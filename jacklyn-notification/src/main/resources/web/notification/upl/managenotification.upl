@@ -1,0 +1,71 @@
+// UPL template for managing notifications
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{notification.notification.manage}
+	searchByList:$c{searchCreateDt searchModuleId searchNotificationTemplateId searchNotificationType searchStatus}
+    searchClearList:$c{searchModuleId searchNotificationTemplateId searchNotificationType searchStatus}
+ 	tableColumnList:$c{messageTypeDesc notificationTypeDesc senderName senderContact statusDesc}
+    tableMultiSelect:true tableMultiSelDependentList:$c{markUnsentBtn markSentBtn markAbortBtn}
+    formSection:$d{!ui-section caption:$m{notification.notification.section-basicdetails} components:$c{frmNotificationTemplate frmNotificationType frmAttempts frmCreateDt frmDueDt frmSentDt frmStatus}}
+    formSection:$d{!ui-section caption:$m{notification.notification.section-sender} components:$c{frmSenderName frmSenderContact}}
+    moreSearchActionComponentList:$c{markUnsentBtn markSentBtn markAbortBtn}
+ 	viewPrivilege:$s{not-notification-view}
+
+//Search
+!ui-date:searchCreateDt caption:$m{notification.notification.createdt} binding:searchCreateDt
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchModuleId caption:$m{notification.notification.module} binding:searchModuleId
+    list:modulelist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchNotificationTemplateId caption:$m{notification.notification.notificationtemplate} binding:searchNotificationTemplateId
+    list:notificationtemplatelist blankOption:$s{} style:$s{width: 200px;}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchNotificationType caption:$m{notification.notification.notificationtype} binding:searchNotificationType
+    list:notificationtypelist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{notification.notification.status} binding:searchStatus
+    list:notificationstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:messageTypeDesc caption:$m{notification.notification.notificationtemplate} binding:messageTypeDesc columnStyle:$s{width:160px;} sortable:true
+!ui-label:notificationTypeDesc caption:$m{notification.notification.notificationtype} binding:notificationTypeDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:senderName caption:$m{notification.notification.sendername} binding:senderName  columnStyle:$s{width:250px;} sortable:true
+!ui-label:senderContact caption:$m{notification.notification.sendercontact} binding:senderContact  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{notification.notification.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmNotificationTemplate caption:$m{notification.notification.notificationtemplate} binding:notificationTemplateId
+    list:notificationtemplatelist style:$s{width: 200px;}
+!ui-select:frmNotificationType caption:$m{notification.notification.notificationtype} binding:notificationType
+    list:notificationtypelist blankOption:$s{}
+!ui-text:frmRecipientName caption:$m{notification.notification.recipientname} binding:recipientName size:40
+!ui-text:frmRecipientContact caption:$m{notification.notification.recipientcontact} binding:recipientContact size:40
+!ui-text:frmSenderName caption:$m{notification.notification.sendername} binding:senderName size:40
+!ui-text:frmSenderContact caption:$m{notification.notification.sendercontact} binding:senderContact size:40
+!ui-text:frmCreateDt caption:$m{notification.notification.createdt} binding:createDt formatter:$d{!datetimeformat style:medium}
+!ui-text:frmDueDt caption:$m{notification.notification.duedt} binding:dueDt formatter:$d{!datetimeformat style:medium}
+!ui-text:frmSentDt caption:$m{notification.notification.sentdt} binding:sentDt formatter:$d{!datetimeformat style:medium}
+!ui-text:frmAttempts caption:$m{notification.notification.attempts}  binding:attempts size:8
+!ui-select:frmStatus caption:$m{notification.notification.status} binding:status list:notificationstatuslist blankOption:$s{}
+
+//More action buttons
+!ui-button:markUnsentBtn styleClass:$e{jk-button} caption:$m{button.mark.unsent}
+	eventHandler:$d{!ui-event event:onclick action:$c{markUnsentAct}}
+    hint:$m{notification.notification.mark.unsent} privilege:$s{not-notification-edit}
+!ui-button:markSentBtn styleClass:$e{jk-button} caption:$m{button.mark.sent}
+	eventHandler:$d{!ui-event event:onclick action:$c{markSentAct}}
+    hint:$m{notification.notification.mark.sent} privilege:$s{not-notification-edit}
+!ui-button:markAbortBtn styleClass:$e{jk-button} caption:$m{button.mark.abort}
+	eventHandler:$d{!ui-event event:onclick action:$c{markAbortAct}}
+    hint:$m{notification.notification.mark.abort} privilege:$s{not-notification-edit}
+
+//Actions
+!ui-post:markUnsentAct path:$n{/markAsUnsent} components:$c{tablePanel}
+    confirm:$m{notification.notification.mark.unsent.confirm}
+!ui-post:markSentAct path:$n{/markAsSent} components:$c{tablePanel}
+    confirm:$m{notification.notification.mark.sent.confirm}
+!ui-post:markAbortAct path:$n{/markAsAborted} components:$c{tablePanel}
+    confirm:$m{notification.notification.mark.abort.confirm}
+    

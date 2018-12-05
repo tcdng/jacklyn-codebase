@@ -1,0 +1,63 @@
+// UPL template for managing users
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{security.user.manage}
+	searchByList:$c{searchLoginId searchFullName searchStatus}
+    searchClearList:$c{searchLoginId searchFullName searchStatus}
+	tableColumnList:$c{loginId fullName email lastLoginDt statusDesc}
+	formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmLoginId frmFullName frmEmail frmTheme frmPasswordExpires frmStatus}}
+	formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
+	formSection:$d{!ui-section caption:$m{security.user.section.assignedroles} components:$c{frmRoleAssignPanel}}
+	formSection:$d{!ui-section caption:$m{security.user.section.organization} components:$c{frmBranchId frmSupervisor}}
+	formBinding:largeData
+    moreCrudFooterComponentList:$c{spacer resetBtn}
+	addPrivilege:$s{sec-user-add} editPrivilege:$s{sec-user-edit}
+	viewPrivilege:$s{sec-user-view} deletePrivilege:$s{sec-user-delete}
+    addValidations:$c{frmLoginIdVal frmEmailVal}
+    saveValidations:$c{frmLoginIdVal frmEmailVal}
+
+//Search
+!ui-text:searchLoginId caption:$m{security.user.loginid} binding:searchLoginId case:upper eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchFullName caption:$m{security.user.fullname} binding:searchFullName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{security.user.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:loginId caption:$m{security.user.loginid} binding:loginId columnStyle:$s{width:150px;} sortable:true
+!ui-label:fullName caption:$m{security.user.fullname} binding:fullName columnStyle:$s{width:200px;} sortable:true
+!ui-label:email caption:$m{security.user.email} binding:email columnStyle:$s{width:200px;} sortable:true
+!ui-label:lastLoginDt caption:$m{security.user.lastlogindt} binding:lastLoginDt style:$s{text-align:center;}
+    formatter:$d{!datetimeformat style:medium}  columnStyle:$s{width:150px;} sortable:true
+!ui-label:statusDesc caption:$m{security.user.status} binding:statusDesc style:$s{text-align:center;}
+	columnStyle:$s{width:120px;} sortable:true
+
+//Form components   
+!ui-name:frmLoginId caption:$m{security.user.loginid} case:upper focus:true binding:data.loginId maxLen:32 required:true
+!ui-text:frmFullName caption:$m{security.user.fullname} binding:data.fullName maxLen:64 required:true size:32
+!ui-text:frmEmail caption:$m{security.user.email} binding:data.email maxLen:64 required:true size:40
+!ui-select:frmTheme caption:$m{security.user.theme} binding:data.themeId list:themelist blankOption:$s{}
+!ui-checkbox:frmPasswordExpires caption:$m{security.user.passwordexpires} layoutCaption:true binding:data.passwordExpires
+!ui-panel:frmPhotoPanel caption:$m{security.user.photo} components:$c{frmImage}
+!ui-picture:frmImage caption:$m{security.user.photo} binding:photograph style:$s{width:200px;height:200px;}
+!ui-select:frmBranchId caption:$m{security.user.branch} binding:data.branchId list:branchlist blankOption:$s{}
+!ui-checkbox:frmSupervisor caption:$m{security.user.supervisor} layoutCaption:true binding:data.supervisor
+!ui-select:frmStatus caption:$m{security.user.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
+
+//Form attachments
+!ui-panel:frmRoleAssignPanel layout:$d{!ui-vertical} components:$c{roleAssignBox}
+!ui-assignmentbox:roleAssignBox binding:roleIdList
+    assignCaption:$m{security.user.maintain.assigned.role} unassignCaption:$m{security.user.maintain.available.role}
+    assignList:roleinlist unassignList:rolenotinlist
+    
+//More action components
+!ui-span:spacer
+!ui-button:resetBtn styleClass:$e{jk-button} privilege:$s{sec-resetuserpassword} caption:$m{button.resetpassword}
+    eventHandler:$d{!ui-event event:onclick action:$c{resetAct}}
+
+//Validations
+!ui-uniquevalidation:frmLoginIdVal components:$c{frmLoginId}
+!ui-emailvalidation:frmEmailVal components:$c{frmEmail}
+
+//Actions
+!ui-post:resetAct path:$n{/resetUserPassword} confirm:$m{security.user.resetpassword.confirm}

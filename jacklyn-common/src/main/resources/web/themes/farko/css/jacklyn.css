@@ -1,0 +1,116 @@
+.ui-document .dBody {background-color: #F0F0F0;}
+
+/** Jacklyn */
+.jk-loginmainbody {display:block; width:908px; margin-left: auto; margin-right: auto; background-color: #000;}
+.jk-loginbannersection {display:inline-block; width:814px;}
+.jk-logintopbannerimg {padding:5px 0px 5px 5px;width:580px; height:280px;}
+
+.jk-loginsection {display:inline-block}
+.jk-logininfo {text-align: center; width: 460px; padding-right:40px; min-height:320px;font-family: "avenir-regular",helvetica,arial,sans-serif;}
+.jk-logininfo-label {display:block; text-align:left; font-size:32px; color:#444;}
+.jk-loginbox {text-align: left; width: 304px; height:280px; background: #F8F8F8; border: 1px solid #A9A9A9;}
+.jk-loginboxframe {padding:5px 5px 5px 0px;}
+    
+.jk-login-contentpanel {display:block;  position: relative; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #000;}
+
+.jk-loginband {padding-top:100px; height: auto;}
+
+.jk-logintopbanner {display: inline-block; width: 260px; background-color: #000;}
+
+.jk-loginuserroleoptions {width: 300px;}
+
+.jk-topbanner {width: 100%; background-color: #000;}
+
+.jk-topbannerimg {width: 200px; height: 36px; text-align: left;}
+
+.jk-topuserimg {float: right; width: 32px; height: 32px;padding:1px;border:solid 1px #A0A0A0;margin-right:4px;cursor:pointer;}
+
+.jk-topbannercontrol {float: right; font-family: sans-serif; font-size: 7pt;
+    font-weight: bold; text-align: right;}
+
+.jk-topnavcontrol {display:inline-block; float: right; font-family: sans-serif; font-size: 7pt;
+    font-weight: bold; text-align: right;}
+.jk-topnavcontrol button {height:14px; font-size:11px; font-weight:bold; border:0px; background-color:#000;}
+.jk-topnavcontrol button:hover:enabled {background-color:#000;}
+
+.jk-userinfoband {display: inline-block; height: 12px; width: 100%; text-align: left;}
+
+.jk-userdtlimg {width: 220px; height: 220px;padding:1px;border:solid 1px #A0A0A0;margin:2px;}
+.jk-userdtltext {font-size:14px;}
+.jk-userdtltext .lttitle {color: #888;}
+.jk-userdtltext .ltcontent {color: #000;}
+
+.jk-switchrole {color: #DEDEDE;}
+.jk-switchrole:hover:enabled {color: #DEDEDE;}
+.jk-logout {color: #DE5050;}
+.jk-logout:hover:enabled {color: #DE5050;}
+
+.jk-content {overflow-y:scroll; max-height:calc(100vh - 40px) !important;}
+
+.jk-footer {display: inline-block; width: 100%; text-align: center; padding-top: 4px; padding-bottom: 4px;
+    border-top: 1px solid #A9A9A9; background-color: black; color: white; font-size: 7pt;}
+
+.jk-dashboard-deck {padding-top: 10px;}
+
+.jk-recordorder {background: #FFFFFF; border: 1px solid #A9A9A9;}
+
+.jk-reportoptions {background: #FFFFFF; border: 1px solid #A9A9A9;}
+.jk-reportoptions-format-sel {width: 180px;}
+
+.jk-reportparameters {background: #FFFFFF; border: 1px solid #A9A9A9; width:410px;}
+
+.jk-searchboxpanel {width: 480px; background: #FFFFFF; border: 1px solid #A9A9A9;}
+
+.jk-mildlabel {margin-bottom:2px; width:120px; height:32px; display:table-cell; text-align:center; vertical-align:middle;
+	color: white; background: #5DDC5D; border: 1px solid #47A447; font-weight:bold;}
+
+.jk-warninglabel {margin-bottom:2px; width:120px; height:32px; text-align:center; vertical-align:middle;
+	color: white; background: #DCDC5D; border: 1px solid #A4A447; font-weight:bold;}
+    
+.jk-bold {font-weight: bold;}
+
+.jk-report-btn {width:18px;height:22px;cursor:pointer;}
+
+.jk-bold-layout {display:table;font-weight:bold; font-size: 12pt;}
+
+.jk-bold-panel {font-weight:bold; font-size: 12pt; border:1px solid #A9A9A9; background-color: #ECECEC;}
+
+.jk-button {margin-bottom:2px; padding: 0px 16px; width:120px; height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
+.jk-button:hover:enabled {color: #FFFFFF; background-color: #6080F0 !important;}
+.jk-button-alert {margin-bottom:2px; padding: 0px 16px; width:120px; height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
+.jk-button-alert:hover:enabled {color: #FFFFFF; background-color: #F06060 !important;}
+
+.jk-wfitemlabel {display:block; font-size:20px; padding:8px; background-color:#D0E0F0;}
+
+.ui-wfactionbuttons {display:table;}
+.ui-wfactionbuttons .buttonRow {display:table-row;}
+.ui-wfactionbuttons .buttonCell {display:table-cell; padding: 0px 2px; vertical-align: bottom;}
+
+.ui-wfhisteventlisting {overflow-y:scroll; padding:1px;}
+.ui-wfhisteventlisting .wwtable {display:table; border-collapse:collapse;width:100%;}
+.ui-wfhisteventlisting .wwodd {display:table-row; background-color:#FFFFFF; border: 1px solid #A9A9A9;}
+.ui-wfhisteventlisting .wwodd:hover {background-color: #D0E0F0;}
+.ui-wfhisteventlisting .wweven {display:table-row; background-color:#FFFFE0; border: 1px solid #A9A9A9;}
+.ui-wfhisteventlisting .wweven:hover {background-color: #D0E0F0;}
+.ui-wfhisteventlisting .wwserialno {display:table-cell; width: 32px; border-right: 1px solid #A9A9A9;}
+.ui-wfhisteventlisting .wwbody {display:table-cell;}
+.ui-wfhisteventlisting .wwcontent {display:table-cell; text-align:left; word-wrap:break-word; font-size:12px; font-style: italic; padding:4px 0px 4px 2px;}
+.ui-wfhisteventlisting .wwlabel {display:table-cell; text-align:right; word-wrap:break-word; color:#808080; font-size:8px; font-weight:bold;padding-right:2px;}
+
+.ui-selectrolepanel {width: 320px;}
+
+.ui-reportrunnerpanel {}
+.ui-reportrunnerpanel .paramList {margin-top:2px; width:300px; height:252px; overflow:auto; background-color:#F0F0F0;}
+
+.ui-wfitemnotespanel {}
+
+.ui-wfitemattachmentspanel {}
+.ui-wfitemattachmentspanel .abody{padding:1px; overflow-y:scroll;}
+
+.jk-maintaintype {display:inline-block; padding:2px; margin-left:4px; text-align:center; font-weight:bold; font-size:9pt;}
+
+.jk-inpectuserimg {width: 120px; height: 120px;padding:1px;border:solid 1px #A0A0A0;margin:2px;}
+.jk-inspecttype {display:inline-block; padding:0px 2px; text-align:center; font-weight:bold;}
+.jk-inspecttext {}
+.jk-inspecttext .lttitle {color: #888;}
+.jk-inspecttext .ltcontent {color: #000;}

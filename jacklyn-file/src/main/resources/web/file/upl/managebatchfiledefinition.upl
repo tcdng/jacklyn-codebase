@@ -1,0 +1,39 @@
+// UPL template for managing file transfer configuration
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{file.batchfiledefinition.manage}
+	searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+	tableColumnList:$c{name description statusDesc}
+    formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.basicdetails} components:$c{frmName frmDescription frmSkipFirst frmStatus}}
+ 	formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.fields} components:$c{frmBatchFileFieldDefPanel}}
+	addPrivilege:$s{fil-batchfiledefinitionadd} editPrivilege:$s{fil-batchfiledefinitionedit}
+	viewPrivilege:$s{fil-batchfiledefinitionview} deletePrivilege:$s{fil-batchfiledefinitiondelete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+ 
+//Search
+!ui-text:searchName caption:$m{file.batchfiledefinition.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{file.batchfiledefinition.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{file.batchfiledefinition.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{file.batchfiledefinition.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{file.batchfiledefinition.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{file.batchfiledefinition.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{file.batchfiledefinition.name} binding:name focus:true dollar:true underscore:true maxLen:32 required:true case:upper
+!ui-text:frmDescription caption:$m{file.batchfiledefinition.description} binding:description size:40 maxLen:40 required:true
+!ui-checkbox:frmSkipFirst caption:$m{file.batchfiledefinition.skipfirstrecord} binding:skipFirst
+!ui-select:frmStatus caption:$m{file.batchfiledefinition.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+!ui-batchfilefielddefcrudpanel:frmBatchFileFieldDefPanel createNext:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}
+
+//Actions

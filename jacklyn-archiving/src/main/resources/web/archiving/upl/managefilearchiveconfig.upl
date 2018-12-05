@@ -1,0 +1,47 @@
+// UPL template for managing file archive configuration
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{archiving.filearchiveconfig.manage}
+	searchByList:$c{searchDescription searchStatus}
+    searchClearList:$c{searchDescription searchStatus}
+	tableColumnList:$c{name description localArchivePath statusDesc}
+	formSection:$d{!ui-section caption:$m{archiving.filearchiveconfig.section.basicdetails} components:$c{frmName frmDescription frmArchivableDef frmLobField frmTimestampField frmStatus}}
+	formSection:$d{!ui-section caption:$m{archiving.filearchiveconfig.section.archive} components:$c{ frmLocalArchivePath frmLocalArchiveDateFormat frmFilenameGenerator frmMaxItemsPerFile frmDeleteRowOnArchive}}
+	addPrivilege:$s{arc-filearchiveconfigadd} editPrivilege:$s{arc-filearchiveconfigedit}
+	viewPrivilege:$s{arc-filearchiveconfigview} deletePrivilege:$s{arc-filearchiveconfigdelete}
+    addValidations:$c{frmUniqueNameVal}
+    saveValidations:$c{frmUniqueNameVal}
+
+//Search
+!ui-text:searchDescription caption:$m{archiving.filearchiveconfig.description} binding:searchDescription
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{archiving.filearchiveconfig.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{archiving.filearchiveconfig.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{archiving.filearchiveconfig.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:localArchivePath caption:$m{archiving.filearchiveconfig.localarchivepath} binding:localArchivePath  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{archiving.filearchiveconfig.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{archiving.filearchiveconfig.name} binding:name focus:true dollar:true underscore:true maxLen:32 required:true
+!ui-text:frmDescription caption:$m{archiving.filearchiveconfig.description} binding:description size:40 maxLen:40 required:true
+!ui-select:frmArchivableDef caption:$m{archiving.filearchiveconfig.archivable} style:$s{width:200px;} binding:archivableDefId list:archivabledeflist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{refreshFormAct}} required:true
+!ui-select:frmLobField caption:$m{archiving.filearchiveconfig.lobfield} style:$s{width:200px;}
+	binding:archivableFieldId list:archivablelobfieldlist listParams:$l{archivableDefId} blankOption:$s{} required:true
+!ui-select:frmTimestampField caption:$m{archiving.filearchiveconfig.timestampfield} style:$s{width:200px;}
+	binding:archivableDateFieldId list:archivingtimestampfieldlist listParams:$l{archivableDefId} blankOption:$s{} required:true
+!ui-text:frmLocalArchivePath caption:$m{archiving.filearchiveconfig.localarchivepath} binding:localArchivePath maxLen:64 required:true
+!ui-select:frmLocalArchiveDateFormat caption:$m{archiving.filearchiveconfig.localarchivedateformat} style:$s{width:200px;}
+	binding:localArchiveDateFormat list:datefolderformatlist blankOption:$s{} required:true
+!ui-select:frmFilenameGenerator caption:$m{archiving.filearchiveconfig.filenamegenerator} style:$s{width:200px;}
+	binding:filenameGenerator list:filearchivenamegeneratorlist blankOption:$s{} required:true
+!ui-integer:frmMaxItemsPerFile caption:$m{archiving.filearchiveconfig.maxitemsperfile} binding:maxItemsPerFile size:10 required:true
+!ui-checkbox:frmDeleteRowOnArchive caption:$m{archiving.filearchiveconfig.deleterowonarchive} binding:deleteRowOnArchive layoutCaption:true
+!ui-select:frmStatus caption:$m{archiving.filearchiveconfig.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmUniqueNameVal components:$c{frmName}

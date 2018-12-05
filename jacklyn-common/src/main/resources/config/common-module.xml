@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<module name="common" description="$m{common.module}">
+	<audits>
+		<audit name="cmn-generatereport" description="$m{common.audittype.generate}"
+			action="generate" />
+	</audits>
+</module>

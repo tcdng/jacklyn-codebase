@@ -1,0 +1,29 @@
+// UPL template for managing archive definitions
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{archiving.archivabledefinition.manage}
+	searchByList:$c{searchModuleId searchStatus}
+	searchClearList:$c{searchModuleId searchStatus}
+	tableColumnList:$c{moduleDesc name description statusDesc}
+	formSection:$d{!ui-section caption:$m{archiving.archivabledefinition.section.basicdetails} components:$c{frmModule frmName frmDescription frmRecordType frmStatus}}
+    viewPrivilege:$s{arc-archivabledefinitionview}
+
+//Search
+!ui-select:searchModuleId caption:$m{archiving.archivabledefinition.module} binding:searchModuleId list:modulelist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{archiving.archivabledefinition.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:moduleDesc caption:$m{archiving.archivabledefinition.module} binding:moduleDesc  columnStyle:$s{width:80px;} sortable:true
+!ui-label:name caption:$m{archiving.archivabledefinition.name} binding:name  columnStyle:$s{width:100px;} sortable:true
+!ui-label:description caption:$m{archiving.archivabledefinition.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{archiving.archivabledefinition.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components   
+!ui-select:frmModule caption:$m{archiving.archivabledefinition.module} binding:moduleId list:modulelist blankOption:$s{}
+!ui-text:frmName caption:$m{archiving.archivabledefinition.name} binding:name size:24
+!ui-text:frmDescription caption:$m{archiving.archivabledefinition.description} binding:description size:40
+!ui-text:frmRecordType caption:$m{archiving.archivabledefinition.recordtype} binding:recordType size:40
+!ui-select:frmStatus caption:$m{archiving.archivabledefinition.status} binding:status list:recordstatuslist blankOption:$s{}

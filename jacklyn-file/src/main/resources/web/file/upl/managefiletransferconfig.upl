@@ -1,0 +1,57 @@
+// UPL template for managing file transfer configuration
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{file.filetransferconfig.manage}
+	searchByList:$c{searchName searchDirection searchStatus}
+    searchClearList:$c{searchName searchDirection searchStatus}
+	tableColumnList:$c{name description directionDesc statusDesc}
+	formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.basicdetails} components:$c{frmName frmDescription frmFilePolicy frmType  frmDirection frmMaxTransferAttempts  frmDeleteSrc frmStatus}}
+	formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.remoteserver} components:$c{frmHost frmPort frmAuthenticationId frmPassword frmServerPath frmServerDateFormat}}
+	formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.localserver} components:$c{frmLocalPath frmLocalDateFormat}}
+    moreCrudFooterComponentList:$c{spacer testBtn}
+	addPrivilege:$s{fil-filetransferconfigadd} editPrivilege:$s{fil-filetransferconfigedit}
+	viewPrivilege:$s{fil-filetransferconfigview} deletePrivilege:$s{fil-filetransferconfigdelete}
+
+//Search
+!ui-text:searchName caption:$m{file.filetransferconfig.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchDirection caption:$m{file.filetransferconfig.direction} binding:searchDirection list:filetransferdirectionlist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{file.filetransferconfig.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{file.filetransferconfig.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{file.filetransferconfig.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:directionDesc caption:$m{file.filetransferconfig.direction} binding:directionDesc  columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{file.filetransferconfig.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{file.filetransferconfig.name} binding:name focus:true dollar:true underscore:true maxLen:32 required:true
+!ui-text:frmDescription caption:$m{file.filetransferconfig.description} binding:description size:40 maxLen:40 required:true
+!ui-select:frmFilePolicy caption:$m{file.filetransferconfig.filepolicy} style:$s{width:200px;} binding:fileTransferPolicy list:filetransferpolicylist blankOption:$s{} required:true
+!ui-select:frmType caption:$m{file.filetransferconfig.type} style:$s{width:200px;} binding:fileTransferServer list:filetransferserverlist blankOption:$s{} required:true
+!ui-select:frmDirection caption:$m{file.filetransferconfig.direction} binding:direction list:filetransferdirectionlist blankOption:$s{} required:true
+!ui-integer:frmMaxTransferAttempts caption:$m{file.filetransferconfig.maxtransferattempts} binding:maxTransferAttempts size:10 required:true
+!ui-checkbox:frmDeleteSrc caption:$m{file.filetransferconfig.deletesource} binding:deleteSourceOnTransfer layoutCaption:true
+!ui-select:frmStatus caption:$m{file.filetransferconfig.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+!ui-text:frmHost caption:$m{file.filetransferconfig.host} binding:remoteHost required:true
+!ui-integer:frmPort precision:5 caption:$m{file.filetransferconfig.port} binding:remotePort size:10
+!ui-text:frmAuthenticationId caption:$m{file.filetransferconfig.authenticationid} binding:authenticationId
+!ui-password:frmPassword caption:$m{file.filetransferconfig.authenticationpassword} binding:authenticationPassword
+!ui-text:frmServerPath caption:$m{file.filetransferconfig.serverpath} binding:remotePath size:40 required:true
+!ui-select:frmServerDateFormat caption:$m{file.filetransferconfig.serverdateformat} binding:remoteDateFormat list:datefolderformatlist blankOption:$s{}
+!ui-text:frmLocalPath caption:$m{file.filetransferconfig.localpath} binding:localPath size:40 required:true
+!ui-select:frmLocalDateFormat caption:$m{file.filetransferconfig.localdateformat} binding:localDateFormat list:datefolderformatlist blankOption:$s{}
+
+//Test button
+!ui-span:spacer
+!ui-button:testBtn styleClass:$e{jk-button} caption:$m{button.test}
+	eventHandler:$d{!ui-event event:onclick action:$c{testAct}}
+
+//Validations
+!ui-validation:frmTestGrpVal components:$c{frmName frmDescription frmFilePolicy frmType frmHost frmServerPath frmLocalPath}
+
+//Actions
+!ui-post:testAct path:$n{/testFileTransferConfig} validations:$c{frmTestGrpVal}
+    components:$c{frmName frmFilePolicy frmType frmHost frmPort frmDescription frmServerPath frmAuthenticationId frmPassword frmLocalPath}

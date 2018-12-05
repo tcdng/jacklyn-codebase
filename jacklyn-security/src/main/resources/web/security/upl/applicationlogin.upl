@@ -1,0 +1,6 @@
+// UPL template for application login frame
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-document layout:$d{!ui-desktoptype1} contentPanel:$c{content}
+!ui-contentpanel:content styleClass:$e{jk-login-contentpanel} path:$s{/security/loginpage/openPage}

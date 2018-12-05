@@ -1,0 +1,30 @@
+// UPL template for workflow step definition CRUD panel
+// Copyright 2018 The Code Department
+!ui-wfstepcrudpanel
+	formSection:$d{!ui-section components:$c{frmWfTemplate frmName frmDescription frmLabel frmTypeCode frmParticipantType
+		frmPriorityLevel frmFormMode frmItemsPerSession frmExpiryHours frmAudit frmBranchOnly frmIncludeForwarder}}
+	formColumns:2
+	tableColumnList:$c{name description stepTypeDesc participantTypeDesc priorityLevelDesc}
+
+//Table columns
+!ui-label:name caption:$m{workflow.wftemplate.wfstep.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{workflow.wftemplate.wfstep.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:stepTypeDesc caption:$m{workflow.wftemplate.wfstep.type} binding:stepTypeDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:priorityLevelDesc caption:$m{workflow.wftemplate.wfstep.prioritylevel} binding:priorityLevelDesc  columnStyle:$s{width:120px;} sortable:true layoutCaption:true
+!ui-label:participantTypeDesc caption:$m{workflow.wftemplate.wfstep.participanttype} binding:participantTypeDesc columnStyle:$s{width:120px;} sortable:true layoutCaption:true
+
+//Form components
+!ui-text:frmWfTemplate caption:$m{workflow.wftemplate.wfstep.wftemplate} binding:wfTemplateName size:40 required:true
+!ui-text:frmName caption:$m{workflow.wftemplate.wfstep.name} case:upper binding:name size:32 required:true
+!ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.description} binding:description size:40 required:true
+!ui-text:frmLabel caption:$m{workflow.wftemplate.wfstep.label} binding:label size:40 required:true
+!ui-select:frmTypeCode caption:$m{workflow.wftemplate.wfstep.type} list:wfsteptypelist blankOption:$s{} binding:stepType required:true
+!ui-select:frmFormMode caption:$m{workflow.wftemplate.wfstep.formmode} list:wfformmodelist blankOption:$s{} binding:formMode
+!ui-select:frmPriorityLevel caption:$m{workflow.wftemplate.wfstep.prioritylevel} list:wfstepprioritylist blankOption:$s{} binding:priorityLevel
+!ui-select:frmParticipantType caption:$m{workflow.wftemplate.wfstep.participanttype} list:wfparticipanttypelist blankOption:$s{} binding:participantType
+!ui-integer:frmItemsPerSession caption:$m{workflow.wftemplate.wfstep.itemspersession} binding:itemsPerSession required:true
+!ui-integer:frmExpiryHours caption:$m{workflow.wftemplate.wfstep.expiryhours} binding:expiryHours required:true
+!ui-checkbox:frmAudit caption:$m{workflow.wftemplate.wfstep.audit} binding:audit
+!ui-checkbox:frmBranchOnly caption:$m{workflow.wftemplate.wfstep.branchonly} binding:branchOnly
+!ui-checkbox:frmIncludeForwarder caption:$m{workflow.wftemplate.wfstep.includeforwarder} binding:includeForwarder
+

@@ -1,0 +1,20 @@
+// UPL template for workflow action definition CRUD panel
+// Copyright 2018 The Code Department
+!ui-wfroutingcrudpanel
+	formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmTargetWfStepName frmClassifierName}}
+	tableColumnList:$c{wfStepName name description targetWfStepName classifierName}
+
+//Table columns
+!ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfrouting.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{workflow.wftemplate.wfstep.wfrouting.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{workflow.wftemplate.wfstep.wfrouting.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:targetWfStepName caption:$m{workflow.wftemplate.wfstep.wfrouting.targetstep} binding:targetWfStepName columnStyle:$s{width:120px;} sortable:true
+!ui-label:classifierName caption:$m{workflow.wftemplate.wfstep.wfrouting.classifier} binding:classifierName columnStyle:$s{width:120px;} sortable:true
+
+//Form components
+!ui-text:frmWfStepName caption:$m{workflow.wftemplate.wfstep.wfrouting.step} binding:wfStepName size:32 required:true
+!ui-text:frmName caption:$m{workflow.wftemplate.wfstep.wfrouting.name} binding:name size:32 required:true
+!ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfrouting.description} binding:description size:40 required:true
+!ui-text:frmTargetWfStepName caption:$m{workflow.wftemplate.wfstep.wfrouting.targetstep} size:32 binding:targetWfStepName required:true
+!ui-text:frmClassifierName caption:$m{workflow.wftemplate.wfstep.wfrouting.classifier} size:32 binding:classifierName
+	

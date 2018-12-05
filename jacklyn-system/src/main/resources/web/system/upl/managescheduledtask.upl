@@ -1,0 +1,63 @@
+// UPL template for scheduled tasks
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.scheduledtask.manage}
+	searchByList:$c{searchDescription searchTaskName searchStatus}
+    searchClearList:$c{searchDescription searchTaskName searchStatus}
+	tableColumnList:$c{taskName description startTime endTime statusDesc}
+	formSection:$d{!ui-section caption:$m{system.scheduledtask.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
+	formSection:$d{!ui-section caption:$m{system.scheduledtask.section.schedule} components:$c{frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths}}
+	formSection:$d{!ui-section caption:$m{system.scheduledtask.section.parameters} components:$c{frmAttachment}}
+	formBinding:largeData
+	addPrivilege:$s{sys-schdtaskadd} editPrivilege:$s{sys-schdtaskedit}
+	viewPrivilege:$s{sys-schdtaskview} deletePrivilege:$s{sys-schdtaskdelete}
+    addValidations:$c{frmTaskNameVal frmParamsVal}
+    saveValidations:$c{frmTaskNameVal frmParamsVal}
+
+//Search
+!ui-text:searchDescription caption:$m{system.scheduledtask.description} binding:searchDescription
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchTaskName caption:$m{system.scheduledtask.taskname} binding:searchTaskName list:schedulabletasklist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.scheduledtask.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:taskName caption:$m{system.scheduledtask.taskname} binding:taskName columnStyle:$s{width:200px;} sortable:true
+!ui-label:description caption:$m{system.scheduledtask.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:startTime caption:$m{system.scheduledtask.starttime} binding:startTime formatter:$d{!timeformat style:medium} columnStyle:$s{width:200px;} sortable:true
+!ui-label:endTime caption:$m{system.scheduledtask.endtime} binding:endTime formatter:$d{!timeformat style:medium} columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{system.scheduledtask.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmTaskName caption:$m{system.scheduledtask.taskname} binding:data.taskName list:schedulabletasklist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}} required:true
+!ui-text:frmDescription caption:$m{system.scheduledtask.description} binding:data.description maxLen:48 size:40 required:true
+!ui-time:frmStartTime caption:$m{system.scheduledtask.starttime} binding:data.startTime required:true
+!ui-group:frmFreqCombo caption:$m{system.scheduledtask.frequency} components:$c{frmFreq frmFreqUnit} space:true
+!ui-integer:frmNumberOfTimes caption:$m{system.scheduledtask.numberoftimes} binding:data.numberOfTimes precision:4 size:5
+!ui-checkbox:frmExpires caption:$m{system.scheduledtask.expires} binding:data.expires
+!ui-dropdowncheckboxlist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
+    selectAllOption:$m{system.scheduledtask.selectalldays}
+!ui-dropdowncheckboxlist:frmDays binding:data.days caption:$m{system.scheduledtask.daysinmonth} list:dayinmonthlist columns:7
+    selectAllOption:$m{system.scheduledtask.selectalldays}
+!ui-dropdowncheckboxlist:frmMonths binding:data.months caption:$m{system.scheduledtask.monthsinyear} list:monthinyearlist columns:3
+    selectAllOption:$m{system.scheduledtask.selectallmonths}
+!ui-select:frmStatus caption:$m{system.scheduledtask.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
+
+!ui-integer:frmFreq binding:data.frequency precision:3 size:4
+!ui-select:frmFreqUnit binding:data.frequencyUnit list:frequencyunitlist blankOption:$s{}
+
+//Form attachments
+!ui-panel:frmAttachment layout:$d{!ui-vertical} components:$c{frmParamsTbl}
+!ui-multidynamic:frmParamsTbl binding:scheduledTaskParams.inputList
+
+
+//Validations
+!ui-uniquevalidation:frmTaskNameVal components:$c{frmDescription}
+!ui-validation:frmParamsVal components:$c{frmAttachment}
+
+//Actions
+!ui-post:refreshParamsAct path:$n{/refreshParameters}
+    components:$c{frmTaskName frmDescription frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths frmStatus}

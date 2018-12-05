@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<module name="organization" description="$m{organization.module}">
+	<menus>
+		<menu name="org-mainorg" description="$m{organization.menu.main}"
+			caption="$m{organization.menu.title}">
+			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
+				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
+				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="org-branchadd" description="$m{organization.privilege.branch.add}" />
+			<privilege name="org-branchedit" description="$m{organization.privilege.branch.edit}" />
+			<privilege name="org-branchview" description="$m{organization.privilege.branch.view}" />
+			<privilege name="org-branchdelete" description="$m{organization.privilege.branch.delete}" />
+		</privilege-group>
+	</privileges>
+</module>

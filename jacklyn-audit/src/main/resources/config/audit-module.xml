@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<module name="audit" description="$m{audit.module}">
+	<audits>
+		<audit name="aud-activateaudittype" description="$m{audit.auditsettings.activate}"
+			action="update" />
+		<audit name="aud-deactivateaudittype" description="$m{audit.auditsettings.deactivate}"
+			action="update" />
+		<audit name="aud-inspectusersearch" description="$m{audit.auditsettings.inspectusersearch}"
+			action="search" />
+	</audits>
+	<dashboard-tiles>
+		<dashboard-tile name="aud-audittrail"
+			caption="$m{audit.dashboard.caption.audittrail}" description="$m{audit.dashboard.tile.audittrail}"
+			image="$t{images/manageaudittrail.png}" path="/audit/audittrail/openPage" />
+	</dashboard-tiles>
+	<menus>
+		<menu name="aud-mainfile" description="$m{audit.menu.main}"
+			caption="$m{audit.menu.title}">
+			<menuitem name="aud-manageauditsettings" caption="$m{audit.auditsettings.menu.title}"
+				pageCaption="$m{audit.auditsettings.manage}" description="$m{audit.menuitem.auditsettings}"
+				path="/audit/auditsettings/openPage" remotePath="/audit/auditsettings/getRemoteDoc" />
+			<menuitem name="aud-manageaudittrail" caption="$m{audit.audittrail.menu.title}"
+				pageCaption="$m{audit.audittrail.manage}" description="$m{audit.menuitem.audittrail}"
+				path="/audit/audittrail/openPage" remotePath="/audit/audittrail/getRemoteDoc" />
+			<menuitem name="aud-inspectuser" caption="$m{audit.inspectuser.menu.title}"
+				pageCaption="$m{audit.inspectuser.manage}" description="$m{audit.menuitem.inspectuser}"
+				path="/audit/inspectuser/openPage" remotePath="/audit/inspectuser/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="aud-audittrailview" description="$m{audit.privilege.audittrail.view}" />
+			<privilege name="aud-auditsettingsview" description="$m{audit.privilege.auditsettings.view}" />
+			<privilege name="aud-auditsettingsedit" description="$m{audit.privilege.auditsettings.edit}" />
+		</privilege-group>
+	</privileges>
+</module>

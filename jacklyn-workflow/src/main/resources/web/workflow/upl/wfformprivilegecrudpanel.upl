@@ -1,0 +1,27 @@
+// UPL template for managing workflow definition input control
+// Copyright 2018 The Code Department
+!ui-wfformprivilegecrudpanel
+	formSection:$d{!ui-section components:$c{frmWfStepName frmWfDocElementName frmType frmVisible frmEditable frmDisabled frmRequired}}
+	tableColumnList:$c{wfStepName wfDocElementName typeDesc visible editable disabled}
+
+//Table columns
+!ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfformprivilege.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
+!ui-label:wfDocElementName caption:$m{workflow.wftemplate.wfstep.wfformprivilege.docname} binding:wfDocElementName columnStyle:$s{width:120px;} sortable:true
+!ui-label:typeDesc caption:$m{workflow.wftemplate.wfstep.wfformprivilege.type} binding:typeDesc columnStyle:$s{width:200px;} sortable:true
+!ui-listlabel:visible caption:$m{workflow.wftemplate.wfstep.wfformprivilege.visible} binding:visible columnStyle:$s{width:80px;}
+	list:booleanlist
+!ui-listlabel:editable caption:$m{workflow.wftemplate.wfstep.wfformprivilege.editable} binding:editable columnStyle:$s{width:80px;}
+	list:booleanlist
+!ui-listlabel:disabled caption:$m{workflow.wftemplate.wfstep.wfformprivilege.disabled} binding:disabled columnStyle:$s{width:80px;}
+	list:booleanlist
+
+//Form components   
+!ui-text:frmWfStepName caption:$m{workflow.wftemplate.wfstep.wfformprivilege.step} binding:wfStepName size:32 required:true
+!ui-text:frmWfDocElementName caption:$m{workflow.wftemplate.wfstep.wfformprivilege.docname} binding:wfDocElementName size:32 required:true
+!ui-select:frmType caption:$m{workflow.wftemplate.wfstep.wfformprivilege.type} binding:type required:true
+	list:wfformelementtypelist blankOption:$s{}
+!ui-checkbox:frmVisible caption:$m{workflow.wftemplate.wfstep.wfformprivilege.visible} binding:visible
+!ui-checkbox:frmEditable caption:$m{workflow.wftemplate.wfstep.wfformprivilege.editable} binding:editable
+!ui-checkbox:frmDisabled caption:$m{workflow.wftemplate.wfstep.wfformprivilege.disabled} binding:disabled
+!ui-checkbox:frmRequired caption:$m{workflow.wftemplate.wfstep.wfformprivilege.required} binding:required
+	

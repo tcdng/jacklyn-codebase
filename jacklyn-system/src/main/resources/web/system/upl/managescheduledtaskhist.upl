@@ -1,0 +1,32 @@
+// UPL template for managing schedule task history
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.scheduledtaskhist.manage}
+	searchByList:$c{searchExecutionDt searchScheduledTaskId searchStatus}
+	searchClearList:$c{searchScheduledTaskId searchStatus}
+	tableColumnList:$c{scheduledTaskDesc startTime endTime statusDesc}
+	formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.basicdetails} components:$c{frmTaskName frmDescription frmStartTime frmEndTime frmErrorMsg frmStatus}}
+	viewPrivilege:$s{sys-schdtaskhistview}
+
+//Search
+!ui-date:searchExecutionDt caption:$m{system.scheduledtaskhist.executiondt}  binding:searchExecutionDt
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchScheduledTaskId caption:$m{system.scheduledtaskhist.taskname} binding:searchScheduledTaskId list:scheduledtasklist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.scheduledtaskhist.status} binding:searchStatus list:taskstatuslist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:scheduledTaskDesc caption:$m{system.scheduledtaskhist.taskname} binding:scheduledTaskDesc  columnStyle:$s{width:300px;} sortable:true
+!ui-label:startTime caption:$m{system.scheduledtaskhist.starttime} binding:startTime style:$s{text-align:center;} formatter:$d{!timeformat style:medium}  columnStyle:$s{width:120px;} sortable:true
+!ui-label:endTime caption:$m{system.scheduledtaskhist.endtime} binding:endTime style:$s{text-align:center;} formatter:$d{!timeformat style:medium} columnStyle:$s{width:120px;} sortable:true
+!ui-label:statusDesc caption:$m{system.scheduledtaskhist.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-text:frmTaskName caption:$m{system.scheduledtaskhist.taskname} binding:taskName
+!ui-text:frmDescription caption:$m{system.scheduledtaskhist.description} binding:scheduledTaskDesc
+!ui-time:frmStartTime caption:$m{system.scheduledtaskhist.starttime} binding:startTime
+!ui-time:frmEndTime caption:$m{system.scheduledtaskhist.endtime} binding:endTime
+!ui-textarea:frmErrorMsg caption:$m{system.scheduledtaskhist.errormsg} binding:errorMsg wordWrap:true
+!ui-select:frmStatus caption:$m{system.scheduledtaskhist.status} binding:status  list:taskstatuslist

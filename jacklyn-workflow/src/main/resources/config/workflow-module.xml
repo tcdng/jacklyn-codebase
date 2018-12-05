@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<module name="workflow" description="$m{workflow.module}">
+	<menus>
+		<menu name="wf-mainworkflow" caption="$m{workflow.menu.title}"
+			description="$m{workflow.menu.main}">
+			<menuitem name="wf-wfcategory-manage" caption="$m{workflow.wfcategory.menu.title}"
+				pageCaption="$m{workflow.wfcategory.manage}"
+				description="$m{workflow.wfcategory.menuitem}" path="/workflow/wfcategory/openPage"
+				remotePath="/workflow/wfcategory/getRemoteDoc" />
+			<menuitem name="wf-publish-manage" caption="$m{workflow.wfcategory.publish.menu.title}"
+				pageCaption="$m{workflow.wfcategory.publish.manage}" description="$m{workflow.wfcategory.publish.menuitem}"
+				path="/workflow/wfpublishcategory/openPage" remotePath="/workflow/wfpublishcategory/getRemoteDoc" />
+			<menuitem name="wf-manual-item" caption="$m{workflow.wfcategory.manualinit.menu.title}"
+				pageCaption="$m{workflow.wfcategory.manualinit.manage}" description="$m{workflow.wfcategory.manualinit.menuitem}"
+				path="/workflow/manualworkiteminitiation/openPage" remotePath="/workflow/manualworkiteminitiation/getRemoteDoc" />
+			<menuitem name="wf-wfdoc-manage" caption="$m{workflow.wfdoc.menu.title}"
+				pageCaption="$m{workflow.wfdoc.manage}"
+				description="$m{workflow.wfdoc.menuitem}" path="/workflow/wfdoc/openPage"
+				remotePath="/workflow/wfdoc/getRemoteDoc" />
+			<menuitem name="wf-wftemplate-manage" caption="$m{workflow.wftemplate.menu.title}"
+				pageCaption="$m{workflow.wftemplate.manage}"
+				description="$m{workflow.wftemplate.menuitem}" path="/workflow/wftemplate/openPage"
+				remotePath="/workflow/wftemplate/getRemoteDoc" />
+			<menuitem name="wf-userwfitems-manage" caption="$m{workflow.userworkflowitems.menu.title}"
+				pageCaption="$m{workflow.userworkflowitems.manage}"
+				description="$m{workflow.userworkflowitems.menuitem}" path="/workflow/userworkflowitems/openPage"/>
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="wf-wfcategory-add" description="$m{workflow.privilege.wfcategory.add}" />
+			<privilege name="wf-wfcategory-edit" description="$m{workflow.privilege.wfcategory.edit}" />
+			<privilege name="wf-wfcategory-view" description="$m{workflow.privilege.wfcategory.view}" />
+			<privilege name="wf-wfcategory-delete" description="$m{workflow.privilege.wfcategory.delete}" />
+			<privilege name="wf-wfdoc-add" description="$m{workflow.privilege.wfdoc.add}" />
+			<privilege name="wf-wfdoc-edit" description="$m{workflow.privilege.wfdoc.edit}" />
+			<privilege name="wf-wfdoc-view" description="$m{workflow.privilege.wfdoc.view}" />
+			<privilege name="wf-wfdoc-delete" description="$m{workflow.privilege.wfdoc.delete}" />
+			<privilege name="wf-wftemplate-add" description="$m{workflow.privilege.wftemplate.add}" />
+			<privilege name="wf-wftemplate-view" description="$m{workflow.privilege.wftemplate.view}" />
+			<privilege name="wf-wftemplate-edit" description="$m{workflow.privilege.wftemplate.edit}" />
+			<privilege name="wf-wftemplate-delete"
+				description="$m{workflow.privilege.wftemplate.delete}" />
+		</privilege-group>
+	</privileges>
+</module>

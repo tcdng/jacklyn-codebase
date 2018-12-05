@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<module name="security" description="$m{security.module}">
+	<audits>
+		<audit name="sec-login" description="$m{security.auditsettings.loggedin}"
+			action="login" />
+		<audit name="sec-logout" description="$m{security.auditsettings.loggedout}"
+			action="logout" />
+		<audit name="sec-chgpassword" description="$m{security.auditsettings.chgpassord}"
+			action="update" />
+		<audit name="sec-resetpassword" description="$m{security.auditsettings.resetpassword}"
+			action="update" />
+	</audits>
+	<dashboard-tiles>
+		<dashboard-tile name="sec-users"
+			caption="$m{security.dashboard.caption.users}" description="$m{security.dashboard.tile.users}"
+			image="$t{images/manageusers.png}" path="/security/user/openPage" />
+		<dashboard-tile name="sec-roles"
+			caption="$m{security.dashboard.caption.roles}" description="$m{security.dashboard.tile.roles}"
+			image="$t{images/manageroles.png}" path="/security/role/openPage" />
+	</dashboard-tiles>
+	<menus>
+		<menu name="sec-mainsecurity" caption="$m{security.menu.title}"
+			description="$m{security.menu.main}">
+			<menuitem name="sec-manageuser" caption="$m{security.user.menu.title}"
+				pageCaption="$m{security.user.manage}" description="$m{security.menuitem.user}"
+				path="/security/user/openPage" remotePath="/security/user/getRemoteDoc" />
+			<menuitem name="sec-manageusersession" caption="$m{security.usersession.menu.title}"
+				pageCaption="$m{security.usersession.manage}" description="$m{security.menuitem.usersession}"
+				path="/security/usersession/openPage" remotePath="/security/usersession/getRemoteDoc" />
+			<menuitem name="sec-managerole" caption="$m{security.role.menu.title}"
+				pageCaption="$m{security.role.manage}" description="$m{security.menuitem.role}"
+				path="/security/role/openPage" remotePath="/security/role/getRemoteDoc" />
+			<menuitem name="sec-manageroledocumentcontrol" caption="$m{security.roledocumentcontrol.menu.title}"
+				pageCaption="$m{security.roleprivilege.manage}" description="$m{security.menuitem.roledocumentcontrol}"
+				path="/security/roledocumentcontrol/openPage" remotePath="/security/roledocumentcontrol/getRemoteDoc" />
+			<menuitem name="sec-changepassword" caption="$m{security.changepassword.menu.title}"
+				pageCaption="$m{security.changepassword.menu.title}" description="$m{security.menuitem.changepassword}"
+				path="/security/changepassword/openPage" />
+		</menu>
+	</menus>
+	<notification-templates>
+		<notification-template name="newpassword"
+			description="$m{security.notification.newpassword.desc}" subject="$m{security.notification.newpassword.subject}"
+			template="$m{security.notification.newpassword.template}" />
+		<notification-template name="resetpassword"
+			description="$m{security.notification.resetpassword.desc}" subject="$m{security.notification.resetpassword.subject}"
+			template="$m{security.notification.resetpassword.template}" />
+	</notification-templates>
+	<privileges>
+		<privilege-group>
+			<privilege name="sec-appadmin" description="$m{security.privilege.appadmin}" />
+			<privilege name="sec-user-add" description="$m{security.privilege.user.add}" />
+			<privilege name="sec-user-view" description="$m{security.privilege.user.view}" />
+			<privilege name="sec-user-edit" description="$m{security.privilege.user.edit}" />
+			<privilege name="sec-user-delete" description="$m{security.privilege.user.delete}" />
+			<privilege name="sec-user-viewsession" description="$m{security.privilege.user.viewsession}" />
+			<privilege name="sec-role-add" description="$m{security.privilege.role.add}" />
+			<privilege name="sec-role-view" description="$m{security.privilege.role.view}" />
+			<privilege name="sec-role-edit" description="$m{security.privilege.role.edit}" />
+			<privilege name="sec-role-delete" description="$m{security.privilege.role.delete}" />
+			<privilege name="sec-changepassword" description="$m{security.privilege.changepassword}" />
+			<privilege name="sec-resetuserpassword" description="$m{security.privilege.resetpassword}" />
+			<privilege name="sec-role-editprivilege"
+				description="$m{security.privilege.role.editprivileges}" />
+			<privilege name="sec-forcelogout" description="$m{security.privilege.forcelogout}" />
+			<privilege name="sec-forcelogoutall" description="$m{security.privilege.forcelogoutall}" />
+		</privilege-group>
+	</privileges>
+	<sys-parameters>
+		<sys-parameter name="SEC-0001" defaultValue="false"
+			description="$m{security.sysparam.enableuserthemes}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-0002" defaultValue="false"
+			description="$m{security.sysparam.enablerolethemes}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-0003" defaultValue="false"
+			description="$m{security.sysparam.enablepasswordhist}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-0004" defaultValue="6"
+			description="$m{security.sysparam.passwordhistlen}" editor="!ui-integer precision:2"
+			type="number" />
+		<sys-parameter name="SEC-0005" defaultValue="false"
+			description="$m{security.sysparam.enablepasswordexpiry}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-0006" defaultValue="30"
+			description="$m{security.sysparam.passwordexpirydays}" editor="!ui-integer precision:3"
+			type="number" />
+		<sys-parameter name="SEC-0007" defaultValue="true"
+			description="$m{security.sysparam.enableaccountlock}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-0008" defaultValue="4"
+			description="$m{security.sysparam.maxlogintries}" editor="!ui-integer precision:2"
+			type="number" />
+		<sys-parameter name="SEC-0009"
+			defaultValue="lowercaseprincipal-passwordgenerator" description="$m{security.sysparam.userpasswordgenerator}"
+			editor="!ui-select list:passwordgeneratorlist" type="string" />
+		<sys-parameter name="SEC-000A" defaultValue="8"
+			description="$m{security.sysparam.userpasswordlength}" editor="!ui-integer precision:2"
+			type="number" />
+		<sys-parameter name="SEC-000B" defaultValue="false"
+			description="$m{security.sysparam.userpasswordsendemail}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-000C" defaultValue="/application"
+			description="$m{security.sysparam.userdefaultapplication}" editor="!ui-select list:webapplicationlist"
+			type="string" />
+		<sys-parameter name="SEC-000D" defaultValue="false"
+			description="$m{security.sysparam.enabletwofactorauthentication}"
+			editor="!ui-select list:booleanlist" type="boolean" />
+		<sys-parameter name="SEC-000E" defaultValue="false"
+			description="$m{security.sysparam.enablesystemwidemultiloginrule}"
+			editor="!ui-select list:booleanlist" type="boolean" />
+		<sys-parameter name="SEC-000F" defaultValue="false"
+			description="$m{security.sysparam.systemwidemultiloginrule}" editor="!ui-select list:booleanlist"
+			type="boolean" />
+		<sys-parameter name="SEC-0010" defaultValue="/application"
+			description="$m{security.sysparam.applicationkey}" editor="!ui-text maxLen:48"
+			type="string" />
+		<sys-parameter name="SEC-0011" defaultValue="newpassword"
+			description="$m{security.sysparam.newpasswordnotificationtemplate}"
+			editor="!ui-select list:notificationtemplatelist listKey:name listParams:$l{security}"
+			type="string" />
+		<sys-parameter name="SEC-0012" defaultValue="resetpassword"
+			description="$m{security.sysparam.resetpasswordnotificationtemplate}"
+			editor="!ui-select list:notificationtemplatelist listKey:name listParams:$l{security}"
+			type="string" />
+		<sys-parameter name="SEC-0013" defaultValue=""
+			description="$m{security.sysparam.emailnotificationchannel}" editor="!ui-select list:notificationchannellist listKey:name"
+			type="string" />
+		<sys-parameter name="SEC-0014"
+			defaultValue="info@tcdng.com" description="$m{security.sysparam.administratoremail}"
+			editor="!ui-text size:40"/>
+		<sys-parameter name="SEC-0015"
+			defaultValue="Administrator" description="$m{security.sysparam.administratorname}"
+			editor="!ui-text size:24"/>
+	</sys-parameters>
+</module>

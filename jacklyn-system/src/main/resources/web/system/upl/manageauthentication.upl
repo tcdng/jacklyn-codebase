@@ -1,0 +1,44 @@
+// UPL template for managing authentications
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.authentication.manage}
+	searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+	tableColumnList:$c{name description cryptograph statusDesc}
+	formSection:$d{!ui-section caption:$m{system.authentication.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
+	formSection:$d{!ui-section caption:$m{system.authentication.section.credentials} components:$c{frmUserName frmCryptograph frmPassword frmConfirmPassword}}
+	formBinding:largeData
+	addPrivilege:$s{sys-authentication-add} editPrivilege:$s{sys-authentication-edit}
+	viewPrivilege:$s{sys-authentication-view} deletePrivilege:$s{sys-authentication-delete}
+    addValidations:$c{frmNameVal frmDescVal confPwdVal}
+    saveValidations:$c{frmNameVal frmDescVal confPwdVal}
+
+//Search
+!ui-text:searchName caption:$m{system.authentication.name} case:upper binding:searchName
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{system.authentication.description} binding:searchDescription
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.authentication.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{system.authentication.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{system.authentication.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:cryptograph caption:$m{system.authentication.cryptograph} binding:cryptograph columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{system.authentication.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{system.authentication.name} binding:data.name focus:true dollar:true underscore:true minLen:3 maxLen:32 required:true
+!ui-text:frmDescription caption:$m{system.authentication.description} binding:data.description size:32 maxLen:48 required:true
+!ui-text:frmUserName caption:$m{system.authentication.username} binding:data.userName maxLen:32 required:true
+!ui-password:frmPassword caption:$m{system.authentication.password} binding:password maxLen:32 required:true
+!ui-password:frmConfirmPassword caption:$m{system.authentication.confirmpassword} binding:confirmPassword maxLen:32 required:true
+!ui-select:frmCryptograph caption:$m{system.authentication.cryptograph} binding:data.cryptograph  required:true
+	list:twowaystringcryptographlist blankOption:$s{}
+!ui-select:frmStatus caption:$m{system.authentication.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}
+!ui-samevalidation:confPwdVal components:$c{frmConfirmPassword frmPassword}

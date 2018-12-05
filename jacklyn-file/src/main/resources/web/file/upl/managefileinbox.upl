@@ -1,0 +1,51 @@
+// UPL template for managing file inbox
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+
+!ui-page caption:$m{file.fileinbox.manage}
+	searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
+    searchClearList:$c{searchFileTransferConfigId searchReadStatus searchStatus}
+    moreSearchActionComponentList:$c{markReadBtn markUnreadBtn}
+    tableColumnList:$c{filename fileLength downloadAttempts readStatusDesc statusDesc}
+    tableMultiSelect:true tableMultiSelDependentList:$c{markReadBtn markUnreadBtn}
+	formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}
+	viewPrivilege:$s{fil-fileinboxview}
+
+//Search
+!ui-date:searchCreateDt caption:$m{file.fileinbox.createdt} binding:searchCreateDt
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchFileTransferConfigId caption:$m{file.fileinbox.transferconfig} binding:searchFileTransferConfigId
+    list:filetransferconfiglist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchReadStatus caption:$m{file.fileinbox.readstatus} binding:searchReadStatus list:inboxfilereadlist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{file.fileinbox.filestatus} binding:searchStatus list:inboxfilestatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:filename caption:$m{file.fileinbox.filename} binding:filename  columnStyle:$s{width:230px;} sortable:true
+!ui-label:fileLength caption:$m{file.fileinbox.filelength} binding:fileLength columnStyle:$s{width:120px;} style:$s{text-align:right;} formatter:$d{!filesizeformat} sortable:true
+!ui-label:downloadAttempts caption:$m{file.fileinbox.downloadattempts} binding:downloadAttempts style:$s{text-align:right;} columnStyle:$s{width:120px;} sortable:true
+!ui-label:readStatusDesc caption:$m{file.fileinbox.readstatus} binding:readStatusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{file.fileinbox.filestatus} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmFileTransferConfig caption:$m{file.fileinbox.transferconfig} binding:fileTransferConfigId list:filetransferconfiglist blankOption:$s{} focus:true
+!ui-text:frmFilename caption:$m{file.fileinbox.filename} binding:filename size:52
+!ui-text:frmFileLength  caption:$m{file.fileinbox.filelength} binding:fileLength size:20 formatter:$d{!filesizeformat}
+!ui-integer:frmDownloadAttempts precision:5 caption:$m{file.fileinbox.downloadattempts} binding:downloadAttempts size:10
+!ui-date:frmDownloadedOn caption:$m{file.fileinbox.downloadedon} binding:downloadedOn
+!ui-select:frmReadStatus caption:$m{file.fileinbox.readstatus} binding:readStatus list:inboxfilereadlist blankOption:$s{}
+!ui-select:frmFileStatus caption:$m{file.fileinbox.filestatus} binding:status list:inboxfilestatuslist blankOption:$s{}
+
+
+//More modify action buttons
+!ui-button:markReadBtn styleClass:$e{jk-button} caption:$m{button.markread} eventHandler:$d{!ui-event event:onclick action:$c{markReadAct}}
+    hint:$m{file.fileinbox.selected.read} privilege:$s{fil-fileinboxedit}
+!ui-button:markUnreadBtn styleClass:$e{jk-button} caption:$m{button.markunread} eventHandler:$d{!ui-event event:onclick action:$c{markUnreadAct}}
+    hint:$m{file.fileinbox.selected.unread} privilege:$s{fil-fileinboxedit}
+
+//Actions
+!ui-post:markReadAct path:$n{/markRead} components:$c{tablePanel} confirm:$m{file.fileinbox.mark.read.confirm}
+!ui-post:markUnreadAct path:$n{/markUnread} components:$c{tablePanel} confirm:$m{file.fileinbox.mark.unread.confirm}

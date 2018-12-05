@@ -1,0 +1,31 @@
+// UPL template for managing file outbox
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{file.fileoutbox.manage}
+	searchByList:$c{searchCreateDt searchFileTransferConfigId searchStatus}
+	searchClearList:$c{searchFileTransferConfigId searchStatus}
+	tableColumnList:$c{filename fileLength uploadAttempts statusDesc}
+	formSection:$d{!ui-section caption:$m{file.fileoutbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmUploadAttempts frmUploadedOn frmFileStatus}}
+	viewPrivilege:$s{fil-fileoutboxview}
+
+//Search
+!ui-date:searchCreateDt caption:$m{file.fileoutbox.createdt} binding:searchCreateDt eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchFileTransferConfigId caption:$m{file.fileoutbox.transferconfig} binding:searchFileTransferConfigId
+    list:filetransferconfiglist blankOption:$s{} eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{file.fileoutbox.filestatus} binding:searchStatus list:outboxfilestatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:filename caption:$m{file.fileoutbox.filename} binding:filename  columnStyle:$s{width:230px;} sortable:true
+!ui-label:fileLength caption:$m{file.fileoutbox.filelength} binding:fileLength columnStyle:$s{width:100px;} style:$s{text-align:right;} formatter:$d{!filesizeformat} sortable:true
+!ui-label:uploadAttempts caption:$m{file.fileoutbox.uploadattempts} binding:uploadAttempts columnStyle:$s{width:100px;} style:$s{text-align:right;} sortable:true
+!ui-label:statusDesc caption:$m{file.fileoutbox.filestatus} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmFileTransferConfig caption:$m{file.fileoutbox.transferconfig} binding:fileTransferConfigId list:filetransferconfiglist blankOption:$s{} focus:true
+!ui-text:frmFilename caption:$m{file.fileoutbox.filename} binding:filename size:52
+!ui-text:frmFileLength caption:$m{file.fileoutbox.filelength} binding:fileLength size:20 formatter:$d{!filesizeformat}
+!ui-integer:frmUploadAttempts precision:5 caption:$m{file.fileoutbox.uploadattempts} binding:uploadAttempts size:10
+!ui-date:frmUploadedOn caption:$m{file.fileoutbox.uploadedon} binding:uploadedOn
+!ui-select:frmFileStatus caption:$m{file.fileoutbox.filestatus} binding:status list:outboxfilestatuslist blankOption:$s{}

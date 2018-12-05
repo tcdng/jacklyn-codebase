@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<module name="archiving" description="$m{archiving.module}">
+	<menus>
+		<menu name="arc-mainarchiving" description="$m{archiving.menu.main}"
+			caption="$m{archiving.menu.title}">
+			<menuitem name="arc-managearchivabledefinition" description="$m{archiving.menuitem.archivabledefinition}"
+				caption="$m{archiving.archivabledefinition.menu.title}" pageCaption="$m{archiving.archivabledefinition.manage}"
+				path="/archiving/archivabledefinition/openPage" remotePath="/archiving/archivabledefinition/getRemoteDoc" />
+			<menuitem name="arc-managefilearchiveconfig" description="$m{archiving.menuitem.filearchiveconfig}"
+				caption="$m{archiving.filearchiveconfig.menu.title}" pageCaption="$m{archiving.filearchiveconfig.manage}"
+				path="/archiving/filearchiveconfig/openPage" remotePath="/archiving/filearchiveconfig/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="arc-archivabledefinitionview"
+				description="$m{archiving.privilege.archivabledefinition.view}" />
+			<privilege name="arc-filearchiveconfigadd"
+				description="$m{archiving.privilege.filearchiveconfig.add}" />
+			<privilege name="arc-filearchiveconfigedit"
+				description="$m{archiving.privilege.filearchiveconfig.edit}" />
+			<privilege name="arc-filearchiveconfigview"
+				description="$m{archiving.privilege.filearchiveconfig.view}" />
+			<privilege name="arc-filearchiveconfigdelete"
+				description="$m{archiving.privilege.filearchiveconfig.delete}" />
+		</privilege-group>
+	</privileges>
+</module>

@@ -1,0 +1,30 @@
+// UPL template for executing file transfers
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{file.batchupload.manage} layout:$d{!ui-vertical}
+	components:$c{batchUploadFramePanel}
+
+!ui-panel:batchUploadFramePanel layout:$d{!ui-horizontal}
+	components:$c{batchUploadPanel batchParamPanel}
+	
+!ui-formpanel:batchUploadPanel
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
+    formSection:$d{!ui-section caption:$m{file.batchupload.section.basicdetails} components:$c{batchUploadConfigId fileSelect}}
+    footerComponentList:$c{uploadBtn doneBtn}
+
+!ui-panel:batchParamPanel components:$c{inputParameters}
+!ui-multidynamic:inputParameters binding:batchUploadParameters.inputParameterList
+        
+!ui-select:batchUploadConfigId binding:batchUploadConfigId caption:$m{file.batchupload.batchfilereadconfig} 
+    list:batchfilereadconfiglist blankOption:$s{} focus:true
+    eventHandler:$d{!ui-event event:onchange action:$c{disableUploadAct loadParamsAct}}
+!ui-fileupload:fileSelect caption:$m{file.batchupload.batchfile} binding:batchUploadParameters.fileBlob selectOnly:true
+    
+!ui-button:uploadBtn caption:$m{button.upload} eventHandler:$d{!ui-event event:onclick action:$c{startUploadAct}}
+!ui-button:doneBtn caption:$m{button.done} eventHandler:$d{!ui-event event:onclick action:$c{uploadDoneAct}}
+    
+!ui-post:loadParamsAct path:$n{/prepareBatchUpload} components:$c{batchUploadConfigId}
+!ui-post:startUploadAct path:$n{/startBatchUploadTask} components:$c{batchUploadFramePanel}
+!ui-post:uploadDoneAct path:$n{/closePage}
+!ui-disable:disableUploadAct valueComponentList:$c{batchUploadConfigId} components:$c{uploadBtn fileSelect}

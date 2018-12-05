@@ -1,0 +1,29 @@
+// UPL template for managing report definitions
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{report.reportabledefinition.manage}
+	searchByList:$c{searchModuleId searchStatus}
+	searchClearList:$c{searchModuleId searchStatus}
+	tableColumnList:$c{moduleDesc name description statusDesc}
+    formSection:$d{!ui-section caption:$m{report.reportabledefinition.section.basicdetails} components:$c{frmModule frmDescription frmTitle frmDynamic frmStatus}}
+    viewPrivilege:$s{rpt-reportdefinitionview}
+
+//Search
+!ui-select:searchModuleId caption:$m{report.reportabledefinition.module} binding:searchModuleId list:modulelist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{report.reportabledefinition.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:moduleDesc caption:$m{report.reportabledefinition.module} binding:moduleDesc  columnStyle:$s{width:80px;} sortable:true
+!ui-label:name caption:$m{report.reportabledefinition.name} binding:name  columnStyle:$s{width:100px;} sortable:true
+!ui-label:description caption:$m{report.reportabledefinition.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{report.reportabledefinition.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components   
+!ui-select:frmModule caption:$m{report.reportabledefinition.module} binding:moduleId list:modulelist blankOption:$s{}
+!ui-text:frmDescription caption:$m{report.reportabledefinition.description} binding:description size:40
+!ui-text:frmTitle caption:$m{report.reportabledefinition.title} binding:title size:40
+!ui-select:frmDynamic caption:$m{report.reportabledefinition.dynamic} binding:dynamic list:booleanlist
+!ui-select:frmStatus caption:$m{report.reportabledefinition.status} binding:status list:recordstatuslist blankOption:$s{}

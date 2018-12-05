@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<module name="notification" description="$m{notification.module}">
+	<audits>
+		<audit name="not-markoutwardunsent" description="$m{notification.auditsettings.message.markunsent}"
+			action="update" />
+		<audit name="not-markoutwardsent" description="$m{notification.auditsettings.message.marksent}"
+			action="update" />
+		<audit name="not-markoutwardabort" description="$m{notification.auditsettings.message.markabort}"
+			action="update" />
+	</audits>
+	<menus>
+		<menu name="not-mainnotification" caption="$m{notification.menu.title}"
+			description="$m{notification.menu.main}">
+			<menuitem name="not-managenotificationtemplate" caption="$m{notification.notificationtemplate.menu.title}"
+				pageCaption="$m{notification.notificationtemplate.manage}" description="$m{notification.menuitem.notificationtemplate}"
+				path="/notification/notificationtemplate/openPage" remotePath="/notification/notificationtemplate/getRemoteDoc" />
+			<menuitem name="not-managenotificationchannel" caption="$m{notification.notificationchannel.menu.title}"
+				pageCaption="$m{notification.notificationchannel.manage}" description="$m{notification.menuitem.notificationchannel}"
+				path="/notification/notificationchannel/openPage" remotePath="/notification/notificationchannel/getRemoteDoc" />
+			<menuitem name="not-managemessage" caption="$m{notification.notification.menu.title}"
+				pageCaption="$m{notification.notification.manage}" description="$m{notification.menuitem.message}"
+				path="/notification/notification/openPage" remotePath="/notification/notification/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="not-notificationchannel-add" description="$m{notification.privilege.notificationchannel.add}" />
+			<privilege name="not-notificationchannel-edit" description="$m{notification.privilege.notificationchannel.edit}" />
+			<privilege name="not-notificationchannel-view" description="$m{notification.privilege.notificationchannel.view}" />
+			<privilege name="not-notificationchannel-delete" description="$m{notification.privilege.notificationchannel.delete}" />
+			<privilege name="not-notificationtemplate-add" description="$m{notification.privilege.notificationtemplate.add}" />
+			<privilege name="not-notificationtemplate-edit" description="$m{notification.privilege.notificationtemplate.edit}" />
+			<privilege name="not-notificationtemplate-view" description="$m{notification.privilege.notificationtemplate.view}" />
+			<privilege name="not-notificationtemplate-delete" description="$m{notification.privilege.notificationtemplate.delete}" />
+			<privilege name="not-notification-add" description="$m{notification.privilege.notification.add}" />
+			<privilege name="not-notification-edit" description="$m{notification.privilege.notification.edit}" />
+			<privilege name="not-notification-view" description="$m{notification.privilege.notification.view}" />
+			<privilege name="not-notification-delete" description="$m{notification.privilege.notification.delete}" />
+		</privilege-group>
+	</privileges>
+	<sys-parameters>
+		<sys-parameter name="NOT-0001" defaultValue="false"
+			description="$m{notification.sysparam.notificationenabled}" editor="!ui-select list:booleanlist"
+			type="boolean" control="true" editable="false" />
+		<sys-parameter name="NOT-0002" defaultValue="15"
+			description="$m{notification.sysparam.notificationmaximumtries}" editor="!ui-integer precision:2"
+			type="number" />
+		<sys-parameter name="NOT-0003" defaultValue="1"
+			description="$m{notification.sysparam.notificationretryminutes}" editor="!ui-integer precision:2"
+			type="number" />
+		<sys-parameter name="NOT-0004" defaultValue="80"
+			description="$m{notification.sysparam.notificationmaxbatchsize}" editor="!ui-integer precision:2"
+			type="number" />
+	</sys-parameters>
+</module>

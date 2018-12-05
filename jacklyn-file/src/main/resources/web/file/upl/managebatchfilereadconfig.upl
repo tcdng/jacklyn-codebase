@@ -1,0 +1,55 @@
+// UPL template for managing batch upload configuration
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{file.batchfilereadconfig.manage}
+	searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+	tableColumnList:$c{batchFileDefinitionDesc name description statusDesc}
+    formSection:$d{!ui-section caption:$m{file.batchfilereadconfig.section.basicdetails} components:$c{frmName frmDescription frmBatchFileDefinitionId frmReadProcessor frmFileReader frmConstraintAction frmStatus}}
+	formSection:$d{!ui-section caption:$m{file.batchfilereadconfig.section.filereaderparameters} components:$c{frmAttachment}}
+	formBinding:largeData
+	addPrivilege:$s{fil-batchfilereadconfigadd} editPrivilege:$s{fil-batchfilereadconfigedit}
+	viewPrivilege:$s{fil-batchfilereadconfigview} deletePrivilege:$s{fil-batchfilereadconfigdelete}
+    addValidations:$c{frmNameVal frmDescVal frmParamsVal}
+    saveValidations:$c{frmNameVal frmDescVal frmParamsVal}
+
+//Search
+!ui-text:searchName caption:$m{file.batchfilereadconfig.name} binding:searchName
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{file.batchfilereadconfig.description} binding:searchDescription 
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{file.batchfilereadconfig.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:batchFileDefinitionDesc caption:$m{file.batchfilereadconfig.batchfiledefinition} binding:batchFileDefinitionDesc  columnStyle:$s{width:100px;} sortable:true
+!ui-label:name caption:$m{file.batchfilereadconfig.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{file.batchfilereadconfig.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{file.batchfilereadconfig.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components
+!ui-name:frmName caption:$m{file.batchfilereadconfig.name} binding:data.name focus:true dollar:true underscore:true maxLen:32 required:true
+!ui-text:frmDescription caption:$m{file.batchfilereadconfig.description} binding:data.description size:40 maxLen:40 required:true
+!ui-select:frmBatchFileDefinitionId caption:$m{file.batchfilereadconfig.batchfiledefinition} style:$s{width:200px;} binding:data.batchFileDefinitionId list:batchfiledefinitionlist blankOption:$s{} required:true
+!ui-select:frmFileReader caption:$m{file.batchfilereadconfig.filereader} style:$s{width:200px;} binding:data.fileReader list:batchfilereaderlist blankOption:$s{} required:true
+	eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}}
+!ui-select:frmReadProcessor caption:$m{file.batchfilereadconfig.readprocessor} style:$s{width:200px;} binding:data.readProcessor list:batchfilereadprocessorlist blankOption:$s{} required:true
+!ui-select:frmConstraintAction caption:$m{file.batchfilereadconfig.constraintaction} style:$s{width:200px;} binding:data.constraintAction
+	list:constraintactionlist blankOption:$s{} required:true
+!ui-select:frmStatus caption:$m{file.batchfilereadconfig.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
+
+//
+//Form attachments
+!ui-panel:frmAttachment layout:$d{!ui-vertical} components:$c{frmParamsTbl}
+!ui-multidynamic:frmParamsTbl binding:fileReaderParams.inputList
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}
+!ui-validation:frmParamsVal components:$c{frmAttachment}
+
+//Actions
+!ui-post:refreshParamsAct path:$n{/refreshParameters}
+    components:$c{frmName frmDescription frmBatchFileDefinitionId frmFileReader frmReadProcessor frmConstraintAction frmStatus}
+	

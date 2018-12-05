@@ -1,0 +1,76 @@
+// UPL template for user workflow items
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-userworkitemspage caption:$m{workflow.userworkflowitems.manage} components:$c{userWorkItemsPanel}
+
+!ui-panel:userWorkItemsPanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{height:100%;margin-bottom:-2px;} heights:$l{100%}}
+    components:$c{userWorkItemsBodyPanel}
+
+!ui-switchpanel:userWorkItemsBodyPanel style:$s{height:100%;} components:$c{wfItemsMainPanel wfItemViewerPanel}
+
+// Workflow item viewer panel
+!ui-panel:wfItemViewerPanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}} components:$c{wfItemPanel}
+!ui-userwfitempanel:wfItemPanel binding:workflowItem
+	applyItemActionPath:$n{/applyActionToWorkflowItem}
+	showAttachmentsPath:$n{/showWorkflowItemAttachments}
+	showNotesPath:$n{/showWorkflowItemNotes}
+	closeViewItemPath:$n{/closeViewWorkflowItems}
+
+
+// Workflow items main Panel
+!ui-panel:wfItemsMainPanel style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
+	components:$c{wfItemsSummaryPanel wfItemsPanel actionOnMultiplePanel}
+
+// Summary
+!ui-panel:wfItemsSummaryPanel layout:$d{!ui-horizontal cellType:bottom showCaption:true captionSuffix:$s{:}}
+	components:$c{wfStepSelect refreshSummaryBtn}
+!ui-select:wfStepSelect caption:$m{workflow.userworkflowitems.step} list:userwfitemsummarylist blankOption:$s{} binding:wfStepName
+	eventHandler:$d{!ui-event event:onchange action:$c{refreshWfItemsAct}} style:$s{width:280px;}
+!ui-button:refreshSummaryBtn styleClass:$e{ui-tablecrudpanel-abutton} caption:$m{button.refresh}
+    eventHandler:$d{!ui-event event:onclick action:$c{refreshSummaryAct}}
+
+// Workflow items
+!ui-panel:wfItemsPanel layout:$d{!ui-vertical showCaption:true captionSuffix:$s{:}} components:$c{wfItemsTbl}
+!ui-table:wfItemsTbl styleClass:$e{ui-table ui-simplecrudtable} style:$s{width:720px;} bodyStyle:$s{height:320px;}
+	components:$c{description stepDt forwardedBy} binding:csWorkItems.wfItemList
+	caption:$m{workflow.userworkflowitems.items}
+    serialNumbers:true rowSelectable:true windowed:true pagination:false
+    multiSelect:true multiSelDependentList:$c{wfActionButtonsOnMultiple releaseItemsBtn viewItemsBtn} sortable:true
+!ui-label:description caption:$m{workflow.userworkflowitems.description} columnStyle:$s{width:240px;} binding:description sortable:true
+!ui-label:forwardedBy caption:$m{workflow.userworkflowitems.forwardedby}columnStyle:$s{width:160px;} binding:forwardedBy sortable:true
+!ui-label:stepDt caption:$m{workflow.userworkflowitems.stepdt} formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:180px;} binding:stepDt sortable:true
+
+// Popup panels
+!ui-wfitemattachmentspanel:attachmentsPopup attachmentsBodyStyle:$s{width:420px; height:180px;} attachmentsInfoProperty:fileAttachmentsInfo
+!ui-wfitemnotespanel:notesPopup binding:notesInfo saveNotesPath:$n{/applyActionWithNotes}
+										   
+// Action panels
+!ui-panel:actionOnMultiplePanel layout:$d{!ui-horizontal style:$s{width:720px;} widths:$l{50% 50%}}
+	components:$c{leftActionOnMultiplePanel rightActionOnMultiplePanel}
+	
+!ui-panel:leftActionOnMultiplePanel style:$s{float:left;}
+	components:$c{wfActionButtonsOnMultiple}
+!ui-panel:rightActionOnMultiplePanel  style:$s{float:right;} layout:$d{!ui-horizontal}
+	components:$c{fetchItemsBtn releaseItemsBtn viewItemsBtn closeBtn}
+
+!ui-wfactionbuttons:wfActionButtonsOnMultiple binding:csWorkItems.actionList
+     eventHandler:$d{!ui-event event:onclick action:$c{applyActionAct}}
+!ui-button:fetchItemsBtn caption:$m{button.fetch} eventHandler:$d{!ui-event event:onclick action:$c{fetchItemsAct}}
+!ui-button:releaseItemsBtn caption:$m{button.release} eventHandler:$d{!ui-event event:onclick action:$c{releaseItemsAct}}
+!ui-button:viewItemsBtn caption:$m{button.view} eventHandler:$d{!ui-event event:onclick action:$c{viewItemsAct}}
+!ui-button:closeBtn caption:$m{button.close} eventHandler:$d{!ui-event event:onclick action:$c{closeAct}}
+
+
+// Actions
+!ui-post:refreshSummaryAct path:$n{/refreshWorkflowItemSummary}
+!ui-post:refreshWfItemsAct path:$n{/refreshWorkflowItems} components:$c{wfStepSelect}
+!ui-post:applyActionAct path:$n{/applyActionToMultipleWorkflowItems} components:$c{wfItemsPanel}
+	confirm:$m{workflow.userworkflowitems.confirm.action.multiple}
+!ui-post:fetchItemsAct path:$n{/fetchWorkflowItems} components:$c{wfStepSelect}
+!ui-post:releaseItemsAct path:$n{/releaseWorkflowItems} components:$c{wfItemsPanel}
+	confirm:$m{workflow.userworkflowitems.confirm.release.multiple}
+!ui-post:viewItemsAct path:$n{/prepareViewWorkflowItems} components:$c{wfItemsPanel}
+!ui-post:closeAct path:$n{/closePage}
+	

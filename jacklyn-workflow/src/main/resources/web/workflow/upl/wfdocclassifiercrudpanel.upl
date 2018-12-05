@@ -1,0 +1,28 @@
+// UPL template for workflow item classifier definition CRUD panel
+// Copyright 2018 The Code Department
+!ui-wfdocclassifiercrudpanel
+	tableColumnList:$c{wfDocName name description logic}
+	formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmLogic frmFilterPanel}}
+
+// Table columns
+!ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocclassifier.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{workflow.wfdoc.wfdocclassifier.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{workflow.wfdoc.wfdocclassifier.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:logic caption:$m{workflow.wfdoc.wfdocclassifier.logic} binding:logic columnStyle:$s{width:120px;}
+
+// Form components
+!ui-text:frmWfDocName caption:$m{workflow.wfdoc.wfdocclassifier.document} size:32 binding:wfDocName required:true
+!ui-text:frmName caption:$m{workflow.wfdoc.wfdocclassifier.name} binding:name size:32 required:true
+!ui-text:frmDescription caption:$m{workflow.wfdoc.wfdocclassifier.description} binding:description size:40 required:true
+!ui-text:frmLogic caption:$m{workflow.wfdoc.wfdocclassifier.logic} binding:logic size:32 maxLen:56
+
+!ui-tablepanel:frmFilterPanel style:$s{height:100%;} caption:$m{workflow.wfdoc.wfdocclassifier.filters}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:420px;height:200px;}  heights:$l{100%}}
+    tableBinding:filterList tableColumnList:$c{filterFieldName filterOp filterValue1 filterValue2 filterFieldOnly}
+    tableWindowed:true tablePagination:false
+    tableSortable:true
+!ui-label:filterFieldName caption:$m{workflow.wfdoc.wfdocclassifier.wffilter.fieldname} binding:fieldName columnStyle:$s{width:120px;} sortable:true
+!ui-label:filterOp caption:$m{workflow.wfdoc.wfdocclassifier.wffilter.operation} binding:opDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:filterValue1 caption:$m{workflow.wfdoc.wfdocclassifier.wffilter.value1} binding:value1 columnStyle:$s{width:120px;}
+!ui-label:filterValue2 caption:$m{workflow.wfdoc.wfdocclassifier.wffilter.value2} binding:value2 columnStyle:$s{width:120px;}
+!ui-checkbox:filterFieldOnly caption:$m{workflow.wfdoc.wfdocclassifier.wffilter.fieldonly} binding:fieldOnly columnStyle:$s{width:120px;} layoutCaption:true

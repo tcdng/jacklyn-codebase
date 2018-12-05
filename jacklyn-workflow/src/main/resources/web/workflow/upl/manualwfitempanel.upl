@@ -1,0 +1,31 @@
+// UPL template for user workflow item panel
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-manualwfitempanel
+	actionPanels:$c{bottomActionPanel}
+	
+!ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+	components:$c{pendBtn pendNextBtn submitBtn submitNextBtn cancelBtn}
+
+!ui-button:pendBtn styleClass:$e{jk-button} caption:$m{button.pendandclose}
+	eventHandler:$d{!ui-event event:onclick action:$c{pendAct}}
+!ui-button:pendNextBtn styleClass:$e{jk-button} caption:$m{button.pendandnext}
+	eventHandler:$d{!ui-event event:onclick action:$c{pendNextAct}}
+!ui-button:submitBtn styleClass:$e{jk-button} caption:$m{button.submitandclose}
+	eventHandler:$d{!ui-event event:onclick action:$c{submitAct}}
+!ui-button:submitNextBtn styleClass:$e{jk-button} caption:$m{button.submitandnext}
+	eventHandler:$d{!ui-event event:onclick action:$c{submitNextAct}}
+!ui-button:cancelBtn styleClass:$e{jk-button-alert} caption:$m{button.cancel}
+	eventHandler:$d{!ui-event event:onclick action:$c{cancelAct}}
+
+// Actions
+!ui-post:pendAct path:$g{pendItemPath} components:$c{dynamicPanel}
+!ui-post:pendNextAct path:$g{pendItemNextPath} components:$c{dynamicPanel}
+!ui-post:submitAct path:$g{submitItemPath} components:$c{dynamicPanel}
+	confirm:$m{manualinit.submit.confirm}
+	validations:$c{validateDynamicPanel}
+!ui-post:submitNextAct path:$g{submitItemNextPath} components:$c{dynamicPanel}
+	confirm:$m{manualinit.submit.confirm}
+	validations:$c{validateDynamicPanel}
+!ui-post:cancelAct path:$g{cancelItemPath}

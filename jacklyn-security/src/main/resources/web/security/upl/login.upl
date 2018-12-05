@@ -1,0 +1,42 @@
+// UPL template for login sequence
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{application.login} components:$c{loginMainBody}  styleClass:$e{jk-loginband}
+!ui-panel:loginMainBody styleClass:$e{jk-loginmainbody} layout:$d{!ui-vertical}
+    components:$c{mainSection}
+
+// Main section
+!ui-panel:mainSection styleClass:$e{jk-loginsection} layout:$d{!ui-horizontal} components:$c{jacklynImg loginBoxFrame}
+
+!ui-panel:loginBoxFrame styleClass:$e{jk-loginboxframe} components:$c{loginBox}
+!ui-image:jacklynImg src:$s{web/images/applicationbanner.jpg} styleClass:$e{jk-logintopbannerimg}
+!ui-panel:loginBox styleClass:$e{jk-loginbox} layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{loginSequencePanel}
+
+// Login sequence
+!ui-switchpanel:loginSequencePanel layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{loginBodyPanel changePasswordBodyPanel}
+
+// Login
+!ui-panel:loginBodyPanel style:$s{width:100%;} layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{loginCaptionPanel loginPanel}
+!ui-titlebar:loginCaptionPanel caption:$m{security.signin}
+!ui-loginpanel:loginPanel loginNameBinding:userName loginPasswordBinding:password
+    loginTokenBinding:token loginMessageBinding:loginMessage loginPath:$n{/login}
+    formCaptionSuffix:$s{}
+
+// Change password
+!ui-panel:changePasswordBodyPanel style:$s{width:100%;} layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{changePwdCaptionPanel changePasswordPanel}
+!ui-titlebar:changePwdCaptionPanel caption:$m{security.changepassword.manage}
+!ui-changepasswordpanel:changePasswordPanel oldPasswordProperty:oldPassword newPasswordProperty:newPassword
+    confirmPasswordProperty:confirmPassword messageProperty:loginMessage
+    changePasswordPath:$n{/changeUserPassword} cancelChangePasswordPath:$n{/cancelChangeUserPassword}
+    formCaptionSuffix:$s{}
+
+// Select user role popup
+!ui-selectrolepanel:selectRolePanel dialogCaption:$m{security.select.role}
+    roleListProperty:userRoleList selectRolePath:$n{/selectUserRole} closeDialogPath:$n{/cancelSelectUserRole}
+
+       

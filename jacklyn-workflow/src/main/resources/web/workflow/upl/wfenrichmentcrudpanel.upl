@@ -1,0 +1,18 @@
+// UPL template for workflow action definition CRUD panel
+// Copyright 2018 The Code Department
+!ui-wfenrichmentcrudpanel
+	formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmLogic}}
+	tableColumnList:$c{wfStepName name description logic}
+
+//Table columns
+!ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfenrichment.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{workflow.wftemplate.wfstep.wfenrichment.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{workflow.wftemplate.wfstep.wfenrichment.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:logic caption:$m{workflow.wftemplate.wfstep.wfenrichment.logic} binding:logic columnStyle:$s{width:120px;} sortable:true
+
+//Form components
+!ui-text:frmWfStepName caption:$m{workflow.wftemplate.wfstep.wfenrichment.step} binding:wfStepName size:32 required:true
+!ui-text:frmName caption:$m{workflow.wftemplate.wfstep.wfenrichment.name} binding:name size:32 required:true
+!ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfenrichment.description} binding:description size:40 required:true
+!ui-text:frmLogic caption:$m{workflow.wftemplate.wfstep.wfenrichment.logic} size:32 binding:logic required:true
+	

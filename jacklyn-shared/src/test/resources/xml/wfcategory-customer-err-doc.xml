@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<wfcategory name="customerCategory" description="Customer Category"
+	version="1">
+	<documents>
+		<document name="custInfo" description="Customer Information">
+			<fields>
+				<field type="long" multiple="false" />
+				<field name="firstName" description="First Name" type="string"
+					multiple="false" />
+				<field name="lastName" description="Last Name" type="string"
+					multiple="false" />
+				<field name="age" description="Age" type="integer" multiple="false" />
+				<field name="height" description="Height" type="double"
+					multiple="false" />
+			</fields>
+			<classifiers>
+				<classifier description="Valid Age">
+					<filter field="age" op="between" value1="18" value2="40"
+						field-only="false" />
+				</classifier>
+			</classifiers>
+			<attachments>
+				<attachment name="birthCert" description="Birth Certificate"
+					label="Certificate" type="pdf" />
+			</attachments>
+			<bean-mappings>
+				<bean-mapping description="Customer Bean Mapping" type="primary">
+					<field-mapping doc-field="firstName" bean-field="firstName" />
+					<field-mapping doc-field="lastName" bean-field="lastName" />
+					<field-mapping doc-field="age" bean-field="age" />
+					<field-mapping doc-field="height" bean-field="height" />
+				</bean-mapping>
+			</bean-mappings>
+		</document>
+	</documents>
+	<forms>
+		<form name="custForm" description="Customer Form" document="custInfo">
+			<tabs>
+				<tab name="main" description="Main Tab" label="Main" pseudo="false">
+					<sections>
+						<section name="basicDetails" description="Basic Details">
+							<field binding="firstName" editor="!ui-text" required="true" />
+							<field binding="lastName" editor="!ui-text" required="true" />
+							<field binding="age" editor="!ui-integer" required="true" />
+							<field binding="height" editor="!ui-decimal" required="true" />
+						</section>
+					</sections>
+				</tab>
+			</tabs>
+		</form>
+	</forms>
+	<messages>
+		<message name="awaitCustApproval" description="Awaiting Customer Approval"
+			attachment-generator="default-messagegenerator" html="false">
+			<subject>Awaiting Customer Approval</subject>
+			<body>Awaiting approval for {firstName} {lastName}</body>
+		</message>
+	</messages>
+	<templates>
+		<template name="custOnboarding" description="Customer Onboarding"
+			document="custInfo">
+			<item-description>Customer:{firstName} {lastName}</item-description>
+			<step name="start" description="Start Step" type="start">
+				<routings>
+					<routing name="routToCreate" description="Route to Create"
+						target="createCust" classifier="validAge" />
+					<routing name="routToApproval" description="Route to Approval"
+						target="custApproval" />
+				</routings>
+			</step>
+			<step name="createCust" description="Create Customer" type="automatic">
+				<record-actions>
+					<record-action name="createCust" description="Create Customer"
+						mapping="custBeanMapping" type="create" />
+				</record-actions>
+				<routings>
+					<routing name="routToEnd" description="Route to End"
+						target="end" />
+				</routings>
+			</step>
+			<step name="custApproval" description="Customer Approval" form="custForm"
+				participant="all" type="interactive">
+				<alerts>
+					<alert name="awaitApproval" description="Awaiting Approval"
+						message="awaitCustApproval" type="system" />
+				</alerts>
+				<user-actions>
+					<user-action name="approveCust" description="Approve Customer"
+						label="Approve" target="createCust" notes-requirement="optional" />
+					<user-action name="rejectCust" description="Reject Customer"
+						label="Reject" target="end" notes-requirement="mandatory" />
+				</user-actions>
+			</step>
+			<step name="end" description="End Step" type="end" />
+		</template>
+	</templates>
+</wfcategory>

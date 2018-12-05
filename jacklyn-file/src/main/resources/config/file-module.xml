@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<module name="file" description="$m{file.module}" deactivatable="true">
+	<audits>
+		<audit name="fil-filetransferstarttask" description="$m{file.settings.filetransfer.start}"
+			action="miscellaneous" />
+		<audit name="fil-filetransfercanceltask" description="$m{file.settings.filetransfer.cancel}"
+			action="miscellaneous" />
+		<audit name="fil-filetransferconfigstarttest" description="$m{file.settings.filetransferconfig.test}"
+			action="miscellaneous" />
+		<audit name="fil-filetransfercanceltest" description="$m{file.settings.filetransferconfig.canceltest}"
+			action="miscellaneous" />
+		<audit name="fil-fileinboxread" description="$m{file.settings.fileinbox.markread}"
+			action="miscellaneous" />
+		<audit name="fil-fileinboxunread" description="$m{file.settings.fileinbox.markunread}"
+			action="update" />
+	</audits>
+	<dashboard-tiles>
+		<dashboard-tile name="fil-filetrnsconfig"
+			caption="$m{file.dashboard.caption.filetransferconfig}" description="$m{file.dashboard.tile.filetransferconfig}"
+			image="$t{images/managefiletrnsconfig.png}" path="/file/filetransferconfig/openPage" />
+	</dashboard-tiles>
+	<menus>
+		<menu name="fil-mainfile" caption="$m{file.menu.title}"
+			description="$m{file.menu.main}">
+			<menuitem name="fil-managefiletransferconfig" caption="$m{file.filetransferconfig.menu.title}"
+				pageCaption="$m{file.filetransferconfig.manage}" description="$m{file.menuitem.filetransferconfig}"
+				path="/file/filetransferconfig/openPage" remotePath="/file/filetransferconfig/getRemoteDoc" />
+			<menuitem name="fil-managefiletransfer" caption="$m{file.filetransfer.menu.title}"
+				pageCaption="$m{file.filetransfer.menu.title}" description="$m{file.menuitem.filetransfer}"
+				path="/file/filetransfer/openPage" remotePath="/file/filetransfer/getRemoteDoc" />
+			<menuitem name="fil-managefileinbox" caption="$m{file.fileinbox.menu.title}"
+				pageCaption="$m{file.fileinbox.manage}" description="$m{file.menuitem.fileinbox}"
+				path="/file/fileinbox/openPage" remotePath="/file/fileinbox/getRemoteDoc" />
+			<menuitem name="fil-managefileoutbox" caption="$m{file.fileoutbox.menu.title}"
+				pageCaption="$m{file.fileoutbox.manage}" description="$m{file.menuitem.fileoutbox}"
+				path="/file/fileoutbox/openPage" remotePath="/file/fileoutbox/getRemoteDoc" />
+			<menuitem name="fil-managebatchfiledefinition" caption="$m{file.batchfiledefinition.menu.title}"
+				pageCaption="$m{file.batchfiledefinition.manage}" description="$m{file.menuitem.batchfiledefinition}"
+				path="/file/batchfiledefinition/openPage" remotePath="/file/batchfiledefinition/getRemoteDoc" />
+			<menuitem name="fil-managebatchfilereadconfig" caption="$m{file.batchfilereadconfig.menu.title}"
+				pageCaption="$m{file.batchfilereadconfig.manage}" description="$m{file.menuitem.batchfilereadconfig}"
+				path="/file/batchfilereadconfig/openPage" remotePath="/file/batchfilereadconfig/getRemoteDoc" />
+			<menuitem name="fil-managebatchupload" caption="$m{file.batchupload.menu.title}"
+				pageCaption="$m{file.batchupload.manage}" description="$m{file.menuitem.batchupload}"
+				path="/file/batchupload/openPage" remotePath="/file/batchupload/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="fil-filetransferconfigadd" description="$m{file.privilege.filetransferconfig.add}" />
+			<privilege name="fil-filetransferconfigedit"
+				description="$m{file.privilege.filetransferconfig.edit}" />
+			<privilege name="fil-filetransferconfigview"
+				description="$m{file.privilege.filetransferconfig.view}" />
+			<privilege name="fil-filetransferconfigdelete"
+				description="$m{file.privilege.filetransferconfig.delete}" />
+			<privilege name="fil-fileinboxedit" description="$m{file.privilege.fileinbox.edit}" />
+			<privilege name="fil-fileinboxview" description="$m{file.privilege.fileinbox.view}" />
+			<privilege name="fil-fileoutboxview" description="$m{file.privilege.fileoutbox.view}" />
+			<privilege name="fil-batchfiledefinitionadd"
+				description="$m{file.privilege.batchfiledefinition.add}" />
+			<privilege name="fil-batchfiledefinitionedit"
+				description="$m{file.privilege.batchfiledefinition.edit}" />
+			<privilege name="fil-batchfiledefinitionview"
+				description="$m{file.privilege.batchfiledefinition.view}" />
+			<privilege name="fil-batchfiledefinitiondelete"
+				description="$m{file.privilege.batchfiledefinition.delete}" />
+			<privilege name="fil-batchfilereadconfigadd"
+				description="$m{file.privilege.batchfilereadconfig.add}" />
+			<privilege name="fil-batchfilereadconfigedit"
+				description="$m{file.privilege.batchfilereadconfig.edit}" />
+			<privilege name="fil-batchfilereadconfigview"
+				description="$m{file.privilege.batchfilereadconfig.view}" />
+			<privilege name="fil-batchfilereadconfigdelete"
+				description="$m{file.privilege.batchfilereadconfig.delete}" />
+		</privilege-group>
+	</privileges>
+</module>

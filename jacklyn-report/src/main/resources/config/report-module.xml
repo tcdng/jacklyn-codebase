@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<module name="report" description="$m{report.module}">
+	<menus>
+		<menu name="rpt-mainreport" caption="$m{report.menu.title}"
+			description="$m{report.menu.main}">
+			<menuitem name="rpt-managereportdefinitions" caption="$m{report.reportabledefinition.menu.title}"
+				pageCaption="$m{report.reportabledefinition.manage}" description="$m{report.menuitem.definitions}"
+				path="/report/reportdefinition/openPage" remotePath="/report/reportdefinition/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="rpt-reportdefinitionview"
+				description="$m{report.privilege.reportdefinition.view}" />
+			<privilege name="rpt-generatereport" description="$m{report.privilege.generatereport}" />
+			<privilege name="rpt-managerecord" description="$m{report.privilege.reportpage}" />
+		</privilege-group>
+	</privileges>
+	<sys-parameters>
+		<sys-parameter name="RPT-0001" defaultValue="web/report/templates/"
+			description="$m{report.sysparam.reporttemplatepath}" editor="!ui-text size:40"
+			type="string" />
+		<sys-parameter name="RPT-0002" defaultValue="web/images/applicationbanner.jpg"
+			description="$m{report.sysparam.reportclientlogo}" editor="!ui-text size:40"
+			type="string" />
+		<sys-parameter name="RPT-0003" defaultValue="dynamicreportportrait.jrxml"
+			description="$m{report.sysparam.dynamicreportportraittemplate}"
+			editor="!ui-text size:40" type="string" />
+		<sys-parameter name="RPT-0004" defaultValue="dynamicreportlandscape.jrxml"
+			description="$m{report.sysparam.dynamicreportlandscapetemplate}"
+			editor="!ui-text size:40" type="string" />
+	</sys-parameters>
+</module>

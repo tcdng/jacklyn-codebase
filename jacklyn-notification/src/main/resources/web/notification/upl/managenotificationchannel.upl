@@ -1,0 +1,40 @@
+// UPL template for managing notification templates
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{notification.notificationchannel.manage}
+	searchByList:$c{searchName searchDescription searchNotificationType searchStatus}
+    searchClearList:$c{searchName searchDescription searchNotificationType searchStatus}
+	tableColumnList:$c{name description notificationTypeDesc statusDesc}
+    formSection:$d{!ui-section caption:$m{notification.notificationchannel.section.basicdetails} components:$c{frmName frmDescription frmNotificationType frmStatus}}
+    formSection:$d{!ui-section caption:$m{notification.notificationchannel.section.host} components:$c{frmHostAddress frmHostPort frmAuthentication frmSecurityType}}
+ 	addPrivilege:$s{not-notificationchannel-add} editPrivilege:$s{not-notificationchannel-edit}
+	viewPrivilege:$s{not-notificationchannel-view} deletePrivilege:$s{not-notificationchannel-delete}
+
+//Search
+!ui-select:searchNotificationType caption:$m{notification.notificationchannel.notificationtype} binding:searchNotificationType list:notificationtypelist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-text:searchName caption:$m{notification.notificationchannel.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{notification.notificationchannel.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{notification.notificationchannel.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:notificationTypeDesc caption:$m{notification.notificationchannel.notificationtype} binding:notificationTypeDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{notification.notificationchannel.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{notification.notificationchannel.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{notification.notificationchannel.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmNotificationType caption:$m{notification.notificationchannel.notificationtype} binding:notificationType
+	list:notificationtypelist blankOption:$s{} required:true focus:true
+!ui-name:frmName caption:$m{notification.notificationchannel.name} required:true binding:name
+!ui-text:frmDescription caption:$m{notification.notificationchannel.description} required:true binding:description size:40
+!ui-text:frmHostAddress caption:$m{notification.notificationchannel.hostaddress} binding:hostAddress size:32
+!ui-integer:frmHostPort caption:$m{notification.notificationchannel.hostport} binding:hostPort size:8 precision:5
+!ui-select:frmAuthentication caption:$m{notification.notificationchannel.authentication} binding:authenticationId
+	list:authenticationlist blankOption:$s{}
+!ui-select:frmSecurityType caption:$m{notification.notificationchannel.securitytype} binding:securityType
+	list:networksecuritytypelist blankOption:$s{}
+!ui-select:frmStatus caption:$m{notification.notificationchannel.status} binding:status
+	list:recordstatuslist blankOption:$s{} required:true

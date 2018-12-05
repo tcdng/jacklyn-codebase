@@ -1,0 +1,35 @@
+// UPL template for managing themes
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.theme.manage}
+	searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+	tableColumnList:$c{name description resourcePath statusDesc}
+	formSection:$d{!ui-section caption:$m{system.theme.section.basicdetails} components:$c{frmName frmDescription frmResourcePath frmStatus}}
+	addPrivilege:$s{sys-themeadd} editPrivilege:$s{sys-themeedit}
+	viewPrivilege:$s{sys-themeview} deletePrivilege:$s{sys-themedelete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchName caption:$m{system.theme.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{system.theme.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.theme.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{system.theme.name} binding:name columnStyle:$s{width:80px;} sortable:true
+!ui-label:description caption:$m{system.theme.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:resourcePath caption:$m{system.theme.resourcepath} binding:resourcePath  columnStyle:$s{width:250px;} sortable:true
+!ui-label:statusDesc caption:$m{system.theme.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{system.theme.name} binding:name minLen:3 maxLen:32 case:upper required:true
+!ui-text:frmDescription caption:$m{system.theme.description} binding:description minLen:1 maxLen:48 required:true
+!ui-text:frmResourcePath caption:$m{system.theme.resourcepath} binding:resourcePath maxLen:64 required:true
+!ui-select:frmStatus caption:$m{system.theme.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

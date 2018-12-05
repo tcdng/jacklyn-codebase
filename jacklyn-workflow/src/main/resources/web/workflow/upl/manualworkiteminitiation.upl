@@ -1,0 +1,42 @@
+// UPL template for manual work item initiation.
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{workflow.wfcategory.manualinit.manage} components:$c{manualWorkItemFrame}
+
+!ui-panel:manualWorkItemFrame style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{width:100%; height:100%;margin-bottom:-2px;} heights:$l{100%}}
+    components:$c{manualWorkItemPanel}
+
+!ui-switchpanel:manualWorkItemPanel style:$s{height:100%;}
+	components:$c{listingMainPanel createItemMainPanel}
+
+// Listing panel
+!ui-panel:listingMainPanel style:$s{height:100%;}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
+    components:$c{listingPanel listingActionsGrpPanel}
+
+!ui-panel:listingPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+	components:$c{roleWfTemplateGrid}
+!ui-linkgrid:roleWfTemplateGrid columns:4 binding:wfTemplateGridInfo
+
+!ui-panel:listingActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
+	components:$c{listingActionPanel}
+!ui-panel:listingActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+	components:$c{listingDoneBtn}
+
+!ui-button:listingDoneBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
+	eventHandler:$d{!ui-event event:onclick action:$c{listingDoneAct}}
+
+!ui-post:listingDoneAct path:$n{/closePage}
+
+// Create work item panel
+!ui-panel:createItemMainPanel style:$s{height:100%;}
+	layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}} components:$c{wfItemPanel}
+!ui-manualwfitempanel:wfItemPanel binding:manualInitItem
+	pendItemPath:$n{/pendCreateItem}
+	pendItemNextPath:$n{/pendCreateItemNext}
+	submitItemPath:$n{/submitCreateItem}
+	submitItemNextPath:$n{/submitCreateItemNext}
+	cancelItemPath:$n{/cancelCreateItem}
+	

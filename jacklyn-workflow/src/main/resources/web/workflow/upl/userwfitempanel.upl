@@ -1,0 +1,42 @@
+// UPL template for user workflow item panel
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-userwfitempanel
+	actionPanels:$c{topActionPanel bottomActionPanel}
+	
+!ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
+    components:$c{itemOfLabel firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn}
+!ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+	components:$c{attachmentsBtn notesBtn wfActionButtons closeBtn}
+
+!ui-button:attachmentsBtn styleClass:$e{jk-button} caption:$m{button.attachments}
+	eventHandler:$d{!ui-event event:onclick action:$c{showAttachmentsAct}}
+!ui-button:notesBtn styleClass:$e{jk-button} caption:$m{button.notes}
+	eventHandler:$d{!ui-event event:onclick action:$c{showNotesAct}}
+!ui-wfactionbuttons:wfActionButtons buttonClass:$s{jk-button} verticalLayout:true binding:actionList
+     eventHandler:$d{!ui-event event:onclick action:$c{applySingleItemActionAct}}
+!ui-button:closeBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
+	eventHandler:$d{!ui-event event:onclick action:$c{closeItemViewerAct}}
+
+!ui-label:itemOfLabel styleClass:$e{jk-mildlabel} binding:$s{label}
+!ui-button:firstFrmBtn styleClass:$e{jk-button} caption:$m{button.first}
+	eventHandler:$d{!ui-event event:onclick action:$c{firstAct}}
+!ui-button:prevFrmBtn styleClass:$e{jk-button} caption:$m{button.prev}
+	eventHandler:$d{!ui-event event:onclick action:$c{prevAct}}
+!ui-button:nextFrmBtn styleClass:$e{jk-button} caption:$m{button.next}
+	eventHandler:$d{!ui-event event:onclick action:$c{nextAct}}
+!ui-button:lastFrmBtn styleClass:$e{jk-button} caption:$m{button.last}
+	eventHandler:$d{!ui-event event:onclick action:$c{lastAct}}
+
+// Actions
+!ui-post:firstAct path:$n{/firstRecord}
+!ui-post:prevAct path:$n{/previousRecord}
+!ui-post:nextAct path:$n{/nextRecord}
+!ui-post:lastAct path:$n{/lastRecord}
+
+!ui-post:applySingleItemActionAct path:$g{applyItemActionPath}
+	validations:$c{validateDynamicPanel} components:$c{dynamicPanel}
+!ui-post:showAttachmentsAct path:$g{showAttachmentsPath}
+!ui-post:showNotesAct path:$g{showNotesPath}
+!ui-post:closeItemViewerAct path:$g{closeViewItemPath}

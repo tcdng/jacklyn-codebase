@@ -1,0 +1,48 @@
+// UPL template for managing menu items
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.menuitem.manage}
+	searchByList:$c{searchMenuId searchStatus}
+    searchClearList:$c{searchStatus}
+	tableColumnList:$c{menuCaption name caption path statusDesc}
+	formSection:$d{!ui-section caption:$m{system.menuitem.section.basicdetails} components:$c{frmMenuCaption frmName frmCaption frmPath frmStatus}}
+    moreSearchActionComponentList:$c{setOrderBtn}
+    moreTableSelDependentList:$c{setOrderBtn}
+	viewPrivilege:$s{sys-menuitemview}
+
+//Search
+!ui-select:searchMenuId caption:$m{system.menuitem.menucaption} binding:searchMenuId list:menulist
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.menuitem.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table renderer
+!ui-label:menuCaption caption:$m{system.menuitem.menucaption} binding:menuCaption formatter:$d{!messageformat} columnStyle:$s{width:90px;} sortable:true
+!ui-label:name caption:$m{system.menuitem.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:caption caption:$m{system.menuitem.caption} binding:caption formatter:$d{!messageformat} columnStyle:$s{width:100px;} sortable:true
+!ui-label:path caption:$m{system.menuitem.actionpath} binding:path columnStyle:$s{width:230px;} sortable:true
+!ui-label:statusDesc caption:$m{system.menuitem.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:90px;} sortable:true
+
+//Form components   
+!ui-text:frmMenuCaption caption:$m{system.menuitem.menucaption} binding:menuCaption
+!ui-text:frmName caption:$m{system.menuitem.name} binding:name size:32
+!ui-text:frmCaption caption:$m{system.menuitem.caption} binding:caption formatter:$d{!messageformat}
+!ui-text:frmPath caption:$m{system.menuitem.actionpath} binding:path size:42
+!ui-select:frmStatus caption:$m{system.menuitem.status} binding:status list:recordstatuslist blankOption:$s{}
+
+//Order popup panel
+!ui-recordorderpanel:orderMenuItemPopup dialogCaption:$m{system.order.menuitem}
+    recordList:menuItemOrderList recordColumnList:$c{orderDesc}
+    saveOrderPath:$n{/saveMenuItemOrder} closeDialogPath:$n{/cancelMenuItemOrder}
+
+//!ui-label:orderMenu caption:$m{system.menuitem.menucaption} binding:menuCaption formatter:$d{!messageformat} columnStyle:$s{width:120px;} sortable:true
+!ui-label:orderDesc caption:$m{system.menuitem.caption} binding:caption formatter:$d{!messageformat}  columnStyle:$s{width:200px;} sortable:true
+
+//More order action buttons
+!ui-button:setOrderBtn styleClass:$e{jk-button} caption:$m{button.set.display.order}
+	eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
+    privilege:$s{sys-menuitemedit}
+
+//Actions
+!ui-post:setOrderAct path:$n{/prepareSetMenuItemOrder}

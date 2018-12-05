@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<module name="customer" description="Customer"  deactivatable="true">
+	<audits>
+		<audit name="customer-search" description="Customer Search"
+			action="search" />
+		<audit name="customer-create" description="Create Customer"
+			action="create" />
+		<audit name="customer-view" description="View Customer" action="view" />
+	</audits>
+	<menus>
+		<menu name="cus-mainsystem" description="Customer" caption="Customer Module">
+			<menuitem name="cus-managemodule" description="Customer"
+				caption="Customer" path="/customer/module/openPage"
+				pageCaption="Manage Customer"
+				remotePath="/customer/module/getRemoteDoc" />
+		</menu>
+	</menus>
+	<wf-categories>
+		<wf-category name="cust-wfcustomercategory" description="Customer Workflow Category">
+			<workflow-items>
+				<workflow-item name="cust-wfcustdoc" description="Customer Document"
+					type="com.tcdng.jacklyn.common.TestCustomer">
+					<classifier name="custdoc-nolastname" description="Customer with no last name"
+						mode="and">
+						<filter name="custdoc-nolastname" field="lastName" op="is_null" />
+					</classifier>
+				</workflow-item>
+			</workflow-items>
+			<workflows>
+				<workflow name="cust-wfcreatecustomer-type1" description="Create Customer 1"
+					item="cust-wfcustdoc">
+					<step name="cust-createcustomer-start" description="Received"
+						type="start" priority="normal">
+						<routing name="cust-createcustomer-repair" description="Route to Repair"
+							classifier="custdoc-nolastname" target="cust-createcustomer-repair" />
+						<routing name="cust-createcustomer-approval" description="Route to Approval"
+							target="cust-createcustomer-approval" />
+					</step>
+					<step name="cust-createcustomer-approval" description="Approval"
+						participant="supervisor" type="intermediate" priority="normal"
+						role="" maxHold="5" commitMode="packed_only" retrieveMode="packed">
+						<action name="cust-createcustomer-approve" description="Approve"
+							label="$m{label.approve}" target="cust-createcustomer-approved" />
+						<action name="cust-createcustomer-decline" description="Decline"
+							label="$m{label.decline}" target="cust-createcustomer-repair" />
+					</step>
+					<step name="cust-createcustomer-repair" description="Repair"
+						participant="regular" type="intermediate" priority="normal" role=""
+						maxHold="5" commitMode="packed_only" retrieveMode="packed">
+						<action name="cust-createcustomer-submit" description="Submit"
+							label="$m{label.submit}" target="cust-createcustomer-approval"/>
+						<action name="cust-createcustomer-discard" description="Discard"
+							label="$m{label.discard}" target="cust-createcustomer-discarded" />
+					</step>
+					<step name="cust-createcustomer-approved" description="Approved"
+						type="end" priority="normal" commitMode="record_only" commitType="create">
+					</step>
+					<step name="cust-createcustomer-discarded" description="Discarded"
+						type="end" priority="normal">
+					</step>
+				</workflow>
+				<workflow name="cust-wfcreatecustomer-type2" description="Create Customer 2"
+					item="cust-wfcustdoc">
+					<step name="cust-createcustomer-start2" description="Received 2"
+						type="start" priority="normal">
+						<routing name="cust-createcustomer-approval2" description="Route to Approval"
+							target="cust-createcustomer-approval2" />
+					</step>
+					<step name="cust-createcustomer-approval2" description="Approval 2"
+						participant="supervisor" type="intermediate" priority="normal"
+						role="" maxHold="5" commitMode="record_only" commitType="create" retrieveMode="record">
+						<action name="cust-createcustomer-approve" description="Approve"
+							label="$m{label.approve}" target="cust-createcustomer-approved2" />
+						<action name="cust-createcustomer-decline" description="Decline"
+							label="$m{label.decline}" target="cust-createcustomer-discarded2" />
+					</step>
+					<step name="cust-createcustomer-approved2" description="Approved 2"
+						type="end" priority="normal" commitMode="record_only" commitType="update">
+					</step>
+					<step name="cust-createcustomer-discarded2" description="Discarded 2"
+						type="end" priority="normal" commitMode="record_only" commitType="delete">
+					</step>
+				</workflow>
+			</workflows>
+		</wf-category>
+	</wf-categories>
+</module>

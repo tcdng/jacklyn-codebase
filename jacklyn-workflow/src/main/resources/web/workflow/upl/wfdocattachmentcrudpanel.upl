@@ -1,0 +1,18 @@
+// UPL template for workflow attachment definition CRUD panel
+// Copyright 2018 The Code Department
+!ui-wfdocattachmentcrudpanel
+	formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmLabel frmTypeDesc}}
+	tableColumnList:$c{wfDocName name description typeDesc}
+
+//Table columns
+!ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocattachment.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{workflow.wfdoc.wfdocattachment.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{workflow.wfdoc.wfdocattachment.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:typeDesc caption:$m{workflow.wfdoc.wfdocattachment.type} binding:typeDesc columnStyle:$s{width:120px;}
+
+//Form components
+!ui-text:frmWfDocName caption:$m{workflow.wfdoc.wfdocattachment.document} size:32 binding:wfDocName required:true
+!ui-text:frmName caption:$m{workflow.wfdoc.wfdocattachment.name} size:32 binding:name required:true
+!ui-text:frmDescription caption:$m{workflow.wfdoc.wfdocattachment.description} binding:description size:40 required:true
+!ui-text:frmLabel caption:$m{workflow.wfdoc.wfdocattachment.label} binding:label size:32 maxLen:56 required:true
+!ui-text:frmTypeDesc caption:$m{workflow.wfdoc.wfdocattachment.type} binding:typeDesc size:32 maxLen:56 required:true

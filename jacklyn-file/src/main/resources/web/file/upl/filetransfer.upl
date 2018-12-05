@@ -1,0 +1,24 @@
+// UPL template for executing file transfers
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+
+!ui-page caption:$m{file.filetransfer.menu.title} components:$c{basePanel}
+
+!ui-panel:basePanel layout:$d{!ui-vertical} components:$c{fileTransferPanel}
+
+!ui-formpanel:fileTransferPanel 
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
+    formSection:$d{!ui-section caption:$m{file.filetransfer.section.basicdetails} components:$c{fileTransferConfigId workingDt}}
+    footerComponentList:$c{transferBtn doneBtn}
+        
+!ui-select:fileTransferConfigId binding:fileTransferConfigId caption:$m{file.filetransfer.filetransferconfig} 
+    list:filetransferconfiglist blankOption:$s{} eventHandler:$d{!ui-event event:onchange action:$c{disableTrnsAct}} focus:true
+!ui-date:workingDt binding:workingDt caption:$m{file.filetransfer.workingdt}
+    
+!ui-button:transferBtn caption:$m{button.execute.transfer} eventHandler:$d{!ui-event event:onclick action:$c{startTrnsAct}}
+!ui-button:doneBtn caption:$m{button.done} eventHandler:$d{!ui-event event:onclick action:$c{trnsDoneAct}}
+    
+!ui-post:startTrnsAct path:$n{/startFileTransferTask} components:$c{fileTransferConfigId workingDt}
+!ui-post:trnsDoneAct path:$n{/closePage}
+!ui-disable:disableTrnsAct valueComponentList:$c{fileTransferConfigId} components:$c{transferBtn}
