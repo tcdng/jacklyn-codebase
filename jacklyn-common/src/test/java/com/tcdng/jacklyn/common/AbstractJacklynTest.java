@@ -38,7 +38,7 @@ public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
 	}
 
 	protected void swapApplicationSystemAnonymousUserTokens() throws Exception {
-		((JacklynTestUtils) this.getComponent("jacklyn-testutils"))
+		((JacklynTestUtils) getComponent("jacklyn-testutils"))
 				.swapApplicationSystemAnonymousUserTokens();
 	}
 }

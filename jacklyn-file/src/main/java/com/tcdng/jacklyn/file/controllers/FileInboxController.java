@@ -66,53 +66,53 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
 
 	@Action
 	public String markRead() throws UnifyException {
-		List<Long> fileInboxIds = this.getSelectedIds();
+		List<Long> fileInboxIds = getSelectedIds();
 		if (!fileInboxIds.isEmpty()) {
-			this.getFileModule().updateFileInboxItemsReadStatus(
+			getFileModule().updateFileInboxItemsReadStatus(
 					(FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
 					FileInboxReadStatus.READ);
-			this.logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKREAD,
-					this.getSelectedDescription());
-			this.hintUser("hint.records.markedread");
+			logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKREAD,
+					getSelectedDescription());
+			hintUser("hint.records.markedread");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Action
 	public String markUnread() throws UnifyException {
-		List<Long> fileInboxIds = this.getSelectedIds();
+		List<Long> fileInboxIds = getSelectedIds();
 		if (!fileInboxIds.isEmpty()) {
-			this.getFileModule().updateFileInboxItemsReadStatus(
+			getFileModule().updateFileInboxItemsReadStatus(
 					(FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
 					FileInboxReadStatus.NOT_READ);
-			this.logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKUNREAD,
-					this.getSelectedDescription());
-			this.hintUser("hint.records.markedunread");
+			logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKUNREAD,
+					getSelectedDescription());
+			hintUser("hint.records.markedunread");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Override
 	protected List<FileInbox> find() throws UnifyException {
 		FileInboxQuery query = new FileInboxQuery();
-		if (QueryUtils.isValidLongCriteria(this.getSearchFileTransferConfigId())) {
-			query.fileTransferConfigId(this.getSearchFileTransferConfigId());
+		if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
+			query.fileTransferConfigId(getSearchFileTransferConfigId());
 		}
 
-		if (this.getSearchReadStatus() != null) {
-			query.readStatus(this.getSearchReadStatus());
+		if (getSearchReadStatus() != null) {
+			query.readStatus(getSearchReadStatus());
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 
-		query.createdOn(this.getSearchCreateDt());
-		return this.getFileModule().findFileInboxItems(query);
+		query.createdOn(getSearchCreateDt());
+		return getFileModule().findFileInboxItems(query);
 	}
 
 	@Override
 	protected FileInbox find(Long id) throws UnifyException {
-		return this.getFileModule().findFileInboxItem(id);
+		return getFileModule().findFileInboxItem(id);
 	}
 }

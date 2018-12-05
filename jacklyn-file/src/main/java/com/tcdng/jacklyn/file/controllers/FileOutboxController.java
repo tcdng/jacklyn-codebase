@@ -54,20 +54,20 @@ public class FileOutboxController extends AbstractFileTransferBoxController<File
 	@Override
 	protected List<FileOutbox> find() throws UnifyException {
 		FileOutboxQuery query = new FileOutboxQuery();
-		if (QueryUtils.isValidLongCriteria(this.getSearchFileTransferConfigId())) {
-			query.fileTransferConfigId(this.getSearchFileTransferConfigId());
+		if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
+			query.fileTransferConfigId(getSearchFileTransferConfigId());
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 
-		query.createdOn(this.getSearchCreateDt());
-		return this.getFileModule().findFileOutboxItems(query);
+		query.createdOn(getSearchCreateDt());
+		return getFileModule().findFileOutboxItems(query);
 	}
 
 	@Override
 	protected FileOutbox find(Long id) throws UnifyException {
-		return this.getFileModule().findFileOutboxItem(id);
+		return getFileModule().findFileOutboxItem(id);
 	}
 }

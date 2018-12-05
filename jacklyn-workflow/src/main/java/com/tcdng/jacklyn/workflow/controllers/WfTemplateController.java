@@ -103,30 +103,30 @@ public class WfTemplateController extends AbstractWorkflowRecordController<WfTem
 	@Override
 	protected List<WfTemplate> find() throws UnifyException {
 		WfTemplateQuery query = new WfTemplateQuery();
-		if (QueryUtils.isValidLongCriteria(this.searchWfCategoryId)) {
+		if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
 			query.wfCategoryId(searchWfCategoryId);
 		}
 
-		if (QueryUtils.isValidStringCriteria(this.searchName)) {
+		if (QueryUtils.isValidStringCriteria(searchName)) {
 			query.nameLike(searchName);
 		}
 
-		if (QueryUtils.isValidStringCriteria(this.searchDescription)) {
+		if (QueryUtils.isValidStringCriteria(searchDescription)) {
 			query.descriptionLike(searchDescription);
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 
 		query.ignoreEmptyCriteria(true);
-		return this.getWorkflowModule().findWfTemplates(query);
+		return getWorkflowModule().findWfTemplates(query);
 	}
 
 	@Override
 	protected WfTemplate find(Long id) throws UnifyException {
-		this.largeData = this.getWorkflowModule().findLargeWfTemplate(id);
-		return this.largeData.getData();
+		largeData = getWorkflowModule().findLargeWfTemplate(id);
+		return largeData.getData();
 	}
 
 	@Override

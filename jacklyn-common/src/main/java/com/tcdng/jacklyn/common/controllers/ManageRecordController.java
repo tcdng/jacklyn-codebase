@@ -413,7 +413,7 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
 										.get(entityClass);
 		if (managedPrivilegeNames != null) {
 			getPageWidgetByShortName(Widget.class, "reportBtn")
-					.setVisible(this.isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
+					.setVisible(isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
 							managedPrivilegeNames.getReportableName()));
 		}
 	}

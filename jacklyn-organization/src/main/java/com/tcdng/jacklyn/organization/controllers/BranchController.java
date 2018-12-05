@@ -73,16 +73,16 @@ public class BranchController extends AbstractOrganizationRecordController<Branc
 			query.descriptionLike(searchDescription);
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.order("description").ignoreEmptyCriteria(true);
-		return this.getOrganizationModule().findBranches(query);
+		return getOrganizationModule().findBranches(query);
 	}
 
 	@Override
 	protected Branch find(Long id) throws UnifyException {
-		return this.getOrganizationModule().findBranch(id);
+		return getOrganizationModule().findBranch(id);
 	}
 
 	@Override

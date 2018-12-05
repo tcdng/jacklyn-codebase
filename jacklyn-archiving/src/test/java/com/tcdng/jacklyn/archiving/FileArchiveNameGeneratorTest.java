@@ -37,7 +37,7 @@ public class FileArchiveNameGeneratorTest extends AbstractJacklynTest {
 	@Test
 	public void testGenerateFileArchiveName() throws Exception {
 		FileArchiveNameGenerator fileArchiveNameGenerator
-				= (FileArchiveNameGenerator) this.getComponent("default-filearchivenamegenerator");
+				= (FileArchiveNameGenerator) getComponent("default-filearchivenamegenerator");
 		Date workingDt = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String expectedFilename = "lobchequeimagecfg" + sdf.format(workingDt) + "0001.arch";

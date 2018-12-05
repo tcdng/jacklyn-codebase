@@ -71,16 +71,16 @@ public class FileArchiveConfigController
 			query.descriptionLike(searchDescription);
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.ignoreEmptyCriteria(true);
-		return this.getArchivingModule().findFileArchiveConfigs(query);
+		return getArchivingModule().findFileArchiveConfigs(query);
 	}
 
 	@Override
 	protected FileArchiveConfig find(Long id) throws UnifyException {
-		return this.getArchivingModule().findFileArchiveConfig(id);
+		return getArchivingModule().findFileArchiveConfig(id);
 	}
 
 	@Override
@@ -90,16 +90,16 @@ public class FileArchiveConfigController
 
 	@Override
 	protected Object create(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-		return this.getArchivingModule().createFileArchiveConfig(fileArchiveConfigData);
+		return getArchivingModule().createFileArchiveConfig(fileArchiveConfigData);
 	}
 
 	@Override
 	protected int update(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-		return this.getArchivingModule().updateFileArchiveConfig(fileArchiveConfigData);
+		return getArchivingModule().updateFileArchiveConfig(fileArchiveConfigData);
 	}
 
 	@Override
 	protected int delete(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-		return this.getArchivingModule().deleteFileArchiveConfig(fileArchiveConfigData.getId());
+		return getArchivingModule().deleteFileArchiveConfig(fileArchiveConfigData.getId());
 	}
 }

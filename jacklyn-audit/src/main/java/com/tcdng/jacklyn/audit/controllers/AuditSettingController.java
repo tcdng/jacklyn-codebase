@@ -76,51 +76,51 @@ public class AuditSettingController extends AbstractAuditRecordController<AuditD
 
 	@Action
 	public String activateAuditTypes() throws UnifyException {
-		List<Long> auditTypeIds = this.getSelectedIds();
+		List<Long> auditTypeIds = getSelectedIds();
 		if (!auditTypeIds.isEmpty()) {
-			this.getAuditModule().setAuditTypeStatus(
+			getAuditModule().setAuditTypeStatus(
 					(AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
 					RecordStatus.ACTIVE);
-			this.logUserEvent(AuditModuleAuditConstants.ACTIVATE_AUDITTYPE,
-					this.getSelectedDescription());
-			this.hintUser("hint.records.activated");
+			logUserEvent(AuditModuleAuditConstants.ACTIVATE_AUDITTYPE,
+					getSelectedDescription());
+			hintUser("hint.records.activated");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Action
 	public String deactivateAuditTypes() throws UnifyException {
-		List<Long> auditTypeIds = this.getSelectedIds();
+		List<Long> auditTypeIds = getSelectedIds();
 		if (!auditTypeIds.isEmpty()) {
-			this.getAuditModule().setAuditTypeStatus(
+			getAuditModule().setAuditTypeStatus(
 					(AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
 					RecordStatus.INACTIVE);
-			this.logUserEvent(AuditModuleAuditConstants.DEACTIVATE_AUDITTYPE,
-					this.getSelectedDescription());
-			this.hintUser("hint.records.deactivated");
+			logUserEvent(AuditModuleAuditConstants.DEACTIVATE_AUDITTYPE,
+					getSelectedDescription());
+			hintUser("hint.records.deactivated");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Override
 	protected List<AuditDefinition> find() throws UnifyException {
 		AuditDefinitionQuery query = new AuditDefinitionQuery();
-		if (QueryUtils.isValidLongCriteria(this.searchModuleId)) {
-			query.moduleId(this.searchModuleId);
+		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+			query.moduleId(searchModuleId);
 		}
-		if (this.getSearchEventType() != null) {
-			query.eventType(this.getSearchEventType());
+		if (getSearchEventType() != null) {
+			query.eventType(getSearchEventType());
 		}
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.ignoreEmptyCriteria(true);
-		return this.getAuditModule().findAuditTypes(query);
+		return getAuditModule().findAuditTypes(query);
 	}
 
 	@Override
 	protected AuditDefinition find(Long id) throws UnifyException {
-		return this.getAuditModule().findAuditType(id);
+		return getAuditModule().findAuditType(id);
 	}
 
 	@Override

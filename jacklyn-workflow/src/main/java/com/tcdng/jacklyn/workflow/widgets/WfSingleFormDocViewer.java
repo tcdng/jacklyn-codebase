@@ -39,7 +39,7 @@ public class WfSingleFormDocViewer extends AbstractWfDocViewer {
 
 	@Override
 	public void setDocumentMode(WfStepDef wfStepDef) throws UnifyException {
-		Form form = (Form) this.getWidgetByShortName("formPanel.form");
+		Form form = (Form) getWidgetByShortName("formPanel.form");
 		form.reset();
 		for (WfFormPrivilegeDef wfFormPrivilegeDef : wfStepDef.getFormPrivilegeList()) {
 			if (WorkflowFormElementType.SECTION.equals(wfFormPrivilegeDef.getType())) {

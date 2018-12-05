@@ -73,16 +73,16 @@ public class ThemeController extends AbstractSystemRecordController<Theme> {
 			query.descriptionLike(searchDescription);
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.order("description").ignoreEmptyCriteria(true);
-		return this.getSystemModule().findThemes(query);
+		return getSystemModule().findThemes(query);
 	}
 
 	@Override
 	protected Theme find(Long id) throws UnifyException {
-		return this.getSystemModule().findTheme(id);
+		return getSystemModule().findTheme(id);
 	}
 
 	@Override

@@ -70,12 +70,12 @@ public class UserSessionController extends ManageRecordController<UserSessionTra
 
 	@Action
 	public String forceLogOut() throws UnifyException {
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Action
 	public String forceLogOutAll() throws UnifyException {
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Override

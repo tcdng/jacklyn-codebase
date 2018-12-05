@@ -42,7 +42,7 @@ public class WfHistEventListingWriter extends AbstractWidgetWriter {
 			throws UnifyException {
 		WfHistEventListing wfHistEventListing = (WfHistEventListing) widget;
 		writer.write("<div ");
-		this.writeTagAttributes(writer, wfHistEventListing);
+		writeTagAttributes(writer, wfHistEventListing);
 		writer.write("><div class=\"wwtable\">");
 
 		List<WfItemHistEvent> listing = wfHistEventListing.getWorkflowItemHistEventList();
@@ -64,12 +64,12 @@ public class WfHistEventListingWriter extends AbstractWidgetWriter {
 				writer.write("<div class=\"wwbody\">");
 				writer.write("<div style=\"display:table;width:100%;\">");
 				WfItemHistEvent workflowItemHistEvent = listing.get(i);
-				this.writeEventAttributeRow(writer, "wwcontent", workflowItemHistEvent.getNotes());
-				this.writeEventAttributeRow(writer, "wwlabel",
-						this.getSessionMessage("wfhisteventlisting.user.action",
+				writeEventAttributeRow(writer, "wwcontent", workflowItemHistEvent.getNotes());
+				writeEventAttributeRow(writer, "wwlabel",
+						getSessionMessage("wfhisteventlisting.user.action",
 								workflowItemHistEvent.getActor(),
 								workflowItemHistEvent.getWfActionDesc()));
-				this.writeEventAttributeRow(writer, "wwlabel", DataUtils.convert(String.class,
+				writeEventAttributeRow(writer, "wwlabel", DataUtils.convert(String.class,
 						workflowItemHistEvent.getActionDt(), formatter));
 				writer.write("</div>");
 				writer.write("</div>");

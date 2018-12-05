@@ -43,12 +43,12 @@ public class ArchivableListCommand extends AbstractArchivingListCommand<StatusPa
 	public List<? extends Listable> execute(Locale locale, StatusParams params)
 			throws UnifyException {
 		if (!StringUtils.isBlank(params.getStatus())) {
-			return this.getArchivingBusinessModule().findArchivableDefinitions(
+			return getArchivingBusinessModule().findArchivableDefinitions(
 					(ArchivableDefinitionQuery) new ArchivableDefinitionQuery().orderByDescription()
 							.status(RecordStatus.fromName(params.getStatus())));
 		}
 
-		return this.getArchivingBusinessModule().findArchivableDefinitions(
+		return getArchivingBusinessModule().findArchivableDefinitions(
 				(ArchivableDefinitionQuery) new ArchivableDefinitionQuery().orderByDescription()
 						.ignoreEmptyCriteria(true));
 	}

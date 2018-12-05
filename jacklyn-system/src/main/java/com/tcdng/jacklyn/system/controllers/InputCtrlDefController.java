@@ -87,16 +87,16 @@ public class InputCtrlDefController extends AbstractSystemRecordController<Input
 			query.descriptionLike(searchDescription);
 		}
 
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.order("description").ignoreEmptyCriteria(true);
-		return this.getSystemModule().findInputCtrlDefs(query);
+		return getSystemModule().findInputCtrlDefs(query);
 	}
 
 	@Override
 	protected InputCtrlDef find(Long id) throws UnifyException {
-		return this.getSystemModule().findInputCtrlDef(id);
+		return getSystemModule().findInputCtrlDef(id);
 	}
 
 	@Override

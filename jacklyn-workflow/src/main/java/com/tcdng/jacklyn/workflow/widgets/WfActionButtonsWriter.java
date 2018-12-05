@@ -40,7 +40,7 @@ public class WfActionButtonsWriter extends AbstractControlWriter {
 			throws UnifyException {
 		WfActionButtons wfActionButtons = (WfActionButtons) component;
 		writer.write("<div ");
-		this.writeTagAttributes(writer, wfActionButtons);
+		writeTagAttributes(writer, wfActionButtons);
 		writer.write(">");
 
 		boolean verticalLayout = wfActionButtons.isVerticalLayout();
@@ -81,7 +81,7 @@ public class WfActionButtonsWriter extends AbstractControlWriter {
 			Control actionCtrl = wfActionButtons.getActionCtrl();
 			for (ValueStore valueStore : wfActionButtons.getValueList()) {
 				actionCtrl.setValueStore(valueStore);
-				this.getRequestContext().setQuickReference(valueStore);
+				getRequestContext().setQuickReference(valueStore);
 				for (EventHandler eventHandler : eventHandlers) {
 					writer.writeBehavior(eventHandler, actionCtrl.getId());
 				}

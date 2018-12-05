@@ -87,16 +87,16 @@ public class BatchFileDefinitionController
 		if (QueryUtils.isValidStringCriteria(searchDescription)) {
 			query.descriptionLike(searchDescription);
 		}
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.ignoreEmptyCriteria(true);
-		return this.getFileModule().findBatchFileDefinitions(query);
+		return getFileModule().findBatchFileDefinitions(query);
 	}
 
 	@Override
 	protected BatchFileDefinition find(Long id) throws UnifyException {
-		return this.getFileModule().findBatchFileDefinition(id);
+		return getFileModule().findBatchFileDefinition(id);
 	}
 
 	@Override
@@ -106,16 +106,16 @@ public class BatchFileDefinitionController
 
 	@Override
 	protected Object create(BatchFileDefinition record) throws UnifyException {
-		return this.getFileModule().createBatchFileDefinition(record);
+		return getFileModule().createBatchFileDefinition(record);
 	}
 
 	@Override
 	protected int update(BatchFileDefinition record) throws UnifyException {
-		return this.getFileModule().updateBatchFileDefinition(record);
+		return getFileModule().updateBatchFileDefinition(record);
 	}
 
 	@Override
 	protected int delete(BatchFileDefinition record) throws UnifyException {
-		return this.getFileModule().deleteBatchFileDefinition(record.getId());
+		return getFileModule().deleteBatchFileDefinition(record.getId());
 	}
 }

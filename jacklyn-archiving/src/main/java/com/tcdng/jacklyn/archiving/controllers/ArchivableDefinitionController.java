@@ -66,19 +66,19 @@ public class ArchivableDefinitionController
 	@Override
 	protected List<ArchivableDefinition> find() throws UnifyException {
 		ArchivableDefinitionQuery query = new ArchivableDefinitionQuery();
-		if (QueryUtils.isValidLongCriteria(this.searchModuleId)) {
-			query.moduleId(this.searchModuleId);
+		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+			query.moduleId(searchModuleId);
 		}
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.ignoreEmptyCriteria(true);
-		return this.getArchivingModule().findArchivableDefinitions(query);
+		return getArchivingModule().findArchivableDefinitions(query);
 	}
 
 	@Override
 	protected ArchivableDefinition find(Long id) throws UnifyException {
-		return this.getArchivingModule().findArchivableDefinition(id);
+		return getArchivingModule().findArchivableDefinition(id);
 	}
 
 	@Override

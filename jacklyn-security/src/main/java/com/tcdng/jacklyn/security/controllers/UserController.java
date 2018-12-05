@@ -55,23 +55,23 @@ public class UserController extends AbstractSecurityRecordController<User> {
 				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
 						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
 						| ManageRecordModifier.REPORTABLE);
-		this.largeData = new UserLargeData();
+		largeData = new UserLargeData();
 	}
 
 	@Override
 	@Action
 	public String copyRecord() throws UnifyException {
-		this.clipboardLargeData = ReflectUtils.shallowBeanCopy(this.largeData);
+		clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
 		return super.copyRecord();
 	}
 
 	@Action
 	public String resetUserPassword() throws UnifyException {
-		User userData = this.getRecord();
-		this.getSecurityModule().resetUserPassword(userData.getId());
-		this.logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, userData.getFullName());
-		this.hintUser("security.user.hint.passwordreset", userData.getFullName());
-		return this.noResult();
+		User userData = getRecord();
+		getSecurityModule().resetUserPassword(userData.getId());
+		logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, userData.getFullName());
+		hintUser("security.user.hint.passwordreset", userData.getFullName());
+		return noResult();
 	}
 
 	public String getSearchLoginId() {
@@ -115,25 +115,25 @@ public class UserController extends AbstractSecurityRecordController<User> {
 		if (QueryUtils.isValidStringCriteria(searchFullName)) {
 			query.fullNameLike(searchFullName);
 		}
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
 		query.order("fullName").ignoreEmptyCriteria(true);
-		return this.getSecurityModule().findUsers(query);
+		return getSecurityModule().findUsers(query);
 	}
 
 	@Override
 	protected User find(Long id) throws UnifyException {
-		this.largeData = this.getSecurityModule().findUserDocument(id);
-		return this.largeData.getData();
+		largeData = getSecurityModule().findUserDocument(id);
+		return largeData.getData();
 	}
 
 	@Override
 	protected User prepareCreate() throws UnifyException {
-		this.setEditable("frmLoginId", true);
+		setEditable("frmLoginId", true);
 
-		this.largeData = new UserLargeData();
-		User userData = this.largeData.getData();
+		largeData = new UserLargeData();
+		User userData = largeData.getData();
 		userData.setStatus(RecordStatus.ACTIVE);
 		userData.setPasswordExpires(Boolean.TRUE);
 		return userData;
@@ -142,53 +142,53 @@ public class UserController extends AbstractSecurityRecordController<User> {
 	@Override
 	protected void onPrepareView(User userData, boolean onPaste) throws UnifyException {
 		if (onPaste) {
-			this.largeData.setPhotograph(this.clipboardLargeData.getPhotograph());
-			this.largeData.setRoleIdList(this.clipboardLargeData.getRoleIdList());
+			largeData.setPhotograph(clipboardLargeData.getPhotograph());
+			largeData.setRoleIdList(clipboardLargeData.getRoleIdList());
 		}
 
-		if (ManageRecordModifier.ADD == this.getMode()) {
-			this.setDisabled("resetBtn", true);
-			this.setDisabled("frmImage", false);
-			this.setEditable("frmLoginId", true);
-			this.setEditable("frmRoleAssignPanel", true);
-			this.setEditable("crudFormPanel.mainBodyPanel", true);
+		if (ManageRecordModifier.ADD == getMode()) {
+			setDisabled("resetBtn", true);
+			setDisabled("frmImage", false);
+			setEditable("frmLoginId", true);
+			setEditable("frmRoleAssignPanel", true);
+			setEditable("crudFormPanel.mainBodyPanel", true);
 		} else {
 			boolean isDisabled = userData.isReserved();
-			this.setDisabled("resetBtn", isDisabled);
-			this.setDisabled("frmImage", isDisabled);
-			this.setEditable("frmLoginId", false);
-			this.setEditable("frmRoleAssignPanel", !isDisabled);
-			this.setEditable("crudFormPanel.mainBodyPanel", !isDisabled);
+			setDisabled("resetBtn", isDisabled);
+			setDisabled("frmImage", isDisabled);
+			setEditable("frmLoginId", false);
+			setEditable("frmRoleAssignPanel", !isDisabled);
+			setEditable("crudFormPanel.mainBodyPanel", !isDisabled);
 		}
 	}
 
 	@Override
 	protected void onLoseView(User userData) throws UnifyException {
-		this.largeData = new UserLargeData();
-		this.clipboardLargeData = null;
+		largeData = new UserLargeData();
+		clipboardLargeData = null;
 	}
 
 	@Override
 	protected Object create(User userData) throws UnifyException {
-		return this.getSecurityModule().createUser(largeData);
+		return getSecurityModule().createUser(largeData);
 	}
 
 	@Override
 	protected int update(User userData) throws UnifyException {
-		return this.getSecurityModule().updateUser(this.largeData);
+		return getSecurityModule().updateUser(largeData);
 	}
 
 	@Override
 	protected int delete(User userData) throws UnifyException {
-		return this.getSecurityModule().deleteUser(userData.getId());
+		return getSecurityModule().deleteUser(userData.getId());
 	}
 
 	@Override
 	protected void onPrepareForm(int mode) throws UnifyException {
-		this.setVisible("resetBtn", mode != ManageRecordModifier.ADD);
+		setVisible("resetBtn", mode != ManageRecordModifier.ADD);
 		if (mode == ManageRecordModifier.ADD) {
-			this.setEditable("frmRoleAssignPanel", true);
-			this.setDisabled("frmImage", false);
+			setEditable("frmRoleAssignPanel", true);
+			setDisabled("frmImage", false);
 		}
 	}
 }

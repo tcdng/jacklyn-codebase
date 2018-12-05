@@ -82,17 +82,17 @@ public class WfCategoryController extends AbstractWorkflowRecordController<WfCat
 			query.descriptionLike(searchDescription);
 		}
 
-		if (this.searchStatus != null) {
+		if (searchStatus != null) {
 			query.status(searchStatus);
 		}
 
 		query.order("description").ignoreEmptyCriteria(true);
-		return this.getWorkflowModule().findWfCategories(query);
+		return getWorkflowModule().findWfCategories(query);
 	}
 
 	@Override
 	protected WfCategory find(Long wfCategoryId) throws UnifyException {
-		return this.getWorkflowModule().findWfCategory(wfCategoryId);
+		return getWorkflowModule().findWfCategory(wfCategoryId);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class WfCategoryController extends AbstractWorkflowRecordController<WfCat
 
 	@Override
 	protected int update(WfCategory wfCategoryData) throws UnifyException {
-		return this.getWorkflowModule().updateWfCategory(wfCategoryData);
+		return getWorkflowModule().updateWfCategory(wfCategoryData);
 	}
 
 	@Override

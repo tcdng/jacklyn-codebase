@@ -43,7 +43,7 @@ public class NotificationTemplateListCommand
 		if (QueryUtils.isValidStringCriteria(params.getValue())) {
 			query.moduleName(params.getValue());
 		}
-		return this.getNotificationModule().findNotificationTemplates(
+		return getNotificationModule().findNotificationTemplates(
 				(NotificationTemplateQuery) query.status(RecordStatus.ACTIVE));
 	}
 }

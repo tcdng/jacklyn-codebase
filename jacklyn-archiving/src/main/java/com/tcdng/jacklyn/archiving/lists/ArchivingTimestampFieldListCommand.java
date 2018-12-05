@@ -51,7 +51,7 @@ public class ArchivingTimestampFieldListCommand
 			query.archivableDefId(params.getArchivableDefId());
 			query.fieldTypeIn(TIME);
 			query.orderByDescription();
-			return this.getArchivingBusinessModule().findArchivingFields(query);
+			return getArchivingBusinessModule().findArchivingFields(query);
 		}
 
 		return Collections.emptyList();

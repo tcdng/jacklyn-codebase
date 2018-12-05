@@ -49,8 +49,8 @@ public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComp
 
 	@Override
 	protected void onInitialize() throws UnifyException {
-		this.dateFormatter = (DateFormatter) this.getUplComponent(this.getApplicationLocale(),
-				this.namingDateFormatter, false);
+		dateFormatter = (DateFormatter) getUplComponent(getApplicationLocale(),
+				namingDateFormatter, false);
 	}
 
 	@Override
@@ -79,9 +79,9 @@ public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComp
 	 */
 	protected String getNextSequenceIdPart(String fileArchiveConfigName, Date workingDt)
 			throws UnifyException {
-		long nextSequenceNo = this.sequenceNumberBusinessModule
+		long nextSequenceNo = sequenceNumberBusinessModule
 				.getNextSequenceNumber(fileArchiveConfigName, workingDt);
-		return String.format("%0" + this.minSequenceLength + "d", nextSequenceNo);
+		return String.format("%0" + minSequenceLength + "d", nextSequenceNo);
 	}
 
 	/**
@@ -93,6 +93,6 @@ public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComp
 	 *             if an error occurs
 	 */
 	protected String getDatePart(Date workingDt) throws UnifyException {
-		return this.dateFormatter.format(workingDt);
+		return dateFormatter.format(workingDt);
 	}
 }

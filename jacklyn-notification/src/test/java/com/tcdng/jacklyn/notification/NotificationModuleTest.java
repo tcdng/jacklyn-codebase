@@ -127,7 +127,7 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testCreateNotificationTemplate() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationTemplate notificationTemplateData = this.getNotificationTemplateData();
+		NotificationTemplate notificationTemplateData = getNotificationTemplateData();
 		Long id = notificationModule.createNotificationTemplate(notificationTemplateData);
 		assertNotNull(id);
 	}

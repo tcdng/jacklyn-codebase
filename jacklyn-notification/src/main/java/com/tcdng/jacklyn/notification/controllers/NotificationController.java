@@ -58,40 +58,40 @@ public class NotificationController extends AbstractNotificationRecordController
 
 	@Action
 	public String markAsUnsent() throws UnifyException {
-		List<Long> messageIds = this.getSelectedIds();
+		List<Long> messageIds = getSelectedIds();
 		if (!messageIds.isEmpty()) {
-			this.getNotificationModule().setNotificationStatus(messageIds,
+			getNotificationModule().setNotificationStatus(messageIds,
 					NotificationStatus.NOT_SENT);
-			this.logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_UNSENT,
-					this.getSelectedDescription());
-			this.hintUser("hint.message.marked.unsent");
+			logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_UNSENT,
+					getSelectedDescription());
+			hintUser("hint.message.marked.unsent");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Action
 	public String markAsSent() throws UnifyException {
-		List<Long> messageIds = this.getSelectedIds();
+		List<Long> messageIds = getSelectedIds();
 		if (!messageIds.isEmpty()) {
-			this.getNotificationModule().setNotificationStatus(messageIds, NotificationStatus.SENT);
-			this.logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_SENT,
-					this.getSelectedDescription());
-			this.hintUser("hint.message.marked.sent");
+			getNotificationModule().setNotificationStatus(messageIds, NotificationStatus.SENT);
+			logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_SENT,
+					getSelectedDescription());
+			hintUser("hint.message.marked.sent");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	@Action
 	public String markAsAborted() throws UnifyException {
-		List<Long> messageIds = this.getSelectedIds();
+		List<Long> messageIds = getSelectedIds();
 		if (!messageIds.isEmpty()) {
-			this.getNotificationModule().setNotificationStatus(messageIds,
+			getNotificationModule().setNotificationStatus(messageIds,
 					NotificationStatus.ABORTED);
-			this.logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_ABORT,
-					this.getSelectedDescription());
-			this.hintUser("hint.message.marked.abort");
+			logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_ABORT,
+					getSelectedDescription());
+			hintUser("hint.message.marked.abort");
 		}
-		return this.findRecords();
+		return findRecords();
 	}
 
 	public Date getSearchCreateDt() {
@@ -137,33 +137,33 @@ public class NotificationController extends AbstractNotificationRecordController
 	@Override
 	protected void onOpenPage() throws UnifyException {
 		super.onOpenPage();
-		if (this.searchCreateDt == null) {
-			this.searchCreateDt = CalendarUtils.getCurrentMidnightDate();
+		if (searchCreateDt == null) {
+			searchCreateDt = CalendarUtils.getCurrentMidnightDate();
 		}
 	}
 
 	@Override
 	protected List<Notification> find() throws UnifyException {
 		NotificationQuery query = new NotificationQuery();
-		query.createdOn(this.searchCreateDt);
-		if (QueryUtils.isValidLongCriteria(this.searchModuleId)) {
+		query.createdOn(searchCreateDt);
+		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
 			query.moduleId(searchModuleId);
 		}
 		if (QueryUtils.isValidLongCriteria(searchNotificationTemplateId)) {
 			query.notificationTemplateId(searchNotificationTemplateId);
 		}
-		if (this.getSearchNotificationType() != null) {
-			query.notificationType(this.getSearchNotificationType());
+		if (getSearchNotificationType() != null) {
+			query.notificationType(getSearchNotificationType());
 		}
-		if (this.getSearchStatus() != null) {
-			query.status(this.getSearchStatus());
+		if (getSearchStatus() != null) {
+			query.status(getSearchStatus());
 		}
-		return this.getNotificationModule().findNotifications(query);
+		return getNotificationModule().findNotifications(query);
 	}
 
 	@Override
 	protected Notification find(Long id) throws UnifyException {
-		return this.getNotificationModule().findNotification(id);
+		return getNotificationModule().findNotification(id);
 	}
 
 	@Override

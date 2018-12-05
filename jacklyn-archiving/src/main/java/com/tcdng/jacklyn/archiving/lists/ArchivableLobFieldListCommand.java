@@ -50,7 +50,7 @@ public class ArchivableLobFieldListCommand extends AbstractArchivingListCommand<
 			query.archivableDefId(params.getArchivableDefId());
 			query.fieldTypeIn(LOBS);
 			query.orderByDescription();
-			return this.getArchivingBusinessModule().findArchivingFields(query);
+			return getArchivingBusinessModule().findArchivingFields(query);
 		}
 
 		return Collections.emptyList();
