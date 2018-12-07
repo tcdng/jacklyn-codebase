@@ -92,8 +92,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 		List<StartupShutdownHook> list = new ArrayList<StartupShutdownHook>();
 		for (UnifyStaticSettings unifyStaticSettings : getStaticSettings()) {
 			if (unifyStaticSettings instanceof JacklynModuleStaticSettings) {
-				JacklynModuleStaticSettings jacklynModuleStaticSettings
-						= (JacklynModuleStaticSettings) unifyStaticSettings;
+				JacklynModuleStaticSettings jacklynModuleStaticSettings = (JacklynModuleStaticSettings) unifyStaticSettings;
 				if (!StringUtils.isBlank(jacklynModuleStaticSettings.getModuleComponent())) {
 					String componentName = jacklynModuleStaticSettings.getModuleComponent();
 					Class<? extends UnifyComponent> type = getComponentType(componentName);
@@ -116,8 +115,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 		List<String> moduleXmlList = new ArrayList<String>();
 		for (UnifyStaticSettings unifyStaticSettings : getStaticSettings()) {
 			if (unifyStaticSettings instanceof JacklynModuleStaticSettings) {
-				JacklynModuleStaticSettings jacklynModuleStaticSettings
-						= (JacklynModuleStaticSettings) unifyStaticSettings;
+				JacklynModuleStaticSettings jacklynModuleStaticSettings = (JacklynModuleStaticSettings) unifyStaticSettings;
 				String componentName = jacklynModuleStaticSettings.getModuleComponent();
 				if (!StringUtils.isBlank(componentName)) {
 					logDebug("Identified feature installer [{0}]...", componentName);
@@ -131,8 +129,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 		}
 
 		List<String> configXmlList = DataUtils.convert(ArrayList.class, String.class,
-				getContainerSetting(Object.class, JacklynPropertyConstants.MODULE_CONFIGURATION),
-				null);
+				getContainerSetting(Object.class, JacklynPropertyConstants.MODULE_CONFIGURATION), null);
 		if (configXmlList != null) {
 			moduleXmlList.addAll(configXmlList);
 		}
@@ -143,8 +140,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 			try {
 				inputStream = IOUtils.openFileResourceInputStream(configFile,
 						getUnifyComponentContext().getWorkingPath());
-				ModuleConfig mc
-						= xmlObjectStreamer.unmarshal(ModuleConfig.class, inputStream, null);
+				ModuleConfig mc = xmlObjectStreamer.unmarshal(ModuleConfig.class, inputStream, null);
 				list.add(mc);
 				mc.getPrivileges().toMap();
 			} finally {
@@ -162,12 +158,10 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 
 	@Override
 	protected void onStartup() throws UnifyException {
-		wireApplicationProvider(ReportProvider.class,
-				JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER,
+		wireApplicationProvider(ReportProvider.class, JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER,
 				JacklynPropertyConstants.COMMON_REPORT_PROVIDER);
 
-		wireApplicationProvider(ReportServer.class,
-				JacklynApplicationAttributeConstants.COMMON_REPORT_SERVER,
+		wireApplicationProvider(ReportServer.class, JacklynApplicationAttributeConstants.COMMON_REPORT_SERVER,
 				JacklynPropertyConstants.COMMON_REPORT_SERVER);
 
 		wireApplicationProvider(RemoteCallSystemAssetProvider.class,
@@ -181,8 +175,8 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends UnifyComponent> void wireApplicationProvider(Class<T> type, String contextID,
-			String configID) throws UnifyException {
+	private <T extends UnifyComponent> void wireApplicationProvider(Class<T> type, String contextID, String configID)
+			throws UnifyException {
 		// Check configuration first
 		String providerName = getContainerSetting(String.class, configID, null);
 		if (StringUtils.isBlank(providerName)) {
@@ -190,17 +184,19 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 			List<UnifyComponentConfig> providerConfigList = getComponentConfigs(type);
 			if (!providerConfigList.isEmpty()) {
 				providerName = providerConfigList.get(0).getName();
-				logInfo("Wiring provider [{0}] via auto-detection...", providerName);
+				logInfo("Wiring provider with context ID [{0}] using [{1}] via auto-detection...", contextID,
+						providerName);
 			}
 		} else {
-			logInfo("Wiring provider [{0}] via configuration [{1}]...", providerName, configID);
+			logInfo("Wiring provider with context ID [{0}] using [{1}] via configuration [{2}]...", contextID,
+					providerName, configID);
 		}
 
 		if (!StringUtils.isBlank(providerName)) {
 			setApplicationAttribute(contextID, (T) getComponent(providerName));
 		} else {
-			logWarn("Could not find provider component with context ID [{0}] and config ID [{1}].",
-					contextID, configID);
+			logWarn("Could not find provider component with context ID [{0}] and config ID [{1}].", contextID,
+					configID);
 		}
 	}
 
@@ -209,8 +205,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 			// Dashboard privileges
 			DashboardTilesConfig dtc = mc.getDashboardTiles();
 			if (dtc != null) {
-				PrivilegeGroupConfig pgc
-						= getPrivilegeGroup(mc, PrivilegeCategoryConstants.DASHBOARD);
+				PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.DASHBOARD);
 				for (DashboardTileConfig dtci : dtc.getDashboardTileList()) {
 					PrivilegeConfig pc = new PrivilegeConfig(dtci.getName(), dtci.getDescription());
 					pgc.addPrivilegeConfig(pc);
@@ -220,8 +215,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 			// Report privileges
 			ReportsConfig rc = mc.getReports();
 			if (rc != null) {
-				PrivilegeGroupConfig pgc
-						= getPrivilegeGroup(mc, PrivilegeCategoryConstants.REPORTABLE);
+				PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.REPORTABLE);
 				for (ReportConfig rci : rc.getReportList()) {
 					PrivilegeConfig pc = new PrivilegeConfig(rci.getName(), rci.getDescription());
 					pgc.addPrivilegeConfig(pc);
@@ -239,8 +233,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 
 			MenusConfig mnc = mc.getMenus();
 			if (mnc != null) {
-				PrivilegeGroupConfig pgc
-						= getPrivilegeGroup(mc, PrivilegeCategoryConstants.APPLICATIONUI);
+				PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.APPLICATIONUI);
 				for (MenuConfig mnci : mnc.getMenuList()) {
 					PrivilegeConfig pc = new PrivilegeConfig(mnci.getName(), mnci.getDescription());
 					pgc.addPrivilegeConfig(pc);
@@ -260,13 +253,11 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 		}
 
 		// Managed record types
-		for (Class<? extends Entity> entityClass : getAnnotatedClasses(Entity.class,
-				Managed.class)) {
+		for (Class<? extends Entity> entityClass : getAnnotatedClasses(Entity.class, Managed.class)) {
 			Managed ma = entityClass.getAnnotation(Managed.class);
 			ModuleConfig mc = moduleConfigs.get(ma.module());
 			if (mc == null) {
-				throw new UnifyException(
-						CommonModuleErrorConstants.UNKNOWN_MODULE_REFERENCED_BY_RECORD, ma.module(),
+				throw new UnifyException(CommonModuleErrorConstants.UNKNOWN_MODULE_REFERENCED_BY_RECORD, ma.module(),
 						entityClass);
 			}
 
@@ -296,8 +287,8 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 				if (ct != null) {
 					fc.setArchFieldType(ArchivingFieldType.fromCode(ct.code()));
 					if (!managedField.isListOnly()) {
-						fc.setArchivable(ma.archivable() && fc.getArchFieldType() != null
-								&& !excludArch.contains(fieldName));
+						fc.setArchivable(
+								ma.archivable() && fc.getArchFieldType() != null && !excludArch.contains(fieldName));
 					}
 				}
 
@@ -323,8 +314,7 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 
 				fc.setName(fieldName);
 				fc.setDescription(description);
-				fc.setAuditable(ma.auditable() && !managedField.isListOnly()
-						&& !excludAud.contains(fieldName));
+				fc.setAuditable(ma.auditable() && !managedField.isListOnly() && !excludAud.contains(fieldName));
 				fc.setReportable(ma.reportable() && !excludRpt.contains(fieldName));
 				managedConfig.addFieldConfig(fc);
 			}
@@ -367,16 +357,11 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 					auditsConfig.setAuditList(auditConfigList = new ArrayList<AuditConfig>());
 				}
 
-				auditConfigList
-						.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.SEARCH));
-				auditConfigList
-						.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.CREATE));
-				auditConfigList
-						.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.VIEW));
-				auditConfigList
-						.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.UPDATE));
-				auditConfigList
-						.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.DELETE));
+				auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.SEARCH));
+				auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.CREATE));
+				auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.VIEW));
+				auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.UPDATE));
+				auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.DELETE));
 			}
 
 			// Reportable configuration
@@ -411,20 +396,18 @@ public class JacklynBootModuleImpl extends AbstractBootModule<ModuleConfig> {
 		}
 	}
 
-	private AuditConfig createAuditConfig(String namePrefix, String titleLowCase, String type,
-			EventType eventType) throws UnifyException {
+	private AuditConfig createAuditConfig(String namePrefix, String titleLowCase, String type, EventType eventType)
+			throws UnifyException {
 		AuditConfig ac = new AuditConfig();
 		String action = eventType.name().toLowerCase();
 		ac.setAction(eventType);
 		ac.setAuditable(type);
 		ac.setName(namePrefix + '-' + action);
-		ac.setDescription(
-				resolveApplicationMessage("$m{module.managedaudit." + action + "}", titleLowCase));
+		ac.setDescription(resolveApplicationMessage("$m{module.managedaudit." + action + "}", titleLowCase));
 		return ac;
 	}
 
-	private PrivilegeGroupConfig getPrivilegeGroup(ModuleConfig mc, String category)
-			throws UnifyException {
+	private PrivilegeGroupConfig getPrivilegeGroup(ModuleConfig mc, String category) throws UnifyException {
 		PrivilegeGroupConfig pgc = mc.getPrivileges().getPrivilegeGroupConfig(category);
 		if (pgc == null) {
 			pgc = new PrivilegeGroupConfig(category);
