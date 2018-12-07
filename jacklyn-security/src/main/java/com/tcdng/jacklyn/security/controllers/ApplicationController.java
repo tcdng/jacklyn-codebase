@@ -48,7 +48,7 @@ import com.tcdng.unify.web.ui.control.Table;
 @UplBinding("web/security/upl/application.upl")
 @ResultMappings({
 		@ResultMapping(name = "forwardtohome",
-				response = { "!forwardresponse path:$x{application.home}" }),
+				response = { "!forwardresponse path:$x{application.web.home}" }),
 		@ResultMapping(name = "showuserroleoptions",
 				response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
 		@ResultMapping(name = "showuserdetails",

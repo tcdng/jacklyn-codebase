@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.security.controllers;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.AbstractPageController;
-import com.tcdng.unify.web.constant.ReservedPageControllerConstants;
 
 /**
  * Page controller for application login document.
@@ -26,7 +25,7 @@ import com.tcdng.unify.web.constant.ReservedPageControllerConstants;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(ReservedPageControllerConstants.APPLICATION_HOME)
+@Component("/application/home")
 @UplBinding("web/security/upl/applicationlogin.upl")
 public class ApplicationLoginController extends AbstractPageController {
 
