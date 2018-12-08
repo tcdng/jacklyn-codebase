@@ -20,6 +20,7 @@ import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -65,6 +66,10 @@ public class ChangeUserPasswordController extends AbstractSecurityController {
 			confirmPassword = null;
 		}
 		return "refreshmain";
+	}
+
+	public String getModeStyle() {
+		return EventType.UPDATE.colorMode();
 	}
 
 	public String getOldPassword() {

@@ -23,6 +23,7 @@ import com.tcdng.jacklyn.system.entities.SystemParameterQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -64,6 +65,10 @@ public class SystemControlController extends AbstractSystemController {
 					systemControlState.getDescription());
 		}
 		return "refreshcontrolpanel";
+	}
+
+	public String getModeStyle() {
+		return EventType.UPDATE.colorMode();
 	}
 
 	public List<SystemControlState> getSystemControlStateList() {

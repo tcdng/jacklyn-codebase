@@ -23,6 +23,7 @@ import com.tcdng.jacklyn.file.entities.FileTransferConfig;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.web.annotation.Action;
@@ -60,6 +61,10 @@ public class FileTransferController extends AbstractFileController {
 								fileTransferConfigData.getName(), String.valueOf(workingDt))
 						.logMessages().build();
 		return launchTaskWithMonitorBox(taskSetup, "file.filetransfer.execution");
+	}
+
+	public String getModeStyle() {
+		return EventType.CREATE.colorMode();
 	}
 
 	public Long getFileTransferConfigId() {

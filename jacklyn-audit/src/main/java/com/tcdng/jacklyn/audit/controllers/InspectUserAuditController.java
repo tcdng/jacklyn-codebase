@@ -54,6 +54,10 @@ public class InspectUserAuditController extends AbstractAuditController {
 		super(true, false);
 	}
 
+	public String getModeStyle() {
+		return EventType.VIEW.colorMode();
+	}
+
 	public String getSearchUserLoginId() {
 		return searchUserLoginId;
 	}

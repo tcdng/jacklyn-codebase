@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.file.data.BatchFileReadInputParameters;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
@@ -65,6 +66,10 @@ public class BatchFileUploadController extends AbstractFileController {
 								batchUploadParameters)
 						.logMessages().build();
 		return launchTaskWithMonitorBox(taskSetup, "file.batchupload.execution");
+	}
+
+	public String getModeStyle() {
+		return EventType.CREATE.colorMode();
 	}
 
 	public Long getBatchUploadConfigId() {
