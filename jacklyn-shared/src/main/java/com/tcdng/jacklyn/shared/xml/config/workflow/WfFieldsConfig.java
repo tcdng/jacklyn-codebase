@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
@@ -20,22 +21,32 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Workflow forms configuration.
+ * Workflow fields configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfFormsConfig {
-	
-	private List<WfFormConfig> wfFormConfigList;
+public class WfFieldsConfig {
 
-	public List<WfFormConfig> getWfFormConfigList() {
-		return wfFormConfigList;
+	private List<WfFieldConfig> wfFieldConfigList;
+
+	private List<WfComplexFieldConfig> wfComplexFieldConfigList;
+
+	public List<WfFieldConfig> getWfFieldConfigList() {
+		return wfFieldConfigList;
 	}
 
-	@XmlElement(name="form", required=true)
-	public void setWfFormConfigList(List<WfFormConfig> wfFormConfigList) {
-		this.wfFormConfigList = wfFormConfigList;
+	@XmlElement(name = "field", required = true)
+	public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
+		this.wfFieldConfigList = wfFieldConfigList;
 	}
-	
+
+	public List<WfComplexFieldConfig> getWfComplexFieldConfigList() {
+		return wfComplexFieldConfigList;
+	}
+
+	@XmlElement(name = "complex-field", required = true)
+	public void setWfComplexFieldConfigList(List<WfComplexFieldConfig> wfComplexFieldConfigList) {
+		this.wfComplexFieldConfigList = wfComplexFieldConfigList;
+	}
 }

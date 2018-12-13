@@ -43,8 +43,6 @@ public class WfStepConfig extends BaseConfig {
 
 	private String label;
 
-	private String form;
-
 	private Integer itemsPerSession;
 
 	private Integer expiryHours;
@@ -117,15 +115,6 @@ public class WfStepConfig extends BaseConfig {
 	@XmlAttribute
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public String getForm() {
-		return form;
-	}
-
-	@XmlAttribute
-	public void setForm(String form) {
-		this.form = form;
 	}
 
 	public Integer getItemsPerSession() {

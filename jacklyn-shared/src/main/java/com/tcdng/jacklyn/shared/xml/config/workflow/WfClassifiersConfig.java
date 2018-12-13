@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
@@ -20,21 +21,21 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Workflow template configurations.
+ * Workflow document classifiers configuration.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
-public class WfTemplatesConfig {
+public class WfClassifiersConfig {
 
-	private List<WfTemplateConfig> wfTemplateConfigList;
+	private List<WfClassifierConfig> wfClassifierConfigList;
 
-	public List<WfTemplateConfig> getWfTemplateConfigList() {
-		return wfTemplateConfigList;
+	public List<WfClassifierConfig> getWfClassifierConfigList() {
+		return wfClassifierConfigList;
 	}
 
-	@XmlElement(name = "template", required = true)
-	public void setWfTemplateConfigList(List<WfTemplateConfig> wfTemplateConfigList) {
-		this.wfTemplateConfigList = wfTemplateConfigList;
+	@XmlElement(name = "classifier", required = true)
+	public void setWfClassifierConfigList(List<WfClassifierConfig> wfClassifierConfigList) {
+		this.wfClassifierConfigList = wfClassifierConfigList;
 	}
 }

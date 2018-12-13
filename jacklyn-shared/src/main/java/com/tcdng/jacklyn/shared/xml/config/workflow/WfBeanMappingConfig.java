@@ -32,15 +32,15 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfDocBeanMappingConfig extends BaseConfig {
+public class WfBeanMappingConfig extends BaseConfig {
 	
 	private WorkflowBeanMappingType type;
 
 	private String beanType;
 	
-	private List<WfDocFieldMappingConfig> fieldMappingList;
+	private List<WfFieldMappingConfig> fieldMappingList;
 
-	public WfDocBeanMappingConfig() {
+	public WfBeanMappingConfig() {
 		this.type = WorkflowBeanMappingType.NONENTRY;
 	}
 
@@ -63,12 +63,12 @@ public class WfDocBeanMappingConfig extends BaseConfig {
 		this.beanType = beanType;
 	}
 
-	public List<WfDocFieldMappingConfig> getFieldMappingList() {
+	public List<WfFieldMappingConfig> getFieldMappingList() {
 		return fieldMappingList;
 	}
 
 	@XmlElement(name="field-mapping", required=true)
-	public void setFieldMappingList(List<WfDocFieldMappingConfig> mappingList) {
+	public void setFieldMappingList(List<WfFieldMappingConfig> mappingList) {
 		this.fieldMappingList = mappingList;
 	}
 }

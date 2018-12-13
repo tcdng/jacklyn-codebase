@@ -36,6 +36,9 @@ public class WfFormPrivilege extends BaseEntity {
 	@ForeignKey(WfStep.class)
 	private Long wfStepId;
 
+	@ForeignKey(WfForm.class)
+	private Long wfFormId;
+
 	@ForeignKey
 	private WorkflowFormElementType type;
 
@@ -74,6 +77,14 @@ public class WfFormPrivilege extends BaseEntity {
 
 	public void setWfStepId(Long wfStepId) {
 		this.wfStepId = wfStepId;
+	}
+
+	public Long getWfFormId() {
+		return wfFormId;
+	}
+
+	public void setWfFormId(Long wfFormId) {
+		this.wfFormId = wfFormId;
 	}
 
 	public Boolean getVisible() {

@@ -15,52 +15,36 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
-
 /**
- * Workflow template configuration.
+ * Workflow template configurations.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class WfTemplateConfig extends BaseConfig {
+public class WfTemplateConfig {
 
-	private String itemDescFormat;
+	private WfMessagesConfig wfMessagesConfig;
 
-	private String wfDocName;
+	private WfStepsConfig wfStepsConfig;
 
-	private List<WfStepConfig> wfStepConfigList;
-	
-	public String getItemDescFormat() {
-		return itemDescFormat;
+	public WfMessagesConfig getWfMessagesConfig() {
+		return wfMessagesConfig;
 	}
 
-	@XmlElement(name="item-description", required = true)
-	public void setItemDescFormat(String itemDescFormat) {
-		this.itemDescFormat = itemDescFormat;
+	@XmlElement(name = "messages", required = true)
+	public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
+		this.wfMessagesConfig = wfMessagesConfig;
 	}
 
-	public String getWfDocName() {
-		return wfDocName;
+	public WfStepsConfig getWfStepsConfig() {
+		return wfStepsConfig;
 	}
 
-	@XmlAttribute(name="document", required=true)
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
-
-	public List<WfStepConfig> getWfStepConfigList() {
-		return wfStepConfigList;
-	}
-
-	@XmlElement(name="step", required=true)
-	public void setWfStepConfigList(List<WfStepConfig> wfStepConfigList) {
-		this.wfStepConfigList = wfStepConfigList;
+	@XmlElement(name = "steps", required = true)
+	public void setWfStepsConfig(WfStepsConfig wfStepsConfig) {
+		this.wfStepsConfig = wfStepsConfig;
 	}
 
 }

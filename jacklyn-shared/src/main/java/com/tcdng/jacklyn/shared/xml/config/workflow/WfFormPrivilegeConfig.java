@@ -31,6 +31,8 @@ public class WfFormPrivilegeConfig {
 	
 	private WorkflowFormElementType type;
 
+	private String formName;
+
 	private String name;
 	
 	private Boolean visible;
@@ -56,6 +58,15 @@ public class WfFormPrivilegeConfig {
 	@XmlAttribute(required = true)
 	public void setType(WorkflowFormElementType type) {
 		this.type = type;
+	}
+
+	public String getFormName() {
+		return formName;
+	}
+
+	@XmlAttribute(name="form", required=true)
+	public void setFormName(String formName) {
+		this.formName = formName;
 	}
 
 	public String getName() {

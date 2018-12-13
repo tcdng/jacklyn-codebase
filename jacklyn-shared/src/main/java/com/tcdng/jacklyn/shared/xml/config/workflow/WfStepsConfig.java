@@ -13,29 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+
 /**
- * Workflow document bean mappings configuration.
+ * Workflow steps configuration.
  * 
  * @author Lateef Ojulari
- * @since 1.0
+ * @version 1.0
  */
-public class WfDocBeanMappingsConfig {
+public class WfStepsConfig extends BaseConfig {
 
-	private List<WfDocBeanMappingConfig> beanMappingList;
+	private List<WfStepConfig> wfStepConfigList;
 
-	public List<WfDocBeanMappingConfig> getBeanMappingList() {
-		return beanMappingList;
+	public List<WfStepConfig> getWfStepConfigList() {
+		return wfStepConfigList;
 	}
 
-	@XmlElement(name="bean-mapping")
-	public void setBeanMappingList(List<WfDocBeanMappingConfig> beanMappingList) {
-		this.beanMappingList = beanMappingList;
+	@XmlElement(name="step", required=true)
+	public void setWfStepConfigList(List<WfStepConfig> wfStepConfigList) {
+		this.wfStepConfigList = wfStepConfigList;
 	}
+
 }

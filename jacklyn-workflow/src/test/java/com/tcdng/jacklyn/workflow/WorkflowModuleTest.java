@@ -40,7 +40,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepPriority;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
-import com.tcdng.jacklyn.shared.xml.config.workflow.WfXmlConfigUtils;
+import com.tcdng.jacklyn.shared.xml.util.WfDocumentConfigUtils;
 import com.tcdng.jacklyn.workflow.TestOpenAccountPolicyLogic.OpenAccountDetails;
 import com.tcdng.jacklyn.workflow.business.WorkflowModule;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
@@ -133,10 +133,11 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		/* Document fields */
 		List<WfDocField> docFieldList = wfDocData.getFieldList();
 		assertNotNull(docFieldList);
-		assertEquals(7, docFieldList.size());
+		assertEquals(11, docFieldList.size());
 
 		WfDocField wfDocFieldData = docFieldList.get(0);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("id", wfDocFieldData.getName());
 		assertEquals("Customer ID", wfDocFieldData.getDescription());
 		assertEquals(DataType.LONG, wfDocFieldData.getDataType());
@@ -144,6 +145,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfDocFieldData = docFieldList.get(1);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("firstName", wfDocFieldData.getName());
 		assertEquals("First Name", wfDocFieldData.getDescription());
 		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
@@ -151,6 +153,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfDocFieldData = docFieldList.get(2);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("lastName", wfDocFieldData.getName());
 		assertEquals("Last Name", wfDocFieldData.getDescription());
 		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
@@ -158,6 +161,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfDocFieldData = docFieldList.get(3);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("age", wfDocFieldData.getName());
 		assertEquals("Age", wfDocFieldData.getDescription());
 		assertEquals(DataType.INTEGER, wfDocFieldData.getDataType());
@@ -165,6 +169,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfDocFieldData = docFieldList.get(4);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("height", wfDocFieldData.getName());
 		assertEquals("Height", wfDocFieldData.getDescription());
 		assertEquals(DataType.DOUBLE, wfDocFieldData.getDataType());
@@ -172,6 +177,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfDocFieldData = docFieldList.get(5);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("accountNo", wfDocFieldData.getName());
 		assertEquals("Account Number", wfDocFieldData.getDescription());
 		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
@@ -179,9 +185,43 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfDocFieldData = docFieldList.get(6);
 		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
 		assertEquals("fullName", wfDocFieldData.getName());
 		assertEquals("Full Name", wfDocFieldData.getDescription());
 		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
+		assertFalse(wfDocFieldData.getArrayFlag());
+
+		wfDocFieldData = docFieldList.get(7);
+		assertNotNull(wfDocFieldData);
+		assertNull(wfDocFieldData.getParentName());
+		assertEquals("driversLicense", wfDocFieldData.getName());
+		assertEquals("Driver's License", wfDocFieldData.getDescription());
+		assertEquals(DataType.COMPLEX, wfDocFieldData.getDataType());
+		assertFalse(wfDocFieldData.getArrayFlag());
+
+		wfDocFieldData = docFieldList.get(8);
+		assertNotNull(wfDocFieldData);
+		System.out.println(wfDocFieldData);
+		assertEquals("driversLicense", wfDocFieldData.getParentName());
+		assertEquals("licenseNo", wfDocFieldData.getName());
+		assertEquals("License No.", wfDocFieldData.getDescription());
+		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
+		assertFalse(wfDocFieldData.getArrayFlag());
+
+		wfDocFieldData = docFieldList.get(9);
+		assertNotNull(wfDocFieldData);
+		assertEquals("driversLicense", wfDocFieldData.getParentName());
+		assertEquals("issueDt", wfDocFieldData.getName());
+		assertEquals("Issue Date", wfDocFieldData.getDescription());
+		assertEquals(DataType.DATE, wfDocFieldData.getDataType());
+		assertFalse(wfDocFieldData.getArrayFlag());
+
+		wfDocFieldData = docFieldList.get(10);
+		assertNotNull(wfDocFieldData);
+		assertEquals("driversLicense", wfDocFieldData.getParentName());
+		assertEquals("expiryDt", wfDocFieldData.getName());
+		assertEquals("Expiry Date", wfDocFieldData.getDescription());
+		assertEquals(DataType.DATE, wfDocFieldData.getDataType());
 		assertFalse(wfDocFieldData.getArrayFlag());
 
 		/* Classifier */
@@ -288,21 +328,30 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		/* Sections */
 		List<WfFormSection> sectionList = wfFormData.getSectionList();
 		assertNotNull(sectionList);
-		assertEquals(1, sectionList.size());
+		assertEquals(2, sectionList.size());
 
 		WfFormSection wfFormSectionData = sectionList.get(0);
 		assertNotNull(wfFormSectionData);
 		assertEquals("basicDetails", wfFormSectionData.getName());
 		assertEquals("Basic Details", wfFormSectionData.getDescription());
+		assertNull(wfFormSectionData.getBinding());
+		assertNull(wfFormSectionData.getLabel());
+
+		wfFormSectionData = sectionList.get(1);
+		assertNotNull(wfFormSectionData);
+		assertEquals("licenseDetails", wfFormSectionData.getName());
+		assertEquals("License Details", wfFormSectionData.getDescription());
+		assertEquals("driversLicense", wfFormSectionData.getBinding());
 		assertNull(wfFormSectionData.getLabel());
 
 		/* Form fields */
 		List<WfFormField> formFieldList = wfFormData.getFieldList();
 		assertNotNull(formFieldList);
-		assertEquals(4, formFieldList.size());
+		assertEquals(7, formFieldList.size());
 
 		WfFormField wfFormFieldData = formFieldList.get(0);
 		assertNotNull(wfFormFieldData);
+		assertEquals("basicDetails", wfFormFieldData.getSectionName());
 		assertEquals("firstName", wfFormFieldData.getBinding());
 		assertEquals("!ui-text", wfFormFieldData.getEditorUpl());
 		assertEquals("First Name", wfFormFieldData.getLabel());
@@ -310,6 +359,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfFormFieldData = formFieldList.get(1);
 		assertNotNull(wfFormFieldData);
+		assertEquals("basicDetails", wfFormFieldData.getSectionName());
 		assertEquals("lastName", wfFormFieldData.getBinding());
 		assertEquals("!ui-text", wfFormFieldData.getEditorUpl());
 		assertEquals("Last Name", wfFormFieldData.getLabel());
@@ -317,6 +367,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfFormFieldData = formFieldList.get(2);
 		assertNotNull(wfFormFieldData);
+		assertEquals("basicDetails", wfFormFieldData.getSectionName());
 		assertEquals("age", wfFormFieldData.getBinding());
 		assertEquals("!ui-integer", wfFormFieldData.getEditorUpl());
 		assertEquals("Age", wfFormFieldData.getLabel());
@@ -324,9 +375,34 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 		wfFormFieldData = formFieldList.get(3);
 		assertNotNull(wfFormFieldData);
+		assertEquals("basicDetails", wfFormFieldData.getSectionName());
 		assertEquals("height", wfFormFieldData.getBinding());
 		assertEquals("!ui-decimal", wfFormFieldData.getEditorUpl());
 		assertEquals("Height", wfFormFieldData.getLabel());
+		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+
+		wfFormFieldData = formFieldList.get(4);
+		assertNotNull(wfFormFieldData);
+		assertEquals("licenseDetails", wfFormFieldData.getSectionName());
+		assertEquals("licenseNo", wfFormFieldData.getBinding());
+		assertEquals("!ui-text", wfFormFieldData.getEditorUpl());
+		assertEquals("License No.", wfFormFieldData.getLabel());
+		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+
+		wfFormFieldData = formFieldList.get(5);
+		assertNotNull(wfFormFieldData);
+		assertEquals("licenseDetails", wfFormFieldData.getSectionName());
+		assertEquals("issueDt", wfFormFieldData.getBinding());
+		assertEquals("!ui-date", wfFormFieldData.getEditorUpl());
+		assertEquals("Issue Date", wfFormFieldData.getLabel());
+		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+
+		wfFormFieldData = formFieldList.get(6);
+		assertNotNull(wfFormFieldData);
+		assertEquals("licenseDetails", wfFormFieldData.getSectionName());
+		assertEquals("expiryDt", wfFormFieldData.getBinding());
+		assertEquals("!ui-date", wfFormFieldData.getEditorUpl());
+		assertEquals("Expiry Date", wfFormFieldData.getLabel());
 		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
 
 		/* Messages */
@@ -935,7 +1011,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		InputStream inputStream = null;
 		try {
 			inputStream = IOUtils.openClassLoaderResourceInputStream(resourceName);
-			return WfXmlConfigUtils.readXmlWfCategoryConfig(inputStream);
+			return WfDocumentConfigUtils.readXmlWfCategoryConfig(inputStream);
 		} finally {
 			IOUtils.close(inputStream);
 		}

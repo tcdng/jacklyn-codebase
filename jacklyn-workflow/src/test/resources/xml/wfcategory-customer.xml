@@ -17,11 +17,11 @@
 					multiple="false" />
 				<field name="fullName" description="Full Name" type="string"
 					multiple="false" />
-				<!-- complex-field name="driversLicense" description="Driver's License">
-					<field name="licenseNo" description="License No." type="string"/>
-					<field name="issueDt" description="Issue Date" type="date"/>
-					<field name="expiryDt" description="Expiry Date" type="date"/>
-				</complex-field-->
+				<complex-field name="driversLicense" description="Driver's License">
+					<field name="licenseNo" description="License No." type="string" />
+					<field name="issueDt" description="Issue Date" type="date" />
+					<field name="expiryDt" description="Expiry Date" type="date" />
+				</complex-field>
 			</fields>
 			<classifiers>
 				<classifier name="validAge" description="Valid Age">
@@ -60,7 +60,7 @@
 							<field binding="height" editor="!ui-decimal" label="Height"
 								required="true" />
 						</section>
-						<!-- section name="licenseDetails" description="License Details"
+						<section name="licenseDetails" description="License Details"
 							binding="driversLicense">
 							<field binding="licenseNo" editor="!ui-text" label="License No."
 								required="true" />
@@ -68,7 +68,7 @@
 								required="true" />
 							<field binding="expiryDt" editor="!ui-date" label="Expiry Date"
 								required="true" />
-						</section-->
+						</section>
 					</sections>
 				</tab>
 			</tabs>
@@ -112,7 +112,7 @@
 				</policies>
 			</step>
 			<step name="custApproval" description="Customer Approval"
-				participant="all" priority="high" form="custForm" type="interactive">
+				participant="all" priority="high" type="interactive">
 				<alerts>
 					<alert name="awaitApproval" description="Awaiting Approval"
 						message="awaitCustApproval" type="system" />

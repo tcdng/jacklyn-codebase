@@ -13,30 +13,43 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+
 /**
- * Workflow form tabs configuration.
+ * Workflow document classifier configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfFormTabsConfig {
+public class WfClassifierConfig extends BaseConfig {
 
-	private List<WfFormTabConfig> wfFormTabConfigList;
+	private String logic;
 
-	public List<WfFormTabConfig> getWfFormTabConfigList() {
-		return wfFormTabConfigList;
+	private List<WfClassifierFilterConfig> wfClassifierFilterConfigList;
+
+	public String getLogic() {
+		return logic;
 	}
 
-	@XmlElement(name = "tab", required = true)
-	public void setWfFormTabConfigList(List<WfFormTabConfig> wfFormTabConfigList) {
-		this.wfFormTabConfigList = wfFormTabConfigList;
+	@XmlAttribute
+	public void setLogic(String logic) {
+		this.logic = logic;
 	}
 
+	public List<WfClassifierFilterConfig> getWfClassifierFilterConfigList() {
+		return wfClassifierFilterConfigList;
+	}
+
+	@XmlElement(name = "filter", required = true)
+	public void setWfClassifierFilterConfigList(
+			List<WfClassifierFilterConfig> wfClassifierFilterConfigList) {
+		this.wfClassifierFilterConfigList = wfClassifierFilterConfigList;
+	}
 }

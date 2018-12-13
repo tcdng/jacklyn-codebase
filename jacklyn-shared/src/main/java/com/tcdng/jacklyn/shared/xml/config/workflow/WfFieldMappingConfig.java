@@ -16,26 +16,35 @@
 
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * Workflow document classifiers configuration.
+ * Workflow document field mapping configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfDocClassifiersConfig {
+public class WfFieldMappingConfig {
 
-	private List<WfDocClassifierConfig> wfDocClassifierConfigList;
+	private String docFieldName;
+	
+	private String beanFieldName;
 
-	public List<WfDocClassifierConfig> getWfDocClassifierConfigList() {
-		return wfDocClassifierConfigList;
+	public String getDocFieldName() {
+		return docFieldName;
 	}
 
-	@XmlElement(name = "classifier", required = true)
-	public void setWfDocClassifierConfigList(List<WfDocClassifierConfig> wfDocClassifierConfigList) {
-		this.wfDocClassifierConfigList = wfDocClassifierConfigList;
+	@XmlAttribute(name="doc-field", required=true)
+	public void setDocFieldName(String docFieldName) {
+		this.docFieldName = docFieldName;
+	}
+
+	public String getBeanFieldName() {
+		return beanFieldName;
+	}
+
+	@XmlAttribute(name="bean-field", required=true)
+	public void setBeanFieldName(String beanFieldName) {
+		this.beanFieldName = beanFieldName;
 	}
 }

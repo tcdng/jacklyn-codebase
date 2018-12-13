@@ -21,21 +21,21 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Workflow form sections configuration.
+ * Workflow document bean mappings configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfFormSectionsConfig {
+public class WfBeanMappingsConfig {
 
-	private List<WfFormSectionConfig> wfFormSectionConfigList;
+	private List<WfBeanMappingConfig> beanMappingList;
 
-	public List<WfFormSectionConfig> getWfFormSectionConfigList() {
-		return wfFormSectionConfigList;
+	public List<WfBeanMappingConfig> getBeanMappingList() {
+		return beanMappingList;
 	}
 
-	@XmlElement(name = "section", required = true)
-	public void setWfFormSectionConfigList(List<WfFormSectionConfig> wfFormSectionConfigList) {
-		this.wfFormSectionConfigList = wfFormSectionConfigList;
+	@XmlElement(name="bean-mapping")
+	public void setBeanMappingList(List<WfBeanMappingConfig> beanMappingList) {
+		this.beanMappingList = beanMappingList;
 	}
 }

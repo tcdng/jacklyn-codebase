@@ -16,6 +16,8 @@
 
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -33,7 +35,7 @@ public class WfFormTabConfig extends BaseConfig {
 
 	private Boolean pseudo;
 	
-	private WfFormSectionsConfig wfFormSectionsConfig;
+	private List<WfFormSectionConfig> wfFormSectionConfigList;
 	
 	public WfFormTabConfig() {
 		this.pseudo = Boolean.TRUE;
@@ -57,13 +59,13 @@ public class WfFormTabConfig extends BaseConfig {
 		this.pseudo = pseudo;
 	}
 
-	public WfFormSectionsConfig getWfFormSectionsConfig() {
-		return wfFormSectionsConfig;
+	public List<WfFormSectionConfig> getWfFormSectionConfigList() {
+		return wfFormSectionConfigList;
 	}
 
-	@XmlElement(name="sections", required=true)
-	public void setWfFormSectionsConfig(WfFormSectionsConfig wfFormSectionsConfig) {
-		this.wfFormSectionsConfig = wfFormSectionsConfig;
+	@XmlElement(name = "section", required = true)
+	public void setWfFormSectionConfigList(List<WfFormSectionConfig> wfFormSectionConfigList) {
+		this.wfFormSectionConfigList = wfFormSectionConfigList;
 	}
 
 }

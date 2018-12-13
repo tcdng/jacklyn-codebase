@@ -28,13 +28,18 @@ import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class WfDocFieldConfig extends BaseConfig {
+public class WfFieldConfig extends BaseConfig {
 
 	private DataType dataType;
 
 	private Boolean multiple;
 
-	public WfDocFieldConfig() {
+	public WfFieldConfig(DataType dataType, Boolean multiple) {
+		this.dataType = dataType;
+		this.multiple = multiple;
+	}
+
+	public WfFieldConfig() {
 		this.multiple = Boolean.FALSE;
 	}
 

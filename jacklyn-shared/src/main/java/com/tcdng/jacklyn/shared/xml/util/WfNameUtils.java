@@ -13,23 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.utils;
+package com.tcdng.jacklyn.shared.xml.util;
 
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.util.StringUtils;
 
 /**
- * Workflow utilities.
+ * Workflow name utilities.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public final class WorkflowUtils {
+public final class WfNameUtils {
 
 	private static FactoryMap<String, DocNameParts> docNames;
-
-	private static FactoryMap<String, FormNameParts> formNames;
 
 	private static FactoryMap<String, TemplateNameParts> templateNames;
 
@@ -42,16 +40,6 @@ public final class WorkflowUtils {
 			protected DocNameParts create(String globalName, Object... params) throws Exception {
 				String[] names = StringUtils.dotSplit(globalName);
 				return new DocNameParts(names[0], names[1]);
-			}
-
-		};
-
-		formNames = new FactoryMap<String, FormNameParts>() {
-
-			@Override
-			protected FormNameParts create(String globalName, Object... params) throws Exception {
-				String[] names = StringUtils.dotSplit(globalName);
-				return new FormNameParts(names[0], names[1]);
 			}
 
 		};
@@ -78,25 +66,24 @@ public final class WorkflowUtils {
 		};
 	}
 
-	private WorkflowUtils() {
+	private WfNameUtils() {
 
+	}
+
+	public static boolean isValidName(String name) {
+		return !StringUtils.isBlank(name) && !name.matches(".*([ \t]).*");
 	}
 
 	public static String getGlobalDocName(String categoryName, String docName) {
 		return StringUtils.dotify(categoryName, docName);
 	}
 
-	public static String getGlobalMessageName(String categoryName, String messageName) {
-		return StringUtils.dotify(categoryName, messageName);
-		// return categoryName + "_" + messageName;
-	}
-
-	public static String getGlobalFormName(String categoryName, String formName) {
-		return StringUtils.dotify(categoryName, formName);
-	}
-
 	public static String getGlobalTemplateName(String categoryName, String templateName) {
 		return StringUtils.dotify(categoryName, templateName);
+	}
+
+	public static String getGlobalMessageName(String categoryName, String messageName) {
+		return StringUtils.dotify(categoryName, messageName);
 	}
 
 	public static String getGlobalStepName(String categoryName, String templateName,
@@ -106,10 +93,6 @@ public final class WorkflowUtils {
 
 	public static DocNameParts getDocNameParts(String globalName) throws UnifyException {
 		return docNames.get(globalName);
-	}
-
-	public static FormNameParts getFormNameParts(String globalName) throws UnifyException {
-		return formNames.get(globalName);
 	}
 
 	public static TemplateNameParts getTemplateNameParts(String globalName) throws UnifyException {

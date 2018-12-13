@@ -15,41 +15,42 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+import com.tcdng.unify.core.constant.FileAttachmentType;
+import com.tcdng.unify.core.util.xml.adapter.FileAttachmentTypeXmlAdapter;
 
 /**
- * Workflow document classifier configuration.
+ * Workflow document attachment configuration.
  * 
  * @author Lateef Ojulari
- * @since 1.0
+ * @version 1.0
  */
-public class WfDocClassifierConfig extends BaseConfig {
+public class WfAttachmentConfig extends BaseConfig {
 
-	private String logic;
+	private String label;
 
-	private List<WfDocClassifierFilterConfig> wfDocClassifierFilterConfigList;
-
-	public String getLogic() {
-		return logic;
+	private FileAttachmentType type;
+	
+	public String getLabel() {
+		return label;
 	}
 
 	@XmlAttribute
-	public void setLogic(String logic) {
-		this.logic = logic;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
-	public List<WfDocClassifierFilterConfig> getWfDocClassifierFilterConfigList() {
-		return wfDocClassifierFilterConfigList;
+	public FileAttachmentType getType() {
+		return type;
 	}
 
-	@XmlElement(name = "filter", required = true)
-	public void setWfDocClassifierFilterConfigList(
-			List<WfDocClassifierFilterConfig> wfDocClassifierFilterConfigList) {
-		this.wfDocClassifierFilterConfigList = wfDocClassifierFilterConfigList;
+    @XmlJavaTypeAdapter(FileAttachmentTypeXmlAdapter.class)
+	@XmlAttribute(required=true)
+	public void setType(FileAttachmentType type) {
+		this.type = type;
 	}
+
 }

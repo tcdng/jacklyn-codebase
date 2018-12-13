@@ -48,6 +48,9 @@ public class WfFormSection extends BaseEntity {
 	@Column(name = "SECTION_LABEL", length = 64, nullable = true)
 	private String label;
 
+	@Column(name = "BINDING", nullable = true)
+	private String binding;
+
 	@ListOnly(key = "wfFormId", property = "name")
 	private String wfFormName;
 
@@ -93,6 +96,14 @@ public class WfFormSection extends BaseEntity {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getBinding() {
+		return binding;
+	}
+
+	public void setBinding(String binding) {
+		this.binding = binding;
 	}
 
 	public String getWfFormName() {

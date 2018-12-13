@@ -40,6 +40,9 @@ public class WfDocField extends BaseEntity {
 	@ForeignKey
 	private DataType dataType;
 
+	@Column(name = "PARENT_FIELD_NM", length = 32, nullable = true)
+	private String parentName;
+
 	@Column(name = "FIELD_NM", length = 32)
 	private String name;
 
@@ -73,6 +76,14 @@ public class WfDocField extends BaseEntity {
 
 	public void setWfDocId(Long wfDocId) {
 		this.wfDocId = wfDocId;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	public String getName() {

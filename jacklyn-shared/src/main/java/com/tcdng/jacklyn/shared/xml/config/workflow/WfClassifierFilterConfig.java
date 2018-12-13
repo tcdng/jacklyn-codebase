@@ -27,7 +27,7 @@ import com.tcdng.unify.core.util.xml.adapter.FilterConditionTypeXmlAdapter;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfDocClassifierFilterConfig {
+public class WfClassifierFilterConfig {
 
 	private String field;
 	
@@ -39,7 +39,7 @@ public class WfDocClassifierFilterConfig {
 	
 	private Boolean fieldOnly;
 
-	public WfDocClassifierFilterConfig() {
+	public WfClassifierFilterConfig() {
 		this.fieldOnly = Boolean.FALSE;
 	}
 

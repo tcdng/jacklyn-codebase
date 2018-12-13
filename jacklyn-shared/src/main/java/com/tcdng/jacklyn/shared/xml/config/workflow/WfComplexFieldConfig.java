@@ -15,42 +15,42 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
-import com.tcdng.unify.core.constant.FileAttachmentType;
-import com.tcdng.unify.core.util.xml.adapter.FileAttachmentTypeXmlAdapter;
+import com.tcdng.unify.core.constant.DataType;
+import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
 
 /**
- * Workflow document attachment configuration.
+ * Document complex field configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class WfDocAttachmentConfig extends BaseConfig {
+public class WfComplexFieldConfig extends WfFieldConfig {
 
-	private String label;
+	private List<WfFieldConfig> wfFieldConfigList;
 
-	private FileAttachmentType type;
-	
-	public String getLabel() {
-		return label;
+	public WfComplexFieldConfig() {
+		super(DataType.COMPLEX, Boolean.FALSE);
 	}
 
-	@XmlAttribute
-	public void setLabel(String label) {
-		this.label = label;
+	public List<WfFieldConfig> getWfFieldConfigList() {
+		return wfFieldConfigList;
 	}
 
-	public FileAttachmentType getType() {
-		return type;
+	@XmlElement(name = "field", required = true)
+	public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
+		this.wfFieldConfigList = wfFieldConfigList;
 	}
 
-    @XmlJavaTypeAdapter(FileAttachmentTypeXmlAdapter.class)
-	@XmlAttribute(required=true)
-	public void setType(FileAttachmentType type) {
-		this.type = type;
-	}
+	@Override
+	@XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
+	@XmlAttribute(name = "type", required = true)
+	public void setDataType(DataType dataType) {
 
+	}
 }

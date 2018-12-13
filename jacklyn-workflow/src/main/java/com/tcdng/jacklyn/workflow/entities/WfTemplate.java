@@ -43,17 +43,11 @@ public class WfTemplate extends BaseStatusEntity {
 	@ForeignKey(WfCategory.class)
 	private Long wfCategoryId;
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
-
 	@Column(name = "WFTEMPLATE_NM", length = 32)
 	private String name;
 
 	@Column(name = "WFTEMPLATE_DESC", length = 64)
 	private String description;
-
-	@Column(name = "ITEM_DESC_FMT", length = 128)
-	private String itemDescFormat;
 
 	@Column(name = "MANUAL_OPTION_FG")
 	private Boolean manualOption;
@@ -69,12 +63,6 @@ public class WfTemplate extends BaseStatusEntity {
 
 	@ListOnly(key = "wfCategoryId", property = "updateDt")
 	private Date updateDt;
-
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
-
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
 
 	@Override
 	public String getDescription() {
@@ -101,44 +89,12 @@ public class WfTemplate extends BaseStatusEntity {
 		this.name = name;
 	}
 
-	public String getItemDescFormat() {
-		return itemDescFormat;
-	}
-
-	public void setItemDescFormat(String itemDescFormat) {
-		this.itemDescFormat = itemDescFormat;
-	}
-
 	public Boolean getManualOption() {
 		return manualOption;
 	}
 
 	public void setManualOption(Boolean manualOption) {
 		this.manualOption = manualOption;
-	}
-
-	public Long getWfDocId() {
-		return wfDocId;
-	}
-
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
-
-	public String getWfDocName() {
-		return wfDocName;
-	}
-
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
-
-	public String getWfDocDesc() {
-		return wfDocDesc;
-	}
-
-	public void setWfDocDesc(String wfDocDesc) {
-		this.wfDocDesc = wfDocDesc;
 	}
 
 	public List<WfStep> getStepList() {

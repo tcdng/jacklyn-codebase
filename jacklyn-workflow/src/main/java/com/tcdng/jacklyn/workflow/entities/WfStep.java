@@ -41,9 +41,6 @@ public class WfStep extends BaseEntity {
 	@ForeignKey(WfTemplate.class)
 	private Long wfTemplateId;
 
-	@ForeignKey(type = WfForm.class, nullable = true)
-	private Long wfFormId;
-
 	@ForeignKey
 	private WorkflowStepType stepType;
 
@@ -130,14 +127,6 @@ public class WfStep extends BaseEntity {
 
 	public void setWfTemplateId(Long wfTemplateId) {
 		this.wfTemplateId = wfTemplateId;
-	}
-
-	public Long getWfFormId() {
-		return wfFormId;
-	}
-
-	public void setWfFormId(Long wfFormId) {
-		this.wfFormId = wfFormId;
 	}
 
 	public WorkflowStepType getStepType() {

@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
@@ -20,22 +21,22 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Workflow documents configuration.
+ * Workflow document attachments configuration.
  * 
  * @author Lateef Ojulari
- * @since 1.0
+ * @version 1.0
  */
-public class WfDocsConfig {
-	
-	private List<WfDocConfig> wfDocConfigList;
+public class WfAttachmentsConfig {
 
-	public List<WfDocConfig> getWfDocConfigList() {
-		return wfDocConfigList;
+	private List<WfAttachmentConfig> wfAttachmentConfigList;
+
+	public List<WfAttachmentConfig> getWfAttachmentConfigList() {
+		return wfAttachmentConfigList;
 	}
 
-	@XmlElement(name="document", required=true)
-	public void setWfDocConfigList(List<WfDocConfig> wfDocConfigList) {
-		this.wfDocConfigList = wfDocConfigList;
+	@XmlElement(name="attachment", required = true)
+	public void setWfAttachmentConfigList(List<WfAttachmentConfig> wfAttachmentConfigList) {
+		this.wfAttachmentConfigList = wfAttachmentConfigList;
 	}
-	
+
 }

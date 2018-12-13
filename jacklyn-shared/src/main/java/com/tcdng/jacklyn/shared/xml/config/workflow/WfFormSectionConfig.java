@@ -33,6 +33,8 @@ public class WfFormSectionConfig extends BaseConfig {
 
 	private String label;
 
+	private String binding;
+
 	private List<WfFormFieldConfig> wfFormFieldConfigList;
 
 	public String getLabel() {
@@ -44,11 +46,20 @@ public class WfFormSectionConfig extends BaseConfig {
 		this.label = label;
 	}
 
+	public String getBinding() {
+		return binding;
+	}
+
+	@XmlAttribute(name = "binding")
+	public void setBinding(String binding) {
+		this.binding = binding;
+	}
+
 	public List<WfFormFieldConfig> getWfFormFieldConfigList() {
 		return wfFormFieldConfigList;
 	}
 
-	@XmlElement(name="field", required=true)
+	@XmlElement(name = "field", required = true)
 	public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
 		this.wfFormFieldConfigList = wfFormFieldConfigList;
 	}
