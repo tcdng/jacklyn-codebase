@@ -288,4 +288,9 @@ public interface WfDocumentErrorConstants {
 	 * Workflow document section field binding has no UPL editor. Index = {0}, sectionName = {1}, binding = {2}
 	 */
 	String WFDOCUMENT_FORMFIELD_NO_EDITOR = "WFDOC_0035"; 
+
+	/**
+	 * Workflow document has no version.
+	 */
+	String WFDOCUMENT_NO_VERSION = "WFDOC_0036	";
 }

@@ -31,8 +31,10 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfUserActionConfig;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAlertConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfEnrichmentConfig;
+import com.tcdng.jacklyn.shared.xml.config.workflow.WfFormPrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfMessageConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfPolicyConfig;
+import com.tcdng.jacklyn.shared.xml.config.workflow.WfRecordActionConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfRoutingConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfStepConfig;
 import com.tcdng.unify.core.UnifyError;
@@ -105,6 +107,10 @@ public final class WfTemplateConfigUtils {
 			ctx.addError(WfTemplateErrorConstants.WFTEMPLATE_NO_DOCUMENT);
 		}
 
+		if (StringUtils.isBlank(wfTemplateConfig.getVersion())) {
+			ctx.addError(WfTemplateErrorConstants.WFTEMPLATE_NO_VERSION);
+		}
+
 		// Messages
 		if (wfTemplateConfig.getWfMessagesConfig() != null
 				&& !DataUtils.isBlank(wfTemplateConfig.getWfMessagesConfig().getWfMessageConfigList())) {
@@ -121,8 +127,8 @@ public final class WfTemplateConfigUtils {
 			for (WfStepConfig wfStepConfig : wfTemplateConfig.getWfStepsConfig().getWfStepConfigList()) {
 				ctx.addStepFirstPass(wfStepConfig);
 			}
-
 			ctx.evaluateFirstPass();
+
 			for (WfStepConfig wfStepConfig : wfTemplateConfig.getWfStepsConfig().getWfStepConfigList()) {
 				ctx.addStepSecondPass(wfStepConfig);
 			}
@@ -140,6 +146,8 @@ public final class WfTemplateConfigUtils {
 		private Set<String> wfMessageConfigs;
 
 		private int startCount;
+
+		private int manualCount;
 
 		private int endCount;
 
@@ -224,6 +232,10 @@ public final class WfTemplateConfigUtils {
 				startCount++;
 			}
 
+			if (WorkflowStepType.MANUAL.equals(wfStepConfig.getType())) {
+				manualCount++;
+			}
+
 			if (WorkflowStepType.END.equals(wfStepConfig.getType())) {
 				endCount++;
 			}
@@ -236,18 +248,38 @@ public final class WfTemplateConfigUtils {
 				case AUTOMATIC:
 					validateEnrichments(wfStepConfig);
 					validatePolicies(wfStepConfig);
+					validateRecordActions(wfStepConfig);
 					validateAlerts(wfStepConfig);
 					validateRoutings(wfStepConfig);
+					invalidateUserActions(wfStepConfig);
+					invalidateFormPrivileges(wfStepConfig);
 					break;
 				case END:
 					validateAlerts(wfStepConfig);
+					invalidateEnrichments(wfStepConfig);
+					invalidateRoutings(wfStepConfig);
+					invalidatePolicies(wfStepConfig);
+					invalidateRecordActions(wfStepConfig);
+					invalidateUserActions(wfStepConfig);
+					invalidateFormPrivileges(wfStepConfig);
 					break;
 				case INTERACTIVE:
 					validateAlerts(wfStepConfig);
 					validateUserActions(wfStepConfig);
+					validateFormPrivileges(wfStepConfig);
+					invalidateEnrichments(wfStepConfig);
+					invalidatePolicies(wfStepConfig);
+					invalidateRoutings(wfStepConfig);
+					invalidateRecordActions(wfStepConfig);
 					break;
 				case MANUAL:
 					validateAlerts(wfStepConfig);
+					validateFormPrivileges(wfStepConfig);
+					invalidateEnrichments(wfStepConfig);
+					invalidateRoutings(wfStepConfig);
+					invalidatePolicies(wfStepConfig);
+					invalidateRecordActions(wfStepConfig);
+					invalidateUserActions(wfStepConfig);
 					break;
 				case RECEPTACLE:
 					break;
@@ -255,11 +287,16 @@ public final class WfTemplateConfigUtils {
 					validateEnrichments(wfStepConfig);
 					validateAlerts(wfStepConfig);
 					validateRoutings(wfStepConfig);
+					invalidatePolicies(wfStepConfig);
+					invalidateRecordActions(wfStepConfig);
+					invalidateUserActions(wfStepConfig);
+					invalidateFormPrivileges(wfStepConfig);
 					break;
 				default:
 					break;
 				}
 			}
+
 			stepCounter++;
 		}
 
@@ -274,6 +311,10 @@ public final class WfTemplateConfigUtils {
 				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_MULTIPLE_START);
 			}
 
+			if (manualCount > 1) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_MULTIPLE_MANUAL);
+			}
+			
 			if (endCount == 0) {
 				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_END);
 			} else if (endCount > 1) {
@@ -340,6 +381,14 @@ public final class WfTemplateConfigUtils {
 			}
 		}
 
+		private void invalidateRoutings(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfRoutingsConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList())) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_ROUTINGS_EXIST, stepCounter, wfStepConfig.getName(),
+						wfStepConfig.getType());
+			}
+		}
+
 		private void validateUserActions(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfUserActionsConfig() == null
 					|| DataUtils.isBlank(wfStepConfig.getWfUserActionsConfig().getWfUserActionConfigList())) {
@@ -403,6 +452,96 @@ public final class WfTemplateConfigUtils {
 			}
 		}
 
+		private void invalidateUserActions(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfUserActionsConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfUserActionsConfig().getWfUserActionConfigList())) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_USERACTIONS_EXIST, stepCounter,
+						wfStepConfig.getName(), wfStepConfig.getType());
+			}
+		}
+
+		private void validateRecordActions(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfRecordActionsConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
+				Set<String> names = new HashSet<String>();
+				int index = 0;
+				for (WfRecordActionConfig wfRecordActionConfig : wfStepConfig.getWfRecordActionsConfig()
+						.getWfRecordActionConfigList()) {
+					String name = wfRecordActionConfig.getName();
+					if (!StringUtils.isBlank(name)) {
+						if (!WfNameUtils.isValidName(name)) {
+							addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_INVALID_NAME, index,
+									wfStepConfig.getName(), name);
+						}
+
+						if (names.contains(name)) {
+							addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_EXIST, index,
+									wfStepConfig.getName(), name);
+						} else {
+							names.add(name);
+						}
+					} else {
+						addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_NAME, index,
+								wfStepConfig.getName());
+					}
+
+					if (StringUtils.isBlank(wfRecordActionConfig.getDescription())) {
+						addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_DESC, index,
+								wfStepConfig.getName());
+					}
+
+					if (wfRecordActionConfig.getActionType() == null) {
+						addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_TYPE, index,
+								wfStepConfig.getName(), name);
+					}
+
+					if (wfRecordActionConfig.getDocMappingName() == null) {
+						addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_MAPPING, index,
+								wfStepConfig.getName(), name);
+					}
+
+					index++;
+				}
+			}
+		}
+
+		private void invalidateRecordActions(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfRecordActionsConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_RECORDACTIONS_EXIST, stepCounter,
+						wfStepConfig.getName(), wfStepConfig.getType());
+			}
+		}
+
+		private void validateFormPrivileges(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfFormPrivilegesConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
+				int index = 0;
+				for (WfFormPrivilegeConfig wfFormPrivilegeConfig : wfStepConfig.getWfFormPrivilegesConfig()
+						.getWfFormPrivilegesConfigList()) {
+					if (StringUtils.isBlank(wfFormPrivilegeConfig.getName())) {
+						addError(WfTemplateErrorConstants.WFTEMPLATE_FORMPRIVILEGE_NO_ELEMENT_NAME, index,
+								wfStepConfig.getName());
+					}
+
+					if (wfFormPrivilegeConfig.getType() == null) {
+						addError(WfTemplateErrorConstants.WFTEMPLATE_FORMPRIVILEGE_NO_ELEMENT_TYPE, index,
+								wfStepConfig.getName());
+					}
+
+					index++;
+				}
+			}
+		}
+
+		private void invalidateFormPrivileges(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfFormPrivilegesConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_FORMPRIVILEGES_EXIST, stepCounter,
+						wfStepConfig.getName(), wfStepConfig.getType());
+			}
+		}
+		
 		private void validateEnrichments(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfEnrichmentsConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
@@ -441,6 +580,14 @@ public final class WfTemplateConfigUtils {
 			}
 		}
 
+		private void invalidateEnrichments(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfEnrichmentsConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_ENRICHMENTS_EXIST, stepCounter,
+						wfStepConfig.getName(), wfStepConfig.getType());
+			}
+		}
+		
 		private void validatePolicies(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfPoliciesConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
@@ -478,6 +625,14 @@ public final class WfTemplateConfigUtils {
 			}
 		}
 
+		private void invalidatePolicies(WfStepConfig wfStepConfig) {
+			if (wfStepConfig.getWfPoliciesConfig() != null
+					&& !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_POLICIES_EXIST, stepCounter,
+						wfStepConfig.getName(), wfStepConfig.getType());
+			}
+		}
+		
 		private void validateAlerts(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfAlertsConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {

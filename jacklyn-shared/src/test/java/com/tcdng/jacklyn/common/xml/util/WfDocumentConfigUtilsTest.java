@@ -63,6 +63,7 @@ public class WfDocumentConfigUtilsTest {
 
 		assertEquals("customerCategory.custInfo", wfDocumentConfig.getName());
 		assertEquals("Customer Information", wfDocumentConfig.getDescription());
+		assertEquals("1.0", wfDocumentConfig.getVersion());
 
 		// Fields
 		WfFieldsConfig wfFieldsConfig = wfDocumentConfig.getWfFieldsConfig();

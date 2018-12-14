@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <document name="customerCategory.custInfo" description="Customer Information"
-	version="1">
+	version="1.0">
 	<fields>
 		<field name="id" description="Customer ID" type="long" />
 		<field name="firstName" description="First Name" type="string" />

@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
-<document description="Customer Information"
-	version="1">
+<document description="Customer Information" version="1.0">
 	<fields>
 		<field name="id" type="long" />
 		<field description="First Name" type="string" />
-		<field name="lastName" description="Last Name"/>
+		<field name="lastName" description="Last Name" />
 		<field name="age" description="Age" type="integer" />
 		<field name="height" description="Height" type="double" />
-		<field name="lastName" description="Last Name Old"/>
+		<field name="lastName" description="Last Name Old" />
 		<complex-field name="driversLicense" description="Driver's License">
 			<field name="licenseNo" description="License No." type="string" />
 			<field name="issueDt" description="Issue Date" type="date" />
@@ -21,8 +20,7 @@
 				field-only="false" />
 		</classifier>
 		<classifier name="validAge" description="Valid Age 2">
-			<filter field="dob" value1="18" value2="40"
-				field-only="false" />
+			<filter field="dob" value1="18" value2="40" field-only="false" />
 		</classifier>
 		<classifier description="Some Classifier">
 		</classifier>
@@ -33,8 +31,7 @@
 			label="Certificate" type="pdf" />
 		<attachment name="birthCert" description="Birth Certificate"
 			label="Certificate" />
-		<attachment description="Origin Certificate"
-			type="xls" />
+		<attachment description="Origin Certificate" type="xls" />
 	</attachments>
 
 	<bean-mappings>

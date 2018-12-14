@@ -104,6 +104,10 @@ public final class WfDocumentConfigUtils {
 			ctx.addError(WfDocumentErrorConstants.WFDOCUMENT_NO_DESC);
 		}
 
+		if (StringUtils.isBlank(wfDocumentConfig.getVersion())) {
+			ctx.addError(WfDocumentErrorConstants.WFDOCUMENT_NO_VERSION);
+		}
+
 		// Fields
 		if (wfDocumentConfig.getWfFieldsConfig() == null
 				|| (DataUtils.isBlank(wfDocumentConfig.getWfFieldsConfig().getWfFieldConfigList())

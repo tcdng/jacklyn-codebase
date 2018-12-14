@@ -71,7 +71,7 @@ public final class WfNameUtils {
 	}
 
 	public static boolean isValidName(String name) {
-		return !StringUtils.isBlank(name) && !name.matches(".*([ \t]).*");
+		return !StringUtils.isBlank(name) && !StringUtils.containsWhitespace(name);
 	}
 
 	public static String getGlobalDocName(String categoryName, String docName) {
