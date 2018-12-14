@@ -15,25 +15,41 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
- * Workflow template configurations.
+ * Workflow template configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class WfTemplateConfig {
+@XmlRootElement(name = "template")
+public class WfTemplateConfig extends BaseConfig {
+	
+	private String document;
 
 	private WfMessagesConfig wfMessagesConfig;
 
 	private WfStepsConfig wfStepsConfig;
 
+	public String getDocument() {
+		return document;
+	}
+
+	@XmlAttribute(name = "document", required = true)
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
 	public WfMessagesConfig getWfMessagesConfig() {
 		return wfMessagesConfig;
 	}
 
-	@XmlElement(name = "messages", required = true)
+	@XmlElement(name = "messages")
 	public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
 		this.wfMessagesConfig = wfMessagesConfig;
 	}
