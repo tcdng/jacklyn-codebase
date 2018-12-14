@@ -32,7 +32,7 @@
 			</routings>
 			<policies>
 				<policy name="testOpenAccount" description="Open Account"
-					logic="testopenaccount-policylogic" />
+					logic="testopenaccount-policylogic" />.
 			</policies>
 		</step>
 		<step name="custApproval" description="Customer Approval"
@@ -47,6 +47,9 @@
 				<user-action name="rejectCust" description="Reject Customer"
 					label="Reject" target="end" notes-requirement="mandatory" />
 			</user-actions>
+			<form-privileges>
+				<form-privilege type="field" name="licenseNo" editable="false"/>
+			</form-privileges>
 		</step>
 		<step name="end" description="End Step" type="end" />
 	</steps>
