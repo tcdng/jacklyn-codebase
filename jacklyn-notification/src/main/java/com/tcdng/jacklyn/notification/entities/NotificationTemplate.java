@@ -31,9 +31,9 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Message Template",
+@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
 		reportable = true, auditable = true)
-@Table(name = "NOTIFICATIONTEMPLATE",
+@Table(name = "NOTIFTEMPLATE",
 		uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
 				@UniqueConstraint({ "moduleId", "description" }) })
 public class NotificationTemplate extends BaseVersionedStatusEntity {
@@ -41,10 +41,10 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 	@ForeignKey(Module.class)
 	private Long moduleId;
 
-	@Column(name = "NOTIFICATIONTEMPLATE_NM", length = 64)
+	@Column(name = "TEMPLATE_NM", length = 96)
 	private String name;
 
-	@Column(name = "NOTIFICATIONTEMPLATE_DESC", length = 64)
+	@Column(name = "TEMPLATE_DESC", length = 64)
 	private String description;
 
 	@Column(length = 64)
