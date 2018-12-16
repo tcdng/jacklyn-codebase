@@ -379,16 +379,16 @@ public class SystemModuleImpl extends AbstractJacklynBusinessModule implements S
 	@Override
 	public Long createScheduledTaskHistory(Long scheduledTaskId, TaskStatus taskStatus,
 			String errorMessages) throws UnifyException {
-		ScheduledTaskHist scheduledTaskHistData = new ScheduledTaskHist();
-		scheduledTaskHistData.setScheduledTaskId(scheduledTaskId);
+		ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
+		scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
 		if (errorMessages != null) {
 			if (errorMessages.length() > 250) {
 				errorMessages = errorMessages.substring(0, 250);
 			}
 		}
-		scheduledTaskHistData.setErrorMsg(errorMessages);
-		scheduledTaskHistData.setTaskStatus(taskStatus);
-		return (Long) db().create(scheduledTaskHistData);
+		scheduledTaskHist.setErrorMsg(errorMessages);
+		scheduledTaskHist.setTaskStatus(taskStatus);
+		return (Long) db().create(scheduledTaskHist);
 	}
 
 	@Override

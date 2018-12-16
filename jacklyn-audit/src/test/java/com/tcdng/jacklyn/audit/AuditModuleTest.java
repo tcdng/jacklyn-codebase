@@ -62,12 +62,12 @@ public class AuditModuleTest extends AbstractJacklynTest {
 		auditTypeList = auditModule.findAuditTypes(query);
 		assertNotNull(auditTypeList);
 		assertEquals(1, auditTypeList.size());
-		AuditDefinition auditDefinitionData = auditTypeList.get(0);
-		assertEquals("customer-search", auditDefinitionData.getName());
-		assertEquals("Customer Search", auditDefinitionData.getDescription());
-		assertNull(auditDefinitionData.getRecordName());
-		assertEquals(EventType.SEARCH, auditDefinitionData.getEventType());
-		assertEquals(RecordStatus.ACTIVE, auditDefinitionData.getStatus());
+		AuditDefinition auditDefinition = auditTypeList.get(0);
+		assertEquals("customer-search", auditDefinition.getName());
+		assertEquals("Customer Search", auditDefinition.getDescription());
+		assertNull(auditDefinition.getRecordName());
+		assertEquals(EventType.SEARCH, auditDefinition.getEventType());
+		assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 	}
 
 	@Test
@@ -77,14 +77,14 @@ public class AuditModuleTest extends AbstractJacklynTest {
 		AuditDefinitionQuery query = new AuditDefinitionQuery();
 		query.name("customer-search");
 		query.moduleName("customer");
-		AuditDefinition auditDefinitionData = auditModule.findAuditType(query);
-		auditDefinitionData = auditModule.findAuditType(auditDefinitionData.getId());
-		assertNotNull(auditDefinitionData);
-		assertEquals("customer-search", auditDefinitionData.getName());
-		assertEquals("Customer Search", auditDefinitionData.getDescription());
-		assertNull(auditDefinitionData.getRecordName());
-		assertEquals(EventType.SEARCH, auditDefinitionData.getEventType());
-		assertEquals(RecordStatus.ACTIVE, auditDefinitionData.getStatus());
+		AuditDefinition auditDefinition = auditModule.findAuditType(query);
+		auditDefinition = auditModule.findAuditType(auditDefinition.getId());
+		assertNotNull(auditDefinition);
+		assertEquals("customer-search", auditDefinition.getName());
+		assertEquals("Customer Search", auditDefinition.getDescription());
+		assertNull(auditDefinition.getRecordName());
+		assertEquals(EventType.SEARCH, auditDefinition.getEventType());
+		assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 	}
 
 	@Test
@@ -100,20 +100,20 @@ public class AuditModuleTest extends AbstractJacklynTest {
 		query.clear();
 		query.name("customer-search");
 		query.moduleName("customer");
-		AuditDefinition auditDefinitionData = auditModule.findAuditType(query);
-		assertEquals(RecordStatus.ACTIVE, auditDefinitionData.getStatus());
+		AuditDefinition auditDefinition = auditModule.findAuditType(query);
+		assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 
 		query.clear();
 		query.name("customer-create");
 		query.moduleName("customer");
-		auditDefinitionData = auditModule.findAuditType(query);
-		assertEquals(RecordStatus.INACTIVE, auditDefinitionData.getStatus());
+		auditDefinition = auditModule.findAuditType(query);
+		assertEquals(RecordStatus.INACTIVE, auditDefinition.getStatus());
 
 		query.clear();
 		query.name("customer-view");
 		query.moduleName("customer");
-		auditDefinitionData = auditModule.findAuditType(query);
-		assertEquals(RecordStatus.INACTIVE, auditDefinitionData.getStatus());
+		auditDefinition = auditModule.findAuditType(query);
+		assertEquals(RecordStatus.INACTIVE, auditDefinition.getStatus());
 
 		// Flip status back
 		query.clear();
@@ -125,20 +125,20 @@ public class AuditModuleTest extends AbstractJacklynTest {
 		query.clear();
 		query.name("customer-search");
 		query.moduleName("customer");
-		auditDefinitionData = auditModule.findAuditType(query);
-		assertEquals(RecordStatus.ACTIVE, auditDefinitionData.getStatus());
+		auditDefinition = auditModule.findAuditType(query);
+		assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 
 		query.clear();
 		query.name("customer-create");
 		query.moduleName("customer");
-		auditDefinitionData = auditModule.findAuditType(query);
-		assertEquals(RecordStatus.INACTIVE, auditDefinitionData.getStatus());
+		auditDefinition = auditModule.findAuditType(query);
+		assertEquals(RecordStatus.INACTIVE, auditDefinition.getStatus());
 
 		query.clear();
 		query.name("customer-view");
 		query.moduleName("customer");
-		auditDefinitionData = auditModule.findAuditType(query);
-		assertEquals(RecordStatus.ACTIVE, auditDefinitionData.getStatus());
+		auditDefinition = auditModule.findAuditType(query);
+		assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 	}
 
 	@Test
@@ -165,8 +165,8 @@ public class AuditModuleTest extends AbstractJacklynTest {
 		assertNotNull(auditTrailList);
 		assertEquals(2, auditTrailList.size());
 
-		AuditTrail auditTrailData = auditModule.findAuditTrail(auditTrailList.get(0).getId());
-		assertNotNull(auditTrailData);
+		AuditTrail auditTrail = auditModule.findAuditTrail(auditTrailList.get(0).getId());
+		assertNotNull(auditTrail);
 	}
 
 	@Test

@@ -1284,12 +1284,12 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
 
 				// Sections
 				for (WfFormSectionConfig wfFormSectionConfig : wfFormTabConfig.getWfFormSectionConfigList()) {
-					WfFormSection wfFormSectionData = new WfFormSection();
-					wfFormSectionData.setName(wfFormSectionConfig.getName());
-					wfFormSectionData.setDescription(resolveApplicationMessage(wfFormSectionConfig.getDescription()));
-					wfFormSectionData.setLabel(wfFormSectionConfig.getLabel());
-					wfFormSectionData.setBinding(wfFormSectionConfig.getBinding());
-					wfFormSectionData.setTabName(wfFormTabConfig.getName());
+					WfFormSection wfFormSection = new WfFormSection();
+					wfFormSection.setName(wfFormSectionConfig.getName());
+					wfFormSection.setDescription(resolveApplicationMessage(wfFormSectionConfig.getDescription()));
+					wfFormSection.setLabel(wfFormSectionConfig.getLabel());
+					wfFormSection.setBinding(wfFormSectionConfig.getBinding());
+					wfFormSection.setTabName(wfFormTabConfig.getName());
 
 					// Fields
 					for (WfFormFieldConfig wfFormFieldConfig : wfFormSectionConfig.getWfFormFieldConfigList()) {
@@ -1302,7 +1302,7 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
 						formFieldList.add(wfFormField);
 					}
 
-					sectionList.add(wfFormSectionData);
+					sectionList.add(wfFormSection);
 				}
 
 				tabList.add(wfFormTab);
@@ -1395,12 +1395,12 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
 					&& !DataUtils.isBlank(wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList())) {
 				routingList = new ArrayList<WfRouting>();
 				for (WfRoutingConfig wfRoutingConfig : wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList()) {
-					WfRouting wfRoutingData = new WfRouting();
-					wfRoutingData.setName(wfRoutingConfig.getName());
-					wfRoutingData.setDescription(resolveApplicationMessage(wfRoutingConfig.getDescription()));
-					wfRoutingData.setClassifierName(wfRoutingConfig.getClassifierName());
-					wfRoutingData.setTargetWfStepName(wfRoutingConfig.getTargetStepName());
-					routingList.add(wfRoutingData);
+					WfRouting wfRouting = new WfRouting();
+					wfRouting.setName(wfRoutingConfig.getName());
+					wfRouting.setDescription(resolveApplicationMessage(wfRoutingConfig.getDescription()));
+					wfRouting.setClassifierName(wfRoutingConfig.getClassifierName());
+					wfRouting.setTargetWfStepName(wfRoutingConfig.getTargetStepName());
+					routingList.add(wfRouting);
 				}
 			}
 			wfStep.setRoutingList(routingList);
@@ -1424,10 +1424,10 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
 						List<WfAttachmentCheck> attachmentCheckList = new ArrayList<WfAttachmentCheck>();
 						for (WfAttachmentCheckConfig wfAttachmentCheckConfig : wfUserActionConfig
 								.getAttachmentCheckConfigList()) {
-							WfAttachmentCheck wfAttachmentCheckData = new WfAttachmentCheck();
-							wfAttachmentCheckData.setWfDocAttachmentName(wfAttachmentCheckConfig.getAttachmentName());
-							wfAttachmentCheckData.setRequirementType(wfAttachmentCheckConfig.getRequirementType());
-							attachmentCheckList.add(wfAttachmentCheckData);
+							WfAttachmentCheck wfAttachmentCheck = new WfAttachmentCheck();
+							wfAttachmentCheck.setWfDocAttachmentName(wfAttachmentCheckConfig.getAttachmentName());
+							wfAttachmentCheck.setRequirementType(wfAttachmentCheckConfig.getRequirementType());
+							attachmentCheckList.add(wfAttachmentCheck);
 						}
 
 						wfUserAction.setAttachmentCheckList(attachmentCheckList);

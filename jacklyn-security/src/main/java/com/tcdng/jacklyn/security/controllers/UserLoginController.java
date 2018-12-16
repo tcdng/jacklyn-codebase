@@ -85,11 +85,11 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 	@Action
 	public String login() throws UnifyException {
 		try {
-			User userData = getSecurityModule().login(userName, password);
+			User user = getSecurityModule().login(userName, password);
 			userName = null;
 			password = null;
 
-			if (!userData.isReserved() && is2FA) {
+			if (!user.isReserved() && is2FA) {
 				TwoFactorAutenticationService twoFactorAuthService
 						= (TwoFactorAutenticationService) this.getComponent(
 								ApplicationComponents.APPLICATION_TWOFACTORAUTHENTICATIONSERVICE);
@@ -101,7 +101,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 			logUserEvent(SecurityModuleAuditConstants.LOGIN);
 			setDisplayMessage(null);
 
-			if (userData.isChangeUserPassword() && !userData.isReserved()) {
+			if (user.isChangeUserPassword() && !user.isReserved()) {
 				oldPassword = null;
 				newPassword = null;
 				confirmPassword = null;
@@ -145,9 +145,9 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 
 	@Action
 	public String selectUserRole() throws UnifyException {
-		UserRole userRoleData = userRoleList.get(selectRoleTable.getViewIndex());
+		UserRole userRole = userRoleList.get(selectRoleTable.getViewIndex());
 		userRoleList = null;
-		return forwardToApplication(userRoleData);
+		return forwardToApplication(userRole);
 	}
 
 	@Action
@@ -248,7 +248,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 
 		// Get user roles that are active based on current time
 		UserToken userToken = getUserToken();
-		UserRole userRoleData = null;
+		UserRole userRole = null;
 
 		UserRoleQuery query = new UserRoleQuery();
 		query.userLoginId(userToken.getUserLoginId());
@@ -267,10 +267,10 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 				selectRoleTable.reset();
 				return "switchrolepanel";
 			}
-			userRoleData = userRoleList.get(0);
+			userRole = userRoleList.get(0);
 		}
 
-		return forwardToApplication(userRoleData);
+		return forwardToApplication(userRole);
 	}
 
 	private void setDisplayMessage(String message) throws UnifyException {

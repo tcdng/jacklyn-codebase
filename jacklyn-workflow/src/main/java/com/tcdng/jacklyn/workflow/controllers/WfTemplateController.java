@@ -19,7 +19,6 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateLargeData;
@@ -55,8 +54,6 @@ public class WfTemplateController extends AbstractWorkflowRecordController<WfTem
 
 	private String searchDescription;
 
-	private RecordStatus searchStatus;
-
 	private WfTemplateLargeData largeData;
 
 	public WfTemplateController() {
@@ -88,14 +85,6 @@ public class WfTemplateController extends AbstractWorkflowRecordController<WfTem
 		this.searchDescription = searchDescription;
 	}
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
-
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
-
 	public WfTemplateLargeData getLargeData() {
 		return largeData;
 	}
@@ -113,10 +102,6 @@ public class WfTemplateController extends AbstractWorkflowRecordController<WfTem
 
 		if (QueryUtils.isValidStringCriteria(searchDescription)) {
 			query.descriptionLike(searchDescription);
-		}
-
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
 		}
 
 		query.ignoreEmptyCriteria(true);

@@ -18,9 +18,9 @@ package com.tcdng.jacklyn.workflow.controllers;
 
 import java.util.List;
 
+import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
-import com.tcdng.jacklyn.workflow.utils.WorkflowUtils;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -147,7 +147,7 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 						"/workflow/manualworkiteminitiation/openCreateItem");
 			}
 
-			String templateName = WorkflowUtils.getGlobalTemplateName(
+			String templateName = WfNameUtils.getGlobalTemplateName(
 					wfTemplateData.getWfCategoryName(), wfTemplateData.getName());
 			lb.addLink(categoryName, templateName, wfTemplateData.getDescription());
 		}

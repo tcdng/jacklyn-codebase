@@ -32,17 +32,17 @@ import com.tcdng.unify.core.business.BusinessLogicInput;
 @Parameters({ @Parameter(description = "Country", name = "country", editor = "!ui-text",
 		mandatory = true) })
 public class TestBankBatchFileReadProcessor
-		extends AbstractDBBatchItemFileReadProcessor<TestBankData> {
+		extends AbstractDBBatchItemFileReadProcessor<TestBank> {
 
 	public TestBankBatchFileReadProcessor() {
-		super(TestBankData.class);
+		super(TestBank.class);
 	}
 
 	@Override
-	protected void preBatchItemCreate(BusinessLogicInput input, TestBankData batchItem)
+	protected void preBatchItemCreate(BusinessLogicInput input, TestBank batchItem)
 			throws UnifyException {
 		// Set bank country as input parameter
 		String country = input.getParameter(String.class, "country");
-		((TestBankData) batchItem).setCountry(country);
+		((TestBank) batchItem).setCountry(country);
 	}
 }

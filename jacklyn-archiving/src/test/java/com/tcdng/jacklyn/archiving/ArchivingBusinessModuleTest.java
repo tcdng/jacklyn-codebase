@@ -70,9 +70,9 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		assertNotNull(archivableList);
 		assertEquals(1, archivableList.size());
 
-		ArchivableDefinition archiveDefinitionData = archivableList.get(0);
-		assertEquals("TestChequeImage", archiveDefinitionData.getDescription());
-		assertEquals(TestChequeImageData.class.getName(), archiveDefinitionData.getRecordType());
+		ArchivableDefinition archiveDefinition = archivableList.get(0);
+		assertEquals("TestChequeImage", archiveDefinition.getDescription());
+		assertEquals(TestChequeImage.class.getName(), archiveDefinition.getRecordType());
 	}
 
 	@Test
@@ -80,31 +80,31 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 		ArchivingFieldQuery query = new ArchivingFieldQuery();
-		query.recordName(TestChequeImageData.class.getName());
+		query.recordName(TestChequeImage.class.getName());
 		query.orderByFieldType();
 		List<ArchivingField> archivableFieldList = archivingModule.findArchivingFields(query);
 		assertNotNull(archivableFieldList);
 		assertEquals(4, archivableFieldList.size());
 
-		ArchivingField archivableFieldData = archivableFieldList.get(0);
-		assertEquals("image", archivableFieldData.getFieldName());
-		assertEquals("Image", archivableFieldData.getDescription());
-		assertEquals(ArchivingFieldType.BLOB, archivableFieldData.getFieldType());
+		ArchivingField archivableField = archivableFieldList.get(0);
+		assertEquals("image", archivableField.getFieldName());
+		assertEquals("Image", archivableField.getDescription());
+		assertEquals(ArchivingFieldType.BLOB, archivableField.getFieldType());
 
-		archivableFieldData = archivableFieldList.get(1);
-		assertEquals("template", archivableFieldData.getFieldName());
-		assertEquals("Template", archivableFieldData.getDescription());
-		assertEquals(ArchivingFieldType.CLOB, archivableFieldData.getFieldType());
+		archivableField = archivableFieldList.get(1);
+		assertEquals("template", archivableField.getFieldName());
+		assertEquals("Template", archivableField.getDescription());
+		assertEquals(ArchivingFieldType.CLOB, archivableField.getFieldType());
 
-		archivableFieldData = archivableFieldList.get(2);
-		assertEquals("createDt", archivableFieldData.getFieldName());
-		assertEquals("Create Dt", archivableFieldData.getDescription());
-		assertEquals(ArchivingFieldType.TIMESTAMP, archivableFieldData.getFieldType());
+		archivableField = archivableFieldList.get(2);
+		assertEquals("createDt", archivableField.getFieldName());
+		assertEquals("Create Dt", archivableField.getDescription());
+		assertEquals(ArchivingFieldType.TIMESTAMP, archivableField.getFieldType());
 
-		archivableFieldData = archivableFieldList.get(3);
-		assertEquals("updateDt", archivableFieldData.getFieldName());
-		assertEquals("Update Dt", archivableFieldData.getDescription());
-		assertEquals(ArchivingFieldType.TIMESTAMP, archivableFieldData.getFieldType());
+		archivableField = archivableFieldList.get(3);
+		assertEquals("updateDt", archivableField.getFieldName());
+		assertEquals("Update Dt", archivableField.getDescription());
+		assertEquals(ArchivingFieldType.TIMESTAMP, archivableField.getFieldType());
 	}
 
 	@Test
@@ -112,8 +112,8 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfig);
 		assertNotNull(fileArchiveConfigId);
 	}
 
@@ -122,13 +122,13 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		FileArchiveConfig fetchedFileArchiveConfigData
+		FileArchiveConfig fetchedFileArchiveConfig
 				= archivingModule.findFileArchiveConfig(fileArchiveConfigId);
-		assertNotNull(fetchedFileArchiveConfigData);
-		assertEquals(fileArchiveConfigData, fetchedFileArchiveConfigData);
+		assertNotNull(fetchedFileArchiveConfig);
+		assertEquals(fileArchiveConfig, fetchedFileArchiveConfig);
 	}
 
 	@Test
@@ -136,26 +136,26 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		List<FileArchiveConfig> fileArchiveConfigList = archivingModule
 				.findFileArchiveConfigs(new FileArchiveConfigQuery().name("ChequeImageArchive"));
-		FileArchiveConfig foundFileArchiveConfigData = fileArchiveConfigList.get(0);
+		FileArchiveConfig foundFileArchiveConfig = fileArchiveConfigList.get(0);
 		assertNotNull(fileArchiveConfigList);
 		assertEquals(1, fileArchiveConfigList.size());
-		assertEquals(fileArchiveConfigData.getName(), foundFileArchiveConfigData.getName());
-		assertEquals(fileArchiveConfigData.getDescription(),
-				foundFileArchiveConfigData.getDescription());
-		assertEquals(fileArchiveConfigData.getLocalArchivePath(),
-				foundFileArchiveConfigData.getLocalArchivePath());
-		assertEquals(fileArchiveConfigData.getFilenameGenerator(),
-				foundFileArchiveConfigData.getFilenameGenerator());
-		assertEquals(fileArchiveConfigData.getMaxItemsPerFile(),
-				foundFileArchiveConfigData.getMaxItemsPerFile());
-		assertEquals(fileArchiveConfigData.getDeleteRowOnArchive(),
-				foundFileArchiveConfigData.getDeleteRowOnArchive());
-		assertEquals(fileArchiveConfigData.getStatus(), foundFileArchiveConfigData.getStatus());
+		assertEquals(fileArchiveConfig.getName(), foundFileArchiveConfig.getName());
+		assertEquals(fileArchiveConfig.getDescription(),
+				foundFileArchiveConfig.getDescription());
+		assertEquals(fileArchiveConfig.getLocalArchivePath(),
+				foundFileArchiveConfig.getLocalArchivePath());
+		assertEquals(fileArchiveConfig.getFilenameGenerator(),
+				foundFileArchiveConfig.getFilenameGenerator());
+		assertEquals(fileArchiveConfig.getMaxItemsPerFile(),
+				foundFileArchiveConfig.getMaxItemsPerFile());
+		assertEquals(fileArchiveConfig.getDeleteRowOnArchive(),
+				foundFileArchiveConfig.getDeleteRowOnArchive());
+		assertEquals(fileArchiveConfig.getStatus(), foundFileArchiveConfig.getStatus());
 	}
 
 	@Test
@@ -163,19 +163,19 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		FileArchiveConfig fetchedFileArchiveConfigData
+		FileArchiveConfig fetchedFileArchiveConfig
 				= archivingModule.findFileArchiveConfig(fileArchiveConfigId);
-		fetchedFileArchiveConfigData.setDescription("Inward Cheque ImageImpl Archive");
-		int count = archivingModule.updateFileArchiveConfig(fetchedFileArchiveConfigData);
+		fetchedFileArchiveConfig.setDescription("Inward Cheque ImageImpl Archive");
+		int count = archivingModule.updateFileArchiveConfig(fetchedFileArchiveConfig);
 		assertEquals(1, count);
 
-		FileArchiveConfig updatedFileArchiveConfigData
+		FileArchiveConfig updatedFileArchiveConfig
 				= archivingModule.findFileArchiveConfig(fileArchiveConfigId);
-		assertEquals(fetchedFileArchiveConfigData, updatedFileArchiveConfigData);
-		assertFalse(fileArchiveConfigData.equals(updatedFileArchiveConfigData));
+		assertEquals(fetchedFileArchiveConfig, updatedFileArchiveConfig);
+		assertFalse(fileArchiveConfig.equals(updatedFileArchiveConfig));
 	}
 
 	@Test
@@ -183,8 +183,8 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		Long fileArchiveConfigId = archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		int count = archivingModule.deleteFileArchiveConfig(fileArchiveConfigId);
 		assertEquals(1, count);
@@ -195,25 +195,25 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		byte[] image = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setImage(image);
-		Long testChequeImageId = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setImage(image);
+		Long testChequeImageId = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId);
-		assertNotNull(fetchedTestChequeImageData.getImage());
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId);
+		assertNotNull(fetchedTestChequeImage.getImage());
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
-		fetchedTestChequeImageData = findRecord(TestChequeImageData.class, testChequeImageId);
-		assertNotNull(fetchedTestChequeImageData);
-		assertNull(fetchedTestChequeImageData.getImage());
+		fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
+		assertNotNull(fetchedTestChequeImage);
+		assertNull(fetchedTestChequeImage.getImage());
 	}
 
 	@Test(timeout = 8000)
@@ -221,26 +221,26 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		fileArchiveConfigData.setDeleteRowOnArchive(Boolean.TRUE);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		fileArchiveConfig.setDeleteRowOnArchive(Boolean.TRUE);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		byte[] image = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setImage(image);
-		Long testChequeImageId = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setImage(image);
+		Long testChequeImageId = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId);
-		assertNotNull(fetchedTestChequeImageData.getImage());
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId);
+		assertNotNull(fetchedTestChequeImage.getImage());
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		boolean deleted = false;
 		try {
-			findRecord(TestChequeImageData.class, testChequeImageId);
+			findRecord(TestChequeImage.class, testChequeImageId);
 		} catch (Exception e) {
 			deleted = true;
 		}
@@ -253,37 +253,37 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setImage(image1);
-		Long testChequeImageId1 = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setImage(image1);
+		Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, 2);
 		byte[] image2
 				= new byte[] { (byte) 0x2B, (byte) 0xDD, (byte) 0x05, (byte) 0x72, (byte) 0x3E };
-		testChequeImageData.setImage(image2);
-		testChequeImageData.setCreateDt(cal.getTime());
-		Long testChequeImageId2 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image2);
+		testChequeImage.setCreateDt(cal.getTime());
+		Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId1);
-		assertNotNull(fetchedTestChequeImageData.getImage());
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId1);
+		assertNotNull(fetchedTestChequeImage.getImage());
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
-		fetchedTestChequeImageData = findRecord(TestChequeImageData.class, testChequeImageId1);
-		assertNotNull(fetchedTestChequeImageData);
-		assertNull(fetchedTestChequeImageData.getImage());
+		fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId1);
+		assertNotNull(fetchedTestChequeImage);
+		assertNull(fetchedTestChequeImage.getImage());
 
-		fetchedTestChequeImageData = findRecord(TestChequeImageData.class, testChequeImageId2);
-		assertNotNull(fetchedTestChequeImageData);
-		assertNotNull(fetchedTestChequeImageData.getImage());
+		fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId2);
+		assertNotNull(fetchedTestChequeImage);
+		assertNotNull(fetchedTestChequeImage.getImage());
 	}
 
 	@Test(timeout = 8000)
@@ -292,42 +292,42 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		fileArchiveConfigData.setDeleteRowOnArchive(Boolean.TRUE);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		fileArchiveConfig.setDeleteRowOnArchive(Boolean.TRUE);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setImage(image1);
-		Long testChequeImageId1 = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setImage(image1);
+		Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, 2);
 		byte[] image2
 				= new byte[] { (byte) 0x2B, (byte) 0xDD, (byte) 0x05, (byte) 0x72, (byte) 0x3E };
-		testChequeImageData.setImage(image2);
-		testChequeImageData.setCreateDt(cal.getTime());
-		Long testChequeImageId2 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image2);
+		testChequeImage.setCreateDt(cal.getTime());
+		Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId1);
-		assertNotNull(fetchedTestChequeImageData.getImage());
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId1);
+		assertNotNull(fetchedTestChequeImage.getImage());
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		boolean deleted = false;
 		try {
-			findRecord(TestChequeImageData.class, testChequeImageId1);
+			findRecord(TestChequeImage.class, testChequeImageId1);
 		} catch (Exception e) {
 			deleted = true;
 		}
 		assertTrue(deleted);
 
-		fetchedTestChequeImageData = findRecord(TestChequeImageData.class, testChequeImageId2);
-		assertNotNull(fetchedTestChequeImageData);
-		assertNotNull(fetchedTestChequeImageData.getImage());
+		fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId2);
+		assertNotNull(fetchedTestChequeImage);
+		assertNotNull(fetchedTestChequeImage.getImage());
 	}
 
 	@Test(timeout = 8000)
@@ -335,23 +335,23 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(true);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(true);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setTemplate("Hello World!");
-		Long testChequeImageId = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setTemplate("Hello World!");
+		Long testChequeImageId = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId);
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId);
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
-		fetchedTestChequeImageData = findRecord(TestChequeImageData.class, testChequeImageId);
-		assertNotNull(fetchedTestChequeImageData);
-		assertNull(fetchedTestChequeImageData.getTemplate());
+		fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
+		assertNotNull(fetchedTestChequeImage);
+		assertNull(fetchedTestChequeImage.getTemplate());
 	}
 
 	@Test(timeout = 8000)
@@ -359,24 +359,24 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
 		byte[] image = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setImage(image);
-		Long testChequeImageId = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setImage(image);
+		Long testChequeImageId = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId);
-		assertNotNull(fetchedTestChequeImageData.getImage());
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId);
+		assertNotNull(fetchedTestChequeImage.getImage());
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		byte[] archivedImage = archivingModule.retriveArchivedBlob(
-				TestChequeImageData.class.getName(), "image", testChequeImageId);
+				TestChequeImage.class.getName(), "image", testChequeImageId);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image, archivedImage));
 	}
@@ -386,41 +386,41 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		fileArchiveConfigData.setMaxItemsPerFile(Integer.valueOf(3));
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		fileArchiveConfig.setMaxItemsPerFile(Integer.valueOf(3));
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
+		TestChequeImage testChequeImage = new TestChequeImage();
 		Date workingDt = CalendarUtils.getMidnightDate(new Date());
-		testChequeImageData.setCreateDt(workingDt);
+		testChequeImage.setCreateDt(workingDt);
 		byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		testChequeImageData.setImage(image1);
-		Long testChequeImageId1 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image1);
+		Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
 		byte[] image2
 				= new byte[] { (byte) 0xC4, (byte) 0x80, (byte) 0x2F, (byte) 0xD4, (byte) 0xBB };
-		testChequeImageData.setImage(image2);
-		Long testChequeImageId2 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image2);
+		Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
 		byte[] image3 = new byte[] { (byte) 0x01, (byte) 0x36, (byte) 0x44 };
-		testChequeImageData.setImage(image3);
-		Long testChequeImageId3 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image3);
+		Long testChequeImageId3 = (Long) createRecord(testChequeImage);
 
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		byte[] archivedImage = archivingModule.retriveArchivedBlob(
-				TestChequeImageData.class.getName(), "image", testChequeImageId1);
+				TestChequeImage.class.getName(), "image", testChequeImageId1);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image1, archivedImage));
 
-		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImageData.class.getName(),
+		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImage.class.getName(),
 				"image", testChequeImageId2);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image2, archivedImage));
 
-		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImageData.class.getName(),
+		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImage.class.getName(),
 				"image", testChequeImageId3);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image3, archivedImage));
@@ -431,25 +431,25 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		fileArchiveConfigData.setMaxItemsPerFile(Integer.valueOf(2));
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		fileArchiveConfig.setMaxItemsPerFile(Integer.valueOf(2));
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
+		TestChequeImage testChequeImage = new TestChequeImage();
 		Date workingDt = CalendarUtils.getMidnightDate(new Date());
-		testChequeImageData.setCreateDt(workingDt);
+		testChequeImage.setCreateDt(workingDt);
 		byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		testChequeImageData.setImage(image1);
-		Long testChequeImageId1 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image1);
+		Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
 		byte[] image2
 				= new byte[] { (byte) 0xC4, (byte) 0x80, (byte) 0x2F, (byte) 0xD4, (byte) 0xBB };
-		testChequeImageData.setImage(image2);
-		Long testChequeImageId2 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image2);
+		Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
 		byte[] image3 = new byte[] { (byte) 0x01, (byte) 0x36, (byte) 0x44 };
-		testChequeImageData.setImage(image3);
-		Long testChequeImageId3 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image3);
+		Long testChequeImageId3 = (Long) createRecord(testChequeImage);
 
 		// Single pass
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
@@ -457,18 +457,18 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		byte[] archivedImage = archivingModule.retriveArchivedBlob(
-				TestChequeImageData.class.getName(), "image", testChequeImageId1);
+				TestChequeImage.class.getName(), "image", testChequeImageId1);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image1, archivedImage));
 
-		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImageData.class.getName(),
+		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImage.class.getName(),
 				"image", testChequeImageId2);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image2, archivedImage));
 
 		// This item has not been archived because of batch limit of 2 and a
 		// single pass
-		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImageData.class.getName(),
+		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImage.class.getName(),
 				"image", testChequeImageId3);
 		assertNull(archivedImage);
 	}
@@ -478,25 +478,25 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(false);
-		fileArchiveConfigData.setMaxItemsPerFile(Integer.valueOf(2));
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(false);
+		fileArchiveConfig.setMaxItemsPerFile(Integer.valueOf(2));
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
+		TestChequeImage testChequeImage = new TestChequeImage();
 		Date workingDt = CalendarUtils.getMidnightDate(new Date());
-		testChequeImageData.setCreateDt(workingDt);
+		testChequeImage.setCreateDt(workingDt);
 		byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
-		testChequeImageData.setImage(image1);
-		Long testChequeImageId1 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image1);
+		Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
 		byte[] image2
 				= new byte[] { (byte) 0xC4, (byte) 0x80, (byte) 0x2F, (byte) 0xD4, (byte) 0xBB };
-		testChequeImageData.setImage(image2);
-		Long testChequeImageId2 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image2);
+		Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
 		byte[] image3 = new byte[] { (byte) 0x01, (byte) 0x36, (byte) 0x44 };
-		testChequeImageData.setImage(image3);
-		Long testChequeImageId3 = (Long) createRecord(testChequeImageData);
+		testChequeImage.setImage(image3);
+		Long testChequeImageId3 = (Long) createRecord(testChequeImage);
 
 		// Mutiple pass
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
@@ -508,16 +508,16 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		byte[] archivedImage = archivingModule.retriveArchivedBlob(
-				TestChequeImageData.class.getName(), "image", testChequeImageId1);
+				TestChequeImage.class.getName(), "image", testChequeImageId1);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image1, archivedImage));
 
-		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImageData.class.getName(),
+		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImage.class.getName(),
 				"image", testChequeImageId2);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image2, archivedImage));
 
-		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImageData.class.getName(),
+		archivedImage = archivingModule.retriveArchivedBlob(TestChequeImage.class.getName(),
 				"image", testChequeImageId3);
 		assertNotNull(archivedImage);
 		assertTrue(Arrays.equals(image3, archivedImage));
@@ -528,22 +528,22 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 
-		FileArchiveConfig fileArchiveConfigData = getFileArchiveConfigData(true);
-		archivingModule.createFileArchiveConfig(fileArchiveConfigData);
+		FileArchiveConfig fileArchiveConfig = getFileArchiveConfig(true);
+		archivingModule.createFileArchiveConfig(fileArchiveConfig);
 
-		TestChequeImageData testChequeImageData = new TestChequeImageData();
-		testChequeImageData.setTemplate("Hello World!");
-		Long testChequeImageId = (Long) createRecord(testChequeImageData);
+		TestChequeImage testChequeImage = new TestChequeImage();
+		testChequeImage.setTemplate("Hello World!");
+		Long testChequeImageId = (Long) createRecord(testChequeImage);
 
-		TestChequeImageData fetchedTestChequeImageData
-				= findRecord(TestChequeImageData.class, testChequeImageId);
-		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImageData.getCreateDt());
+		TestChequeImage fetchedTestChequeImage
+				= findRecord(TestChequeImage.class, testChequeImageId);
+		Date workingDt = CalendarUtils.getMidnightDate(fetchedTestChequeImage.getCreateDt());
 		TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
 		waitForTask(tm);
 		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
 		String archivedTemplate = archivingModule.retriveArchivedClob(
-				TestChequeImageData.class.getName(), "template", testChequeImageId);
+				TestChequeImage.class.getName(), "template", testChequeImageId);
 		assertEquals("Hello World!", archivedTemplate);
 	}
 
@@ -561,36 +561,36 @@ public class ArchivingBusinessModuleTest extends AbstractJacklynTest {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onTearDown() throws Exception {
-		deleteAll(TestChequeImageData.class, FileArchiveEntry.class, FileArchive.class,
+		deleteAll(TestChequeImage.class, FileArchiveEntry.class, FileArchive.class,
 				FileArchiveConfig.class);
 	}
 
-	private FileArchiveConfig getFileArchiveConfigData(boolean clob) throws Exception {
+	private FileArchiveConfig getFileArchiveConfig(boolean clob) throws Exception {
 		ArchivingModule archivingModule = (ArchivingModule) getComponent(
 				ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE);
 		ArchivingFieldQuery query = new ArchivingFieldQuery();
-		query.recordName(TestChequeImageData.class.getName());
+		query.recordName(TestChequeImage.class.getName());
 		query.orderByFieldType();
 		List<ArchivingField> archivableFieldList = archivingModule.findArchivingFields(query);
 
-		FileArchiveConfig fileArchiveConfigData = new FileArchiveConfig();
+		FileArchiveConfig fileArchiveConfig = new FileArchiveConfig();
 		ArchivingField afd = null;
 		if (clob) {
 			afd = archivableFieldList.get(1);
 		} else {
 			afd = archivableFieldList.get(0);
 		}
-		fileArchiveConfigData.setArchivableDefId(afd.getArchivableDefId());
-		fileArchiveConfigData.setArchivableFieldId(afd.getId());
-		fileArchiveConfigData.setArchivableDateFieldId(archivableFieldList.get(2).getId());
-		fileArchiveConfigData.setName("ChequeImageArchive");
-		fileArchiveConfigData.setDescription("Cheque ImageImpl Archive");
-		fileArchiveConfigData.setLocalArchivePath("c:\\archive\\images");
-		fileArchiveConfigData.setFilenameGenerator("default-filearchivenamegenerator");
-		fileArchiveConfigData.setMaxItemsPerFile(2);
-		fileArchiveConfigData.setDeleteRowOnArchive(Boolean.FALSE);
-		fileArchiveConfigData.setStatus(RecordStatus.ACTIVE);
-		return fileArchiveConfigData;
+		fileArchiveConfig.setArchivableDefId(afd.getArchivableDefId());
+		fileArchiveConfig.setArchivableFieldId(afd.getId());
+		fileArchiveConfig.setArchivableDateFieldId(archivableFieldList.get(2).getId());
+		fileArchiveConfig.setName("ChequeImageArchive");
+		fileArchiveConfig.setDescription("Cheque ImageImpl Archive");
+		fileArchiveConfig.setLocalArchivePath("c:\\archive\\images");
+		fileArchiveConfig.setFilenameGenerator("default-filearchivenamegenerator");
+		fileArchiveConfig.setMaxItemsPerFile(2);
+		fileArchiveConfig.setDeleteRowOnArchive(Boolean.FALSE);
+		fileArchiveConfig.setStatus(RecordStatus.ACTIVE);
+		return fileArchiveConfig;
 	}
 
 	private TaskMonitor launchBlobFileArchiveTask(String configName, Date workingDt)

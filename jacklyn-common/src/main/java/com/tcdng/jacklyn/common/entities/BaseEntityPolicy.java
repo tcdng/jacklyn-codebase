@@ -41,8 +41,8 @@ public class BaseEntityPolicy extends SequencedEntityPolicy {
 
 	@Override
 	public Object preCreate(Entity record, Date now) throws UnifyException {
-		BaseEntity baseData = ((BaseEntity) record);
-		Long id = baseData.getId();
+		BaseEntity baseEntity = ((BaseEntity) record);
+		Long id = baseEntity.getId();
 		if (id == null || id >= 0) {
 			return super.preCreate(record, now);
 		}

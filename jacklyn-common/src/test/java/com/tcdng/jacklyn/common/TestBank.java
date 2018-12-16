@@ -28,7 +28,7 @@ import com.tcdng.unify.core.database.AbstractTestEntity;
  * @since 1.0
  */
 @Table(name = "TEST_BANK", uniqueConstraints = { @UniqueConstraint({ "name" }) })
-public class TestBankData extends AbstractTestEntity implements BatchItemRecord {
+public class TestBank extends AbstractTestEntity implements BatchItemRecord {
 
 	@Column
 	private String name;

@@ -35,7 +35,7 @@ public interface TestChequeBusinessModule extends BusinessModule {
 	 * @throws UnifyException
 	 *             if an error occurs
 	 */
-	Long createChequeImage(TestChequeImageData record) throws UnifyException;
+	Long createChequeImage(TestChequeImage record) throws UnifyException;
 
 	/**
 	 * Finds cheque image by ID.
@@ -46,5 +46,5 @@ public interface TestChequeBusinessModule extends BusinessModule {
 	 * @throws UnifyException
 	 *             if recotd with ID is not found
 	 */
-	TestChequeImageData findChequeImage(Long id) throws UnifyException;
+	TestChequeImage findChequeImage(Long id) throws UnifyException;
 }
