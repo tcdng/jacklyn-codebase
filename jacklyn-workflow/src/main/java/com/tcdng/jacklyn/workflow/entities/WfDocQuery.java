@@ -27,35 +27,35 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfDocQuery extends BaseEntityQuery<WfDoc> {
 
-	public WfDocQuery() {
-		super(WfDoc.class);
-	}
+    public WfDocQuery() {
+        super(WfDoc.class);
+    }
 
-	public WfDocQuery wfCategoryId(Long wfCategoryId) {
-		return (WfDocQuery) equals("wfCategoryId", wfCategoryId);
-	}
+    public WfDocQuery wfCategoryId(Long wfCategoryId) {
+        return (WfDocQuery) equals("wfCategoryId", wfCategoryId);
+    }
 
-	public WfDocQuery wfCategoryName(String wfCategoryName) {
-		return (WfDocQuery) equals("wfCategoryName", wfCategoryName);
-	}
+    public WfDocQuery wfCategoryName(String wfCategoryName) {
+        return (WfDocQuery) equals("wfCategoryName", wfCategoryName);
+    }
 
-	public WfDocQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-		return (WfDocQuery) equals("wfCategoryStatus", wfCategoryStatus);
-	}
+    public WfDocQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+        return (WfDocQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
 
-	public WfDocQuery wfCategoryVersion(String wfCategoryVersion) {
-		return (WfDocQuery) equals("wfCategoryVersion", wfCategoryVersion);
-	}
+    public WfDocQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfDocQuery) equals("wfCategoryVersion", wfCategoryVersion);
+    }
 
-	public WfDocQuery name(String name) {
-		return (WfDocQuery) equals("name", name);
-	}
+    public WfDocQuery name(String name) {
+        return (WfDocQuery) equals("name", name);
+    }
 
-	public WfDocQuery nameLike(String name) {
-		return (WfDocQuery) like("name", name);
-	}
+    public WfDocQuery nameLike(String name) {
+        return (WfDocQuery) like("name", name);
+    }
 
-	public WfDocQuery descriptionLike(String description) {
-		return (WfDocQuery) like("description", description);
-	}
+    public WfDocQuery descriptionLike(String description) {
+        return (WfDocQuery) like("description", description);
+    }
 }

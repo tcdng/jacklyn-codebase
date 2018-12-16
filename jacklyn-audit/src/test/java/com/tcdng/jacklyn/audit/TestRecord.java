@@ -31,67 +31,67 @@ import com.tcdng.unify.core.database.Entity;
 @Table
 public class TestRecord implements Entity {
 
-	@Id
-	private Long id;
+    @Id
+    private Long id;
 
-	@Column
-	private String name;
+    @Column
+    private String name;
 
-	@Column
-	private BigDecimal balance;
+    @Column
+    private BigDecimal balance;
 
-	public TestRecord(Long id, String name, BigDecimal balance) {
-		this.id = id;
-		this.name = name;
-		this.balance = balance;
-	}
+    public TestRecord(Long id, String name, BigDecimal balance) {
+        this.id = id;
+        this.name = name;
+        this.balance = balance;
+    }
 
-	public TestRecord() {
+    public TestRecord() {
 
-	}
+    }
 
-	@Override
-	public String getListKey() {
-		return String.valueOf(id);
-	}
+    @Override
+    public String getListKey() {
+        return String.valueOf(id);
+    }
 
-	@Override
-	public String getListDescription() {
-		return name;
-	}
+    @Override
+    public String getListDescription() {
+        return name;
+    }
 
-	@Override
-	public String getDescription() {
-		return name;
-	}
+    @Override
+    public String getDescription() {
+        return name;
+    }
 
-	@Override
-	public Long getId() {
-		return this.id;
-	}
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 
-	@Override
-	public boolean isReserved() {
-		return false;
-	}
+    @Override
+    public boolean isReserved() {
+        return false;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public BigDecimal getBalance() {
-		return balance;
-	}
+    public BigDecimal getBalance() {
+        return balance;
+    }
 
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
-	}
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -37,151 +37,149 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
  */
 public class WfDocDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 5731603377730336455L;
+    private static final long serialVersionUID = 5731603377730336455L;
 
-	private Long wfDocId;
+    private Long wfDocId;
 
-	private PackableDocConfig docConfig;
+    private PackableDocConfig docConfig;
 
-	private String globalName;
+    private String globalName;
 
-	private Date timestamp;
+    private Date timestamp;
 
-	private WfFormDef wfFormDef;
-	
-	private List<StringToken> itemDescFormat;
+    private WfFormDef wfFormDef;
 
-	private Map<Class<?>, WfDocBeanMappingDef> entryBeanMappings;
+    private List<StringToken> itemDescFormat;
 
-	private Map<String, WfDocBeanMappingDef> beanMappings;
+    private Map<Class<?>, WfDocBeanMappingDef> entryBeanMappings;
 
-	private Map<String, WfDocAttachmentDef> attachments;
+    private Map<String, WfDocBeanMappingDef> beanMappings;
 
-	private Map<String, WfDocClassifierDef> classifiers;
+    private Map<String, WfDocAttachmentDef> attachments;
 
-	public WfDocDef(Long wfDocId, String globalName, String name, String description,
-			PackableDocConfig docConfig, Date timestamp, WfFormDef wfFormDef,
-			List<StringToken> itemDescFormat, List<WfDocBeanMappingDef> beanMappingList,
-			List<WfDocAttachmentDef> attachmentList, List<WfDocClassifierDef> classifierList) {
-		super(name, description);
-		this.wfDocId = wfDocId;
-		this.globalName = globalName;
-		this.docConfig = docConfig;
-		this.timestamp = timestamp;
-		this.wfFormDef = wfFormDef;
-		this.itemDescFormat = itemDescFormat;
+    private Map<String, WfDocClassifierDef> classifiers;
 
-		if (beanMappingList != null) {
-			entryBeanMappings = new HashMap<Class<?>, WfDocBeanMappingDef>();
-			beanMappings = new HashMap<String, WfDocBeanMappingDef>();
-			for (WfDocBeanMappingDef wfDocBeanMappingDef : beanMappingList) {
-				if (wfDocBeanMappingDef.isEntryMapping()) {
-					entryBeanMappings.put(wfDocBeanMappingDef.getBeanType(), wfDocBeanMappingDef);
-				}
+    public WfDocDef(Long wfDocId, String globalName, String name, String description, PackableDocConfig docConfig,
+            Date timestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
+            List<WfDocBeanMappingDef> beanMappingList, List<WfDocAttachmentDef> attachmentList,
+            List<WfDocClassifierDef> classifierList) {
+        super(name, description);
+        this.wfDocId = wfDocId;
+        this.globalName = globalName;
+        this.docConfig = docConfig;
+        this.timestamp = timestamp;
+        this.wfFormDef = wfFormDef;
+        this.itemDescFormat = itemDescFormat;
 
-				beanMappings.put(wfDocBeanMappingDef.getName(), wfDocBeanMappingDef);
-			}
-		} else {
-			beanMappings = Collections.emptyMap();
-			entryBeanMappings = Collections.emptyMap();
-		}
+        if (beanMappingList != null) {
+            entryBeanMappings = new HashMap<Class<?>, WfDocBeanMappingDef>();
+            beanMappings = new HashMap<String, WfDocBeanMappingDef>();
+            for (WfDocBeanMappingDef wfDocBeanMappingDef : beanMappingList) {
+                if (wfDocBeanMappingDef.isEntryMapping()) {
+                    entryBeanMappings.put(wfDocBeanMappingDef.getBeanType(), wfDocBeanMappingDef);
+                }
 
-		if (attachmentList != null) {
-			attachments = new LinkedHashMap<String, WfDocAttachmentDef>();
-			for (WfDocAttachmentDef wfDocAttachmentDef : attachmentList) {
-				attachments.put(wfDocAttachmentDef.getName(), wfDocAttachmentDef);
-			}
+                beanMappings.put(wfDocBeanMappingDef.getName(), wfDocBeanMappingDef);
+            }
+        } else {
+            beanMappings = Collections.emptyMap();
+            entryBeanMappings = Collections.emptyMap();
+        }
 
-			attachments = Collections.unmodifiableMap(attachments);
-		} else {
-			attachments = Collections.emptyMap();
-		}
+        if (attachmentList != null) {
+            attachments = new LinkedHashMap<String, WfDocAttachmentDef>();
+            for (WfDocAttachmentDef wfDocAttachmentDef : attachmentList) {
+                attachments.put(wfDocAttachmentDef.getName(), wfDocAttachmentDef);
+            }
 
-		if (classifierList != null) {
-			classifiers = new LinkedHashMap<String, WfDocClassifierDef>();
-			for (WfDocClassifierDef wfDocClassifierDef : classifierList) {
-				classifiers.put(wfDocClassifierDef.getName(), wfDocClassifierDef);
-			}
+            attachments = Collections.unmodifiableMap(attachments);
+        } else {
+            attachments = Collections.emptyMap();
+        }
 
-			classifiers = Collections.unmodifiableMap(classifiers);
-		} else {
-			classifiers = Collections.emptyMap();
-		}
-	}
+        if (classifierList != null) {
+            classifiers = new LinkedHashMap<String, WfDocClassifierDef>();
+            for (WfDocClassifierDef wfDocClassifierDef : classifierList) {
+                classifiers.put(wfDocClassifierDef.getName(), wfDocClassifierDef);
+            }
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+            classifiers = Collections.unmodifiableMap(classifiers);
+        } else {
+            classifiers = Collections.emptyMap();
+        }
+    }
 
-	public PackableDocConfig getDocConfig() {
-		return docConfig;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public String getGlobalName() {
-		return globalName;
-	}
+    public PackableDocConfig getDocConfig() {
+        return docConfig;
+    }
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
+    public String getGlobalName() {
+        return globalName;
+    }
 
-	public WfFormDef getWfFormDef() {
-		return wfFormDef;
-	}
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	public List<StringToken> getItemDescFormat() {
-		return itemDescFormat;
-	}
+    public WfFormDef getWfFormDef() {
+        return wfFormDef;
+    }
 
-	public Map<String, WfDocAttachmentDef> getAttachments() {
-		return attachments;
-	}
+    public List<StringToken> getItemDescFormat() {
+        return itemDescFormat;
+    }
 
-	public Map<String, WfDocClassifierDef> getClassifiers() {
-		return classifiers;
-	}
+    public Map<String, WfDocAttachmentDef> getAttachments() {
+        return attachments;
+    }
 
-	public Set<String> getWfDocBeanMappingNames() {
-		return beanMappings.keySet();
-	}
+    public Map<String, WfDocClassifierDef> getClassifiers() {
+        return classifiers;
+    }
 
-	public WfDocBeanMappingDef getWfDocBeanMappingDef(String name) {
-		return beanMappings.get(name);
-	}
+    public Set<String> getWfDocBeanMappingNames() {
+        return beanMappings.keySet();
+    }
 
-	public WfDocBeanMappingDef getEntryWfDocBeanMappingDef(Class<?> beanType)
-			throws UnifyException {
-		WfDocBeanMappingDef wfDocBeanMappingDef = entryBeanMappings.get(beanType);
-		if (wfDocBeanMappingDef == null) {
-			throw new UnifyException(
-					WorkflowModuleErrorConstants.WORKFLOW_DOCUMENT_ENTRY_BEANMAPPING_FOR_TYPE_UNKNOWN,
-					getDescription(), beanType);
-		}
+    public WfDocBeanMappingDef getWfDocBeanMappingDef(String name) {
+        return beanMappings.get(name);
+    }
 
-		return wfDocBeanMappingDef;
-	}
+    public WfDocBeanMappingDef getEntryWfDocBeanMappingDef(Class<?> beanType) throws UnifyException {
+        WfDocBeanMappingDef wfDocBeanMappingDef = entryBeanMappings.get(beanType);
+        if (wfDocBeanMappingDef == null) {
+            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_DOCUMENT_ENTRY_BEANMAPPING_FOR_TYPE_UNKNOWN,
+                    getDescription(), beanType);
+        }
 
-	public Set<String> getWfDocAttachmentNames() {
-		return attachments.keySet();
-	}
+        return wfDocBeanMappingDef;
+    }
 
-	public WfDocAttachmentDef getWfDocAttachmentDef(String name) {
-		return attachments.get(name);
-	}
+    public Set<String> getWfDocAttachmentNames() {
+        return attachments.keySet();
+    }
 
-	public Set<String> getWfDocClassifierNames() {
-		return classifiers.keySet();
-	}
+    public WfDocAttachmentDef getWfDocAttachmentDef(String name) {
+        return attachments.get(name);
+    }
 
-	public WfDocClassifierDef getWfDocClassifierDef(String name) {
-		return classifiers.get(name);
-	}
+    public Set<String> getWfDocClassifierNames() {
+        return classifiers.keySet();
+    }
 
-	public int getFieldCount() {
-		return docConfig.getFieldCount();
-	}
-	
-	public boolean isForm() {
-		return wfFormDef != null;
-	}
+    public WfDocClassifierDef getWfDocClassifierDef(String name) {
+        return classifiers.get(name);
+    }
+
+    public int getFieldCount() {
+        return docConfig.getFieldCount();
+    }
+
+    public boolean isForm() {
+        return wfFormDef != null;
+    }
 }

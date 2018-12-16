@@ -21,15 +21,14 @@ package com.tcdng.jacklyn.common.entities;
  * @author Lateef Ojulari
  * @version 1.0
  */
-public abstract class BaseInstallEntityQuery<T extends BaseInstallEntity>
-		extends BaseStatusEntityQuery<T> {
+public abstract class BaseInstallEntityQuery<T extends BaseInstallEntity> extends BaseStatusEntityQuery<T> {
 
-	public BaseInstallEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-		this.installed(Boolean.TRUE);
-	}
+    public BaseInstallEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+        this.installed(Boolean.TRUE);
+    }
 
-	public BaseInstallEntityQuery<T> installed(Boolean installed) {
-		return (BaseInstallEntityQuery<T>) equals("installed", installed);
-	}
+    public BaseInstallEntityQuery<T> installed(Boolean installed) {
+        return (BaseInstallEntityQuery<T>) equals("installed", installed);
+    }
 }

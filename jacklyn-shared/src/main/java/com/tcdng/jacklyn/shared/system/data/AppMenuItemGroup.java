@@ -27,83 +27,83 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class AppMenuItemGroup {
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private String pageCaption;
+    private String pageCaption;
 
-	private String caption;
+    private String caption;
 
-	private String path;
+    private String path;
 
-	private List<AppMenuItem> menuItemList;
+    private List<AppMenuItem> menuItemList;
 
-	public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String path,
-			List<AppMenuItem> menuItemList) {
-		this.name = name;
-		this.description = description;
-		this.pageCaption = pageCaption;
-		this.caption = caption;
-		this.path = path;
-		this.menuItemList = menuItemList;
-	}
+    public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String path,
+            List<AppMenuItem> menuItemList) {
+        this.name = name;
+        this.description = description;
+        this.pageCaption = pageCaption;
+        this.caption = caption;
+        this.path = path;
+        this.menuItemList = menuItemList;
+    }
 
-	public AppMenuItemGroup() {
+    public AppMenuItemGroup() {
 
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@XmlElement
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @XmlElement
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getPageCaption() {
-		return pageCaption;
-	}
+    public String getPageCaption() {
+        return pageCaption;
+    }
 
-	@XmlElement
-	public void setPageCaption(String pageCaption) {
-		this.pageCaption = pageCaption;
-	}
+    @XmlElement
+    public void setPageCaption(String pageCaption) {
+        this.pageCaption = pageCaption;
+    }
 
-	public String getCaption() {
-		return caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	@XmlElement
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    @XmlElement
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	@XmlElement
-	public void setPath(String path) {
-		this.path = path;
-	}
+    @XmlElement
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public List<AppMenuItem> getMenuItemList() {
-		return menuItemList;
-	}
+    public List<AppMenuItem> getMenuItemList() {
+        return menuItemList;
+    }
 
-	@XmlElement(name = "menuItem")
-	public void setMenuItemList(List<AppMenuItem> menuItemList) {
-		this.menuItemList = menuItemList;
-	}
+    @XmlElement(name = "menuItem")
+    public void setMenuItemList(List<AppMenuItem> menuItemList) {
+        this.menuItemList = menuItemList;
+    }
 }

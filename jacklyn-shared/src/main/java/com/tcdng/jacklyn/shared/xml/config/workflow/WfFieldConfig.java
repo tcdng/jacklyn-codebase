@@ -30,36 +30,36 @@ import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
  */
 public class WfFieldConfig extends BaseConfig {
 
-	private DataType dataType;
+    private DataType dataType;
 
-	private Boolean multiple;
+    private Boolean multiple;
 
-	public WfFieldConfig(DataType dataType, Boolean multiple) {
-		this.dataType = dataType;
-		this.multiple = multiple;
-	}
+    public WfFieldConfig(DataType dataType, Boolean multiple) {
+        this.dataType = dataType;
+        this.multiple = multiple;
+    }
 
-	public WfFieldConfig() {
-		this.multiple = Boolean.FALSE;
-	}
+    public WfFieldConfig() {
+        this.multiple = Boolean.FALSE;
+    }
 
-	public DataType getDataType() {
-		return dataType;
-	}
+    public DataType getDataType() {
+        return dataType;
+    }
 
-	@XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
-	@XmlAttribute(name = "type", required = true)
-	public void setDataType(DataType dataType) {
-		this.dataType = dataType;
-	}
+    @XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
+    @XmlAttribute(name = "type", required = true)
+    public void setDataType(DataType dataType) {
+        this.dataType = dataType;
+    }
 
-	public Boolean getMultiple() {
-		return multiple;
-	}
+    public Boolean getMultiple() {
+        return multiple;
+    }
 
-	@XmlAttribute
-	public void setMultiple(Boolean multiple) {
-		this.multiple = multiple;
-	}
+    @XmlAttribute
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
+    }
 
 }

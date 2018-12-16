@@ -27,14 +27,14 @@ import com.tcdng.unify.core.annotation.Version;
 @Policy("versionedstatusentity-policy")
 public abstract class BaseVersionedStatusEntity extends BaseStatusEntity {
 
-	@Version
-	private long versionNo;
+    @Version
+    private long versionNo;
 
-	public long getVersionNo() {
-		return versionNo;
-	}
+    public long getVersionNo() {
+        return versionNo;
+    }
 
-	public void setVersionNo(long versionNo) {
-		this.versionNo = versionNo;
-	}
+    public void setVersionNo(long versionNo) {
+        this.versionNo = versionNo;
+    }
 }

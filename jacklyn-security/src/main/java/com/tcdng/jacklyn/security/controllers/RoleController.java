@@ -39,117 +39,115 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/security/upl/managerole.upl")
 public class RoleController extends AbstractSecurityRecordController<Role> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	private RoleLargeData largeData;
+    private RoleLargeData largeData;
 
-	private RoleLargeData clipboardLargeData;
+    private RoleLargeData clipboardLargeData;
 
-	public RoleController() {
-		super(Role.class, "security.role.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-		largeData = new RoleLargeData();
-	}
+    public RoleController() {
+        super(Role.class, "security.role.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+                | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+        largeData = new RoleLargeData();
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	public RoleLargeData getLargeData() {
-		return largeData;
-	}
+    public RoleLargeData getLargeData() {
+        return largeData;
+    }
 
-	public void setLargeData(RoleLargeData largeData) {
-		this.largeData = largeData;
-	}
+    public void setLargeData(RoleLargeData largeData) {
+        this.largeData = largeData;
+    }
 
-	@Override
-	protected List<Role> find() throws UnifyException {
-		RoleQuery query = new RoleQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.order("description").ignoreEmptyCriteria(true);
-		return getSecurityModule().findRoles(query);
-	}
+    @Override
+    protected List<Role> find() throws UnifyException {
+        RoleQuery query = new RoleQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.order("description").ignoreEmptyCriteria(true);
+        return getSecurityModule().findRoles(query);
+    }
 
-	@Override
-	protected Role find(Long id) throws UnifyException {
-		largeData = getSecurityModule().findRoleForm(id);
-		return largeData.getData();
-	}
+    @Override
+    protected Role find(Long id) throws UnifyException {
+        largeData = getSecurityModule().findRoleForm(id);
+        return largeData.getData();
+    }
 
-	@Override
-	protected Role prepareCreate() throws UnifyException {
-		largeData = new RoleLargeData();
-		return largeData.getData();
-	}
+    @Override
+    protected Role prepareCreate() throws UnifyException {
+        largeData = new RoleLargeData();
+        return largeData.getData();
+    }
 
-	@Override
-	protected void onPrepareView(Role roleData, boolean onPaste) throws UnifyException {
-		if (onPaste) {
-			largeData.setPrivilegeIdList(clipboardLargeData.getPrivilegeIdList());
-			largeData.setWfStepIdList(clipboardLargeData.getWfStepIdList());
-		}
-	}
+    @Override
+    protected void onPrepareView(Role roleData, boolean onPaste) throws UnifyException {
+        if (onPaste) {
+            largeData.setPrivilegeIdList(clipboardLargeData.getPrivilegeIdList());
+            largeData.setWfStepIdList(clipboardLargeData.getWfStepIdList());
+        }
+    }
 
-	@Override
-	@Action
-	public String copyRecord() throws UnifyException {
-		clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
-		return super.copyRecord();
-	}
+    @Override
+    @Action
+    public String copyRecord() throws UnifyException {
+        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
+        return super.copyRecord();
+    }
 
-	@Override
-	protected void onLoseView(Role roleData) throws UnifyException {
-		largeData = new RoleLargeData();
-		clipboardLargeData = null;
-	}
+    @Override
+    protected void onLoseView(Role roleData) throws UnifyException {
+        largeData = new RoleLargeData();
+        clipboardLargeData = null;
+    }
 
-	@Override
-	protected Object create(Role roleData) throws UnifyException {
-		return getSecurityModule().createRole(largeData);
-	}
+    @Override
+    protected Object create(Role roleData) throws UnifyException {
+        return getSecurityModule().createRole(largeData);
+    }
 
-	@Override
-	protected int update(Role roleData) throws UnifyException {
-		return getSecurityModule().updateRole(largeData);
-	}
+    @Override
+    protected int update(Role roleData) throws UnifyException {
+        return getSecurityModule().updateRole(largeData);
+    }
 
-	@Override
-	protected int delete(Role roleData) throws UnifyException {
-		return getSecurityModule().deleteRole(roleData.getId());
-	}
+    @Override
+    protected int delete(Role roleData) throws UnifyException {
+        return getSecurityModule().deleteRole(roleData.getId());
+    }
 }

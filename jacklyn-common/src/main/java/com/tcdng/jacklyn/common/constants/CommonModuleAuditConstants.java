@@ -24,6 +24,6 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface CommonModuleAuditConstants {
 
-	String GENERATE_REPORT = "cmn-generatereport";
+    String GENERATE_REPORT = "cmn-generatereport";
 
 }

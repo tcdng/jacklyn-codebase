@@ -27,29 +27,29 @@ import java.util.List;
  */
 public class WfFormSectionDef extends BaseLabelWfDef {
 
-	private static final long serialVersionUID = 800388073154871802L;
+    private static final long serialVersionUID = 800388073154871802L;
 
-	private String binding;
-	
-	private List<WfFormFieldDef> fieldList;
+    private String binding;
 
-	public WfFormSectionDef(String name, String description, String label,
-			String binding, List<WfFormFieldDef> fieldList) {
-		super(name, description, label);
-		this.binding = binding;
-		if (fieldList != null && !fieldList.isEmpty()) {
-			this.fieldList = Collections.unmodifiableList(fieldList);
-		} else {
-			this.fieldList = Collections.emptyList();
-		}
-	}
+    private List<WfFormFieldDef> fieldList;
 
-	public String getBinding() {
-		return binding;
-	}
+    public WfFormSectionDef(String name, String description, String label, String binding,
+            List<WfFormFieldDef> fieldList) {
+        super(name, description, label);
+        this.binding = binding;
+        if (fieldList != null && !fieldList.isEmpty()) {
+            this.fieldList = Collections.unmodifiableList(fieldList);
+        } else {
+            this.fieldList = Collections.emptyList();
+        }
+    }
 
-	public List<WfFormFieldDef> getFieldList() {
-		return fieldList;
-	}
+    public String getBinding() {
+        return binding;
+    }
+
+    public List<WfFormFieldDef> getFieldList() {
+        return fieldList;
+    }
 
 }

@@ -34,11 +34,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("rolelist")
 public class RoleListCommand extends AbstractZeroParamsSecurityListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getSecurityBusinessModule().findRoles(
-				(RoleQuery) new RoleQuery().status(RecordStatus.ACTIVE).order("description"));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getSecurityBusinessModule()
+                .findRoles((RoleQuery) new RoleQuery().status(RecordStatus.ACTIVE).order("description"));
+    }
 
 }

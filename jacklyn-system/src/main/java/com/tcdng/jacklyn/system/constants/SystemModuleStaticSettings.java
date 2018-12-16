@@ -28,11 +28,11 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class SystemModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public static final int INSTALLATION_INDEX = 0;
+    public static final int INSTALLATION_INDEX = 0;
 
-	public SystemModuleStaticSettings() {
-		super(SystemModuleNameConstants.SYSTEMBUSINESSMODULE, "config/system-module.xml",
-				"com.tcdng.jacklyn.resources.system-messages", INSTALLATION_INDEX);
-	}
+    public SystemModuleStaticSettings() {
+        super(SystemModuleNameConstants.SYSTEMBUSINESSMODULE, "config/system-module.xml",
+                "com.tcdng.jacklyn.resources.system-messages", INSTALLATION_INDEX);
+    }
 
 }

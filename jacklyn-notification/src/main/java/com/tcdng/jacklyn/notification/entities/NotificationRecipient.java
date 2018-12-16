@@ -29,45 +29,45 @@ import com.tcdng.unify.core.annotation.Table;
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Recipient",
-		reportable = true)
+        reportable = true)
 @Table("NOTIFRECIPIENT")
 public class NotificationRecipient extends BaseEntity {
 
-	@ForeignKey(Notification.class)
-	private Long notificationId;
+    @ForeignKey(Notification.class)
+    private Long notificationId;
 
-	@Column(length = 64)
-	private String recipientName;
+    @Column(length = 64)
+    private String recipientName;
 
-	@Column(length = 64)
-	private String recipientContact;
+    @Column(length = 64)
+    private String recipientContact;
 
-	@Override
-	public String getDescription() {
-		return recipientName;
-	}
+    @Override
+    public String getDescription() {
+        return recipientName;
+    }
 
-	public Long getNotificationId() {
-		return notificationId;
-	}
+    public Long getNotificationId() {
+        return notificationId;
+    }
 
-	public void setNotificationId(Long notificationId) {
-		this.notificationId = notificationId;
-	}
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
+    }
 
-	public String getRecipientName() {
-		return recipientName;
-	}
+    public String getRecipientName() {
+        return recipientName;
+    }
 
-	public void setRecipientName(String recipientName) {
-		this.recipientName = recipientName;
-	}
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
 
-	public String getRecipientContact() {
-		return recipientContact;
-	}
+    public String getRecipientContact() {
+        return recipientContact;
+    }
 
-	public void setRecipientContact(String recipientContact) {
-		this.recipientContact = recipientContact;
-	}
+    public void setRecipientContact(String recipientContact) {
+        this.recipientContact = recipientContact;
+    }
 }

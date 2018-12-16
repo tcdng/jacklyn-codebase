@@ -25,20 +25,20 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
  */
 public class WfItemAttachmentQuery extends BaseTimestampedEntityQuery<WfItemAttachment> {
 
-	public WfItemAttachmentQuery() {
-		super(WfItemAttachment.class);
-	}
+    public WfItemAttachmentQuery() {
+        super(WfItemAttachment.class);
+    }
 
-	public WfItemAttachmentQuery wfItemId(Long wfItemId) {
-		return (WfItemAttachmentQuery) equals("wfItemId", wfItemId);
-	}
+    public WfItemAttachmentQuery wfItemId(Long wfItemId) {
+        return (WfItemAttachmentQuery) equals("wfItemId", wfItemId);
+    }
 
-	public WfItemAttachmentQuery wfItemAttachmentDefId(Long wfItemAttachmentDefId) {
-		return (WfItemAttachmentQuery) equals("wfItemAttachmentDefId", wfItemAttachmentDefId);
-	}
+    public WfItemAttachmentQuery wfItemAttachmentDefId(Long wfItemAttachmentDefId) {
+        return (WfItemAttachmentQuery) equals("wfItemAttachmentDefId", wfItemAttachmentDefId);
+    }
 
-	public WfItemAttachmentQuery name(String name) {
-		return (WfItemAttachmentQuery) equals("name", name);
-	}
+    public WfItemAttachmentQuery name(String name) {
+        return (WfItemAttachmentQuery) equals("name", name);
+    }
 
 }

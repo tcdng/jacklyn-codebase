@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class SysParamsConfig {
 
-	private List<SysParamConfig> sysParamList;
+    private List<SysParamConfig> sysParamList;
 
-	public List<SysParamConfig> getSysParamList() {
-		return sysParamList;
-	}
+    public List<SysParamConfig> getSysParamList() {
+        return sysParamList;
+    }
 
-	@XmlElement(name = "sys-parameter", required = true)
-	public void setSysParamList(List<SysParamConfig> sysParamList) {
-		this.sysParamList = sysParamList;
-	}
+    @XmlElement(name = "sys-parameter", required = true)
+    public void setSysParamList(List<SysParamConfig> sysParamList) {
+        this.sysParamList = sysParamList;
+    }
 }

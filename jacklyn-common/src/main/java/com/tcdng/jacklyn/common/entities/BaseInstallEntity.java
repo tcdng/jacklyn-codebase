@@ -31,26 +31,26 @@ import com.tcdng.unify.core.annotation.Policy;
 @Policy("installentity-policy")
 public abstract class BaseInstallEntity extends BaseStatusEntity {
 
-	@Format(formatter = "!datetimeformat")
-	@Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-	private Date updateDt;
+    @Format(formatter = "!datetimeformat")
+    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private Date updateDt;
 
-	@Column(name = "INSTALLED_FG")
-	private Boolean installed;
+    @Column(name = "INSTALLED_FG")
+    private Boolean installed;
 
-	public Date getUpdateDt() {
-		return updateDt;
-	}
+    public Date getUpdateDt() {
+        return updateDt;
+    }
 
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
+    public void setUpdateDt(Date updateDt) {
+        this.updateDt = updateDt;
+    }
 
-	public Boolean getInstalled() {
-		return installed;
-	}
+    public Boolean getInstalled() {
+        return installed;
+    }
 
-	public void setInstalled(Boolean installed) {
-		this.installed = installed;
-	}
+    public void setInstalled(Boolean installed) {
+        this.installed = installed;
+    }
 }

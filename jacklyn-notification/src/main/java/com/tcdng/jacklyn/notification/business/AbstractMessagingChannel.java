@@ -24,16 +24,15 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractMessagingChannel extends AbstractUnifyComponent
-		implements MessagingChannel {
+public abstract class AbstractMessagingChannel extends AbstractUnifyComponent implements MessagingChannel {
 
-	@Override
-	protected void onInitialize() throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 }

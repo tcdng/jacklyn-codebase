@@ -26,51 +26,50 @@ import java.util.List;
  */
 public class InspectUserInfo {
 
-	private String fullName;
+    private String fullName;
 
-	private String emailAddress;
+    private String emailAddress;
 
-	private byte[] photo;
+    private byte[] photo;
 
-	private List<InspectUserAuditItem> auditItems;
+    private List<InspectUserAuditItem> auditItems;
 
-	public InspectUserInfo() {
+    public InspectUserInfo() {
 
-	}
+    }
 
-	public InspectUserInfo(String fullName, String emailAddress, byte[] photo,
-			List<InspectUserAuditItem> auditItems) {
-		this.fullName = fullName;
-		this.emailAddress = emailAddress;
-		this.photo = photo;
-		this.auditItems = auditItems;
-	}
+    public InspectUserInfo(String fullName, String emailAddress, byte[] photo, List<InspectUserAuditItem> auditItems) {
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
+        this.photo = photo;
+        this.auditItems = auditItems;
+    }
 
-	public String getFullName() {
-		return fullName;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	public byte[] getPhoto() {
-		return photo;
-	}
+    public byte[] getPhoto() {
+        return photo;
+    }
 
-	public int getItemCount() {
-		if (auditItems != null) {
-			return auditItems.size();
-		}
+    public int getItemCount() {
+        if (auditItems != null) {
+            return auditItems.size();
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 
-	public List<InspectUserAuditItem> getAuditItems() {
-		return auditItems;
-	}
+    public List<InspectUserAuditItem> getAuditItems() {
+        return auditItems;
+    }
 
-	public boolean isUser() {
-		return fullName != null;
-	}
+    public boolean isUser() {
+        return fullName != null;
+    }
 }

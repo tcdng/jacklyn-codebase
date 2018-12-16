@@ -28,51 +28,49 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public final class NotificationUtils {
 
-	private static FactoryMap<String, TemplateNameParts> templateNames;
+    private static FactoryMap<String, TemplateNameParts> templateNames;
 
-	static {
-		templateNames = new FactoryMap<String, TemplateNameParts>() {
+    static {
+        templateNames = new FactoryMap<String, TemplateNameParts>() {
 
-			@Override
-			protected TemplateNameParts create(String globalName, Object... params)
-					throws Exception {
-				String[] names = StringUtils.dotSplit(globalName);
-				return new TemplateNameParts(names[0], names[1]);
-			}
+            @Override
+            protected TemplateNameParts create(String globalName, Object... params) throws Exception {
+                String[] names = StringUtils.dotSplit(globalName);
+                return new TemplateNameParts(names[0], names[1]);
+            }
 
-		};
-	}
+        };
+    }
 
-	private NotificationUtils() {
+    private NotificationUtils() {
 
-	}
+    }
 
-	public static String getGlobalTemplateName(String moduleName, String templateName) {
-		return StringUtils.dotify(moduleName, templateName);
-	}
+    public static String getGlobalTemplateName(String moduleName, String templateName) {
+        return StringUtils.dotify(moduleName, templateName);
+    }
 
-	public static TemplateNameParts getTemplateNameParts(String globalTemplateName)
-			throws UnifyException {
-		return templateNames.get(globalTemplateName);
-	}
+    public static TemplateNameParts getTemplateNameParts(String globalTemplateName) throws UnifyException {
+        return templateNames.get(globalTemplateName);
+    }
 
-	public static class TemplateNameParts {
+    public static class TemplateNameParts {
 
-		private String moduleName;
+        private String moduleName;
 
-		private String templateName;
+        private String templateName;
 
-		public TemplateNameParts(String moduleName, String templateName) {
-			this.moduleName = moduleName;
-			this.templateName = templateName;
-		}
+        public TemplateNameParts(String moduleName, String templateName) {
+            this.moduleName = moduleName;
+            this.templateName = templateName;
+        }
 
-		public String getModuleName() {
-			return moduleName;
-		}
+        public String getModuleName() {
+            return moduleName;
+        }
 
-		public String getTemplateName() {
-			return templateName;
-		}
-	}
+        public String getTemplateName() {
+            return templateName;
+        }
+    }
 }

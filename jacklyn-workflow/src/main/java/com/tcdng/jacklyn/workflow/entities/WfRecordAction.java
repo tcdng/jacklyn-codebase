@@ -31,96 +31,96 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFRECORDACTION", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
-		@UniqueConstraint({ "wfStepId", "description" }) })
+        @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfRecordAction extends BaseEntity {
 
-	@ForeignKey(WfStep.class)
-	private Long wfStepId;
+    @ForeignKey(WfStep.class)
+    private Long wfStepId;
 
-	@ForeignKey
-	private WorkflowRecordActionType actionType;
+    @ForeignKey
+    private WorkflowRecordActionType actionType;
 
-	@Column(name = "RECORDACTION_NM", length = 32)
-	private String name;
+    @Column(name = "RECORDACTION_NM", length = 32)
+    private String name;
 
-	@Column(name = "RECORDACTION_DESC", length = 64)
-	private String description;
+    @Column(name = "RECORDACTION_DESC", length = 64)
+    private String description;
 
-	@Column(name = "DOCMAPPING_NM", length = 32)
-	private String docMappingName;
+    @Column(name = "DOCMAPPING_NM", length = 32)
+    private String docMappingName;
 
-	@ListOnly(key = "wfStepId", property = "name")
-	private String wfStepName;
+    @ListOnly(key = "wfStepId", property = "name")
+    private String wfStepName;
 
-	@ListOnly(key = "wfStepId", property = "description")
-	private String wfStepDesc;
+    @ListOnly(key = "wfStepId", property = "description")
+    private String wfStepDesc;
 
-	@ListOnly(key = "actionType", property = "description")
-	private String actionTypeDesc;
+    @ListOnly(key = "actionType", property = "description")
+    private String actionTypeDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Long getWfStepId() {
-		return wfStepId;
-	}
+    public Long getWfStepId() {
+        return wfStepId;
+    }
 
-	public void setWfStepId(Long wfStepId) {
-		this.wfStepId = wfStepId;
-	}
+    public void setWfStepId(Long wfStepId) {
+        this.wfStepId = wfStepId;
+    }
 
-	public WorkflowRecordActionType getActionType() {
-		return actionType;
-	}
+    public WorkflowRecordActionType getActionType() {
+        return actionType;
+    }
 
-	public void setActionType(WorkflowRecordActionType actionType) {
-		this.actionType = actionType;
-	}
+    public void setActionType(WorkflowRecordActionType actionType) {
+        this.actionType = actionType;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDocMappingName() {
-		return docMappingName;
-	}
+    public String getDocMappingName() {
+        return docMappingName;
+    }
 
-	public void setDocMappingName(String docMappingName) {
-		this.docMappingName = docMappingName;
-	}
+    public void setDocMappingName(String docMappingName) {
+        this.docMappingName = docMappingName;
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public void setWfStepName(String wfStepName) {
-		this.wfStepName = wfStepName;
-	}
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
 
-	public String getWfStepDesc() {
-		return wfStepDesc;
-	}
+    public String getWfStepDesc() {
+        return wfStepDesc;
+    }
 
-	public void setWfStepDesc(String wfStepDesc) {
-		this.wfStepDesc = wfStepDesc;
-	}
+    public void setWfStepDesc(String wfStepDesc) {
+        this.wfStepDesc = wfStepDesc;
+    }
 
-	public String getActionTypeDesc() {
-		return actionTypeDesc;
-	}
+    public String getActionTypeDesc() {
+        return actionTypeDesc;
+    }
 
-	public void setActionTypeDesc(String actionTypeDesc) {
-		this.actionTypeDesc = actionTypeDesc;
-	}
+    public void setActionTypeDesc(String actionTypeDesc) {
+        this.actionTypeDesc = actionTypeDesc;
+    }
 
 }

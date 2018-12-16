@@ -27,28 +27,28 @@ import java.util.List;
  */
 public class WfDocClassifierDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 4973270364809680350L;
+    private static final long serialVersionUID = 4973270364809680350L;
 
-	private String logic;
+    private String logic;
 
-	private List<WfDocClassifierFilterDef> filterList;
+    private List<WfDocClassifierFilterDef> filterList;
 
-	public WfDocClassifierDef(String name, String description, String logic,
-			List<WfDocClassifierFilterDef> filterList) {
-		super(name, description);
-		this.logic = logic;
-		if (filterList != null) {
-			this.filterList = Collections.unmodifiableList(filterList);
-		} else {
-			this.filterList = Collections.emptyList();
-		}
-	}
+    public WfDocClassifierDef(String name, String description, String logic,
+            List<WfDocClassifierFilterDef> filterList) {
+        super(name, description);
+        this.logic = logic;
+        if (filterList != null) {
+            this.filterList = Collections.unmodifiableList(filterList);
+        } else {
+            this.filterList = Collections.emptyList();
+        }
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 
-	public List<WfDocClassifierFilterDef> getFilterList() {
-		return filterList;
-	}
+    public List<WfDocClassifierFilterDef> getFilterList() {
+        return filterList;
+    }
 }

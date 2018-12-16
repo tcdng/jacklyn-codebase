@@ -28,25 +28,25 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfFieldsConfig {
 
-	private List<WfFieldConfig> wfFieldConfigList;
+    private List<WfFieldConfig> wfFieldConfigList;
 
-	private List<WfComplexFieldConfig> wfComplexFieldConfigList;
+    private List<WfComplexFieldConfig> wfComplexFieldConfigList;
 
-	public List<WfFieldConfig> getWfFieldConfigList() {
-		return wfFieldConfigList;
-	}
+    public List<WfFieldConfig> getWfFieldConfigList() {
+        return wfFieldConfigList;
+    }
 
-	@XmlElement(name = "field", required = true)
-	public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
-		this.wfFieldConfigList = wfFieldConfigList;
-	}
+    @XmlElement(name = "field", required = true)
+    public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
+        this.wfFieldConfigList = wfFieldConfigList;
+    }
 
-	public List<WfComplexFieldConfig> getWfComplexFieldConfigList() {
-		return wfComplexFieldConfigList;
-	}
+    public List<WfComplexFieldConfig> getWfComplexFieldConfigList() {
+        return wfComplexFieldConfigList;
+    }
 
-	@XmlElement(name = "complex-field", required = true)
-	public void setWfComplexFieldConfigList(List<WfComplexFieldConfig> wfComplexFieldConfigList) {
-		this.wfComplexFieldConfigList = wfComplexFieldConfigList;
-	}
+    @XmlElement(name = "complex-field", required = true)
+    public void setWfComplexFieldConfigList(List<WfComplexFieldConfig> wfComplexFieldConfigList) {
+        this.wfComplexFieldConfigList = wfComplexFieldConfigList;
+    }
 }

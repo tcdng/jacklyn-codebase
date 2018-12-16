@@ -33,27 +33,25 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/workflow/upl/wfpublishcategory.upl")
 public class WfPublishCategoryController extends AbstractWorkflowController {
 
-	private byte[] wfCategoryBin;
+    private byte[] wfCategoryBin;
 
-	public WfPublishCategoryController() {
-		super(true, false);
-	}
+    public WfPublishCategoryController() {
+        super(true, false);
+    }
 
-	@Action
-	public String startWfPublishCategoryTask() throws UnifyException {
-		TaskSetup taskSetup = TaskSetup.newBuilder()
-				.addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
-				.setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN,
-						wfCategoryBin)
-				.logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "workflow.wfcategory.publish");
-	}
+    @Action
+    public String startWfPublishCategoryTask() throws UnifyException {
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryBin).logMessages()
+                .build();
+        return launchTaskWithMonitorBox(taskSetup, "workflow.wfcategory.publish");
+    }
 
-	public byte[] getWfCategoryBin() {
-		return wfCategoryBin;
-	}
+    public byte[] getWfCategoryBin() {
+        return wfCategoryBin;
+    }
 
-	public void setWfCategoryBin(byte[] wfCategoryBin) {
-		this.wfCategoryBin = wfCategoryBin;
-	}
+    public void setWfCategoryBin(byte[] wfCategoryBin) {
+        this.wfCategoryBin = wfCategoryBin;
+    }
 }

@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.service.constants;
  */
 public interface ServiceModuleNameConstants {
 
-	String SERVICE_MODULE = "service";
+    String SERVICE_MODULE = "service";
 
-	String SERVICEBUSINESSMODULE = "jacklyn-servicebusinessmodule";
+    String SERVICEBUSINESSMODULE = "jacklyn-servicebusinessmodule";
 }

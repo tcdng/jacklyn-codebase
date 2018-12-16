@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("inboxfilereadlist")
 public enum FileInboxReadStatus implements EnumConst {
 
-	NOT_READ("N"), READ("R"), READ_FAILED("F");
+    NOT_READ("N"), READ("R"), READ_FAILED("F");
 
-	private final String code;
+    private final String code;
 
-	private FileInboxReadStatus(String code) {
-		this.code = code;
-	}
+    private FileInboxReadStatus(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static FileInboxReadStatus fromCode(String code) {
-		return EnumUtils.fromCode(FileInboxReadStatus.class, code);
-	}
+    public static FileInboxReadStatus fromCode(String code) {
+        return EnumUtils.fromCode(FileInboxReadStatus.class, code);
+    }
 
-	public static FileInboxReadStatus fromName(String name) {
-		return EnumUtils.fromName(FileInboxReadStatus.class, name);
-	}
+    public static FileInboxReadStatus fromName(String name) {
+        return EnumUtils.fromName(FileInboxReadStatus.class, name);
+    }
 }

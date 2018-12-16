@@ -30,21 +30,21 @@ import com.tcdng.unify.core.database.Entity;
 @Component("versionedstatusentity-policy")
 public class BaseVersionedStatusEntityPolicy extends BaseStatusEntityPolicy {
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		((BaseVersionedStatusEntity) record).setVersionNo(1L);
-		return super.preCreate(record, now);
-	}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        ((BaseVersionedStatusEntity) record).setVersionNo(1L);
+        return super.preCreate(record, now);
+    }
 
-	@Override
-	public void preUpdate(Entity record, Date now) throws UnifyException {
-		BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
-		versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
-	}
+    @Override
+    public void preUpdate(Entity record, Date now) throws UnifyException {
+        BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
+        versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
+    }
 
-	@Override
-	public void onUpdateError(Entity record) {
-		BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
-		versionedRecord.setVersionNo(versionedRecord.getVersionNo() - 1L);
-	}
+    @Override
+    public void onUpdateError(Entity record) {
+        BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
+        versionedRecord.setVersionNo(versionedRecord.getVersionNo() - 1L);
+    }
 }

@@ -23,14 +23,14 @@ package com.tcdng.jacklyn.notification.constants;
  */
 public interface NotificationModuleErrorConstants {
 
-	/**
-	 * Message template with name {0} is unknown.
-	 */
-	String MESSAGE_TEMPLATE_WITH_NAME_UNKNOWN = "NOTIF_0001";
+    /**
+     * Message template with name {0} is unknown.
+     */
+    String MESSAGE_TEMPLATE_WITH_NAME_UNKNOWN = "NOTIF_0001";
 
-	/**
-	 * Message channel with name {0} is unknown.
-	 */
-	String MESSAGE_CHANNEL_WITH_NAME_UNKNOWN = "NOTIF_0002";
+    /**
+     * Message channel with name {0} is unknown.
+     */
+    String MESSAGE_CHANNEL_WITH_NAME_UNKNOWN = "NOTIF_0002";
 
 }

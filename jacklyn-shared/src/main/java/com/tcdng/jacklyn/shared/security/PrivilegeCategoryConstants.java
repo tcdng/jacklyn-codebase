@@ -22,12 +22,12 @@ package com.tcdng.jacklyn.shared.security;
  * @version 1.0
  */
 public interface PrivilegeCategoryConstants {
-	
-	String APPLICATIONUI = "APPUI";
-	
-	String DASHBOARD = "DSHBRD";
-	
-	String DOCUMENTCONTROL = "DOCCTRL";
-	
-	String REPORTABLE = "RPT";
+
+    String APPLICATIONUI = "APPUI";
+
+    String DASHBOARD = "DSHBRD";
+
+    String DOCUMENTCONTROL = "DOCCTRL";
+
+    String REPORTABLE = "RPT";
 }

@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.notification.constants;
  */
 public interface NotificationModuleNameConstants {
 
-	String NOTIFICATION_MODULE = "notification";
+    String NOTIFICATION_MODULE = "notification";
 
-	String NOTIFICATIONBUSINESSMODULE = "jacklyn-notificationbusinessmodule";
+    String NOTIFICATIONBUSINESSMODULE = "jacklyn-notificationbusinessmodule";
 
-	String EMAILMESSAGINGCHANNEL = "email-messagingchannel";
+    String EMAILMESSAGINGCHANNEL = "email-messagingchannel";
 
-	String SYSTEMMESSAGINGCHANNEL = "system-messagingchannel";
+    String SYSTEMMESSAGINGCHANNEL = "system-messagingchannel";
 }

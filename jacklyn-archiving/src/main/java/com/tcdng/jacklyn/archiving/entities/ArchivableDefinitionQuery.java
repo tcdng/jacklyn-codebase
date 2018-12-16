@@ -25,23 +25,23 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class ArchivableDefinitionQuery extends BaseInstallEntityQuery<ArchivableDefinition> {
 
-	public ArchivableDefinitionQuery() {
-		super(ArchivableDefinition.class);
-	}
+    public ArchivableDefinitionQuery() {
+        super(ArchivableDefinition.class);
+    }
 
-	public ArchivableDefinitionQuery moduleId(Long moduleId) {
-		return (ArchivableDefinitionQuery) equals("moduleId", moduleId);
-	}
+    public ArchivableDefinitionQuery moduleId(Long moduleId) {
+        return (ArchivableDefinitionQuery) equals("moduleId", moduleId);
+    }
 
-	public ArchivableDefinitionQuery moduleName(String moduleName) {
-		return (ArchivableDefinitionQuery) equals("moduleName", moduleName);
-	}
+    public ArchivableDefinitionQuery moduleName(String moduleName) {
+        return (ArchivableDefinitionQuery) equals("moduleName", moduleName);
+    }
 
-	public ArchivableDefinitionQuery name(String name) {
-		return (ArchivableDefinitionQuery) equals("name", name);
-	}
+    public ArchivableDefinitionQuery name(String name) {
+        return (ArchivableDefinitionQuery) equals("name", name);
+    }
 
-	public ArchivableDefinitionQuery orderByDescription() {
-		return (ArchivableDefinitionQuery) order("description");
-	}
+    public ArchivableDefinitionQuery orderByDescription() {
+        return (ArchivableDefinitionQuery) order("description");
+    }
 }

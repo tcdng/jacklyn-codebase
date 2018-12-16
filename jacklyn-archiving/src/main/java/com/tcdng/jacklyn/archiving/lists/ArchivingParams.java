@@ -24,13 +24,13 @@ package com.tcdng.jacklyn.archiving.lists;
  */
 public class ArchivingParams {
 
-	private Long archivableDefId;
+    private Long archivableDefId;
 
-	public ArchivingParams(Long archivableDefId) {
-		this.archivableDefId = archivableDefId;
-	}
+    public ArchivingParams(Long archivableDefId) {
+        this.archivableDefId = archivableDefId;
+    }
 
-	public Long getArchivableDefId() {
-		return archivableDefId;
-	}
+    public Long getArchivableDefId() {
+        return archivableDefId;
+    }
 }

@@ -29,14 +29,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractFileController extends BasePageController {
 
-	@Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
-	private FileModule fileModule;
+    @Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
+    private FileModule fileModule;
 
-	public AbstractFileController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractFileController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected FileModule getFileModule() throws UnifyException {
-		return fileModule;
-	}
+    protected FileModule getFileModule() throws UnifyException {
+        return fileModule;
+    }
 }

@@ -35,74 +35,72 @@ import com.tcdng.unify.core.util.QueryUtils;
 @UplBinding("web/organization/upl/managebranch.upl")
 public class BranchController extends AbstractOrganizationRecordController<Branch> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	public BranchController() {
-		super(Branch.class, "organization.branch.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public BranchController() {
+        super(Branch.class, "organization.branch.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+                | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	@Override
-	protected List<Branch> find() throws UnifyException {
-		BranchQuery query = new BranchQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.name(searchName);
-		}
+    @Override
+    protected List<Branch> find() throws UnifyException {
+        BranchQuery query = new BranchQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.name(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.order("description").ignoreEmptyCriteria(true);
-		return getOrganizationModule().findBranches(query);
-	}
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.order("description").ignoreEmptyCriteria(true);
+        return getOrganizationModule().findBranches(query);
+    }
 
-	@Override
-	protected Branch find(Long id) throws UnifyException {
-		return getOrganizationModule().findBranch(id);
-	}
+    @Override
+    protected Branch find(Long id) throws UnifyException {
+        return getOrganizationModule().findBranch(id);
+    }
 
-	@Override
-	protected Branch prepareCreate() throws UnifyException {
-		return new Branch();
-	}
+    @Override
+    protected Branch prepareCreate() throws UnifyException {
+        return new Branch();
+    }
 
-	@Override
-	protected Object create(Branch branchData) throws UnifyException {
-		return getOrganizationModule().createBranch(branchData);
-	}
+    @Override
+    protected Object create(Branch branchData) throws UnifyException {
+        return getOrganizationModule().createBranch(branchData);
+    }
 
-	@Override
-	protected int update(Branch branchData) throws UnifyException {
-		return getOrganizationModule().updateBranch(branchData);
-	}
+    @Override
+    protected int update(Branch branchData) throws UnifyException {
+        return getOrganizationModule().updateBranch(branchData);
+    }
 
-	@Override
-	protected int delete(Branch branchData) throws UnifyException {
-		return getOrganizationModule().deleteBranch(branchData.getId());
-	}
+    @Override
+    protected int delete(Branch branchData) throws UnifyException {
+        return getOrganizationModule().deleteBranch(branchData.getId());
+    }
 
 }

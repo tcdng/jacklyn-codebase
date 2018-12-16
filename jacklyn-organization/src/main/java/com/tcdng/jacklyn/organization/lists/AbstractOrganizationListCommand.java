@@ -28,15 +28,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractOrganizationListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE)
-	private OrganizationModule organizationModule;
+    @Configurable(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE)
+    private OrganizationModule organizationModule;
 
-	public AbstractOrganizationListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractOrganizationListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected OrganizationModule getOrganizationModule() {
-		return organizationModule;
-	}
+    protected OrganizationModule getOrganizationModule() {
+        return organizationModule;
+    }
 
 }

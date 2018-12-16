@@ -28,45 +28,45 @@ import com.tcdng.unify.core.operation.FilterConditionType;
  */
 public class WfDocClassifierFilterDef implements Serializable {
 
-	private static final long serialVersionUID = 5301262527629289555L;
+    private static final long serialVersionUID = 5301262527629289555L;
 
-	private FilterConditionType op;
+    private FilterConditionType op;
 
-	private String fieldName;
+    private String fieldName;
 
-	private String value1;
+    private String value1;
 
-	private String value2;
+    private String value2;
 
-	private boolean fieldOnly;
+    private boolean fieldOnly;
 
-	public WfDocClassifierFilterDef(FilterConditionType op, String fieldName, String value1,
-			String value2, boolean fieldOnly) {
-		this.op = op;
-		this.fieldName = fieldName;
-		this.value1 = value1;
-		this.value2 = value2;
-		this.fieldOnly = fieldOnly;
-	}
+    public WfDocClassifierFilterDef(FilterConditionType op, String fieldName, String value1, String value2,
+            boolean fieldOnly) {
+        this.op = op;
+        this.fieldName = fieldName;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.fieldOnly = fieldOnly;
+    }
 
-	public FilterConditionType getOp() {
-		return op;
-	}
+    public FilterConditionType getOp() {
+        return op;
+    }
 
-	public String getFieldName() {
-		return fieldName;
-	}
+    public String getFieldName() {
+        return fieldName;
+    }
 
-	public String getValue1() {
-		return value1;
-	}
+    public String getValue1() {
+        return value1;
+    }
 
-	public String getValue2() {
-		return value2;
-	}
+    public String getValue2() {
+        return value2;
+    }
 
-	public boolean isFieldOnly() {
-		return fieldOnly;
-	}
+    public boolean isFieldOnly() {
+        return fieldOnly;
+    }
 
 }

@@ -23,35 +23,35 @@ package com.tcdng.jacklyn.common.data;
  */
 public class ReportJoinOptions {
 
-	private String tableA;
+    private String tableA;
 
-	private String columnA;
+    private String columnA;
 
-	private String tableB;
+    private String tableB;
 
-	private String columnB;
+    private String columnB;
 
-	public ReportJoinOptions(String tableA, String columnA, String tableB, String columnB) {
-		this.tableA = tableA;
-		this.columnA = columnA;
-		this.tableB = tableB;
-		this.columnB = columnB;
-	}
+    public ReportJoinOptions(String tableA, String columnA, String tableB, String columnB) {
+        this.tableA = tableA;
+        this.columnA = columnA;
+        this.tableB = tableB;
+        this.columnB = columnB;
+    }
 
-	public String getTableA() {
-		return tableA;
-	}
+    public String getTableA() {
+        return tableA;
+    }
 
-	public String getColumnA() {
-		return columnA;
-	}
+    public String getColumnA() {
+        return columnA;
+    }
 
-	public String getTableB() {
-		return tableB;
-	}
+    public String getTableB() {
+        return tableB;
+    }
 
-	public String getColumnB() {
-		return columnB;
-	}
+    public String getColumnB() {
+        return columnB;
+    }
 
 }

@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface CommonModuleNameConstants {
 
-	String JACKLYNAPPLICATIONSERVICEGATE = "jacklyn-applicationservicegate";
+    String JACKLYNAPPLICATIONSERVICEGATE = "jacklyn-applicationservicegate";
 
-	String JACKLYNBOOTMODULE = "jacklyn-bootmodule";
+    String JACKLYNBOOTMODULE = "jacklyn-bootmodule";
 
-	String PAGECONTROLLERSESSIONUTILS = "pagecontroller-sessionutils";
+    String PAGECONTROLLERSESSIONUTILS = "pagecontroller-sessionutils";
 }

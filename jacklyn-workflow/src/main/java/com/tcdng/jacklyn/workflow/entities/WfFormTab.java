@@ -29,63 +29,63 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFFORMTAB", uniqueConstraints = { @UniqueConstraint({ "wfFormId", "name" }),
-		@UniqueConstraint({ "wfFormId", "description" }) })
+        @UniqueConstraint({ "wfFormId", "description" }) })
 public class WfFormTab extends BaseEntity {
 
-	@ForeignKey(WfForm.class)
-	private Long wfFormId;
+    @ForeignKey(WfForm.class)
+    private Long wfFormId;
 
-	@Column(name = "TAB_NM", length = 32)
-	private String name;
+    @Column(name = "TAB_NM", length = 32)
+    private String name;
 
-	@Column(name = "TAB_DESC", length = 64)
-	private String description;
+    @Column(name = "TAB_DESC", length = 64)
+    private String description;
 
-	@Column(name = "TAB_LABEL", length = 64, nullable = true)
-	private String label;
+    @Column(name = "TAB_LABEL", length = 64, nullable = true)
+    private String label;
 
-	@Column(name = "PSEUDO_FG")
-	private Boolean pseudo;
+    @Column(name = "PSEUDO_FG")
+    private Boolean pseudo;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Long getWfFormId() {
-		return wfFormId;
-	}
+    public Long getWfFormId() {
+        return wfFormId;
+    }
 
-	public void setWfFormId(Long wfFormId) {
-		this.wfFormId = wfFormId;
-	}
+    public void setWfFormId(Long wfFormId) {
+        this.wfFormId = wfFormId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public Boolean getPseudo() {
-		return pseudo;
-	}
+    public Boolean getPseudo() {
+        return pseudo;
+    }
 
-	public void setPseudo(Boolean pseudo) {
-		this.pseudo = pseudo;
-	}
+    public void setPseudo(Boolean pseudo) {
+        this.pseudo = pseudo;
+    }
 
 }

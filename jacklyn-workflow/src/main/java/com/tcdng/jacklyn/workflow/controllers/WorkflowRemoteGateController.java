@@ -46,30 +46,30 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/workflow/gate")
 public class WorkflowRemoteGateController extends BaseRemoteCallController {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
+    private WorkflowModule workflowModule;
 
-	@GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
-			description = "$m{workflow.gate.remotecall.publishwfcategory}")
-	public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
-		workflowModule.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
-		return new PublishWfCategoryResult();
-	}
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
+            description = "$m{workflow.gate.remotecall.publishwfcategory}")
+    public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
+        workflowModule.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
+        return new PublishWfCategoryResult();
+    }
 
-	@GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
-			description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
-	public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(GetToolingEnrichmentLogicParams params)
-			throws UnifyException {
-		List<ToolingEnrichmentLogicItem> list = workflowModule.findToolingEnrichmentLogicTypes();
-		return new GetToolingEnrichmentLogicResult(list);
-	}
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
+            description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
+    public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(GetToolingEnrichmentLogicParams params)
+            throws UnifyException {
+        List<ToolingEnrichmentLogicItem> list = workflowModule.findToolingEnrichmentLogicTypes();
+        return new GetToolingEnrichmentLogicResult(list);
+    }
 
-	@GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
-			description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
-	public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
-			throws UnifyException {
-		List<ToolingPolicyLogicItem> list = workflowModule.findToolingPolicyLogicTypes();
-		return new GetToolingPolicyLogicResult(list);
-	}
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
+            description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
+    public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
+            throws UnifyException {
+        List<ToolingPolicyLogicItem> list = workflowModule.findToolingPolicyLogicTypes();
+        return new GetToolingPolicyLogicResult(list);
+    }
 
 }

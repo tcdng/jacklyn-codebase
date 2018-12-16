@@ -30,38 +30,37 @@ import com.tcdng.unify.core.annotation.Component;
 @Component("testopenaccount-policylogic")
 public class TestOpenAccountPolicyLogic extends AbstractWfItemPolicyLogic {
 
-	private OpenAccountDetails openAccountDetails;
+    private OpenAccountDetails openAccountDetails;
 
-	@Override
-	public void executePolicy(WfItemReader wfItemReader) throws UnifyException {
-		openAccountDetails
-				= new OpenAccountDetails(wfItemReader.readFieldValue(String.class, "fullName"),
-						wfItemReader.readFieldValue(String.class, "accountNo"));
-	}
+    @Override
+    public void executePolicy(WfItemReader wfItemReader) throws UnifyException {
+        openAccountDetails = new OpenAccountDetails(wfItemReader.readFieldValue(String.class, "fullName"),
+                wfItemReader.readFieldValue(String.class, "accountNo"));
+    }
 
-	public OpenAccountDetails getOpenAccountDetails() {
-		return openAccountDetails;
-	}
+    public OpenAccountDetails getOpenAccountDetails() {
+        return openAccountDetails;
+    }
 
-	public void clear() {
-		openAccountDetails = null;
-	}
+    public void clear() {
+        openAccountDetails = null;
+    }
 
-	public static class OpenAccountDetails {
-		private String fullName;
-		private String accountNo;
+    public static class OpenAccountDetails {
+        private String fullName;
+        private String accountNo;
 
-		public OpenAccountDetails(String fullName, String accountNo) {
-			this.fullName = fullName;
-			this.accountNo = accountNo;
-		}
+        public OpenAccountDetails(String fullName, String accountNo) {
+            this.fullName = fullName;
+            this.accountNo = accountNo;
+        }
 
-		public String getFullName() {
-			return fullName;
-		}
+        public String getFullName() {
+            return fullName;
+        }
 
-		public String getAccountNo() {
-			return accountNo;
-		}
-	}
+        public String getAccountNo() {
+            return accountNo;
+        }
+    }
 }

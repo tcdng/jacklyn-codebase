@@ -31,37 +31,37 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfFormSectionConfig extends BaseConfig {
 
-	private String label;
+    private String label;
 
-	private String binding;
+    private String binding;
 
-	private List<WfFormFieldConfig> wfFormFieldConfigList;
+    private List<WfFormFieldConfig> wfFormFieldConfigList;
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	@XmlAttribute(name = "label")
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    @XmlAttribute(name = "label")
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getBinding() {
-		return binding;
-	}
+    public String getBinding() {
+        return binding;
+    }
 
-	@XmlAttribute(name = "binding")
-	public void setBinding(String binding) {
-		this.binding = binding;
-	}
+    @XmlAttribute(name = "binding")
+    public void setBinding(String binding) {
+        this.binding = binding;
+    }
 
-	public List<WfFormFieldConfig> getWfFormFieldConfigList() {
-		return wfFormFieldConfigList;
-	}
+    public List<WfFormFieldConfig> getWfFormFieldConfigList() {
+        return wfFormFieldConfigList;
+    }
 
-	@XmlElement(name = "field", required = true)
-	public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
-		this.wfFormFieldConfigList = wfFormFieldConfigList;
-	}
+    @XmlElement(name = "field", required = true)
+    public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
+        this.wfFormFieldConfigList = wfFormFieldConfigList;
+    }
 
 }

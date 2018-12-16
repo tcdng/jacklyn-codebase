@@ -24,11 +24,10 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractZeroParamsNotificationListCommand
-		extends AbstractNotificationListCommand<ZeroParams> {
+public abstract class AbstractZeroParamsNotificationListCommand extends AbstractNotificationListCommand<ZeroParams> {
 
-	public AbstractZeroParamsNotificationListCommand() {
-		super(ZeroParams.class);
-	}
+    public AbstractZeroParamsNotificationListCommand() {
+        super(ZeroParams.class);
+    }
 
 }

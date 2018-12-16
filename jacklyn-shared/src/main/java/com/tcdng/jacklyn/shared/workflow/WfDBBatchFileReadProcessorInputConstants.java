@@ -23,5 +23,5 @@ package com.tcdng.jacklyn.shared.workflow;
  */
 public interface WfDBBatchFileReadProcessorInputConstants {
 
-	String WORKFLOWSTEPCODE = "wfDefStepName";
+    String WORKFLOWSTEPCODE = "wfDefStepName";
 }

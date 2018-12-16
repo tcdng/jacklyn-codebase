@@ -37,61 +37,58 @@ import com.tcdng.unify.web.ui.writer.AbstractWidgetWriter;
 @Component("wfhisteventlisting-writer")
 public class WfHistEventListingWriter extends AbstractWidgetWriter {
 
-	@Override
-	protected void doWriteStructureAndContent(ResponseWriter writer, Widget widget)
-			throws UnifyException {
-		WfHistEventListing wfHistEventListing = (WfHistEventListing) widget;
-		writer.write("<div ");
-		writeTagAttributes(writer, wfHistEventListing);
-		writer.write("><div class=\"wwtable\">");
+    @Override
+    protected void doWriteStructureAndContent(ResponseWriter writer, Widget widget) throws UnifyException {
+        WfHistEventListing wfHistEventListing = (WfHistEventListing) widget;
+        writer.write("<div ");
+        writeTagAttributes(writer, wfHistEventListing);
+        writer.write("><div class=\"wwtable\">");
 
-		List<WfItemHistEvent> listing = wfHistEventListing.getWorkflowItemHistEventList();
-		if (listing != null) {
-			Formatter<?> formatter = wfHistEventListing.getFormatter();
+        List<WfItemHistEvent> listing = wfHistEventListing.getWorkflowItemHistEventList();
+        if (listing != null) {
+            Formatter<?> formatter = wfHistEventListing.getFormatter();
 
-			for (int i = 0; i < listing.size(); i++) {
-				// Event row
-				writer.write("<div class=\"");
-				if (i % 2 == 0) {
-					writer.write("wwodd");
-				} else {
-					writer.write("wweven");
-				}
-				writer.write("\">");
-				writer.write("<div class=\"wwserialno\">").write(i + 1).write(".</div>"); // Localization?
+            for (int i = 0; i < listing.size(); i++) {
+                // Event row
+                writer.write("<div class=\"");
+                if (i % 2 == 0) {
+                    writer.write("wwodd");
+                } else {
+                    writer.write("wweven");
+                }
+                writer.write("\">");
+                writer.write("<div class=\"wwserialno\">").write(i + 1).write(".</div>"); // Localization?
 
-				// Event
-				writer.write("<div class=\"wwbody\">");
-				writer.write("<div style=\"display:table;width:100%;\">");
-				WfItemHistEvent workflowItemHistEvent = listing.get(i);
-				writeEventAttributeRow(writer, "wwcontent", workflowItemHistEvent.getNotes());
-				writeEventAttributeRow(writer, "wwlabel",
-						getSessionMessage("wfhisteventlisting.user.action",
-								workflowItemHistEvent.getActor(),
-								workflowItemHistEvent.getWfActionDesc()));
-				writeEventAttributeRow(writer, "wwlabel", DataUtils.convert(String.class,
-						workflowItemHistEvent.getActionDt(), formatter));
-				writer.write("</div>");
-				writer.write("</div>");
-				// End event
+                // Event
+                writer.write("<div class=\"wwbody\">");
+                writer.write("<div style=\"display:table;width:100%;\">");
+                WfItemHistEvent workflowItemHistEvent = listing.get(i);
+                writeEventAttributeRow(writer, "wwcontent", workflowItemHistEvent.getNotes());
+                writeEventAttributeRow(writer, "wwlabel", getSessionMessage("wfhisteventlisting.user.action",
+                        workflowItemHistEvent.getActor(), workflowItemHistEvent.getWfActionDesc()));
+                writeEventAttributeRow(writer, "wwlabel",
+                        DataUtils.convert(String.class, workflowItemHistEvent.getActionDt(), formatter));
+                writer.write("</div>");
+                writer.write("</div>");
+                // End event
 
-				// End event row
-				writer.write("</div>");
-			}
-		}
+                // End event row
+                writer.write("</div>");
+            }
+        }
 
-		writer.write("</div></div>");
-	}
+        writer.write("</div></div>");
+    }
 
-	private void writeEventAttributeRow(ResponseWriter writer, String styleClass, String content)
-			throws UnifyException {
-		writer.write("<div style=\"display:table-row;\">");
-		writer.write("<div class=\"").write(styleClass).write("\"><span>");
-		if (content != null) {
-			writer.writeWithHtmlEscape(content);
-		}
-		writer.write("</span></div>");
-		writer.write("</div>");
-	}
+    private void writeEventAttributeRow(ResponseWriter writer, String styleClass, String content)
+            throws UnifyException {
+        writer.write("<div style=\"display:table-row;\">");
+        writer.write("<div class=\"").write(styleClass).write("\"><span>");
+        if (content != null) {
+            writer.writeWithHtmlEscape(content);
+        }
+        writer.write("</span></div>");
+        writer.write("</div>");
+    }
 
 }

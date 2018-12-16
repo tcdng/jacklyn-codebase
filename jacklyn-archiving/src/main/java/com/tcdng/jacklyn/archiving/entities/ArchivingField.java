@@ -32,74 +32,73 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "Archiving Field")
-@Table(name = "ARCHIVINGFLD",
-		uniqueConstraints = { @UniqueConstraint({ "archivableDefId", "fieldName" }) })
+@Table(name = "ARCHIVINGFLD", uniqueConstraints = { @UniqueConstraint({ "archivableDefId", "fieldName" }) })
 public class ArchivingField extends BaseInstallEntity {
 
-	@ForeignKey(ArchivableDefinition.class)
-	private Long archivableDefId;
+    @ForeignKey(ArchivableDefinition.class)
+    private Long archivableDefId;
 
-	@ForeignKey
-	private ArchivingFieldType fieldType;
+    @ForeignKey
+    private ArchivingFieldType fieldType;
 
-	@Column(name = "FIELD_NM", length = 32)
-	private String fieldName;
+    @Column(name = "FIELD_NM", length = 32)
+    private String fieldName;
 
-	@Column(name = "FIELD_DESC", length = 64)
-	private String description;
+    @Column(name = "FIELD_DESC", length = 64)
+    private String description;
 
-	@ListOnly(key = "archivableDefId", property = "recordType")
-	private String recordName;
+    @ListOnly(key = "archivableDefId", property = "recordType")
+    private String recordName;
 
-	@ListOnly(key = "fieldType", property = "description")
-	private String fieldTypeDesc;
+    @ListOnly(key = "fieldType", property = "description")
+    private String fieldTypeDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public Long getArchivableDefId() {
-		return archivableDefId;
-	}
+    public Long getArchivableDefId() {
+        return archivableDefId;
+    }
 
-	public void setArchivableDefId(Long archivableDefId) {
-		this.archivableDefId = archivableDefId;
-	}
+    public void setArchivableDefId(Long archivableDefId) {
+        this.archivableDefId = archivableDefId;
+    }
 
-	public ArchivingFieldType getFieldType() {
-		return fieldType;
-	}
+    public ArchivingFieldType getFieldType() {
+        return fieldType;
+    }
 
-	public void setFieldType(ArchivingFieldType fieldType) {
-		this.fieldType = fieldType;
-	}
+    public void setFieldType(ArchivingFieldType fieldType) {
+        this.fieldType = fieldType;
+    }
 
-	public String getFieldName() {
-		return fieldName;
-	}
+    public String getFieldName() {
+        return fieldName;
+    }
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getRecordName() {
-		return recordName;
-	}
+    public String getRecordName() {
+        return recordName;
+    }
 
-	public void setRecordName(String recordName) {
-		this.recordName = recordName;
-	}
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
 
-	public String getFieldTypeDesc() {
-		return fieldTypeDesc;
-	}
+    public String getFieldTypeDesc() {
+        return fieldTypeDesc;
+    }
 
-	public void setFieldTypeDesc(String fieldTypeDesc) {
-		this.fieldTypeDesc = fieldTypeDesc;
-	}
+    public void setFieldTypeDesc(String fieldTypeDesc) {
+        this.fieldTypeDesc = fieldTypeDesc;
+    }
 }

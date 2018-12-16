@@ -26,23 +26,23 @@ import com.tcdng.jacklyn.shared.file.FileInboxStatus;
  */
 public class FileInboxQuery extends AbstractFileBoxDataQuery<FileInbox> {
 
-	public FileInboxQuery() {
-		super(FileInbox.class);
-	}
+    public FileInboxQuery() {
+        super(FileInbox.class);
+    }
 
-	public FileInboxQuery readStatus(FileInboxReadStatus readStatus) {
-		return (FileInboxQuery) equals("readStatus", readStatus);
-	}
+    public FileInboxQuery readStatus(FileInboxReadStatus readStatus) {
+        return (FileInboxQuery) equals("readStatus", readStatus);
+    }
 
-	public FileInboxQuery readStatusNot(FileInboxReadStatus readStatus) {
-		return (FileInboxQuery) equals("readStatus", readStatus);
-	}
+    public FileInboxQuery readStatusNot(FileInboxReadStatus readStatus) {
+        return (FileInboxQuery) equals("readStatus", readStatus);
+    }
 
-	public FileInboxQuery status(FileInboxStatus status) {
-		return (FileInboxQuery) equals("status", status);
-	}
+    public FileInboxQuery status(FileInboxStatus status) {
+        return (FileInboxQuery) equals("status", status);
+    }
 
-	public FileInboxQuery statusNot(FileInboxStatus status) {
-		return (FileInboxQuery) notEqual("status", status);
-	}
+    public FileInboxQuery statusNot(FileInboxStatus status) {
+        return (FileInboxQuery) notEqual("status", status);
+    }
 }

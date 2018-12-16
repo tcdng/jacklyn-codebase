@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
  */
 public class BaseStatusEntityQuery<T extends BaseStatusEntity> extends BaseEntityQuery<T> {
 
-	public BaseStatusEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseStatusEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseStatusEntityQuery<T> status(RecordStatus status) {
-		return (BaseStatusEntityQuery<T>) equals("status", status);
-	}
+    public BaseStatusEntityQuery<T> status(RecordStatus status) {
+        return (BaseStatusEntityQuery<T>) equals("status", status);
+    }
 
-	public BaseStatusEntityQuery<T> statusNot(RecordStatus status) {
-		return (BaseStatusEntityQuery<T>) notEqual("status", status);
-	}
+    public BaseStatusEntityQuery<T> statusNot(RecordStatus status) {
+        return (BaseStatusEntityQuery<T>) notEqual("status", status);
+    }
 }

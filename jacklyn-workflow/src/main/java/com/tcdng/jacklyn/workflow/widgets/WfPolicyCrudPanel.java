@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfpolicycrudpanel.upl")
 public class WfPolicyCrudPanel extends AbstractInMemoryTableCrudPanel<WfPolicy> {
 
-	public WfPolicyCrudPanel() {
-		super(WfPolicy.class, "workflow.wftemplate.wfstep.wfpolicy", false);
-	}
+    public WfPolicyCrudPanel() {
+        super(WfPolicy.class, "workflow.wftemplate.wfstep.wfpolicy", false);
+    }
 
 }

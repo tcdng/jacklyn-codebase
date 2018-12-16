@@ -31,42 +31,42 @@ import com.tcdng.unify.core.util.StringUtils;
 @Table("WFDOCFIELDMAPPING")
 public class WfDocFieldMapping extends BaseEntity {
 
-	@ForeignKey(WfDocBeanMapping.class)
-	private Long wfDocBeanMappingId;
+    @ForeignKey(WfDocBeanMapping.class)
+    private Long wfDocBeanMappingId;
 
-	@Column(name = "DOCFIELD_NM", length = 32)
-	private String docFieldName;
+    @Column(name = "DOCFIELD_NM", length = 32)
+    private String docFieldName;
 
-	@Column(name = "BEANFIELD_NM", length = 32)
-	private String beanFieldName;
+    @Column(name = "BEANFIELD_NM", length = 32)
+    private String beanFieldName;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate(docFieldName, "<->", beanFieldName);
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate(docFieldName, "<->", beanFieldName);
+    }
 
-	public Long getWfDocBeanMappingId() {
-		return wfDocBeanMappingId;
-	}
+    public Long getWfDocBeanMappingId() {
+        return wfDocBeanMappingId;
+    }
 
-	public void setWfDocBeanMappingId(Long wfDocBeanMappingId) {
-		this.wfDocBeanMappingId = wfDocBeanMappingId;
-	}
+    public void setWfDocBeanMappingId(Long wfDocBeanMappingId) {
+        this.wfDocBeanMappingId = wfDocBeanMappingId;
+    }
 
-	public String getDocFieldName() {
-		return docFieldName;
-	}
+    public String getDocFieldName() {
+        return docFieldName;
+    }
 
-	public void setDocFieldName(String docFieldName) {
-		this.docFieldName = docFieldName;
-	}
+    public void setDocFieldName(String docFieldName) {
+        this.docFieldName = docFieldName;
+    }
 
-	public String getBeanFieldName() {
-		return beanFieldName;
-	}
+    public String getBeanFieldName() {
+        return beanFieldName;
+    }
 
-	public void setBeanFieldName(String beanFieldName) {
-		this.beanFieldName = beanFieldName;
-	}
+    public void setBeanFieldName(String beanFieldName) {
+        this.beanFieldName = beanFieldName;
+    }
 
 }

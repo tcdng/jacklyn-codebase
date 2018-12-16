@@ -28,42 +28,42 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
  */
 public class MessageTemplateDef {
 
-	private Long notificationTemplateId;
+    private Long notificationTemplateId;
 
-	private String subject;
+    private String subject;
 
-	private List<StringToken> tokenList;
+    private List<StringToken> tokenList;
 
-	private boolean html;
+    private boolean html;
 
-	private long versionNo;
+    private long versionNo;
 
-	public MessageTemplateDef(Long notificationTemplateId, String subject,
-			List<StringToken> tokenList, boolean html, long versionNo) {
-		this.notificationTemplateId = notificationTemplateId;
-		this.subject = subject;
-		this.tokenList = tokenList;
-		this.html = html;
-		this.versionNo = versionNo;
-	}
+    public MessageTemplateDef(Long notificationTemplateId, String subject, List<StringToken> tokenList, boolean html,
+            long versionNo) {
+        this.notificationTemplateId = notificationTemplateId;
+        this.subject = subject;
+        this.tokenList = tokenList;
+        this.html = html;
+        this.versionNo = versionNo;
+    }
 
-	public Long getNotificationTemplateId() {
-		return notificationTemplateId;
-	}
+    public Long getNotificationTemplateId() {
+        return notificationTemplateId;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public List<StringToken> getTokenList() {
-		return tokenList;
-	}
+    public List<StringToken> getTokenList() {
+        return tokenList;
+    }
 
-	public boolean isHtml() {
-		return html;
-	}
+    public boolean isHtml() {
+        return html;
+    }
 
-	public long getVersionNo() {
-		return versionNo;
-	}
+    public long getVersionNo() {
+        return versionNo;
+    }
 }

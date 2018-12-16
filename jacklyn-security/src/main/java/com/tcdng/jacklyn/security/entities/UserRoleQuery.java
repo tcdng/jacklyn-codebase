@@ -32,46 +32,45 @@ import com.tcdng.unify.core.util.CalendarUtils;
  */
 public class UserRoleQuery extends BaseEntityQuery<UserRole> {
 
-	public UserRoleQuery() {
-		super(UserRole.class);
-	}
+    public UserRoleQuery() {
+        super(UserRole.class);
+    }
 
-	public UserRoleQuery userId(Long userId) {
-		return (UserRoleQuery) equals("userId", userId);
-	}
+    public UserRoleQuery userId(Long userId) {
+        return (UserRoleQuery) equals("userId", userId);
+    }
 
-	public UserRoleQuery userLoginId(String userLoginId) {
-		return (UserRoleQuery) equals("userLoginId", userLoginId);
-	}
+    public UserRoleQuery userLoginId(String userLoginId) {
+        return (UserRoleQuery) equals("userLoginId", userLoginId);
+    }
 
-	public UserRoleQuery roleId(Long roleId) {
-		return (UserRoleQuery) equals("roleId", roleId);
-	}
+    public UserRoleQuery roleId(Long roleId) {
+        return (UserRoleQuery) equals("roleId", roleId);
+    }
 
-	public UserRoleQuery roleIdNot(Long roleId) {
-		return (UserRoleQuery) notEqual("roleId", roleId);
-	}
+    public UserRoleQuery roleIdNot(Long roleId) {
+        return (UserRoleQuery) notEqual("roleId", roleId);
+    }
 
-	public UserRoleQuery roleName(String roleName) {
-		return (UserRoleQuery) equals("roleName", roleName);
-	}
+    public UserRoleQuery roleName(String roleName) {
+        return (UserRoleQuery) equals("roleName", roleName);
+    }
 
-	public UserRoleQuery roleNameNot(String roleName) {
-		return (UserRoleQuery) notEqual("roleName", roleName);
-	}
+    public UserRoleQuery roleNameNot(String roleName) {
+        return (UserRoleQuery) notEqual("roleName", roleName);
+    }
 
-	public UserRoleQuery roleIdIn(Collection<Long> roleId) {
-		return (UserRoleQuery) amongst("roleId", roleId);
-	}
+    public UserRoleQuery roleIdIn(Collection<Long> roleId) {
+        return (UserRoleQuery) amongst("roleId", roleId);
+    }
 
-	public UserRoleQuery roleStatus(RecordStatus roleStatus) {
-		return (UserRoleQuery) equals("roleStatus", roleStatus);
-	}
+    public UserRoleQuery roleStatus(RecordStatus roleStatus) {
+        return (UserRoleQuery) equals("roleStatus", roleStatus);
+    }
 
-	public UserRoleQuery roleActiveTime(Date date) throws UnifyException {
-		date = CalendarUtils.getTimeOfDay(date);
-		return (UserRoleQuery) add(
-				new OrBuilder().less("activeBefore", date).isNull("activeBefore"))
-						.add(new OrBuilder().greater("activeAfter", date).isNull("activeAfter"));
-	}
+    public UserRoleQuery roleActiveTime(Date date) throws UnifyException {
+        date = CalendarUtils.getTimeOfDay(date);
+        return (UserRoleQuery) add(new OrBuilder().less("activeBefore", date).isNull("activeBefore"))
+                .add(new OrBuilder().greater("activeAfter", date).isNull("activeAfter"));
+    }
 }

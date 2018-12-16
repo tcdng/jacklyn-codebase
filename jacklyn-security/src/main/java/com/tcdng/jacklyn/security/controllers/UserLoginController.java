@@ -47,233 +47,227 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
 @Component("/security/loginpage")
 @UplBinding("web/security/upl/login.upl")
 @ResultMappings({
-		@ResultMapping(name = "refreshlogin",
-				response = { "!refreshpanelresponse panels:$l{loginSequencePanel}" }),
-		@ResultMapping(name = "switchlogin",
-				response = { "!hidepopupresponse",
-						"!switchpanelresponse panels:$l{loginSequencePanel.loginBodyPanel}" }),
-		@ResultMapping(name = "switchchangepassword", response = {
-				"!switchpanelresponse panels:$l{loginSequencePanel.changePasswordBodyPanel}" }),
-		@ResultMapping(name = "switchrolepanel",
-				response = { "!showpopupresponse popup:$s{selectRolePanel}" }) })
+        @ResultMapping(name = "refreshlogin", response = { "!refreshpanelresponse panels:$l{loginSequencePanel}" }),
+        @ResultMapping(name = "switchlogin",
+                response = { "!hidepopupresponse",
+                        "!switchpanelresponse panels:$l{loginSequencePanel.loginBodyPanel}" }),
+        @ResultMapping(name = "switchchangepassword",
+                response = { "!switchpanelresponse panels:$l{loginSequencePanel.changePasswordBodyPanel}" }),
+        @ResultMapping(name = "switchrolepanel", response = { "!showpopupresponse popup:$s{selectRolePanel}" }) })
 public class UserLoginController extends AbstractApplicationForwarderController {
 
-	private String userName;
+    private String userName;
 
-	private String password;
+    private String password;
 
-	private String token;
+    private String token;
 
-	private String oldPassword;
+    private String oldPassword;
 
-	private String newPassword;
+    private String newPassword;
 
-	private String confirmPassword;
+    private String confirmPassword;
 
-	private String loginMessage;
+    private String loginMessage;
 
-	private List<UserRole> userRoleList;
+    private List<UserRole> userRoleList;
 
-	private Table selectRoleTable;
+    private Table selectRoleTable;
 
-	private boolean is2FA;
+    private boolean is2FA;
 
-	public UserLoginController() {
-		super(false, false);
-	}
+    public UserLoginController() {
+        super(false, false);
+    }
 
-	@Action
-	public String login() throws UnifyException {
-		try {
-			User user = getSecurityModule().login(userName, password);
-			userName = null;
-			password = null;
+    @Action
+    public String login() throws UnifyException {
+        try {
+            User user = getSecurityModule().login(userName, password);
+            userName = null;
+            password = null;
 
-			if (!user.isReserved() && is2FA) {
-				TwoFactorAutenticationService twoFactorAuthService
-						= (TwoFactorAutenticationService) this.getComponent(
-								ApplicationComponents.APPLICATION_TWOFACTORAUTHENTICATIONSERVICE);
-				if (!twoFactorAuthService.authenticate(userName, token)) {
-					throw new UnifyException(SecurityModuleErrorConstants.INVALID_ONETIME_PASSWORD);
-				}
-			}
+            if (!user.isReserved() && is2FA) {
+                TwoFactorAutenticationService twoFactorAuthService = (TwoFactorAutenticationService) this
+                        .getComponent(ApplicationComponents.APPLICATION_TWOFACTORAUTHENTICATIONSERVICE);
+                if (!twoFactorAuthService.authenticate(userName, token)) {
+                    throw new UnifyException(SecurityModuleErrorConstants.INVALID_ONETIME_PASSWORD);
+                }
+            }
 
-			logUserEvent(SecurityModuleAuditConstants.LOGIN);
-			setDisplayMessage(null);
+            logUserEvent(SecurityModuleAuditConstants.LOGIN);
+            setDisplayMessage(null);
 
-			if (user.isChangeUserPassword() && !user.isReserved()) {
-				oldPassword = null;
-				newPassword = null;
-				confirmPassword = null;
-				return "switchchangepassword";
-			}
-			return selectRole();
-		} catch (UnifyException e) {
-			logError(e);
-			UnifyError err = e.getUnifyError();
-			setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
-		}
-		return "refreshlogin";
-	}
+            if (user.isChangeUserPassword() && !user.isReserved()) {
+                oldPassword = null;
+                newPassword = null;
+                confirmPassword = null;
+                return "switchchangepassword";
+            }
+            return selectRole();
+        } catch (UnifyException e) {
+            logError(e);
+            UnifyError err = e.getUnifyError();
+            setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
+        }
+        return "refreshlogin";
+    }
 
-	@Action
-	public String changeUserPassword() throws UnifyException {
-		try {
-			setDisplayMessage(null);
-			getSecurityModule().changeUserPassword(oldPassword, newPassword);
-			logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
-			return selectRole();
-		} catch (UnifyException e) {
-			UnifyError err = e.getUnifyError();
-			setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
-			if (SecurityModuleErrorConstants.USER_ROLE_NOT_ACTIVE_AT_CURRENTTIME
-					.equals(err.getErrorCode())) {
-				return "switchlogin";
-			}
-		}
-		return "switchchangepassword";
-	}
+    @Action
+    public String changeUserPassword() throws UnifyException {
+        try {
+            setDisplayMessage(null);
+            getSecurityModule().changeUserPassword(oldPassword, newPassword);
+            logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
+            return selectRole();
+        } catch (UnifyException e) {
+            UnifyError err = e.getUnifyError();
+            setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
+            if (SecurityModuleErrorConstants.USER_ROLE_NOT_ACTIVE_AT_CURRENTTIME.equals(err.getErrorCode())) {
+                return "switchlogin";
+            }
+        }
+        return "switchchangepassword";
+    }
 
-	@Action
-	public String cancelChangeUserPassword() throws UnifyException {
-		userName = null;
-		password = null;
-		setDisplayMessage(null);
-		getSecurityModule().logout(false);
-		return "switchlogin";
-	}
+    @Action
+    public String cancelChangeUserPassword() throws UnifyException {
+        userName = null;
+        password = null;
+        setDisplayMessage(null);
+        getSecurityModule().logout(false);
+        return "switchlogin";
+    }
 
-	@Action
-	public String selectUserRole() throws UnifyException {
-		UserRole userRole = userRoleList.get(selectRoleTable.getViewIndex());
-		userRoleList = null;
-		return forwardToApplication(userRole);
-	}
+    @Action
+    public String selectUserRole() throws UnifyException {
+        UserRole userRole = userRoleList.get(selectRoleTable.getViewIndex());
+        userRoleList = null;
+        return forwardToApplication(userRole);
+    }
 
-	@Action
-	public String cancelSelectUserRole() throws UnifyException {
-		return cancelChangeUserPassword();
-	}
+    @Action
+    public String cancelSelectUserRole() throws UnifyException {
+        return cancelChangeUserPassword();
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public String getOldPassword() {
-		return oldPassword;
-	}
+    public String getOldPassword() {
+        return oldPassword;
+    }
 
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
-	}
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 
-	public String getNewPassword() {
-		return newPassword;
-	}
+    public String getNewPassword() {
+        return newPassword;
+    }
 
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
-	public String getLoginMessage() {
-		return loginMessage;
-	}
+    public String getLoginMessage() {
+        return loginMessage;
+    }
 
-	public void setLoginMessage(String loginMessage) {
-		this.loginMessage = loginMessage;
-	}
+    public void setLoginMessage(String loginMessage) {
+        this.loginMessage = loginMessage;
+    }
 
-	public List<UserRole> getUserRoleList() {
-		return userRoleList;
-	}
+    public List<UserRole> getUserRoleList() {
+        return userRoleList;
+    }
 
-	public void setUserRoleList(List<UserRole> userRoleList) {
-		this.userRoleList = userRoleList;
-	}
+    public void setUserRoleList(List<UserRole> userRoleList) {
+        this.userRoleList = userRoleList;
+    }
 
-	@Override
-	protected void onSetPage() throws UnifyException {
-		selectRoleTable = getPageWidgetByShortName(Table.class,
-				"selectRolePanel.roleTablePanel.contentTbl");
-	}
+    @Override
+    protected void onSetPage() throws UnifyException {
+        selectRoleTable = getPageWidgetByShortName(Table.class, "selectRolePanel.roleTablePanel.contentTbl");
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		userName = null;
-		password = null;
-		token = null;
-		newPassword = null;
-		oldPassword = null;
-		confirmPassword = null;
-		SwitchPanel switchPanel = (SwitchPanel) getPanelByShortName("loginSequencePanel");
-		switchPanel.switchContent("loginBodyPanel");
-		setDisplayMessage(loginMessage);
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        userName = null;
+        password = null;
+        token = null;
+        newPassword = null;
+        oldPassword = null;
+        confirmPassword = null;
+        SwitchPanel switchPanel = (SwitchPanel) getPanelByShortName("loginSequencePanel");
+        switchPanel.switchContent("loginBodyPanel");
+        setDisplayMessage(loginMessage);
 
-		// Show/hide token field based on system parameter
-		is2FA = getSystemBusinessModule().getSysParameterValue(boolean.class,
-				SecurityModuleSysParamConstants.ENABLE_TWOFACTOR_AUTHENTICATION);
-		setVisible("loginPanel.tokenField", is2FA);
-	}
+        // Show/hide token field based on system parameter
+        is2FA = getSystemBusinessModule().getSysParameterValue(boolean.class,
+                SecurityModuleSysParamConstants.ENABLE_TWOFACTOR_AUTHENTICATION);
+        setVisible("loginPanel.tokenField", is2FA);
+    }
 
-	private String selectRole() throws UnifyException {
-		setDisplayMessage(null);
+    private String selectRole() throws UnifyException {
+        setDisplayMessage(null);
 
-		// Get user roles that are active based on current time
-		UserToken userToken = getUserToken();
-		UserRole userRole = null;
+        // Get user roles that are active based on current time
+        UserToken userToken = getUserToken();
+        UserRole userRole = null;
 
-		UserRoleQuery query = new UserRoleQuery();
-		query.userLoginId(userToken.getUserLoginId());
-		query.roleStatus(RecordStatus.ACTIVE);
-		query.roleActiveTime(new Date());
-		List<UserRole> userRoleList = getSecurityModule().findUserRoles(query);
+        UserRoleQuery query = new UserRoleQuery();
+        query.userLoginId(userToken.getUserLoginId());
+        query.roleStatus(RecordStatus.ACTIVE);
+        query.roleActiveTime(new Date());
+        List<UserRole> userRoleList = getSecurityModule().findUserRoles(query);
 
-		if (userRoleList.isEmpty()) {
-			if (!userToken.isReservedUser()) {
-				throw new UnifyException(
-						SecurityModuleErrorConstants.USER_ROLE_NOT_ACTIVE_AT_CURRENTTIME);
-			}
-		} else {
-			if (userRoleList.size() > 1) {
-				this.userRoleList = userRoleList;
-				selectRoleTable.reset();
-				return "switchrolepanel";
-			}
-			userRole = userRoleList.get(0);
-		}
+        if (userRoleList.isEmpty()) {
+            if (!userToken.isReservedUser()) {
+                throw new UnifyException(SecurityModuleErrorConstants.USER_ROLE_NOT_ACTIVE_AT_CURRENTTIME);
+            }
+        } else {
+            if (userRoleList.size() > 1) {
+                this.userRoleList = userRoleList;
+                selectRoleTable.reset();
+                return "switchrolepanel";
+            }
+            userRole = userRoleList.get(0);
+        }
 
-		return forwardToApplication(userRole);
-	}
+        return forwardToApplication(userRole);
+    }
 
-	private void setDisplayMessage(String message) throws UnifyException {
-		loginMessage = message;
-	}
+    private void setDisplayMessage(String message) throws UnifyException {
+        loginMessage = message;
+    }
 }

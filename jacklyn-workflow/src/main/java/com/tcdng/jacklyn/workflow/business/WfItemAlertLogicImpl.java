@@ -28,13 +28,13 @@ import com.tcdng.unify.core.annotation.Component;
  * @since 1.0
  */
 @Component(name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC,
-		description = "Default Workflow Item Alert Logic")
+        description = "Default Workflow Item Alert Logic")
 public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
 
-	@Override
-	public void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
-		// TODO Auto-generated method stub
+    @Override
+    public void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }

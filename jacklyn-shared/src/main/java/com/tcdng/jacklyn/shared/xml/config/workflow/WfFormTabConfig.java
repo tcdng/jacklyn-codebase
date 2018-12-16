@@ -31,41 +31,41 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfFormTabConfig extends BaseConfig {
 
-	private String label;
+    private String label;
 
-	private Boolean pseudo;
-	
-	private List<WfFormSectionConfig> wfFormSectionConfigList;
-	
-	public WfFormTabConfig() {
-		this.pseudo = Boolean.TRUE;
-	}
+    private Boolean pseudo;
 
-	public String getLabel() {
-		return label;
-	}
+    private List<WfFormSectionConfig> wfFormSectionConfigList;
 
-	@XmlAttribute(name = "label")
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public WfFormTabConfig() {
+        this.pseudo = Boolean.TRUE;
+    }
 
-	public Boolean getPseudo() {
-		return pseudo;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	@XmlAttribute(name = "label")
-	public void setPseudo(Boolean pseudo) {
-		this.pseudo = pseudo;
-	}
+    @XmlAttribute(name = "label")
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public List<WfFormSectionConfig> getWfFormSectionConfigList() {
-		return wfFormSectionConfigList;
-	}
+    public Boolean getPseudo() {
+        return pseudo;
+    }
 
-	@XmlElement(name = "section", required = true)
-	public void setWfFormSectionConfigList(List<WfFormSectionConfig> wfFormSectionConfigList) {
-		this.wfFormSectionConfigList = wfFormSectionConfigList;
-	}
+    @XmlAttribute(name = "label")
+    public void setPseudo(Boolean pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public List<WfFormSectionConfig> getWfFormSectionConfigList() {
+        return wfFormSectionConfigList;
+    }
+
+    @XmlElement(name = "section", required = true)
+    public void setWfFormSectionConfigList(List<WfFormSectionConfig> wfFormSectionConfigList) {
+        this.wfFormSectionConfigList = wfFormSectionConfigList;
+    }
 
 }

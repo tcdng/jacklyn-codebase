@@ -29,38 +29,38 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 @XmlRootElement(name = "category")
 public class WfCategoryConfig extends BaseConfig {
-	
-	private String version;
 
-	private WfDocumentsConfig wfDocumentsConfig;
+    private String version;
 
-	private WfTemplatesConfig wfTemplatesConfig;
+    private WfDocumentsConfig wfDocumentsConfig;
 
-	public String getVersion() {
-		return version;
-	}
+    private WfTemplatesConfig wfTemplatesConfig;
 
-	@XmlAttribute(name = "version", required = true)
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public WfDocumentsConfig getWfDocumentsConfig() {
-		return wfDocumentsConfig;
-	}
+    @XmlAttribute(name = "version", required = true)
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	@XmlElement(name = "documents")
-	public void setWfDocumentsConfig(WfDocumentsConfig wfDocumentsConfig) {
-		this.wfDocumentsConfig = wfDocumentsConfig;
-	}
+    public WfDocumentsConfig getWfDocumentsConfig() {
+        return wfDocumentsConfig;
+    }
 
-	public WfTemplatesConfig getWfTemplatesConfig() {
-		return wfTemplatesConfig;
-	}
+    @XmlElement(name = "documents")
+    public void setWfDocumentsConfig(WfDocumentsConfig wfDocumentsConfig) {
+        this.wfDocumentsConfig = wfDocumentsConfig;
+    }
 
-	@XmlElement(name = "templates", required = true)
-	public void setWfTemplatesConfig(WfTemplatesConfig wfTemplatesConfig) {
-		this.wfTemplatesConfig = wfTemplatesConfig;
-	}
+    public WfTemplatesConfig getWfTemplatesConfig() {
+        return wfTemplatesConfig;
+    }
+
+    @XmlElement(name = "templates", required = true)
+    public void setWfTemplatesConfig(WfTemplatesConfig wfTemplatesConfig) {
+        this.wfTemplatesConfig = wfTemplatesConfig;
+    }
 
 }

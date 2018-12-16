@@ -40,88 +40,87 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @Component("/security/roledocumentcontrol")
 @UplBinding("web/security/upl/manageroledocumentcontrol.upl")
 @ResultMappings({ @ResultMapping(name = "refreshtable",
-		response = { "!refreshpanelresponse panels:$l{tablePanel actionPanel}" }) })
+        response = { "!refreshpanelresponse panels:$l{tablePanel actionPanel}" }) })
 public class RoleDocumentControlController extends AbstractSecurityController {
 
-	private Long searchRoleId;
+    private Long searchRoleId;
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private List<RolePrivilegeWidget> rolePrivilegeWidgetList;
+    private List<RolePrivilegeWidget> rolePrivilegeWidgetList;
 
-	public RoleDocumentControlController() {
-		super(true, false);
-	}
+    public RoleDocumentControlController() {
+        super(true, false);
+    }
 
-	@Action
-	public String findPrivileges() throws UnifyException {
-		doFindPrivileges();
-		logUserEvent(EventType.SEARCH, RolePrivilege.class);
-		return "refreshtable";
-	}
+    @Action
+    public String findPrivileges() throws UnifyException {
+        doFindPrivileges();
+        logUserEvent(EventType.SEARCH, RolePrivilege.class);
+        return "refreshtable";
+    }
 
-	@Action
-	public String savePrivileges() throws UnifyException {
-		getSecurityModule().updateRoleDocumentControls(rolePrivilegeWidgetList);
-		hintUser("hint.security.roleprivilege.saved");
-		doFindPrivileges();
-		return "refreshtable";
-	}
+    @Action
+    public String savePrivileges() throws UnifyException {
+        getSecurityModule().updateRoleDocumentControls(rolePrivilegeWidgetList);
+        hintUser("hint.security.roleprivilege.saved");
+        doFindPrivileges();
+        return "refreshtable";
+    }
 
-	public Long getSearchRoleId() {
-		return searchRoleId;
-	}
+    public Long getSearchRoleId() {
+        return searchRoleId;
+    }
 
-	public void setSearchRoleId(Long searchRoleId) {
-		this.searchRoleId = searchRoleId;
-	}
+    public void setSearchRoleId(Long searchRoleId) {
+        this.searchRoleId = searchRoleId;
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public List<RolePrivilegeWidget> getRolePrivilegeWidgetList() {
-		return rolePrivilegeWidgetList;
-	}
+    public List<RolePrivilegeWidget> getRolePrivilegeWidgetList() {
+        return rolePrivilegeWidgetList;
+    }
 
-	public void setRolePrivilegeWidgetList(List<RolePrivilegeWidget> rolePrivilegeWidgetList) {
-		this.rolePrivilegeWidgetList = rolePrivilegeWidgetList;
-	}
+    public void setRolePrivilegeWidgetList(List<RolePrivilegeWidget> rolePrivilegeWidgetList) {
+        this.rolePrivilegeWidgetList = rolePrivilegeWidgetList;
+    }
 
-	@Override
-	protected void onIndexPage() throws UnifyException {
-		super.onIndexPage();
-		searchRoleId = null;
-		searchModuleId = null;
-		rolePrivilegeWidgetList = Collections.emptyList();
-	}
+    @Override
+    protected void onIndexPage() throws UnifyException {
+        super.onIndexPage();
+        searchRoleId = null;
+        searchModuleId = null;
+        rolePrivilegeWidgetList = Collections.emptyList();
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		doFindPrivileges();
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        doFindPrivileges();
+    }
 
-	@Override
-	protected void onClosePage() throws UnifyException {
-		searchRoleId = null;
-		searchModuleId = null;
-		rolePrivilegeWidgetList = null;
-	}
+    @Override
+    protected void onClosePage() throws UnifyException {
+        searchRoleId = null;
+        searchModuleId = null;
+        rolePrivilegeWidgetList = null;
+    }
 
-	protected void doFindPrivileges() throws UnifyException {
-		if (QueryUtils.isValidLongCriteria(searchRoleId)
-				&& QueryUtils.isValidLongCriteria(searchModuleId)) {
-			RolePrivilegeWidgetQuery query = new RolePrivilegeWidgetQuery();
-			query.roleId(searchRoleId);
-			query.moduleId(searchModuleId);
-			query.categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL);
-			rolePrivilegeWidgetList = getSecurityModule().findRoleDocumentControls(query);
-		} else {
-			rolePrivilegeWidgetList = Collections.emptyList();
-		}
-	}
+    protected void doFindPrivileges() throws UnifyException {
+        if (QueryUtils.isValidLongCriteria(searchRoleId) && QueryUtils.isValidLongCriteria(searchModuleId)) {
+            RolePrivilegeWidgetQuery query = new RolePrivilegeWidgetQuery();
+            query.roleId(searchRoleId);
+            query.moduleId(searchModuleId);
+            query.categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL);
+            rolePrivilegeWidgetList = getSecurityModule().findRoleDocumentControls(query);
+        } else {
+            rolePrivilegeWidgetList = Collections.emptyList();
+        }
+    }
 }

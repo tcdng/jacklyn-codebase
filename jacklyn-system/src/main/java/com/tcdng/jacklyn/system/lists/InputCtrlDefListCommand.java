@@ -34,11 +34,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("inputctrldeflist")
 public class InputCtrlDefListCommand extends AbstractZeroParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		InputCtrlDefQuery query = new InputCtrlDefQuery();
-		query.status(RecordStatus.ACTIVE).order("description");
-		return getSystemModule().findInputCtrlDefs(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        InputCtrlDefQuery query = new InputCtrlDefQuery();
+        query.status(RecordStatus.ACTIVE).order("description");
+        return getSystemModule().findInputCtrlDefs(query);
+    }
 }

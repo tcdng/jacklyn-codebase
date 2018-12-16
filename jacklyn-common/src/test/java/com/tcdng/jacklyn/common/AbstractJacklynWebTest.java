@@ -32,23 +32,21 @@ import com.tcdng.unify.web.WebApplicationComponents;
  */
 public abstract class AbstractJacklynWebTest extends AbstractJacklynTest {
 
-	protected static final short TEST_HTTPPORT = 6082;
+    protected static final short TEST_HTTPPORT = 6082;
 
-	@Override
-	protected void doAddSettingsAndDependencies() throws Exception {
-		super.doAddSettingsAndDependencies();
-		addContainerSetting(UnifyCorePropertyConstants.APPLICATION_INTERFACES,
-				new String[] { JettyApplicationComponents.JETTY_HTTPINTERFACE });
+    @Override
+    protected void doAddSettingsAndDependencies() throws Exception {
+        super.doAddSettingsAndDependencies();
+        addContainerSetting(UnifyCorePropertyConstants.APPLICATION_INTERFACES,
+                new String[] { JettyApplicationComponents.JETTY_HTTPINTERFACE });
 
-		addDependency(CommonModuleNameConstants.JACKLYNAPPLICATIONSERVICEGATE,
-				CommonRemoteCallGateImpl.class, true, true, new Setting("openMode", "true"));
-		addDependency(JettyApplicationComponents.JETTY_HTTPINTERFACE, JettyHttpInterface.class, true, true,
-				new Setting("contextPath", "/jacklyn"),
-				new Setting("httpPort", String.valueOf(TEST_HTTPPORT)));
-	}
+        addDependency(CommonModuleNameConstants.JACKLYNAPPLICATIONSERVICEGATE, CommonRemoteCallGateImpl.class, true,
+                true, new Setting("openMode", "true"));
+        addDependency(JettyApplicationComponents.JETTY_HTTPINTERFACE, JettyHttpInterface.class, true, true,
+                new Setting("contextPath", "/jacklyn"), new Setting("httpPort", String.valueOf(TEST_HTTPPORT)));
+    }
 
-	protected RemoteCallClient getRemoteCallClient() throws Exception {
-		return (RemoteCallClient) this
-				.getComponent(WebApplicationComponents.APPLICATION_REMOTECALLCLIENT);
-	}
+    protected RemoteCallClient getRemoteCallClient() throws Exception {
+        return (RemoteCallClient) this.getComponent(WebApplicationComponents.APPLICATION_REMOTECALLCLIENT);
+    }
 }

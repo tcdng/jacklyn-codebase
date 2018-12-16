@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("systemparamtypelist")
 public enum SystemParamType implements EnumConst {
 
-	BOOLEAN("B"), NUMBER("N"), STRING("S");
+    BOOLEAN("B"), NUMBER("N"), STRING("S");
 
-	private final String code;
+    private final String code;
 
-	private SystemParamType(String code) {
-		this.code = code;
-	}
+    private SystemParamType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static SystemParamType fromCode(String code) {
-		return EnumUtils.fromCode(SystemParamType.class, code);
-	}
+    public static SystemParamType fromCode(String code) {
+        return EnumUtils.fromCode(SystemParamType.class, code);
+    }
 
-	public static SystemParamType fromName(String name) {
-		return EnumUtils.fromName(SystemParamType.class, name);
-	}
+    public static SystemParamType fromName(String name) {
+        return EnumUtils.fromName(SystemParamType.class, name);
+    }
 }

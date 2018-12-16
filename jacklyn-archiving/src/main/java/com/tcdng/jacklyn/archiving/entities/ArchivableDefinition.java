@@ -31,76 +31,75 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "Archivable Definition",
-		reportable = true, auditable = true)
-@Table(name = "ARCHIVABLEDEF",
-		uniqueConstraints = { @UniqueConstraint({ "moduleId", "recordType" }) })
+@Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "Archivable Definition", reportable = true,
+        auditable = true)
+@Table(name = "ARCHIVABLEDEF", uniqueConstraints = { @UniqueConstraint({ "moduleId", "recordType" }) })
 public class ArchivableDefinition extends BaseInstallEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "ARCHIVE_NM", length = 32)
-	private String name;
+    @Column(name = "ARCHIVE_NM", length = 32)
+    private String name;
 
-	@Column(name = "ARCHIVE_DESC", length = 64)
-	private String description;
+    @Column(name = "ARCHIVE_DESC", length = 64)
+    private String description;
 
-	@Column(length = 256)
-	private String recordType;
+    @Column(length = 256)
+    private String recordType;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getRecordType() {
-		return recordType;
-	}
+    public String getRecordType() {
+        return recordType;
+    }
 
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+    public void setRecordType(String recordType) {
+        this.recordType = recordType;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 }

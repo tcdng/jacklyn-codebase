@@ -28,52 +28,51 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Managed", reportable = true,
-		auditable = true)
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Managed", reportable = true, auditable = true)
 @Table(name = "MODULE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Module extends BaseInstallEntity {
 
-	@Column(name = "MODULE_NM", length = 32)
-	private String name;
+    @Column(name = "MODULE_NM", length = 32)
+    private String name;
 
-	@Column(name = "MODULE_DESC", length = 64)
-	private String description;
+    @Column(name = "MODULE_DESC", length = 64)
+    private String description;
 
-	@Column
-	private Boolean deactivatable;
+    @Column
+    private Boolean deactivatable;
 
-	@Column
-	private Boolean remote;
+    @Column
+    private Boolean remote;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Boolean getDeactivatable() {
-		return deactivatable;
-	}
+    public Boolean getDeactivatable() {
+        return deactivatable;
+    }
 
-	public void setDeactivatable(Boolean deactivatable) {
-		this.deactivatable = deactivatable;
-	}
+    public void setDeactivatable(Boolean deactivatable) {
+        this.deactivatable = deactivatable;
+    }
 
-	public Boolean getRemote() {
-		return remote;
-	}
+    public Boolean getRemote() {
+        return remote;
+    }
 
-	public void setRemote(Boolean remote) {
-		this.remote = remote;
-	}
+    public void setRemote(Boolean remote) {
+        this.remote = remote;
+    }
 }

@@ -25,34 +25,34 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public abstract class BaseConfig {
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	public BaseConfig(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
+    public BaseConfig(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-	public BaseConfig() {
+    public BaseConfig() {
 
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@XmlAttribute(required = true)
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlAttribute(required = true)
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@XmlAttribute(required = true)
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @XmlAttribute(required = true)
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

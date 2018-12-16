@@ -29,49 +29,49 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 @XmlRootElement(name = "template")
 public class WfTemplateConfig extends BaseConfig {
-	
-	private String document;
 
-	private String version;
+    private String document;
 
-	private WfMessagesConfig wfMessagesConfig;
+    private String version;
 
-	private WfStepsConfig wfStepsConfig;
+    private WfMessagesConfig wfMessagesConfig;
 
-	public String getDocument() {
-		return document;
-	}
+    private WfStepsConfig wfStepsConfig;
 
-	@XmlAttribute(name = "document", required = true)
-	public void setDocument(String document) {
-		this.document = document;
-	}
+    public String getDocument() {
+        return document;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    @XmlAttribute(name = "document", required = true)
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
-	@XmlAttribute(name = "version", required = true)
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public WfMessagesConfig getWfMessagesConfig() {
-		return wfMessagesConfig;
-	}
+    @XmlAttribute(name = "version", required = true)
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	@XmlElement(name = "messages")
-	public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
-		this.wfMessagesConfig = wfMessagesConfig;
-	}
+    public WfMessagesConfig getWfMessagesConfig() {
+        return wfMessagesConfig;
+    }
 
-	public WfStepsConfig getWfStepsConfig() {
-		return wfStepsConfig;
-	}
+    @XmlElement(name = "messages")
+    public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
+        this.wfMessagesConfig = wfMessagesConfig;
+    }
 
-	@XmlElement(name = "steps", required = true)
-	public void setWfStepsConfig(WfStepsConfig wfStepsConfig) {
-		this.wfStepsConfig = wfStepsConfig;
-	}
+    public WfStepsConfig getWfStepsConfig() {
+        return wfStepsConfig;
+    }
+
+    @XmlElement(name = "steps", required = true)
+    public void setWfStepsConfig(WfStepsConfig wfStepsConfig) {
+        this.wfStepsConfig = wfStepsConfig;
+    }
 
 }

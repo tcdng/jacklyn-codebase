@@ -25,12 +25,12 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
  */
 public class WfItemPackedDocQuery extends BaseTimestampedEntityQuery<WfItemPackedDoc> {
 
-	public WfItemPackedDocQuery() {
-		super(WfItemPackedDoc.class);
-	}
+    public WfItemPackedDocQuery() {
+        super(WfItemPackedDoc.class);
+    }
 
-	public WfItemPackedDocQuery wfItemId(Long wfItemId) {
-		return (WfItemPackedDocQuery) equals("wfItemId", wfItemId);
-	}
+    public WfItemPackedDocQuery wfItemId(Long wfItemId) {
+        return (WfItemPackedDocQuery) equals("wfItemId", wfItemId);
+    }
 
 }

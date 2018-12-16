@@ -27,160 +27,160 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public final class WfNameUtils {
 
-	private static FactoryMap<String, DocNameParts> docNames;
+    private static FactoryMap<String, DocNameParts> docNames;
 
-	private static FactoryMap<String, TemplateNameParts> templateNames;
+    private static FactoryMap<String, TemplateNameParts> templateNames;
 
-	private static FactoryMap<String, StepNameParts> stepNames;
+    private static FactoryMap<String, StepNameParts> stepNames;
 
-	static {
-		docNames = new FactoryMap<String, DocNameParts>() {
+    static {
+        docNames = new FactoryMap<String, DocNameParts>() {
 
-			@Override
-			protected DocNameParts create(String globalName, Object... params) throws Exception {
-				String[] names = StringUtils.dotSplit(globalName);
-				return new DocNameParts(names[0], names[1]);
-			}
+            @Override
+            protected DocNameParts create(String globalName, Object... params) throws Exception {
+                String[] names = StringUtils.dotSplit(globalName);
+                return new DocNameParts(names[0], names[1]);
+            }
 
-		};
+        };
 
-		templateNames = new FactoryMap<String, TemplateNameParts>() {
+        templateNames = new FactoryMap<String, TemplateNameParts>() {
 
-			@Override
-			protected TemplateNameParts create(String globalName, Object... params) throws Exception {
-				String[] names = StringUtils.dotSplit(globalName);
-				return new TemplateNameParts(names[0], names[1]);
-			}
+            @Override
+            protected TemplateNameParts create(String globalName, Object... params) throws Exception {
+                String[] names = StringUtils.dotSplit(globalName);
+                return new TemplateNameParts(names[0], names[1]);
+            }
 
-		};
+        };
 
-		stepNames = new FactoryMap<String, StepNameParts>() {
+        stepNames = new FactoryMap<String, StepNameParts>() {
 
-			@Override
-			protected StepNameParts create(String globalName, Object... params) throws Exception {
-				String[] names = StringUtils.dotSplit(globalName);
-				return new StepNameParts(StringUtils.dotify(names[0], names[1]), names[2]);
-			}
+            @Override
+            protected StepNameParts create(String globalName, Object... params) throws Exception {
+                String[] names = StringUtils.dotSplit(globalName);
+                return new StepNameParts(StringUtils.dotify(names[0], names[1]), names[2]);
+            }
 
-		};
-	}
+        };
+    }
 
-	private WfNameUtils() {
+    private WfNameUtils() {
 
-	}
+    }
 
-	public static boolean isValidName(String name) {
-		return !StringUtils.isBlank(name) && !StringUtils.containsWhitespace(name);
-	}
+    public static boolean isValidName(String name) {
+        return !StringUtils.isBlank(name) && !StringUtils.containsWhitespace(name);
+    }
 
-	public static String getGlobalDocName(String categoryName, String docName) {
-		return StringUtils.dotify(categoryName, docName);
-	}
+    public static String getGlobalDocName(String categoryName, String docName) {
+        return StringUtils.dotify(categoryName, docName);
+    }
 
-	public static String getGlobalTemplateName(String categoryName, String templateName) {
-		return StringUtils.dotify(categoryName, templateName);
-	}
+    public static String getGlobalTemplateName(String categoryName, String templateName) {
+        return StringUtils.dotify(categoryName, templateName);
+    }
 
-	public static String getGlobalMessageName(String categoryName, String templateName, String messageName) {
-		return StringUtils.dotify(categoryName, templateName, messageName);
-	}
+    public static String getGlobalMessageName(String categoryName, String templateName, String messageName) {
+        return StringUtils.dotify(categoryName, templateName, messageName);
+    }
 
-	public static String getGlobalStepName(String categoryName, String templateName, String stepName) {
-		return StringUtils.dotify(categoryName, templateName, stepName);
-	}
+    public static String getGlobalStepName(String categoryName, String templateName, String stepName) {
+        return StringUtils.dotify(categoryName, templateName, stepName);
+    }
 
-	public static DocNameParts getDocNameParts(String globalName) throws UnifyException {
-		return docNames.get(globalName);
-	}
+    public static DocNameParts getDocNameParts(String globalName) throws UnifyException {
+        return docNames.get(globalName);
+    }
 
-	public static TemplateNameParts getTemplateNameParts(String globalName) throws UnifyException {
-		return templateNames.get(globalName);
-	}
+    public static TemplateNameParts getTemplateNameParts(String globalName) throws UnifyException {
+        return templateNames.get(globalName);
+    }
 
-	public static StepNameParts getStepNameParts(String globalName) throws UnifyException {
-		return stepNames.get(globalName);
-	}
+    public static StepNameParts getStepNameParts(String globalName) throws UnifyException {
+        return stepNames.get(globalName);
+    }
 
-	public static class DocNameParts {
+    public static class DocNameParts {
 
-		private String categoryName;
+        private String categoryName;
 
-		private String docName;
+        private String docName;
 
-		public DocNameParts(String categoryName, String docName) {
-			this.categoryName = categoryName;
-			this.docName = docName;
-		}
+        public DocNameParts(String categoryName, String docName) {
+            this.categoryName = categoryName;
+            this.docName = docName;
+        }
 
-		public String getCategoryName() {
-			return categoryName;
-		}
+        public String getCategoryName() {
+            return categoryName;
+        }
 
-		public String getDocName() {
-			return docName;
-		}
+        public String getDocName() {
+            return docName;
+        }
 
-	}
+    }
 
-	public static class FormNameParts {
+    public static class FormNameParts {
 
-		private String categoryName;
+        private String categoryName;
 
-		private String formName;
+        private String formName;
 
-		public FormNameParts(String categoryName, String formName) {
-			this.categoryName = categoryName;
-			this.formName = formName;
-		}
+        public FormNameParts(String categoryName, String formName) {
+            this.categoryName = categoryName;
+            this.formName = formName;
+        }
 
-		public String getCategoryName() {
-			return categoryName;
-		}
+        public String getCategoryName() {
+            return categoryName;
+        }
 
-		public String getFormName() {
-			return formName;
-		}
+        public String getFormName() {
+            return formName;
+        }
 
-	}
+    }
 
-	public static class TemplateNameParts {
+    public static class TemplateNameParts {
 
-		private String categoryName;
+        private String categoryName;
 
-		private String templateName;
+        private String templateName;
 
-		public TemplateNameParts(String categoryName, String templateName) {
-			this.categoryName = categoryName;
-			this.templateName = templateName;
-		}
+        public TemplateNameParts(String categoryName, String templateName) {
+            this.categoryName = categoryName;
+            this.templateName = templateName;
+        }
 
-		public String getCategoryName() {
-			return categoryName;
-		}
+        public String getCategoryName() {
+            return categoryName;
+        }
 
-		public String getTemplateName() {
-			return templateName;
-		}
-	}
+        public String getTemplateName() {
+            return templateName;
+        }
+    }
 
-	public static class StepNameParts {
+    public static class StepNameParts {
 
-		private String globalTemplateName;
+        private String globalTemplateName;
 
-		private String stepName;
+        private String stepName;
 
-		public StepNameParts(String globalTemplateName, String stepName) {
-			this.globalTemplateName = globalTemplateName;
-			this.stepName = stepName;
-		}
+        public StepNameParts(String globalTemplateName, String stepName) {
+            this.globalTemplateName = globalTemplateName;
+            this.stepName = stepName;
+        }
 
-		public String getGlobalTemplateName() {
-			return globalTemplateName;
-		}
+        public String getGlobalTemplateName() {
+            return globalTemplateName;
+        }
 
-		public String getStepName() {
-			return stepName;
-		}
+        public String getStepName() {
+            return stepName;
+        }
 
-	}
+    }
 }

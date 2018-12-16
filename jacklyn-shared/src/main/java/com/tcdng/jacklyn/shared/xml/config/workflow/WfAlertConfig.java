@@ -31,26 +31,26 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfAlertConfig extends BaseConfig {
 
-	private NotificationType type;
-	
-	private String message;
+    private NotificationType type;
 
-	public NotificationType getType() {
-		return type;
-	}
+    private String message;
 
-	@XmlJavaTypeAdapter(NotificationTypeXmlAdapter.class)
-	@XmlAttribute(name="type", required=true)
-	public void setType(NotificationType type) {
-		this.type = type;
-	}
+    public NotificationType getType() {
+        return type;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    @XmlJavaTypeAdapter(NotificationTypeXmlAdapter.class)
+    @XmlAttribute(name = "type", required = true)
+    public void setType(NotificationType type) {
+        this.type = type;
+    }
 
-	@XmlAttribute(required = true)
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
+
+    @XmlAttribute(required = true)
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

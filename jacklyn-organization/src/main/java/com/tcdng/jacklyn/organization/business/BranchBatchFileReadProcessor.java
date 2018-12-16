@@ -28,8 +28,8 @@ import com.tcdng.unify.core.batch.AbstractDBBatchItemFileReadProcessor;
 @Component(name = "branchbatchfilereadprocessor", description = "$m{branch-batchfilereadprocessor}")
 public class BranchBatchFileReadProcessor extends AbstractDBBatchItemFileReadProcessor<Branch> {
 
-	public BranchBatchFileReadProcessor() {
-		super(Branch.class);
-	}
+    public BranchBatchFileReadProcessor() {
+        super(Branch.class);
+    }
 
 }

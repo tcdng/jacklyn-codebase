@@ -26,35 +26,35 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ToolingEnrichmentLogicItem {
 
-	private String name;
-	
-	private String description;
+    private String name;
 
-	public ToolingEnrichmentLogicItem(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
+    private String description;
 
-	public ToolingEnrichmentLogicItem() {
+    public ToolingEnrichmentLogicItem(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-	}
+    public ToolingEnrichmentLogicItem() {
 
-	public String getName() {
-		return name;
-	}
+    }
 
-	@XmlElement
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
+
+    @XmlElement
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

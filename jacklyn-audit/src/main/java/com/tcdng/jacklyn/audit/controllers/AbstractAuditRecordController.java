@@ -28,17 +28,16 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractAuditRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractAuditRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(AuditModuleNameConstants.AUDITBUSINESSMODULE)
-	private AuditModule auditModule;
+    @Configurable(AuditModuleNameConstants.AUDITBUSINESSMODULE)
+    private AuditModule auditModule;
 
-	public AbstractAuditRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractAuditRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected AuditModule getAuditModule() throws UnifyException {
-		return auditModule;
-	}
+    protected AuditModule getAuditModule() throws UnifyException {
+        return auditModule;
+    }
 }

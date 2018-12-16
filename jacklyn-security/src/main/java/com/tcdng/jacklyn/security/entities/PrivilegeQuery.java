@@ -25,31 +25,31 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class PrivilegeQuery extends BaseInstallEntityQuery<Privilege> {
 
-	public PrivilegeQuery() {
-		super(Privilege.class);
-	}
+    public PrivilegeQuery() {
+        super(Privilege.class);
+    }
 
-	public PrivilegeQuery name(String name) {
-		return (PrivilegeQuery) equals("name", name);
-	}
+    public PrivilegeQuery name(String name) {
+        return (PrivilegeQuery) equals("name", name);
+    }
 
-	public PrivilegeQuery privilegeGroupId(Long privilegeGroupId) {
-		return (PrivilegeQuery) equals("privilegeGroupId", privilegeGroupId);
-	}
+    public PrivilegeQuery privilegeGroupId(Long privilegeGroupId) {
+        return (PrivilegeQuery) equals("privilegeGroupId", privilegeGroupId);
+    }
 
-	public PrivilegeQuery moduleId(Long moduleId) {
-		return (PrivilegeQuery) equals("moduleId", moduleId);
-	}
+    public PrivilegeQuery moduleId(Long moduleId) {
+        return (PrivilegeQuery) equals("moduleId", moduleId);
+    }
 
-	public PrivilegeQuery moduleName(String moduleName) {
-		return (PrivilegeQuery) equals("moduleName", moduleName);
-	}
+    public PrivilegeQuery moduleName(String moduleName) {
+        return (PrivilegeQuery) equals("moduleName", moduleName);
+    }
 
-	public PrivilegeQuery privilegeCategoryId(Long privilegeCategoryId) {
-		return (PrivilegeQuery) equals("privilegeCategoryId", privilegeCategoryId);
-	}
+    public PrivilegeQuery privilegeCategoryId(Long privilegeCategoryId) {
+        return (PrivilegeQuery) equals("privilegeCategoryId", privilegeCategoryId);
+    }
 
-	public PrivilegeQuery categoryName(String categoryName) {
-		return (PrivilegeQuery) equals("categoryName", categoryName);
-	}
+    public PrivilegeQuery categoryName(String categoryName) {
+        return (PrivilegeQuery) equals("categoryName", categoryName);
+    }
 }

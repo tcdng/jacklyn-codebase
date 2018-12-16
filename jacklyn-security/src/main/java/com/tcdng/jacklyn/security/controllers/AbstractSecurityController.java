@@ -29,14 +29,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractSecurityController extends BasePageController {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
+    private SecurityModule securityModule;
 
-	public AbstractSecurityController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractSecurityController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected SecurityModule getSecurityModule() throws UnifyException {
-		return securityModule;
-	}
+    protected SecurityModule getSecurityModule() throws UnifyException {
+        return securityModule;
+    }
 }

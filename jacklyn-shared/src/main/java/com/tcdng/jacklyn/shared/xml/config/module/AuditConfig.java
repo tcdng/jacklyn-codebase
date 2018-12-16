@@ -30,30 +30,30 @@ import com.tcdng.unify.core.util.xml.adapter.EventTypeXmlAdapter;
  */
 public class AuditConfig extends BaseConfig {
 
-	private EventType action;
+    private EventType action;
 
-	private String auditable;
+    private String auditable;
 
-	public EventType getAction() {
-		return action;
-	}
+    public EventType getAction() {
+        return action;
+    }
 
     @XmlJavaTypeAdapter(EventTypeXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setAction(EventType action) {
-		this.action = action;
-	}
+    @XmlAttribute(required = true)
+    public void setAction(EventType action) {
+        this.action = action;
+    }
 
-	public String getAuditable() {
-		return auditable;
-	}
+    public String getAuditable() {
+        return auditable;
+    }
 
-	@XmlAttribute
-	public void setAuditable(String auditable) {
-		this.auditable = auditable;
-	}
-	
-	public boolean isType() {
-		return this.auditable != null;
-	}
+    @XmlAttribute
+    public void setAuditable(String auditable) {
+        this.auditable = auditable;
+    }
+
+    public boolean isType() {
+        return this.auditable != null;
+    }
 }

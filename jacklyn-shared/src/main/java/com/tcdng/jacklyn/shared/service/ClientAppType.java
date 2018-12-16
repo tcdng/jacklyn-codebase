@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("clientapptypelist")
 public enum ClientAppType implements EnumConst {
 
-	STANDARD("S"), OS("O");
+    STANDARD("S"), OS("O");
 
-	private final String code;
+    private final String code;
 
-	private ClientAppType(String code) {
-		this.code = code;
-	}
+    private ClientAppType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static ClientAppType fromCode(String code) {
-		return EnumUtils.fromCode(ClientAppType.class, code);
-	}
+    public static ClientAppType fromCode(String code) {
+        return EnumUtils.fromCode(ClientAppType.class, code);
+    }
 
-	public static ClientAppType fromName(String name) {
-		return EnumUtils.fromName(ClientAppType.class, name);
-	}
+    public static ClientAppType fromName(String name) {
+        return EnumUtils.fromName(ClientAppType.class, name);
+    }
 }

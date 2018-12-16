@@ -31,22 +31,21 @@ import com.tcdng.unify.core.annotation.Transactional;
  */
 @Transactional
 @Component("test-chequeservice")
-public class TestChequeBusinessModuleImpl extends AbstractJacklynBusinessModule
-		implements TestChequeBusinessModule {
+public class TestChequeBusinessModuleImpl extends AbstractJacklynBusinessModule implements TestChequeBusinessModule {
 
-	@Override
-	public Long createChequeImage(TestChequeImage record) throws UnifyException {
-		return (Long) db().create(record);
-	}
+    @Override
+    public Long createChequeImage(TestChequeImage record) throws UnifyException {
+        return (Long) db().create(record);
+    }
 
-	@Override
-	public TestChequeImage findChequeImage(Long id) throws UnifyException {
-		return db().find(TestChequeImage.class, id);
-	}
+    @Override
+    public TestChequeImage findChequeImage(Long id) throws UnifyException {
+        return db().find(TestChequeImage.class, id);
+    }
 
-	@Override
-	public void installFeatures(List<ModuleConfig> featureDefinitions) throws UnifyException {
+    @Override
+    public void installFeatures(List<ModuleConfig> featureDefinitions) throws UnifyException {
 
-	}
+    }
 
 }

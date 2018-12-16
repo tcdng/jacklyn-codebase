@@ -31,20 +31,20 @@ import com.tcdng.unify.core.database.Entity;
 @Component("statusentity-policy")
 public class BaseStatusEntityPolicy extends BaseEntityPolicy {
 
-	public BaseStatusEntityPolicy() {
+    public BaseStatusEntityPolicy() {
 
-	}
+    }
 
-	public BaseStatusEntityPolicy(boolean setNow) {
-		super(setNow);
-	}
+    public BaseStatusEntityPolicy(boolean setNow) {
+        super(setNow);
+    }
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		if (((BaseStatusEntity) record).getStatus() == null) {
-			((BaseStatusEntity) record).setStatus(RecordStatus.ACTIVE);
-		}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        if (((BaseStatusEntity) record).getStatus() == null) {
+            ((BaseStatusEntity) record).setStatus(RecordStatus.ACTIVE);
+        }
 
-		return super.preCreate(record, now);
-	}
+        return super.preCreate(record, now);
+    }
 }

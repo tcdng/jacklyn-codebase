@@ -27,9 +27,9 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CrudPanelList {
 
-	/** The CRUD panel short name */
-	String panel();
+    /** The CRUD panel short name */
+    String panel();
 
-	/** The bean list field name */
-	String field();
+    /** The bean list field name */
+    String field();
 }

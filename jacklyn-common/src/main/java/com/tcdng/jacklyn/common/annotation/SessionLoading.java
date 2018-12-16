@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SessionLoading {
 
-	SessionAttr[] sessionAttributes() default {};
+    SessionAttr[] sessionAttributes() default {};
 
-	CrudPanelList[] crudPanelLists() default {};
+    CrudPanelList[] crudPanelLists() default {};
 }

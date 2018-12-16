@@ -28,12 +28,11 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class NotificationModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public static final int INSTALLATION_INDEX = 8;
+    public static final int INSTALLATION_INDEX = 8;
 
-	public NotificationModuleStaticSettings() {
-		super(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE,
-				"config/notification-module.xml",
-				"com.tcdng.jacklyn.resources.notification-messages", INSTALLATION_INDEX);
-	}
+    public NotificationModuleStaticSettings() {
+        super(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE, "config/notification-module.xml",
+                "com.tcdng.jacklyn.resources.notification-messages", INSTALLATION_INDEX);
+    }
 
 }

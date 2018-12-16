@@ -25,19 +25,19 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  */
 public class BranchQuery extends BaseVersionedStatusEntityQuery<Branch> {
 
-	public BranchQuery() {
-		super(Branch.class);
-	}
+    public BranchQuery() {
+        super(Branch.class);
+    }
 
-	public BranchQuery name(String name) {
-		return (BranchQuery) equals("name", name);
-	}
+    public BranchQuery name(String name) {
+        return (BranchQuery) equals("name", name);
+    }
 
-	public BranchQuery nameLike(String name) {
-		return (BranchQuery) like("name", name);
-	}
+    public BranchQuery nameLike(String name) {
+        return (BranchQuery) like("name", name);
+    }
 
-	public BranchQuery descriptionLike(String description) {
-		return (BranchQuery) like("description", description);
-	}
+    public BranchQuery descriptionLike(String description) {
+        return (BranchQuery) like("description", description);
+    }
 }

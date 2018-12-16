@@ -27,15 +27,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class DashboardTilesConfig {
 
-	private List<DashboardTileConfig> dashboardTileList;
+    private List<DashboardTileConfig> dashboardTileList;
 
-	public List<DashboardTileConfig> getDashboardTileList() {
-		return dashboardTileList;
-	}
+    public List<DashboardTileConfig> getDashboardTileList() {
+        return dashboardTileList;
+    }
 
-	@XmlElement(name = "dashboard-tile", required = true)
-	public void setDashboardTileList(List<DashboardTileConfig> dashboardTileList) {
-		this.dashboardTileList = dashboardTileList;
-	}
+    @XmlElement(name = "dashboard-tile", required = true)
+    public void setDashboardTileList(List<DashboardTileConfig> dashboardTileList) {
+        this.dashboardTileList = dashboardTileList;
+    }
 
 }

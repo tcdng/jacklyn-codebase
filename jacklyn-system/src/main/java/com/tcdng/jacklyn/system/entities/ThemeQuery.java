@@ -25,25 +25,25 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  */
 public class ThemeQuery extends BaseVersionedStatusEntityQuery<Theme> {
 
-	public ThemeQuery() {
-		super(Theme.class);
-	}
+    public ThemeQuery() {
+        super(Theme.class);
+    }
 
-	@Override
-	public ThemeQuery order(String field) {
-		return (ThemeQuery) super.order(field);
-	}
+    @Override
+    public ThemeQuery order(String field) {
+        return (ThemeQuery) super.order(field);
+    }
 
-	@Override
-	public ThemeQuery select(String field) {
-		return (ThemeQuery) super.select(field);
-	}
+    @Override
+    public ThemeQuery select(String field) {
+        return (ThemeQuery) super.select(field);
+    }
 
-	public ThemeQuery name(String name) {
-		return (ThemeQuery) equals("name", name);
-	}
+    public ThemeQuery name(String name) {
+        return (ThemeQuery) equals("name", name);
+    }
 
-	public ThemeQuery descriptionLike(String description) {
-		return (ThemeQuery) like("description", description);
-	}
+    public ThemeQuery descriptionLike(String description) {
+        return (ThemeQuery) like("description", description);
+    }
 }

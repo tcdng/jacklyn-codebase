@@ -36,25 +36,24 @@ import com.tcdng.unify.web.data.AssignParams;
 @Component("wfstepnotinlist")
 public class WfStepNotInListCommand extends AbstractAssignParamsWorkflowListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, AssignParams params)
-			throws UnifyException {
-		if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
-			WfStepQuery query = new WfStepQuery();
-			query.wfCategoryId(params.getFilterId1(Long.class));
-			if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
-				query.wfTemplateId(params.getFilterId2(Long.class));
-			}
+    @Override
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
+            WfStepQuery query = new WfStepQuery();
+            query.wfCategoryId(params.getFilterId1(Long.class));
+            if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
+                query.wfTemplateId(params.getFilterId2(Long.class));
+            }
 
-			if (params.isAssignedIdList()) {
-				query.idNotIn(params.getAssignedIdList(Long.class));
-			}
+            if (params.isAssignedIdList()) {
+                query.idNotIn(params.getAssignedIdList(Long.class));
+            }
 
-			query.isParticipation().select("id", "description");
-			return getWorkflowModule().findSteps(query);
-		}
+            query.isParticipation().select("id", "description");
+            return getWorkflowModule().findSteps(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
 }

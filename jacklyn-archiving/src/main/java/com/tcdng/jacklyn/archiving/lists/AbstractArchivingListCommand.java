@@ -28,15 +28,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractArchivingListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
-	private ArchivingModule archivingModule;
+    @Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
+    private ArchivingModule archivingModule;
 
-	public AbstractArchivingListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractArchivingListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected ArchivingModule getArchivingBusinessModule() {
-		return archivingModule;
-	}
+    protected ArchivingModule getArchivingBusinessModule() {
+        return archivingModule;
+    }
 
 }

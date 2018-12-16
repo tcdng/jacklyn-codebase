@@ -35,100 +35,98 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/notification/notificationchannel")
 @UplBinding("web/notification/upl/managenotificationchannel.upl")
-public class NotificationChannelController
-		extends AbstractNotificationRecordController<NotificationChannel> {
+public class NotificationChannelController extends AbstractNotificationRecordController<NotificationChannel> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	private NotificationType searchNotificationType;
+    private NotificationType searchNotificationType;
 
-	public NotificationChannelController() {
-		super(NotificationChannel.class, "notification.notificationchannel.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.CLIPBOARD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public NotificationChannelController() {
+        super(NotificationChannel.class, "notification.notificationchannel.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.COPY_TO_ADD
+                        | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.REPORTABLE);
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	public NotificationType getSearchNotificationType() {
-		return searchNotificationType;
-	}
+    public NotificationType getSearchNotificationType() {
+        return searchNotificationType;
+    }
 
-	public void setSearchNotificationType(NotificationType searchNotificationType) {
-		this.searchNotificationType = searchNotificationType;
-	}
+    public void setSearchNotificationType(NotificationType searchNotificationType) {
+        this.searchNotificationType = searchNotificationType;
+    }
 
-	@Override
-	protected List<NotificationChannel> find() throws UnifyException {
-		NotificationChannelQuery query = new NotificationChannelQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+    @Override
+    protected List<NotificationChannel> find() throws UnifyException {
+        NotificationChannelQuery query = new NotificationChannelQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		if (searchNotificationType != null) {
-			query.notificationType(searchNotificationType);
-		}
+        if (searchNotificationType != null) {
+            query.notificationType(searchNotificationType);
+        }
 
-		if (searchStatus != null) {
-			query.status(searchStatus);
-		}
-		query.ignoreEmptyCriteria(true);
-		return getNotificationModule().findNotificationChannels(query);
-	}
+        if (searchStatus != null) {
+            query.status(searchStatus);
+        }
+        query.ignoreEmptyCriteria(true);
+        return getNotificationModule().findNotificationChannels(query);
+    }
 
-	@Override
-	protected NotificationChannel find(Long id) throws UnifyException {
-		return getNotificationModule().findNotificationChannel(id);
-	}
+    @Override
+    protected NotificationChannel find(Long id) throws UnifyException {
+        return getNotificationModule().findNotificationChannel(id);
+    }
 
-	@Override
-	protected NotificationChannel prepareCreate() throws UnifyException {
-		return new NotificationChannel();
-	}
+    @Override
+    protected NotificationChannel prepareCreate() throws UnifyException {
+        return new NotificationChannel();
+    }
 
-	@Override
-	protected Object create(NotificationChannel notificationChannelData) throws UnifyException {
-		return getNotificationModule().createNotificationChannel(notificationChannelData);
-	}
+    @Override
+    protected Object create(NotificationChannel notificationChannelData) throws UnifyException {
+        return getNotificationModule().createNotificationChannel(notificationChannelData);
+    }
 
-	@Override
-	protected int update(NotificationChannel notificationChannelData) throws UnifyException {
-		return getNotificationModule().updateNotificationChannel(notificationChannelData);
-	}
+    @Override
+    protected int update(NotificationChannel notificationChannelData) throws UnifyException {
+        return getNotificationModule().updateNotificationChannel(notificationChannelData);
+    }
 
-	@Override
-	protected int delete(NotificationChannel notificationChannelData) throws UnifyException {
-		return getNotificationModule().deleteNotificationChannel(notificationChannelData.getId());
-	}
+    @Override
+    protected int delete(NotificationChannel notificationChannelData) throws UnifyException {
+        return getNotificationModule().deleteNotificationChannel(notificationChannelData.getId());
+    }
 
 }

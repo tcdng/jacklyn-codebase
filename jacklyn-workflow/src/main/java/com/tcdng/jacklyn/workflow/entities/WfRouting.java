@@ -29,85 +29,85 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFROUTING", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
-		@UniqueConstraint({ "wfStepId", "description" }) })
+        @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfRouting extends BaseEntity {
 
-	@ForeignKey(WfStep.class)
-	private Long wfStepId;
+    @ForeignKey(WfStep.class)
+    private Long wfStepId;
 
-	@Column(name = "TARGET_STEP_NM", length = 32)
-	private String targetWfStepName;
+    @Column(name = "TARGET_STEP_NM", length = 32)
+    private String targetWfStepName;
 
-	@Column(name = "ROUTING_NM", length = 32)
-	private String name;
+    @Column(name = "ROUTING_NM", length = 32)
+    private String name;
 
-	@Column(name = "ROUTING_DESC", length = 64)
-	private String description;
+    @Column(name = "ROUTING_DESC", length = 64)
+    private String description;
 
-	@Column(name = "CLASSIFIER_NM", nullable = true)
-	private String classifierName;
+    @Column(name = "CLASSIFIER_NM", nullable = true)
+    private String classifierName;
 
-	@ListOnly(key = "wfStepId", property = "name")
-	private String wfStepName;
+    @ListOnly(key = "wfStepId", property = "name")
+    private String wfStepName;
 
-	@ListOnly(key = "wfStepId", property = "description")
-	private String wfStepDesc;
+    @ListOnly(key = "wfStepId", property = "description")
+    private String wfStepDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Long getWfStepId() {
-		return wfStepId;
-	}
+    public Long getWfStepId() {
+        return wfStepId;
+    }
 
-	public void setWfStepId(Long wfStepId) {
-		this.wfStepId = wfStepId;
-	}
+    public void setWfStepId(Long wfStepId) {
+        this.wfStepId = wfStepId;
+    }
 
-	public String getTargetWfStepName() {
-		return targetWfStepName;
-	}
+    public String getTargetWfStepName() {
+        return targetWfStepName;
+    }
 
-	public void setTargetWfStepName(String targetWfStepName) {
-		this.targetWfStepName = targetWfStepName;
-	}
+    public void setTargetWfStepName(String targetWfStepName) {
+        this.targetWfStepName = targetWfStepName;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getClassifierName() {
-		return classifierName;
-	}
+    public String getClassifierName() {
+        return classifierName;
+    }
 
-	public void setClassifierName(String classifierName) {
-		this.classifierName = classifierName;
-	}
+    public void setClassifierName(String classifierName) {
+        this.classifierName = classifierName;
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public void setWfStepName(String wfStepName) {
-		this.wfStepName = wfStepName;
-	}
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
 
-	public String getWfStepDesc() {
-		return wfStepDesc;
-	}
+    public String getWfStepDesc() {
+        return wfStepDesc;
+    }
 
-	public void setWfStepDesc(String wfStepDesc) {
-		this.wfStepDesc = wfStepDesc;
-	}
+    public void setWfStepDesc(String wfStepDesc) {
+        this.wfStepDesc = wfStepDesc;
+    }
 
 }

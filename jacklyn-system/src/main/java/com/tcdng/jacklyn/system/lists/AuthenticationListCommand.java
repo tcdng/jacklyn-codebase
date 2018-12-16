@@ -35,11 +35,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("authenticationlist")
 public class AuthenticationListCommand extends AbstractZeroParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getSystemModule().findAuthentications((AuthenticationQuery) new AuthenticationQuery()
-				.status(RecordStatus.ACTIVE).order("description"));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getSystemModule().findAuthentications(
+                (AuthenticationQuery) new AuthenticationQuery().status(RecordStatus.ACTIVE).order("description"));
+    }
 
 }

@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.archiving.constants;
  */
 public interface FileArchiveTaskParamConstants {
 
-	String FILEARCHIVECONFIGNAME = "fileArchiveConfigName";
+    String FILEARCHIVECONFIGNAME = "fileArchiveConfigName";
 
-	String WORKINGDT = "workingDt";
+    String WORKINGDT = "workingDt";
 }

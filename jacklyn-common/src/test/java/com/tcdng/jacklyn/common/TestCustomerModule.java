@@ -26,47 +26,47 @@ import com.tcdng.unify.core.business.BusinessModule;
  */
 public interface TestCustomerModule extends BusinessModule {
 
-	/**
-	 * Creates a customer record in persistence.
-	 * 
-	 * @param customer
-	 *            the record to create
-	 * @return the customer ID
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Long createCustomer(TestCustomer customer) throws UnifyException;
+    /**
+     * Creates a customer record in persistence.
+     * 
+     * @param customer
+     *            the record to create
+     * @return the customer ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createCustomer(TestCustomer customer) throws UnifyException;
 
-	/**
-	 * Finds a customer by supplied ID.
-	 * 
-	 * @param customerId
-	 *            the customer ID
-	 * @return found customer
-	 * @throws UnifyException
-	 *             if customer with ID is not found. If an error occurs
-	 */
-	TestCustomer findCustomer(Long customerId) throws UnifyException;
+    /**
+     * Finds a customer by supplied ID.
+     * 
+     * @param customerId
+     *            the customer ID
+     * @return found customer
+     * @throws UnifyException
+     *             if customer with ID is not found. If an error occurs
+     */
+    TestCustomer findCustomer(Long customerId) throws UnifyException;
 
-	/**
-	 * Finds a customer by first name.
-	 * 
-	 * @param firstName
-	 *            the first name
-	 * @return customer if found otherwise null
-	 * @throws UnifyException
-	 *             If an error occurs
-	 */
-	TestCustomer findCustomer(String firstName) throws UnifyException;
+    /**
+     * Finds a customer by first name.
+     * 
+     * @param firstName
+     *            the first name
+     * @return customer if found otherwise null
+     * @throws UnifyException
+     *             If an error occurs
+     */
+    TestCustomer findCustomer(String firstName) throws UnifyException;
 
-	/**
-	 * Updates a customer record in persistence.
-	 * 
-	 * @param customer
-	 *            the record to update
-	 * @return 1
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int updateCustomer(TestCustomer customer) throws UnifyException;
+    /**
+     * Updates a customer record in persistence.
+     * 
+     * @param customer
+     *            the record to update
+     * @return 1
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateCustomer(TestCustomer customer) throws UnifyException;
 }

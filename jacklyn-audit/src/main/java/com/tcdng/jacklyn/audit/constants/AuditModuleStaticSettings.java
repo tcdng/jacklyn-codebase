@@ -28,9 +28,9 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class AuditModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public AuditModuleStaticSettings() {
-		super(AuditModuleNameConstants.AUDITBUSINESSMODULE, "config/audit-module.xml",
-				"com.tcdng.jacklyn.resources.audit-messages");
-	}
+    public AuditModuleStaticSettings() {
+        super(AuditModuleNameConstants.AUDITBUSINESSMODULE, "config/audit-module.xml",
+                "com.tcdng.jacklyn.resources.audit-messages");
+    }
 
 }

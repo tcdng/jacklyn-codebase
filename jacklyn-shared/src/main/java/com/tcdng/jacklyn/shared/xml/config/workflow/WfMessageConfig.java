@@ -29,51 +29,51 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfMessageConfig extends BaseConfig {
 
-	private String subject;
-	
-	private String body;
-	
-	private String attachmentGenerator;
+    private String subject;
 
-	private Boolean html;
-	
-	public WfMessageConfig() {
-		html = Boolean.FALSE;
-	}
-	
-	public String getSubject() {
-		return subject;
-	}
+    private String body;
 
-	@XmlElement(required = true)
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    private String attachmentGenerator;
 
-	public String getBody() {
-		return body;
-	}
+    private Boolean html;
 
-	@XmlElement(required = true)
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public WfMessageConfig() {
+        html = Boolean.FALSE;
+    }
 
-	public String getAttachmentGenerator() {
-		return attachmentGenerator;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	@XmlAttribute(name="attachment-generator", required = true)
-	public void setAttachmentGenerator(String attachmentGenerator) {
-		this.attachmentGenerator = attachmentGenerator;
-	}
+    @XmlElement(required = true)
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public Boolean getHtml() {
-		return html;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	@XmlAttribute(required = true)
-	public void setHtml(Boolean html) {
-		this.html = html;
-	}
+    @XmlElement(required = true)
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getAttachmentGenerator() {
+        return attachmentGenerator;
+    }
+
+    @XmlAttribute(name = "attachment-generator", required = true)
+    public void setAttachmentGenerator(String attachmentGenerator) {
+        this.attachmentGenerator = attachmentGenerator;
+    }
+
+    public Boolean getHtml() {
+        return html;
+    }
+
+    @XmlAttribute(required = true)
+    public void setHtml(Boolean html) {
+        this.html = html;
+    }
 }

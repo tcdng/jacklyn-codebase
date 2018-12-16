@@ -28,18 +28,17 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractReportRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractReportRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(ReportModuleNameConstants.REPORTBUSINESSMODULE)
-	private ReportModule reportModule;
+    @Configurable(ReportModuleNameConstants.REPORTBUSINESSMODULE)
+    private ReportModule reportModule;
 
-	public AbstractReportRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractReportRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected ReportModule getReportModule() {
-		return reportModule;
-	}
+    protected ReportModule getReportModule() {
+        return reportModule;
+    }
 
 }

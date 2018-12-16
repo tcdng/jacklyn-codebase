@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfClassifiersConfig {
 
-	private List<WfClassifierConfig> wfClassifierConfigList;
+    private List<WfClassifierConfig> wfClassifierConfigList;
 
-	public List<WfClassifierConfig> getWfClassifierConfigList() {
-		return wfClassifierConfigList;
-	}
+    public List<WfClassifierConfig> getWfClassifierConfigList() {
+        return wfClassifierConfigList;
+    }
 
-	@XmlElement(name = "classifier", required = true)
-	public void setWfClassifierConfigList(List<WfClassifierConfig> wfClassifierConfigList) {
-		this.wfClassifierConfigList = wfClassifierConfigList;
-	}
+    @XmlElement(name = "classifier", required = true)
+    public void setWfClassifierConfigList(List<WfClassifierConfig> wfClassifierConfigList) {
+        this.wfClassifierConfigList = wfClassifierConfigList;
+    }
 }

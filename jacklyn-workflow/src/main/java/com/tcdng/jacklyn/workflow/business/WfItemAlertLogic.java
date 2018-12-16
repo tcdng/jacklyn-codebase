@@ -28,15 +28,15 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface WfItemAlertLogic extends UnifyComponent {
 
-	/**
-	 * Sends an alert based on workflow item.
-	 * 
-	 * @param wfItemReader
-	 *            the workflow item reader.
-	 * @param wfAlertDef
-	 *            the alert definition
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
+    /**
+     * Sends an alert based on workflow item.
+     * 
+     * @param wfItemReader
+     *            the workflow item reader.
+     * @param wfAlertDef
+     *            the alert definition
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
 }

@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfRoutingQuery extends BaseEntityQuery<WfRouting> {
 
-	public WfRoutingQuery() {
-		super(WfRouting.class);
-	}
+    public WfRoutingQuery() {
+        super(WfRouting.class);
+    }
 
-	public WfRoutingQuery wfStepId(Long wfStepId) {
-		return (WfRoutingQuery) equals("wfStepId", wfStepId);
-	}
+    public WfRoutingQuery wfStepId(Long wfStepId) {
+        return (WfRoutingQuery) equals("wfStepId", wfStepId);
+    }
 }

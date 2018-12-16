@@ -29,24 +29,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfformelementtypelist")
 public enum WorkflowFormElementType implements EnumConst {
 
-	TAB("TAB"), SECTION("SEC"), FIELD("FLD");
+    TAB("TAB"), SECTION("SEC"), FIELD("FLD");
 
-	private final String code;
+    private final String code;
 
-	private WorkflowFormElementType(String code) {
-		this.code = code;
-	}
+    private WorkflowFormElementType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static WorkflowFormElementType fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowFormElementType.class, code);
-	}
+    public static WorkflowFormElementType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowFormElementType.class, code);
+    }
 
-	public static WorkflowFormElementType fromName(String name) {
-		return EnumUtils.fromName(WorkflowFormElementType.class, name);
-	}
+    public static WorkflowFormElementType fromName(String name) {
+        return EnumUtils.fromName(WorkflowFormElementType.class, name);
+    }
 }

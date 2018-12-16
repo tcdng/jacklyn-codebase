@@ -26,23 +26,23 @@ import com.tcdng.jacklyn.shared.system.SystemAssetType;
  */
 public class ClientAppAssetQuery extends BaseEntityQuery<ClientAppAsset> {
 
-	public ClientAppAssetQuery() {
-		super(ClientAppAsset.class);
-	}
+    public ClientAppAssetQuery() {
+        super(ClientAppAsset.class);
+    }
 
-	public ClientAppAssetQuery clientAppId(Long clientAppId) {
-		return (ClientAppAssetQuery) equals("clientAppId", clientAppId);
-	}
+    public ClientAppAssetQuery clientAppId(Long clientAppId) {
+        return (ClientAppAssetQuery) equals("clientAppId", clientAppId);
+    }
 
-	public ClientAppAssetQuery clientAppName(String clientAppName) {
-		return (ClientAppAssetQuery) equals("clientAppName", clientAppName);
-	}
+    public ClientAppAssetQuery clientAppName(String clientAppName) {
+        return (ClientAppAssetQuery) equals("clientAppName", clientAppName);
+    }
 
-	public ClientAppAssetQuery assetName(String assetName) {
-		return (ClientAppAssetQuery) equals("assetName", assetName);
-	}
+    public ClientAppAssetQuery assetName(String assetName) {
+        return (ClientAppAssetQuery) equals("assetName", assetName);
+    }
 
-	public ClientAppAssetQuery assetType(SystemAssetType assetType) {
-		return (ClientAppAssetQuery) equals("assetType", assetType);
-	}
+    public ClientAppAssetQuery assetType(SystemAssetType assetType) {
+        return (ClientAppAssetQuery) equals("assetType", assetType);
+    }
 }

@@ -31,68 +31,65 @@ import com.tcdng.unify.core.system.SequenceNumberBusinessModule;
  * @since 1.0
  */
 public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComponent
-		implements FileArchiveNameGenerator {
+        implements FileArchiveNameGenerator {
 
-	@Configurable(ApplicationComponents.APPLICATION_SEQUENCENUMBERBUSINESSMODULE)
-	private SequenceNumberBusinessModule sequenceNumberBusinessModule;
+    @Configurable(ApplicationComponents.APPLICATION_SEQUENCENUMBERBUSINESSMODULE)
+    private SequenceNumberBusinessModule sequenceNumberBusinessModule;
 
-	@Configurable("!fixeddatetimeformat pattern:$s{yyyyMMdd}")
-	private String namingDateFormatter;
+    @Configurable("!fixeddatetimeformat pattern:$s{yyyyMMdd}")
+    private String namingDateFormatter;
 
-	@Configurable(".arch")
-	private String fileExtension;
+    @Configurable(".arch")
+    private String fileExtension;
 
-	@Configurable("4")
-	private int minSequenceLength;
+    @Configurable("4")
+    private int minSequenceLength;
 
-	private DateFormatter dateFormatter;
+    private DateFormatter dateFormatter;
 
-	@Override
-	protected void onInitialize() throws UnifyException {
-		dateFormatter = (DateFormatter) getUplComponent(getApplicationLocale(),
-				namingDateFormatter, false);
-	}
+    @Override
+    protected void onInitialize() throws UnifyException {
+        dateFormatter = (DateFormatter) getUplComponent(getApplicationLocale(), namingDateFormatter, false);
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 
-	/**
-	 * Returns the file extension part.
-	 */
-	protected String getFileExtensionPart() {
-		return fileExtension;
-	}
+    /**
+     * Returns the file extension part.
+     */
+    protected String getFileExtensionPart() {
+        return fileExtension;
+    }
 
-	/**
-	 * Returns the next sequence number part of archive file name based on supplied
-	 * archive configuration name, working date and configurable minimum sequence
-	 * length.
-	 * 
-	 * @param fileArchiveConfigName
-	 *            the file archive configuration name
-	 * @param workingDt
-	 *            the working date
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	protected String getNextSequenceIdPart(String fileArchiveConfigName, Date workingDt)
-			throws UnifyException {
-		long nextSequenceNo = sequenceNumberBusinessModule
-				.getNextSequenceNumber(fileArchiveConfigName, workingDt);
-		return String.format("%0" + minSequenceLength + "d", nextSequenceNo);
-	}
+    /**
+     * Returns the next sequence number part of archive file name based on supplied
+     * archive configuration name, working date and configurable minimum sequence
+     * length.
+     * 
+     * @param fileArchiveConfigName
+     *            the file archive configuration name
+     * @param workingDt
+     *            the working date
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected String getNextSequenceIdPart(String fileArchiveConfigName, Date workingDt) throws UnifyException {
+        long nextSequenceNo = sequenceNumberBusinessModule.getNextSequenceNumber(fileArchiveConfigName, workingDt);
+        return String.format("%0" + minSequenceLength + "d", nextSequenceNo);
+    }
 
-	/**
-	 * Returns the date part of archive file name using supplied working date
-	 * 
-	 * @param workingDt
-	 *            the working date
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	protected String getDatePart(Date workingDt) throws UnifyException {
-		return dateFormatter.format(workingDt);
-	}
+    /**
+     * Returns the date part of archive file name using supplied working date
+     * 
+     * @param workingDt
+     *            the working date
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected String getDatePart(Date workingDt) throws UnifyException {
+        return dateFormatter.format(workingDt);
+    }
 }

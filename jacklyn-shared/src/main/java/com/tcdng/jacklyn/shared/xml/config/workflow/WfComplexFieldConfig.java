@@ -32,25 +32,25 @@ import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
  */
 public class WfComplexFieldConfig extends WfFieldConfig {
 
-	private List<WfFieldConfig> wfFieldConfigList;
+    private List<WfFieldConfig> wfFieldConfigList;
 
-	public WfComplexFieldConfig() {
-		super(DataType.COMPLEX, Boolean.FALSE);
-	}
+    public WfComplexFieldConfig() {
+        super(DataType.COMPLEX, Boolean.FALSE);
+    }
 
-	public List<WfFieldConfig> getWfFieldConfigList() {
-		return wfFieldConfigList;
-	}
+    public List<WfFieldConfig> getWfFieldConfigList() {
+        return wfFieldConfigList;
+    }
 
-	@XmlElement(name = "field", required = true)
-	public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
-		this.wfFieldConfigList = wfFieldConfigList;
-	}
+    @XmlElement(name = "field", required = true)
+    public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
+        this.wfFieldConfigList = wfFieldConfigList;
+    }
 
-	@Override
-	@XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
-	@XmlAttribute(name = "type", required = true)
-	public void setDataType(DataType dataType) {
+    @Override
+    @XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
+    @XmlAttribute(name = "type", required = true)
+    public void setDataType(DataType dataType) {
 
-	}
+    }
 }

@@ -23,28 +23,28 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfFormFieldDef extends BaseLabelWfDef {
 
-	private static final long serialVersionUID = 3410393972134663967L;
+    private static final long serialVersionUID = 3410393972134663967L;
 
-	private String editorUpl;
+    private String editorUpl;
 
-	private boolean required;
+    private boolean required;
 
-	public WfFormFieldDef(String binding, String label, String editorUpl, boolean required) {
-		super(binding, label, label);
-		this.editorUpl = editorUpl;
-		this.required = required;
-	}
+    public WfFormFieldDef(String binding, String label, String editorUpl, boolean required) {
+        super(binding, label, label);
+        this.editorUpl = editorUpl;
+        this.required = required;
+    }
 
-	public String getBinding() {
-		return getName();
-	}
+    public String getBinding() {
+        return getName();
+    }
 
-	public String getEditorUpl() {
-		return editorUpl;
-	}
+    public String getEditorUpl() {
+        return editorUpl;
+    }
 
-	public boolean isRequired() {
-		return required;
-	}
+    public boolean isRequired() {
+        return required;
+    }
 
 }

@@ -30,17 +30,16 @@ import com.tcdng.unify.core.report.ReportColumn;
  */
 public abstract class BaseRecordReportProcessor extends AbstractRecordReportProcessor {
 
-	public BaseRecordReportProcessor(Class<? extends Query<? extends Entity>> recordQueryClass) {
-		super(recordQueryClass);
-	}
+    public BaseRecordReportProcessor(Class<? extends Query<? extends Entity>> recordQueryClass) {
+        super(recordQueryClass);
+    }
 
-	@Override
-	protected ReportColumn[] getReportColumns(String reportName) throws UnifyException {
-		return getCommonReportProvider().findReportableColumns(reportName);
-	}
+    @Override
+    protected ReportColumn[] getReportColumns(String reportName) throws UnifyException {
+        return getCommonReportProvider().findReportableColumns(reportName);
+    }
 
-	protected ReportProvider getCommonReportProvider() throws UnifyException {
-		return (ReportProvider) getApplicationAttribute(
-				JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER);
-	}
+    protected ReportProvider getCommonReportProvider() throws UnifyException {
+        return (ReportProvider) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER);
+    }
 }

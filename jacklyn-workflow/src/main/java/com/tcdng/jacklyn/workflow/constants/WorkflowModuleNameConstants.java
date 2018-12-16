@@ -23,13 +23,13 @@ package com.tcdng.jacklyn.workflow.constants;
  */
 public interface WorkflowModuleNameConstants {
 
-	String WORKFLOW_MODULE = "workflow";
+    String WORKFLOW_MODULE = "workflow";
 
-	String WORKFLOWBUSINESSMODULE = "jacklyn-workflowbusinessmodule";
+    String WORKFLOWBUSINESSMODULE = "jacklyn-workflowbusinessmodule";
 
-	String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
+    String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
 
-	String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-workflowitemclassifierlogic";
+    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-workflowitemclassifierlogic";
 
-	String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
+    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
 }

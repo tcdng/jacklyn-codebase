@@ -30,58 +30,58 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface OrganizationModule extends JacklynBusinessModule {
 
-	/**
-	 * Creates a new branch.
-	 * 
-	 * @param branch
-	 *            the branch data
-	 * @return the created branch ID
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Long createBranch(Branch branch) throws UnifyException;
+    /**
+     * Creates a new branch.
+     * 
+     * @param branch
+     *            the branch data
+     * @return the created branch ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createBranch(Branch branch) throws UnifyException;
 
-	/**
-	 * Finds branch by ID.
-	 * 
-	 * @param branchId
-	 *            the branch ID
-	 * @return the branch data
-	 * @throws UnifyException
-	 *             if branch with ID is not found
-	 */
-	Branch findBranch(Long branchId) throws UnifyException;
+    /**
+     * Finds branch by ID.
+     * 
+     * @param branchId
+     *            the branch ID
+     * @return the branch data
+     * @throws UnifyException
+     *             if branch with ID is not found
+     */
+    Branch findBranch(Long branchId) throws UnifyException;
 
-	/**
-	 * Finds branchs by query.
-	 * 
-	 * @param query
-	 *            the branch query
-	 * @return the list of branchs found
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<Branch> findBranches(BranchQuery query) throws UnifyException;
+    /**
+     * Finds branchs by query.
+     * 
+     * @param query
+     *            the branch query
+     * @return the list of branchs found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findBranches(BranchQuery query) throws UnifyException;
 
-	/**
-	 * Updates a branch.
-	 * 
-	 * @param branch
-	 *            the branch data
-	 * @return the update count
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int updateBranch(Branch branch) throws UnifyException;
+    /**
+     * Updates a branch.
+     * 
+     * @param branch
+     *            the branch data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateBranch(Branch branch) throws UnifyException;
 
-	/**
-	 * Deletes a branch.
-	 * 
-	 * @param id
-	 *            the branch ID
-	 * @return the delete count
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int deleteBranch(Long id) throws UnifyException;
+    /**
+     * Deletes a branch.
+     * 
+     * @param id
+     *            the branch ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteBranch(Long id) throws UnifyException;
 }

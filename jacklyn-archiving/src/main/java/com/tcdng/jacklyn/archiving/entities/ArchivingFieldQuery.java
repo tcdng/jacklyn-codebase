@@ -26,43 +26,43 @@ import com.tcdng.jacklyn.shared.archiving.ArchivingFieldType;
  */
 public class ArchivingFieldQuery extends BaseInstallEntityQuery<ArchivingField> {
 
-	public ArchivingFieldQuery() {
-		super(ArchivingField.class);
-	}
+    public ArchivingFieldQuery() {
+        super(ArchivingField.class);
+    }
 
-	public ArchivingFieldQuery archivableDefId(Long archivableDefId) {
-		return (ArchivingFieldQuery) equals("archivableDefId", archivableDefId);
-	}
+    public ArchivingFieldQuery archivableDefId(Long archivableDefId) {
+        return (ArchivingFieldQuery) equals("archivableDefId", archivableDefId);
+    }
 
-	public ArchivingFieldQuery fieldName(String fieldName) {
-		return (ArchivingFieldQuery) equals("fieldName", fieldName);
-	}
+    public ArchivingFieldQuery fieldName(String fieldName) {
+        return (ArchivingFieldQuery) equals("fieldName", fieldName);
+    }
 
-	public ArchivingFieldQuery fieldType(ArchivingFieldType fieldType) {
-		return (ArchivingFieldQuery) equals("fieldType", fieldType);
-	}
+    public ArchivingFieldQuery fieldType(ArchivingFieldType fieldType) {
+        return (ArchivingFieldQuery) equals("fieldType", fieldType);
+    }
 
-	public ArchivingFieldQuery fieldTypeIn(ArchivingFieldType[] fieldType) {
-		return (ArchivingFieldQuery) equals("fieldType", fieldType);
-	}
+    public ArchivingFieldQuery fieldTypeIn(ArchivingFieldType[] fieldType) {
+        return (ArchivingFieldQuery) equals("fieldType", fieldType);
+    }
 
-	public ArchivingFieldQuery fieldTypeNot(ArchivingFieldType fieldType) {
-		return (ArchivingFieldQuery) notEqual("fieldType", fieldType);
-	}
+    public ArchivingFieldQuery fieldTypeNot(ArchivingFieldType fieldType) {
+        return (ArchivingFieldQuery) notEqual("fieldType", fieldType);
+    }
 
-	public ArchivingFieldQuery fieldTypeNotIn(ArchivingFieldType[] fieldType) {
-		return (ArchivingFieldQuery) notEqual("fieldType", fieldType);
-	}
+    public ArchivingFieldQuery fieldTypeNotIn(ArchivingFieldType[] fieldType) {
+        return (ArchivingFieldQuery) notEqual("fieldType", fieldType);
+    }
 
-	public ArchivingFieldQuery recordName(String recordName) {
-		return (ArchivingFieldQuery) equals("recordName", recordName);
-	}
+    public ArchivingFieldQuery recordName(String recordName) {
+        return (ArchivingFieldQuery) equals("recordName", recordName);
+    }
 
-	public ArchivingFieldQuery orderByFieldType() {
-		return (ArchivingFieldQuery) order("fieldType");
-	}
+    public ArchivingFieldQuery orderByFieldType() {
+        return (ArchivingFieldQuery) order("fieldType");
+    }
 
-	public ArchivingFieldQuery orderByDescription() {
-		return (ArchivingFieldQuery) order("description");
-	}
+    public ArchivingFieldQuery orderByDescription() {
+        return (ArchivingFieldQuery) order("description");
+    }
 }

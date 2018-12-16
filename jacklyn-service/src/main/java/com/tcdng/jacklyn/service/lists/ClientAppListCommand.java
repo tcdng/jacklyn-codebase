@@ -33,11 +33,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("clientapplist")
 public class ClientAppListCommand extends AbstractZeroParamsServiceListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getServiceModule().findClientApps((ClientAppQuery) new ClientAppQuery()
-				.ignoreEmptyCriteria(true).order("description"));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getServiceModule()
+                .findClientApps((ClientAppQuery) new ClientAppQuery().ignoreEmptyCriteria(true).order("description"));
+    }
 
 }

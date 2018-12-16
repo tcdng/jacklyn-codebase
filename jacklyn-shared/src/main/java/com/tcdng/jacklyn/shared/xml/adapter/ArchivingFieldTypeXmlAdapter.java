@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  */
 public class ArchivingFieldTypeXmlAdapter extends AbstractEnumConstXmlAdapter<ArchivingFieldType> {
 
-	public ArchivingFieldTypeXmlAdapter() {
-		super(ArchivingFieldType.class);
-	}
+    public ArchivingFieldTypeXmlAdapter() {
+        super(ArchivingFieldType.class);
+    }
 }

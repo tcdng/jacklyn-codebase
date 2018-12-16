@@ -37,49 +37,47 @@ import com.tcdng.jacklyn.shared.system.data.GetAppModulesResult;
  */
 public class SystemRemoteGateTest extends AbstractJacklynWebTest {
 
-	private static final String TEST_REMOTE_APP_URL
-			= "http://localhost:" + TEST_HTTPPORT + "/jacklyn";
+    private static final String TEST_REMOTE_APP_URL = "http://localhost:" + TEST_HTTPPORT + "/jacklyn";
 
-	@Test
-	public void testGetApplicationInfo() throws Exception {
-		GetAppInfoParams params = new GetAppInfoParams();
-		GetAppInfoResult result = getRemoteCallClient().remoteCall(GetAppInfoResult.class,
-				TEST_REMOTE_APP_URL, params);
-		assertNotNull(result);
-		assertFalse(result.isError());
-		assertEquals("jacklyn-codebase", result.getAppName());
-		assertEquals("1.0.0", result.getAppVersion());
-		assertEquals("Client Title", result.getClientTitle());
-		assertNull(result.getErrorCode());
-		assertNull(result.getErrorMsg());
-	}
+    @Test
+    public void testGetApplicationInfo() throws Exception {
+        GetAppInfoParams params = new GetAppInfoParams();
+        GetAppInfoResult result = getRemoteCallClient().remoteCall(GetAppInfoResult.class, TEST_REMOTE_APP_URL, params);
+        assertNotNull(result);
+        assertFalse(result.isError());
+        assertEquals("jacklyn-codebase", result.getAppName());
+        assertEquals("1.0.0", result.getAppVersion());
+        assertEquals("Client Title", result.getClientTitle());
+        assertNull(result.getErrorCode());
+        assertNull(result.getErrorMsg());
+    }
 
-	@Test
-	public void testGetApplicationModules() throws Exception {
-		GetAppModulesParams params = new GetAppModulesParams();
-		GetAppModulesResult result = getRemoteCallClient().remoteCall(GetAppModulesResult.class,
-				TEST_REMOTE_APP_URL, params);
-		assertNotNull(result);
-		assertFalse(result.isError());
-		assertNotNull(result.getModuleList());
-		assertFalse(result.getModuleList().isEmpty());
-		assertNull(result.getErrorCode());
-		assertNull(result.getErrorMsg());
-	}
+    @Test
+    public void testGetApplicationModules() throws Exception {
+        GetAppModulesParams params = new GetAppModulesParams();
+        GetAppModulesResult result = getRemoteCallClient().remoteCall(GetAppModulesResult.class, TEST_REMOTE_APP_URL,
+                params);
+        assertNotNull(result);
+        assertFalse(result.isError());
+        assertNotNull(result.getModuleList());
+        assertFalse(result.getModuleList().isEmpty());
+        assertNull(result.getErrorCode());
+        assertNull(result.getErrorMsg());
+    }
 
-	@Override
-	protected void onSetup() throws Exception {
-		if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
-				SystemRemoteCallNameConstants.GET_APPLICATION_INFO)) {
-			getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
-					SystemRemoteCallNameConstants.GET_APPLICATION_INFO);
-			getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
-					SystemRemoteCallNameConstants.GET_APPLICATION_MODULES);
-		}
-	}
+    @Override
+    protected void onSetup() throws Exception {
+        if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
+                SystemRemoteCallNameConstants.GET_APPLICATION_INFO)) {
+            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+                    SystemRemoteCallNameConstants.GET_APPLICATION_INFO);
+            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+                    SystemRemoteCallNameConstants.GET_APPLICATION_MODULES);
+        }
+    }
 
-	@Override
-	protected void onTearDown() throws Exception {
+    @Override
+    protected void onTearDown() throws Exception {
 
-	}
+    }
 }

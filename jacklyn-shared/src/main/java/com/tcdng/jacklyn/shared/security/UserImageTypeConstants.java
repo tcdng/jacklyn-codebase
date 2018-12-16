@@ -23,5 +23,5 @@ package com.tcdng.jacklyn.shared.security;
  */
 public interface UserImageTypeConstants {
 
-	String PHOTOGRAPH = "P";
+    String PHOTOGRAPH = "P";
 }

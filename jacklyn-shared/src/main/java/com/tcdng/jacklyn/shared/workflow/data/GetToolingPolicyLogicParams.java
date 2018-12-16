@@ -30,8 +30,8 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetToolingPolicyLogicParams extends RemoteCallParams {
 
-	public GetToolingPolicyLogicParams() {
-		super(WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST);
-	}
+    public GetToolingPolicyLogicParams() {
+        super(WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST);
+    }
 
 }

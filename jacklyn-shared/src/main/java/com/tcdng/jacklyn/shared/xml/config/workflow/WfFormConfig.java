@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfFormConfig {
 
-	private List<WfFormTabConfig> wfFormTabConfigList;
+    private List<WfFormTabConfig> wfFormTabConfigList;
 
-	public List<WfFormTabConfig> getWfFormTabConfigList() {
-		return wfFormTabConfigList;
-	}
+    public List<WfFormTabConfig> getWfFormTabConfigList() {
+        return wfFormTabConfigList;
+    }
 
-	@XmlElement(name = "tab", required = true)
-	public void setWfFormTabConfigList(List<WfFormTabConfig> wfFormTabConfigList) {
-		this.wfFormTabConfigList = wfFormTabConfigList;
-	}
+    @XmlElement(name = "tab", required = true)
+    public void setWfFormTabConfigList(List<WfFormTabConfig> wfFormTabConfigList) {
+        this.wfFormTabConfigList = wfFormTabConfigList;
+    }
 }

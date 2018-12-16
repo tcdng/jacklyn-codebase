@@ -25,36 +25,36 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class InputControlConfig {
 
-	private String name;
-	
-	private String description;
-	
-	private String editor;
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    private String description;
 
-	@XmlAttribute(required = true)
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String editor;
 
-	public String getDescription() {
-		return description;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@XmlAttribute(required = true)
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @XmlAttribute(required = true)
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getEditor() {
-		return editor;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@XmlAttribute(required = true)
-	public void setEditor(String editor) {
-		this.editor = editor;
-	}
+    @XmlAttribute(required = true)
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    @XmlAttribute(required = true)
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 }

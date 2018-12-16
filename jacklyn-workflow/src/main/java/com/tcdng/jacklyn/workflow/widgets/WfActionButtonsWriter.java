@@ -35,57 +35,55 @@ import com.tcdng.unify.web.ui.writer.AbstractControlWriter;
 @Component("wfactionbuttons-writer")
 public class WfActionButtonsWriter extends AbstractControlWriter {
 
-	@Override
-	protected void doWriteStructureAndContent(ResponseWriter writer, Widget component)
-			throws UnifyException {
-		WfActionButtons wfActionButtons = (WfActionButtons) component;
-		writer.write("<div ");
-		writeTagAttributes(writer, wfActionButtons);
-		writer.write(">");
+    @Override
+    protected void doWriteStructureAndContent(ResponseWriter writer, Widget component) throws UnifyException {
+        WfActionButtons wfActionButtons = (WfActionButtons) component;
+        writer.write("<div ");
+        writeTagAttributes(writer, wfActionButtons);
+        writer.write(">");
 
-		boolean verticalLayout = wfActionButtons.isVerticalLayout();
-		if (!verticalLayout) {
-			writer.write("<div class=\"buttonRow\">");
-		}
+        boolean verticalLayout = wfActionButtons.isVerticalLayout();
+        if (!verticalLayout) {
+            writer.write("<div class=\"buttonRow\">");
+        }
 
-		Control actionCtrl = wfActionButtons.getActionCtrl();
-		for (ValueStore valueStore : wfActionButtons.getValueList()) {
-			if (verticalLayout) {
-				writer.write("<div class=\"buttonRow\">");
-			}
+        Control actionCtrl = wfActionButtons.getActionCtrl();
+        for (ValueStore valueStore : wfActionButtons.getValueList()) {
+            if (verticalLayout) {
+                writer.write("<div class=\"buttonRow\">");
+            }
 
-			writer.write("<div class=\"buttonCell\">");
-			actionCtrl.setValueStore(valueStore);
-			writer.writeStructureAndContent(actionCtrl);
-			writer.write("</div>");
+            writer.write("<div class=\"buttonCell\">");
+            actionCtrl.setValueStore(valueStore);
+            writer.writeStructureAndContent(actionCtrl);
+            writer.write("</div>");
 
-			if (verticalLayout) {
-				writer.write("</div>");
-			}
-		}
+            if (verticalLayout) {
+                writer.write("</div>");
+            }
+        }
 
-		if (!verticalLayout) {
-			writer.write("</div>");
-		}
+        if (!verticalLayout) {
+            writer.write("</div>");
+        }
 
-		writer.write("</div>");
-	}
+        writer.write("</div>");
+    }
 
-	@Override
-	protected void doWriteBehavior(ResponseWriter writer, Widget widget) throws UnifyException {
-		WfActionButtons wfActionButtons = (WfActionButtons) widget;
-		// All behavior should be tied to action control
-		EventHandler[] eventHandlers
-				= wfActionButtons.getUplAttribute(EventHandler[].class, "eventHandler");
-		if (eventHandlers != null) {
-			Control actionCtrl = wfActionButtons.getActionCtrl();
-			for (ValueStore valueStore : wfActionButtons.getValueList()) {
-				actionCtrl.setValueStore(valueStore);
-				getRequestContext().setQuickReference(valueStore);
-				for (EventHandler eventHandler : eventHandlers) {
-					writer.writeBehavior(eventHandler, actionCtrl.getId());
-				}
-			}
-		}
-	}
+    @Override
+    protected void doWriteBehavior(ResponseWriter writer, Widget widget) throws UnifyException {
+        WfActionButtons wfActionButtons = (WfActionButtons) widget;
+        // All behavior should be tied to action control
+        EventHandler[] eventHandlers = wfActionButtons.getUplAttribute(EventHandler[].class, "eventHandler");
+        if (eventHandlers != null) {
+            Control actionCtrl = wfActionButtons.getActionCtrl();
+            for (ValueStore valueStore : wfActionButtons.getValueList()) {
+                actionCtrl.setValueStore(valueStore);
+                getRequestContext().setQuickReference(valueStore);
+                for (EventHandler eventHandler : eventHandlers) {
+                    writer.writeBehavior(eventHandler, actionCtrl.getId());
+                }
+            }
+        }
+    }
 }

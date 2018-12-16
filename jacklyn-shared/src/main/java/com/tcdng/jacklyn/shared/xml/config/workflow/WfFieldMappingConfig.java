@@ -26,25 +26,25 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class WfFieldMappingConfig {
 
-	private String docFieldName;
-	
-	private String beanFieldName;
+    private String docFieldName;
 
-	public String getDocFieldName() {
-		return docFieldName;
-	}
+    private String beanFieldName;
 
-	@XmlAttribute(name="doc-field", required=true)
-	public void setDocFieldName(String docFieldName) {
-		this.docFieldName = docFieldName;
-	}
+    public String getDocFieldName() {
+        return docFieldName;
+    }
 
-	public String getBeanFieldName() {
-		return beanFieldName;
-	}
+    @XmlAttribute(name = "doc-field", required = true)
+    public void setDocFieldName(String docFieldName) {
+        this.docFieldName = docFieldName;
+    }
 
-	@XmlAttribute(name="bean-field", required=true)
-	public void setBeanFieldName(String beanFieldName) {
-		this.beanFieldName = beanFieldName;
-	}
+    public String getBeanFieldName() {
+        return beanFieldName;
+    }
+
+    @XmlAttribute(name = "bean-field", required = true)
+    public void setBeanFieldName(String beanFieldName) {
+        this.beanFieldName = beanFieldName;
+    }
 }

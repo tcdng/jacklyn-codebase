@@ -28,9 +28,9 @@ import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
 @Policy("baseentity-policy")
 public abstract class BaseEntity extends AbstractSequencedEntity implements Document {
 
-	@Override
-	public Long getOwnerId() {
-		return null;
-	}
+    @Override
+    public Long getOwnerId() {
+        return null;
+    }
 
 }

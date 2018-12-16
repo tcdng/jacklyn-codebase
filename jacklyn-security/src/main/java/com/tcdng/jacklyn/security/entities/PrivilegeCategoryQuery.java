@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class PrivilegeCategoryQuery extends BaseInstallEntityQuery<PrivilegeCategory> {
 
-	public PrivilegeCategoryQuery() {
-		super(PrivilegeCategory.class);
-	}
+    public PrivilegeCategoryQuery() {
+        super(PrivilegeCategory.class);
+    }
 
-	public PrivilegeCategoryQuery name(String name) {
-		return (PrivilegeCategoryQuery) equals("name", name);
-	}
+    public PrivilegeCategoryQuery name(String name) {
+        return (PrivilegeCategoryQuery) equals("name", name);
+    }
 }

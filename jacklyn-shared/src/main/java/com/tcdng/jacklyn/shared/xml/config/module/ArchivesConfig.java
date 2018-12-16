@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ArchivesConfig {
 
-	private List<ArchiveConfig> archiveList;
+    private List<ArchiveConfig> archiveList;
 
-	public List<ArchiveConfig> getArchiveList() {
-		return archiveList;
-	}
+    public List<ArchiveConfig> getArchiveList() {
+        return archiveList;
+    }
 
-	@XmlElement(name = "archive", required = true)
-	public void setArchiveList(List<ArchiveConfig> archiveList) {
-		this.archiveList = archiveList;
-	}
+    @XmlElement(name = "archive", required = true)
+    public void setArchiveList(List<ArchiveConfig> archiveList) {
+        this.archiveList = archiveList;
+    }
 }

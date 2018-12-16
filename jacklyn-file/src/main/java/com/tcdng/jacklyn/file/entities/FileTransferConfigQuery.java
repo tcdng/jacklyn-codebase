@@ -26,23 +26,23 @@ import com.tcdng.jacklyn.shared.file.FileTransferDirection;
  */
 public class FileTransferConfigQuery extends BaseVersionedStatusEntityQuery<FileTransferConfig> {
 
-	public FileTransferConfigQuery() {
-		super(FileTransferConfig.class);
-	}
+    public FileTransferConfigQuery() {
+        super(FileTransferConfig.class);
+    }
 
-	public FileTransferConfigQuery name(String name) {
-		return (FileTransferConfigQuery) equals("name", name);
-	}
+    public FileTransferConfigQuery name(String name) {
+        return (FileTransferConfigQuery) equals("name", name);
+    }
 
-	public FileTransferConfigQuery nameLike(String name) {
-		return (FileTransferConfigQuery) like("name", name);
-	}
+    public FileTransferConfigQuery nameLike(String name) {
+        return (FileTransferConfigQuery) like("name", name);
+    }
 
-	public FileTransferConfigQuery descriptionLike(String description) {
-		return (FileTransferConfigQuery) like("description", description);
-	}
+    public FileTransferConfigQuery descriptionLike(String description) {
+        return (FileTransferConfigQuery) like("description", description);
+    }
 
-	public FileTransferConfigQuery direction(FileTransferDirection direction) {
-		return (FileTransferConfigQuery) equals("direction", direction);
-	}
+    public FileTransferConfigQuery direction(FileTransferDirection direction) {
+        return (FileTransferConfigQuery) equals("direction", direction);
+    }
 }

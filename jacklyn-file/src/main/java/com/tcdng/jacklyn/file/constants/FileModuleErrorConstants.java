@@ -23,16 +23,16 @@ package com.tcdng.jacklyn.file.constants;
  */
 public interface FileModuleErrorConstants {
 
-	/** File transfer configuration with name {0} is unknown */
-	String FILETRANSFERCONFIG_NAME_UNKNOWN = "FILE_0001";
+    /** File transfer configuration with name {0} is unknown */
+    String FILETRANSFERCONFIG_NAME_UNKNOWN = "FILE_0001";
 
-	/** File transfer configuration invalid local path. [{0}] */
-	String FILETRANSFERCONFIG_INVALID_LOCALPATH = "FILE_0002";
+    /** File transfer configuration invalid local path. [{0}] */
+    String FILETRANSFERCONFIG_INVALID_LOCALPATH = "FILE_0002";
 
-	/** Batch upload configuration with name {0} is unknown */
-	String BATCHUPLOADCONFIG_NAME_UNKNOWN = "FILE_0003";
+    /** Batch upload configuration with name {0} is unknown */
+    String BATCHUPLOADCONFIG_NAME_UNKNOWN = "FILE_0003";
 
-	/** Bulk file definition with name {0} is unknown */
-	String BATCHFILEDEFINITION_NAME_UNKNOWN = "FILE_0004";
+    /** Bulk file definition with name {0} is unknown */
+    String BATCHFILEDEFINITION_NAME_UNKNOWN = "FILE_0004";
 
 }

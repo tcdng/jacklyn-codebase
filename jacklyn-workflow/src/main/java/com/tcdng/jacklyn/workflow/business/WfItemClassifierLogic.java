@@ -27,17 +27,16 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface WfItemClassifierLogic extends UnifyComponent {
 
-	/**
-	 * Tests if workflow item matches classification.
-	 * 
-	 * @param wfItemReader
-	 *            the workflow item reader
-	 * @param wfDocClassifierDef
-	 *            classifier definition
-	 * @return a true value if matched otherwise false
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef)
-			throws UnifyException;
+    /**
+     * Tests if workflow item matches classification.
+     * 
+     * @param wfItemReader
+     *            the workflow item reader
+     * @param wfDocClassifierDef
+     *            classifier definition
+     * @return a true value if matched otherwise false
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException;
 }

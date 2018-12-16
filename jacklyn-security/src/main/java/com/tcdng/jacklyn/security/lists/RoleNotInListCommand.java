@@ -35,16 +35,15 @@ import com.tcdng.unify.web.data.AssignParams;
 @Component("rolenotinlist")
 public class RoleNotInListCommand extends AbstractAssignParamsSecurityListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, AssignParams params)
-			throws UnifyException {
-		RoleQuery query = new RoleQuery();
-		if (params.isAssignedIdList()) {
-			query.idNotIn(params.getAssignedIdList(Long.class));
-		}
-		query.status(RecordStatus.ACTIVE).order("description");
-		query.ignoreEmptyCriteria(true);
-		return getSecurityBusinessModule().findRoles(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        RoleQuery query = new RoleQuery();
+        if (params.isAssignedIdList()) {
+            query.idNotIn(params.getAssignedIdList(Long.class));
+        }
+        query.status(RecordStatus.ACTIVE).order("description");
+        query.ignoreEmptyCriteria(true);
+        return getSecurityBusinessModule().findRoles(query);
+    }
 
 }

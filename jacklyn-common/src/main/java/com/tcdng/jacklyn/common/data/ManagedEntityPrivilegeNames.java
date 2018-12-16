@@ -23,14 +23,14 @@ package com.tcdng.jacklyn.common.data;
  */
 public class ManagedEntityPrivilegeNames {
 
-	private String reportableName;
+    private String reportableName;
 
-	public ManagedEntityPrivilegeNames(String reportableName) {
-		this.reportableName = reportableName;
-	}
+    public ManagedEntityPrivilegeNames(String reportableName) {
+        this.reportableName = reportableName;
+    }
 
-	public String getReportableName() {
-		return reportableName;
-	}
+    public String getReportableName() {
+        return reportableName;
+    }
 
 }

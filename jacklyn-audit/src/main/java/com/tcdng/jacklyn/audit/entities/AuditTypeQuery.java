@@ -25,12 +25,12 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class AuditTypeQuery extends BaseInstallEntityQuery<AuditType> {
 
-	public AuditTypeQuery() {
-		super(AuditType.class);
-	}
+    public AuditTypeQuery() {
+        super(AuditType.class);
+    }
 
-	public AuditTypeQuery recordName(String recordName) {
-		return (AuditTypeQuery) equals("recordName", recordName);
-	}
+    public AuditTypeQuery recordName(String recordName) {
+        return (AuditTypeQuery) equals("recordName", recordName);
+    }
 
 }

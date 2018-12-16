@@ -28,15 +28,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractWorkflowListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
+    private WorkflowModule workflowModule;
 
-	public AbstractWorkflowListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractWorkflowListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected WorkflowModule getWorkflowModule() {
-		return workflowModule;
-	}
+    protected WorkflowModule getWorkflowModule() {
+        return workflowModule;
+    }
 
 }

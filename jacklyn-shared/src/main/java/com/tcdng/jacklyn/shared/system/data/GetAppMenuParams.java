@@ -30,35 +30,35 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetAppMenuParams extends RemoteCallParams {
 
-	private String moduleName;
+    private String moduleName;
 
-	private String menuName;
-	
-	public GetAppMenuParams(String moduleName, String menuName) {
-		super(SystemRemoteCallNameConstants.GET_APPLICATION_MENU);
-		this.moduleName = moduleName;
-		this.menuName = menuName;
-	}
+    private String menuName;
 
-	public GetAppMenuParams() {
-		super(SystemRemoteCallNameConstants.GET_APPLICATION_MENU);
-	}
+    public GetAppMenuParams(String moduleName, String menuName) {
+        super(SystemRemoteCallNameConstants.GET_APPLICATION_MENU);
+        this.moduleName = moduleName;
+        this.menuName = menuName;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public GetAppMenuParams() {
+        super(SystemRemoteCallNameConstants.GET_APPLICATION_MENU);
+    }
 
-	@XmlElement
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public String getMenuName() {
-		return menuName;
-	}
+    @XmlElement
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	@XmlElement
-	public void setMenuName(String menuName) {
-		this.menuName = menuName;
-	}
+    public String getMenuName() {
+        return menuName;
+    }
+
+    @XmlElement
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
 }

@@ -26,34 +26,34 @@ import com.tcdng.jacklyn.common.entities.BaseLargeData;
  */
 public class AuthenticationLargeData extends BaseLargeData<Authentication> {
 
-	private String password;
+    private String password;
 
-	private String confirmPassword;
+    private String confirmPassword;
 
-	public AuthenticationLargeData(Authentication authenticationData) {
-		super(authenticationData);
-		this.password = authenticationData.getPassword();
-		this.confirmPassword = authenticationData.getPassword();
-	}
+    public AuthenticationLargeData(Authentication authenticationData) {
+        super(authenticationData);
+        this.password = authenticationData.getPassword();
+        this.confirmPassword = authenticationData.getPassword();
+    }
 
-	public AuthenticationLargeData() {
-		super(new Authentication());
-	}
+    public AuthenticationLargeData() {
+        super(new Authentication());
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
 }

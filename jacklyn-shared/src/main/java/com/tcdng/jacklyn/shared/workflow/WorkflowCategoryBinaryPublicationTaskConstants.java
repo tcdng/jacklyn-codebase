@@ -24,9 +24,9 @@ package com.tcdng.jacklyn.shared.workflow;
  */
 public interface WorkflowCategoryBinaryPublicationTaskConstants {
 
-	String TASK_NAME = "wfcategorybinarypublicationtask";
+    String TASK_NAME = "wfcategorybinarypublicationtask";
 
-	String WFCATEGORY_BIN = "wfCategoryBin";
+    String WFCATEGORY_BIN = "wfCategoryBin";
 
-	String WFCATEGORY_ACTIVATE = "wfActivate";
+    String WFCATEGORY_ACTIVATE = "wfActivate";
 }

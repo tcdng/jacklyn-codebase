@@ -26,19 +26,19 @@ import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
  */
 public class AuthenticationQuery extends BaseStatusEntityQuery<Authentication> {
 
-	public AuthenticationQuery() {
-		super(Authentication.class);
-	}
+    public AuthenticationQuery() {
+        super(Authentication.class);
+    }
 
-	public AuthenticationQuery name(String name) {
-		return (AuthenticationQuery) equals("name", name);
-	}
+    public AuthenticationQuery name(String name) {
+        return (AuthenticationQuery) equals("name", name);
+    }
 
-	public AuthenticationQuery nameLike(String name) {
-		return (AuthenticationQuery) like("name", name);
-	}
+    public AuthenticationQuery nameLike(String name) {
+        return (AuthenticationQuery) like("name", name);
+    }
 
-	public AuthenticationQuery descriptionLike(String description) {
-		return (AuthenticationQuery) like("description", description);
-	}
+    public AuthenticationQuery descriptionLike(String description) {
+        return (AuthenticationQuery) like("description", description);
+    }
 }

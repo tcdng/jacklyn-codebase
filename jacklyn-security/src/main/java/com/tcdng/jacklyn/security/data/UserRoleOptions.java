@@ -27,13 +27,13 @@ import com.tcdng.jacklyn.security.entities.UserRole;
  */
 public class UserRoleOptions {
 
-	private List<UserRole> userRoleList;
+    private List<UserRole> userRoleList;
 
-	public List<UserRole> getUserRoleList() {
-		return userRoleList;
-	}
+    public List<UserRole> getUserRoleList() {
+        return userRoleList;
+    }
 
-	public void setUserRoleList(List<UserRole> userRoleList) {
-		this.userRoleList = userRoleList;
-	}
+    public void setUserRoleList(List<UserRole> userRoleList) {
+        this.userRoleList = userRoleList;
+    }
 }

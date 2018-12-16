@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.notification.constants;
  */
 public interface NotificationModuleAuditConstants {
 
-	String MARK_OUTWARD_UNSENT = "not-markoutwardunsent";
+    String MARK_OUTWARD_UNSENT = "not-markoutwardunsent";
 
-	String MARK_OUTWARD_SENT = "not-markoutwardsent";
+    String MARK_OUTWARD_SENT = "not-markoutwardsent";
 
-	String MARK_OUTWARD_ABORT = "not-markoutwardabort";
+    String MARK_OUTWARD_ABORT = "not-markoutwardabort";
 }

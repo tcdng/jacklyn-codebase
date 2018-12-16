@@ -28,14 +28,14 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractServiceListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
-	private ServiceModule serviceModule;
+    @Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
+    private ServiceModule serviceModule;
 
-	public AbstractServiceListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractServiceListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected ServiceModule getServiceModule() {
-		return serviceModule;
-	}
+    protected ServiceModule getServiceModule() {
+        return serviceModule;
+    }
 }

@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfUserActionQuery extends BaseEntityQuery<WfUserAction> {
 
-	public WfUserActionQuery() {
-		super(WfUserAction.class);
-	}
+    public WfUserActionQuery() {
+        super(WfUserAction.class);
+    }
 
-	public WfUserActionQuery wfStepId(Long wfStepId) {
-		return (WfUserActionQuery) equals("wfStepId", wfStepId);
-	}
+    public WfUserActionQuery wfStepId(Long wfStepId) {
+        return (WfUserActionQuery) equals("wfStepId", wfStepId);
+    }
 }

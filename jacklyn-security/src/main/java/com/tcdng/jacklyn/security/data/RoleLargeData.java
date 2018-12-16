@@ -28,38 +28,38 @@ import com.tcdng.jacklyn.security.entities.Role;
  */
 public class RoleLargeData extends BaseLargeData<Role> {
 
-	private List<Long> privilegeIdList;
+    private List<Long> privilegeIdList;
 
-	private List<Long> wfStepIdList;
+    private List<Long> wfStepIdList;
 
-	public RoleLargeData() {
-		super(new Role());
-	}
+    public RoleLargeData() {
+        super(new Role());
+    }
 
-	public RoleLargeData(Role roleData) {
-		super(roleData);
-	}
+    public RoleLargeData(Role roleData) {
+        super(roleData);
+    }
 
-	public RoleLargeData(Role roleData, List<Long> privilegeIdList, List<Long> wfStepIdList) {
-		super(roleData);
-		this.privilegeIdList = privilegeIdList;
-		this.wfStepIdList = wfStepIdList;
-	}
+    public RoleLargeData(Role roleData, List<Long> privilegeIdList, List<Long> wfStepIdList) {
+        super(roleData);
+        this.privilegeIdList = privilegeIdList;
+        this.wfStepIdList = wfStepIdList;
+    }
 
-	public List<Long> getPrivilegeIdList() {
-		return privilegeIdList;
-	}
+    public List<Long> getPrivilegeIdList() {
+        return privilegeIdList;
+    }
 
-	public void setPrivilegeIdList(List<Long> privilegeIdList) {
-		this.privilegeIdList = privilegeIdList;
-	}
+    public void setPrivilegeIdList(List<Long> privilegeIdList) {
+        this.privilegeIdList = privilegeIdList;
+    }
 
-	public List<Long> getWfStepIdList() {
-		return wfStepIdList;
-	}
+    public List<Long> getWfStepIdList() {
+        return wfStepIdList;
+    }
 
-	public void setWfStepIdList(List<Long> wfStepIdList) {
-		this.wfStepIdList = wfStepIdList;
-	}
+    public void setWfStepIdList(List<Long> wfStepIdList) {
+        this.wfStepIdList = wfStepIdList;
+    }
 
 }

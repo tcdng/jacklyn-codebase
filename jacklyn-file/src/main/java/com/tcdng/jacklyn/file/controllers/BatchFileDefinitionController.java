@@ -36,86 +36,83 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/file/batchfiledefinition")
 @UplBinding("web/file/upl/managebatchfiledefinition.upl")
-@SessionLoading(crudPanelLists = {
-		@CrudPanelList(panel = "frmBatchFileFieldDefPanel", field = "record.fieldDefList") })
-public class BatchFileDefinitionController
-		extends AbstractFileRecordController<BatchFileDefinition> {
+@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", field = "record.fieldDefList") })
+public class BatchFileDefinitionController extends AbstractFileRecordController<BatchFileDefinition> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public BatchFileDefinitionController() {
-		super(BatchFileDefinition.class, "file.batchfiledefinition.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public BatchFileDefinitionController() {
+        super(BatchFileDefinition.class, "file.batchfiledefinition.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
+                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<BatchFileDefinition> find() throws UnifyException {
-		BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getFileModule().findBatchFileDefinitions(query);
-	}
+    @Override
+    protected List<BatchFileDefinition> find() throws UnifyException {
+        BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getFileModule().findBatchFileDefinitions(query);
+    }
 
-	@Override
-	protected BatchFileDefinition find(Long id) throws UnifyException {
-		return getFileModule().findBatchFileDefinition(id);
-	}
+    @Override
+    protected BatchFileDefinition find(Long id) throws UnifyException {
+        return getFileModule().findBatchFileDefinition(id);
+    }
 
-	@Override
-	protected BatchFileDefinition prepareCreate() throws UnifyException {
-		return new BatchFileDefinition();
-	}
+    @Override
+    protected BatchFileDefinition prepareCreate() throws UnifyException {
+        return new BatchFileDefinition();
+    }
 
-	@Override
-	protected Object create(BatchFileDefinition record) throws UnifyException {
-		return getFileModule().createBatchFileDefinition(record);
-	}
+    @Override
+    protected Object create(BatchFileDefinition record) throws UnifyException {
+        return getFileModule().createBatchFileDefinition(record);
+    }
 
-	@Override
-	protected int update(BatchFileDefinition record) throws UnifyException {
-		return getFileModule().updateBatchFileDefinition(record);
-	}
+    @Override
+    protected int update(BatchFileDefinition record) throws UnifyException {
+        return getFileModule().updateBatchFileDefinition(record);
+    }
 
-	@Override
-	protected int delete(BatchFileDefinition record) throws UnifyException {
-		return getFileModule().deleteBatchFileDefinition(record.getId());
-	}
+    @Override
+    protected int delete(BatchFileDefinition record) throws UnifyException {
+        return getFileModule().deleteBatchFileDefinition(record.getId());
+    }
 }

@@ -32,109 +32,108 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
-		reportable = true, auditable = true)
-@Table(name = "NOTIFTEMPLATE",
-		uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
-				@UniqueConstraint({ "moduleId", "description" }) })
+        reportable = true, auditable = true)
+@Table(name = "NOTIFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
+        @UniqueConstraint({ "moduleId", "description" }) })
 public class NotificationTemplate extends BaseVersionedStatusEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "TEMPLATE_NM", length = 96)
-	private String name;
+    @Column(name = "TEMPLATE_NM", length = 96)
+    private String name;
 
-	@Column(name = "TEMPLATE_DESC", length = 64)
-	private String description;
+    @Column(name = "TEMPLATE_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64)
-	private String subject;
+    @Column(length = 64)
+    private String subject;
 
-	@Column(length = 2048)
-	private String template;
+    @Column(length = 2048)
+    private String template;
 
-	@Column(name = "HTML_FG")
-	private Boolean htmlFlag;
+    @Column(name = "HTML_FG")
+    private Boolean htmlFlag;
 
-	@Column(length = 32, nullable = true)
-	private String attachmentGenerator;
+    @Column(length = 32, nullable = true)
+    private String attachmentGenerator;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDescription;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDescription;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDescription() {
-		return moduleDescription;
-	}
+    public String getModuleDescription() {
+        return moduleDescription;
+    }
 
-	public void setModuleDescription(String moduleDescription) {
-		this.moduleDescription = moduleDescription;
-	}
+    public void setModuleDescription(String moduleDescription) {
+        this.moduleDescription = moduleDescription;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Boolean getHtmlFlag() {
-		return htmlFlag;
-	}
+    public Boolean getHtmlFlag() {
+        return htmlFlag;
+    }
 
-	public void setHtmlFlag(Boolean htmlFlag) {
-		this.htmlFlag = htmlFlag;
-	}
+    public void setHtmlFlag(Boolean htmlFlag) {
+        this.htmlFlag = htmlFlag;
+    }
 
-	public String getAttachmentGenerator() {
-		return attachmentGenerator;
-	}
+    public String getAttachmentGenerator() {
+        return attachmentGenerator;
+    }
 
-	public void setAttachmentGenerator(String attachmentGenerator) {
-		this.attachmentGenerator = attachmentGenerator;
-	}
+    public void setAttachmentGenerator(String attachmentGenerator) {
+        this.attachmentGenerator = attachmentGenerator;
+    }
 }

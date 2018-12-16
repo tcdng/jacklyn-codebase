@@ -27,14 +27,14 @@ import com.tcdng.unify.core.UnifyException;
  */
 public abstract class AbstractMessageAttachmentGenerator extends AbstractUnifyComponent {
 
-	@Override
-	protected void onInitialize() throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 
 }

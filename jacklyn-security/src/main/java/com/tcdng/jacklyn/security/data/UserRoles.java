@@ -25,43 +25,43 @@ import java.util.List;
  */
 public class UserRoles {
 
-	private Long userId;
+    private Long userId;
 
-	private String userName;
+    private String userName;
 
-	private List<Long> roleIdList;
+    private List<Long> roleIdList;
 
-	public UserRoles(Long userId, String userName, List<Long> roleIdList) {
-		this.userId = userId;
-		this.userName = userName;
-		this.roleIdList = roleIdList;
-	}
+    public UserRoles(Long userId, String userName, List<Long> roleIdList) {
+        this.userId = userId;
+        this.userName = userName;
+        this.roleIdList = roleIdList;
+    }
 
-	public UserRoles() {
+    public UserRoles() {
 
-	}
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public List<Long> getRoleIdList() {
-		return roleIdList;
-	}
+    public List<Long> getRoleIdList() {
+        return roleIdList;
+    }
 
-	public void setRoleIdList(List<Long> roleIdList) {
-		this.roleIdList = roleIdList;
-	}
+    public void setRoleIdList(List<Long> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
 }

@@ -28,8 +28,8 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class SharedModuleStaticSettings extends AbstractUnifyStaticSettings {
 
-	public SharedModuleStaticSettings() {
-		super("com.tcdng.jacklyn.resources.shared-messages");
-	}
+    public SharedModuleStaticSettings() {
+        super("com.tcdng.jacklyn.resources.shared-messages");
+    }
 
 }

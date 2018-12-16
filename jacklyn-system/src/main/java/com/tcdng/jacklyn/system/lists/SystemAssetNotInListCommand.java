@@ -36,24 +36,23 @@ import com.tcdng.unify.web.data.AssignParams;
 @Component("systemassetnotinlist")
 public class SystemAssetNotInListCommand extends AbstractAssignParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, AssignParams params)
-			throws UnifyException {
-		SystemAssetQuery query = new SystemAssetQuery();
-		if (params.isAssignedIdList()) {
-			query.idNotIn(params.getAssignedIdList(Long.class));
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        SystemAssetQuery query = new SystemAssetQuery();
+        if (params.isAssignedIdList()) {
+            query.idNotIn(params.getAssignedIdList(Long.class));
+        }
 
-		if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
-			query.type(params.getFilterId1(SystemAssetType.class));
-		}
+        if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
+            query.type(params.getFilterId1(SystemAssetType.class));
+        }
 
-		if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
-			query.moduleId(params.getFilterId2(Long.class));
-		}
+        if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
+            query.moduleId(params.getFilterId2(Long.class));
+        }
 
-		query.order("description");
-		return getSystemModule().findSystemAssets(query);
-	}
+        query.order("description");
+        return getSystemModule().findSystemAssets(query);
+    }
 
 }

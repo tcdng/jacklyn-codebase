@@ -32,187 +32,187 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "File DataTransfer Configuration",
-		reportable = true, auditable = true)
+@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "File DataTransfer Configuration", reportable = true,
+        auditable = true)
 @Table(name = "FILETRANSFERCFG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class FileTransferConfig extends BaseVersionedStatusEntity {
 
-	@ForeignKey(name = "DIRECTION_TY")
-	private FileTransferDirection direction;
+    @ForeignKey(name = "DIRECTION_TY")
+    private FileTransferDirection direction;
 
-	@Column(name = "FILETRANSFERCFG_NM")
-	private String name;
+    @Column(name = "FILETRANSFERCFG_NM")
+    private String name;
 
-	@Column(name = "FILETRANSFERCFG_DESC", length = 64)
-	private String description;
+    @Column(name = "FILETRANSFERCFG_DESC", length = 64)
+    private String description;
 
-	@Column(length = 48)
-	private String fileTransferPolicy;
+    @Column(length = 48)
+    private String fileTransferPolicy;
 
-	@Column(length = 48)
-	private String fileTransferServer;
+    @Column(length = 48)
+    private String fileTransferServer;
 
-	@Column(length = 64)
-	private String remoteHost;
+    @Column(length = 64)
+    private String remoteHost;
 
-	@Column(nullable = true)
-	private Integer remotePort;
+    @Column(nullable = true)
+    private Integer remotePort;
 
-	@Column(transformer = "lowercase-transformer", nullable = true)
-	private String authenticationId;
+    @Column(transformer = "lowercase-transformer", nullable = true)
+    private String authenticationId;
 
-	@Format(mask = true)
-	@Column(length = 256, transformer = "twoway-stringcryptograph", nullable = true)
-	private String authenticationPassword;
+    @Format(mask = true)
+    @Column(length = 256, transformer = "twoway-stringcryptograph", nullable = true)
+    private String authenticationPassword;
 
-	@Column(length = 96)
-	private String remotePath;
+    @Column(length = 96)
+    private String remotePath;
 
-	@Column(length = 32, nullable = true)
-	private String remoteDateFormat;
+    @Column(length = 32, nullable = true)
+    private String remoteDateFormat;
 
-	@Column(length = 96)
-	private String localPath;
+    @Column(length = 96)
+    private String localPath;
 
-	@Column(length = 32, nullable = true)
-	private String localDateFormat;
+    @Column(length = 32, nullable = true)
+    private String localDateFormat;
 
-	@Column
-	private Integer maxTransferAttempts;
+    @Column
+    private Integer maxTransferAttempts;
 
-	@Column
-	private Boolean deleteSourceOnTransfer;
+    @Column
+    private Boolean deleteSourceOnTransfer;
 
-	@Format(description = "$m{file.filetransferconfig.direction}")
-	@ListOnly(key = "direction", property = "description")
-	private String directionDesc;
+    @Format(description = "$m{file.filetransferconfig.direction}")
+    @ListOnly(key = "direction", property = "description")
+    private String directionDesc;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getFileTransferPolicy() {
-		return fileTransferPolicy;
-	}
+    public String getFileTransferPolicy() {
+        return fileTransferPolicy;
+    }
 
-	public void setFileTransferPolicy(String fileTransferPolicy) {
-		this.fileTransferPolicy = fileTransferPolicy;
-	}
+    public void setFileTransferPolicy(String fileTransferPolicy) {
+        this.fileTransferPolicy = fileTransferPolicy;
+    }
 
-	public String getFileTransferServer() {
-		return fileTransferServer;
-	}
+    public String getFileTransferServer() {
+        return fileTransferServer;
+    }
 
-	public void setFileTransferServer(String fileTransferServer) {
-		this.fileTransferServer = fileTransferServer;
-	}
+    public void setFileTransferServer(String fileTransferServer) {
+        this.fileTransferServer = fileTransferServer;
+    }
 
-	public String getRemoteHost() {
-		return remoteHost;
-	}
+    public String getRemoteHost() {
+        return remoteHost;
+    }
 
-	public void setRemoteHost(String remoteHost) {
-		this.remoteHost = remoteHost;
-	}
+    public void setRemoteHost(String remoteHost) {
+        this.remoteHost = remoteHost;
+    }
 
-	public Integer getRemotePort() {
-		return remotePort;
-	}
+    public Integer getRemotePort() {
+        return remotePort;
+    }
 
-	public void setRemotePort(Integer remotePort) {
-		this.remotePort = remotePort;
-	}
+    public void setRemotePort(Integer remotePort) {
+        this.remotePort = remotePort;
+    }
 
-	public String getAuthenticationId() {
-		return authenticationId;
-	}
+    public String getAuthenticationId() {
+        return authenticationId;
+    }
 
-	public void setAuthenticationId(String authenticationId) {
-		this.authenticationId = authenticationId;
-	}
+    public void setAuthenticationId(String authenticationId) {
+        this.authenticationId = authenticationId;
+    }
 
-	public String getAuthenticationPassword() {
-		return authenticationPassword;
-	}
+    public String getAuthenticationPassword() {
+        return authenticationPassword;
+    }
 
-	public void setAuthenticationPassword(String authenticationPassword) {
-		this.authenticationPassword = authenticationPassword;
-	}
+    public void setAuthenticationPassword(String authenticationPassword) {
+        this.authenticationPassword = authenticationPassword;
+    }
 
-	public String getRemotePath() {
-		return remotePath;
-	}
+    public String getRemotePath() {
+        return remotePath;
+    }
 
-	public void setRemotePath(String remotePath) {
-		this.remotePath = remotePath;
-	}
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
+    }
 
-	public String getRemoteDateFormat() {
-		return remoteDateFormat;
-	}
+    public String getRemoteDateFormat() {
+        return remoteDateFormat;
+    }
 
-	public void setRemoteDateFormat(String remoteDateFormat) {
-		this.remoteDateFormat = remoteDateFormat;
-	}
+    public void setRemoteDateFormat(String remoteDateFormat) {
+        this.remoteDateFormat = remoteDateFormat;
+    }
 
-	public String getLocalPath() {
-		return localPath;
-	}
+    public String getLocalPath() {
+        return localPath;
+    }
 
-	public void setLocalPath(String localPath) {
-		this.localPath = localPath;
-	}
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
+    }
 
-	public String getLocalDateFormat() {
-		return localDateFormat;
-	}
+    public String getLocalDateFormat() {
+        return localDateFormat;
+    }
 
-	public void setLocalDateFormat(String localDateFormat) {
-		this.localDateFormat = localDateFormat;
-	}
+    public void setLocalDateFormat(String localDateFormat) {
+        this.localDateFormat = localDateFormat;
+    }
 
-	public Integer getMaxTransferAttempts() {
-		return maxTransferAttempts;
-	}
+    public Integer getMaxTransferAttempts() {
+        return maxTransferAttempts;
+    }
 
-	public void setMaxTransferAttempts(Integer maxTransferAttempts) {
-		this.maxTransferAttempts = maxTransferAttempts;
-	}
+    public void setMaxTransferAttempts(Integer maxTransferAttempts) {
+        this.maxTransferAttempts = maxTransferAttempts;
+    }
 
-	public FileTransferDirection getDirection() {
-		return direction;
-	}
+    public FileTransferDirection getDirection() {
+        return direction;
+    }
 
-	public void setDirection(FileTransferDirection direction) {
-		this.direction = direction;
-	}
+    public void setDirection(FileTransferDirection direction) {
+        this.direction = direction;
+    }
 
-	public String getDirectionDesc() {
-		return directionDesc;
-	}
+    public String getDirectionDesc() {
+        return directionDesc;
+    }
 
-	public void setDirectionDesc(String directionDesc) {
-		this.directionDesc = directionDesc;
-	}
+    public void setDirectionDesc(String directionDesc) {
+        this.directionDesc = directionDesc;
+    }
 
-	public Boolean getDeleteSourceOnTransfer() {
-		return deleteSourceOnTransfer;
-	}
+    public Boolean getDeleteSourceOnTransfer() {
+        return deleteSourceOnTransfer;
+    }
 
-	public void setDeleteSourceOnTransfer(Boolean deleteSourceOnTransfer) {
-		this.deleteSourceOnTransfer = deleteSourceOnTransfer;
-	}
+    public void setDeleteSourceOnTransfer(Boolean deleteSourceOnTransfer) {
+        this.deleteSourceOnTransfer = deleteSourceOnTransfer;
+    }
 }

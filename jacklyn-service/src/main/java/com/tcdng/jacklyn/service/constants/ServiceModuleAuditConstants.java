@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.service.constants;
  */
 public interface ServiceModuleAuditConstants {
 
-	String ACTIVATE_OPERATION = "srv-activateoperation";
+    String ACTIVATE_OPERATION = "srv-activateoperation";
 
-	String DEACTIVATE_OPERATION = "srv-deactivateoperation";
+    String DEACTIVATE_OPERATION = "srv-deactivateoperation";
 
-	String ASSIGN_APPLICATION_ASSET = "srv-assignapplicationasset";
+    String ASSIGN_APPLICATION_ASSET = "srv-assignapplicationasset";
 
-	String UNASSIGN_APPLICATION_ASSET = "srv-unassignapplicationasset";
+    String UNASSIGN_APPLICATION_ASSET = "srv-unassignapplicationasset";
 }

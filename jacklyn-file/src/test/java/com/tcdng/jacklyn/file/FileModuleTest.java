@@ -70,652 +70,591 @@ import com.tcdng.unify.core.util.IOUtils;
  */
 public class FileModuleTest extends AbstractJacklynTest {
 
-	@Test
-	public void testCreateFileTransferConfig() throws Exception {
-		FileTransferConfig fileTransferConfig = getUploadFileTransferConfig();
-		Long fileTransferConfigId
-				= getFileModule().createFileTransferConfig(fileTransferConfig);
-		assertNotNull(fileTransferConfigId);
-	}
-
-	@Test
-	public void testFindFileTransferConfigs() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
-		getFileModule().createFileTransferConfig(downloadConfig);
-		getFileModule().createFileTransferConfig(uploadConfig);
-
-		FileTransferConfigQuery query = new FileTransferConfigQuery();
-		query.orderById();
-		query.ignoreEmptyCriteria(true);
-		List<FileTransferConfig> fileTransferConfigList
-				= getFileModule().findFileTransferConfigs(query);
-		assertNotNull(fileTransferConfigList);
-		assertEquals(2, fileTransferConfigList.size());
-
-		FileTransferConfig foundDownloadConfig = fileTransferConfigList.get(0);
-		assertEquals(downloadConfig.getDescription(), foundDownloadConfig.getDescription());
-		assertEquals(downloadConfig.getDeleteSourceOnTransfer(),
-				foundDownloadConfig.getDeleteSourceOnTransfer());
-		assertEquals(downloadConfig.getDirection(), foundDownloadConfig.getDirection());
-		assertEquals(downloadConfig.getFileTransferPolicy(),
-				foundDownloadConfig.getFileTransferPolicy());
-		assertEquals(downloadConfig.getFileTransferServer(),
-				foundDownloadConfig.getFileTransferServer());
-		assertEquals(downloadConfig.getLocalPath(), foundDownloadConfig.getLocalPath());
-		assertEquals(downloadConfig.getMaxTransferAttempts(),
-				foundDownloadConfig.getMaxTransferAttempts());
-		assertEquals(downloadConfig.getRemoteHost(), foundDownloadConfig.getRemoteHost());
-		assertEquals(downloadConfig.getRemotePath(), foundDownloadConfig.getRemotePath());
-		assertEquals(downloadConfig.getRemotePort(), foundDownloadConfig.getRemotePort());
-		assertEquals(downloadConfig.getStatus(), foundDownloadConfig.getStatus());
-
-		FileTransferConfig foundUploadConfig = fileTransferConfigList.get(1);
-		assertEquals(uploadConfig.getDescription(), foundUploadConfig.getDescription());
-		assertEquals(uploadConfig.getDeleteSourceOnTransfer(),
-				foundUploadConfig.getDeleteSourceOnTransfer());
-		assertEquals(uploadConfig.getDirection(), foundUploadConfig.getDirection());
-		assertEquals(uploadConfig.getFileTransferPolicy(),
-				foundUploadConfig.getFileTransferPolicy());
-		assertEquals(uploadConfig.getFileTransferServer(),
-				foundUploadConfig.getFileTransferServer());
-		assertEquals(uploadConfig.getLocalPath(), foundUploadConfig.getLocalPath());
-		assertEquals(uploadConfig.getMaxTransferAttempts(),
-				foundUploadConfig.getMaxTransferAttempts());
-		assertEquals(uploadConfig.getRemoteHost(), foundUploadConfig.getRemoteHost());
-		assertEquals(uploadConfig.getRemotePath(), foundUploadConfig.getRemotePath());
-		assertEquals(uploadConfig.getRemotePort(), foundUploadConfig.getRemotePort());
-		assertEquals(uploadConfig.getStatus(), foundUploadConfig.getStatus());
-	}
-
-	@Test
-	public void testFindFileTransferConfig() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		Long id = getFileModule().createFileTransferConfig(downloadConfig);
-
-		FileTransferConfig fetchedDownloadConfig = getFileModule().findFileTransferConfig(id);
-		assertNotNull(fetchedDownloadConfig);
-		assertEquals(downloadConfig, fetchedDownloadConfig);
-	}
-
-	@Test
-	public void testUpdateFileTransferConfig() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		Long id = getFileModule().createFileTransferConfig(downloadConfig);
-
-		FileTransferConfig fetchedDownloadConfig = getFileModule().findFileTransferConfig(id);
-		fetchedDownloadConfig.setDeleteSourceOnTransfer(Boolean.TRUE);
-		fetchedDownloadConfig.setLocalPath("c:\\banking\\reports");
-		fetchedDownloadConfig.setMaxTransferAttempts(Integer.valueOf(20));
-		int updateCount = getFileModule().updateFileTransferConfig(fetchedDownloadConfig);
-		assertEquals(1, updateCount);
-
-		FileTransferConfig updatedDownloadConfig = getFileModule().findFileTransferConfig(id);
-		assertFalse(downloadConfig.equals(updatedDownloadConfig));
-		assertEquals(fetchedDownloadConfig, updatedDownloadConfig);
-	}
-
-	@Test
-	public void testDeleteFileTransferConfig() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		Long id = getFileModule().createFileTransferConfig(downloadConfig);
-		int updateCount = getFileModule().deleteFileTransferConfig(id);
-		assertEquals(1, updateCount);
-
-		FileTransferConfigQuery query = new FileTransferConfigQuery();
-		query.id(id);
-		List<FileTransferConfig> list = getFileModule().findFileTransferConfigs(query);
-		assertEquals(0, list.size());
-	}
-
-	@Test
-	public void testCreateBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		assertNotNull(batchFileDefinitionId);
-	}
-
-	@Test
-	public void testFindBatchFileDefinitions() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		getFileModule().createBatchFileDefinition(batchFileDefinition);
-
-		BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
-		query.orderById();
-		query.ignoreEmptyCriteria(true);
-		List<BatchFileDefinition> batchFileDefinitionList
-				= getFileModule().findBatchFileDefinitions(query);
-		assertNotNull(batchFileDefinitionList);
-		assertEquals(1, batchFileDefinitionList.size());
-
-		assertEquals(batchFileDefinition.getName(), batchFileDefinitionList.get(0).getName());
-		assertEquals(batchFileDefinition.getDescription(),
-				batchFileDefinitionList.get(0).getDescription());
-	}
-
-	@Test
-	public void testFindBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
-
-		BatchFileDefinition fetchBatchFileDefinition
-				= getFileModule().findBatchFileDefinition(id);
-		assertNotNull(fetchBatchFileDefinition);
-		assertEquals(batchFileDefinition.getName(), fetchBatchFileDefinition.getName());
-		assertEquals(batchFileDefinition.getDescription(),
-				fetchBatchFileDefinition.getDescription());
-	}
-
-	@Test
-	public void testUpdateBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
-
-		BatchFileDefinition fetchedBatchFileDefinition
-				= getFileModule().findBatchFileDefinition(id);
-		fetchedBatchFileDefinition.setDescription("Test Definiton Main");
-		int updateCount = getFileModule().updateBatchFileDefinition(fetchedBatchFileDefinition);
-		assertEquals(1, updateCount);
-
-		BatchFileDefinition updatedBatchFileDefinition
-				= getFileModule().findBatchFileDefinition(id);
-		assertFalse(batchFileDefinition.equals(updatedBatchFileDefinition));
-		assertEquals(fetchedBatchFileDefinition, updatedBatchFileDefinition);
-	}
-
-	@Test
-	public void testDeleteBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
-		int updateCount = getFileModule().deleteBatchFileDefinition(id);
-		assertEquals(1, updateCount);
-
-		BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
-		query.id(id);
-		List<BatchFileDefinition> list = getFileModule().findBatchFileDefinitions(query);
-		assertEquals(0, list.size());
-	}
-
-	@Test
-	public void testCreateBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		Long batchUploadConfigId
-				= getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-		assertNotNull(batchUploadConfigId);
-	}
-
-	@Test
-	public void testFindBatchFileReadConfigs() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-
-		BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
-		query.orderById();
-		query.ignoreEmptyCriteria(true);
-		List<BatchFileReadConfig> batchUploadConfigList
-				= getFileModule().findBatchFileReadConfigs(query);
-		assertNotNull(batchUploadConfigList);
-		assertEquals(1, batchUploadConfigList.size());
-
-		BatchFileReadConfig foundBatchFileReadConfig = batchUploadConfigList.get(0);
-		assertEquals(batchFileReadConfig.getBatchFileDefinitionId(),
-				foundBatchFileReadConfig.getBatchFileDefinitionId());
-		assertEquals(batchFileReadConfig.getReadProcessor(),
-				foundBatchFileReadConfig.getReadProcessor());
-		assertEquals(batchFileReadConfig.getConstraintAction(),
-				foundBatchFileReadConfig.getConstraintAction());
-		assertEquals(batchFileReadConfig.getDescription(),
-				foundBatchFileReadConfig.getDescription());
-		assertEquals(batchFileReadConfig.getFileReader(),
-				foundBatchFileReadConfig.getFileReader());
-		assertEquals(batchFileReadConfig.getName(), foundBatchFileReadConfig.getName());
-		assertEquals(batchFileReadConfig.getStatus(), foundBatchFileReadConfig.getStatus());
-	}
-
-	@Test
-	public void testFindBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-
-		BatchFileReadConfig fetchedDownloadConfig = getFileModule().findBatchFileReadConfig(id);
-		assertNotNull(fetchedDownloadConfig);
-		assertEquals(batchFileReadConfig, fetchedDownloadConfig);
-	}
-
-	@Test
-	public void testUpdateBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-
-		BatchFileReadConfig fetchedBatchFileReadConfig
-				= getFileModule().findBatchFileReadConfig(id);
-		fetchedBatchFileReadConfig.setDescription("Main Sample Config");
-		int updateCount = getFileModule().updateBatchFileReadConfig(fetchedBatchFileReadConfig);
-		assertEquals(1, updateCount);
-
-		BatchFileReadConfig updatedBatchFileReadConfig
-				= getFileModule().findBatchFileReadConfig(id);
-		assertFalse(batchFileReadConfig.equals(updatedBatchFileReadConfig));
-		assertEquals(fetchedBatchFileReadConfig, updatedBatchFileReadConfig);
-	}
-
-	@Test
-	public void testDeleteBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-		int updateCount = getFileModule().deleteBatchFileReadConfig(id);
-		assertEquals(1, updateCount);
-
-		BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
-		query.id(id);
-		List<BatchFileReadConfig> list = getFileModule().findBatchFileReadConfigs(query);
-		assertEquals(0, list.size());
-	}
-
-	@Test
-	public void testGetBatchFileReadInputParameters() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-
-		BatchFileReadInputParameters buip
-				= getFileModule().getBatchFileReadInputParameters(batchConfigId);
-		assertNotNull(buip);
-		assertEquals("BankBatchConfig", buip.getName());
-		assertEquals("Bank Batch Config", buip.getDescription());
-
-		List<Input> inputParameterList = buip.getInputParameterList();
-		assertNotNull(inputParameterList);
-		assertEquals(1, inputParameterList.size());
-
-		Input placeHolder = inputParameterList.get(0);
-		assertEquals("country", placeHolder.getName());
-		assertEquals("Country", placeHolder.getDescription());
-	}
-
-	@Test(timeout = 4000)
-	public void testFindFileInboxItems() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		fileModule.createFileTransferConfig(downloadConfig);
-
-		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		FileInboxQuery query = new FileInboxQuery();
-		query.fileTransferConfigName("downloadFileTransfer");
-		query.order("filename");
-		List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
-		assertNotNull(fileInboxList);
-		assertEquals(3, fileInboxList.size());
-
-		FileInbox fileInbox = fileInboxList.get(0);
-		assertEquals("butterfly.png", fileInbox.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
-
-		fileInbox = fileInboxList.get(1);
-		assertEquals("customer.html", fileInbox.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
-
-		fileInbox = fileInboxList.get(2);
-		assertEquals("hello.txt", fileInbox.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
-	}
-
-	@Test(timeout = 4000)
-	public void testFindFileInboxItem() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		fileModule.createFileTransferConfig(downloadConfig);
-
-		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		FileInboxQuery query = new FileInboxQuery();
-		query.fileTransferConfigName("downloadFileTransfer");
-		List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
-
-		FileInbox fileInbox = fileInboxList.get(0);
-		FileInbox fetchedFileInbox = fileModule.findFileInboxItem(fileInbox.getId());
-		assertEquals(fileInbox, fetchedFileInbox);
-	}
-
-	@Test(timeout = 4000)
-	public void testUpdateFileInboxItemsReadStatus() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		fileModule.createFileTransferConfig(downloadConfig);
-
-		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		FileInboxQuery query = new FileInboxQuery();
-		query.fileTransferConfigName("downloadFileTransfer");
-		query.setFilenameIn(Arrays.asList(new String[] { "butterfly.png", "hello.txt" }));
-		fileModule.updateFileInboxItemsReadStatus(query, FileInboxReadStatus.READ);
-
-		query = new FileInboxQuery();
-		query.fileTransferConfigName("downloadFileTransfer");
-		query.order("filename");
-		List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
-
-		FileInbox fileInbox = fileInboxList.get(0);
-		assertEquals("butterfly.png", fileInbox.getFilename());
-		assertEquals(FileInboxReadStatus.READ, fileInbox.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
-
-		fileInbox = fileInboxList.get(1);
-		assertEquals("customer.html", fileInbox.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
-
-		fileInbox = fileInboxList.get(2);
-		assertEquals("hello.txt", fileInbox.getFilename());
-		assertEquals(FileInboxReadStatus.READ, fileInbox.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
-	}
-
-	@Test(timeout = 4000)
-	public void testFindFileOutboxItems() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
-		fileModule.createFileTransferConfig(uploadConfig);
-
-		TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		FileOutboxQuery query = new FileOutboxQuery();
-		query.fileTransferConfigName("uploadFileTransfer");
-		query.order("filename");
-		List<FileOutbox> fileOutboxList = fileModule.findFileOutboxItems(query);
-		assertNotNull(fileOutboxList);
-		assertEquals(2, fileOutboxList.size());
-
-		FileOutbox fileOutbox = fileOutboxList.get(0);
-		assertEquals("doctor.png", fileOutbox.getFilename());
-		assertEquals(FileOutboxStatus.SENT, fileOutbox.getStatus());
-
-		fileOutbox = fileOutboxList.get(1);
-		assertEquals("transactions.txt", fileOutbox.getFilename());
-		assertEquals(FileOutboxStatus.SENT, fileOutbox.getStatus());
-	}
-
-	@Test(timeout = 4000)
-	public void testFindFileOutboxItem() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
-		fileModule.createFileTransferConfig(uploadConfig);
-
-		TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		FileOutboxQuery query = new FileOutboxQuery();
-		query.fileTransferConfigName("uploadFileTransfer");
-		List<FileOutbox> fileInboxList = fileModule.findFileOutboxItems(query);
-
-		FileOutbox fileOutbox = fileInboxList.get(0);
-		FileOutbox fetchedFileOutbox = fileModule.findFileOutboxItem(fileOutbox.getId());
-		assertEquals(fileOutbox, fetchedFileOutbox);
-	}
-
-	@Test(timeout = 4000)
-	public void testStartTestFileTransferConfigTask() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		fileModule.createFileTransferConfig(downloadConfig);
-		TaskMonitor tm
-				= ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
-						.launchTask(TaskSetup.newBuilder()
-								.addTask(FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK)
-								.setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA,
-										downloadConfig)
-								.build());
-		assertNotNull(tm);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-	}
-
-	@Test(timeout = 4000)
-	public void testStartUpdateFileTransferListTask() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
-		fileModule.createFileTransferConfig(downloadConfig);
-		fileModule.createFileTransferConfig(uploadConfig);
-
-		TaskMonitor tm = launchUpdateFileTransferListTask("downloadFileTransfer", new Date());
-		assertNotNull(tm);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		tm = launchUpdateFileTransferListTask("uploadFileTransfer", new Date());
-		assertNotNull(tm);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-	}
-
-	@Test(timeout = 4000)
-	public void testStartExecuteFileTransferTask() throws Exception {
-		FileModule fileModule
-				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
-		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
-		fileModule.createFileTransferConfig(downloadConfig);
-		fileModule.createFileTransferConfig(uploadConfig);
-
-		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
-		assertNotNull(tm);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
-		assertNotNull(tm);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-	}
-
-	@Test
-	public void testStartBatchFileReadTask() throws Exception {
-		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
-		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinition);
-		BatchFileReadConfig batchFileReadConfig
-				= getBatchFileReadConfig(batchFileDefinitionId);
-		Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
-
-		BatchFileReadInputParameters buip
-				= getFileModule().getBatchFileReadInputParameters(batchConfigId);
-		byte[] file = IOUtils.createInMemoryTextFile("011First Bank          FBN 011000001",
-				"032Union Bank          UBN 032000001", "044Access Bank         ACC 044000001");
-		buip.setFileBlob(file);
-		buip.setParameter("country", "Nigeria");
-
-		TaskMonitor tm
-				= ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
-						.launchTask(TaskSetup.newBuilder()
-								.addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
-								.setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS, buip)
-								.build());
-		assertNotNull(tm);
-		waitForTask(tm);
-		assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
-
-		GenericBusinessModule genericBusinessModule = (GenericBusinessModule) this
-				.getComponent(ApplicationComponents.APPLICATION_GENERICBUSINESSMODULE);
-		List<TestBank> bankList = genericBusinessModule.listAll(
-				new Query<TestBank>(TestBank.class).order("id").ignoreEmptyCriteria(true));
-		assertNotNull(bankList);
-		assertEquals(3, bankList.size());
-
-		TestBank bank = bankList.get(0);
-		assertEquals("011", bank.getName());
-		assertEquals("First Bank", bank.getDescription());
-		assertEquals("FBN", bank.getShortName());
-		assertEquals("011000001", bank.getHoRoutingNo());
-		assertEquals("Nigeria", bank.getCountry());
-
-		bank = bankList.get(1);
-		assertEquals("032", bank.getName());
-		assertEquals("Union Bank", bank.getDescription());
-		assertEquals("UBN", bank.getShortName());
-		assertEquals("032000001", bank.getHoRoutingNo());
-		assertEquals("Nigeria", bank.getCountry());
-
-		bank = bankList.get(2);
-		assertEquals("044", bank.getName());
-		assertEquals("Access Bank", bank.getDescription());
-		assertEquals("ACC", bank.getShortName());
-		assertEquals("044000001", bank.getHoRoutingNo());
-		assertEquals("Nigeria", bank.getCountry());
-	}
-
-	@Override
-	protected void doAddSettingsAndDependencies() throws Exception {
-		super.doAddSettingsAndDependencies();
-
-		addDependency("test-filetransferserver", TestFileTransferServer.class,
-				new Setting("localFilenames", new String[] { "doctor.png", "transactions.txt" }),
-				new Setting("remoteFilenames",
-						new String[] { "butterfly.png", "hello.txt", "customer.html" }));
-	}
-
-	@Override
-	protected void onSetup() throws Exception {
-
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void onTearDown() throws Exception {
-		deleteAll(FileInbox.class, FileOutbox.class, BatchFileReadConfig.class,
-				BatchFileDefinition.class, FileTransferConfig.class);
-	}
-
-	private FileTransferConfig getUploadFileTransferConfig() {
-		FileTransferConfig fileTransferConfig = new FileTransferConfig();
-		fileTransferConfig.setName("uploadFileTransfer");
-		fileTransferConfig.setDeleteSourceOnTransfer(Boolean.FALSE);
-		fileTransferConfig.setDescription("EOD Report Transfer");
-		fileTransferConfig.setDirection(FileTransferDirection.UPLOAD);
-		fileTransferConfig.setFileTransferPolicy("wildcard-filetransferpolicy");
-		fileTransferConfig.setFileTransferServer("test-filetransferserver");
-		fileTransferConfig.setLocalPath("c:\\data\\reports");
-		fileTransferConfig.setMaxTransferAttempts(Integer.valueOf(10));
-		fileTransferConfig.setRemoteHost("192.168.1.1");
-		fileTransferConfig.setRemotePath("/eodreports");
-		fileTransferConfig.setStatus(RecordStatus.ACTIVE);
-		return fileTransferConfig;
-	}
-
-	private FileTransferConfig getDownloadFileTransferConfig() {
-		FileTransferConfig fileTransferConfig = new FileTransferConfig();
-		fileTransferConfig.setName("downloadFileTransfer");
-		fileTransferConfig.setDeleteSourceOnTransfer(Boolean.FALSE);
-		fileTransferConfig.setDescription("BPXF File Transfer");
-		fileTransferConfig.setDirection(FileTransferDirection.DOWNLOAD);
-		fileTransferConfig.setFileTransferPolicy("wildcard-filetransferpolicy");
-		fileTransferConfig.setFileTransferServer("test-filetransferserver");
-		fileTransferConfig.setLocalPath("c:\\truncation\\bpxf");
-		fileTransferConfig.setMaxTransferAttempts(Integer.valueOf(4));
-		fileTransferConfig.setRemoteHost("10.0.2.15");
-		fileTransferConfig.setRemotePath("/incoming/bfxf");
-		fileTransferConfig.setStatus(RecordStatus.ACTIVE);
-		return fileTransferConfig;
-	}
-
-	private BatchFileDefinition newBatchFileDefinition() {
-		BatchFileDefinition batchFileDefinition = new BatchFileDefinition();
-		batchFileDefinition.setName("fil-001");
-		batchFileDefinition.setDescription("Test Definition");
-
-		List<BatchFileFieldDefinition> fieldDefList = new ArrayList<BatchFileFieldDefinition>();
-		fieldDefList.add(newBatchFileFieldDefinition("name", 3));
-		fieldDefList.add(newBatchFileFieldDefinition("description", 20));
-		fieldDefList.add(newBatchFileFieldDefinition("shortName", 4));
-		fieldDefList.add(newBatchFileFieldDefinition("hoRoutingNo", 9));
-		batchFileDefinition.setFieldDefList(fieldDefList);
-
-		return batchFileDefinition;
-	}
-
-	private BatchFileFieldDefinition newBatchFileFieldDefinition(String name, int length) {
-		BatchFileFieldDefinition batchFileFieldDefinition = new BatchFileFieldDefinition();
-		batchFileFieldDefinition.setName(name);
-		batchFileFieldDefinition.setLength(length);
-		batchFileFieldDefinition.setTrim(true);
-		return batchFileFieldDefinition;
-	}
-
-	private BatchFileReadConfig getBatchFileReadConfig(Long batchFileDefinitionId) {
-		BatchFileReadConfig batchFileReadConfig = new BatchFileReadConfig();
-		batchFileReadConfig.setBatchFileDefinitionId(batchFileDefinitionId);
-		batchFileReadConfig.setReadProcessor("test-bankbatchfilereadprocessor");
-		batchFileReadConfig.setFileReader("fixedlength-batchfilereader");
-		batchFileReadConfig.setConstraintAction(ConstraintAction.FAIL);
-		batchFileReadConfig.setDescription("Bank Batch Config");
-		batchFileReadConfig.setName("BankBatchConfig");
-		return batchFileReadConfig;
-	}
-
-	private FileModule getFileModule() throws Exception {
-		return (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-	}
-
-	private TaskMonitor launchFileTransferTask(String configName, Date workingDt,
-			boolean updateList) throws Exception {
-		return ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
-				.launchTask(TaskSetup.newBuilder()
-						.addTask(FileTransferTaskConstants.FILETRANSFERTASK)
-						.setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, configName)
-						.setParam(FileTransferTaskConstants.UPDATEFILEBOX, updateList)
-						.setParam(FileTransferTaskConstants.WORKINGDT, workingDt).build());
-	}
-
-	private TaskMonitor launchUpdateFileTransferListTask(String configName, Date workingDt)
-			throws Exception {
-		return ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
-				.launchTask(TaskSetup.newBuilder()
-						.addTask(FileTransferTaskConstants.FILETRANSFERLISTUPDATETASK)
-						.setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, configName)
-						.setParam(FileTransferTaskConstants.WORKINGDT, workingDt).build());
-	}
+    @Test
+    public void testCreateFileTransferConfig() throws Exception {
+        FileTransferConfig fileTransferConfig = getUploadFileTransferConfig();
+        Long fileTransferConfigId = getFileModule().createFileTransferConfig(fileTransferConfig);
+        assertNotNull(fileTransferConfigId);
+    }
+
+    @Test
+    public void testFindFileTransferConfigs() throws Exception {
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        FileTransferConfig uploadConfig = getUploadFileTransferConfig();
+        getFileModule().createFileTransferConfig(downloadConfig);
+        getFileModule().createFileTransferConfig(uploadConfig);
+
+        FileTransferConfigQuery query = new FileTransferConfigQuery();
+        query.orderById();
+        query.ignoreEmptyCriteria(true);
+        List<FileTransferConfig> fileTransferConfigList = getFileModule().findFileTransferConfigs(query);
+        assertNotNull(fileTransferConfigList);
+        assertEquals(2, fileTransferConfigList.size());
+
+        FileTransferConfig foundDownloadConfig = fileTransferConfigList.get(0);
+        assertEquals(downloadConfig.getDescription(), foundDownloadConfig.getDescription());
+        assertEquals(downloadConfig.getDeleteSourceOnTransfer(), foundDownloadConfig.getDeleteSourceOnTransfer());
+        assertEquals(downloadConfig.getDirection(), foundDownloadConfig.getDirection());
+        assertEquals(downloadConfig.getFileTransferPolicy(), foundDownloadConfig.getFileTransferPolicy());
+        assertEquals(downloadConfig.getFileTransferServer(), foundDownloadConfig.getFileTransferServer());
+        assertEquals(downloadConfig.getLocalPath(), foundDownloadConfig.getLocalPath());
+        assertEquals(downloadConfig.getMaxTransferAttempts(), foundDownloadConfig.getMaxTransferAttempts());
+        assertEquals(downloadConfig.getRemoteHost(), foundDownloadConfig.getRemoteHost());
+        assertEquals(downloadConfig.getRemotePath(), foundDownloadConfig.getRemotePath());
+        assertEquals(downloadConfig.getRemotePort(), foundDownloadConfig.getRemotePort());
+        assertEquals(downloadConfig.getStatus(), foundDownloadConfig.getStatus());
+
+        FileTransferConfig foundUploadConfig = fileTransferConfigList.get(1);
+        assertEquals(uploadConfig.getDescription(), foundUploadConfig.getDescription());
+        assertEquals(uploadConfig.getDeleteSourceOnTransfer(), foundUploadConfig.getDeleteSourceOnTransfer());
+        assertEquals(uploadConfig.getDirection(), foundUploadConfig.getDirection());
+        assertEquals(uploadConfig.getFileTransferPolicy(), foundUploadConfig.getFileTransferPolicy());
+        assertEquals(uploadConfig.getFileTransferServer(), foundUploadConfig.getFileTransferServer());
+        assertEquals(uploadConfig.getLocalPath(), foundUploadConfig.getLocalPath());
+        assertEquals(uploadConfig.getMaxTransferAttempts(), foundUploadConfig.getMaxTransferAttempts());
+        assertEquals(uploadConfig.getRemoteHost(), foundUploadConfig.getRemoteHost());
+        assertEquals(uploadConfig.getRemotePath(), foundUploadConfig.getRemotePath());
+        assertEquals(uploadConfig.getRemotePort(), foundUploadConfig.getRemotePort());
+        assertEquals(uploadConfig.getStatus(), foundUploadConfig.getStatus());
+    }
+
+    @Test
+    public void testFindFileTransferConfig() throws Exception {
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        Long id = getFileModule().createFileTransferConfig(downloadConfig);
+
+        FileTransferConfig fetchedDownloadConfig = getFileModule().findFileTransferConfig(id);
+        assertNotNull(fetchedDownloadConfig);
+        assertEquals(downloadConfig, fetchedDownloadConfig);
+    }
+
+    @Test
+    public void testUpdateFileTransferConfig() throws Exception {
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        Long id = getFileModule().createFileTransferConfig(downloadConfig);
+
+        FileTransferConfig fetchedDownloadConfig = getFileModule().findFileTransferConfig(id);
+        fetchedDownloadConfig.setDeleteSourceOnTransfer(Boolean.TRUE);
+        fetchedDownloadConfig.setLocalPath("c:\\banking\\reports");
+        fetchedDownloadConfig.setMaxTransferAttempts(Integer.valueOf(20));
+        int updateCount = getFileModule().updateFileTransferConfig(fetchedDownloadConfig);
+        assertEquals(1, updateCount);
+
+        FileTransferConfig updatedDownloadConfig = getFileModule().findFileTransferConfig(id);
+        assertFalse(downloadConfig.equals(updatedDownloadConfig));
+        assertEquals(fetchedDownloadConfig, updatedDownloadConfig);
+    }
+
+    @Test
+    public void testDeleteFileTransferConfig() throws Exception {
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        Long id = getFileModule().createFileTransferConfig(downloadConfig);
+        int updateCount = getFileModule().deleteFileTransferConfig(id);
+        assertEquals(1, updateCount);
+
+        FileTransferConfigQuery query = new FileTransferConfigQuery();
+        query.id(id);
+        List<FileTransferConfig> list = getFileModule().findFileTransferConfigs(query);
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    public void testCreateBatchFileDefinition() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        assertNotNull(batchFileDefinitionId);
+    }
+
+    @Test
+    public void testFindBatchFileDefinitions() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        getFileModule().createBatchFileDefinition(batchFileDefinition);
+
+        BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
+        query.orderById();
+        query.ignoreEmptyCriteria(true);
+        List<BatchFileDefinition> batchFileDefinitionList = getFileModule().findBatchFileDefinitions(query);
+        assertNotNull(batchFileDefinitionList);
+        assertEquals(1, batchFileDefinitionList.size());
+
+        assertEquals(batchFileDefinition.getName(), batchFileDefinitionList.get(0).getName());
+        assertEquals(batchFileDefinition.getDescription(), batchFileDefinitionList.get(0).getDescription());
+    }
+
+    @Test
+    public void testFindBatchFileDefinition() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
+
+        BatchFileDefinition fetchBatchFileDefinition = getFileModule().findBatchFileDefinition(id);
+        assertNotNull(fetchBatchFileDefinition);
+        assertEquals(batchFileDefinition.getName(), fetchBatchFileDefinition.getName());
+        assertEquals(batchFileDefinition.getDescription(), fetchBatchFileDefinition.getDescription());
+    }
+
+    @Test
+    public void testUpdateBatchFileDefinition() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
+
+        BatchFileDefinition fetchedBatchFileDefinition = getFileModule().findBatchFileDefinition(id);
+        fetchedBatchFileDefinition.setDescription("Test Definiton Main");
+        int updateCount = getFileModule().updateBatchFileDefinition(fetchedBatchFileDefinition);
+        assertEquals(1, updateCount);
+
+        BatchFileDefinition updatedBatchFileDefinition = getFileModule().findBatchFileDefinition(id);
+        assertFalse(batchFileDefinition.equals(updatedBatchFileDefinition));
+        assertEquals(fetchedBatchFileDefinition, updatedBatchFileDefinition);
+    }
+
+    @Test
+    public void testDeleteBatchFileDefinition() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        int updateCount = getFileModule().deleteBatchFileDefinition(id);
+        assertEquals(1, updateCount);
+
+        BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
+        query.id(id);
+        List<BatchFileDefinition> list = getFileModule().findBatchFileDefinitions(query);
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    public void testCreateBatchFileReadConfig() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        Long batchUploadConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+        assertNotNull(batchUploadConfigId);
+    }
+
+    @Test
+    public void testFindBatchFileReadConfigs() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+
+        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        query.orderById();
+        query.ignoreEmptyCriteria(true);
+        List<BatchFileReadConfig> batchUploadConfigList = getFileModule().findBatchFileReadConfigs(query);
+        assertNotNull(batchUploadConfigList);
+        assertEquals(1, batchUploadConfigList.size());
+
+        BatchFileReadConfig foundBatchFileReadConfig = batchUploadConfigList.get(0);
+        assertEquals(batchFileReadConfig.getBatchFileDefinitionId(),
+                foundBatchFileReadConfig.getBatchFileDefinitionId());
+        assertEquals(batchFileReadConfig.getReadProcessor(), foundBatchFileReadConfig.getReadProcessor());
+        assertEquals(batchFileReadConfig.getConstraintAction(), foundBatchFileReadConfig.getConstraintAction());
+        assertEquals(batchFileReadConfig.getDescription(), foundBatchFileReadConfig.getDescription());
+        assertEquals(batchFileReadConfig.getFileReader(), foundBatchFileReadConfig.getFileReader());
+        assertEquals(batchFileReadConfig.getName(), foundBatchFileReadConfig.getName());
+        assertEquals(batchFileReadConfig.getStatus(), foundBatchFileReadConfig.getStatus());
+    }
+
+    @Test
+    public void testFindBatchFileReadConfig() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+
+        BatchFileReadConfig fetchedDownloadConfig = getFileModule().findBatchFileReadConfig(id);
+        assertNotNull(fetchedDownloadConfig);
+        assertEquals(batchFileReadConfig, fetchedDownloadConfig);
+    }
+
+    @Test
+    public void testUpdateBatchFileReadConfig() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+
+        BatchFileReadConfig fetchedBatchFileReadConfig = getFileModule().findBatchFileReadConfig(id);
+        fetchedBatchFileReadConfig.setDescription("Main Sample Config");
+        int updateCount = getFileModule().updateBatchFileReadConfig(fetchedBatchFileReadConfig);
+        assertEquals(1, updateCount);
+
+        BatchFileReadConfig updatedBatchFileReadConfig = getFileModule().findBatchFileReadConfig(id);
+        assertFalse(batchFileReadConfig.equals(updatedBatchFileReadConfig));
+        assertEquals(fetchedBatchFileReadConfig, updatedBatchFileReadConfig);
+    }
+
+    @Test
+    public void testDeleteBatchFileReadConfig() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+        int updateCount = getFileModule().deleteBatchFileReadConfig(id);
+        assertEquals(1, updateCount);
+
+        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        query.id(id);
+        List<BatchFileReadConfig> list = getFileModule().findBatchFileReadConfigs(query);
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    public void testGetBatchFileReadInputParameters() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+
+        BatchFileReadInputParameters buip = getFileModule().getBatchFileReadInputParameters(batchConfigId);
+        assertNotNull(buip);
+        assertEquals("BankBatchConfig", buip.getName());
+        assertEquals("Bank Batch Config", buip.getDescription());
+
+        List<Input> inputParameterList = buip.getInputParameterList();
+        assertNotNull(inputParameterList);
+        assertEquals(1, inputParameterList.size());
+
+        Input placeHolder = inputParameterList.get(0);
+        assertEquals("country", placeHolder.getName());
+        assertEquals("Country", placeHolder.getDescription());
+    }
+
+    @Test(timeout = 4000)
+    public void testFindFileInboxItems() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        fileModule.createFileTransferConfig(downloadConfig);
+
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        FileInboxQuery query = new FileInboxQuery();
+        query.fileTransferConfigName("downloadFileTransfer");
+        query.order("filename");
+        List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
+        assertNotNull(fileInboxList);
+        assertEquals(3, fileInboxList.size());
+
+        FileInbox fileInbox = fileInboxList.get(0);
+        assertEquals("butterfly.png", fileInbox.getFilename());
+        assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+        assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
+
+        fileInbox = fileInboxList.get(1);
+        assertEquals("customer.html", fileInbox.getFilename());
+        assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+        assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
+
+        fileInbox = fileInboxList.get(2);
+        assertEquals("hello.txt", fileInbox.getFilename());
+        assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+        assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
+    }
+
+    @Test(timeout = 4000)
+    public void testFindFileInboxItem() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        fileModule.createFileTransferConfig(downloadConfig);
+
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        FileInboxQuery query = new FileInboxQuery();
+        query.fileTransferConfigName("downloadFileTransfer");
+        List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
+
+        FileInbox fileInbox = fileInboxList.get(0);
+        FileInbox fetchedFileInbox = fileModule.findFileInboxItem(fileInbox.getId());
+        assertEquals(fileInbox, fetchedFileInbox);
+    }
+
+    @Test(timeout = 4000)
+    public void testUpdateFileInboxItemsReadStatus() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        fileModule.createFileTransferConfig(downloadConfig);
+
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        FileInboxQuery query = new FileInboxQuery();
+        query.fileTransferConfigName("downloadFileTransfer");
+        query.setFilenameIn(Arrays.asList(new String[] { "butterfly.png", "hello.txt" }));
+        fileModule.updateFileInboxItemsReadStatus(query, FileInboxReadStatus.READ);
+
+        query = new FileInboxQuery();
+        query.fileTransferConfigName("downloadFileTransfer");
+        query.order("filename");
+        List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
+
+        FileInbox fileInbox = fileInboxList.get(0);
+        assertEquals("butterfly.png", fileInbox.getFilename());
+        assertEquals(FileInboxReadStatus.READ, fileInbox.getReadStatus());
+        assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
+
+        fileInbox = fileInboxList.get(1);
+        assertEquals("customer.html", fileInbox.getFilename());
+        assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+        assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
+
+        fileInbox = fileInboxList.get(2);
+        assertEquals("hello.txt", fileInbox.getFilename());
+        assertEquals(FileInboxReadStatus.READ, fileInbox.getReadStatus());
+        assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
+    }
+
+    @Test(timeout = 4000)
+    public void testFindFileOutboxItems() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig uploadConfig = getUploadFileTransferConfig();
+        fileModule.createFileTransferConfig(uploadConfig);
+
+        TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        FileOutboxQuery query = new FileOutboxQuery();
+        query.fileTransferConfigName("uploadFileTransfer");
+        query.order("filename");
+        List<FileOutbox> fileOutboxList = fileModule.findFileOutboxItems(query);
+        assertNotNull(fileOutboxList);
+        assertEquals(2, fileOutboxList.size());
+
+        FileOutbox fileOutbox = fileOutboxList.get(0);
+        assertEquals("doctor.png", fileOutbox.getFilename());
+        assertEquals(FileOutboxStatus.SENT, fileOutbox.getStatus());
+
+        fileOutbox = fileOutboxList.get(1);
+        assertEquals("transactions.txt", fileOutbox.getFilename());
+        assertEquals(FileOutboxStatus.SENT, fileOutbox.getStatus());
+    }
+
+    @Test(timeout = 4000)
+    public void testFindFileOutboxItem() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig uploadConfig = getUploadFileTransferConfig();
+        fileModule.createFileTransferConfig(uploadConfig);
+
+        TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        FileOutboxQuery query = new FileOutboxQuery();
+        query.fileTransferConfigName("uploadFileTransfer");
+        List<FileOutbox> fileInboxList = fileModule.findFileOutboxItems(query);
+
+        FileOutbox fileOutbox = fileInboxList.get(0);
+        FileOutbox fetchedFileOutbox = fileModule.findFileOutboxItem(fileOutbox.getId());
+        assertEquals(fileOutbox, fetchedFileOutbox);
+    }
+
+    @Test(timeout = 4000)
+    public void testStartTestFileTransferConfigTask() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        fileModule.createFileTransferConfig(downloadConfig);
+        TaskMonitor tm = ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
+                .launchTask(TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK)
+                        .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, downloadConfig).build());
+        assertNotNull(tm);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+    }
+
+    @Test(timeout = 4000)
+    public void testStartUpdateFileTransferListTask() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        FileTransferConfig uploadConfig = getUploadFileTransferConfig();
+        fileModule.createFileTransferConfig(downloadConfig);
+        fileModule.createFileTransferConfig(uploadConfig);
+
+        TaskMonitor tm = launchUpdateFileTransferListTask("downloadFileTransfer", new Date());
+        assertNotNull(tm);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        tm = launchUpdateFileTransferListTask("uploadFileTransfer", new Date());
+        assertNotNull(tm);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+    }
+
+    @Test(timeout = 4000)
+    public void testStartExecuteFileTransferTask() throws Exception {
+        FileModule fileModule = (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+        FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+        FileTransferConfig uploadConfig = getUploadFileTransferConfig();
+        fileModule.createFileTransferConfig(downloadConfig);
+        fileModule.createFileTransferConfig(uploadConfig);
+
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        assertNotNull(tm);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
+        assertNotNull(tm);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+    }
+
+    @Test
+    public void testStartBatchFileReadTask() throws Exception {
+        BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+        Long batchFileDefinitionId = getFileModule().createBatchFileDefinition(batchFileDefinition);
+        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
+        Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
+
+        BatchFileReadInputParameters buip = getFileModule().getBatchFileReadInputParameters(batchConfigId);
+        byte[] file = IOUtils.createInMemoryTextFile("011First Bank          FBN 011000001",
+                "032Union Bank          UBN 032000001", "044Access Bank         ACC 044000001");
+        buip.setFileBlob(file);
+        buip.setParameter("country", "Nigeria");
+
+        TaskMonitor tm = ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
+                .launchTask(TaskSetup.newBuilder().addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
+                        .setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS, buip).build());
+        assertNotNull(tm);
+        waitForTask(tm);
+        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+
+        GenericBusinessModule genericBusinessModule = (GenericBusinessModule) this
+                .getComponent(ApplicationComponents.APPLICATION_GENERICBUSINESSMODULE);
+        List<TestBank> bankList = genericBusinessModule
+                .listAll(new Query<TestBank>(TestBank.class).order("id").ignoreEmptyCriteria(true));
+        assertNotNull(bankList);
+        assertEquals(3, bankList.size());
+
+        TestBank bank = bankList.get(0);
+        assertEquals("011", bank.getName());
+        assertEquals("First Bank", bank.getDescription());
+        assertEquals("FBN", bank.getShortName());
+        assertEquals("011000001", bank.getHoRoutingNo());
+        assertEquals("Nigeria", bank.getCountry());
+
+        bank = bankList.get(1);
+        assertEquals("032", bank.getName());
+        assertEquals("Union Bank", bank.getDescription());
+        assertEquals("UBN", bank.getShortName());
+        assertEquals("032000001", bank.getHoRoutingNo());
+        assertEquals("Nigeria", bank.getCountry());
+
+        bank = bankList.get(2);
+        assertEquals("044", bank.getName());
+        assertEquals("Access Bank", bank.getDescription());
+        assertEquals("ACC", bank.getShortName());
+        assertEquals("044000001", bank.getHoRoutingNo());
+        assertEquals("Nigeria", bank.getCountry());
+    }
+
+    @Override
+    protected void doAddSettingsAndDependencies() throws Exception {
+        super.doAddSettingsAndDependencies();
+
+        addDependency("test-filetransferserver", TestFileTransferServer.class,
+                new Setting("localFilenames", new String[] { "doctor.png", "transactions.txt" }),
+                new Setting("remoteFilenames", new String[] { "butterfly.png", "hello.txt", "customer.html" }));
+    }
+
+    @Override
+    protected void onSetup() throws Exception {
+
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void onTearDown() throws Exception {
+        deleteAll(FileInbox.class, FileOutbox.class, BatchFileReadConfig.class, BatchFileDefinition.class,
+                FileTransferConfig.class);
+    }
+
+    private FileTransferConfig getUploadFileTransferConfig() {
+        FileTransferConfig fileTransferConfig = new FileTransferConfig();
+        fileTransferConfig.setName("uploadFileTransfer");
+        fileTransferConfig.setDeleteSourceOnTransfer(Boolean.FALSE);
+        fileTransferConfig.setDescription("EOD Report Transfer");
+        fileTransferConfig.setDirection(FileTransferDirection.UPLOAD);
+        fileTransferConfig.setFileTransferPolicy("wildcard-filetransferpolicy");
+        fileTransferConfig.setFileTransferServer("test-filetransferserver");
+        fileTransferConfig.setLocalPath("c:\\data\\reports");
+        fileTransferConfig.setMaxTransferAttempts(Integer.valueOf(10));
+        fileTransferConfig.setRemoteHost("192.168.1.1");
+        fileTransferConfig.setRemotePath("/eodreports");
+        fileTransferConfig.setStatus(RecordStatus.ACTIVE);
+        return fileTransferConfig;
+    }
+
+    private FileTransferConfig getDownloadFileTransferConfig() {
+        FileTransferConfig fileTransferConfig = new FileTransferConfig();
+        fileTransferConfig.setName("downloadFileTransfer");
+        fileTransferConfig.setDeleteSourceOnTransfer(Boolean.FALSE);
+        fileTransferConfig.setDescription("BPXF File Transfer");
+        fileTransferConfig.setDirection(FileTransferDirection.DOWNLOAD);
+        fileTransferConfig.setFileTransferPolicy("wildcard-filetransferpolicy");
+        fileTransferConfig.setFileTransferServer("test-filetransferserver");
+        fileTransferConfig.setLocalPath("c:\\truncation\\bpxf");
+        fileTransferConfig.setMaxTransferAttempts(Integer.valueOf(4));
+        fileTransferConfig.setRemoteHost("10.0.2.15");
+        fileTransferConfig.setRemotePath("/incoming/bfxf");
+        fileTransferConfig.setStatus(RecordStatus.ACTIVE);
+        return fileTransferConfig;
+    }
+
+    private BatchFileDefinition newBatchFileDefinition() {
+        BatchFileDefinition batchFileDefinition = new BatchFileDefinition();
+        batchFileDefinition.setName("fil-001");
+        batchFileDefinition.setDescription("Test Definition");
+
+        List<BatchFileFieldDefinition> fieldDefList = new ArrayList<BatchFileFieldDefinition>();
+        fieldDefList.add(newBatchFileFieldDefinition("name", 3));
+        fieldDefList.add(newBatchFileFieldDefinition("description", 20));
+        fieldDefList.add(newBatchFileFieldDefinition("shortName", 4));
+        fieldDefList.add(newBatchFileFieldDefinition("hoRoutingNo", 9));
+        batchFileDefinition.setFieldDefList(fieldDefList);
+
+        return batchFileDefinition;
+    }
+
+    private BatchFileFieldDefinition newBatchFileFieldDefinition(String name, int length) {
+        BatchFileFieldDefinition batchFileFieldDefinition = new BatchFileFieldDefinition();
+        batchFileFieldDefinition.setName(name);
+        batchFileFieldDefinition.setLength(length);
+        batchFileFieldDefinition.setTrim(true);
+        return batchFileFieldDefinition;
+    }
+
+    private BatchFileReadConfig getBatchFileReadConfig(Long batchFileDefinitionId) {
+        BatchFileReadConfig batchFileReadConfig = new BatchFileReadConfig();
+        batchFileReadConfig.setBatchFileDefinitionId(batchFileDefinitionId);
+        batchFileReadConfig.setReadProcessor("test-bankbatchfilereadprocessor");
+        batchFileReadConfig.setFileReader("fixedlength-batchfilereader");
+        batchFileReadConfig.setConstraintAction(ConstraintAction.FAIL);
+        batchFileReadConfig.setDescription("Bank Batch Config");
+        batchFileReadConfig.setName("BankBatchConfig");
+        return batchFileReadConfig;
+    }
+
+    private FileModule getFileModule() throws Exception {
+        return (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
+    }
+
+    private TaskMonitor launchFileTransferTask(String configName, Date workingDt, boolean updateList) throws Exception {
+        return ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
+                .launchTask(TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERTASK)
+                        .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, configName)
+                        .setParam(FileTransferTaskConstants.UPDATEFILEBOX, updateList)
+                        .setParam(FileTransferTaskConstants.WORKINGDT, workingDt).build());
+    }
+
+    private TaskMonitor launchUpdateFileTransferListTask(String configName, Date workingDt) throws Exception {
+        return ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
+                .launchTask(TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERLISTUPDATETASK)
+                        .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, configName)
+                        .setParam(FileTransferTaskConstants.WORKINGDT, workingDt).build());
+    }
 }

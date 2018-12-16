@@ -31,75 +31,75 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Table(name = "WFFORMFIELD", uniqueConstraints = { @UniqueConstraint({ "wfFormId", "binding" }) })
 public class WfFormField extends BaseEntity {
 
-	@ForeignKey(WfForm.class)
-	private Long wfFormId;
+    @ForeignKey(WfForm.class)
+    private Long wfFormId;
 
-	@Column(name = "SECTION_NM", length = 32)
-	private String sectionName;
+    @Column(name = "SECTION_NM", length = 32)
+    private String sectionName;
 
-	@Column
-	private String binding;
+    @Column
+    private String binding;
 
-	@Column(name = "FIELD_LABEL", length = 64, nullable = true)
-	private String label;
+    @Column(name = "FIELD_LABEL", length = 64, nullable = true)
+    private String label;
 
-	@Column(length = 128, nullable = true)
-	private String editorUpl;
+    @Column(length = 128, nullable = true)
+    private String editorUpl;
 
-	@Column(name = "REQUIRED_FG")
-	private Boolean required;
+    @Column(name = "REQUIRED_FG")
+    private Boolean required;
 
-	@Override
-	public String getDescription() {
-		return this.binding;
-	}
+    @Override
+    public String getDescription() {
+        return this.binding;
+    }
 
-	public Long getWfFormId() {
-		return wfFormId;
-	}
+    public Long getWfFormId() {
+        return wfFormId;
+    }
 
-	public String getSectionName() {
-		return sectionName;
-	}
+    public String getSectionName() {
+        return sectionName;
+    }
 
-	public void setSectionName(String sectionName) {
-		this.sectionName = sectionName;
-	}
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
 
-	public void setWfFormId(Long wfFormId) {
-		this.wfFormId = wfFormId;
-	}
+    public void setWfFormId(Long wfFormId) {
+        this.wfFormId = wfFormId;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getEditorUpl() {
-		return editorUpl;
-	}
+    public String getEditorUpl() {
+        return editorUpl;
+    }
 
-	public void setEditorUpl(String editorUpl) {
-		this.editorUpl = editorUpl;
-	}
+    public void setEditorUpl(String editorUpl) {
+        this.editorUpl = editorUpl;
+    }
 
-	public String getBinding() {
-		return binding;
-	}
+    public String getBinding() {
+        return binding;
+    }
 
-	public void setBinding(String binding) {
-		this.binding = binding;
-	}
+    public void setBinding(String binding) {
+        this.binding = binding;
+    }
 
-	public Boolean getRequired() {
-		return required;
-	}
+    public Boolean getRequired() {
+        return required;
+    }
 
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
 
 }

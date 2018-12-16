@@ -26,8 +26,8 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  */
 public class NotificationTypeXmlAdapter extends AbstractEnumConstXmlAdapter<NotificationType> {
 
-	public NotificationTypeXmlAdapter() {
-		super(NotificationType.class);
-	}
+    public NotificationTypeXmlAdapter() {
+        super(NotificationType.class);
+    }
 
 }

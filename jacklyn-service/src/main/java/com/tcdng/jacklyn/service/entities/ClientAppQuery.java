@@ -26,23 +26,23 @@ import com.tcdng.jacklyn.shared.service.ClientAppType;
  */
 public class ClientAppQuery extends BaseVersionedStatusEntityQuery<ClientApp> {
 
-	public ClientAppQuery() {
-		super(ClientApp.class);
-	}
+    public ClientAppQuery() {
+        super(ClientApp.class);
+    }
 
-	public ClientAppQuery name(String name) {
-		return (ClientAppQuery) equals("name", name);
-	}
+    public ClientAppQuery name(String name) {
+        return (ClientAppQuery) equals("name", name);
+    }
 
-	public ClientAppQuery nameLike(String name) {
-		return (ClientAppQuery) like("name", name);
-	}
+    public ClientAppQuery nameLike(String name) {
+        return (ClientAppQuery) like("name", name);
+    }
 
-	public ClientAppQuery descriptionLike(String description) {
-		return (ClientAppQuery) like("description", description);
-	}
+    public ClientAppQuery descriptionLike(String description) {
+        return (ClientAppQuery) like("description", description);
+    }
 
-	public ClientAppQuery type(ClientAppType type) {
-		return (ClientAppQuery) equals("type", type);
-	}
+    public ClientAppQuery type(ClientAppType type) {
+        return (ClientAppQuery) equals("type", type);
+    }
 }

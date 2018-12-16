@@ -37,14 +37,14 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/service/gate")
 public class ServiceRemoteCallController extends BaseRemoteCallController {
 
-	@Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
-	private ServiceModule serviceModule;
+    @Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
+    private ServiceModule serviceModule;
 
-	@GatewayAction(name = ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL,
-			description = "$m{service.gate.remotecall.osrequestinstall}", restricted = false)
-	public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
-			throws UnifyException {
-		return serviceModule.processOSInstallationRequest(oSInstallationReqParams);
-	}
+    @GatewayAction(name = ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL,
+            description = "$m{service.gate.remotecall.osrequestinstall}", restricted = false)
+    public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
+            throws UnifyException {
+        return serviceModule.processOSInstallationRequest(oSInstallationReqParams);
+    }
 
 }

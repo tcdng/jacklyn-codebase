@@ -26,44 +26,44 @@ import java.util.List;
  * @author Lateef
  * @since 1.0
  */
-public class WfFormDef implements Serializable{
+public class WfFormDef implements Serializable {
 
-	private static final long serialVersionUID = 5731603377730336455L;
+    private static final long serialVersionUID = 5731603377730336455L;
 
-	private Long wfFormId;
+    private Long wfFormId;
 
-	private List<WfFormTabDef> tabs;
+    private List<WfFormTabDef> tabs;
 
-	private boolean read;
+    private boolean read;
 
-	public WfFormDef(Long wfFormId, List<WfFormTabDef> tabList) {
-		this.wfFormId = wfFormId;
-		if (tabList != null) {
-			tabs = Collections.unmodifiableList(tabList);
-		} else {
-			tabs = Collections.emptyList();
-		}
+    public WfFormDef(Long wfFormId, List<WfFormTabDef> tabList) {
+        this.wfFormId = wfFormId;
+        if (tabList != null) {
+            tabs = Collections.unmodifiableList(tabList);
+        } else {
+            tabs = Collections.emptyList();
+        }
 
-		read = false;
-	}
+        read = false;
+    }
 
-	public Long getWfFormId() {
-		return wfFormId;
-	}
+    public Long getWfFormId() {
+        return wfFormId;
+    }
 
-	public List<WfFormTabDef> getTabs() {
-		return tabs;
-	}
+    public List<WfFormTabDef> getTabs() {
+        return tabs;
+    }
 
-	public List<WfFormTabDef> getTabList() {
-		return tabs;
-	}
+    public List<WfFormTabDef> getTabList() {
+        return tabs;
+    }
 
-	public boolean isRead() {
-		return read;
-	}
+    public boolean isRead() {
+        return read;
+    }
 
-	public void read() {
-		read = true;
-	}
+    public void read() {
+        read = true;
+    }
 }

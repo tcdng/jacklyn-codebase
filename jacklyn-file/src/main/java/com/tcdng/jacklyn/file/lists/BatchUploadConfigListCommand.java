@@ -34,11 +34,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("batchfilereadconfiglist")
 public class BatchUploadConfigListCommand extends AbstractZeroParamsFileListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
-		query.status(RecordStatus.ACTIVE).order("description");
-		return this.getFileModule().findBatchFileReadConfigs(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        query.status(RecordStatus.ACTIVE).order("description");
+        return this.getFileModule().findBatchFileReadConfigs(query);
+    }
 }

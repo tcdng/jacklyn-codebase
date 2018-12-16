@@ -27,29 +27,29 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "PRIVILEGECAT",
-		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+        uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class PrivilegeCategory extends BaseInstallEntity {
 
-	@Column(name = "PRIVILEGECAT_NM")
-	private String name;
+    @Column(name = "PRIVILEGECAT_NM")
+    private String name;
 
-	@Column(name = "PRIVILEGECAT_DESC", length = 48)
-	private String description;
+    @Column(name = "PRIVILEGECAT_DESC", length = 48)
+    private String description;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

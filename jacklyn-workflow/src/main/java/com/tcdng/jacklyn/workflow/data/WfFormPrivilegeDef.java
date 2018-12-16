@@ -28,52 +28,52 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowFormElementType;
  */
 public class WfFormPrivilegeDef implements Serializable {
 
-	private static final long serialVersionUID = -3500886543859051597L;
+    private static final long serialVersionUID = -3500886543859051597L;
 
-	private WorkflowFormElementType type;
+    private WorkflowFormElementType type;
 
-	private String name;
+    private String name;
 
-	private boolean visible;
+    private boolean visible;
 
-	private boolean editable;
+    private boolean editable;
 
-	private boolean disabled;
+    private boolean disabled;
 
-	private boolean required;
+    private boolean required;
 
-	public WfFormPrivilegeDef(WorkflowFormElementType type, String name, boolean visible,
-			boolean editable, boolean disabled, boolean required) {
-		this.type = type;
-		this.name = name;
-		this.visible = visible;
-		this.editable = editable;
-		this.disabled = disabled;
-		this.required = required;
-	}
+    public WfFormPrivilegeDef(WorkflowFormElementType type, String name, boolean visible, boolean editable,
+            boolean disabled, boolean required) {
+        this.type = type;
+        this.name = name;
+        this.visible = visible;
+        this.editable = editable;
+        this.disabled = disabled;
+        this.required = required;
+    }
 
-	public WorkflowFormElementType getType() {
-		return type;
-	}
+    public WorkflowFormElementType getType() {
+        return type;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean isVisible() {
-		return visible;
-	}
+    public boolean isVisible() {
+        return visible;
+    }
 
-	public boolean isEditable() {
-		return editable;
-	}
+    public boolean isEditable() {
+        return editable;
+    }
 
-	public boolean isDisabled() {
-		return disabled;
-	}
+    public boolean isDisabled() {
+        return disabled;
+    }
 
-	public boolean isRequired() {
-		return required;
-	}
+    public boolean isRequired() {
+        return required;
+    }
 
 }

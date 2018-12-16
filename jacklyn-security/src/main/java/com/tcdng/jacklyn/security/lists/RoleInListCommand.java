@@ -36,16 +36,15 @@ import com.tcdng.unify.web.data.AssignParams;
 @Component("roleinlist")
 public class RoleInListCommand extends AbstractAssignParamsSecurityListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, AssignParams params)
-			throws UnifyException {
-		if (params.isAssignedIdList()) {
-			RoleQuery query = new RoleQuery();
-			query.idIn(params.getAssignedIdList(Long.class));
-			query.status(RecordStatus.ACTIVE).order("description");
-			return getSecurityBusinessModule().findRoles(query);
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        if (params.isAssignedIdList()) {
+            RoleQuery query = new RoleQuery();
+            query.idIn(params.getAssignedIdList(Long.class));
+            query.status(RecordStatus.ACTIVE).order("description");
+            return getSecurityBusinessModule().findRoles(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 }

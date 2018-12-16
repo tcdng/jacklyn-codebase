@@ -36,47 +36,43 @@ import com.tcdng.unify.core.task.TaskStatus;
 @Component("scheduledtaskstatuslogger")
 public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	@Override
-	public void logTaskStatus(TaskMonitor taskMonitor, Map<String, Object> parameters) {
-		createScheduledTaskHistory(taskMonitor.getCurrentTaskStatus(), parameters,
-				taskMonitor.getExceptions());
+    @Override
+    public void logTaskStatus(TaskMonitor taskMonitor, Map<String, Object> parameters) {
+        createScheduledTaskHistory(taskMonitor.getCurrentTaskStatus(), parameters, taskMonitor.getExceptions());
 
-		if (taskMonitor.isDone()) {
-			parameters.remove(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
-		}
-	}
+        if (taskMonitor.isDone()) {
+            parameters.remove(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
+        }
+    }
 
-	@Override
-	public void logCriticalFailure(String taskName, Map<String, Object> parameters,
-			Exception exception) {
-		createScheduledTaskHistory(TaskStatus.CRITICAL, parameters, exception);
-	}
+    @Override
+    public void logCriticalFailure(String taskName, Map<String, Object> parameters, Exception exception) {
+        createScheduledTaskHistory(TaskStatus.CRITICAL, parameters, exception);
+    }
 
-	private void createScheduledTaskHistory(TaskStatus taskStatus, Map<String, Object> parameters,
-			Exception... exceptions) {
-		try {
-			String errorMessages = null;
-			if (exceptions != null && exceptions.length > 0) {
-				StringBuilder sb = new StringBuilder();
-				for (Exception exception : exceptions) {
-					sb.append(getExceptionMessage(LocaleType.APPLICATION, exception));
-				}
-				errorMessages = sb.toString();
-			}
+    private void createScheduledTaskHistory(TaskStatus taskStatus, Map<String, Object> parameters,
+            Exception... exceptions) {
+        try {
+            String errorMessages = null;
+            if (exceptions != null && exceptions.length > 0) {
+                StringBuilder sb = new StringBuilder();
+                for (Exception exception : exceptions) {
+                    sb.append(getExceptionMessage(LocaleType.APPLICATION, exception));
+                }
+                errorMessages = sb.toString();
+            }
 
-			TaskStatus oldTaskStatus
-					= (TaskStatus) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
-			if (!taskStatus.equals(oldTaskStatus)) {
-				systemModule.createScheduledTaskHistory(
-						(Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID),
-						taskStatus, errorMessages);
-				parameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, taskStatus);
-			}
-		} catch (UnifyException e) {
-			logError(e);
-		}
-	}
+            TaskStatus oldTaskStatus = (TaskStatus) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
+            if (!taskStatus.equals(oldTaskStatus)) {
+                systemModule.createScheduledTaskHistory(
+                        (Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID), taskStatus, errorMessages);
+                parameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, taskStatus);
+            }
+        } catch (UnifyException e) {
+            logError(e);
+        }
+    }
 }

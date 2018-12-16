@@ -23,19 +23,19 @@ package com.tcdng.jacklyn.file.constants;
  */
 public interface FileTransferTaskConstants {
 
-	String FILETRANSFERCONFIGTESTTASK = "filetransferconfigtesttask";
+    String FILETRANSFERCONFIGTESTTASK = "filetransferconfigtesttask";
 
-	String FILETRANSFERTASK = "filetransfertask";
+    String FILETRANSFERTASK = "filetransfertask";
 
-	String FILETRANSFERLISTUPDATETASK = "filetransferlistupdatetask";
+    String FILETRANSFERLISTUPDATETASK = "filetransferlistupdatetask";
 
-	String FILETRANSFERCONFIGNAME = "fileTransferConfigName";
+    String FILETRANSFERCONFIGNAME = "fileTransferConfigName";
 
-	String WORKINGDT = "workingDt";
+    String WORKINGDT = "workingDt";
 
-	String UPDATEFILEBOX = "updateFileBox";
+    String UPDATEFILEBOX = "updateFileBox";
 
-	String FILETRANSFERCONFIGDATA = "filetransferConfigData";
+    String FILETRANSFERCONFIGDATA = "filetransferConfigData";
 
-	String FILETRANSFERCONFIGTESTRESULT = "fileTransferConfigTestResult";
+    String FILETRANSFERCONFIGTESTRESULT = "fileTransferConfigTestResult";
 }

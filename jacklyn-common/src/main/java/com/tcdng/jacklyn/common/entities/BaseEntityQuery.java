@@ -25,12 +25,12 @@ import com.tcdng.unify.core.system.entities.SequencedEntityQuery;
  */
 public abstract class BaseEntityQuery<T extends BaseEntity> extends SequencedEntityQuery<T> {
 
-	public BaseEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseEntityQuery<T> workflowFlag(Boolean workflowFlag) {
-		return (BaseEntityQuery<T>) equals("workflowFlag", workflowFlag);
-	}
+    public BaseEntityQuery<T> workflowFlag(Boolean workflowFlag) {
+        return (BaseEntityQuery<T>) equals("workflowFlag", workflowFlag);
+    }
 
 }

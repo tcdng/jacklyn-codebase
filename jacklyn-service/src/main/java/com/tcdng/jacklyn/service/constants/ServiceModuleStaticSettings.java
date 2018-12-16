@@ -28,10 +28,9 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class ServiceModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public ServiceModuleStaticSettings() {
-		super(ServiceModuleNameConstants.SERVICEBUSINESSMODULE,
-				"config/service-module.xml",
-				"com.tcdng.jacklyn.resources.service-messages");
-	}
+    public ServiceModuleStaticSettings() {
+        super(ServiceModuleNameConstants.SERVICEBUSINESSMODULE, "config/service-module.xml",
+                "com.tcdng.jacklyn.resources.service-messages");
+    }
 
 }

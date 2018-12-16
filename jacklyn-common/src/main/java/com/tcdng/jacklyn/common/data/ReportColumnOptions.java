@@ -25,137 +25,137 @@ import com.tcdng.unify.core.constant.HAlignType;
  */
 public class ReportColumnOptions {
 
-	private static final int DEFAULT_WIDTH = 10;
+    private static final int DEFAULT_WIDTH = 10;
 
-	private String tableName;
+    private String tableName;
 
-	private String columnName;
+    private String columnName;
 
-	private String description;
+    private String description;
 
-	private String type;
+    private String type;
 
-	private String formatter;
+    private String formatter;
 
-	private HAlignType hAlignType;
+    private HAlignType hAlignType;
 
-	private int width;
+    private int width;
 
-	private String order;
+    private String order;
 
-	private boolean group;
+    private boolean group;
 
-	private boolean sum;
+    private boolean sum;
 
-	private boolean included;
+    private boolean included;
 
-	public ReportColumnOptions(String columnName, String description, String type, String formatter,
-			HAlignType hAlignType, int width, boolean included) {
-		this.columnName = columnName;
-		this.description = description;
-		this.type = type;
-		this.formatter = formatter;
-		this.included = included;
+    public ReportColumnOptions(String columnName, String description, String type, String formatter,
+            HAlignType hAlignType, int width, boolean included) {
+        this.columnName = columnName;
+        this.description = description;
+        this.type = type;
+        this.formatter = formatter;
+        this.included = included;
 
-		setHorizontalAlignment(hAlignType);
-		setWidth(width);
-	}
+        setHorizontalAlignment(hAlignType);
+        setWidth(width);
+    }
 
-	public ReportColumnOptions() {
-		this.setWidth(0);
-	}
+    public ReportColumnOptions() {
+        this.setWidth(0);
+    }
 
-	public String getTableName() {
-		return tableName;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public String getColumnName() {
-		return columnName;
-	}
+    public String getColumnName() {
+        return columnName;
+    }
 
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getFormatter() {
-		return formatter;
-	}
+    public String getFormatter() {
+        return formatter;
+    }
 
-	public void setFormatter(String formatter) {
-		this.formatter = formatter;
-	}
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
+    }
 
-	public HAlignType getHorizontalAlignment() {
-		return hAlignType;
-	}
+    public HAlignType getHorizontalAlignment() {
+        return hAlignType;
+    }
 
-	public void setHorizontalAlignment(HAlignType hAlignType) {
-		this.hAlignType = hAlignType;
-		if (this.hAlignType == null) {
-			this.hAlignType = HAlignType.LEFT;
-		}
-	}
+    public void setHorizontalAlignment(HAlignType hAlignType) {
+        this.hAlignType = hAlignType;
+        if (this.hAlignType == null) {
+            this.hAlignType = HAlignType.LEFT;
+        }
+    }
 
-	public int getWidth() {
-		return width;
-	}
+    public int getWidth() {
+        return width;
+    }
 
-	public void setWidth(int width) {
-		this.width = width;
-		if (this.width <= 0) {
-			this.width = DEFAULT_WIDTH;
-		}
-	}
+    public void setWidth(int width) {
+        this.width = width;
+        if (this.width <= 0) {
+            this.width = DEFAULT_WIDTH;
+        }
+    }
 
-	public String getOrder() {
-		return order;
-	}
+    public String getOrder() {
+        return order;
+    }
 
-	public void setOrder(String order) {
-		this.order = order;
-	}
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
-	public boolean isGroup() {
-		return group;
-	}
+    public boolean isGroup() {
+        return group;
+    }
 
-	public void setGroup(boolean group) {
-		this.group = group;
-	}
+    public void setGroup(boolean group) {
+        this.group = group;
+    }
 
-	public boolean isSum() {
-		return sum;
-	}
+    public boolean isSum() {
+        return sum;
+    }
 
-	public void setSum(boolean sum) {
-		this.sum = sum;
-	}
+    public void setSum(boolean sum) {
+        this.sum = sum;
+    }
 
-	public boolean isIncluded() {
-		return included;
-	}
+    public boolean isIncluded() {
+        return included;
+    }
 
-	public void setIncluded(boolean included) {
-		this.included = included;
-	}
+    public void setIncluded(boolean included) {
+        this.included = included;
+    }
 }

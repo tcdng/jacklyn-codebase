@@ -29,16 +29,16 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/workflow/upl/userwfitempanel.upl")
 public class UserWfItemPanel extends AbstractWfItemPanel {
 
-	@Override
-	public void switchState() throws UnifyException {
-		super.switchState();
+    @Override
+    public void switchState() throws UnifyException {
+        super.switchState();
 
-		// Flip buttons
-		int viewIndex = getValue(int.class, "viewIndex");
-		int itemCount = getValue(int.class, "itemCount");
-		setDisabled("firstFrmBtn", viewIndex == 0);
-		setDisabled("prevFrmBtn", viewIndex == 0);
-		setDisabled("nextFrmBtn", viewIndex >= (itemCount - 1));
-		setDisabled("lastFrmBtn", viewIndex >= (itemCount - 1));
-	}
+        // Flip buttons
+        int viewIndex = getValue(int.class, "viewIndex");
+        int itemCount = getValue(int.class, "itemCount");
+        setDisabled("firstFrmBtn", viewIndex == 0);
+        setDisabled("prevFrmBtn", viewIndex == 0);
+        setDisabled("nextFrmBtn", viewIndex >= (itemCount - 1));
+        setDisabled("lastFrmBtn", viewIndex >= (itemCount - 1));
+    }
 }

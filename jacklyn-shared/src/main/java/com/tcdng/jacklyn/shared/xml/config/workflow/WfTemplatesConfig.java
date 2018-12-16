@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfTemplatesConfig {
 
-	private List<WfTemplateConfig> wfTemplateConfigList;
+    private List<WfTemplateConfig> wfTemplateConfigList;
 
-	public List<WfTemplateConfig> getWfTemplateConfigList() {
-		return wfTemplateConfigList;
-	}
+    public List<WfTemplateConfig> getWfTemplateConfigList() {
+        return wfTemplateConfigList;
+    }
 
-	@XmlElement(name="template", required=true)
-	public void setWfTemplateConfigList(List<WfTemplateConfig> wfTemplateConfigList) {
-		this.wfTemplateConfigList = wfTemplateConfigList;
-	}
+    @XmlElement(name = "template", required = true)
+    public void setWfTemplateConfigList(List<WfTemplateConfig> wfTemplateConfigList) {
+        this.wfTemplateConfigList = wfTemplateConfigList;
+    }
 
 }

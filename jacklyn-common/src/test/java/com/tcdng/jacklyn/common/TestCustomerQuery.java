@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class TestCustomerQuery extends BaseEntityQuery<TestCustomer> {
 
-	public TestCustomerQuery() {
-		super(TestCustomer.class);
-	}
+    public TestCustomerQuery() {
+        super(TestCustomer.class);
+    }
 
-	public TestCustomerQuery firstName(String firstName) {
-		return (TestCustomerQuery) this.equals("firstName", firstName);
-	}
+    public TestCustomerQuery firstName(String firstName) {
+        return (TestCustomerQuery) this.equals("firstName", firstName);
+    }
 }

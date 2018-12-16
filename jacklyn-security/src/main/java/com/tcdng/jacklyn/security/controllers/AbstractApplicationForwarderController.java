@@ -31,50 +31,50 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  * @since 1.0
  */
 @ResultMappings({ @ResultMapping(name = "forwardtoapplication",
-		response = { "!forwardresponse pathProperty:$s{applicationPath}" }) })
+        response = { "!forwardresponse pathProperty:$s{applicationPath}" }) })
 public abstract class AbstractApplicationForwarderController extends AbstractSecurityController {
 
-	private String applicationPath;
+    private String applicationPath;
 
-	public AbstractApplicationForwarderController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractApplicationForwarderController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	public String getApplicationPath() {
-		return applicationPath;
-	}
+    public String getApplicationPath() {
+        return applicationPath;
+    }
 
-	public void setApplicationPath(String applicationPath) {
-		this.applicationPath = applicationPath;
-	}
+    public void setApplicationPath(String applicationPath) {
+        this.applicationPath = applicationPath;
+    }
 
-	/**
-	 * Forwards to application base on supplied user role.
-	 * 
-	 * @param userRoleData
-	 *            the user role information
-	 * @return the forward-to-application result mapping name
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	protected String forwardToApplication(UserRole userRoleData) throws UnifyException {
-		Long userRoleId = null;
-		if (userRoleData != null) {
-			userRoleId = userRoleData.getId();
-			applicationPath = userRoleData.getRoleApplication();
-		}
+    /**
+     * Forwards to application base on supplied user role.
+     * 
+     * @param userRoleData
+     *            the user role information
+     * @return the forward-to-application result mapping name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected String forwardToApplication(UserRole userRoleData) throws UnifyException {
+        Long userRoleId = null;
+        if (userRoleData != null) {
+            userRoleId = userRoleData.getId();
+            applicationPath = userRoleData.getRoleApplication();
+        }
 
-		if (StringUtils.isBlank(applicationPath)) {
-			applicationPath = getSystemBusinessModule().getSysParameterValue(String.class,
-					SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
-		}
+        if (StringUtils.isBlank(applicationPath)) {
+            applicationPath = getSystemBusinessModule().getSysParameterValue(String.class,
+                    SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
+        }
 
-		getSecurityModule().setCurrentUserRole(userRoleId);
-		return "forwardtoapplication";
-	}
+        getSecurityModule().setCurrentUserRole(userRoleId);
+        return "forwardtoapplication";
+    }
 
-	protected SystemModule getSystemBusinessModule() throws UnifyException {
-		return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
-	}
+    protected SystemModule getSystemBusinessModule() throws UnifyException {
+        return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
+    }
 
 }

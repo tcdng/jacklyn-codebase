@@ -27,24 +27,24 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
  */
 public class NotificationChannelQuery extends BaseVersionedStatusEntityQuery<NotificationChannel> {
 
-	public NotificationChannelQuery() {
-		super(NotificationChannel.class);
-	}
+    public NotificationChannelQuery() {
+        super(NotificationChannel.class);
+    }
 
-	public NotificationChannelQuery notificationType(NotificationType notificationType) {
-		return (NotificationChannelQuery) equals("notificationType", notificationType);
-	}
+    public NotificationChannelQuery notificationType(NotificationType notificationType) {
+        return (NotificationChannelQuery) equals("notificationType", notificationType);
+    }
 
-	public NotificationChannelQuery name(String name) {
-		return (NotificationChannelQuery) equals("name", name);
-	}
+    public NotificationChannelQuery name(String name) {
+        return (NotificationChannelQuery) equals("name", name);
+    }
 
-	public NotificationChannelQuery nameLike(String name) {
-		return (NotificationChannelQuery) like("name", name);
-	}
+    public NotificationChannelQuery nameLike(String name) {
+        return (NotificationChannelQuery) like("name", name);
+    }
 
-	public NotificationChannelQuery descriptionLike(String description) {
-		return (NotificationChannelQuery) like("description", description);
-	}
+    public NotificationChannelQuery descriptionLike(String description) {
+        return (NotificationChannelQuery) like("description", description);
+    }
 
 }

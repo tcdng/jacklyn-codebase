@@ -29,27 +29,26 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractSystemRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractSystemRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public AbstractSystemRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractSystemRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	protected SystemModule getSystemModule() throws UnifyException {
-		return systemModule;
-	}
+    protected SystemModule getSystemModule() throws UnifyException {
+        return systemModule;
+    }
 }

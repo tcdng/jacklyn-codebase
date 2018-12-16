@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.file.constants;
  */
 public interface FileModuleNameConstants {
 
-	String FILE_MODULE = "file";
+    String FILE_MODULE = "file";
 
-	String FILEBUSINESSMODULE = "jacklyn-filebusinessmodule";
+    String FILEBUSINESSMODULE = "jacklyn-filebusinessmodule";
 
-	String RECEPTACLEBATCHITEMFILEREADPROCESSOR = "receptacle-batchitemfilereadprocessor";
+    String RECEPTACLEBATCHITEMFILEREADPROCESSOR = "receptacle-batchitemfilereadprocessor";
 }

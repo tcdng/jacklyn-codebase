@@ -31,13 +31,12 @@ import com.tcdng.unify.core.task.TaskOutput;
  * @since 1.0
  */
 @Component(name = "testschedulabletask", description = "Test Schedulable Taskable")
-@Schedulable(parameters = { @Parameter(name = "batchSize", description = "Batch Size",
-		editor = "!ui-integer", type = Integer.class, mandatory = true) })
+@Schedulable(parameters = { @Parameter(name = "batchSize", description = "Batch Size", editor = "!ui-integer",
+        type = Integer.class, mandatory = true) })
 public class TestSchedulableTask extends AbstractTask {
 
-	@Override
-	public void execute(TaskMonitor taskMonitor, TaskInput input, TaskOutput output)
-			throws UnifyException {
-		output.setResult("batchSize", input.getParam(Integer.class, "batchSize"));
-	}
+    @Override
+    public void execute(TaskMonitor taskMonitor, TaskInput input, TaskOutput output) throws UnifyException {
+        output.setResult("batchSize", input.getParam(Integer.class, "batchSize"));
+    }
 }

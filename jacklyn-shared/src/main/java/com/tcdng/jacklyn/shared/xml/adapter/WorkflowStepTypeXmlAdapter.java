@@ -26,8 +26,8 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  */
 public class WorkflowStepTypeXmlAdapter extends AbstractEnumConstXmlAdapter<WorkflowStepType> {
 
-	public WorkflowStepTypeXmlAdapter() {
-		super(WorkflowStepType.class);
-	}
+    public WorkflowStepTypeXmlAdapter() {
+        super(WorkflowStepType.class);
+    }
 
 }

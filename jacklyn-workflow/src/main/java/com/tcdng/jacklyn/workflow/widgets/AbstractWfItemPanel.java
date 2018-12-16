@@ -31,14 +31,14 @@ import com.tcdng.unify.web.ui.panel.DynamicPanel;
 @UplBinding("web/workflow/upl/wfitempanel.upl")
 public abstract class AbstractWfItemPanel extends AbstractPanel {
 
-	@Override
-	public void switchState() throws UnifyException {
-		super.switchState();
+    @Override
+    public void switchState() throws UnifyException {
+        super.switchState();
 
-		DynamicPanel dynamicPanel = (DynamicPanel) getWidgetByShortName("dynamicPanel");
-		WfDocViewer wfDocumentViewer = (WfDocViewer) dynamicPanel.getStandalonePanel();
-		ViewableWfItem wfStepItem = getValue(ViewableWfItem.class);
-		wfDocumentViewer.setDocumentMode(wfStepItem.getWfStepDef());
-	}
+        DynamicPanel dynamicPanel = (DynamicPanel) getWidgetByShortName("dynamicPanel");
+        WfDocViewer wfDocumentViewer = (WfDocViewer) dynamicPanel.getStandalonePanel();
+        ViewableWfItem wfStepItem = getValue(ViewableWfItem.class);
+        wfDocumentViewer.setDocumentMode(wfStepItem.getWfStepDef());
+    }
 
 }

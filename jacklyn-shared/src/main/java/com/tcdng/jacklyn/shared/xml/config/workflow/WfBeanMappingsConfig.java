@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfBeanMappingsConfig {
 
-	private List<WfBeanMappingConfig> beanMappingList;
+    private List<WfBeanMappingConfig> beanMappingList;
 
-	public List<WfBeanMappingConfig> getBeanMappingList() {
-		return beanMappingList;
-	}
+    public List<WfBeanMappingConfig> getBeanMappingList() {
+        return beanMappingList;
+    }
 
-	@XmlElement(name="bean-mapping")
-	public void setBeanMappingList(List<WfBeanMappingConfig> beanMappingList) {
-		this.beanMappingList = beanMappingList;
-	}
+    @XmlElement(name = "bean-mapping")
+    public void setBeanMappingList(List<WfBeanMappingConfig> beanMappingList) {
+        this.beanMappingList = beanMappingList;
+    }
 }

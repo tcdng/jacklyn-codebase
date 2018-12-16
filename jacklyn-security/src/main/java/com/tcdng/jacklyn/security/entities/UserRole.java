@@ -35,140 +35,140 @@ import com.tcdng.unify.core.util.StringUtils;
 @Table(name = "USERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
 public class UserRole extends BaseEntity implements Describable {
 
-	@ForeignKey(User.class)
-	private Long userId;
+    @ForeignKey(User.class)
+    private Long userId;
 
-	@ForeignKey(Role.class)
-	private Long roleId;
+    @ForeignKey(Role.class)
+    private Long roleId;
 
-	@ListOnly(key = "userId", property = "loginId")
-	private String userLoginId;
+    @ListOnly(key = "userId", property = "loginId")
+    private String userLoginId;
 
-	@ListOnly(key = "userId", property = "fullName")
-	private String userName;
+    @ListOnly(key = "userId", property = "fullName")
+    private String userName;
 
-	@ListOnly(key = "userId", property = "themeId")
-	private Long userThemeId;
+    @ListOnly(key = "userId", property = "themeId")
+    private Long userThemeId;
 
-	@ListOnly(key = "roleId", property = "name")
-	private String roleName;
+    @ListOnly(key = "roleId", property = "name")
+    private String roleName;
 
-	@ListOnly(key = "roleId", property = "description")
-	private String roleDesc;
+    @ListOnly(key = "roleId", property = "description")
+    private String roleDesc;
 
-	@ListOnly(key = "roleId", property = "application")
-	private String roleApplication;
+    @ListOnly(key = "roleId", property = "application")
+    private String roleApplication;
 
-	@ListOnly(key = "roleId", property = "activeBefore")
-	private Date activeBefore;
+    @ListOnly(key = "roleId", property = "activeBefore")
+    private Date activeBefore;
 
-	@ListOnly(key = "roleId", property = "activeAfter")
-	private Date activeAfter;
+    @ListOnly(key = "roleId", property = "activeAfter")
+    private Date activeAfter;
 
-	@ListOnly(key = "roleId", property = "status")
-	private RecordStatus roleStatus;
+    @ListOnly(key = "roleId", property = "status")
+    private RecordStatus roleStatus;
 
-	@ListOnly(key = "roleId", property = "themeId")
-	private Long roleThemeId;
+    @ListOnly(key = "roleId", property = "themeId")
+    private Long roleThemeId;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate(userName, " - ", roleDesc);
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate(userName, " - ", roleDesc);
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
+    public Long getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-	public String getUserLoginId() {
-		return userLoginId;
-	}
+    public String getUserLoginId() {
+        return userLoginId;
+    }
 
-	public void setUserLoginId(String userLoginId) {
-		this.userLoginId = userLoginId;
-	}
+    public void setUserLoginId(String userLoginId) {
+        this.userLoginId = userLoginId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public Long getUserThemeId() {
-		return userThemeId;
-	}
+    public Long getUserThemeId() {
+        return userThemeId;
+    }
 
-	public void setUserThemeId(Long userThemeId) {
-		this.userThemeId = userThemeId;
-	}
+    public void setUserThemeId(Long userThemeId) {
+        this.userThemeId = userThemeId;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
-	public String getRoleDesc() {
-		return roleDesc;
-	}
+    public String getRoleDesc() {
+        return roleDesc;
+    }
 
-	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
-	}
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
+    }
 
-	public String getRoleApplication() {
-		return roleApplication;
-	}
+    public String getRoleApplication() {
+        return roleApplication;
+    }
 
-	public void setRoleApplication(String roleApplication) {
-		this.roleApplication = roleApplication;
-	}
+    public void setRoleApplication(String roleApplication) {
+        this.roleApplication = roleApplication;
+    }
 
-	public Date getActiveBefore() {
-		return activeBefore;
-	}
+    public Date getActiveBefore() {
+        return activeBefore;
+    }
 
-	public void setActiveBefore(Date activeBefore) {
-		this.activeBefore = activeBefore;
-	}
+    public void setActiveBefore(Date activeBefore) {
+        this.activeBefore = activeBefore;
+    }
 
-	public Date getActiveAfter() {
-		return activeAfter;
-	}
+    public Date getActiveAfter() {
+        return activeAfter;
+    }
 
-	public void setActiveAfter(Date activeAfter) {
-		this.activeAfter = activeAfter;
-	}
+    public void setActiveAfter(Date activeAfter) {
+        this.activeAfter = activeAfter;
+    }
 
-	public RecordStatus getRoleStatus() {
-		return roleStatus;
-	}
+    public RecordStatus getRoleStatus() {
+        return roleStatus;
+    }
 
-	public void setRoleStatus(RecordStatus roleStatus) {
-		this.roleStatus = roleStatus;
-	}
+    public void setRoleStatus(RecordStatus roleStatus) {
+        this.roleStatus = roleStatus;
+    }
 
-	public Long getRoleThemeId() {
-		return roleThemeId;
-	}
+    public Long getRoleThemeId() {
+        return roleThemeId;
+    }
 
-	public void setRoleThemeId(Long roleThemeId) {
-		this.roleThemeId = roleThemeId;
-	}
+    public void setRoleThemeId(Long roleThemeId) {
+        this.roleThemeId = roleThemeId;
+    }
 }

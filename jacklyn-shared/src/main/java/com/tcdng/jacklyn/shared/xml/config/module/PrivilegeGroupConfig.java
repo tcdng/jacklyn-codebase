@@ -31,38 +31,38 @@ import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
  */
 public class PrivilegeGroupConfig {
 
-	private String category;
+    private String category;
 
-	private List<PrivilegeConfig> privilegeList;
+    private List<PrivilegeConfig> privilegeList;
 
-	public PrivilegeGroupConfig() {
-		this(PrivilegeCategoryConstants.APPLICATIONUI);
-	}
+    public PrivilegeGroupConfig() {
+        this(PrivilegeCategoryConstants.APPLICATIONUI);
+    }
 
-	public PrivilegeGroupConfig(String category) {
-		this.category = category;
-		this.privilegeList = new ArrayList<PrivilegeConfig>();
-	}
+    public PrivilegeGroupConfig(String category) {
+        this.category = category;
+        this.privilegeList = new ArrayList<PrivilegeConfig>();
+    }
 
-	public List<PrivilegeConfig> getPrivilegeList() {
-		return privilegeList;
-	}
+    public List<PrivilegeConfig> getPrivilegeList() {
+        return privilegeList;
+    }
 
-	@XmlElement(name = "privilege", required = true)
-	public void setPrivilegeList(List<PrivilegeConfig> privilegeList) {
-		this.privilegeList = privilegeList;
-	}
+    @XmlElement(name = "privilege", required = true)
+    public void setPrivilegeList(List<PrivilegeConfig> privilegeList) {
+        this.privilegeList = privilegeList;
+    }
 
-	public String getCategory() {
-		return category;
-	}
+    public String getCategory() {
+        return category;
+    }
 
-	@XmlAttribute
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    @XmlAttribute
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public void addPrivilegeConfig(PrivilegeConfig pc) {
-		this.privilegeList.add(pc);
-	}
+    public void addPrivilegeConfig(PrivilegeConfig pc) {
+        this.privilegeList.add(pc);
+    }
 }

@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfalertcrudpanel.upl")
 public class WfAlertCrudPanel extends AbstractInMemoryTableCrudPanel<WfAlert> {
 
-	public WfAlertCrudPanel() {
-		super(WfAlert.class, "workflow.wftemplate.wfstep.wfalert", false);
-	}
+    public WfAlertCrudPanel() {
+        super(WfAlert.class, "workflow.wftemplate.wfstep.wfalert", false);
+    }
 
 }

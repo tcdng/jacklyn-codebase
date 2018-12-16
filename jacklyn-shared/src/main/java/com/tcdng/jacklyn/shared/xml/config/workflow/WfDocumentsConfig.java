@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfDocumentsConfig {
 
-	private List<WfDocumentConfig> wfDocumentConfigList;
+    private List<WfDocumentConfig> wfDocumentConfigList;
 
-	public List<WfDocumentConfig> getWfDocumentConfigList() {
-		return wfDocumentConfigList;
-	}
+    public List<WfDocumentConfig> getWfDocumentConfigList() {
+        return wfDocumentConfigList;
+    }
 
-	@XmlElement(name="document", required=true)
-	public void setWfDocumentConfigList(List<WfDocumentConfig> wfDocumentConfigList) {
-		this.wfDocumentConfigList = wfDocumentConfigList;
-	}
+    @XmlElement(name = "document", required = true)
+    public void setWfDocumentConfigList(List<WfDocumentConfig> wfDocumentConfigList) {
+        this.wfDocumentConfigList = wfDocumentConfigList;
+    }
 
 }

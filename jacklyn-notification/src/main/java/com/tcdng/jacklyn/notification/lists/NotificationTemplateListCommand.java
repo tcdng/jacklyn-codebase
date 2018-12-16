@@ -33,17 +33,15 @@ import com.tcdng.unify.core.util.QueryUtils;
  * @since 1.0
  */
 @Component("notificationtemplatelist")
-public class NotificationTemplateListCommand
-		extends AbstractSingleStringParamsNotificationListCommand {
+public class NotificationTemplateListCommand extends AbstractSingleStringParamsNotificationListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, SingleStringParams params)
-			throws UnifyException {
-		NotificationTemplateQuery query = new NotificationTemplateQuery();
-		if (QueryUtils.isValidStringCriteria(params.getValue())) {
-			query.moduleName(params.getValue());
-		}
-		return getNotificationModule().findNotificationTemplates(
-				(NotificationTemplateQuery) query.status(RecordStatus.ACTIVE));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, SingleStringParams params) throws UnifyException {
+        NotificationTemplateQuery query = new NotificationTemplateQuery();
+        if (QueryUtils.isValidStringCriteria(params.getValue())) {
+            query.moduleName(params.getValue());
+        }
+        return getNotificationModule()
+                .findNotificationTemplates((NotificationTemplateQuery) query.status(RecordStatus.ACTIVE));
+    }
 }

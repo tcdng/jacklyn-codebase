@@ -35,10 +35,8 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("branchlist")
 public class BranchListCommand extends AbstractZeroParamsOrganizationListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getOrganizationModule()
-				.findBranches((BranchQuery) new BranchQuery().ignoreEmptyCriteria(true));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getOrganizationModule().findBranches((BranchQuery) new BranchQuery().ignoreEmptyCriteria(true));
+    }
 }

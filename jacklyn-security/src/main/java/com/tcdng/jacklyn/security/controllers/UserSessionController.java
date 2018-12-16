@@ -40,80 +40,80 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/security/upl/manageusersession.upl")
 public class UserSessionController extends ManageRecordController<UserSessionTracking, String> {
 
-	@Configurable(ApplicationComponents.APPLICATION_USERSESSIONMANAGER)
-	private UserSessionManager userSessionManager;
+    @Configurable(ApplicationComponents.APPLICATION_USERSESSIONMANAGER)
+    private UserSessionManager userSessionManager;
 
-	private String searchLoginId;
+    private String searchLoginId;
 
-	private String searchNodeId;
+    private String searchNodeId;
 
-	public UserSessionController() {
-		super(UserSessionTracking.class, "security.usersession.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public UserSessionController() {
+        super(UserSessionTracking.class, "security.usersession.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public String getSearchLoginId() {
-		return searchLoginId;
-	}
+    public String getSearchLoginId() {
+        return searchLoginId;
+    }
 
-	public void setSearchLoginId(String searchLoginId) {
-		this.searchLoginId = searchLoginId;
-	}
+    public void setSearchLoginId(String searchLoginId) {
+        this.searchLoginId = searchLoginId;
+    }
 
-	public String getSearchNodeId() {
-		return searchNodeId;
-	}
+    public String getSearchNodeId() {
+        return searchNodeId;
+    }
 
-	public void setSearchNodeId(String searchNodeId) {
-		this.searchNodeId = searchNodeId;
-	}
+    public void setSearchNodeId(String searchNodeId) {
+        this.searchNodeId = searchNodeId;
+    }
 
-	@Action
-	public String forceLogOut() throws UnifyException {
-		return findRecords();
-	}
+    @Action
+    public String forceLogOut() throws UnifyException {
+        return findRecords();
+    }
 
-	@Action
-	public String forceLogOutAll() throws UnifyException {
-		return findRecords();
-	}
+    @Action
+    public String forceLogOutAll() throws UnifyException {
+        return findRecords();
+    }
 
-	@Override
-	protected List<UserSessionTracking> find() throws UnifyException {
-		UserSessionTrackingQuery query = new UserSessionTrackingQuery();
-		if (QueryUtils.isValidStringCriteria(searchLoginId)) {
-			query.userLoginId(searchLoginId);
-		}
+    @Override
+    protected List<UserSessionTracking> find() throws UnifyException {
+        UserSessionTrackingQuery query = new UserSessionTrackingQuery();
+        if (QueryUtils.isValidStringCriteria(searchLoginId)) {
+            query.userLoginId(searchLoginId);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchNodeId)) {
-			query.node(searchNodeId);
-		}
-		query.ignoreEmptyCriteria(true);
-		return userSessionManager.findUserSessions(query);
-	}
+        if (QueryUtils.isValidStringCriteria(searchNodeId)) {
+            query.node(searchNodeId);
+        }
+        query.ignoreEmptyCriteria(true);
+        return userSessionManager.findUserSessions(query);
+    }
 
-	@Override
-	protected UserSessionTracking find(String id) throws UnifyException {
-		return userSessionManager.findUserSession(id);
-	}
+    @Override
+    protected UserSessionTracking find(String id) throws UnifyException {
+        return userSessionManager.findUserSession(id);
+    }
 
-	@Override
-	protected UserSessionTracking prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected UserSessionTracking prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(UserSessionTracking record) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(UserSessionTracking record) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(UserSessionTracking record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(UserSessionTracking record) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(UserSessionTracking record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(UserSessionTracking record) throws UnifyException {
+        return 0;
+    }
 }

@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("datefolderformatlist")
 public enum DateFolderFormat implements EnumConst {
 
-	DDMMYYY("ddMMyyyy"), MMDDYYYY("MMddyyyy"), YYYYMMDD("yyyyMMdd");
+    DDMMYYY("ddMMyyyy"), MMDDYYYY("MMddyyyy"), YYYYMMDD("yyyyMMdd");
 
-	private final String code;
+    private final String code;
 
-	private DateFolderFormat(String code) {
-		this.code = code;
-	}
+    private DateFolderFormat(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static DateFolderFormat fromCode(String code) {
-		return EnumUtils.fromCode(DateFolderFormat.class, code);
-	}
+    public static DateFolderFormat fromCode(String code) {
+        return EnumUtils.fromCode(DateFolderFormat.class, code);
+    }
 
-	public static DateFolderFormat fromName(String name) {
-		return EnumUtils.fromName(DateFolderFormat.class, name);
-	}
+    public static DateFolderFormat fromName(String name) {
+        return EnumUtils.fromName(DateFolderFormat.class, name);
+    }
 }

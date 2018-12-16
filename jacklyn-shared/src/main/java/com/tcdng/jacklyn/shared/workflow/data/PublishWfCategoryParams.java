@@ -31,34 +31,34 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class PublishWfCategoryParams extends RemoteCallParams {
 
-	private byte[] wfCategoryXml;
+    private byte[] wfCategoryXml;
 
-	private boolean activate;
-	
-	public PublishWfCategoryParams() {
-		this(null);
-	}
+    private boolean activate;
 
-	public PublishWfCategoryParams(byte[] wfCategoryXml) {
-		super(WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
-		this.wfCategoryXml = wfCategoryXml;
-	}
+    public PublishWfCategoryParams() {
+        this(null);
+    }
 
-	public byte[] getWfCategoryXml() {
-		return wfCategoryXml;
-	}
+    public PublishWfCategoryParams(byte[] wfCategoryXml) {
+        super(WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
+        this.wfCategoryXml = wfCategoryXml;
+    }
 
-	@XmlElement
-	public void setWfCategoryXml(byte[] wfCategoryXml) {
-		this.wfCategoryXml = wfCategoryXml;
-	}
+    public byte[] getWfCategoryXml() {
+        return wfCategoryXml;
+    }
 
-	public boolean isActivate() {
-		return activate;
-	}
+    @XmlElement
+    public void setWfCategoryXml(byte[] wfCategoryXml) {
+        this.wfCategoryXml = wfCategoryXml;
+    }
 
-	public void setActivate(boolean activate) {
-		this.activate = activate;
-	}
+    public boolean isActivate() {
+        return activate;
+    }
+
+    public void setActivate(boolean activate) {
+        this.activate = activate;
+    }
 
 }

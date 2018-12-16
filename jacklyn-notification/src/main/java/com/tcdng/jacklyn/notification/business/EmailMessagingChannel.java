@@ -38,26 +38,25 @@ import com.tcdng.unify.core.notification.EmailServerConfig;
 @Component(NotificationModuleNameConstants.EMAILMESSAGINGCHANNEL)
 public class EmailMessagingChannel extends AbstractMessagingChannel {
 
-	@Configurable(ApplicationComponents.APPLICATION_DEFAULTEMAILSERVER)
-	private EmailServer emailServer;
+    @Configurable(ApplicationComponents.APPLICATION_DEFAULTEMAILSERVER)
+    private EmailServer emailServer;
 
-	@Override
-	public boolean sendMessage(MessagingChannelDef notificationChannelDef, String subject,
-			String senderContact, List<String> recipientContactList, String messageBody,
-			boolean isHtml, List<FileAttachment> fileAttachmentList) throws UnifyException {
-		String configurationCode = notificationChannelDef.getNotificationChannelName();
-		if (!emailServer.isConfigured(configurationCode)) {
-			emailServer.configure(configurationCode, new EmailServerConfig(
-					notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
-					notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
-					notificationChannelDef.getPassword()));
-		}
+    @Override
+    public boolean sendMessage(MessagingChannelDef notificationChannelDef, String subject, String senderContact,
+            List<String> recipientContactList, String messageBody, boolean isHtml,
+            List<FileAttachment> fileAttachmentList) throws UnifyException {
+        String configurationCode = notificationChannelDef.getNotificationChannelName();
+        if (!emailServer.isConfigured(configurationCode)) {
+            emailServer.configure(configurationCode,
+                    new EmailServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
+                            notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
+                            notificationChannelDef.getPassword()));
+        }
 
-		Email email = Email.newBuilder().fromSender(senderContact)
-				.toRecipients(TYPE.TO, recipientContactList).withSubject(subject)
-				.withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
-				.build();
-		emailServer.sendEmail(configurationCode, email);
-		return email.isSent();
-	}
+        Email email = Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
+                .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
+                .build();
+        emailServer.sendEmail(configurationCode, email);
+        return email.isSent();
+    }
 }

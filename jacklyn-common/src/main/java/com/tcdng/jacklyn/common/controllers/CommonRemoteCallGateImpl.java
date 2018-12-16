@@ -33,17 +33,17 @@ import com.tcdng.unify.web.AbstractRemoteCallGate;
 @Component(CommonModuleNameConstants.JACKLYNAPPLICATIONSERVICEGATE)
 public class CommonRemoteCallGateImpl extends AbstractRemoteCallGate {
 
-	@Override
-	protected void doGrantPass(String clientAppCode, String methodCode) throws UnifyException {
-		if (!getRemoteCallSystemAssetProvider().accessSystemAsset(clientAppCode,
-				SystemAssetType.REMOTECALLMETHOD, methodCode)) {
-			throw new UnifyException(CommonModuleErrorConstants.APPLICATION_SERVICE_ACCESSDENIED,
-					clientAppCode, methodCode);
-		}
-	}
+    @Override
+    protected void doGrantPass(String clientAppCode, String methodCode) throws UnifyException {
+        if (!getRemoteCallSystemAssetProvider().accessSystemAsset(clientAppCode, SystemAssetType.REMOTECALLMETHOD,
+                methodCode)) {
+            throw new UnifyException(CommonModuleErrorConstants.APPLICATION_SERVICE_ACCESSDENIED, clientAppCode,
+                    methodCode);
+        }
+    }
 
-	private RemoteCallSystemAssetProvider getRemoteCallSystemAssetProvider() throws UnifyException {
-		return (RemoteCallSystemAssetProvider) getApplicationAttribute(
-				JacklynApplicationAttributeConstants.RC_SYSTEMASSET_PROVIDER);
-	}
+    private RemoteCallSystemAssetProvider getRemoteCallSystemAssetProvider() throws UnifyException {
+        return (RemoteCallSystemAssetProvider) getApplicationAttribute(
+                JacklynApplicationAttributeConstants.RC_SYSTEMASSET_PROVIDER);
+    }
 }

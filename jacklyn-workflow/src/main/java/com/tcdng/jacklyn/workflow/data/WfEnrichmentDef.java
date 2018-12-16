@@ -24,16 +24,16 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfEnrichmentDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 295716302360623629L;
+    private static final long serialVersionUID = 295716302360623629L;
 
-	private String logic;
+    private String logic;
 
-	public WfEnrichmentDef(String name, String description, String logic) {
-		super(name, description);
-		this.logic = logic;
-	}
+    public WfEnrichmentDef(String name, String description, String logic) {
+        super(name, description);
+        this.logic = logic;
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 }

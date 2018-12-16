@@ -28,14 +28,14 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractSystemListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	public AbstractSystemListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractSystemListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected SystemModule getSystemModule() {
-		return systemModule;
-	}
+    protected SystemModule getSystemModule() {
+        return systemModule;
+    }
 }

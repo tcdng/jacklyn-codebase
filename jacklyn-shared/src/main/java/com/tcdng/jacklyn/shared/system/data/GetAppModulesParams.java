@@ -30,8 +30,8 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetAppModulesParams extends RemoteCallParams {
 
-	public GetAppModulesParams() {
-		super(SystemRemoteCallNameConstants.GET_APPLICATION_MODULES);
-	}
+    public GetAppModulesParams() {
+        super(SystemRemoteCallNameConstants.GET_APPLICATION_MODULES);
+    }
 
 }

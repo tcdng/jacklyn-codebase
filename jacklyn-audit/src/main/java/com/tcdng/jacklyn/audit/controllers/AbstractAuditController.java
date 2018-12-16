@@ -29,15 +29,15 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractAuditController extends BasePageController {
 
-	@Configurable(AuditModuleNameConstants.AUDITBUSINESSMODULE)
-	private AuditModule auditModule;
+    @Configurable(AuditModuleNameConstants.AUDITBUSINESSMODULE)
+    private AuditModule auditModule;
 
-	public AbstractAuditController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractAuditController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected AuditModule getAuditModule() {
-		return auditModule;
-	}
+    protected AuditModule getAuditModule() {
+        return auditModule;
+    }
 
 }

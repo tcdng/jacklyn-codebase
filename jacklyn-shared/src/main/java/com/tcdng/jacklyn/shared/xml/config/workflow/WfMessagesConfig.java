@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfMessagesConfig {
 
-	private List<WfMessageConfig> wfMessageConfigList;
+    private List<WfMessageConfig> wfMessageConfigList;
 
-	public List<WfMessageConfig> getWfMessageConfigList() {
-		return wfMessageConfigList;
-	}
+    public List<WfMessageConfig> getWfMessageConfigList() {
+        return wfMessageConfigList;
+    }
 
-	@XmlElement(name="message", required=true)
-	public void setWfMessageConfigList(List<WfMessageConfig> wfMessageConfigList) {
-		this.wfMessageConfigList = wfMessageConfigList;
-	}
+    @XmlElement(name = "message", required = true)
+    public void setWfMessageConfigList(List<WfMessageConfig> wfMessageConfigList) {
+        this.wfMessageConfigList = wfMessageConfigList;
+    }
 
 }

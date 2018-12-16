@@ -33,90 +33,90 @@ import com.tcdng.unify.core.UnifyException;
  */
 public class WfTemplateDef extends BaseWfDef {
 
-	private static final long serialVersionUID = -7947997247077702621L;
+    private static final long serialVersionUID = -7947997247077702621L;
 
-	private Long wfTemplateId;
+    private Long wfTemplateId;
 
-	private String globalName;
+    private String globalName;
 
-	private Date timestamp;
+    private Date timestamp;
 
-	private WfDocDef wfDocDef;
+    private WfDocDef wfDocDef;
 
-	private WfStepDef startStep;
+    private WfStepDef startStep;
 
-	private WfManualInitDef manualInitDef;
+    private WfManualInitDef manualInitDef;
 
-	private Map<String, WfStepDef> steps;
+    private Map<String, WfStepDef> steps;
 
-	public WfTemplateDef(Long wfTemplateId, String globalName, String name, String description,
-			Date timestamp, WfDocDef wfDocDef, List<WfStepDef> stepList) {
-		super(name, description);
-		this.wfTemplateId = wfTemplateId;
-		this.globalName = globalName;
-		this.timestamp = timestamp;
-		this.wfDocDef = wfDocDef;
+    public WfTemplateDef(Long wfTemplateId, String globalName, String name, String description, Date timestamp,
+            WfDocDef wfDocDef, List<WfStepDef> stepList) {
+        super(name, description);
+        this.wfTemplateId = wfTemplateId;
+        this.globalName = globalName;
+        this.timestamp = timestamp;
+        this.wfDocDef = wfDocDef;
 
-		if (stepList != null) {
-			this.steps = new HashMap<String, WfStepDef>();
-			for (WfStepDef wfStepDef : stepList) {
-				if (wfStepDef.isStart()) {
-					startStep = wfStepDef;
-				} else if (wfStepDef.isManual()) {
-					manualInitDef = new WfManualInitDef(wfDocDef, wfStepDef);
-				}
+        if (stepList != null) {
+            this.steps = new HashMap<String, WfStepDef>();
+            for (WfStepDef wfStepDef : stepList) {
+                if (wfStepDef.isStart()) {
+                    startStep = wfStepDef;
+                } else if (wfStepDef.isManual()) {
+                    manualInitDef = new WfManualInitDef(wfDocDef, wfStepDef);
+                }
 
-				this.steps.put(wfStepDef.getName(), wfStepDef);
-			}
-		} else {
-			this.steps = Collections.emptyMap();
-		}
-	}
+                this.steps.put(wfStepDef.getName(), wfStepDef);
+            }
+        } else {
+            this.steps = Collections.emptyMap();
+        }
+    }
 
-	public Long getWfTemplateId() {
-		return wfTemplateId;
-	}
+    public Long getWfTemplateId() {
+        return wfTemplateId;
+    }
 
-	public String getGlobalName() {
-		return globalName;
-	}
+    public String getGlobalName() {
+        return globalName;
+    }
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	public WfDocDef getWfDocDef() {
-		return wfDocDef;
-	}
+    public WfDocDef getWfDocDef() {
+        return wfDocDef;
+    }
 
-	public WfStepDef getStartStep() {
-		return startStep;
-	}
+    public WfStepDef getStartStep() {
+        return startStep;
+    }
 
-	public Set<String> getWfStepNames() {
-		return this.steps.keySet();
-	}
+    public Set<String> getWfStepNames() {
+        return this.steps.keySet();
+    }
 
-	public WfManualInitDef getManualInitDef() throws UnifyException {
-		if (manualInitDef == null) {
-			throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_TEMPLATE_NO_MANUAL_INIT,
-					this.getDescription());
-		}
+    public WfManualInitDef getManualInitDef() throws UnifyException {
+        if (manualInitDef == null) {
+            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_TEMPLATE_NO_MANUAL_INIT,
+                    this.getDescription());
+        }
 
-		return manualInitDef;
-	}
+        return manualInitDef;
+    }
 
-	public boolean isSupportManualInit() {
-		return manualInitDef != null;
-	}
+    public boolean isSupportManualInit() {
+        return manualInitDef != null;
+    }
 
-	public WfStepDef getWfStepDef(String stepName) throws UnifyException {
-		WfStepDef wfStepDef = this.steps.get(stepName);
-		if (wfStepDef == null) {
-			throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_STEP_WITH_NAME_UNKNOWN,
-					this.getDescription(), stepName);
-		}
+    public WfStepDef getWfStepDef(String stepName) throws UnifyException {
+        WfStepDef wfStepDef = this.steps.get(stepName);
+        if (wfStepDef == null) {
+            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_STEP_WITH_NAME_UNKNOWN,
+                    this.getDescription(), stepName);
+        }
 
-		return wfStepDef;
-	}
+        return wfStepDef;
+    }
 }

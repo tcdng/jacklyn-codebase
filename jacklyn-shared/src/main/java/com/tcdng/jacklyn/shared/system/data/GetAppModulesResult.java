@@ -32,22 +32,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetAppModulesResult extends RemoteCallResult {
 
-	private List<AppModule> moduleList;
+    private List<AppModule> moduleList;
 
-	public GetAppModulesResult(List<AppModule> moduleList) {
-		this.moduleList = moduleList;
-	}
+    public GetAppModulesResult(List<AppModule> moduleList) {
+        this.moduleList = moduleList;
+    }
 
-	public GetAppModulesResult() {
+    public GetAppModulesResult() {
 
-	}
+    }
 
-	public List<AppModule> getModuleList() {
-		return moduleList;
-	}
+    public List<AppModule> getModuleList() {
+        return moduleList;
+    }
 
-	@XmlElement(name = "module")
-	public void setModuleList(List<AppModule> moduleList) {
-		this.moduleList = moduleList;
-	}
+    @XmlElement(name = "module")
+    public void setModuleList(List<AppModule> moduleList) {
+        this.moduleList = moduleList;
+    }
 }

@@ -36,101 +36,99 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wftemplate")
 @UplBinding("web/workflow/upl/managewftemplate.upl")
-@SessionLoading(crudPanelLists = {
-		@CrudPanelList(panel = "frmWfStepListPanel", field = "largeData.stepList"),
-		@CrudPanelList(panel = "frmWfEnrichmentListPanel", field = "largeData.enrichmentList"),
-		@CrudPanelList(panel = "frmWfRoutingListPanel", field = "largeData.routingList"),
-		@CrudPanelList(panel = "frmWfUserActionListPanel", field = "largeData.userActionList"),
-		@CrudPanelList(panel = "frmWfRecordActionListPanel", field = "largeData.recordActionList"),
-		@CrudPanelList(panel = "frmWfFormPrivilegeListPanel",
-				field = "largeData.formPrivilegeList"),
-		@CrudPanelList(panel = "frmWfPolicyListPanel", field = "largeData.policyList"),
-		@CrudPanelList(panel = "frmWfAlertListPanel", field = "largeData.alertList") })
+@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmWfStepListPanel", field = "largeData.stepList"),
+        @CrudPanelList(panel = "frmWfEnrichmentListPanel", field = "largeData.enrichmentList"),
+        @CrudPanelList(panel = "frmWfRoutingListPanel", field = "largeData.routingList"),
+        @CrudPanelList(panel = "frmWfUserActionListPanel", field = "largeData.userActionList"),
+        @CrudPanelList(panel = "frmWfRecordActionListPanel", field = "largeData.recordActionList"),
+        @CrudPanelList(panel = "frmWfFormPrivilegeListPanel", field = "largeData.formPrivilegeList"),
+        @CrudPanelList(panel = "frmWfPolicyListPanel", field = "largeData.policyList"),
+        @CrudPanelList(panel = "frmWfAlertListPanel", field = "largeData.alertList") })
 public class WfTemplateController extends AbstractWorkflowRecordController<WfTemplate> {
 
-	private Long searchWfCategoryId;
+    private Long searchWfCategoryId;
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private WfTemplateLargeData largeData;
+    private WfTemplateLargeData largeData;
 
-	public WfTemplateController() {
-		super(WfTemplate.class, "workflow.wftemplate.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public WfTemplateController() {
+        super(WfTemplate.class, "workflow.wftemplate.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchWfCategoryId() {
-		return searchWfCategoryId;
-	}
+    public Long getSearchWfCategoryId() {
+        return searchWfCategoryId;
+    }
 
-	public void setSearchWfCategoryId(Long searchWfCategoryId) {
-		this.searchWfCategoryId = searchWfCategoryId;
-	}
+    public void setSearchWfCategoryId(Long searchWfCategoryId) {
+        this.searchWfCategoryId = searchWfCategoryId;
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public WfTemplateLargeData getLargeData() {
-		return largeData;
-	}
+    public WfTemplateLargeData getLargeData() {
+        return largeData;
+    }
 
-	@Override
-	protected List<WfTemplate> find() throws UnifyException {
-		WfTemplateQuery query = new WfTemplateQuery();
-		if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
-			query.wfCategoryId(searchWfCategoryId);
-		}
+    @Override
+    protected List<WfTemplate> find() throws UnifyException {
+        WfTemplateQuery query = new WfTemplateQuery();
+        if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
+            query.wfCategoryId(searchWfCategoryId);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		query.ignoreEmptyCriteria(true);
-		return getWorkflowModule().findWfTemplates(query);
-	}
+        query.ignoreEmptyCriteria(true);
+        return getWorkflowModule().findWfTemplates(query);
+    }
 
-	@Override
-	protected WfTemplate find(Long id) throws UnifyException {
-		largeData = getWorkflowModule().findLargeWfTemplate(id);
-		return largeData.getData();
-	}
+    @Override
+    protected WfTemplate find(Long id) throws UnifyException {
+        largeData = getWorkflowModule().findLargeWfTemplate(id);
+        return largeData.getData();
+    }
 
-	@Override
-	protected WfTemplate prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected WfTemplate prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(WfTemplate wfDefData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(WfTemplate wfDefData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(WfTemplate wfDefData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(WfTemplate wfDefData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(WfTemplate wfDefData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(WfTemplate wfDefData) throws UnifyException {
+        return 0;
+    }
 }

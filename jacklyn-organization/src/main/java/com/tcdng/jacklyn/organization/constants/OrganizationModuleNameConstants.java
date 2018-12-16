@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.organization.constants;
  */
 public interface OrganizationModuleNameConstants {
 
-	String ORGANIZATION_MODULE = "organization";
+    String ORGANIZATION_MODULE = "organization";
 
-	String ORGANIZATIONBUSINESSMODULE = "jacklyn-organizationbusinessmodule";
+    String ORGANIZATIONBUSINESSMODULE = "jacklyn-organizationbusinessmodule";
 }

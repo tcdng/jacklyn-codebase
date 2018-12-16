@@ -26,25 +26,25 @@ import com.tcdng.unify.core.business.BusinessModule;
  */
 public interface TestChequeBusinessModule extends BusinessModule {
 
-	/**
-	 * Creates a cheque image record.
-	 * 
-	 * @param record
-	 *            the record to create
-	 * @return the record ID
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Long createChequeImage(TestChequeImage record) throws UnifyException;
+    /**
+     * Creates a cheque image record.
+     * 
+     * @param record
+     *            the record to create
+     * @return the record ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createChequeImage(TestChequeImage record) throws UnifyException;
 
-	/**
-	 * Finds cheque image by ID.
-	 * 
-	 * @param id
-	 *            the ID to search with
-	 * @return cheque image record
-	 * @throws UnifyException
-	 *             if recotd with ID is not found
-	 */
-	TestChequeImage findChequeImage(Long id) throws UnifyException;
+    /**
+     * Finds cheque image by ID.
+     * 
+     * @param id
+     *            the ID to search with
+     * @return cheque image record
+     * @throws UnifyException
+     *             if recotd with ID is not found
+     */
+    TestChequeImage findChequeImage(Long id) throws UnifyException;
 }

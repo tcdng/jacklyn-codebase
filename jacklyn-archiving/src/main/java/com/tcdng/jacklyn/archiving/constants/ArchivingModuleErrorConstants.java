@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.archiving.constants;
  */
 public interface ArchivingModuleErrorConstants {
 
-	/** File archive configuration with name {0} is unknown */
-	String FILEARCHIVECONFIG_NAME_UNKNOWN = "ARCHIVING_0001";
+    /** File archive configuration with name {0} is unknown */
+    String FILEARCHIVECONFIG_NAME_UNKNOWN = "ARCHIVING_0001";
 
-	/** File archive configuration with name {0} is inactive */
-	String FILEARCHIVECONFIG_INACTIVE = "ARCHIVING_0002";
+    /** File archive configuration with name {0} is inactive */
+    String FILEARCHIVECONFIG_INACTIVE = "ARCHIVING_0002";
 }

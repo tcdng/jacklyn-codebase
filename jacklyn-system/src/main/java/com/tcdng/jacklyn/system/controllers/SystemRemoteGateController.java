@@ -60,89 +60,83 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/system/gate")
 public class SystemRemoteGateController extends BaseRemoteCallController {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	@GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,
-			description = "$m{system.gate.remotecall.getapplicationinfo}")
-	public GetAppInfoResult getApplicationInfo(GetAppInfoParams params) throws UnifyException {
-		return new GetAppInfoResult(getApplicationName(),
-				systemModule.getSysParameterValue(String.class,
-						SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION),
-				systemModule.getSysParameterValue(String.class,
-						SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
-	}
+    @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,
+            description = "$m{system.gate.remotecall.getapplicationinfo}")
+    public GetAppInfoResult getApplicationInfo(GetAppInfoParams params) throws UnifyException {
+        return new GetAppInfoResult(getApplicationName(),
+                systemModule.getSysParameterValue(String.class,
+                        SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION),
+                systemModule.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
+    }
 
-	@GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MENU,
-			description = "$m{system.gate.remotecall.getapplicationmenu}")
-	public GetAppMenuResult getApplicationMenu(GetAppMenuParams params) throws UnifyException {
-		List<AppMenuItemGroup> appMenuItemGroupList = new ArrayList<AppMenuItemGroup>();
-		ApplicationMenuQuery menuQuery = new ApplicationMenuQuery();
-		if (QueryUtils.isValidStringCriteria(params.getModuleName())) {
-			menuQuery.moduleName(params.getModuleName());
-		}
+    @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MENU,
+            description = "$m{system.gate.remotecall.getapplicationmenu}")
+    public GetAppMenuResult getApplicationMenu(GetAppMenuParams params) throws UnifyException {
+        List<AppMenuItemGroup> appMenuItemGroupList = new ArrayList<AppMenuItemGroup>();
+        ApplicationMenuQuery menuQuery = new ApplicationMenuQuery();
+        if (QueryUtils.isValidStringCriteria(params.getModuleName())) {
+            menuQuery.moduleName(params.getModuleName());
+        }
 
-		if (QueryUtils.isValidStringCriteria(params.getMenuName())) {
-			menuQuery.name(params.getMenuName());
-		}
-		menuQuery.ignoreEmptyCriteria(true);
-		menuQuery.orderByDisplayOrder();
+        if (QueryUtils.isValidStringCriteria(params.getMenuName())) {
+            menuQuery.name(params.getMenuName());
+        }
+        menuQuery.ignoreEmptyCriteria(true);
+        menuQuery.orderByDisplayOrder();
 
-		List<ApplicationMenu> menuList = systemModule.findMenus(menuQuery);
-		for (ApplicationMenu menuData : menuList) {
-			List<AppMenuItem> appMenuItemList = new ArrayList<AppMenuItem>();
-			List<ApplicationMenuItem> menuItemList = systemModule.findMenuItems(
-					new ApplicationMenuItemQuery().menuId(menuData.getId()).orderByDisplayOrder());
-			for (ApplicationMenuItem menuItemData : menuItemList) {
-				String remotePath = menuItemData.getRemotePath();
-				if (!StringUtils.isBlank(remotePath)) {
-					appMenuItemList.add(new AppMenuItem(menuItemData.getName(),
-							resolveApplicationMessage(menuItemData.getDescription()),
-							resolveApplicationMessage(menuItemData.getPageCaption()),
-							resolveApplicationMessage(menuItemData.getCaption()), remotePath));
-				}
-			}
+        List<ApplicationMenu> menuList = systemModule.findMenus(menuQuery);
+        for (ApplicationMenu menuData : menuList) {
+            List<AppMenuItem> appMenuItemList = new ArrayList<AppMenuItem>();
+            List<ApplicationMenuItem> menuItemList = systemModule
+                    .findMenuItems(new ApplicationMenuItemQuery().menuId(menuData.getId()).orderByDisplayOrder());
+            for (ApplicationMenuItem menuItemData : menuItemList) {
+                String remotePath = menuItemData.getRemotePath();
+                if (!StringUtils.isBlank(remotePath)) {
+                    appMenuItemList.add(new AppMenuItem(menuItemData.getName(),
+                            resolveApplicationMessage(menuItemData.getDescription()),
+                            resolveApplicationMessage(menuItemData.getPageCaption()),
+                            resolveApplicationMessage(menuItemData.getCaption()), remotePath));
+                }
+            }
 
-			String remotePath = menuData.getRemotePath();
-			if (!StringUtils.isBlank(remotePath) || !appMenuItemList.isEmpty()) {
-				appMenuItemGroupList.add(new AppMenuItemGroup(menuData.getName(),
-						resolveApplicationMessage(menuData.getDescription()),
-						resolveApplicationMessage(menuData.getPageCaption()),
-						resolveApplicationMessage(menuData.getCaption()), remotePath,
-						appMenuItemList));
-			}
-		}
+            String remotePath = menuData.getRemotePath();
+            if (!StringUtils.isBlank(remotePath) || !appMenuItemList.isEmpty()) {
+                appMenuItemGroupList.add(
+                        new AppMenuItemGroup(menuData.getName(), resolveApplicationMessage(menuData.getDescription()),
+                                resolveApplicationMessage(menuData.getPageCaption()),
+                                resolveApplicationMessage(menuData.getCaption()), remotePath, appMenuItemList));
+            }
+        }
 
-		return new GetAppMenuResult(appMenuItemGroupList);
-	}
+        return new GetAppMenuResult(appMenuItemGroupList);
+    }
 
-	@GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MODULES,
-			description = "$m{system.gate.remotecall.getapplicationmodule}")
-	public GetAppModulesResult getApplicationModules(GetAppModulesParams params)
-			throws UnifyException {
-		List<AppModule> appModuleList = new ArrayList<AppModule>();
-		List<Module> moduleList = systemModule
-				.findModules((ModuleQuery) new ModuleQuery().ignoreEmptyCriteria(true));
-		for (Module moduleData : moduleList) {
-			appModuleList.add(new AppModule(moduleData.getName(), moduleData.getDescription(),
-					moduleData.getStatus().code()));
-		}
+    @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MODULES,
+            description = "$m{system.gate.remotecall.getapplicationmodule}")
+    public GetAppModulesResult getApplicationModules(GetAppModulesParams params) throws UnifyException {
+        List<AppModule> appModuleList = new ArrayList<AppModule>();
+        List<Module> moduleList = systemModule.findModules((ModuleQuery) new ModuleQuery().ignoreEmptyCriteria(true));
+        for (Module moduleData : moduleList) {
+            appModuleList.add(
+                    new AppModule(moduleData.getName(), moduleData.getDescription(), moduleData.getStatus().code()));
+        }
 
-		return new GetAppModulesResult(appModuleList);
-	}
+        return new GetAppModulesResult(appModuleList);
+    }
 
-	@GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
-			description = "$m{system.gate.remotecall.getrecordtypes}")
-	public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params)
-			throws UnifyException {
-		return new GetToolingRecordTypeResult(systemModule.findToolingRecordTypes());
-	}
+    @GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
+            description = "$m{system.gate.remotecall.getrecordtypes}")
+    public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
+        return new GetToolingRecordTypeResult(systemModule.findToolingRecordTypes());
+    }
 
-	@GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES,
-			description = "$m{system.gate.remotecall.getlisttypes}")
-	public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params)
-			throws UnifyException {
-		return new GetToolingListTypeResult(systemModule.findToolingListTypes());
-	}
+    @GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES,
+            description = "$m{system.gate.remotecall.getlisttypes}")
+    public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params) throws UnifyException {
+        return new GetToolingListTypeResult(systemModule.findToolingListTypes());
+    }
 
 }

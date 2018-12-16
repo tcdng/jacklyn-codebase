@@ -27,35 +27,35 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class ApplicationMenuItemQuery extends BaseInstallEntityQuery<ApplicationMenuItem> {
 
-	public ApplicationMenuItemQuery() {
-		super(ApplicationMenuItem.class);
-	}
+    public ApplicationMenuItemQuery() {
+        super(ApplicationMenuItem.class);
+    }
 
-	public ApplicationMenuItemQuery moduleId(Long moduleId) {
-		return (ApplicationMenuItemQuery) equals("moduleId", moduleId);
-	}
+    public ApplicationMenuItemQuery moduleId(Long moduleId) {
+        return (ApplicationMenuItemQuery) equals("moduleId", moduleId);
+    }
 
-	public ApplicationMenuItemQuery moduleName(String moduleName) {
-		return (ApplicationMenuItemQuery) equals("moduleName", moduleName);
-	}
+    public ApplicationMenuItemQuery moduleName(String moduleName) {
+        return (ApplicationMenuItemQuery) equals("moduleName", moduleName);
+    }
 
-	public ApplicationMenuItemQuery menuId(Long menuId) {
-		return (ApplicationMenuItemQuery) equals("menuId", menuId);
-	}
+    public ApplicationMenuItemQuery menuId(Long menuId) {
+        return (ApplicationMenuItemQuery) equals("menuId", menuId);
+    }
 
-	public ApplicationMenuItemQuery parentMenuItemId(Long parentMenuItemId) {
-		return (ApplicationMenuItemQuery) equals("parentMenuItemId", parentMenuItemId);
-	}
+    public ApplicationMenuItemQuery parentMenuItemId(Long parentMenuItemId) {
+        return (ApplicationMenuItemQuery) equals("parentMenuItemId", parentMenuItemId);
+    }
 
-	public ApplicationMenuItemQuery name(String name) {
-		return (ApplicationMenuItemQuery) equals("name", name);
-	}
+    public ApplicationMenuItemQuery name(String name) {
+        return (ApplicationMenuItemQuery) equals("name", name);
+    }
 
-	public ApplicationMenuItemQuery nameNotIn(List<String> names) {
-		return (ApplicationMenuItemQuery) notAmongst("name", names);
-	}
+    public ApplicationMenuItemQuery nameNotIn(List<String> names) {
+        return (ApplicationMenuItemQuery) notAmongst("name", names);
+    }
 
-	public ApplicationMenuItemQuery orderByDisplayOrder() {
-		return (ApplicationMenuItemQuery) order("displayOrder");
-	}
+    public ApplicationMenuItemQuery orderByDisplayOrder() {
+        return (ApplicationMenuItemQuery) order("displayOrder");
+    }
 }

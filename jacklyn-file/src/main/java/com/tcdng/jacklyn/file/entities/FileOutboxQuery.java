@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.shared.file.FileOutboxStatus;
  */
 public class FileOutboxQuery extends AbstractFileBoxDataQuery<FileOutbox> {
 
-	public FileOutboxQuery() {
-		super(FileOutbox.class);
-	}
+    public FileOutboxQuery() {
+        super(FileOutbox.class);
+    }
 
-	public FileOutboxQuery status(FileOutboxStatus status) {
-		return (FileOutboxQuery) equals("status", status);
-	}
+    public FileOutboxQuery status(FileOutboxStatus status) {
+        return (FileOutboxQuery) equals("status", status);
+    }
 
-	public FileOutboxQuery statusNot(FileOutboxStatus status) {
-		return (FileOutboxQuery) notEqual("status", status);
-	}
+    public FileOutboxQuery statusNot(FileOutboxStatus status) {
+        return (FileOutboxQuery) notEqual("status", status);
+    }
 }

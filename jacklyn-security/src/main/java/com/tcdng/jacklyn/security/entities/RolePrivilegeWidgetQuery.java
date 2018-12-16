@@ -27,32 +27,32 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class RolePrivilegeWidgetQuery extends BaseEntityQuery<RolePrivilegeWidget> {
 
-	public RolePrivilegeWidgetQuery() {
-		super(RolePrivilegeWidget.class);
-	}
+    public RolePrivilegeWidgetQuery() {
+        super(RolePrivilegeWidget.class);
+    }
 
-	public RolePrivilegeWidgetQuery rolePrivilegeId(Long rolePrivilegeId) {
-		return (RolePrivilegeWidgetQuery) equals("rolePrivilegeId", rolePrivilegeId);
-	}
+    public RolePrivilegeWidgetQuery rolePrivilegeId(Long rolePrivilegeId) {
+        return (RolePrivilegeWidgetQuery) equals("rolePrivilegeId", rolePrivilegeId);
+    }
 
-	public RolePrivilegeWidgetQuery rolePrivilegeIdIn(Collection<Long> rolePrivilegeId) {
-		return (RolePrivilegeWidgetQuery) amongst("rolePrivilegeId", rolePrivilegeId);
-	}
+    public RolePrivilegeWidgetQuery rolePrivilegeIdIn(Collection<Long> rolePrivilegeId) {
+        return (RolePrivilegeWidgetQuery) amongst("rolePrivilegeId", rolePrivilegeId);
+    }
 
-	public RolePrivilegeWidgetQuery roleId(Long roleId) {
-		return (RolePrivilegeWidgetQuery) equals("roleId", roleId);
-	}
+    public RolePrivilegeWidgetQuery roleId(Long roleId) {
+        return (RolePrivilegeWidgetQuery) equals("roleId", roleId);
+    }
 
-	public RolePrivilegeWidgetQuery moduleId(Long moduleId) {
-		return (RolePrivilegeWidgetQuery) equals("moduleId", moduleId);
-	}
+    public RolePrivilegeWidgetQuery moduleId(Long moduleId) {
+        return (RolePrivilegeWidgetQuery) equals("moduleId", moduleId);
+    }
 
-	public RolePrivilegeWidgetQuery privilegeCategoryId(Long privilegeCategoryId) {
-		return (RolePrivilegeWidgetQuery) equals("privilegeCategoryId", privilegeCategoryId);
-	}
+    public RolePrivilegeWidgetQuery privilegeCategoryId(Long privilegeCategoryId) {
+        return (RolePrivilegeWidgetQuery) equals("privilegeCategoryId", privilegeCategoryId);
+    }
 
-	public RolePrivilegeWidgetQuery categoryName(String categoryName) {
-		return (RolePrivilegeWidgetQuery) equals("categoryName", categoryName);
-	}
+    public RolePrivilegeWidgetQuery categoryName(String categoryName) {
+        return (RolePrivilegeWidgetQuery) equals("categoryName", categoryName);
+    }
 
 }

@@ -29,60 +29,60 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("AUTHENTICATION")
 public class Authentication extends BaseStatusEntity {
 
-	@Column(length = 32)
-	private String name;
+    @Column(length = 32)
+    private String name;
 
-	@Column(length = 64)
-	private String description;
+    @Column(length = 64)
+    private String description;
 
-	@Column(length = 32)
-	private String userName;
+    @Column(length = 32)
+    private String userName;
 
-	@Column(length = 256)
-	private String password;
+    @Column(length = 256)
+    private String password;
 
-	@Column(length = 32)
-	private String cryptograph;
+    @Column(length = 32)
+    private String cryptograph;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getCryptograph() {
-		return cryptograph;
-	}
+    public String getCryptograph() {
+        return cryptograph;
+    }
 
-	public void setCryptograph(String cryptograph) {
-		this.cryptograph = cryptograph;
-	}
+    public void setCryptograph(String cryptograph) {
+        this.cryptograph = cryptograph;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

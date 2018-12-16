@@ -27,24 +27,24 @@ import com.tcdng.unify.core.util.EnumUtils;
  */
 @StaticList("inboxfilestatuslist")
 public enum FileInboxStatus implements EnumConst {
-	NOT_RECEIVED("N"), RECEIVED("R"), ABORTED("A");
+    NOT_RECEIVED("N"), RECEIVED("R"), ABORTED("A");
 
-	private final String code;
+    private final String code;
 
-	private FileInboxStatus(String constant) {
-		this.code = constant;
-	}
+    private FileInboxStatus(String constant) {
+        this.code = constant;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static FileInboxStatus fromCode(String code) {
-		return EnumUtils.fromCode(FileInboxStatus.class, code);
-	}
+    public static FileInboxStatus fromCode(String code) {
+        return EnumUtils.fromCode(FileInboxStatus.class, code);
+    }
 
-	public static FileInboxStatus fromName(String name) {
-		return EnumUtils.fromName(FileInboxStatus.class, name);
-	}
+    public static FileInboxStatus fromName(String name) {
+        return EnumUtils.fromName(FileInboxStatus.class, name);
+    }
 }

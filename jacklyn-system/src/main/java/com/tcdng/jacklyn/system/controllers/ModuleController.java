@@ -36,89 +36,89 @@ import com.tcdng.unify.core.util.QueryUtils;
 @UplBinding("web/system/upl/managemodule.upl")
 public class ModuleController extends AbstractSystemRecordController<Module> {
 
-	private String searchDescription;
+    private String searchDescription;
 
-	public ModuleController() {
-		super(Module.class, "system.module.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-						| ManageRecordModifier.MODIFY | ManageRecordModifier.ACTIVATABLE
-						| ManageRecordModifier.REPORTABLE | ManageRecordModifier.ALTERNATE_SAVE);
-	}
+    public ModuleController() {
+        super(Module.class, "system.module.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.MODIFY
+                        | ManageRecordModifier.ACTIVATABLE | ManageRecordModifier.REPORTABLE
+                        | ManageRecordModifier.ALTERNATE_SAVE);
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	@Override
-	protected List<Module> find() throws UnifyException {
-		ModuleQuery query = new ModuleQuery();
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.order("description").ignoreEmptyCriteria(true);
-		return getSystemModule().findModules(query);
-	}
+    @Override
+    protected List<Module> find() throws UnifyException {
+        ModuleQuery query = new ModuleQuery();
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.order("description").ignoreEmptyCriteria(true);
+        return getSystemModule().findModules(query);
+    }
 
-	@Override
-	protected Module find(Long id) throws UnifyException {
-		return getSystemModule().findModule(id);
-	}
+    @Override
+    protected Module find(Long id) throws UnifyException {
+        return getSystemModule().findModule(id);
+    }
 
-	@Override
-	protected Module prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Module prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected void onPrepareView(Module moduleData, boolean paste) throws UnifyException {
-		setEditable("frmStatus", moduleData.getDeactivatable());
-	}
+    @Override
+    protected void onPrepareView(Module moduleData, boolean paste) throws UnifyException {
+        setEditable("frmStatus", moduleData.getDeactivatable());
+    }
 
-	@Override
-	protected Object create(Module moduleData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(Module moduleData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(Module moduleData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(Module moduleData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(Module moduleData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(Module moduleData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected boolean isActivatable(Module moduleData) throws UnifyException {
-		return moduleData.getDeactivatable();
-	}
+    @Override
+    protected boolean isActivatable(Module moduleData) throws UnifyException {
+        return moduleData.getDeactivatable();
+    }
 
-	@Override
-	protected int activate(Module moduleData) throws UnifyException {
-		getSystemModule().activateModule(moduleData.getName());
-		moduleData.setStatus(RecordStatus.ACTIVE);
-		return 1;
-	}
+    @Override
+    protected int activate(Module moduleData) throws UnifyException {
+        getSystemModule().activateModule(moduleData.getName());
+        moduleData.setStatus(RecordStatus.ACTIVE);
+        return 1;
+    }
 
-	@Override
-	protected int deactivate(Module moduleData) throws UnifyException {
-		getSystemModule().deactivateModule(moduleData.getName());
-		moduleData.setStatus(RecordStatus.INACTIVE);
-		return 1;
-	}
+    @Override
+    protected int deactivate(Module moduleData) throws UnifyException {
+        getSystemModule().deactivateModule(moduleData.getName());
+        moduleData.setStatus(RecordStatus.INACTIVE);
+        return 1;
+    }
 
-	@Override
-	protected void onSetPage() throws UnifyException {
-		super.onSetPage();
-		setEditable("frmName", false);
-		setEditable("frmDescription", false);
-	}
+    @Override
+    protected void onSetPage() throws UnifyException {
+        super.onSetPage();
+        setEditable("frmName", false);
+        setEditable("frmDescription", false);
+    }
 }

@@ -28,61 +28,61 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class RolePrivilegeQuery extends BaseEntityQuery<RolePrivilege> {
 
-	public RolePrivilegeQuery() {
-		super(RolePrivilege.class);
-	}
+    public RolePrivilegeQuery() {
+        super(RolePrivilege.class);
+    }
 
-	public RolePrivilegeQuery roleId(Long roleId) {
-		return (RolePrivilegeQuery) equals("roleId", roleId);
-	}
+    public RolePrivilegeQuery roleId(Long roleId) {
+        return (RolePrivilegeQuery) equals("roleId", roleId);
+    }
 
-	public RolePrivilegeQuery roleName(String roleName) {
-		return (RolePrivilegeQuery) equals("roleName", roleName);
-	}
+    public RolePrivilegeQuery roleName(String roleName) {
+        return (RolePrivilegeQuery) equals("roleName", roleName);
+    }
 
-	public RolePrivilegeQuery privilegeId(Long privilegeId) {
-		return (RolePrivilegeQuery) equals("privilegeId", privilegeId);
-	}
+    public RolePrivilegeQuery privilegeId(Long privilegeId) {
+        return (RolePrivilegeQuery) equals("privilegeId", privilegeId);
+    }
 
-	public RolePrivilegeQuery privilegeIdIn(Collection<Long> privilegeId) {
-		return (RolePrivilegeQuery) amongst("privilegeId", privilegeId);
-	}
+    public RolePrivilegeQuery privilegeIdIn(Collection<Long> privilegeId) {
+        return (RolePrivilegeQuery) amongst("privilegeId", privilegeId);
+    }
 
-	public RolePrivilegeQuery privilegeIdNotIn(Collection<Long> privilegeId) {
-		return (RolePrivilegeQuery) notAmongst("privilegeId", privilegeId);
-	}
+    public RolePrivilegeQuery privilegeIdNotIn(Collection<Long> privilegeId) {
+        return (RolePrivilegeQuery) notAmongst("privilegeId", privilegeId);
+    }
 
-	public RolePrivilegeQuery moduleId(Long moduleId) {
-		return (RolePrivilegeQuery) equals("moduleId", moduleId);
-	}
+    public RolePrivilegeQuery moduleId(Long moduleId) {
+        return (RolePrivilegeQuery) equals("moduleId", moduleId);
+    }
 
-	public RolePrivilegeQuery privilegeGroupId(Long privilegeGroupId) {
-		return (RolePrivilegeQuery) equals("privilegeGroupId", privilegeGroupId);
-	}
+    public RolePrivilegeQuery privilegeGroupId(Long privilegeGroupId) {
+        return (RolePrivilegeQuery) equals("privilegeGroupId", privilegeGroupId);
+    }
 
-	public RolePrivilegeQuery privilegeCategoryId(Long privilegeCategoryId) {
-		return (RolePrivilegeQuery) equals("privilegeCategoryId", privilegeCategoryId);
-	}
+    public RolePrivilegeQuery privilegeCategoryId(Long privilegeCategoryId) {
+        return (RolePrivilegeQuery) equals("privilegeCategoryId", privilegeCategoryId);
+    }
 
-	public RolePrivilegeQuery categoryName(String categoryName) {
-		return (RolePrivilegeQuery) equals("categoryName", categoryName);
-	}
+    public RolePrivilegeQuery categoryName(String categoryName) {
+        return (RolePrivilegeQuery) equals("categoryName", categoryName);
+    }
 
-	public RolePrivilegeQuery categoryNameNot(String categoryName) {
-		return (RolePrivilegeQuery) notEqual("categoryName", categoryName);
-	}
+    public RolePrivilegeQuery categoryNameNot(String categoryName) {
+        return (RolePrivilegeQuery) notEqual("categoryName", categoryName);
+    }
 
-	public RolePrivilegeQuery privilegeStatus(RecordStatus privilegeStatus) {
-		return (RolePrivilegeQuery) equals("privilegeStatus", privilegeStatus);
-	}
+    public RolePrivilegeQuery privilegeStatus(RecordStatus privilegeStatus) {
+        return (RolePrivilegeQuery) equals("privilegeStatus", privilegeStatus);
+    }
 
-	@Override
-	public RolePrivilegeQuery select(String field) {
-		return (RolePrivilegeQuery) super.select(field);
-	}
+    @Override
+    public RolePrivilegeQuery select(String field) {
+        return (RolePrivilegeQuery) super.select(field);
+    }
 
-	@Override
-	public RolePrivilegeQuery order(String field) {
-		return (RolePrivilegeQuery) super.order(field);
-	}
+    @Override
+    public RolePrivilegeQuery order(String field) {
+        return (RolePrivilegeQuery) super.order(field);
+    }
 }

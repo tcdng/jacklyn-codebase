@@ -27,9 +27,9 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SessionAttr {
 
-	/** The attribute name */
-	String name();
+    /** The attribute name */
+    String name();
 
-	/** The bean field */
-	String field();
+    /** The bean field */
+    String field();
 }

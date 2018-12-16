@@ -31,57 +31,57 @@ import com.tcdng.unify.core.constant.FileAttachmentType;
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Attachment",
-		reportable = true)
+        reportable = true)
 @Table("NOTIFATTACH")
 public class NotificationAttachment extends BaseEntity {
 
-	@ForeignKey(Notification.class)
-	private Long notificationId;
+    @ForeignKey(Notification.class)
+    private Long notificationId;
 
-	@ForeignKey(name = "ATTACHMENT_TY")
-	private FileAttachmentType type;
+    @ForeignKey(name = "ATTACHMENT_TY")
+    private FileAttachmentType type;
 
-	@Column(name = "FILE_NM", length = 64, nullable = true)
-	private String fileName;
+    @Column(name = "FILE_NM", length = 64, nullable = true)
+    private String fileName;
 
-	@Column(name = "ATTACHMENT_DATA")
-	private byte[] data;
+    @Column(name = "ATTACHMENT_DATA")
+    private byte[] data;
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	public Long getNotificationId() {
-		return notificationId;
-	}
+    public Long getNotificationId() {
+        return notificationId;
+    }
 
-	public void setNotificationId(Long notificationId) {
-		this.notificationId = notificationId;
-	}
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
+    }
 
-	public FileAttachmentType getType() {
-		return type;
-	}
+    public FileAttachmentType getType() {
+        return type;
+    }
 
-	public void setType(FileAttachmentType type) {
-		this.type = type;
-	}
+    public void setType(FileAttachmentType type) {
+        this.type = type;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public byte[] getData() {
-		return data;
-	}
+    public byte[] getData() {
+        return data;
+    }
 
-	public void setData(byte[] data) {
-		this.data = data;
-	}
+    public void setData(byte[] data) {
+        this.data = data;
+    }
 
 }

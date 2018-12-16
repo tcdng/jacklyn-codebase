@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("biometriccategorylist")
 public enum BiometricCategory implements EnumConst {
 
-	USERS("U");
+    USERS("U");
 
-	private final String code;
+    private final String code;
 
-	private BiometricCategory(String code) {
-		this.code = code;
-	}
+    private BiometricCategory(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static BiometricCategory fromCode(String code) {
-		return EnumUtils.fromCode(BiometricCategory.class, code);
-	}
+    public static BiometricCategory fromCode(String code) {
+        return EnumUtils.fromCode(BiometricCategory.class, code);
+    }
 
-	public static BiometricCategory fromName(String name) {
-		return EnumUtils.fromName(BiometricCategory.class, name);
-	}
+    public static BiometricCategory fromName(String name) {
+        return EnumUtils.fromName(BiometricCategory.class, name);
+    }
 }

@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class AuditDetailQuery extends BaseEntityQuery<AuditDetail> {
 
-	public AuditDetailQuery() {
-		super(AuditDetail.class);
-	}
+    public AuditDetailQuery() {
+        super(AuditDetail.class);
+    }
 
-	public AuditDetailQuery auditTrailId(Long auditTrailId) {
-		return (AuditDetailQuery) equals("auditTrailId", auditTrailId);
-	}
+    public AuditDetailQuery auditTrailId(Long auditTrailId) {
+        return (AuditDetailQuery) equals("auditTrailId", auditTrailId);
+    }
 }

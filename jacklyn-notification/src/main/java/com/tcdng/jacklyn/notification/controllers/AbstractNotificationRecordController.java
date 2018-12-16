@@ -28,18 +28,16 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractNotificationRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractNotificationRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
-	private NotificationModule notificationModule;
+    @Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
+    private NotificationModule notificationModule;
 
-	public AbstractNotificationRecordController(Class<T> entityClass, String hintKey,
-			int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractNotificationRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected NotificationModule getNotificationModule() throws UnifyException {
-		return notificationModule;
-	}
+    protected NotificationModule getNotificationModule() throws UnifyException {
+        return notificationModule;
+    }
 }

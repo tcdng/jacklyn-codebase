@@ -30,27 +30,27 @@ import com.tcdng.unify.core.util.xml.adapter.FileAttachmentTypeXmlAdapter;
  */
 public class WfAttachmentConfig extends BaseConfig {
 
-	private String label;
+    private String label;
 
-	private FileAttachmentType type;
-	
-	public String getLabel() {
-		return label;
-	}
+    private FileAttachmentType type;
 
-	@XmlAttribute
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public FileAttachmentType getType() {
-		return type;
-	}
+    @XmlAttribute
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public FileAttachmentType getType() {
+        return type;
+    }
 
     @XmlJavaTypeAdapter(FileAttachmentTypeXmlAdapter.class)
-	@XmlAttribute(required=true)
-	public void setType(FileAttachmentType type) {
-		this.type = type;
-	}
+    @XmlAttribute(required = true)
+    public void setType(FileAttachmentType type) {
+        this.type = type;
+    }
 
 }

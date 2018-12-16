@@ -37,100 +37,100 @@ import com.tcdng.unify.core.logging.EventType;
  */
 public interface AuditModule extends JacklynBusinessModule {
 
-	/**
-	 * Finds audit types by query.
-	 * 
-	 * @param query
-	 *            the audit type query
-	 * @return a list of audit type data
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<AuditDefinition> findAuditTypes(AuditDefinitionQuery query) throws UnifyException;
+    /**
+     * Finds audit types by query.
+     * 
+     * @param query
+     *            the audit type query
+     * @return a list of audit type data
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<AuditDefinition> findAuditTypes(AuditDefinitionQuery query) throws UnifyException;
 
-	/**
-	 * Finds an audit type record by query.
-	 * 
-	 * @param query
-	 *            the audit type query
-	 * @return the audit trail record
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	AuditDefinition findAuditType(AuditDefinitionQuery query) throws UnifyException;
+    /**
+     * Finds an audit type record by query.
+     * 
+     * @param query
+     *            the audit type query
+     * @return the audit trail record
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    AuditDefinition findAuditType(AuditDefinitionQuery query) throws UnifyException;
 
-	/**
-	 * Finds an audit type record by ID.
-	 * 
-	 * @param id
-	 *            the audit type ID
-	 * @return the audit trail record
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	AuditDefinition findAuditType(Long id) throws UnifyException;
+    /**
+     * Finds an audit type record by ID.
+     * 
+     * @param id
+     *            the audit type ID
+     * @return the audit trail record
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    AuditDefinition findAuditType(Long id) throws UnifyException;
 
-	/**
-	 * Sets the status of audit types determined by query.
-	 * 
-	 * @param query
-	 *            the query
-	 * @param status
-	 *            the status to set audit types to
-	 * @return the number of records updated
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int setAuditTypeStatus(AuditDefinitionQuery query, RecordStatus status) throws UnifyException;
+    /**
+     * Sets the status of audit types determined by query.
+     * 
+     * @param query
+     *            the query
+     * @param status
+     *            the status to set audit types to
+     * @return the number of records updated
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int setAuditTypeStatus(AuditDefinitionQuery query, RecordStatus status) throws UnifyException;
 
-	/**
-	 * Finds audit trail by query.
-	 * 
-	 * @param query
-	 *            the audit trail query
-	 * @return a list of audit trail data
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<AuditTrail> findAuditTrail(AuditTrailQuery query) throws UnifyException;
+    /**
+     * Finds audit trail by query.
+     * 
+     * @param query
+     *            the audit trail query
+     * @return a list of audit trail data
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<AuditTrail> findAuditTrail(AuditTrailQuery query) throws UnifyException;
 
-	/**
-	 * Finds an audit trail record.
-	 * 
-	 * @param id
-	 *            the audit trail ID
-	 * @return the audit trail record
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	AuditTrail findAuditTrail(Long id) throws UnifyException;
+    /**
+     * Finds an audit trail record.
+     * 
+     * @param id
+     *            the audit trail ID
+     * @return the audit trail record
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    AuditTrail findAuditTrail(Long id) throws UnifyException;
 
-	/**
-	 * Finds audit detail list by audit trail ID.
-	 * 
-	 * @param auditTrailId
-	 *            the audit trail ID
-	 * @return a list of audit trail detail data
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<AuditDetail> findAuditDetails(Long auditTrailId) throws UnifyException;
+    /**
+     * Finds audit detail list by audit trail ID.
+     * 
+     * @param auditTrailId
+     *            the audit trail ID
+     * @return a list of audit trail detail data
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<AuditDetail> findAuditDetails(Long auditTrailId) throws UnifyException;
 
-	/**
-	 * Fetches inspect user information using supplied parameters.
-	 * 
-	 * @param userLoginId
-	 *            the user login ID
-	 * @param createDt
-	 *            the audit create date
-	 * @param moduleId
-	 *            optional module ID
-	 * @param eventType
-	 *            optional event type
-	 * @return the inspect user information
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	InspectUserInfo fetchInspectUserInfo(String userLoginId, Date createDt, Long moduleId,
-			EventType eventType) throws UnifyException;
+    /**
+     * Fetches inspect user information using supplied parameters.
+     * 
+     * @param userLoginId
+     *            the user login ID
+     * @param createDt
+     *            the audit create date
+     * @param moduleId
+     *            optional module ID
+     * @param eventType
+     *            optional event type
+     * @return the inspect user information
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    InspectUserInfo fetchInspectUserInfo(String userLoginId, Date createDt, Long moduleId, EventType eventType)
+            throws UnifyException;
 }

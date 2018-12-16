@@ -28,9 +28,9 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class ReportModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public ReportModuleStaticSettings() {
-		super(ReportModuleNameConstants.REPORTBUSINESSMODULE, "config/report-module.xml",
-				"com.tcdng.jacklyn.resources.report-messages");
-	}
+    public ReportModuleStaticSettings() {
+        super(ReportModuleNameConstants.REPORTBUSINESSMODULE, "config/report-module.xml",
+                "com.tcdng.jacklyn.resources.report-messages");
+    }
 
 }

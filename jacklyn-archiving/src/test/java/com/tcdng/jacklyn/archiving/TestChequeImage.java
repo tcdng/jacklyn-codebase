@@ -28,35 +28,34 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "TestChequeImage",
-		archivable = true)
+@Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "TestChequeImage", archivable = true)
 @Table("TEST_CHEQUE_IMAGE")
 public class TestChequeImage extends BaseTimestampedEntity {
 
-	@Column(nullable = true)
-	private byte[] image;
+    @Column(nullable = true)
+    private byte[] image;
 
-	@Column(type = ColumnType.CLOB, nullable = true)
-	private String template;
+    @Column(type = ColumnType.CLOB, nullable = true)
+    private String template;
 
-	@Override
-	public String getDescription() {
-		return this.template;
-	}
+    @Override
+    public String getDescription() {
+        return this.template;
+    }
 
-	public byte[] getImage() {
-		return image;
-	}
+    public byte[] getImage() {
+        return image;
+    }
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 }

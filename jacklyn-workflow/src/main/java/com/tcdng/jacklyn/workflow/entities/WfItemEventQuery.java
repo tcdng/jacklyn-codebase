@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfItemEventQuery extends BaseEntityQuery<WfItemEvent> {
 
-	public WfItemEventQuery() {
-		super(WfItemEvent.class);
-	}
+    public WfItemEventQuery() {
+        super(WfItemEvent.class);
+    }
 
-	public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
-		return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
-	}
+    public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
+        return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
+    }
 
-	public WfItemEventQuery notesOnly() {
-		return (WfItemEventQuery) isNotNull("notes");
-	}
+    public WfItemEventQuery notesOnly() {
+        return (WfItemEventQuery) isNotNull("notes");
+    }
 }

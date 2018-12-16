@@ -27,14 +27,14 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class ArchiveConfig extends BaseConfig {
 
-	private String archivable;
+    private String archivable;
 
-	public String getArchivable() {
-		return archivable;
-	}
+    public String getArchivable() {
+        return archivable;
+    }
 
-	@XmlAttribute(required = true)
-	public void setArchivable(String archivable) {
-		this.archivable = archivable;
-	}
+    @XmlAttribute(required = true)
+    public void setArchivable(String archivable) {
+        this.archivable = archivable;
+    }
 }

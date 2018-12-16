@@ -34,36 +34,35 @@ import com.tcdng.unify.core.annotation.Transactional;
  */
 @Transactional
 @Component(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE)
-public class OrganizationModuleImpl extends AbstractJacklynBusinessModule
-		implements OrganizationModule {
+public class OrganizationModuleImpl extends AbstractJacklynBusinessModule implements OrganizationModule {
 
-	@Override
-	public Long createBranch(Branch branch) throws UnifyException {
-		return (Long) db().create(branch);
-	}
+    @Override
+    public Long createBranch(Branch branch) throws UnifyException {
+        return (Long) db().create(branch);
+    }
 
-	@Override
-	public Branch findBranch(Long branchId) throws UnifyException {
-		return db().find(Branch.class, branchId);
-	}
+    @Override
+    public Branch findBranch(Long branchId) throws UnifyException {
+        return db().find(Branch.class, branchId);
+    }
 
-	@Override
-	public List<Branch> findBranches(BranchQuery query) throws UnifyException {
-		return db().listAll(query);
-	}
+    @Override
+    public List<Branch> findBranches(BranchQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
 
-	@Override
-	public int updateBranch(Branch branch) throws UnifyException {
-		return db().updateByIdVersion(branch);
-	}
+    @Override
+    public int updateBranch(Branch branch) throws UnifyException {
+        return db().updateByIdVersion(branch);
+    }
 
-	@Override
-	public int deleteBranch(Long id) throws UnifyException {
-		return db().delete(Branch.class, id);
-	}
+    @Override
+    public int deleteBranch(Long id) throws UnifyException {
+        return db().delete(Branch.class, id);
+    }
 
-	@Override
-	public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
+    @Override
+    public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
 
-	}
+    }
 }

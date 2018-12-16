@@ -27,27 +27,27 @@ import java.util.Set;
  */
 public class MessageDictionary implements Serializable {
 
-	private static final long serialVersionUID = 1680429097663631478L;
+    private static final long serialVersionUID = 1680429097663631478L;
 
-	private Map<String, Object> dictionary;
+    private Map<String, Object> dictionary;
 
-	public MessageDictionary(Map<String, Object> dictionary) {
-		this.dictionary = dictionary;
-	}
+    public MessageDictionary(Map<String, Object> dictionary) {
+        this.dictionary = dictionary;
+    }
 
-	public void addEntry(String entryName, Object value) {
-		this.dictionary.put(entryName, value);
-	}
+    public void addEntry(String entryName, Object value) {
+        this.dictionary.put(entryName, value);
+    }
 
-	public Set<String> getEntryNames() {
-		return this.dictionary.keySet();
-	}
+    public Set<String> getEntryNames() {
+        return this.dictionary.keySet();
+    }
 
-	public Object getEntry(String entryName) {
-		return this.dictionary.get(entryName);
-	}
+    public Object getEntry(String entryName) {
+        return this.dictionary.get(entryName);
+    }
 
-	public Map<String, Object> getDictionary() {
-		return dictionary;
-	}
+    public Map<String, Object> getDictionary() {
+        return dictionary;
+    }
 }

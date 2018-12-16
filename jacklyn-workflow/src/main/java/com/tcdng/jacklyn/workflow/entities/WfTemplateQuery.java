@@ -26,39 +26,39 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfTemplateQuery extends BaseEntityQuery<WfTemplate> {
 
-	public WfTemplateQuery() {
-		super(WfTemplate.class);
-	}
+    public WfTemplateQuery() {
+        super(WfTemplate.class);
+    }
 
-	public WfTemplateQuery wfCategoryId(Long wfCategoryId) {
-		return (WfTemplateQuery) equals("wfCategoryId", wfCategoryId);
-	}
+    public WfTemplateQuery wfCategoryId(Long wfCategoryId) {
+        return (WfTemplateQuery) equals("wfCategoryId", wfCategoryId);
+    }
 
-	public WfTemplateQuery wfCategoryName(String wfCategoryName) {
-		return (WfTemplateQuery) equals("wfCategoryName", wfCategoryName);
-	}
+    public WfTemplateQuery wfCategoryName(String wfCategoryName) {
+        return (WfTemplateQuery) equals("wfCategoryName", wfCategoryName);
+    }
 
-	public WfTemplateQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-		return (WfTemplateQuery) equals("wfCategoryStatus", wfCategoryStatus);
-	}
+    public WfTemplateQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+        return (WfTemplateQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
 
-	public WfTemplateQuery wfCategoryVersion(String wfCategoryVersion) {
-		return (WfTemplateQuery) equals("wfCategoryVersion", wfCategoryVersion);
-	}
+    public WfTemplateQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfTemplateQuery) equals("wfCategoryVersion", wfCategoryVersion);
+    }
 
-	public WfTemplateQuery name(String name) {
-		return (WfTemplateQuery) equals("name", name);
-	}
+    public WfTemplateQuery name(String name) {
+        return (WfTemplateQuery) equals("name", name);
+    }
 
-	public WfTemplateQuery nameLike(String name) {
-		return (WfTemplateQuery) like("name", name);
-	}
+    public WfTemplateQuery nameLike(String name) {
+        return (WfTemplateQuery) like("name", name);
+    }
 
-	public WfTemplateQuery descriptionLike(String description) {
-		return (WfTemplateQuery) like("description", description);
-	}
+    public WfTemplateQuery descriptionLike(String description) {
+        return (WfTemplateQuery) like("description", description);
+    }
 
-	public WfTemplateQuery manualOption(Boolean manualOption) {
-		return (WfTemplateQuery) equals("manualOption", manualOption);
-	}
+    public WfTemplateQuery manualOption(Boolean manualOption) {
+        return (WfTemplateQuery) equals("manualOption", manualOption);
+    }
 }

@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.file.constants;
  */
 public interface BatchFileReadTaskConstants {
 
-	String BATCHFILEREADTASK = "batchfilereadtask";
+    String BATCHFILEREADTASK = "batchfilereadtask";
 
-	String BATCHFILEREADINPUTPARAMS = "batchFileReadInputParameters";
+    String BATCHFILEREADINPUTPARAMS = "batchFileReadInputParameters";
 }

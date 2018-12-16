@@ -30,53 +30,53 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Table(name = "WFITEMATTACHMENT", uniqueConstraints = { @UniqueConstraint({ "wfItemId", "name" }) })
 public class WfItemAttachment extends BaseTimestampedEntity {
 
-	@ForeignKey(WfItem.class)
-	private Long wfItemId;
+    @ForeignKey(WfItem.class)
+    private Long wfItemId;
 
-	@Column(name = "ATTACHMENTDEF_NM", length = 32)
-	private String name;
+    @Column(name = "ATTACHMENTDEF_NM", length = 32)
+    private String name;
 
-	@Column(name = "FILE_NM", length = 64)
-	private String fileName;
+    @Column(name = "FILE_NM", length = 64)
+    private String fileName;
 
-	@Column(name = "ATTACHMENT_DATA")
-	private byte[] data;
+    @Column(name = "ATTACHMENT_DATA")
+    private byte[] data;
 
-	@Override
-	public String getDescription() {
-		return this.name;
-	}
+    @Override
+    public String getDescription() {
+        return this.name;
+    }
 
-	public Long getWfItemId() {
-		return wfItemId;
-	}
+    public Long getWfItemId() {
+        return wfItemId;
+    }
 
-	public void setWfItemId(Long wfItemId) {
-		this.wfItemId = wfItemId;
-	}
+    public void setWfItemId(Long wfItemId) {
+        this.wfItemId = wfItemId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public String getFileName() {
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public byte[] getData() {
-		return data;
-	}
+    public byte[] getData() {
+        return data;
+    }
 
-	public void setData(byte[] data) {
-		this.data = data;
-	}
+    public void setData(byte[] data) {
+        this.data = data;
+    }
 
 }

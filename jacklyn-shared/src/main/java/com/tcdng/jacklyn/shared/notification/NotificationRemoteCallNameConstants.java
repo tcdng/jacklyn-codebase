@@ -24,5 +24,5 @@ package com.tcdng.jacklyn.shared.notification;
  */
 public interface NotificationRemoteCallNameConstants {
 
-	String GET_TOOLING_ATTACHMENT_GENERATOR_LIST = "notGetToolingAttachmentGenList";
+    String GET_TOOLING_ATTACHMENT_GENERATOR_LIST = "notGetToolingAttachmentGenList";
 }

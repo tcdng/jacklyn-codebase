@@ -29,48 +29,48 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class OSInstallationReqResult extends RemoteCallResult {
 
-	private String appName;
+    private String appName;
 
-	private String appDesc;
-	
-	private byte[] appIcon;
+    private String appDesc;
 
-	private boolean alreadyInstalled;
-	
-	public String getAppName() {
-		return appName;
-	}
+    private byte[] appIcon;
 
-	@XmlElement(required=true)
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
+    private boolean alreadyInstalled;
 
-	public String getAppDesc() {
-		return appDesc;
-	}
+    public String getAppName() {
+        return appName;
+    }
 
-	@XmlElement(required=true)
-	public void setAppDesc(String appDesc) {
-		this.appDesc = appDesc;
-	}
+    @XmlElement(required = true)
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
-	public byte[] getAppIcon() {
-		return appIcon;
-	}
+    public String getAppDesc() {
+        return appDesc;
+    }
 
-	@XmlElement(required=true)
-	public void setAppIcon(byte[] appIcon) {
-		this.appIcon = appIcon;
-	}
+    @XmlElement(required = true)
+    public void setAppDesc(String appDesc) {
+        this.appDesc = appDesc;
+    }
 
-	public boolean isAlreadyInstalled() {
-		return alreadyInstalled;
-	}
+    public byte[] getAppIcon() {
+        return appIcon;
+    }
 
-	@XmlElement(required=true)
-	public void setAlreadyInstalled(boolean alreadyInstalled) {
-		this.alreadyInstalled = alreadyInstalled;
-	}
+    @XmlElement(required = true)
+    public void setAppIcon(byte[] appIcon) {
+        this.appIcon = appIcon;
+    }
+
+    public boolean isAlreadyInstalled() {
+        return alreadyInstalled;
+    }
+
+    @XmlElement(required = true)
+    public void setAlreadyInstalled(boolean alreadyInstalled) {
+        this.alreadyInstalled = alreadyInstalled;
+    }
 
 }

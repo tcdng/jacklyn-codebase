@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemReservedUserConstants {
 
-	String SYSTEM_LOGINID = "SYSTEM";
+    String SYSTEM_LOGINID = "SYSTEM";
 
-	String ANONYMOUS_LOGINID = "ANONYMOUS";
+    String ANONYMOUS_LOGINID = "ANONYMOUS";
 
-	Long SYSTEM_ID = Long.valueOf(-99);
+    Long SYSTEM_ID = Long.valueOf(-99);
 
-	Long ANONYMOUS_ID = Long.valueOf(-98);
+    Long ANONYMOUS_ID = Long.valueOf(-98);
 }

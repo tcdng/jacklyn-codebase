@@ -26,5 +26,5 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface JacklynTestUtils extends UnifyComponent {
 
-	void swapApplicationSystemAnonymousUserTokens() throws UnifyException;
+    void swapApplicationSystemAnonymousUserTokens() throws UnifyException;
 }

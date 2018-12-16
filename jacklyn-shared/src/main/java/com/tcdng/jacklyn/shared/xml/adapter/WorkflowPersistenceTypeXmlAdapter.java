@@ -25,11 +25,10 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WorkflowPersistenceTypeXmlAdapter
-		extends AbstractEnumConstXmlAdapter<WorkflowRecordActionType> {
+public class WorkflowPersistenceTypeXmlAdapter extends AbstractEnumConstXmlAdapter<WorkflowRecordActionType> {
 
-	public WorkflowPersistenceTypeXmlAdapter() {
-		super(WorkflowRecordActionType.class);
-	}
+    public WorkflowPersistenceTypeXmlAdapter() {
+        super(WorkflowRecordActionType.class);
+    }
 
 }

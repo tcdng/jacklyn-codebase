@@ -33,42 +33,42 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  * @since 1.0
  */
 public class WfBeanMappingConfig extends BaseConfig {
-	
-	private WorkflowBeanMappingType type;
 
-	private String beanType;
-	
-	private List<WfFieldMappingConfig> fieldMappingList;
+    private WorkflowBeanMappingType type;
 
-	public WfBeanMappingConfig() {
-		this.type = WorkflowBeanMappingType.NONENTRY;
-	}
+    private String beanType;
 
-	public WorkflowBeanMappingType getType() {
-		return type;
-	}
+    private List<WfFieldMappingConfig> fieldMappingList;
+
+    public WfBeanMappingConfig() {
+        this.type = WorkflowBeanMappingType.NONENTRY;
+    }
+
+    public WorkflowBeanMappingType getType() {
+        return type;
+    }
 
     @XmlJavaTypeAdapter(WorkflowBeanMappingTypeXmlAdapter.class)
-	@XmlAttribute(required=true)
-	public void setType(WorkflowBeanMappingType type) {
-		this.type = type;
-	}
-	
-	public String getBeanType() {
-		return beanType;
-	}
+    @XmlAttribute(required = true)
+    public void setType(WorkflowBeanMappingType type) {
+        this.type = type;
+    }
 
-	@XmlAttribute(name="bean-type", required=true)
-	public void setBeanType(String beanType) {
-		this.beanType = beanType;
-	}
+    public String getBeanType() {
+        return beanType;
+    }
 
-	public List<WfFieldMappingConfig> getFieldMappingList() {
-		return fieldMappingList;
-	}
+    @XmlAttribute(name = "bean-type", required = true)
+    public void setBeanType(String beanType) {
+        this.beanType = beanType;
+    }
 
-	@XmlElement(name="field-mapping", required=true)
-	public void setFieldMappingList(List<WfFieldMappingConfig> mappingList) {
-		this.fieldMappingList = mappingList;
-	}
+    public List<WfFieldMappingConfig> getFieldMappingList() {
+        return fieldMappingList;
+    }
+
+    @XmlElement(name = "field-mapping", required = true)
+    public void setFieldMappingList(List<WfFieldMappingConfig> mappingList) {
+        this.fieldMappingList = mappingList;
+    }
 }

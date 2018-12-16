@@ -32,22 +32,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetToolingListTypeResult extends RemoteCallResult {
 
-	private List<ToolingListTypeItem> listTypeList;
+    private List<ToolingListTypeItem> listTypeList;
 
-	public GetToolingListTypeResult(List<ToolingListTypeItem> listTypeList) {
-		this.listTypeList = listTypeList;
-	}
-	
-	public GetToolingListTypeResult() {
-		
-	}
+    public GetToolingListTypeResult(List<ToolingListTypeItem> listTypeList) {
+        this.listTypeList = listTypeList;
+    }
 
-	public List<ToolingListTypeItem> getListTypeList() {
-		return listTypeList;
-	}
+    public GetToolingListTypeResult() {
 
-	@XmlElement(name = "listType")
-	public void setListTypeList(List<ToolingListTypeItem> listTypeList) {
-		this.listTypeList = listTypeList;
-	}
+    }
+
+    public List<ToolingListTypeItem> getListTypeList() {
+        return listTypeList;
+    }
+
+    @XmlElement(name = "listType")
+    public void setListTypeList(List<ToolingListTypeItem> listTypeList) {
+        this.listTypeList = listTypeList;
+    }
 }

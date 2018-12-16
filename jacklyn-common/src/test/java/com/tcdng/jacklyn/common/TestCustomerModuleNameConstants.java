@@ -24,5 +24,5 @@ package com.tcdng.jacklyn.common;
  */
 public interface TestCustomerModuleNameConstants {
 
-	String CUSTOMER_MODULE = "customer";
+    String CUSTOMER_MODULE = "customer";
 }

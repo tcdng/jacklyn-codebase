@@ -26,8 +26,8 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  */
 public class SystemParamTypeXmlAdapter extends AbstractEnumConstXmlAdapter<SystemParamType> {
 
-	public SystemParamTypeXmlAdapter() {
-		super(SystemParamType.class);
-	}
+    public SystemParamTypeXmlAdapter() {
+        super(SystemParamType.class);
+    }
 
 }
