@@ -32,70 +32,70 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task History",
-		reportable = true, auditable = true)
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task History", reportable = true,
+        auditable = true)
 @Table("SCHEDTASKHIST")
 public class ScheduledTaskHist extends BaseTimestampedEntity {
 
-	@ForeignKey(ScheduledTask.class)
-	private Long scheduledTaskId;
+    @ForeignKey(ScheduledTask.class)
+    private Long scheduledTaskId;
 
-	@Column(length = 256, nullable = true)
-	private String errorMsg;
+    @Column(length = 256, nullable = true)
+    private String errorMsg;
 
-	@Column
-	private TaskStatus taskStatus;
+    @Column
+    private TaskStatus taskStatus;
 
-	@Format(description = "$m{system.scheduledtaskhist.scheduledtask}")
-	@ListOnly(key = "scheduledTaskId", property = "description")
-	private String scheduledTaskDesc;
+    @Format(description = "$m{system.scheduledtaskhist.scheduledtask}")
+    @ListOnly(key = "scheduledTaskId", property = "description")
+    private String scheduledTaskDesc;
 
-	@ListOnly(key = "scheduledTaskId", property = "taskName")
-	private String taskName;
+    @ListOnly(key = "scheduledTaskId", property = "taskName")
+    private String taskName;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate(scheduledTaskDesc, " - timestamp:", getCreateDt(),
-				"- status: ", this.taskStatus);
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate(scheduledTaskDesc, " - timestamp:", getCreateDt(), "- status: ",
+                this.taskStatus);
+    }
 
-	public Long getScheduledTaskId() {
-		return scheduledTaskId;
-	}
+    public Long getScheduledTaskId() {
+        return scheduledTaskId;
+    }
 
-	public void setScheduledTaskId(Long scheduledTaskId) {
-		this.scheduledTaskId = scheduledTaskId;
-	}
+    public void setScheduledTaskId(Long scheduledTaskId) {
+        this.scheduledTaskId = scheduledTaskId;
+    }
 
-	public String getErrorMsg() {
-		return errorMsg;
-	}
+    public String getErrorMsg() {
+        return errorMsg;
+    }
 
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
-	public TaskStatus getTaskStatus() {
-		return taskStatus;
-	}
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
 
-	public void setTaskStatus(TaskStatus taskStatus) {
-		this.taskStatus = taskStatus;
-	}
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
-	public String getScheduledTaskDesc() {
-		return scheduledTaskDesc;
-	}
+    public String getScheduledTaskDesc() {
+        return scheduledTaskDesc;
+    }
 
-	public void setScheduledTaskDesc(String scheduledTaskDesc) {
-		this.scheduledTaskDesc = scheduledTaskDesc;
-	}
+    public void setScheduledTaskDesc(String scheduledTaskDesc) {
+        this.scheduledTaskDesc = scheduledTaskDesc;
+    }
 
-	public String getTaskName() {
-		return taskName;
-	}
+    public String getTaskName() {
+        return taskName;
+    }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 }

@@ -26,31 +26,31 @@ import com.tcdng.unify.core.logging.EventType;
  */
 public class AuditTrailQuery extends BaseTimestampedEntityQuery<AuditTrail> {
 
-	public AuditTrailQuery() {
-		super(AuditTrail.class);
-	}
+    public AuditTrailQuery() {
+        super(AuditTrail.class);
+    }
 
-	public AuditTrailQuery userLoginId(String userLoginId) {
-		return (AuditTrailQuery) equals("userLoginId", userLoginId);
-	}
+    public AuditTrailQuery userLoginId(String userLoginId) {
+        return (AuditTrailQuery) equals("userLoginId", userLoginId);
+    }
 
-	public AuditTrailQuery moduleId(Long moduleId) {
-		return (AuditTrailQuery) equals("moduleId", moduleId);
-	}
+    public AuditTrailQuery moduleId(Long moduleId) {
+        return (AuditTrailQuery) equals("moduleId", moduleId);
+    }
 
-	public AuditTrailQuery moduleName(String moduleName) {
-		return (AuditTrailQuery) equals("moduleName", moduleName);
-	}
+    public AuditTrailQuery moduleName(String moduleName) {
+        return (AuditTrailQuery) equals("moduleName", moduleName);
+    }
 
-	public AuditTrailQuery auditDefinitionName(String auditDefinitionName) {
-		return (AuditTrailQuery) equals("auditDefinitionName", auditDefinitionName);
-	}
+    public AuditTrailQuery auditDefinitionName(String auditDefinitionName) {
+        return (AuditTrailQuery) equals("auditDefinitionName", auditDefinitionName);
+    }
 
-	public AuditTrailQuery recordId(Long recordId) {
-		return (AuditTrailQuery) equals("recordId", recordId);
-	}
+    public AuditTrailQuery recordId(Long recordId) {
+        return (AuditTrailQuery) equals("recordId", recordId);
+    }
 
-	public AuditTrailQuery eventType(EventType eventType) {
-		return (AuditTrailQuery) equals("eventType", eventType);
-	}
+    public AuditTrailQuery eventType(EventType eventType) {
+        return (AuditTrailQuery) equals("eventType", eventType);
+    }
 }

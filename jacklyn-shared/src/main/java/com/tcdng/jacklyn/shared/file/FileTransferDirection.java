@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("filetransferdirectionlist")
 public enum FileTransferDirection implements EnumConst {
 
-	UPLOAD("U"), DOWNLOAD("D");
+    UPLOAD("U"), DOWNLOAD("D");
 
-	private final String code;
+    private final String code;
 
-	private FileTransferDirection(String code) {
-		this.code = code;
-	}
+    private FileTransferDirection(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static FileTransferDirection fromCode(String code) {
-		return EnumUtils.fromCode(FileTransferDirection.class, code);
-	}
+    public static FileTransferDirection fromCode(String code) {
+        return EnumUtils.fromCode(FileTransferDirection.class, code);
+    }
 
-	public static FileTransferDirection fromName(String name) {
-		return EnumUtils.fromName(FileTransferDirection.class, name);
-	}
+    public static FileTransferDirection fromName(String name) {
+        return EnumUtils.fromName(FileTransferDirection.class, name);
+    }
 }

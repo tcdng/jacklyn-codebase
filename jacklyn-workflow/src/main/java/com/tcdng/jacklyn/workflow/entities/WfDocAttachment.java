@@ -30,96 +30,96 @@ import com.tcdng.unify.core.constant.FileAttachmentType;
  * @version 1.0
  */
 @Table(name = "WFDOCATTACHMENT", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
-		@UniqueConstraint({ "wfDocId", "description" }) })
+        @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocAttachment extends BaseEntity {
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
+    @ForeignKey(WfDoc.class)
+    private Long wfDocId;
 
-	@ForeignKey
-	private FileAttachmentType attachmentType;
+    @ForeignKey
+    private FileAttachmentType attachmentType;
 
-	@Column(name = "ATTACHMENT_NM", length = 32)
-	private String name;
+    @Column(name = "ATTACHMENT_NM", length = 32)
+    private String name;
 
-	@Column(name = "ATTACHMENT_DESC", length = 64)
-	private String description;
+    @Column(name = "ATTACHMENT_DESC", length = 64)
+    private String description;
 
-	@Column(name = "ATTACHMENT_LABEL", length = 64, nullable = true)
-	private String label;
+    @Column(name = "ATTACHMENT_LABEL", length = 64, nullable = true)
+    private String label;
 
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
 
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
 
-	@ListOnly(key = "attachmentType", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "attachmentType", property = "description")
+    private String typeDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
+    public void setWfDocId(Long wfDocId) {
+        this.wfDocId = wfDocId;
+    }
 
-	public FileAttachmentType getAttachmentType() {
-		return attachmentType;
-	}
+    public FileAttachmentType getAttachmentType() {
+        return attachmentType;
+    }
 
-	public void setAttachmentType(FileAttachmentType attachmentType) {
-		this.attachmentType = attachmentType;
-	}
+    public void setAttachmentType(FileAttachmentType attachmentType) {
+        this.attachmentType = attachmentType;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getWfDocName() {
-		return wfDocName;
-	}
+    public String getWfDocName() {
+        return wfDocName;
+    }
 
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
 
-	public String getWfDocDesc() {
-		return wfDocDesc;
-	}
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
 
-	public void setWfDocDesc(String wfDocDesc) {
-		this.wfDocDesc = wfDocDesc;
-	}
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

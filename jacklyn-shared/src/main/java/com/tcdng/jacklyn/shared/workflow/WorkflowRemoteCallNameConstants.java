@@ -24,9 +24,9 @@ package com.tcdng.jacklyn.shared.workflow;
  */
 public interface WorkflowRemoteCallNameConstants {
 
-	String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
+    String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
 
-	String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
+    String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
 
-	String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
+    String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
 }

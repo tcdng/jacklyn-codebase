@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class MenusConfig {
 
-	private List<MenuConfig> menuList;
+    private List<MenuConfig> menuList;
 
-	public List<MenuConfig> getMenuList() {
-		return menuList;
-	}
+    public List<MenuConfig> getMenuList() {
+        return menuList;
+    }
 
-	@XmlElement(name = "menu", required = true)
-	public void setMenuList(List<MenuConfig> menuList) {
-		this.menuList = menuList;
-	}
+    @XmlElement(name = "menu", required = true)
+    public void setMenuList(List<MenuConfig> menuList) {
+        this.menuList = menuList;
+    }
 }

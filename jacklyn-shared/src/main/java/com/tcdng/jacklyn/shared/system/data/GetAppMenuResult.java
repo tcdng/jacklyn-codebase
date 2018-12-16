@@ -31,22 +31,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetAppMenuResult extends RemoteCallResult {
 
-	private List<AppMenuItemGroup> menuItemGroupList;
+    private List<AppMenuItemGroup> menuItemGroupList;
 
-	public GetAppMenuResult(List<AppMenuItemGroup> menuItemGroupList) {
-		this.menuItemGroupList = menuItemGroupList;
-	}
+    public GetAppMenuResult(List<AppMenuItemGroup> menuItemGroupList) {
+        this.menuItemGroupList = menuItemGroupList;
+    }
 
-	public GetAppMenuResult() {
+    public GetAppMenuResult() {
 
-	}
+    }
 
-	public List<AppMenuItemGroup> getMenuItemGroupList() {
-		return menuItemGroupList;
-	}
+    public List<AppMenuItemGroup> getMenuItemGroupList() {
+        return menuItemGroupList;
+    }
 
-	@XmlElement(name = "menuItemGroup")
-	public void setMenuItemGroupList(List<AppMenuItemGroup> menuItemGroupList) {
-		this.menuItemGroupList = menuItemGroupList;
-	}
+    @XmlElement(name = "menuItemGroup")
+    public void setMenuItemGroupList(List<AppMenuItemGroup> menuItemGroupList) {
+        this.menuItemGroupList = menuItemGroupList;
+    }
 }

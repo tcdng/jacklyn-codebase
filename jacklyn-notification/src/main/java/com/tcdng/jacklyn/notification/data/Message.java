@@ -31,183 +31,182 @@ import com.tcdng.unify.core.util.DataUtils;
  */
 public class Message {
 
-	private String notificationChannelName;
+    private String notificationChannelName;
 
-	private String globalTemplateName;
+    private String globalTemplateName;
 
-	private String senderName;
+    private String senderName;
 
-	private String senderContact;
+    private String senderContact;
 
-	private List<Recipient> recipients;
+    private List<Recipient> recipients;
 
-	private List<Attachment> attachments;
+    private List<Attachment> attachments;
 
-	private Map<String, Object> dictionary;
+    private Map<String, Object> dictionary;
 
-	private Message(String notificationChannelName, String globalTemplateName, String senderName,
-			String senderContact, List<Recipient> recipients, List<Attachment> attachments,
-			Map<String, Object> dictionary) {
-		this.globalTemplateName = globalTemplateName;
-		this.notificationChannelName = notificationChannelName;
-		this.senderName = senderName;
-		this.senderContact = senderContact;
-		this.recipients = recipients;
-		this.attachments = attachments;
-		this.dictionary = dictionary;
-	}
+    private Message(String notificationChannelName, String globalTemplateName, String senderName, String senderContact,
+            List<Recipient> recipients, List<Attachment> attachments, Map<String, Object> dictionary) {
+        this.globalTemplateName = globalTemplateName;
+        this.notificationChannelName = notificationChannelName;
+        this.senderName = senderName;
+        this.senderContact = senderContact;
+        this.recipients = recipients;
+        this.attachments = attachments;
+        this.dictionary = dictionary;
+    }
 
-	public String getNotificationChannelName() {
-		return notificationChannelName;
-	}
+    public String getNotificationChannelName() {
+        return notificationChannelName;
+    }
 
-	public String getGlobalTemplateName() {
-		return globalTemplateName;
-	}
+    public String getGlobalTemplateName() {
+        return globalTemplateName;
+    }
 
-	public String getSenderName() {
-		return senderName;
-	}
+    public String getSenderName() {
+        return senderName;
+    }
 
-	public String getSenderContact() {
-		return senderContact;
-	}
+    public String getSenderContact() {
+        return senderContact;
+    }
 
-	public List<Recipient> getRecipients() {
-		return recipients;
-	}
+    public List<Recipient> getRecipients() {
+        return recipients;
+    }
 
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
 
-	public Map<String, Object> getDictionary() {
-		return dictionary;
-	}
+    public Map<String, Object> getDictionary() {
+        return dictionary;
+    }
 
-	public static class Builder {
+    public static class Builder {
 
-		private String globalTemplateName;
+        private String globalTemplateName;
 
-		private String senderName;
+        private String senderName;
 
-		private String senderContact;
+        private String senderContact;
 
-		private List<Recipient> recipients;
+        private List<Recipient> recipients;
 
-		private List<Attachment> attachments;
+        private List<Attachment> attachments;
 
-		private Map<String, Object> dictionary;
+        private Map<String, Object> dictionary;
 
-		private String notificationChannelName;
+        private String notificationChannelName;
 
-		public Builder(String globalTemplateName) {
-			this.globalTemplateName = globalTemplateName;
-			recipients = new ArrayList<Recipient>();
-		}
+        public Builder(String globalTemplateName) {
+            this.globalTemplateName = globalTemplateName;
+            recipients = new ArrayList<Recipient>();
+        }
 
-		public Builder fromSender(String senderName, String senderContact) {
-			this.senderName = senderName;
-			this.senderContact = senderContact;
-			return this;
-		}
+        public Builder fromSender(String senderName, String senderContact) {
+            this.senderName = senderName;
+            this.senderContact = senderContact;
+            return this;
+        }
 
-		public Builder toRecipient(String name, String contact) {
-			recipients.add(new Recipient(name, contact));
-			return this;
-		}
+        public Builder toRecipient(String name, String contact) {
+            recipients.add(new Recipient(name, contact));
+            return this;
+        }
 
-		public Builder usingDictionaryEntry(String entry, Object value) {
-			getDictionary().put(entry, value);
-			return this;
-		}
+        public Builder usingDictionaryEntry(String entry, Object value) {
+            getDictionary().put(entry, value);
+            return this;
+        }
 
-		public Builder withAttachment(FileAttachmentType type, String fileName, byte[] data) {
-			getAttachments().add(new Attachment(type, fileName, data));
-			return this;
-		}
+        public Builder withAttachment(FileAttachmentType type, String fileName, byte[] data) {
+            getAttachments().add(new Attachment(type, fileName, data));
+            return this;
+        }
 
-		public Builder withAttachment(FileAttachmentType type, byte[] data) {
-			getAttachments().add(new Attachment(type, data));
-			return this;
-		}
+        public Builder withAttachment(FileAttachmentType type, byte[] data) {
+            getAttachments().add(new Attachment(type, data));
+            return this;
+        }
 
-		public Builder sendVia(String notificationChannelName) {
-			this.notificationChannelName = notificationChannelName;
-			return this;
-		}
+        public Builder sendVia(String notificationChannelName) {
+            this.notificationChannelName = notificationChannelName;
+            return this;
+        }
 
-		public Message build() {
-			return new Message(notificationChannelName, globalTemplateName, senderName,
-					senderContact, DataUtils.unmodifiableList(recipients),
-					DataUtils.unmodifiableList(attachments), DataUtils.unmodifiableMap(dictionary));
-		}
+        public Message build() {
+            return new Message(notificationChannelName, globalTemplateName, senderName, senderContact,
+                    DataUtils.unmodifiableList(recipients), DataUtils.unmodifiableList(attachments),
+                    DataUtils.unmodifiableMap(dictionary));
+        }
 
-		private List<Attachment> getAttachments() {
-			if (attachments == null) {
-				attachments = new ArrayList<Attachment>();
-			}
+        private List<Attachment> getAttachments() {
+            if (attachments == null) {
+                attachments = new ArrayList<Attachment>();
+            }
 
-			return attachments;
-		}
+            return attachments;
+        }
 
-		private Map<String, Object> getDictionary() {
-			if (dictionary == null) {
-				dictionary = new HashMap<String, Object>();
-			}
+        private Map<String, Object> getDictionary() {
+            if (dictionary == null) {
+                dictionary = new HashMap<String, Object>();
+            }
 
-			return dictionary;
-		}
-	}
+            return dictionary;
+        }
+    }
 
-	public static class Recipient {
-		private String name;
+    public static class Recipient {
+        private String name;
 
-		private String contact;
+        private String contact;
 
-		private Recipient(String name, String contact) {
-			this.name = name;
-			this.contact = contact;
-		}
+        private Recipient(String name, String contact) {
+            this.name = name;
+            this.contact = contact;
+        }
 
-		public String getName() {
-			return name;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public String getContact() {
-			return contact;
-		}
-	}
+        public String getContact() {
+            return contact;
+        }
+    }
 
-	public static class Attachment {
+    public static class Attachment {
 
-		private FileAttachmentType type;
+        private FileAttachmentType type;
 
-		private String fileName;
+        private String fileName;
 
-		private byte[] data;
+        private byte[] data;
 
-		public Attachment(FileAttachmentType type, String fileName, byte[] data) {
-			this.type = type;
-			this.fileName = fileName;
-			this.data = data;
-		}
+        public Attachment(FileAttachmentType type, String fileName, byte[] data) {
+            this.type = type;
+            this.fileName = fileName;
+            this.data = data;
+        }
 
-		public Attachment(FileAttachmentType type, byte[] data) {
-			this.type = type;
-			this.data = data;
-		}
+        public Attachment(FileAttachmentType type, byte[] data) {
+            this.type = type;
+            this.data = data;
+        }
 
-		public FileAttachmentType getType() {
-			return type;
-		}
+        public FileAttachmentType getType() {
+            return type;
+        }
 
-		public String getFileName() {
-			return fileName;
-		}
+        public String getFileName() {
+            return fileName;
+        }
 
-		public byte[] getData() {
-			return data;
-		}
-	}
+        public byte[] getData() {
+            return data;
+        }
+    }
 }

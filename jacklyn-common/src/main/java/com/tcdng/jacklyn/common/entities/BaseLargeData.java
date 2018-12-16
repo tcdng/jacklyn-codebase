@@ -25,35 +25,35 @@ import com.tcdng.unify.core.data.AbstractWrappedData;
  */
 public abstract class BaseLargeData<T extends BaseEntity> extends AbstractWrappedData<T> {
 
-	public BaseLargeData(T data) {
-		super(data);
-	}
+    public BaseLargeData(T data) {
+        super(data);
+    }
 
-	public void setId(Long id) {
-		this.getData().setId(id);
-	}
+    public void setId(Long id) {
+        this.getData().setId(id);
+    }
 
-	public Long getId() {
-		return (Long) this.getData().getId();
-	}
+    public Long getId() {
+        return (Long) this.getData().getId();
+    }
 
-	public Object getOwnerId() {
-		return this.getData().getOwnerId();
-	}
+    public Object getOwnerId() {
+        return this.getData().getOwnerId();
+    }
 
-	public String getDescription() {
-		return this.getData().getDescription();
-	}
+    public String getDescription() {
+        return this.getData().getDescription();
+    }
 
-	public boolean isReserved() {
-		return this.getData().isReserved();
-	}
+    public boolean isReserved() {
+        return this.getData().isReserved();
+    }
 
-	public String getListKey() {
-		return this.getData().getListKey();
-	}
+    public String getListKey() {
+        return this.getData().getListKey();
+    }
 
-	public String getListDescription() {
-		return this.getData().getListDescription();
-	}
+    public String getListDescription() {
+        return this.getData().getListDescription();
+    }
 }

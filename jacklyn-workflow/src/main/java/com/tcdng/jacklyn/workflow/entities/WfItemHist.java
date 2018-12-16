@@ -33,103 +33,103 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("WFITEMHISTORY")
 public class WfItemHist extends BaseTimestampedEntity {
 
-	@ForeignKey(WfTemplate.class)
-	private Long wfTemplateId;
+    @ForeignKey(WfTemplate.class)
+    private Long wfTemplateId;
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
+    @ForeignKey(WfDoc.class)
+    private Long wfDocId;
 
-	@Column(nullable = true)
-	private Long documentId;
+    @Column(nullable = true)
+    private Long documentId;
 
-	@Column(length = 64)
-	private String description;
+    @Column(length = 64)
+    private String description;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-	private String wfCategoryName;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
+    private String wfCategoryName;
 
-	@ListOnly(key = "wfTemplateId", property = "name")
-	private String wfTemplateName;
+    @ListOnly(key = "wfTemplateId", property = "name")
+    private String wfTemplateName;
 
-	@ListOnly(key = "wfTemplateId", property = "description")
-	private String wfTemplateDesc;
+    @ListOnly(key = "wfTemplateId", property = "description")
+    private String wfTemplateDesc;
 
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
 
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
 
-	public Long getDocumentId() {
-		return documentId;
-	}
+    public Long getDocumentId() {
+        return documentId;
+    }
 
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Long getWfTemplateId() {
-		return wfTemplateId;
-	}
+    public Long getWfTemplateId() {
+        return wfTemplateId;
+    }
 
-	public void setWfTemplateId(Long wfTemplateId) {
-		this.wfTemplateId = wfTemplateId;
-	}
+    public void setWfTemplateId(Long wfTemplateId) {
+        this.wfTemplateId = wfTemplateId;
+    }
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
+    public void setWfDocId(Long wfDocId) {
+        this.wfDocId = wfDocId;
+    }
 
-	public String getWfCategoryName() {
-		return wfCategoryName;
-	}
+    public String getWfCategoryName() {
+        return wfCategoryName;
+    }
 
-	public void setWfCategoryName(String wfCategoryName) {
-		this.wfCategoryName = wfCategoryName;
-	}
+    public void setWfCategoryName(String wfCategoryName) {
+        this.wfCategoryName = wfCategoryName;
+    }
 
-	public String getWfTemplateName() {
-		return wfTemplateName;
-	}
+    public String getWfTemplateName() {
+        return wfTemplateName;
+    }
 
-	public void setWfTemplateName(String wfTemplateName) {
-		this.wfTemplateName = wfTemplateName;
-	}
+    public void setWfTemplateName(String wfTemplateName) {
+        this.wfTemplateName = wfTemplateName;
+    }
 
-	public String getWfTemplateDesc() {
-		return wfTemplateDesc;
-	}
+    public String getWfTemplateDesc() {
+        return wfTemplateDesc;
+    }
 
-	public void setWfTemplateDesc(String wfTemplateDesc) {
-		this.wfTemplateDesc = wfTemplateDesc;
-	}
+    public void setWfTemplateDesc(String wfTemplateDesc) {
+        this.wfTemplateDesc = wfTemplateDesc;
+    }
 
-	public String getWfDocName() {
-		return wfDocName;
-	}
+    public String getWfDocName() {
+        return wfDocName;
+    }
 
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
 
-	public String getWfDocDesc() {
-		return wfDocDesc;
-	}
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
 
-	public void setWfDocDesc(String wfDocDesc) {
-		this.wfDocDesc = wfDocDesc;
-	}
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
+    }
 
 }

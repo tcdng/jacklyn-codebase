@@ -37,45 +37,41 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public final class JacklynUtils {
 
-	private JacklynUtils() {
+    private JacklynUtils() {
 
-	}
+    }
 
-	public static String getExtendedFilePath(String path, String workingDtFormat, Date workingDt)
-			throws UnifyException {
-		StringBuilder sb = new StringBuilder();
-		sb.append(path);
-		if (!StringUtils.isBlank(workingDtFormat) && workingDt != null) {
-			if (!path.endsWith("/") && !path.endsWith("\\")) {
-				sb.append(File.separator);
-			}
-			sb.append(CalendarUtils.format(workingDtFormat, workingDt));
-		}
-		return sb.toString();
-	}
+    public static String getExtendedFilePath(String path, String workingDtFormat, Date workingDt)
+            throws UnifyException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(path);
+        if (!StringUtils.isBlank(workingDtFormat) && workingDt != null) {
+            if (!path.endsWith("/") && !path.endsWith("\\")) {
+                sb.append(File.separator);
+            }
+            sb.append(CalendarUtils.format(workingDtFormat, workingDt));
+        }
+        return sb.toString();
+    }
 
-	public static String generateManagedRecordTitle(Class<? extends Entity> managed) {
-		String title
-				= AnnotationUtils.getAnnotationString(managed.getAnnotation(Managed.class).title());
-		if (title == null) {
-			title = NameUtils.getDescription(managed);
-		}
-		return title;
-	}
+    public static String generateManagedRecordTitle(Class<? extends Entity> managed) {
+        String title = AnnotationUtils.getAnnotationString(managed.getAnnotation(Managed.class).title());
+        if (title == null) {
+            title = NameUtils.getDescription(managed);
+        }
+        return title;
+    }
 
-	public static String generateManagedRecordReportableName(Class<? extends Entity> reportable,
-			String title) {
-		return reportable.getAnnotation(Managed.class).module().toLowerCase() + '-'
-				+ StringUtils.squeeze(title) + "-rpt";
-	}
+    public static String generateManagedRecordReportableName(Class<? extends Entity> reportable, String title) {
+        return reportable.getAnnotation(Managed.class).module().toLowerCase() + '-' + StringUtils.squeeze(title)
+                + "-rpt";
+    }
 
-	public static ManagedConfig getManagedConfig(ModuleConfig moduleConfig, String type)
-			throws UnifyException {
-		ManagedConfig managedConfig = moduleConfig.getManagedConfig(type);
-		if (managedConfig == null) {
-			throw new UnifyException(CommonModuleErrorConstants.UNKNOWN_MANAGED_TYPE, type,
-					moduleConfig.getName());
-		}
-		return managedConfig;
-	}
+    public static ManagedConfig getManagedConfig(ModuleConfig moduleConfig, String type) throws UnifyException {
+        ManagedConfig managedConfig = moduleConfig.getManagedConfig(type);
+        if (managedConfig == null) {
+            throw new UnifyException(CommonModuleErrorConstants.UNKNOWN_MANAGED_TYPE, type, moduleConfig.getName());
+        }
+        return managedConfig;
+    }
 }

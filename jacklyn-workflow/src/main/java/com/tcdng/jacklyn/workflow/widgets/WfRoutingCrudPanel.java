@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfroutingcrudpanel.upl")
 public class WfRoutingCrudPanel extends AbstractInMemoryTableCrudPanel<WfRouting> {
 
-	public WfRoutingCrudPanel() {
-		super(WfRouting.class, "workflow.wftemplate.wfstep.wfrouting", false);
-	}
+    public WfRoutingCrudPanel() {
+        super(WfRouting.class, "workflow.wftemplate.wfstep.wfrouting", false);
+    }
 
 }

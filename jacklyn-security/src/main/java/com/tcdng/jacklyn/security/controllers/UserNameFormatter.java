@@ -32,30 +32,30 @@ import com.tcdng.unify.core.format.AbstractFormatter;
 @Component(name = "usernameformat", description = "$m{security.format.username}")
 public class UserNameFormatter extends AbstractFormatter<String> {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
+    private SecurityModule securityModule;
 
-	public UserNameFormatter() {
-		super(String.class);
-	}
+    public UserNameFormatter() {
+        super(String.class);
+    }
 
-	@Override
-	public String format(String value) throws UnifyException {
-		User user = getSecurityModule().findUser(value);
-		return user.getFullName();
-	}
+    @Override
+    public String format(String value) throws UnifyException {
+        User user = getSecurityModule().findUser(value);
+        return user.getFullName();
+    }
 
-	@Override
-	public String parse(String string) throws UnifyException {
-		return null;
-	}
+    @Override
+    public String parse(String string) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	public String getPattern() throws UnifyException {
-		return null;
-	}
+    @Override
+    public String getPattern() throws UnifyException {
+        return null;
+    }
 
-	protected SecurityModule getSecurityModule() throws UnifyException {
-		return securityModule;
-	}
+    protected SecurityModule getSecurityModule() throws UnifyException {
+        return securityModule;
+    }
 }

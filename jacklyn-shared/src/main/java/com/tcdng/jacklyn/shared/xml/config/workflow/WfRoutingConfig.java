@@ -27,26 +27,26 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfRoutingConfig extends BaseConfig {
 
-	private String targetStepName;
+    private String targetStepName;
 
-	private String classifierName;
+    private String classifierName;
 
-	public String getTargetStepName() {
-		return targetStepName;
-	}
+    public String getTargetStepName() {
+        return targetStepName;
+    }
 
-	@XmlAttribute(name = "target", required = true)
-	public void setTargetStepName(String targetStepName) {
-		this.targetStepName = targetStepName;
-	}
+    @XmlAttribute(name = "target", required = true)
+    public void setTargetStepName(String targetStepName) {
+        this.targetStepName = targetStepName;
+    }
 
-	public String getClassifierName() {
-		return classifierName;
-	}
+    public String getClassifierName() {
+        return classifierName;
+    }
 
-	@XmlAttribute(name = "classifier", required = true)
-	public void setClassifierName(String classifierName) {
-		this.classifierName = classifierName;
-	}
+    @XmlAttribute(name = "classifier", required = true)
+    public void setClassifierName(String classifierName) {
+        this.classifierName = classifierName;
+    }
 
 }

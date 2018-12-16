@@ -28,18 +28,17 @@ import com.tcdng.unify.core.annotation.Component;
  * @since 1.0
  */
 @Component(name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMCLASSIFIERLOGIC,
-		description = "Default Workflow Item Classifier Logic")
+        description = "Default Workflow Item Classifier Logic")
 public class WfItemClassifierLogicImpl extends AbstractWfItemClassifierLogic {
 
-	@Override
-	public boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef)
-			throws UnifyException {
-		for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
-			if (!applyFilter(wfItemReader, filter)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException {
+        for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
+            if (!applyFilter(wfItemReader, filter)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

@@ -27,36 +27,36 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class NotificationTemplateConfig extends BaseConfig {
 
-	private String subject;
+    private String subject;
 
-	private String template;
+    private String template;
 
-	private boolean html;
-	
-	public String getSubject() {
-		return subject;
-	}
+    private boolean html;
 
-	@XmlAttribute(required = true)
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    @XmlAttribute(required = true)
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	@XmlAttribute(required = true)
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	public boolean isHtml() {
-		return html;
-	}
+    @XmlAttribute(required = true)
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	@XmlAttribute(required = true)
-	public void setHtml(boolean html) {
-		this.html = html;
-	}
+    public boolean isHtml() {
+        return html;
+    }
+
+    @XmlAttribute(required = true)
+    public void setHtml(boolean html) {
+        this.html = html;
+    }
 }

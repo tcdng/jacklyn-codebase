@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfAttachmentsConfig {
 
-	private List<WfAttachmentConfig> wfAttachmentConfigList;
+    private List<WfAttachmentConfig> wfAttachmentConfigList;
 
-	public List<WfAttachmentConfig> getWfAttachmentConfigList() {
-		return wfAttachmentConfigList;
-	}
+    public List<WfAttachmentConfig> getWfAttachmentConfigList() {
+        return wfAttachmentConfigList;
+    }
 
-	@XmlElement(name="attachment", required = true)
-	public void setWfAttachmentConfigList(List<WfAttachmentConfig> wfAttachmentConfigList) {
-		this.wfAttachmentConfigList = wfAttachmentConfigList;
-	}
+    @XmlElement(name = "attachment", required = true)
+    public void setWfAttachmentConfigList(List<WfAttachmentConfig> wfAttachmentConfigList) {
+        this.wfAttachmentConfigList = wfAttachmentConfigList;
+    }
 
 }

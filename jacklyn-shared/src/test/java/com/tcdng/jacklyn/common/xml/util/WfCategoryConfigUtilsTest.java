@@ -35,17 +35,17 @@ import com.tcdng.unify.core.UnifyError;
  */
 public class WfCategoryConfigUtilsTest {
 
-	@Test
-	public void testReadWfCategoryConfig() throws Exception {
-		WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils.readWfCategoryConfig("xml/wfcustomer.xml");
-		assertNotNull(wfCategoryConfig);
-	}
+    @Test
+    public void testReadWfCategoryConfig() throws Exception {
+        WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils.readWfCategoryConfig("xml/wfcustomer.xml");
+        assertNotNull(wfCategoryConfig);
+    }
 
-	@Test
-	public void testValidateWfCategoryConfig() throws Exception {
-		WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils.readWfCategoryConfig("xml/wfcustomer.xml");
-		List<UnifyError> errorList = WfCategoryConfigUtils.validate(wfCategoryConfig);
-		assertNotNull(errorList);
-		assertEquals(0, errorList.size());
-	}
+    @Test
+    public void testValidateWfCategoryConfig() throws Exception {
+        WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils.readWfCategoryConfig("xml/wfcustomer.xml");
+        List<UnifyError> errorList = WfCategoryConfigUtils.validate(wfCategoryConfig);
+        assertNotNull(errorList);
+        assertEquals(0, errorList.size());
+    }
 }

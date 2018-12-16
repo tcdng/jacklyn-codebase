@@ -34,119 +34,119 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("ROLEWFSTEP")
 public class RoleWfStep extends BaseEntity {
 
-	@ForeignKey(Role.class)
-	private Long roleId;
+    @ForeignKey(Role.class)
+    private Long roleId;
 
-	@ForeignKey(WfTemplate.class)
-	private Long wfTemplateId;
+    @ForeignKey(WfTemplate.class)
+    private Long wfTemplateId;
 
-	@Column(name = "STEP_NM", length = 32)
-	private String stepName;
+    @Column(name = "STEP_NM", length = 32)
+    private String stepName;
 
-	@ListOnly(key = "roleId", property = "name")
-	private String roleName;
+    @ListOnly(key = "roleId", property = "name")
+    private String roleName;
 
-	@ListOnly(key = "roleId", property = "description")
-	private String roleDesc;
+    @ListOnly(key = "roleId", property = "description")
+    private String roleDesc;
 
-	@ListOnly(key = "wfTemplateId", property = "name")
-	private String wfTemplateName;
+    @ListOnly(key = "wfTemplateId", property = "name")
+    private String wfTemplateName;
 
-	@ListOnly(key = "wfTemplateId", property = "description")
-	private String wfTemplateDesc;
+    @ListOnly(key = "wfTemplateId", property = "description")
+    private String wfTemplateDesc;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryId")
-	private Long wfCategoryId;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryId")
+    private Long wfCategoryId;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-	private String wfCategoryName;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
+    private String wfCategoryName;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryDesc")
-	private String wfCategoryDesc;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryDesc")
+    private String wfCategoryDesc;
 
-	@Override
-	public String getDescription() {
-		return stepName;
-	}
+    @Override
+    public String getDescription() {
+        return stepName;
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
+    public Long getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-	public Long getWfTemplateId() {
-		return wfTemplateId;
-	}
+    public Long getWfTemplateId() {
+        return wfTemplateId;
+    }
 
-	public void setWfTemplateId(Long wfTemplateId) {
-		this.wfTemplateId = wfTemplateId;
-	}
+    public void setWfTemplateId(Long wfTemplateId) {
+        this.wfTemplateId = wfTemplateId;
+    }
 
-	public String getStepName() {
-		return stepName;
-	}
+    public String getStepName() {
+        return stepName;
+    }
 
-	public void setStepName(String stepName) {
-		this.stepName = stepName;
-	}
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
-	public String getRoleDesc() {
-		return roleDesc;
-	}
+    public String getRoleDesc() {
+        return roleDesc;
+    }
 
-	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
-	}
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
+    }
 
-	public String getWfTemplateName() {
-		return wfTemplateName;
-	}
+    public String getWfTemplateName() {
+        return wfTemplateName;
+    }
 
-	public void setWfTemplateName(String wfTemplateName) {
-		this.wfTemplateName = wfTemplateName;
-	}
+    public void setWfTemplateName(String wfTemplateName) {
+        this.wfTemplateName = wfTemplateName;
+    }
 
-	public String getWfTemplateDesc() {
-		return wfTemplateDesc;
-	}
+    public String getWfTemplateDesc() {
+        return wfTemplateDesc;
+    }
 
-	public void setWfTemplateDesc(String wfTemplateDesc) {
-		this.wfTemplateDesc = wfTemplateDesc;
-	}
+    public void setWfTemplateDesc(String wfTemplateDesc) {
+        this.wfTemplateDesc = wfTemplateDesc;
+    }
 
-	public Long getWfCategoryId() {
-		return wfCategoryId;
-	}
+    public Long getWfCategoryId() {
+        return wfCategoryId;
+    }
 
-	public void setWfCategoryId(Long wfCategoryId) {
-		this.wfCategoryId = wfCategoryId;
-	}
+    public void setWfCategoryId(Long wfCategoryId) {
+        this.wfCategoryId = wfCategoryId;
+    }
 
-	public String getWfCategoryName() {
-		return wfCategoryName;
-	}
+    public String getWfCategoryName() {
+        return wfCategoryName;
+    }
 
-	public void setWfCategoryName(String wfCategoryName) {
-		this.wfCategoryName = wfCategoryName;
-	}
+    public void setWfCategoryName(String wfCategoryName) {
+        this.wfCategoryName = wfCategoryName;
+    }
 
-	public String getWfCategoryDesc() {
-		return wfCategoryDesc;
-	}
+    public String getWfCategoryDesc() {
+        return wfCategoryDesc;
+    }
 
-	public void setWfCategoryDesc(String wfCategoryDesc) {
-		this.wfCategoryDesc = wfCategoryDesc;
-	}
+    public void setWfCategoryDesc(String wfCategoryDesc) {
+        this.wfCategoryDesc = wfCategoryDesc;
+    }
 
 }

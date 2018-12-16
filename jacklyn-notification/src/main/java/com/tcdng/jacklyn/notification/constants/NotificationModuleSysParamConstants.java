@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.notification.constants;
  */
 public interface NotificationModuleSysParamConstants {
 
-	String NOTIFICATION_ENABLED = "NOT-0001";
+    String NOTIFICATION_ENABLED = "NOT-0001";
 
-	String NOTIFICATION_MAXIMUM_TRIES = "NOT-0002";
+    String NOTIFICATION_MAXIMUM_TRIES = "NOT-0002";
 
-	String NOTIFICATION_RETRY_MINUTES = "NOT-0003";
+    String NOTIFICATION_RETRY_MINUTES = "NOT-0003";
 
-	String NOTIFICATION_MAX_BATCH_SIZE = "NOT-0004";
+    String NOTIFICATION_MAX_BATCH_SIZE = "NOT-0004";
 }

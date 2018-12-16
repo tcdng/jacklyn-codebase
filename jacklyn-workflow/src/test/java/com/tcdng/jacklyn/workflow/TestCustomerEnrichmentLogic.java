@@ -30,13 +30,13 @@ import com.tcdng.unify.core.annotation.Component;
 @Component("testcustomer-enrichmentlogic")
 public class TestCustomerEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
 
-	@Override
-	public void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException {
-		// Enrich workflow item
-		String firstName = wfItemReaderWriter.readFieldValue(String.class, "firstName");
-		String lastName = wfItemReaderWriter.readFieldValue(String.class, "lastName");
-		wfItemReaderWriter.writeFieldValue("fullName", firstName + " " + lastName);
-		wfItemReaderWriter.writeFieldValue("accountNo", "0123456789");
-	}
+    @Override
+    public void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException {
+        // Enrich workflow item
+        String firstName = wfItemReaderWriter.readFieldValue(String.class, "firstName");
+        String lastName = wfItemReaderWriter.readFieldValue(String.class, "lastName");
+        wfItemReaderWriter.writeFieldValue("fullName", firstName + " " + lastName);
+        wfItemReaderWriter.writeFieldValue("accountNo", "0123456789");
+    }
 
 }

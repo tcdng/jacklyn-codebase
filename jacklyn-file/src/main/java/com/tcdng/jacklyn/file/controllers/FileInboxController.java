@@ -39,80 +39,76 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/file/upl/managefileinbox.upl")
 public class FileInboxController extends AbstractFileTransferBoxController<FileInbox> {
 
-	private FileInboxReadStatus searchReadStatus;
+    private FileInboxReadStatus searchReadStatus;
 
-	private FileInboxStatus searchStatus;
+    private FileInboxStatus searchStatus;
 
-	public FileInboxController() {
-		super(FileInbox.class, "file.fileinbox.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public FileInboxController() {
+        super(FileInbox.class, "file.fileinbox.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public FileInboxReadStatus getSearchReadStatus() {
-		return searchReadStatus;
-	}
+    public FileInboxReadStatus getSearchReadStatus() {
+        return searchReadStatus;
+    }
 
-	public void setSearchReadStatus(FileInboxReadStatus searchReadStatus) {
-		this.searchReadStatus = searchReadStatus;
-	}
+    public void setSearchReadStatus(FileInboxReadStatus searchReadStatus) {
+        this.searchReadStatus = searchReadStatus;
+    }
 
-	public FileInboxStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public FileInboxStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(FileInboxStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(FileInboxStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Action
-	public String markRead() throws UnifyException {
-		List<Long> fileInboxIds = getSelectedIds();
-		if (!fileInboxIds.isEmpty()) {
-			getFileModule().updateFileInboxItemsReadStatus(
-					(FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
-					FileInboxReadStatus.READ);
-			logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKREAD,
-					getSelectedDescription());
-			hintUser("hint.records.markedread");
-		}
-		return findRecords();
-	}
+    @Action
+    public String markRead() throws UnifyException {
+        List<Long> fileInboxIds = getSelectedIds();
+        if (!fileInboxIds.isEmpty()) {
+            getFileModule().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
+                    FileInboxReadStatus.READ);
+            logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKREAD, getSelectedDescription());
+            hintUser("hint.records.markedread");
+        }
+        return findRecords();
+    }
 
-	@Action
-	public String markUnread() throws UnifyException {
-		List<Long> fileInboxIds = getSelectedIds();
-		if (!fileInboxIds.isEmpty()) {
-			getFileModule().updateFileInboxItemsReadStatus(
-					(FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
-					FileInboxReadStatus.NOT_READ);
-			logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKUNREAD,
-					getSelectedDescription());
-			hintUser("hint.records.markedunread");
-		}
-		return findRecords();
-	}
+    @Action
+    public String markUnread() throws UnifyException {
+        List<Long> fileInboxIds = getSelectedIds();
+        if (!fileInboxIds.isEmpty()) {
+            getFileModule().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
+                    FileInboxReadStatus.NOT_READ);
+            logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKUNREAD, getSelectedDescription());
+            hintUser("hint.records.markedunread");
+        }
+        return findRecords();
+    }
 
-	@Override
-	protected List<FileInbox> find() throws UnifyException {
-		FileInboxQuery query = new FileInboxQuery();
-		if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
-			query.fileTransferConfigId(getSearchFileTransferConfigId());
-		}
+    @Override
+    protected List<FileInbox> find() throws UnifyException {
+        FileInboxQuery query = new FileInboxQuery();
+        if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
+            query.fileTransferConfigId(getSearchFileTransferConfigId());
+        }
 
-		if (getSearchReadStatus() != null) {
-			query.readStatus(getSearchReadStatus());
-		}
+        if (getSearchReadStatus() != null) {
+            query.readStatus(getSearchReadStatus());
+        }
 
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
 
-		query.createdOn(getSearchCreateDt());
-		return getFileModule().findFileInboxItems(query);
-	}
+        query.createdOn(getSearchCreateDt());
+        return getFileModule().findFileInboxItems(query);
+    }
 
-	@Override
-	protected FileInbox find(Long id) throws UnifyException {
-		return getFileModule().findFileInboxItem(id);
-	}
+    @Override
+    protected FileInbox find(Long id) throws UnifyException {
+        return getFileModule().findFileInboxItem(id);
+    }
 }

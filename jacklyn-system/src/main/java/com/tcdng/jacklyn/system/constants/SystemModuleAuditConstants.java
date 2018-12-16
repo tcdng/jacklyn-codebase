@@ -23,17 +23,17 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemModuleAuditConstants {
 
-	String AUDIT_ACTIVATE_MODULEACTIVITY = "sys-activatemoduleact";
+    String AUDIT_ACTIVATE_MODULEACTIVITY = "sys-activatemoduleact";
 
-	String AUDIT_DEACTIVATE_MODULEACTIVITY = "sys-deactivatemoduleact";
+    String AUDIT_DEACTIVATE_MODULEACTIVITY = "sys-deactivatemoduleact";
 
-	String AUDIT_SET_MENU_DISPLAY_ORDER = "sys-menusetdisplayorder";
+    String AUDIT_SET_MENU_DISPLAY_ORDER = "sys-menusetdisplayorder";
 
-	String AUDIT_SET_MENUITEM_DISPLAY_ORDER = "sys-menuitemsetdisplayorder";
+    String AUDIT_SET_MENUITEM_DISPLAY_ORDER = "sys-menuitemsetdisplayorder";
 
-	String AUDIT_ENABLE_CONTROL = "sys-enablecontrol";
+    String AUDIT_ENABLE_CONTROL = "sys-enablecontrol";
 
-	String AUDIT_DISABLE_CONTROL = "sys-disablecontrol";
+    String AUDIT_DISABLE_CONTROL = "sys-disablecontrol";
 
-	String AUDIT_SET_DASHBOARDTILE_DISPLAY_ORDER = "sys-orderdashboardtile";
+    String AUDIT_SET_DASHBOARDTILE_DISPLAY_ORDER = "sys-orderdashboardtile";
 }

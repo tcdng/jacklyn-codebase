@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.security.constants;
  */
 public interface SecurityModuleNameConstants {
 
-	String SECURITY_MODULE = "security";
+    String SECURITY_MODULE = "security";
 
-	String SECURITYBUSINESSMODULE = "jacklyn-securitybusinessmodule";
+    String SECURITYBUSINESSMODULE = "jacklyn-securitybusinessmodule";
 }

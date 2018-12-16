@@ -23,8 +23,8 @@ package com.tcdng.jacklyn.audit.constants;
  */
 public interface AuditModuleNameConstants {
 
-	String AUDIT_MODULE = "audit";
+    String AUDIT_MODULE = "audit";
 
-	String AUDITBUSINESSMODULE = "jacklyn-auditbusinessmodule";
+    String AUDITBUSINESSMODULE = "jacklyn-auditbusinessmodule";
 
 }

@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("outboxfilestatuslist")
 public enum FileOutboxStatus implements EnumConst {
 
-	NOT_SENT("N"), SENT("S"), ABORTED("A");
+    NOT_SENT("N"), SENT("S"), ABORTED("A");
 
-	private final String code;
+    private final String code;
 
-	private FileOutboxStatus(String code) {
-		this.code = code;
-	}
+    private FileOutboxStatus(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static FileOutboxStatus fromCode(String code) {
-		return EnumUtils.fromCode(FileOutboxStatus.class, code);
-	}
+    public static FileOutboxStatus fromCode(String code) {
+        return EnumUtils.fromCode(FileOutboxStatus.class, code);
+    }
 
-	public static FileOutboxStatus fromName(String name) {
-		return EnumUtils.fromName(FileOutboxStatus.class, name);
-	}
+    public static FileOutboxStatus fromName(String name) {
+        return EnumUtils.fromName(FileOutboxStatus.class, name);
+    }
 }

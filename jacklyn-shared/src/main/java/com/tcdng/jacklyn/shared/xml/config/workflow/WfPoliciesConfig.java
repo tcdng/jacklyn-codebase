@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfPoliciesConfig {
 
-	private List<WfPolicyConfig> wfPolicyConfigList;
+    private List<WfPolicyConfig> wfPolicyConfigList;
 
-	public List<WfPolicyConfig> getWfPolicyConfigList() {
-		return wfPolicyConfigList;
-	}
+    public List<WfPolicyConfig> getWfPolicyConfigList() {
+        return wfPolicyConfigList;
+    }
 
-	@XmlElement(name="policy", required=true)
-	public void setWfPolicyConfigList(List<WfPolicyConfig> wfPolicyConfigList) {
-		this.wfPolicyConfigList = wfPolicyConfigList;
-	}
+    @XmlElement(name = "policy", required = true)
+    public void setWfPolicyConfigList(List<WfPolicyConfig> wfPolicyConfigList) {
+        this.wfPolicyConfigList = wfPolicyConfigList;
+    }
 
 }

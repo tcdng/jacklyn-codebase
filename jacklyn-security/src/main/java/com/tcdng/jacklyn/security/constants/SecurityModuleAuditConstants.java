@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.security.constants;
  */
 public interface SecurityModuleAuditConstants {
 
-	String LOGIN = "sec-login";
+    String LOGIN = "sec-login";
 
-	String LOGOUT = "sec-logout";
+    String LOGOUT = "sec-logout";
 
-	String CHANGE_PASSWORD = "sec-chgpassword";
+    String CHANGE_PASSWORD = "sec-chgpassword";
 
-	String RESET_PASSWORD = "sec-resetpassword";
+    String RESET_PASSWORD = "sec-resetpassword";
 }

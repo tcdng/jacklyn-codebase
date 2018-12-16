@@ -35,16 +35,15 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("menulist")
 public class MenuListCommand extends AbstractZeroParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		ApplicationMenuQuery query = new ApplicationMenuQuery();
-		query.status(RecordStatus.ACTIVE).order("caption");
-		List<ApplicationMenu> menuList = getSystemModule().findMenus(query);
-		for (ApplicationMenu menuData : menuList) {
-			menuData.setCaption(resolveSessionMessage(menuData.getCaption()));
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        ApplicationMenuQuery query = new ApplicationMenuQuery();
+        query.status(RecordStatus.ACTIVE).order("caption");
+        List<ApplicationMenu> menuList = getSystemModule().findMenus(query);
+        for (ApplicationMenu menuData : menuList) {
+            menuData.setCaption(resolveSessionMessage(menuData.getCaption()));
+        }
 
-		return menuList;
-	}
+        return menuList;
+    }
 }

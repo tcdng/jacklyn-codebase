@@ -25,19 +25,19 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  */
 public class BatchFileDefinitionQuery extends BaseVersionedStatusEntityQuery<BatchFileDefinition> {
 
-	public BatchFileDefinitionQuery() {
-		super(BatchFileDefinition.class);
-	}
+    public BatchFileDefinitionQuery() {
+        super(BatchFileDefinition.class);
+    }
 
-	public BatchFileDefinitionQuery name(String name) {
-		return (BatchFileDefinitionQuery) equals("name", name);
-	}
+    public BatchFileDefinitionQuery name(String name) {
+        return (BatchFileDefinitionQuery) equals("name", name);
+    }
 
-	public BatchFileDefinitionQuery nameLike(String name) {
-		return (BatchFileDefinitionQuery) like("name", name);
-	}
+    public BatchFileDefinitionQuery nameLike(String name) {
+        return (BatchFileDefinitionQuery) like("name", name);
+    }
 
-	public BatchFileDefinitionQuery descriptionLike(String description) {
-		return (BatchFileDefinitionQuery) like("description", description);
-	}
+    public BatchFileDefinitionQuery descriptionLike(String description) {
+        return (BatchFileDefinitionQuery) like("description", description);
+    }
 }

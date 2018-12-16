@@ -25,23 +25,23 @@ import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
  */
 public class WfCategoryQuery extends BaseStatusEntityQuery<WfCategory> {
 
-	public WfCategoryQuery() {
-		super(WfCategory.class);
-	}
+    public WfCategoryQuery() {
+        super(WfCategory.class);
+    }
 
-	public WfCategoryQuery version(String version) {
-		return (WfCategoryQuery) equals("version", version);
-	}
+    public WfCategoryQuery version(String version) {
+        return (WfCategoryQuery) equals("version", version);
+    }
 
-	public WfCategoryQuery name(String name) {
-		return (WfCategoryQuery) equals("name", name);
-	}
+    public WfCategoryQuery name(String name) {
+        return (WfCategoryQuery) equals("name", name);
+    }
 
-	public WfCategoryQuery nameLike(String name) {
-		return (WfCategoryQuery) like("name", name);
-	}
+    public WfCategoryQuery nameLike(String name) {
+        return (WfCategoryQuery) like("name", name);
+    }
 
-	public WfCategoryQuery descriptionLike(String description) {
-		return (WfCategoryQuery) like("description", description);
-	}
+    public WfCategoryQuery descriptionLike(String description) {
+        return (WfCategoryQuery) like("description", description);
+    }
 }

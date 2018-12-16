@@ -30,31 +30,31 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Table(name = "WFITEMPACKEDDOC", uniqueConstraints = { @UniqueConstraint({ "wfItemId" }) })
 public class WfItemPackedDoc extends BaseTimestampedEntity {
 
-	@ForeignKey(WfItem.class)
-	private Long wfItemId;
+    @ForeignKey(WfItem.class)
+    private Long wfItemId;
 
-	@Column
-	private byte[] packedDoc;
+    @Column
+    private byte[] packedDoc;
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	public Long getWfItemId() {
-		return wfItemId;
-	}
+    public Long getWfItemId() {
+        return wfItemId;
+    }
 
-	public void setWfItemId(Long wfItemId) {
-		this.wfItemId = wfItemId;
-	}
+    public void setWfItemId(Long wfItemId) {
+        this.wfItemId = wfItemId;
+    }
 
-	public byte[] getPackedDoc() {
-		return packedDoc;
-	}
+    public byte[] getPackedDoc() {
+        return packedDoc;
+    }
 
-	public void setPackedDoc(byte[] packedDoc) {
-		this.packedDoc = packedDoc;
-	}
+    public void setPackedDoc(byte[] packedDoc) {
+        this.packedDoc = packedDoc;
+    }
 
 }

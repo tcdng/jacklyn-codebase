@@ -35,21 +35,20 @@ import com.tcdng.unify.core.util.StringUtils;
 @Component("archivabledeflist")
 public class ArchivableListCommand extends AbstractArchivingListCommand<StatusParams> {
 
-	public ArchivableListCommand() {
-		super(StatusParams.class);
-	}
+    public ArchivableListCommand() {
+        super(StatusParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, StatusParams params)
-			throws UnifyException {
-		if (!StringUtils.isBlank(params.getStatus())) {
-			return getArchivingBusinessModule().findArchivableDefinitions(
-					(ArchivableDefinitionQuery) new ArchivableDefinitionQuery().orderByDescription()
-							.status(RecordStatus.fromName(params.getStatus())));
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, StatusParams params) throws UnifyException {
+        if (!StringUtils.isBlank(params.getStatus())) {
+            return getArchivingBusinessModule()
+                    .findArchivableDefinitions((ArchivableDefinitionQuery) new ArchivableDefinitionQuery()
+                            .orderByDescription().status(RecordStatus.fromName(params.getStatus())));
+        }
 
-		return getArchivingBusinessModule().findArchivableDefinitions(
-				(ArchivableDefinitionQuery) new ArchivableDefinitionQuery().orderByDescription()
-						.ignoreEmptyCriteria(true));
-	}
+        return getArchivingBusinessModule()
+                .findArchivableDefinitions((ArchivableDefinitionQuery) new ArchivableDefinitionQuery()
+                        .orderByDescription().ignoreEmptyCriteria(true));
+    }
 }

@@ -28,11 +28,11 @@ import com.tcdng.unify.core.business.BusinessModule;
  */
 public interface JacklynBusinessModule extends BusinessModule, FeatureInstaller<ModuleConfig> {
 
-	/**
-	 * Clears all module cache.
-	 * 
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void clearCache() throws UnifyException;
+    /**
+     * Clears all module cache.
+     * 
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void clearCache() throws UnifyException;
 }

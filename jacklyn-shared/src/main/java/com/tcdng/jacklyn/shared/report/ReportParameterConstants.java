@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.shared.report;
  */
 public interface ReportParameterConstants {
 
-	String APPLICATION_TITLE = "APPLICATION_TITLE";
+    String APPLICATION_TITLE = "APPLICATION_TITLE";
 
-	String REPORT_TITLE = "REPORT_TITLE";
+    String REPORT_TITLE = "REPORT_TITLE";
 
-	String CLIENT_TITLE = "CLIENT_TITLE";
+    String CLIENT_TITLE = "CLIENT_TITLE";
 
-	String CLIENT_LOGO = "CLIENT_LOGO";
+    String CLIENT_LOGO = "CLIENT_LOGO";
 }

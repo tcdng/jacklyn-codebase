@@ -35,194 +35,194 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfStepConfig extends BaseConfig {
 
-	private WorkflowStepType type;
+    private WorkflowStepType type;
 
-	private WorkflowParticipantType participant;
+    private WorkflowParticipantType participant;
 
-	private WorkflowStepPriority priority;
+    private WorkflowStepPriority priority;
 
-	private String label;
+    private String label;
 
-	private Integer itemsPerSession;
+    private Integer itemsPerSession;
 
-	private Integer expiryHours;
+    private Integer expiryHours;
 
-	private Boolean audit;
+    private Boolean audit;
 
-	private Boolean branchOnly;
+    private Boolean branchOnly;
 
-	private Boolean includeForwarder;
+    private Boolean includeForwarder;
 
-	private WfEnrichmentsConfig wfEnrichmentsConfig;
+    private WfEnrichmentsConfig wfEnrichmentsConfig;
 
-	private WfRoutingsConfig wfRoutingsConfig;
-	
-	private WfRecordActionsConfig wfRecordActionsConfig;
-	
-	private WfUserActionsConfig wfUserActionsConfig;
-	
-	private WfFormPrivilegesConfig wfFormPrivilegesConfig;
+    private WfRoutingsConfig wfRoutingsConfig;
 
-	private WfPoliciesConfig wfPoliciesConfig;
+    private WfRecordActionsConfig wfRecordActionsConfig;
 
-	private WfAlertsConfig wfAlertsConfig;
+    private WfUserActionsConfig wfUserActionsConfig;
 
-	public WfStepConfig() {
-		this.type = WorkflowStepType.AUTOMATIC;
-		this.participant = WorkflowParticipantType.NONE;
-		this.priority = WorkflowStepPriority.NORMAL;
-		this.audit = Boolean.FALSE;
-		this.branchOnly = Boolean.FALSE;
-		this.includeForwarder = Boolean.FALSE;
-		this.itemsPerSession = Integer.valueOf(0);
-		this.expiryHours = Integer.valueOf(0);
-	}
+    private WfFormPrivilegesConfig wfFormPrivilegesConfig;
 
-	public WorkflowStepType getType() {
-		return type;
-	}
+    private WfPoliciesConfig wfPoliciesConfig;
 
-	@XmlJavaTypeAdapter(WorkflowStepTypeXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setType(WorkflowStepType type) {
-		this.type = type;
-	}
+    private WfAlertsConfig wfAlertsConfig;
 
-	public WorkflowParticipantType getParticipant() {
-		return participant;
-	}
+    public WfStepConfig() {
+        this.type = WorkflowStepType.AUTOMATIC;
+        this.participant = WorkflowParticipantType.NONE;
+        this.priority = WorkflowStepPriority.NORMAL;
+        this.audit = Boolean.FALSE;
+        this.branchOnly = Boolean.FALSE;
+        this.includeForwarder = Boolean.FALSE;
+        this.itemsPerSession = Integer.valueOf(0);
+        this.expiryHours = Integer.valueOf(0);
+    }
 
-	@XmlJavaTypeAdapter(WorkflowParticipantTypeXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setParticipant(WorkflowParticipantType participant) {
-		this.participant = participant;
-	}
+    public WorkflowStepType getType() {
+        return type;
+    }
 
-	public WorkflowStepPriority getPriority() {
-		return priority;
-	}
+    @XmlJavaTypeAdapter(WorkflowStepTypeXmlAdapter.class)
+    @XmlAttribute(required = true)
+    public void setType(WorkflowStepType type) {
+        this.type = type;
+    }
 
-	@XmlJavaTypeAdapter(WorkflowStepPriorityXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setPriority(WorkflowStepPriority priority) {
-		this.priority = priority;
-	}
+    public WorkflowParticipantType getParticipant() {
+        return participant;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    @XmlJavaTypeAdapter(WorkflowParticipantTypeXmlAdapter.class)
+    @XmlAttribute(required = true)
+    public void setParticipant(WorkflowParticipantType participant) {
+        this.participant = participant;
+    }
 
-	@XmlAttribute
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public WorkflowStepPriority getPriority() {
+        return priority;
+    }
 
-	public Integer getItemsPerSession() {
-		return itemsPerSession;
-	}
+    @XmlJavaTypeAdapter(WorkflowStepPriorityXmlAdapter.class)
+    @XmlAttribute(required = true)
+    public void setPriority(WorkflowStepPriority priority) {
+        this.priority = priority;
+    }
 
-	@XmlAttribute(name="max-session-items", required = true)
-	public void setItemsPerSession(Integer itemsPerSession) {
-		this.itemsPerSession = itemsPerSession;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public Integer getExpiryHours() {
-		return expiryHours;
-	}
+    @XmlAttribute
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	@XmlAttribute(name="expiry-hours", required = true)
-	public void setExpiryHours(Integer expiryHours) {
-		this.expiryHours = expiryHours;
-	}
+    public Integer getItemsPerSession() {
+        return itemsPerSession;
+    }
 
-	public Boolean getAudit() {
-		return audit;
-	}
+    @XmlAttribute(name = "max-session-items", required = true)
+    public void setItemsPerSession(Integer itemsPerSession) {
+        this.itemsPerSession = itemsPerSession;
+    }
 
-	@XmlAttribute
-	public void setAudit(Boolean audit) {
-		this.audit = audit;
-	}
+    public Integer getExpiryHours() {
+        return expiryHours;
+    }
 
-	public Boolean getBranchOnly() {
-		return branchOnly;
-	}
+    @XmlAttribute(name = "expiry-hours", required = true)
+    public void setExpiryHours(Integer expiryHours) {
+        this.expiryHours = expiryHours;
+    }
 
-	@XmlAttribute(name="branch-only")
-	public void setBranchOnly(Boolean branchOnly) {
-		this.branchOnly = branchOnly;
-	}
+    public Boolean getAudit() {
+        return audit;
+    }
 
-	public Boolean getIncludeForwarder() {
-		return includeForwarder;
-	}
+    @XmlAttribute
+    public void setAudit(Boolean audit) {
+        this.audit = audit;
+    }
 
-	@XmlAttribute(name="include-forwarder")
-	public void setIncludeForwarder(Boolean includeForwarder) {
-		this.includeForwarder = includeForwarder;
-	}
+    public Boolean getBranchOnly() {
+        return branchOnly;
+    }
 
-	public WfEnrichmentsConfig getWfEnrichmentsConfig() {
-		return wfEnrichmentsConfig;
-	}
+    @XmlAttribute(name = "branch-only")
+    public void setBranchOnly(Boolean branchOnly) {
+        this.branchOnly = branchOnly;
+    }
 
-	@XmlElement(name = "enrichments", required = true)
-	public void setWfEnrichmentsConfig(WfEnrichmentsConfig wfEnrichmentsConfig) {
-		this.wfEnrichmentsConfig = wfEnrichmentsConfig;
-	}
+    public Boolean getIncludeForwarder() {
+        return includeForwarder;
+    }
 
-	public WfPoliciesConfig getWfPoliciesConfig() {
-		return wfPoliciesConfig;
-	}
+    @XmlAttribute(name = "include-forwarder")
+    public void setIncludeForwarder(Boolean includeForwarder) {
+        this.includeForwarder = includeForwarder;
+    }
 
-	@XmlElement(name = "policies", required = true)
-	public void setWfPoliciesConfig(WfPoliciesConfig wfPoliciesConfig) {
-		this.wfPoliciesConfig = wfPoliciesConfig;
-	}
+    public WfEnrichmentsConfig getWfEnrichmentsConfig() {
+        return wfEnrichmentsConfig;
+    }
 
-	public WfAlertsConfig getWfAlertsConfig() {
-		return wfAlertsConfig;
-	}
+    @XmlElement(name = "enrichments", required = true)
+    public void setWfEnrichmentsConfig(WfEnrichmentsConfig wfEnrichmentsConfig) {
+        this.wfEnrichmentsConfig = wfEnrichmentsConfig;
+    }
 
-	@XmlElement(name = "alerts", required = true)
-	public void setWfAlertsConfig(WfAlertsConfig wfAlertsConfig) {
-		this.wfAlertsConfig = wfAlertsConfig;
-	}
+    public WfPoliciesConfig getWfPoliciesConfig() {
+        return wfPoliciesConfig;
+    }
 
-	public WfRoutingsConfig getWfRoutingsConfig() {
-		return wfRoutingsConfig;
-	}
+    @XmlElement(name = "policies", required = true)
+    public void setWfPoliciesConfig(WfPoliciesConfig wfPoliciesConfig) {
+        this.wfPoliciesConfig = wfPoliciesConfig;
+    }
 
-	@XmlElement(name = "routings", required = true)
-	public void setWfRoutingsConfig(WfRoutingsConfig wfRoutingsConfig) {
-		this.wfRoutingsConfig = wfRoutingsConfig;
-	}
+    public WfAlertsConfig getWfAlertsConfig() {
+        return wfAlertsConfig;
+    }
 
-	public WfRecordActionsConfig getWfRecordActionsConfig() {
-		return wfRecordActionsConfig;
-	}
+    @XmlElement(name = "alerts", required = true)
+    public void setWfAlertsConfig(WfAlertsConfig wfAlertsConfig) {
+        this.wfAlertsConfig = wfAlertsConfig;
+    }
 
-	@XmlElement(name = "record-actions", required = true)
-	public void setWfRecordActionsConfig(WfRecordActionsConfig wfRecordActionsConfig) {
-		this.wfRecordActionsConfig = wfRecordActionsConfig;
-	}
+    public WfRoutingsConfig getWfRoutingsConfig() {
+        return wfRoutingsConfig;
+    }
 
-	public WfUserActionsConfig getWfUserActionsConfig() {
-		return wfUserActionsConfig;
-	}
+    @XmlElement(name = "routings", required = true)
+    public void setWfRoutingsConfig(WfRoutingsConfig wfRoutingsConfig) {
+        this.wfRoutingsConfig = wfRoutingsConfig;
+    }
 
-	@XmlElement(name = "user-actions", required = true)
-	public void setWfUserActionsConfig(WfUserActionsConfig wfUserActionsConfig) {
-		this.wfUserActionsConfig = wfUserActionsConfig;
-	}
+    public WfRecordActionsConfig getWfRecordActionsConfig() {
+        return wfRecordActionsConfig;
+    }
 
-	public WfFormPrivilegesConfig getWfFormPrivilegesConfig() {
-		return wfFormPrivilegesConfig;
-	}
+    @XmlElement(name = "record-actions", required = true)
+    public void setWfRecordActionsConfig(WfRecordActionsConfig wfRecordActionsConfig) {
+        this.wfRecordActionsConfig = wfRecordActionsConfig;
+    }
 
-	@XmlElement(name = "form-privileges")
-	public void setWfFormPrivilegesConfig(WfFormPrivilegesConfig wfFormPrivilegesConfig) {
-		this.wfFormPrivilegesConfig = wfFormPrivilegesConfig;
-	}
+    public WfUserActionsConfig getWfUserActionsConfig() {
+        return wfUserActionsConfig;
+    }
+
+    @XmlElement(name = "user-actions", required = true)
+    public void setWfUserActionsConfig(WfUserActionsConfig wfUserActionsConfig) {
+        this.wfUserActionsConfig = wfUserActionsConfig;
+    }
+
+    public WfFormPrivilegesConfig getWfFormPrivilegesConfig() {
+        return wfFormPrivilegesConfig;
+    }
+
+    @XmlElement(name = "form-privileges")
+    public void setWfFormPrivilegesConfig(WfFormPrivilegesConfig wfFormPrivilegesConfig) {
+        this.wfFormPrivilegesConfig = wfFormPrivilegesConfig;
+    }
 
 }

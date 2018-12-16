@@ -27,34 +27,34 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntityQue
  */
 public class UserQuery extends BaseVersionedTimestampedStatusEntityQuery<User> {
 
-	public UserQuery() {
-		super(User.class);
-	}
+    public UserQuery() {
+        super(User.class);
+    }
 
-	@Override
-	public UserQuery id(Long id) {
-		return (UserQuery) super.id(id);
-	}
+    @Override
+    public UserQuery id(Long id) {
+        return (UserQuery) super.id(id);
+    }
 
-	@Override
-	public UserQuery idIn(Collection<Long> id) {
-		return (UserQuery) super.idIn(id);
-	}
+    @Override
+    public UserQuery idIn(Collection<Long> id) {
+        return (UserQuery) super.idIn(id);
+    }
 
-	@Override
-	public UserQuery idNotIn(Collection<Long> id) {
-		return (UserQuery) super.idNotIn(id);
-	}
+    @Override
+    public UserQuery idNotIn(Collection<Long> id) {
+        return (UserQuery) super.idNotIn(id);
+    }
 
-	public UserQuery fullNameLike(String fullName) {
-		return (UserQuery) like("fullName", fullName);
-	}
+    public UserQuery fullNameLike(String fullName) {
+        return (UserQuery) like("fullName", fullName);
+    }
 
-	public UserQuery loginId(String loginId) {
-		return (UserQuery) equals("loginId", loginId);
-	}
+    public UserQuery loginId(String loginId) {
+        return (UserQuery) equals("loginId", loginId);
+    }
 
-	public UserQuery password(String password) {
-		return (UserQuery) equals("password", password);
-	}
+    public UserQuery password(String password) {
+        return (UserQuery) equals("password", password);
+    }
 }

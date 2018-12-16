@@ -25,17 +25,16 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemEnrichmentLogic extends AbstractUnifyComponent
-		implements WfItemEnrichmentLogic {
+public abstract class AbstractWfItemEnrichmentLogic extends AbstractUnifyComponent implements WfItemEnrichmentLogic {
 
-	@Override
-	protected void onInitialize() throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 
 }

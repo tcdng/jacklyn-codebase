@@ -29,28 +29,26 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractOrganizationRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE)
-	private OrganizationModule organizationModule;
+    @Configurable(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE)
+    private OrganizationModule organizationModule;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public AbstractOrganizationRecordController(Class<T> entityClass, String hintKey,
-			int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractOrganizationRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	protected OrganizationModule getOrganizationModule() throws UnifyException {
-		return organizationModule;
-	}
+    protected OrganizationModule getOrganizationModule() throws UnifyException {
+        return organizationModule;
+    }
 }

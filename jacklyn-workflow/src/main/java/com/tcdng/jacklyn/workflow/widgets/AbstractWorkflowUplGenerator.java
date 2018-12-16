@@ -33,40 +33,39 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public abstract class AbstractWorkflowUplGenerator extends AbstractUplGenerator {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
+    private WorkflowModule workflowModule;
 
-	public AbstractWorkflowUplGenerator(String uplComponentName) {
-		super(uplComponentName);
-	}
+    public AbstractWorkflowUplGenerator(String uplComponentName) {
+        super(uplComponentName);
+    }
 
-	@Override
-	public boolean isNewerVersion(String target) throws UnifyException {
-		WfFormDef wfFormDef = workflowModule.getRuntimeWfFormDef(target);
-		return !wfFormDef.isRead();
-	}
+    @Override
+    public boolean isNewerVersion(String target) throws UnifyException {
+        WfFormDef wfFormDef = workflowModule.getRuntimeWfFormDef(target);
+        return !wfFormDef.isRead();
+    }
 
-	@Override
-	protected void generateBody(StringBuilder sb, String target) throws UnifyException {
-		WfFormDef wfFormDef = workflowModule.getRuntimeWfFormDef(target);
-		wfFormDef.read(); // Indicate generation has been done for this document instance
-		doGenerateBody(sb, wfFormDef);
-	}
+    @Override
+    protected void generateBody(StringBuilder sb, String target) throws UnifyException {
+        WfFormDef wfFormDef = workflowModule.getRuntimeWfFormDef(target);
+        wfFormDef.read(); // Indicate generation has been done for this document instance
+        doGenerateBody(sb, wfFormDef);
+    }
 
-	protected WorkflowModule getWorkflowModule() {
-		return workflowModule;
-	}
+    protected WorkflowModule getWorkflowModule() {
+        return workflowModule;
+    }
 
-	protected void appendLabel(StringBuilder sb, BaseLabelWfDef baseWfDef) throws UnifyException {
-		String label = baseWfDef.getDescription();
-		if (!StringUtils.isBlank(baseWfDef.getLabel())) {
-			label = resolveSessionMessage(baseWfDef.getLabel());
-		}
+    protected void appendLabel(StringBuilder sb, BaseLabelWfDef baseWfDef) throws UnifyException {
+        String label = baseWfDef.getDescription();
+        if (!StringUtils.isBlank(baseWfDef.getLabel())) {
+            label = resolveSessionMessage(baseWfDef.getLabel());
+        }
 
-		sb.append(label);
-	}
+        sb.append(label);
+    }
 
-	protected abstract void doGenerateBody(StringBuilder sb, WfFormDef wfFormDef)
-			throws UnifyException;
+    protected abstract void doGenerateBody(StringBuilder sb, WfFormDef wfFormDef) throws UnifyException;
 
 }

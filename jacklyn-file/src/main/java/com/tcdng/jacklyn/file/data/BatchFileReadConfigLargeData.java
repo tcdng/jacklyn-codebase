@@ -27,28 +27,27 @@ import com.tcdng.unify.core.data.Inputs;
  */
 public class BatchFileReadConfigLargeData extends BaseLargeData<BatchFileReadConfig> {
 
-	private Inputs fileReaderParams;
+    private Inputs fileReaderParams;
 
-	public BatchFileReadConfigLargeData(BatchFileReadConfig batchFileReadConfigData,
-			Inputs fileReaderParams) {
-		super(batchFileReadConfigData);
-		this.fileReaderParams = fileReaderParams;
-	}
+    public BatchFileReadConfigLargeData(BatchFileReadConfig batchFileReadConfigData, Inputs fileReaderParams) {
+        super(batchFileReadConfigData);
+        this.fileReaderParams = fileReaderParams;
+    }
 
-	public BatchFileReadConfigLargeData(BatchFileReadConfig batchFileReadConfigData) {
-		super(batchFileReadConfigData);
-	}
+    public BatchFileReadConfigLargeData(BatchFileReadConfig batchFileReadConfigData) {
+        super(batchFileReadConfigData);
+    }
 
-	public BatchFileReadConfigLargeData() {
-		super(new BatchFileReadConfig());
-	}
+    public BatchFileReadConfigLargeData() {
+        super(new BatchFileReadConfig());
+    }
 
-	public Inputs getFileReaderParams() {
-		return fileReaderParams;
-	}
+    public Inputs getFileReaderParams() {
+        return fileReaderParams;
+    }
 
-	public void setFileReaderParams(Inputs fileReaderParams) {
-		this.fileReaderParams = fileReaderParams;
-	}
+    public void setFileReaderParams(Inputs fileReaderParams) {
+        this.fileReaderParams = fileReaderParams;
+    }
 
 }

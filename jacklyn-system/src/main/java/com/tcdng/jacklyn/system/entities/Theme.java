@@ -28,51 +28,50 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Theme", reportable = true,
-		auditable = true)
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Theme", reportable = true, auditable = true)
 @Table(name = "THEME", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Theme extends BaseVersionedStatusEntity {
 
-	@Column(name = "THEME_NM", length = 32)
-	private String name;
+    @Column(name = "THEME_NM", length = 32)
+    private String name;
 
-	@Column(name = "THEME_DESC", length = 64)
-	private String description;
+    @Column(name = "THEME_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64)
-	private String resourcePath;
+    @Column(length = 64)
+    private String resourcePath;
 
-	public Theme(String name, String description, String resourcePath) {
-		this.name = name;
-		this.description = description;
-		this.resourcePath = resourcePath;
-	}
+    public Theme(String name, String description, String resourcePath) {
+        this.name = name;
+        this.description = description;
+        this.resourcePath = resourcePath;
+    }
 
-	public Theme() {
+    public Theme() {
 
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getResourcePath() {
-		return resourcePath;
-	}
+    public String getResourcePath() {
+        return resourcePath;
+    }
 
-	public void setResourcePath(String resourcePath) {
-		this.resourcePath = resourcePath;
-	}
+    public void setResourcePath(String resourcePath) {
+        this.resourcePath = resourcePath;
+    }
 }

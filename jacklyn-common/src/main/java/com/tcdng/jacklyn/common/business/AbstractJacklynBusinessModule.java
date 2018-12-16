@@ -38,49 +38,46 @@ import com.tcdng.unify.core.util.ReflectUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractJacklynBusinessModule extends AbstractBusinessModule
-		implements JacklynBusinessModule {
+public abstract class AbstractJacklynBusinessModule extends AbstractBusinessModule implements JacklynBusinessModule {
 
-	private static final Class<?>[] TOOLING_DESCRIBABLE_PARAM_TYPE = { String.class, String.class };
+    private static final Class<?>[] TOOLING_DESCRIBABLE_PARAM_TYPE = { String.class, String.class };
 
-	@Configurable(ApplicationComponents.APPLICATION_PARAMETERBUSINESSMODULE)
-	private ParameterBusinessModule parameterBusinessModule;
+    @Configurable(ApplicationComponents.APPLICATION_PARAMETERBUSINESSMODULE)
+    private ParameterBusinessModule parameterBusinessModule;
 
-	@Override
-	public void clearCache() throws UnifyException {
+    @Override
+    public void clearCache() throws UnifyException {
 
-	}
+    }
 
-	protected ParameterBusinessModule getParameterBusinessModule() {
-		return parameterBusinessModule;
-	}
+    protected ParameterBusinessModule getParameterBusinessModule() {
+        return parameterBusinessModule;
+    }
 
-	@Override
-	protected UserToken getUserToken() throws UnifyException {
-		UserToken userToken = super.getUserToken();
-		if (userToken == null) {
-			return (UserToken) getApplicationAttribute(
-					JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN);
-		}
-		return userToken;
-	}
+    @Override
+    protected UserToken getUserToken() throws UnifyException {
+        UserToken userToken = super.getUserToken();
+        if (userToken == null) {
+            return (UserToken) getApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN);
+        }
+        return userToken;
+    }
 
-	protected Long getUserBranchId() throws UnifyException {
-		return (Long) getSessionAttribute(JacklynSessionAttributeConstants.BRANCHID);
-	}
+    protected Long getUserBranchId() throws UnifyException {
+        return (Long) getSessionAttribute(JacklynSessionAttributeConstants.BRANCHID);
+    }
 
-	protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass,
-			Class<U> type) throws UnifyException {
-		List<T> list = new ArrayList<T>();
-		for (Class<? extends U> typeClass : getAnnotatedClasses(type, Tooling.class)) {
-			Component ca = typeClass.getAnnotation(Component.class);
-			if (ca != null) {
-				Tooling ta = typeClass.getAnnotation(Tooling.class);
-				list.add(ReflectUtils.newInstance(itemClass, TOOLING_DESCRIBABLE_PARAM_TYPE,
-						AnnotationUtils.getComponentName(typeClass),
-						resolveApplicationMessage(ta.value())));
-			}
-		}
-		return list;
-	}
+    protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type)
+            throws UnifyException {
+        List<T> list = new ArrayList<T>();
+        for (Class<? extends U> typeClass : getAnnotatedClasses(type, Tooling.class)) {
+            Component ca = typeClass.getAnnotation(Component.class);
+            if (ca != null) {
+                Tooling ta = typeClass.getAnnotation(Tooling.class);
+                list.add(ReflectUtils.newInstance(itemClass, TOOLING_DESCRIBABLE_PARAM_TYPE,
+                        AnnotationUtils.getComponentName(typeClass), resolveApplicationMessage(ta.value())));
+            }
+        }
+        return list;
+    }
 }

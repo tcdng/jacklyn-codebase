@@ -27,72 +27,72 @@ import com.tcdng.unify.core.constant.NetworkSecurityType;
  */
 public class MessagingChannelDef {
 
-	private Long notificationChannelId;
+    private Long notificationChannelId;
 
-	private String notificationChannelName;
+    private String notificationChannelName;
 
-	private NotificationType notificationType;
+    private NotificationType notificationType;
 
-	private String hostAddress;
+    private String hostAddress;
 
-	private Integer hostPort;
+    private Integer hostPort;
 
-	private NetworkSecurityType securityType;
+    private NetworkSecurityType securityType;
 
-	private String username;
+    private String username;
 
-	private String password;
+    private String password;
 
-	private long versionNo;
+    private long versionNo;
 
-	public MessagingChannelDef(Long notificationChannelId, String notificationChannelName,
-			NotificationType notificationType, String hostAddress, Integer hostPort,
-			NetworkSecurityType securityType, String username, String password, long versionNo) {
-		this.notificationChannelId = notificationChannelId;
-		this.notificationChannelName = notificationChannelName;
-		this.notificationType = notificationType;
-		this.hostAddress = hostAddress;
-		this.hostPort = hostPort;
-		this.securityType = securityType;
-		this.username = username;
-		this.password = password;
-		this.versionNo = versionNo;
-	}
+    public MessagingChannelDef(Long notificationChannelId, String notificationChannelName,
+            NotificationType notificationType, String hostAddress, Integer hostPort, NetworkSecurityType securityType,
+            String username, String password, long versionNo) {
+        this.notificationChannelId = notificationChannelId;
+        this.notificationChannelName = notificationChannelName;
+        this.notificationType = notificationType;
+        this.hostAddress = hostAddress;
+        this.hostPort = hostPort;
+        this.securityType = securityType;
+        this.username = username;
+        this.password = password;
+        this.versionNo = versionNo;
+    }
 
-	public Long getNotificationChannelId() {
-		return notificationChannelId;
-	}
+    public Long getNotificationChannelId() {
+        return notificationChannelId;
+    }
 
-	public String getNotificationChannelName() {
-		return notificationChannelName;
-	}
+    public String getNotificationChannelName() {
+        return notificationChannelName;
+    }
 
-	public NotificationType getNotificationType() {
-		return notificationType;
-	}
+    public NotificationType getNotificationType() {
+        return notificationType;
+    }
 
-	public String getHostAddress() {
-		return hostAddress;
-	}
+    public String getHostAddress() {
+        return hostAddress;
+    }
 
-	public Integer getHostPort() {
-		return hostPort;
-	}
+    public Integer getHostPort() {
+        return hostPort;
+    }
 
-	public NetworkSecurityType getSecurityType() {
-		return securityType;
-	}
+    public NetworkSecurityType getSecurityType() {
+        return securityType;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public long getVersionNo() {
-		return versionNo;
-	}
+    public long getVersionNo() {
+        return versionNo;
+    }
 
 }

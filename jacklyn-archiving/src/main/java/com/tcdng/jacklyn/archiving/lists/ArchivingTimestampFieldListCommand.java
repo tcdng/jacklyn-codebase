@@ -33,28 +33,25 @@ import com.tcdng.unify.core.util.QueryUtils;
  * @since 1.0
  */
 @Component("archivingtimestampfieldlist")
-public class ArchivingTimestampFieldListCommand
-		extends AbstractArchivingListCommand<ArchivingParams> {
+public class ArchivingTimestampFieldListCommand extends AbstractArchivingListCommand<ArchivingParams> {
 
-	public ArchivingTimestampFieldListCommand() {
-		super(ArchivingParams.class);
-	}
+    public ArchivingTimestampFieldListCommand() {
+        super(ArchivingParams.class);
+    }
 
-	private static final ArchivingFieldType[] TIME
-			= { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP };
+    private static final ArchivingFieldType[] TIME = { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP };
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ArchivingParams params)
-			throws UnifyException {
-		if (QueryUtils.isValidLongCriteria(params.getArchivableDefId())) {
-			ArchivingFieldQuery query = new ArchivingFieldQuery();
-			query.archivableDefId(params.getArchivableDefId());
-			query.fieldTypeIn(TIME);
-			query.orderByDescription();
-			return getArchivingBusinessModule().findArchivingFields(query);
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ArchivingParams params) throws UnifyException {
+        if (QueryUtils.isValidLongCriteria(params.getArchivableDefId())) {
+            ArchivingFieldQuery query = new ArchivingFieldQuery();
+            query.archivableDefId(params.getArchivableDefId());
+            query.fieldTypeIn(TIME);
+            query.orderByDescription();
+            return getArchivingBusinessModule().findArchivingFields(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
 }

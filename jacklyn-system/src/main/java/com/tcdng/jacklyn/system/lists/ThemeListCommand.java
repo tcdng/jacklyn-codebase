@@ -34,11 +34,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("themelist")
 public class ThemeListCommand extends AbstractZeroParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		ThemeQuery query = new ThemeQuery();
-		query.status(RecordStatus.ACTIVE).order("description");
-		return getSystemModule().findThemes(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        ThemeQuery query = new ThemeQuery();
+        query.status(RecordStatus.ACTIVE).order("description");
+        return getSystemModule().findThemes(query);
+    }
 }

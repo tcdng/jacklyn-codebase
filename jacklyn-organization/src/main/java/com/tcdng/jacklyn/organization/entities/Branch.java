@@ -30,41 +30,40 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @version 1.0
  */
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
-		auditable = true)
-@Table(name = "BRANCH",
-		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+        auditable = true)
+@Table(name = "BRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
-	@Column(name = "BRANCH_NM", length = 32)
-	private String name;
+    @Column(name = "BRANCH_NM", length = 32)
+    private String name;
 
-	@Column(name = "BRANCH_DESC", length = 64)
-	private String description;
+    @Column(name = "BRANCH_DESC", length = 64)
+    private String description;
 
-	@Override
-	public Object getBatchId() {
-		return null;
-	}
+    @Override
+    public Object getBatchId() {
+        return null;
+    }
 
-	@Override
-	public void setBatchId(Object id) {
+    @Override
+    public void setBatchId(Object id) {
 
-	}
+    }
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

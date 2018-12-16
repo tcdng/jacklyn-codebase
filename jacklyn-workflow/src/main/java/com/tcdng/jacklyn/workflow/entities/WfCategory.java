@@ -28,43 +28,43 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Category",
-		reportable = true, auditable = true)
-@Table(name = "WFCATEGORY",
-		uniqueConstraints = { @UniqueConstraint({ "name", "version" }), @UniqueConstraint({ "description", "version" }) })
+@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Category", reportable = true,
+        auditable = true)
+@Table(name = "WFCATEGORY", uniqueConstraints = { @UniqueConstraint({ "name", "version" }),
+        @UniqueConstraint({ "description", "version" }) })
 public class WfCategory extends BaseTimestampedStatusEntity {
 
-	@Column(name = "CATEGORY_NM", length = 32)
-	private String name;
+    @Column(name = "CATEGORY_NM", length = 32)
+    private String name;
 
-	@Column(name = "CATEGORY_DESC", length = 64)
-	private String description;
+    @Column(name = "CATEGORY_DESC", length = 64)
+    private String description;
 
-	@Column(name = "CATEGORY_VERSION", length = 32)
-	private String version;
+    @Column(name = "CATEGORY_VERSION", length = 32)
+    private String version;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
 }

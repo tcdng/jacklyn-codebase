@@ -27,8 +27,8 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  */
 public class WorkflowFormElementTypeXmlAdapter extends AbstractEnumConstXmlAdapter<WorkflowFormElementType> {
 
-	public WorkflowFormElementTypeXmlAdapter() {
-		super(WorkflowFormElementType.class);
-	}
+    public WorkflowFormElementTypeXmlAdapter() {
+        super(WorkflowFormElementType.class);
+    }
 
 }

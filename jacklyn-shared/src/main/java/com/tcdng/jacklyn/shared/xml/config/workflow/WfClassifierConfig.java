@@ -30,26 +30,25 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfClassifierConfig extends BaseConfig {
 
-	private String logic;
+    private String logic;
 
-	private List<WfClassifierFilterConfig> wfClassifierFilterConfigList;
+    private List<WfClassifierFilterConfig> wfClassifierFilterConfigList;
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 
-	@XmlAttribute
-	public void setLogic(String logic) {
-		this.logic = logic;
-	}
+    @XmlAttribute
+    public void setLogic(String logic) {
+        this.logic = logic;
+    }
 
-	public List<WfClassifierFilterConfig> getWfClassifierFilterConfigList() {
-		return wfClassifierFilterConfigList;
-	}
+    public List<WfClassifierFilterConfig> getWfClassifierFilterConfigList() {
+        return wfClassifierFilterConfigList;
+    }
 
-	@XmlElement(name = "filter", required = true)
-	public void setWfClassifierFilterConfigList(
-			List<WfClassifierFilterConfig> wfClassifierFilterConfigList) {
-		this.wfClassifierFilterConfigList = wfClassifierFilterConfigList;
-	}
+    @XmlElement(name = "filter", required = true)
+    public void setWfClassifierFilterConfigList(List<WfClassifierFilterConfig> wfClassifierFilterConfigList) {
+        this.wfClassifierFilterConfigList = wfClassifierFilterConfigList;
+    }
 }

@@ -25,23 +25,23 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  */
 public class FileArchiveConfigQuery extends BaseVersionedStatusEntityQuery<FileArchiveConfig> {
 
-	public FileArchiveConfigQuery() {
-		super(FileArchiveConfig.class);
-	}
+    public FileArchiveConfigQuery() {
+        super(FileArchiveConfig.class);
+    }
 
-	public FileArchiveConfigQuery name(String name) {
-		return (FileArchiveConfigQuery) equals("name", name);
-	}
+    public FileArchiveConfigQuery name(String name) {
+        return (FileArchiveConfigQuery) equals("name", name);
+    }
 
-	public FileArchiveConfigQuery nameLike(String name) {
-		return (FileArchiveConfigQuery) like("name", name);
-	}
+    public FileArchiveConfigQuery nameLike(String name) {
+        return (FileArchiveConfigQuery) like("name", name);
+    }
 
-	public FileArchiveConfigQuery descriptionLike(String description) {
-		return (FileArchiveConfigQuery) like("description", description);
-	}
+    public FileArchiveConfigQuery descriptionLike(String description) {
+        return (FileArchiveConfigQuery) like("description", description);
+    }
 
-	public FileArchiveConfigQuery fieldType(String fieldType) {
-		return (FileArchiveConfigQuery) equals("fieldType", fieldType);
-	}
+    public FileArchiveConfigQuery fieldType(String fieldType) {
+        return (FileArchiveConfigQuery) equals("fieldType", fieldType);
+    }
 }

@@ -24,20 +24,20 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfManualInitDef {
 
-	private WfDocDef wfDocDef;
+    private WfDocDef wfDocDef;
 
-	private WfStepDef wfStepDef;
+    private WfStepDef wfStepDef;
 
-	public WfManualInitDef(WfDocDef wfDocDef, WfStepDef wfStepDef) {
-		this.wfDocDef = wfDocDef;
-		this.wfStepDef = wfStepDef;
-	}
+    public WfManualInitDef(WfDocDef wfDocDef, WfStepDef wfStepDef) {
+        this.wfDocDef = wfDocDef;
+        this.wfStepDef = wfStepDef;
+    }
 
-	public WfDocDef getWfDocDef() {
-		return wfDocDef;
-	}
+    public WfDocDef getWfDocDef() {
+        return wfDocDef;
+    }
 
-	public WfStepDef getWfStepDef() {
-		return wfStepDef;
-	}
+    public WfStepDef getWfStepDef() {
+        return wfStepDef;
+    }
 }

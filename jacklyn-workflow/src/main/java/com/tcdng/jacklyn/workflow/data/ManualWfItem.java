@@ -26,32 +26,32 @@ import com.tcdng.unify.core.data.PackableDoc;
  */
 public class ManualWfItem implements ViewableWfItem {
 
-	private WfStepDef wfStepDef;
+    private WfStepDef wfStepDef;
 
-	private PackableDoc pd;
+    private PackableDoc pd;
 
-	public ManualWfItem(WfStepDef wfStepDef, PackableDoc pd) {
-		this.wfStepDef = wfStepDef;
-		this.pd = pd;
-	}
+    public ManualWfItem(WfStepDef wfStepDef, PackableDoc pd) {
+        this.wfStepDef = wfStepDef;
+        this.pd = pd;
+    }
 
-	@Override
-	public String getTitle() {
-		return wfStepDef.getDescription();
-	}
+    @Override
+    public String getTitle() {
+        return wfStepDef.getDescription();
+    }
 
-	@Override
-	public String getDocViewer() {
-		return wfStepDef.getDocViewer();
-	}
+    @Override
+    public String getDocViewer() {
+        return wfStepDef.getDocViewer();
+    }
 
-	@Override
-	public PackableDoc getPd() {
-		return pd;
-	}
+    @Override
+    public PackableDoc getPd() {
+        return pd;
+    }
 
-	@Override
-	public WfStepDef getWfStepDef() {
-		return wfStepDef;
-	}
+    @Override
+    public WfStepDef getWfStepDef() {
+        return wfStepDef;
+    }
 }

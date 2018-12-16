@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfRoutingsConfig {
 
-	private List<WfRoutingConfig> wfRoutingConfigList;
+    private List<WfRoutingConfig> wfRoutingConfigList;
 
-	public List<WfRoutingConfig> getWfRoutingConfigList() {
-		return wfRoutingConfigList;
-	}
+    public List<WfRoutingConfig> getWfRoutingConfigList() {
+        return wfRoutingConfigList;
+    }
 
-	@XmlElement(name="routing", required=true)
-	public void setWfRoutingConfigList(List<WfRoutingConfig> wfRoutingConfigList) {
-		this.wfRoutingConfigList = wfRoutingConfigList;
-	}
+    @XmlElement(name = "routing", required = true)
+    public void setWfRoutingConfigList(List<WfRoutingConfig> wfRoutingConfigList) {
+        this.wfRoutingConfigList = wfRoutingConfigList;
+    }
 
 }

@@ -23,13 +23,13 @@ package com.tcdng.jacklyn.workflow.constants;
  */
 public interface WorkflowModuleAuditConstants {
 
-	String ACTIVATE_WORKFLOW = "wf-activateworkflow";
+    String ACTIVATE_WORKFLOW = "wf-activateworkflow";
 
-	String DEACTIVATE_WORKFLOW = "wf-deactivateworkflow";
+    String DEACTIVATE_WORKFLOW = "wf-deactivateworkflow";
 
-	String HOLD_WFITEM = "wf-heldworkflowitem";
+    String HOLD_WFITEM = "wf-heldworkflowitem";
 
-	String RELEASED_WFITEM = "wf-releasedworkflowitem";
+    String RELEASED_WFITEM = "wf-releasedworkflowitem";
 
-	String APPLIED_WFACTION = "wf-appliedworkflowaction";
+    String APPLIED_WFACTION = "wf-appliedworkflowaction";
 }

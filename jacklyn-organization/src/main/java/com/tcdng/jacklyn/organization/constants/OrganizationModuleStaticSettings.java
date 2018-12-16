@@ -28,10 +28,9 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class OrganizationModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public OrganizationModuleStaticSettings() {
-		super(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE,
-				"config/organization-module.xml",
-				"com.tcdng.jacklyn.resources.organization-messages");
-	}
+    public OrganizationModuleStaticSettings() {
+        super(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE, "config/organization-module.xml",
+                "com.tcdng.jacklyn.resources.organization-messages");
+    }
 
 }

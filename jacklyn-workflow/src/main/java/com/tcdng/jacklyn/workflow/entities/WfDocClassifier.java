@@ -32,84 +32,84 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFDOCCLASSIFIER", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
-		@UniqueConstraint({ "wfDocId", "description" }) })
+        @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocClassifier extends BaseEntity {
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
+    @ForeignKey(WfDoc.class)
+    private Long wfDocId;
 
-	@Column(name = "CLASSIFIER_NM", length = 32)
-	private String name;
+    @Column(name = "CLASSIFIER_NM", length = 32)
+    private String name;
 
-	@Column(name = "CLASSIFIER_DESC", length = 64)
-	private String description;
+    @Column(name = "CLASSIFIER_DESC", length = 64)
+    private String description;
 
-	@Column(nullable = true)
-	private String logic;
+    @Column(nullable = true)
+    private String logic;
 
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
 
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
 
-	@ChildList
-	private List<WfDocClassifierFilter> filterList;
+    @ChildList
+    private List<WfDocClassifierFilter> filterList;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
+    public void setWfDocId(Long wfDocId) {
+        this.wfDocId = wfDocId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 
-	public void setLogic(String logic) {
-		this.logic = logic;
-	}
+    public void setLogic(String logic) {
+        this.logic = logic;
+    }
 
-	public List<WfDocClassifierFilter> getFilterList() {
-		return filterList;
-	}
+    public List<WfDocClassifierFilter> getFilterList() {
+        return filterList;
+    }
 
-	public void setFilterList(List<WfDocClassifierFilter> filterList) {
-		this.filterList = filterList;
-	}
+    public void setFilterList(List<WfDocClassifierFilter> filterList) {
+        this.filterList = filterList;
+    }
 
-	public String getWfDocName() {
-		return wfDocName;
-	}
+    public String getWfDocName() {
+        return wfDocName;
+    }
 
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
 
-	public String getWfDocDesc() {
-		return wfDocDesc;
-	}
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
 
-	public void setWfDocDesc(String wfDocDesc) {
-		this.wfDocDesc = wfDocDesc;
-	}
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
+    }
 }

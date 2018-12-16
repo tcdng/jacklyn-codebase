@@ -27,23 +27,23 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class DashboardTileQuery extends BaseInstallEntityQuery<DashboardTile> {
 
-	public DashboardTileQuery() {
-		super(DashboardTile.class);
-	}
+    public DashboardTileQuery() {
+        super(DashboardTile.class);
+    }
 
-	public DashboardTileQuery moduleId(Long moduleId) {
-		return (DashboardTileQuery) equals("moduleId", moduleId);
-	}
+    public DashboardTileQuery moduleId(Long moduleId) {
+        return (DashboardTileQuery) equals("moduleId", moduleId);
+    }
 
-	public DashboardTileQuery name(String name) {
-		return (DashboardTileQuery) equals("name", name);
-	}
+    public DashboardTileQuery name(String name) {
+        return (DashboardTileQuery) equals("name", name);
+    }
 
-	public DashboardTileQuery nameIn(Collection<String> name) {
-		return (DashboardTileQuery) amongst("name", name);
-	}
+    public DashboardTileQuery nameIn(Collection<String> name) {
+        return (DashboardTileQuery) amongst("name", name);
+    }
 
-	public DashboardTileQuery orderByDisplayOrder() {
-		return (DashboardTileQuery) order("displayOrder");
-	}
+    public DashboardTileQuery orderByDisplayOrder() {
+        return (DashboardTileQuery) order("displayOrder");
+    }
 }

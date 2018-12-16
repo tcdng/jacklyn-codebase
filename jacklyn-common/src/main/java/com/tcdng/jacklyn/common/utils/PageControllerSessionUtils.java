@@ -28,23 +28,23 @@ import com.tcdng.unify.web.PageController;
  */
 public interface PageControllerSessionUtils extends UnifyComponent {
 
-	/**
-	 * Loads session for supplied controller using data object
-	 * 
-	 * @param pageController
-	 *            the page controller
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	<T extends Entity> void loadSession(PageController pageController) throws UnifyException;
+    /**
+     * Loads session for supplied controller using data object
+     * 
+     * @param pageController
+     *            the page controller
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    <T extends Entity> void loadSession(PageController pageController) throws UnifyException;
 
-	/**
-	 * Clears session for supplied controller.
-	 * 
-	 * @param pageController
-	 *            the page controller
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void unloadSession(PageController pageController) throws UnifyException;
+    /**
+     * Clears session for supplied controller.
+     * 
+     * @param pageController
+     *            the page controller
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void unloadSession(PageController pageController) throws UnifyException;
 }

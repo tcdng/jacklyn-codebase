@@ -34,16 +34,15 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("filearchiveconfiglist")
 public class FileArchiveConfigListCommand extends AbstractArchivingListCommand<ZeroParams> {
 
-	public FileArchiveConfigListCommand() {
-		super(ZeroParams.class);
-	}
+    public FileArchiveConfigListCommand() {
+        super(ZeroParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		FileArchiveConfigQuery query = new FileArchiveConfigQuery();
-		query.status(RecordStatus.ACTIVE);
-		query.order("description");
-		return getArchivingBusinessModule().findFileArchiveConfigs(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        FileArchiveConfigQuery query = new FileArchiveConfigQuery();
+        query.status(RecordStatus.ACTIVE);
+        query.order("description");
+        return getArchivingBusinessModule().findFileArchiveConfigs(query);
+    }
 }

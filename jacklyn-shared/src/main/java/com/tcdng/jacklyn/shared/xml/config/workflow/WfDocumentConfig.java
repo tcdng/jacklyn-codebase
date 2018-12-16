@@ -30,81 +30,81 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 @XmlRootElement(name = "document")
 public class WfDocumentConfig extends BaseConfig {
 
-	private String version;
+    private String version;
 
-	private String itemDescFormat;
-	
-	private WfFieldsConfig wfFieldsConfig;
+    private String itemDescFormat;
 
-	private WfClassifiersConfig wfClassifiersConfig;
+    private WfFieldsConfig wfFieldsConfig;
 
-	private WfAttachmentsConfig wfAttachmentsConfig;
-	
-	private WfBeanMappingsConfig wfBeanMappingsConfig;
+    private WfClassifiersConfig wfClassifiersConfig;
 
-	private WfFormConfig wfFormConfig;
+    private WfAttachmentsConfig wfAttachmentsConfig;
 
-	public String getItemDescFormat() {
-		return itemDescFormat;
-	}
+    private WfBeanMappingsConfig wfBeanMappingsConfig;
 
-	@XmlElement(name = "item-description-format", required = true)
-	public void setItemDescFormat(String itemDescFormat) {
-		this.itemDescFormat = itemDescFormat;
-	}
+    private WfFormConfig wfFormConfig;
 
-	public String getVersion() {
-		return version;
-	}
+    public String getItemDescFormat() {
+        return itemDescFormat;
+    }
 
-	@XmlAttribute(name = "version", required = true)
-	public void setVersion(String version) {
-		this.version = version;
-	}
-	
-	public WfFieldsConfig getWfFieldsConfig() {
-		return wfFieldsConfig;
-	}
+    @XmlElement(name = "item-description-format", required = true)
+    public void setItemDescFormat(String itemDescFormat) {
+        this.itemDescFormat = itemDescFormat;
+    }
 
-	@XmlElement(name="fields", required=true)
-	public void setWfFieldsConfig(WfFieldsConfig wfFieldsConfig) {
-		this.wfFieldsConfig = wfFieldsConfig;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public WfClassifiersConfig getWfClassifiersConfig() {
-		return wfClassifiersConfig;
-	}
+    @XmlAttribute(name = "version", required = true)
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	@XmlElement(name="classifiers", required=true)
-	public void setWfClassifiersConfig(WfClassifiersConfig wfClassifiersConfig) {
-		this.wfClassifiersConfig = wfClassifiersConfig;
-	}
+    public WfFieldsConfig getWfFieldsConfig() {
+        return wfFieldsConfig;
+    }
 
-	public WfAttachmentsConfig getWfAttachmentsConfig() {
-		return wfAttachmentsConfig;
-	}
+    @XmlElement(name = "fields", required = true)
+    public void setWfFieldsConfig(WfFieldsConfig wfFieldsConfig) {
+        this.wfFieldsConfig = wfFieldsConfig;
+    }
 
-	@XmlElement(name="attachments", required=true)
-	public void setWfAttachmentsConfig(WfAttachmentsConfig wfAttachmentsConfig) {
-		this.wfAttachmentsConfig = wfAttachmentsConfig;
-	}
+    public WfClassifiersConfig getWfClassifiersConfig() {
+        return wfClassifiersConfig;
+    }
 
-	public WfBeanMappingsConfig getWfBeanMappingsConfig() {
-		return wfBeanMappingsConfig;
-	}
+    @XmlElement(name = "classifiers", required = true)
+    public void setWfClassifiersConfig(WfClassifiersConfig wfClassifiersConfig) {
+        this.wfClassifiersConfig = wfClassifiersConfig;
+    }
 
-	@XmlElement(name="bean-mappings", required=true)
-	public void setWfBeanMappingsConfig(WfBeanMappingsConfig wfBeanMappingsConfig) {
-		this.wfBeanMappingsConfig = wfBeanMappingsConfig;
-	}
+    public WfAttachmentsConfig getWfAttachmentsConfig() {
+        return wfAttachmentsConfig;
+    }
 
-	public WfFormConfig getWfFormConfig() {
-		return wfFormConfig;
-	}
+    @XmlElement(name = "attachments", required = true)
+    public void setWfAttachmentsConfig(WfAttachmentsConfig wfAttachmentsConfig) {
+        this.wfAttachmentsConfig = wfAttachmentsConfig;
+    }
 
-	@XmlElement(name = "form", required = true)
-	public void setWfFormConfig(WfFormConfig wfFormConfig) {
-		this.wfFormConfig = wfFormConfig;
-	}
+    public WfBeanMappingsConfig getWfBeanMappingsConfig() {
+        return wfBeanMappingsConfig;
+    }
+
+    @XmlElement(name = "bean-mappings", required = true)
+    public void setWfBeanMappingsConfig(WfBeanMappingsConfig wfBeanMappingsConfig) {
+        this.wfBeanMappingsConfig = wfBeanMappingsConfig;
+    }
+
+    public WfFormConfig getWfFormConfig() {
+        return wfFormConfig;
+    }
+
+    @XmlElement(name = "form", required = true)
+    public void setWfFormConfig(WfFormConfig wfFormConfig) {
+        this.wfFormConfig = wfFormConfig;
+    }
 
 }

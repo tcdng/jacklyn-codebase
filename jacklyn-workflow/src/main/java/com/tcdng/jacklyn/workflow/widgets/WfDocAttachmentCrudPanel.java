@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfdocattachmentcrudpanel.upl")
 public class WfDocAttachmentCrudPanel extends AbstractInMemoryTableCrudPanel<WfDocAttachment> {
 
-	public WfDocAttachmentCrudPanel() {
-		super(WfDocAttachment.class, "workflow.wfdoc.wfdocattachment", false);
-	}
+    public WfDocAttachmentCrudPanel() {
+        super(WfDocAttachment.class, "workflow.wfdoc.wfdocattachment", false);
+    }
 
 }

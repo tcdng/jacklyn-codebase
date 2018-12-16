@@ -35,18 +35,17 @@ import com.tcdng.unify.web.data.FilterParams;
 @Component("wftemplatelist")
 public class WfTemplateListCommand extends AbstractWorkflowListCommand<FilterParams> {
 
-	public WfTemplateListCommand() {
-		super(FilterParams.class);
-	}
+    public WfTemplateListCommand() {
+        super(FilterParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, FilterParams params)
-			throws UnifyException {
-		if (QueryUtils.isValidLongCriteria(params.getFilterId())) {
-			return getWorkflowModule().findWfTemplates(params.getFilterId());
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, FilterParams params) throws UnifyException {
+        if (QueryUtils.isValidLongCriteria(params.getFilterId())) {
+            return getWorkflowModule().findWfTemplates(params.getFilterId());
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
 }

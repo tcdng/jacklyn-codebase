@@ -33,11 +33,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("batchfiledefinitionlist")
 public class BatchFileDefinitionListCommand extends AbstractZeroParamsFileListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
-		query.order("description").ignoreEmptyCriteria(true);
-		return this.getFileModule().findBatchFileDefinitions(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
+        query.order("description").ignoreEmptyCriteria(true);
+        return this.getFileModule().findBatchFileDefinitions(query);
+    }
 }

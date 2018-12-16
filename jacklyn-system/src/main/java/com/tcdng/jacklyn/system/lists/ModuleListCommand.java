@@ -34,11 +34,10 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("modulelist")
 public class ModuleListCommand extends AbstractZeroParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		ModuleQuery query = new ModuleQuery();
-		query.status(RecordStatus.ACTIVE).order("description");
-		return getSystemModule().findModules(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        ModuleQuery query = new ModuleQuery();
+        query.status(RecordStatus.ACTIVE).order("description");
+        return getSystemModule().findModules(query);
+    }
 }

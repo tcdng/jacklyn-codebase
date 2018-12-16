@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedEntityQuery;
  */
 public class BiometricQuery extends BaseVersionedTimestampedEntityQuery<Biometric> {
 
-	public BiometricQuery() {
-		super(Biometric.class);
-	}
+    public BiometricQuery() {
+        super(Biometric.class);
+    }
 
-	public BiometricQuery categoryName(String categoryName) {
-		return (BiometricQuery) equals("categoryName", categoryName);
-	}
+    public BiometricQuery categoryName(String categoryName) {
+        return (BiometricQuery) equals("categoryName", categoryName);
+    }
 
-	public BiometricQuery typeName(String typeName) {
-		return (BiometricQuery) equals("typeName", typeName);
-	}
+    public BiometricQuery typeName(String typeName) {
+        return (BiometricQuery) equals("typeName", typeName);
+    }
 }

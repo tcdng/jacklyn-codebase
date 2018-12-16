@@ -27,13 +27,13 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface WfItemEnrichmentLogic extends UnifyComponent {
 
-	/**
-	 * Enriches workflow item using supplied reader-writer.
-	 * 
-	 * @param wfItemReaderWriter
-	 *            the reader-writer to use
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException;
+    /**
+     * Enriches workflow item using supplied reader-writer.
+     * 
+     * @param wfItemReaderWriter
+     *            the reader-writer to use
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException;
 }

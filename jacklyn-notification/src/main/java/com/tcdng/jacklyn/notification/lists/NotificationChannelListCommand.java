@@ -34,11 +34,11 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("notificationchannellist")
 public class NotificationChannelListCommand extends AbstractZeroParamsNotificationListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams param) throws UnifyException {
-		return getNotificationModule()
-				.findNotificationChannels((NotificationChannelQuery) new NotificationChannelQuery()
-						.ignoreEmptyCriteria(true).order("description"));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams param) throws UnifyException {
+        return getNotificationModule()
+                .findNotificationChannels((NotificationChannelQuery) new NotificationChannelQuery()
+                        .ignoreEmptyCriteria(true).order("description"));
+    }
 
 }

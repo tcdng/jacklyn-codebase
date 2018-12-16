@@ -34,86 +34,86 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("WFFORM")
 public class WfForm extends BaseEntity {
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
+    @ForeignKey(WfDoc.class)
+    private Long wfDocId;
 
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
 
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
 
-	@ListOnly(key = "wfDocId", property = "wfCategoryUpdateDt")
-	private Date wfCategoryUpdateDt;
+    @ListOnly(key = "wfDocId", property = "wfCategoryUpdateDt")
+    private Date wfCategoryUpdateDt;
 
-	@ChildList
-	private List<WfFormTab> tabList;
+    @ChildList
+    private List<WfFormTab> tabList;
 
-	@ChildList
-	private List<WfFormSection> sectionList;
+    @ChildList
+    private List<WfFormSection> sectionList;
 
-	@ChildList
-	private List<WfFormField> fieldList;
+    @ChildList
+    private List<WfFormField> fieldList;
 
-	@Override
-	public String getDescription() {
-		return wfDocName;
-	}
+    @Override
+    public String getDescription() {
+        return wfDocName;
+    }
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
+    public void setWfDocId(Long wfDocId) {
+        this.wfDocId = wfDocId;
+    }
 
-	public List<WfFormTab> getTabList() {
-		return tabList;
-	}
+    public List<WfFormTab> getTabList() {
+        return tabList;
+    }
 
-	public void setTabList(List<WfFormTab> tabList) {
-		this.tabList = tabList;
-	}
+    public void setTabList(List<WfFormTab> tabList) {
+        this.tabList = tabList;
+    }
 
-	public List<WfFormSection> getSectionList() {
-		return sectionList;
-	}
+    public List<WfFormSection> getSectionList() {
+        return sectionList;
+    }
 
-	public void setSectionList(List<WfFormSection> sectionList) {
-		this.sectionList = sectionList;
-	}
+    public void setSectionList(List<WfFormSection> sectionList) {
+        this.sectionList = sectionList;
+    }
 
-	public List<WfFormField> getFieldList() {
-		return fieldList;
-	}
+    public List<WfFormField> getFieldList() {
+        return fieldList;
+    }
 
-	public void setFieldList(List<WfFormField> fieldList) {
-		this.fieldList = fieldList;
-	}
+    public void setFieldList(List<WfFormField> fieldList) {
+        this.fieldList = fieldList;
+    }
 
-	public String getWfDocName() {
-		return wfDocName;
-	}
+    public String getWfDocName() {
+        return wfDocName;
+    }
 
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
 
-	public String getWfDocDesc() {
-		return wfDocDesc;
-	}
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
 
-	public void setWfDocDesc(String wfDocDesc) {
-		this.wfDocDesc = wfDocDesc;
-	}
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
+    }
 
-	public Date getWfCategoryUpdateDt() {
-		return wfCategoryUpdateDt;
-	}
+    public Date getWfCategoryUpdateDt() {
+        return wfCategoryUpdateDt;
+    }
 
-	public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
-		this.wfCategoryUpdateDt = wfCategoryUpdateDt;
-	}
+    public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
+        this.wfCategoryUpdateDt = wfCategoryUpdateDt;
+    }
 
 }

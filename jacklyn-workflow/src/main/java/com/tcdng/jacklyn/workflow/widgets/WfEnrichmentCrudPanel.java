@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfenrichmentcrudpanel.upl")
 public class WfEnrichmentCrudPanel extends AbstractInMemoryTableCrudPanel<WfEnrichment> {
 
-	public WfEnrichmentCrudPanel() {
-		super(WfEnrichment.class, "workflow.wftemplate.wfstep.wfenrichment", false);
-	}
+    public WfEnrichmentCrudPanel() {
+        super(WfEnrichment.class, "workflow.wftemplate.wfstep.wfenrichment", false);
+    }
 
 }

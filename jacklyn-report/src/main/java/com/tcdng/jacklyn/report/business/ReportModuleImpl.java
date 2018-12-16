@@ -70,291 +70,269 @@ import com.tcdng.unify.web.util.WebUtils;
 @Component(ReportModuleNameConstants.REPORTBUSINESSMODULE)
 public class ReportModuleImpl extends AbstractJacklynBusinessModule implements ReportModule {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	@Override
-	public List<ReportableDefinition> findReportables(ReportableDefinitionQuery query)
-			throws UnifyException {
-		return db().listAll(query);
-	}
+    @Override
+    public List<ReportableDefinition> findReportables(ReportableDefinitionQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
 
-	@Override
-	public ReportableDefinition findReportDefinition(Long id) throws UnifyException {
-		return db().list(ReportableDefinition.class, id);
-	}
+    @Override
+    public ReportableDefinition findReportDefinition(Long id) throws UnifyException {
+        return db().list(ReportableDefinition.class, id);
+    }
 
-	@Override
-	public List<ReportableDefinition> findRoleReportables(Long moduleId) throws UnifyException {
-		// TODO
-		return null;
-	}
+    @Override
+    public List<ReportableDefinition> findRoleReportables(Long moduleId) throws UnifyException {
+        // TODO
+        return null;
+    }
 
-	@Override
-	public ReportColumn[] findReportableColumns(String reportableName) throws UnifyException {
-		ReportableDefinition reportableDefinition
-				= db().find(new ReportableDefinitionQuery().name(reportableName));
+    @Override
+    public ReportColumn[] findReportableColumns(String reportableName) throws UnifyException {
+        ReportableDefinition reportableDefinition = db().find(new ReportableDefinitionQuery().name(reportableName));
 
-		List<ReportableField> reportFieldList = db().findAll(
-				new ReportableFieldQuery().reportableId(reportableDefinition.getId()).orderById());
+        List<ReportableField> reportFieldList = db()
+                .findAll(new ReportableFieldQuery().reportableId(reportableDefinition.getId()).orderById());
 
-		ReportColumn[] reportColumns = new ReportColumn[reportFieldList.size()];
-		for (int i = 0; i < reportColumns.length; i++) {
-			ReportableField reportableField = reportFieldList.get(i);
-			reportColumns[i] = ReportColumn.newBuilder().title(reportableField.getDescription())
-					.name(reportableField.getName()).className(reportableField.getType())
-					.widthRatio(reportableField.getWidth())
-					.formatter(reportableField.getFormatter())
-					.horizontalAlignment(HAlignType.fromName(reportableField.getHorizontalAlign()))
-					.build();
-		}
-		return reportColumns;
-	}
+        ReportColumn[] reportColumns = new ReportColumn[reportFieldList.size()];
+        for (int i = 0; i < reportColumns.length; i++) {
+            ReportableField reportableField = reportFieldList.get(i);
+            reportColumns[i] = ReportColumn.newBuilder().title(reportableField.getDescription())
+                    .name(reportableField.getName()).className(reportableField.getType())
+                    .widthRatio(reportableField.getWidth()).formatter(reportableField.getFormatter())
+                    .horizontalAlignment(HAlignType.fromName(reportableField.getHorizontalAlign())).build();
+        }
+        return reportColumns;
+    }
 
-	@Override
-	public ReportOptions getDynamicReportOptions(String recordName,
-			List<String> priorityPropertyList) throws UnifyException {
-		ReportableDefinition reportableDefinition
-				= db().find(new ReportableDefinitionQuery().recordName(recordName).dynamic(true));
-		ReportOptions reportOptions = new ReportOptions();
-		reportOptions.setReportName(reportableDefinition.getName());
-		reportOptions.setTitle(reportableDefinition.getTitle());
-		reportOptions.setRecordName(recordName);
+    @Override
+    public ReportOptions getDynamicReportOptions(String recordName, List<String> priorityPropertyList)
+            throws UnifyException {
+        ReportableDefinition reportableDefinition = db()
+                .find(new ReportableDefinitionQuery().recordName(recordName).dynamic(true));
+        ReportOptions reportOptions = new ReportOptions();
+        reportOptions.setReportName(reportableDefinition.getName());
+        reportOptions.setTitle(reportableDefinition.getTitle());
+        reportOptions.setRecordName(recordName);
 
-		Map<String, ReportableField> fieldMap
-				= db().listAllMap(String.class, "name", new ReportableFieldQuery()
-						.reportableId(reportableDefinition.getId()).parameterOnly(false));
-		boolean isSelectAll = priorityPropertyList == null;
-		if (!isSelectAll) {
-			for (String property : priorityPropertyList) {
-				if (property != null) {
-					ReportableField reportableField = fieldMap.remove(property);
-					if (reportableField != null) {
-						reportOptions
-								.addColumnOptions(createReportColumnOptions(reportableField, true));
-					}
-				}
-			}
-		}
+        Map<String, ReportableField> fieldMap = db().listAllMap(String.class, "name",
+                new ReportableFieldQuery().reportableId(reportableDefinition.getId()).parameterOnly(false));
+        boolean isSelectAll = priorityPropertyList == null;
+        if (!isSelectAll) {
+            for (String property : priorityPropertyList) {
+                if (property != null) {
+                    ReportableField reportableField = fieldMap.remove(property);
+                    if (reportableField != null) {
+                        reportOptions.addColumnOptions(createReportColumnOptions(reportableField, true));
+                    }
+                }
+            }
+        }
 
-		for (ReportableField reportableField : fieldMap.values()) {
-			// Add what's left
-			reportOptions.addColumnOptions(createReportColumnOptions(reportableField, isSelectAll));
-		}
+        for (ReportableField reportableField : fieldMap.values()) {
+            // Add what's left
+            reportOptions.addColumnOptions(createReportColumnOptions(reportableField, isSelectAll));
+        }
 
-		return reportOptions;
-	}
+        return reportOptions;
+    }
 
-	@Override
-	public void generateDynamicReport(ReportOptions reportOptions, OutputStream outputStream)
-			throws UnifyException {
-		Report.Builder rb = Report.newBuilder();
-		rb.code(reportOptions.getReportName());
-		rb.title(reportOptions.getTitle());
-		rb.dataSource(reportOptions.getDataSource());
-		rb.dynamicDataSource(reportOptions.isDynamicDataSource());
-		rb.printColumnNames(reportOptions.isPrintColumnNames());
-		rb.underlineRows(reportOptions.isUnderlineRows());
-		rb.shadeOddRows(reportOptions.isShadeOddRows());
-		rb.landscape(reportOptions.isLandscape());
-		rb.format(ReportFormat.fromName(reportOptions.getReportFormat()));
-		if (reportOptions.isColumnarLayout()) {
-			rb.layout(ReportLayout.COLUMNAR);
-		}
+    @Override
+    public void generateDynamicReport(ReportOptions reportOptions, OutputStream outputStream) throws UnifyException {
+        Report.Builder rb = Report.newBuilder();
+        rb.code(reportOptions.getReportName());
+        rb.title(reportOptions.getTitle());
+        rb.dataSource(reportOptions.getDataSource());
+        rb.dynamicDataSource(reportOptions.isDynamicDataSource());
+        rb.printColumnNames(reportOptions.isPrintColumnNames());
+        rb.underlineRows(reportOptions.isUnderlineRows());
+        rb.shadeOddRows(reportOptions.isShadeOddRows());
+        rb.landscape(reportOptions.isLandscape());
+        rb.format(ReportFormat.fromName(reportOptions.getReportFormat()));
+        if (reportOptions.isColumnarLayout()) {
+            rb.layout(ReportLayout.COLUMNAR);
+        }
 
-		List<ReportColumnOptions> reportColumnOptionsList
-				= new ArrayList<ReportColumnOptions>(reportOptions.getColumnOptionsList());
-		DataUtils.sort(reportColumnOptionsList, ReportColumnOptions.class, "group", false);
+        List<ReportColumnOptions> reportColumnOptionsList = new ArrayList<ReportColumnOptions>(
+                reportOptions.getColumnOptionsList());
+        DataUtils.sort(reportColumnOptionsList, ReportColumnOptions.class, "group", false);
 
-		List<ReportColumnOptions> sortReportColumnOptionsList
-				= new ArrayList<ReportColumnOptions>();
-		for (ReportColumnOptions reportColumnOptions : reportColumnOptionsList) {
-			if (reportColumnOptions.isIncluded()) {
-				if (reportColumnOptions.isGroup() || reportColumnOptions.getOrder() != null) {
-					sortReportColumnOptionsList.add(reportColumnOptions);
-				}
+        List<ReportColumnOptions> sortReportColumnOptionsList = new ArrayList<ReportColumnOptions>();
+        for (ReportColumnOptions reportColumnOptions : reportColumnOptionsList) {
+            if (reportColumnOptions.isIncluded()) {
+                if (reportColumnOptions.isGroup() || reportColumnOptions.getOrder() != null) {
+                    sortReportColumnOptionsList.add(reportColumnOptions);
+                }
 
-				rb.addColumn(reportColumnOptions.getDescription(),
-						reportColumnOptions.getTableName(), reportColumnOptions.getColumnName(),
-						reportColumnOptions.getType(), reportColumnOptions.getFormatter(),
-						OrderType.fromName(reportColumnOptions.getOrder()),
-						reportColumnOptions.getHorizontalAlignment(),
-						reportColumnOptions.getWidth(), reportColumnOptions.isGroup(),
-						reportColumnOptions.isSum());
-			}
-		}
+                rb.addColumn(reportColumnOptions.getDescription(), reportColumnOptions.getTableName(),
+                        reportColumnOptions.getColumnName(), reportColumnOptions.getType(),
+                        reportColumnOptions.getFormatter(), OrderType.fromName(reportColumnOptions.getOrder()),
+                        reportColumnOptions.getHorizontalAlignment(), reportColumnOptions.getWidth(),
+                        reportColumnOptions.isGroup(), reportColumnOptions.isSum());
+            }
+        }
 
-		if (reportOptions.isBeanCollection()) {
-			Class<?> dataClass = ReflectUtils.getClassForName(reportOptions.getRecordName());
-			List<?> content = reportOptions.getContent();
-			for (int i = sortReportColumnOptionsList.size() - 1; i >= 0; i--) {
-				ReportColumnOptions reportColumnOptions = sortReportColumnOptionsList.get(i);
-				DataUtils.sort(content, dataClass, reportColumnOptions.getColumnName(),
-						OrderType.ASCENDING.code().equals(reportColumnOptions.getOrder()));
-			}
-			rb.beanCollection(content);
-		} else {
-			rb.query(reportOptions.getQuery());
-			rb.table(reportOptions.getTableName());
+        if (reportOptions.isBeanCollection()) {
+            Class<?> dataClass = ReflectUtils.getClassForName(reportOptions.getRecordName());
+            List<?> content = reportOptions.getContent();
+            for (int i = sortReportColumnOptionsList.size() - 1; i >= 0; i--) {
+                ReportColumnOptions reportColumnOptions = sortReportColumnOptionsList.get(i);
+                DataUtils.sort(content, dataClass, reportColumnOptions.getColumnName(),
+                        OrderType.ASCENDING.code().equals(reportColumnOptions.getOrder()));
+            }
+            rb.beanCollection(content);
+        } else {
+            rb.query(reportOptions.getQuery());
+            rb.table(reportOptions.getTableName());
 
-			if (reportOptions.isJoinOptions()) {
-				for (ReportJoinOptions rjo : reportOptions.getJoinOptionsList()) {
-					rb.addJoin(rjo.getTableA(), rjo.getColumnA(), rjo.getTableB(),
-							rjo.getColumnB());
-				}
-			}
+            if (reportOptions.isJoinOptions()) {
+                for (ReportJoinOptions rjo : reportOptions.getJoinOptionsList()) {
+                    rb.addJoin(rjo.getTableA(), rjo.getColumnA(), rjo.getTableB(), rjo.getColumnB());
+                }
+            }
 
-			if (reportOptions.isFilterOptions()) {
-				for (ReportFilterOptions rfo : reportOptions.getFilterOptionsList()) {
-					rb.addFilter(rfo.getOp(), rfo.getTableName(), rfo.getColumnName(),
-							rfo.getParam1(), rfo.getParam2());
-				}
-			}
-		}
+            if (reportOptions.isFilterOptions()) {
+                for (ReportFilterOptions rfo : reportOptions.getFilterOptionsList()) {
+                    rb.addFilter(rfo.getOp(), rfo.getTableName(), rfo.getColumnName(), rfo.getParam1(),
+                            rfo.getParam2());
+                }
+            }
+        }
 
-		Report report = rb.build();
-		setCommonReportParameters(report);
-		getCommonReportServer().generateReport(report, outputStream);
-	}
+        Report report = rb.build();
+        setCommonReportParameters(report);
+        getCommonReportServer().generateReport(report, outputStream);
+    }
 
-	@Override
-	public boolean isReportable(String recordName) throws UnifyException {
-		return db().find(new ReportableDefinitionQuery().name(recordName)) != null;
-	}
+    @Override
+    public boolean isReportable(String recordName) throws UnifyException {
+        return db().find(new ReportableDefinitionQuery().name(recordName)) != null;
+    }
 
-	@Override
-	public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
-		// Uninstall old records
-		db().updateAll(new ReportableDefinitionQuery(),
-				new Update().add("installed", Boolean.FALSE));
+    @Override
+    public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
+        // Uninstall old records
+        db().updateAll(new ReportableDefinitionQuery(), new Update().add("installed", Boolean.FALSE));
 
-		// Install new and update old
-		ReportableDefinition reportableDefinition = new ReportableDefinition();
-		for (ModuleConfig moduleConfig : moduleConfigList) {
-			Long moduleId = systemModule.getModuleId(moduleConfig.getName());
-			if (moduleConfig.getReports() != null) {
-				logDebug("Installing report definitions for module [{0}]...",
-						resolveApplicationMessage(moduleConfig.getDescription()));
-				ReportableDefinitionQuery rdQuery = new ReportableDefinitionQuery();
-				for (ReportConfig reportConfig : moduleConfig.getReports().getReportList()) {
-					rdQuery.clear();
-					String reportName = reportConfig.getName();
-					String description = resolveApplicationMessage(reportConfig.getDescription());
-					String title = reportConfig.getTitle();
-					if (title == null) {
-						title = description;
-					}
+        // Install new and update old
+        ReportableDefinition reportableDefinition = new ReportableDefinition();
+        for (ModuleConfig moduleConfig : moduleConfigList) {
+            Long moduleId = systemModule.getModuleId(moduleConfig.getName());
+            if (moduleConfig.getReports() != null) {
+                logDebug("Installing report definitions for module [{0}]...",
+                        resolveApplicationMessage(moduleConfig.getDescription()));
+                ReportableDefinitionQuery rdQuery = new ReportableDefinitionQuery();
+                for (ReportConfig reportConfig : moduleConfig.getReports().getReportList()) {
+                    rdQuery.clear();
+                    String reportName = reportConfig.getName();
+                    String description = resolveApplicationMessage(reportConfig.getDescription());
+                    String title = reportConfig.getTitle();
+                    if (title == null) {
+                        title = description;
+                    }
 
-					ReportableDefinition oldReportableDefinition
-							= db().find(rdQuery.name(reportName));
-					Long reportableId = null;
-					if (oldReportableDefinition == null) {
-						reportableDefinition = new ReportableDefinition();
-						reportableDefinition.setModuleId(moduleId);
-						reportableDefinition.setName(reportName);
-						reportableDefinition.setRecordName(reportConfig.getReportable());
-						reportableDefinition.setTitle(title);
-						reportableDefinition.setDescription(description);
-						reportableDefinition.setTemplate(reportConfig.getTemplate());
-						reportableDefinition.setProcessor(reportConfig.getProcessor());
-						reportableDefinition.setDynamic(reportConfig.isDynamic());
-						reportableId = (Long) db().create(reportableDefinition);
-					} else {
-						// Update old definition
-						oldReportableDefinition.setRecordName(reportConfig.getReportable());
-						oldReportableDefinition.setTitle(title);
-						oldReportableDefinition.setDescription(description);
-						oldReportableDefinition.setTemplate(reportConfig.getTemplate());
-						oldReportableDefinition.setProcessor(reportConfig.getProcessor());
-						oldReportableDefinition.setDynamic(reportConfig.isDynamic());
-						oldReportableDefinition.setInstalled(Boolean.TRUE);
-						db().updateByIdVersion(oldReportableDefinition);
-						reportableId = oldReportableDefinition.getId();
+                    ReportableDefinition oldReportableDefinition = db().find(rdQuery.name(reportName));
+                    Long reportableId = null;
+                    if (oldReportableDefinition == null) {
+                        reportableDefinition = new ReportableDefinition();
+                        reportableDefinition.setModuleId(moduleId);
+                        reportableDefinition.setName(reportName);
+                        reportableDefinition.setRecordName(reportConfig.getReportable());
+                        reportableDefinition.setTitle(title);
+                        reportableDefinition.setDescription(description);
+                        reportableDefinition.setTemplate(reportConfig.getTemplate());
+                        reportableDefinition.setProcessor(reportConfig.getProcessor());
+                        reportableDefinition.setDynamic(reportConfig.isDynamic());
+                        reportableId = (Long) db().create(reportableDefinition);
+                    } else {
+                        // Update old definition
+                        oldReportableDefinition.setRecordName(reportConfig.getReportable());
+                        oldReportableDefinition.setTitle(title);
+                        oldReportableDefinition.setDescription(description);
+                        oldReportableDefinition.setTemplate(reportConfig.getTemplate());
+                        oldReportableDefinition.setProcessor(reportConfig.getProcessor());
+                        oldReportableDefinition.setDynamic(reportConfig.isDynamic());
+                        oldReportableDefinition.setInstalled(Boolean.TRUE);
+                        db().updateByIdVersion(oldReportableDefinition);
+                        reportableId = oldReportableDefinition.getId();
 
-						// Delete old fields
-						db().deleteAll(new ReportableFieldQuery().reportableId(reportableId));
-					}
+                        // Delete old fields
+                        db().deleteAll(new ReportableFieldQuery().reportableId(reportableId));
+                    }
 
-					// Re-create/Create report fields
-					if (reportConfig.isManaged()) {
-						ManagedConfig managedConfig = JacklynUtils.getManagedConfig(moduleConfig,
-								reportConfig.getReportable());
-						ReportableField reportableField = new ReportableField();
-						reportableField.setReportableId(reportableId);
-						for (FieldConfig rfd : managedConfig.getFieldList()) {
-							if (rfd.isReportable()) {
-								reportableField.setDescription(rfd.getDescription());
-								reportableField.setFormatter(rfd.getFormatter());
-								reportableField.setHorizontalAlign(rfd.gethAlign());
-								reportableField.setName(rfd.getName());
-								reportableField.setParameterOnly(rfd.isParameterOnly());
-								reportableField.setType(rfd.getType());
-								reportableField.setWidth(rfd.getWidth());
-								db().create(reportableField);
-							}
-						}
-					}
+                    // Re-create/Create report fields
+                    if (reportConfig.isManaged()) {
+                        ManagedConfig managedConfig = JacklynUtils.getManagedConfig(moduleConfig,
+                                reportConfig.getReportable());
+                        ReportableField reportableField = new ReportableField();
+                        reportableField.setReportableId(reportableId);
+                        for (FieldConfig rfd : managedConfig.getFieldList()) {
+                            if (rfd.isReportable()) {
+                                reportableField.setDescription(rfd.getDescription());
+                                reportableField.setFormatter(rfd.getFormatter());
+                                reportableField.setHorizontalAlign(rfd.gethAlign());
+                                reportableField.setName(rfd.getName());
+                                reportableField.setParameterOnly(rfd.isParameterOnly());
+                                reportableField.setType(rfd.getType());
+                                reportableField.setWidth(rfd.getWidth());
+                                db().create(reportableField);
+                            }
+                        }
+                    }
 
-					// Re-create/Create report parameters
-					if (reportConfig.getParameters() != null) {
-						List<ParameterDef> parameterDefinitionList = new ArrayList<ParameterDef>();
-						for (ParameterConfig rpd : reportConfig.getParameters()
-								.getParameterList()) {
-							ParameterDef parameterDef = new ParameterDef();
-							parameterDef.setName(rpd.getName());
-							parameterDef.setDescription(rpd.getDescription());
-							parameterDef.setEditor(rpd.getEditor());
-							parameterDef.setType(rpd.getType());
-							parameterDef.setMandatory(rpd.isMandatory());
-							parameterDefinitionList.add(parameterDef);
-						}
+                    // Re-create/Create report parameters
+                    if (reportConfig.getParameters() != null) {
+                        List<ParameterDef> parameterDefinitionList = new ArrayList<ParameterDef>();
+                        for (ParameterConfig rpd : reportConfig.getParameters().getParameterList()) {
+                            ParameterDef parameterDef = new ParameterDef();
+                            parameterDef.setName(rpd.getName());
+                            parameterDef.setDescription(rpd.getDescription());
+                            parameterDef.setEditor(rpd.getEditor());
+                            parameterDef.setType(rpd.getType());
+                            parameterDef.setMandatory(rpd.isMandatory());
+                            parameterDefinitionList.add(parameterDef);
+                        }
 
-						getParameterBusinessModule().defineParameters(reportName,
-								parameterDefinitionList);
-					}
-				}
-			}
-		}
-	}
+                        getParameterBusinessModule().defineParameters(reportName, parameterDefinitionList);
+                    }
+                }
+            }
+        }
+    }
 
-	private ReportServer getCommonReportServer() throws UnifyException {
-		return (ReportServer) getApplicationAttribute(
-				JacklynApplicationAttributeConstants.COMMON_REPORT_SERVER);
-	}
+    private ReportServer getCommonReportServer() throws UnifyException {
+        return (ReportServer) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_SERVER);
+    }
 
-	private ReportColumnOptions createReportColumnOptions(ReportableField reportableField,
-			boolean included) {
-		return new ReportColumnOptions(reportableField.getName(), reportableField.getDescription(),
-				reportableField.getType(), reportableField.getFormatter(),
-				HAlignType.fromName(reportableField.getHorizontalAlign()),
-				reportableField.getWidth(), included);
-	}
+    private ReportColumnOptions createReportColumnOptions(ReportableField reportableField, boolean included) {
+        return new ReportColumnOptions(reportableField.getName(), reportableField.getDescription(),
+                reportableField.getType(), reportableField.getFormatter(),
+                HAlignType.fromName(reportableField.getHorizontalAlign()), reportableField.getWidth(), included);
+    }
 
-	private void setCommonReportParameters(Report report) throws UnifyException {
-		report.setParameter(ReportParameterConstants.APPLICATION_TITLE,
-				getUnifyComponentContext().getInstanceName());
-		report.setParameter(ReportParameterConstants.CLIENT_TITLE,
-				systemModule.getSysParameterValue(String.class,
-						SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
-		report.setParameter(ReportParameterConstants.REPORT_TITLE, report.getTitle());
+    private void setCommonReportParameters(Report report) throws UnifyException {
+        report.setParameter(ReportParameterConstants.APPLICATION_TITLE, getUnifyComponentContext().getInstanceName());
+        report.setParameter(ReportParameterConstants.CLIENT_TITLE,
+                systemModule.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
+        report.setParameter(ReportParameterConstants.REPORT_TITLE, report.getTitle());
 
-		String imagePath = WebUtils.expandThemeTag(systemModule.getSysParameterValue(String.class,
-				ReportModuleSysParamConstants.REPORT_CLIENT_LOGO));
-		byte[] clientLogo = IOUtils.readFileResourceInputStream(imagePath,
-				getUnifyComponentContext().getWorkingPath());
-		report.setParameter(ReportParameterConstants.CLIENT_LOGO, clientLogo);
+        String imagePath = WebUtils.expandThemeTag(
+                systemModule.getSysParameterValue(String.class, ReportModuleSysParamConstants.REPORT_CLIENT_LOGO));
+        byte[] clientLogo = IOUtils.readFileResourceInputStream(imagePath, getUnifyComponentContext().getWorkingPath());
+        report.setParameter(ReportParameterConstants.CLIENT_LOGO, clientLogo);
 
-		String templatePath = systemModule.getSysParameterValue(String.class,
-				ReportModuleSysParamConstants.REPORT_TEMPLATE_PATH);
-		String template = report.getTemplate();
-		if (template == null) {
-			String templateParameter
-					= ReportModuleSysParamConstants.DYNAMIC_REPORT_PORTRAIT_TEMPLATE;
-			if (report.isLandscape()) {
-				templateParameter = ReportModuleSysParamConstants.DYNAMIC_REPORT_LANDSCAPE_TEMPLATE;
-			}
-			template = systemModule.getSysParameterValue(String.class, templateParameter);
-		}
-		report.setTemplate(IOUtils.buildFilename(templatePath, template));
-	}
+        String templatePath = systemModule.getSysParameterValue(String.class,
+                ReportModuleSysParamConstants.REPORT_TEMPLATE_PATH);
+        String template = report.getTemplate();
+        if (template == null) {
+            String templateParameter = ReportModuleSysParamConstants.DYNAMIC_REPORT_PORTRAIT_TEMPLATE;
+            if (report.isLandscape()) {
+                templateParameter = ReportModuleSysParamConstants.DYNAMIC_REPORT_LANDSCAPE_TEMPLATE;
+            }
+            template = systemModule.getSysParameterValue(String.class, templateParameter);
+        }
+        report.setTemplate(IOUtils.buildFilename(templatePath, template));
+    }
 }

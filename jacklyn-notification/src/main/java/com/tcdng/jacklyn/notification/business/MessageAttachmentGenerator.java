@@ -32,15 +32,14 @@ import com.tcdng.unify.core.data.FileAttachment;
  */
 public interface MessageAttachmentGenerator extends UnifyComponent {
 
-	/**
-	 * Generates file attachments using supplied message dictionary.
-	 * 
-	 * @param messageDictionary
-	 *            the dictionary to use
-	 * @return list of file attachments
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<FileAttachment> generateAttachments(MessageDictionary messageDictionary)
-			throws UnifyException;
+    /**
+     * Generates file attachments using supplied message dictionary.
+     * 
+     * @param messageDictionary
+     *            the dictionary to use
+     * @return list of file attachments
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<FileAttachment> generateAttachments(MessageDictionary messageDictionary) throws UnifyException;
 }

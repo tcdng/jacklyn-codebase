@@ -37,129 +37,125 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/batchfilereadconfig")
 @UplBinding("web/file/upl/managebatchfilereadconfig.upl")
-public class BatchFileReadConfigController
-		extends AbstractFileRecordController<BatchFileReadConfig> {
+public class BatchFileReadConfigController extends AbstractFileRecordController<BatchFileReadConfig> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	private BatchFileReadConfigLargeData formBean;
+    private BatchFileReadConfigLargeData formBean;
 
-	private BatchFileReadConfigLargeData clipboardFormBean;
+    private BatchFileReadConfigLargeData clipboardFormBean;
 
-	public BatchFileReadConfigController() {
-		super(BatchFileReadConfig.class, "file.batchfilereadconfig.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public BatchFileReadConfigController() {
+        super(BatchFileReadConfig.class, "file.batchfilereadconfig.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
+                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
 
-	@Action
-	@Override
-	public String copyRecord() throws UnifyException {
-		clipboardFormBean = ReflectUtils.shallowBeanCopy(formBean);
-		return super.copyRecord();
-	}
+    @Action
+    @Override
+    public String copyRecord() throws UnifyException {
+        clipboardFormBean = ReflectUtils.shallowBeanCopy(formBean);
+        return super.copyRecord();
+    }
 
-	@Action
-	public String refreshParameters() throws UnifyException {
-		onPrepareView(getRecord(), false);
-		return "refreshmain";
-	}
+    @Action
+    public String refreshParameters() throws UnifyException {
+        onPrepareView(getRecord(), false);
+        return "refreshmain";
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	public BatchFileReadConfigLargeData getFormBean() {
-		return formBean;
-	}
+    public BatchFileReadConfigLargeData getFormBean() {
+        return formBean;
+    }
 
-	public void setFormBean(BatchFileReadConfigLargeData formBean) {
-		this.formBean = formBean;
-	}
+    public void setFormBean(BatchFileReadConfigLargeData formBean) {
+        this.formBean = formBean;
+    }
 
-	@Override
-	protected List<BatchFileReadConfig> find() throws UnifyException {
-		BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getFileModule().findBatchFileReadConfigs(query);
-	}
+    @Override
+    protected List<BatchFileReadConfig> find() throws UnifyException {
+        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getFileModule().findBatchFileReadConfigs(query);
+    }
 
-	@Override
-	protected BatchFileReadConfig find(Long id) throws UnifyException {
-		formBean = getFileModule().findBatchFileReadConfigDocument(id);
-		return formBean.getData();
-	}
+    @Override
+    protected BatchFileReadConfig find(Long id) throws UnifyException {
+        formBean = getFileModule().findBatchFileReadConfigDocument(id);
+        return formBean.getData();
+    }
 
-	@Override
-	protected BatchFileReadConfig prepareCreate() throws UnifyException {
-		formBean = new BatchFileReadConfigLargeData();
-		return formBean.getData();
-	}
+    @Override
+    protected BatchFileReadConfig prepareCreate() throws UnifyException {
+        formBean = new BatchFileReadConfigLargeData();
+        return formBean.getData();
+    }
 
-	@Override
-	protected Object create(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-		return getFileModule().createBatchFileReadConfig(formBean);
-	}
+    @Override
+    protected Object create(BatchFileReadConfig batchUploadConfig) throws UnifyException {
+        return getFileModule().createBatchFileReadConfig(formBean);
+    }
 
-	@Override
-	protected int update(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-		return getFileModule().updateBatchFileReadConfig(formBean);
-	}
+    @Override
+    protected int update(BatchFileReadConfig batchUploadConfig) throws UnifyException {
+        return getFileModule().updateBatchFileReadConfig(formBean);
+    }
 
-	@Override
-	protected int delete(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-		return getFileModule().deleteBatchFileReadConfig(batchUploadConfig.getId());
-	}
+    @Override
+    protected int delete(BatchFileReadConfig batchUploadConfig) throws UnifyException {
+        return getFileModule().deleteBatchFileReadConfig(batchUploadConfig.getId());
+    }
 
-	@Override
-	protected void onPrepareView(BatchFileReadConfig batchUploadConfig, boolean onPaste)
-			throws UnifyException {
-		if (onPaste) {
-			formBean.setFileReaderParams(clipboardFormBean.getFileReaderParams());
-			;
-		} else {
-			formBean
-					= getFileModule().loadBatchFileReadConfigDocumentValues(formBean);
-		}
-	}
+    @Override
+    protected void onPrepareView(BatchFileReadConfig batchUploadConfig, boolean onPaste) throws UnifyException {
+        if (onPaste) {
+            formBean.setFileReaderParams(clipboardFormBean.getFileReaderParams());
+            ;
+        } else {
+            formBean = getFileModule().loadBatchFileReadConfigDocumentValues(formBean);
+        }
+    }
 
-	@Override
-	protected void onLoseView(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-		formBean = new BatchFileReadConfigLargeData();
-		clipboardFormBean = null;
-	}
+    @Override
+    protected void onLoseView(BatchFileReadConfig batchUploadConfig) throws UnifyException {
+        formBean = new BatchFileReadConfigLargeData();
+        clipboardFormBean = null;
+    }
 }

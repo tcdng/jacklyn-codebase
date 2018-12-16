@@ -26,13 +26,13 @@ import com.tcdng.unify.core.UnifyStaticSettings;
  */
 public interface JacklynModuleStaticSettings extends UnifyStaticSettings {
 
-	/**
-	 * Returns the module configuration file.
-	 */
-	String getModuleConfig();
+    /**
+     * Returns the module configuration file.
+     */
+    String getModuleConfig();
 
-	/**
-	 * Returns the module component name.
-	 */
-	String getModuleComponent();
+    /**
+     * Returns the module component name.
+     */
+    String getModuleComponent();
 }

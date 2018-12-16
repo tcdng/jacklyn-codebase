@@ -32,22 +32,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetToolingPolicyLogicResult extends RemoteCallResult {
 
-	private List<ToolingPolicyLogicItem> policyLogicList;
+    private List<ToolingPolicyLogicItem> policyLogicList;
 
-	public GetToolingPolicyLogicResult(List<ToolingPolicyLogicItem> policyLogicList) {
-		this.policyLogicList = policyLogicList;
-	}
+    public GetToolingPolicyLogicResult(List<ToolingPolicyLogicItem> policyLogicList) {
+        this.policyLogicList = policyLogicList;
+    }
 
-	public GetToolingPolicyLogicResult() {
+    public GetToolingPolicyLogicResult() {
 
-	}
+    }
 
-	public List<ToolingPolicyLogicItem> getPolicyLogicList() {
-		return policyLogicList;
-	}
+    public List<ToolingPolicyLogicItem> getPolicyLogicList() {
+        return policyLogicList;
+    }
 
-	@XmlElement(name = "policyLogic")
-	public void setPolicyLogicList(List<ToolingPolicyLogicItem> policyLogicList) {
-		this.policyLogicList = policyLogicList;
-	}
+    @XmlElement(name = "policyLogic")
+    public void setPolicyLogicList(List<ToolingPolicyLogicItem> policyLogicList) {
+        this.policyLogicList = policyLogicList;
+    }
 }

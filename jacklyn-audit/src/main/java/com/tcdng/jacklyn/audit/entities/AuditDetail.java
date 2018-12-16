@@ -32,30 +32,30 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("AUDITDETAIL")
 public class AuditDetail extends BaseEntity {
 
-	@ForeignKey(AuditTrail.class)
-	private Long auditTrailId;
+    @ForeignKey(AuditTrail.class)
+    private Long auditTrailId;
 
-	@Column(length = 256)
-	private String detail;
+    @Column(length = 256)
+    private String detail;
 
-	@Override
-	public String getDescription() {
-		return this.detail;
-	}
+    @Override
+    public String getDescription() {
+        return this.detail;
+    }
 
-	public Long getAuditTrailId() {
-		return auditTrailId;
-	}
+    public Long getAuditTrailId() {
+        return auditTrailId;
+    }
 
-	public void setAuditTrailId(Long auditTrailId) {
-		this.auditTrailId = auditTrailId;
-	}
+    public void setAuditTrailId(Long auditTrailId) {
+        this.auditTrailId = auditTrailId;
+    }
 
-	public String getDetail() {
-		return detail;
-	}
+    public String getDetail() {
+        return detail;
+    }
 
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
 }

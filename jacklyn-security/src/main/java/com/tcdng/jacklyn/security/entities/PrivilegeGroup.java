@@ -30,104 +30,103 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "PRIVILEGEGRP",
-		uniqueConstraints = { @UniqueConstraint({ "moduleId", "privilegeCategoryId" }) })
+@Table(name = "PRIVILEGEGRP", uniqueConstraints = { @UniqueConstraint({ "moduleId", "privilegeCategoryId" }) })
 public class PrivilegeGroup extends BaseEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@ForeignKey(PrivilegeCategory.class)
-	private Long privilegeCategoryId;
+    @ForeignKey(PrivilegeCategory.class)
+    private Long privilegeCategoryId;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	@ListOnly(key = "moduleId", property = "status")
-	private RecordStatus moduleStatus;
+    @ListOnly(key = "moduleId", property = "status")
+    private RecordStatus moduleStatus;
 
-	@ListOnly(key = "privilegeCategoryId", property = "name")
-	private String categoryName;
+    @ListOnly(key = "privilegeCategoryId", property = "name")
+    private String categoryName;
 
-	@ListOnly(key = "privilegeCategoryId", property = "description")
-	private String categoryDesc;
+    @ListOnly(key = "privilegeCategoryId", property = "description")
+    private String categoryDesc;
 
-	@ListOnly(key = "privilegeCategoryId", property = "status")
-	private RecordStatus categoryStatus;
+    @ListOnly(key = "privilegeCategoryId", property = "status")
+    private RecordStatus categoryStatus;
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getFullDescription() {
-		return StringUtils.concatenate(this.moduleDesc, " [", this.categoryDesc, "]");
-	}
+    public String getFullDescription() {
+        return StringUtils.concatenate(this.moduleDesc, " [", this.categoryDesc, "]");
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 
-	public RecordStatus getModuleStatus() {
-		return moduleStatus;
-	}
+    public RecordStatus getModuleStatus() {
+        return moduleStatus;
+    }
 
-	public void setModuleStatus(RecordStatus moduleStatus) {
-		this.moduleStatus = moduleStatus;
-	}
+    public void setModuleStatus(RecordStatus moduleStatus) {
+        this.moduleStatus = moduleStatus;
+    }
 
-	public Long getPrivilegeCategoryId() {
-		return privilegeCategoryId;
-	}
+    public Long getPrivilegeCategoryId() {
+        return privilegeCategoryId;
+    }
 
-	public void setPrivilegeCategoryId(Long privilegeCategoryId) {
-		this.privilegeCategoryId = privilegeCategoryId;
-	}
+    public void setPrivilegeCategoryId(Long privilegeCategoryId) {
+        this.privilegeCategoryId = privilegeCategoryId;
+    }
 
-	public String getCategoryName() {
-		return categoryName;
-	}
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-	public String getCategoryDesc() {
-		return categoryDesc;
-	}
+    public String getCategoryDesc() {
+        return categoryDesc;
+    }
 
-	public void setCategoryDesc(String categoryDesc) {
-		this.categoryDesc = categoryDesc;
-	}
+    public void setCategoryDesc(String categoryDesc) {
+        this.categoryDesc = categoryDesc;
+    }
 
-	public RecordStatus getCategoryStatus() {
-		return categoryStatus;
-	}
+    public RecordStatus getCategoryStatus() {
+        return categoryStatus;
+    }
 
-	public void setCategoryStatus(RecordStatus categoryStatus) {
-		this.categoryStatus = categoryStatus;
-	}
+    public void setCategoryStatus(RecordStatus categoryStatus) {
+        this.categoryStatus = categoryStatus;
+    }
 }

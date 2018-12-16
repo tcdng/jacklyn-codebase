@@ -33,134 +33,134 @@ import com.tcdng.unify.core.constant.FrequencyUnit;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task",
-		reportable = true, auditable = true)
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task", reportable = true,
+        auditable = true)
 @Table(name = "SCHEDTASK", uniqueConstraints = { @UniqueConstraint({ "description" }) })
 public class ScheduledTask extends BaseVersionedStatusEntity {
 
-	@Column(name = "SCHEDTASK_DESC", length = 64)
-	private String description;
+    @Column(name = "SCHEDTASK_DESC", length = 64)
+    private String description;
 
-	@Column(name = "TASK_NM")
-	private String taskName;
+    @Column(name = "TASK_NM")
+    private String taskName;
 
-	@Column(type = ColumnType.TIMESTAMP)
-	private Date startTime;
+    @Column(type = ColumnType.TIMESTAMP)
+    private Date startTime;
 
-	@Column(nullable = true)
-	private Integer frequency;
+    @Column(nullable = true)
+    private Integer frequency;
 
-	@Format(description = "$m{system.scheduledtask.frequencyunit}")
-	@Column(nullable = true)
-	private FrequencyUnit frequencyUnit;
+    @Format(description = "$m{system.scheduledtask.frequencyunit}")
+    @Column(nullable = true)
+    private FrequencyUnit frequencyUnit;
 
-	@Column(nullable = true)
-	private Integer numberOfTimes;
+    @Column(nullable = true)
+    private Integer numberOfTimes;
 
-	@Column
-	private Boolean expires;
+    @Column
+    private Boolean expires;
 
-	@Column(nullable = true)
-	private String[] weekdays;
+    @Column(nullable = true)
+    private String[] weekdays;
 
-	@Column(nullable = true)
-	private String[] days;
+    @Column(nullable = true)
+    private String[] days;
 
-	@Column(nullable = true)
-	private String[] months;
+    @Column(nullable = true)
+    private String[] months;
 
-	@Column(nullable = true)
-	private Boolean updated;
+    @Column(nullable = true)
+    private Boolean updated;
 
-	public ScheduledTask() {
-		this.expires = Boolean.FALSE;
-	}
+    public ScheduledTask() {
+        this.expires = Boolean.FALSE;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getTaskName() {
-		return taskName;
-	}
+    public String getTaskName() {
+        return taskName;
+    }
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 
-	public Date getStartTime() {
-		return startTime;
-	}
+    public Date getStartTime() {
+        return startTime;
+    }
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-	public Integer getFrequency() {
-		return frequency;
-	}
+    public Integer getFrequency() {
+        return frequency;
+    }
 
-	public void setFrequency(Integer frequency) {
-		this.frequency = frequency;
-	}
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
+    }
 
-	public FrequencyUnit getFrequencyUnit() {
-		return frequencyUnit;
-	}
+    public FrequencyUnit getFrequencyUnit() {
+        return frequencyUnit;
+    }
 
-	public void setFrequencyUnit(FrequencyUnit frequencyUnit) {
-		this.frequencyUnit = frequencyUnit;
-	}
+    public void setFrequencyUnit(FrequencyUnit frequencyUnit) {
+        this.frequencyUnit = frequencyUnit;
+    }
 
-	public Integer getNumberOfTimes() {
-		return numberOfTimes;
-	}
+    public Integer getNumberOfTimes() {
+        return numberOfTimes;
+    }
 
-	public void setNumberOfTimes(Integer numberOfTimes) {
-		this.numberOfTimes = numberOfTimes;
-	}
+    public void setNumberOfTimes(Integer numberOfTimes) {
+        this.numberOfTimes = numberOfTimes;
+    }
 
-	public Boolean getExpires() {
-		return expires;
-	}
+    public Boolean getExpires() {
+        return expires;
+    }
 
-	public void setExpires(Boolean expires) {
-		this.expires = expires;
-	}
+    public void setExpires(Boolean expires) {
+        this.expires = expires;
+    }
 
-	public String[] getWeekdays() {
-		return weekdays;
-	}
+    public String[] getWeekdays() {
+        return weekdays;
+    }
 
-	public void setWeekdays(String[] weekdays) {
-		this.weekdays = weekdays;
-	}
+    public void setWeekdays(String[] weekdays) {
+        this.weekdays = weekdays;
+    }
 
-	public String[] getDays() {
-		return days;
-	}
+    public String[] getDays() {
+        return days;
+    }
 
-	public void setDays(String[] days) {
-		this.days = days;
-	}
+    public void setDays(String[] days) {
+        this.days = days;
+    }
 
-	public String[] getMonths() {
-		return months;
-	}
+    public String[] getMonths() {
+        return months;
+    }
 
-	public void setMonths(String[] months) {
-		this.months = months;
-	}
+    public void setMonths(String[] months) {
+        this.months = months;
+    }
 
-	public Boolean getUpdated() {
-		return updated;
-	}
+    public Boolean getUpdated() {
+        return updated;
+    }
 
-	public void setUpdated(Boolean updated) {
-		this.updated = updated;
-	}
+    public void setUpdated(Boolean updated) {
+        this.updated = updated;
+    }
 }

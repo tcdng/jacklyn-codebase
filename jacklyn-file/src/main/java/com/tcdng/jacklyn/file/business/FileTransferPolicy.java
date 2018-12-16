@@ -29,81 +29,79 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface FileTransferPolicy extends UnifyComponent {
 
-	/**
-	 * Returns the extended version of the remote path based on the supplied working
-	 * date.
-	 * 
-	 * @param remotePath
-	 *            the remote path
-	 * @param workingDtFormat
-	 *            the working date format
-	 * @param workingDt
-	 *            the working date
-	 * @return the extended remote path
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	String getExtendedRemotePath(String remotePath, String workingDtFormat, Date workingDt)
-			throws UnifyException;
+    /**
+     * Returns the extended version of the remote path based on the supplied working
+     * date.
+     * 
+     * @param remotePath
+     *            the remote path
+     * @param workingDtFormat
+     *            the working date format
+     * @param workingDt
+     *            the working date
+     * @return the extended remote path
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String getExtendedRemotePath(String remotePath, String workingDtFormat, Date workingDt) throws UnifyException;
 
-	/**
-	 * Returns the extended version of the local path based on the supplied working
-	 * date.
-	 * 
-	 * @param localPath
-	 *            the local path
-	 * @param workingDtFormat
-	 *            the working date format
-	 * @param workingDt
-	 *            the working date
-	 * @return the extended local path
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	String getExtendedLocalPath(String localPath, String workingDtFormat, Date workingDt)
-			throws UnifyException;
+    /**
+     * Returns the extended version of the local path based on the supplied working
+     * date.
+     * 
+     * @param localPath
+     *            the local path
+     * @param workingDtFormat
+     *            the working date format
+     * @param workingDt
+     *            the working date
+     * @return the extended local path
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String getExtendedLocalPath(String localPath, String workingDtFormat, Date workingDt) throws UnifyException;
 
-	/**
-	 * Returns file prefixes based on supplied working date.
-	 * 
-	 * @param workingDt
-	 *            the working date
-	 * @return a list of file prefixes for filtering files to copy. A null means no
-	 *         filtering by prefix
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Set<String> getFilePrefixes(Date workingDt) throws UnifyException;
+    /**
+     * Returns file prefixes based on supplied working date.
+     * 
+     * @param workingDt
+     *            the working date
+     * @return a list of file prefixes for filtering files to copy. A null means no
+     *         filtering by prefix
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Set<String> getFilePrefixes(Date workingDt) throws UnifyException;
 
-	/**
-	 * Returns file suffixes based on supplied working date.
-	 * 
-	 * @param workingDt
-	 *            the working date
-	 * @return a list of file suffixes for filtering files to copy. A null means no
-	 *         filtering by suffix
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Set<String> getFileSuffixes(Date workingDt) throws UnifyException;
+    /**
+     * Returns file suffixes based on supplied working date.
+     * 
+     * @param workingDt
+     *            the working date
+     * @return a list of file suffixes for filtering files to copy. A null means no
+     *         filtering by suffix
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Set<String> getFileSuffixes(Date workingDt) throws UnifyException;
 
-	/**
-	 * Returns source semaphore suffix.
-	 * 
-	 * @return the return value is used to check for semaphore files before file
-	 *         transfer can occur. A null means no semaphore check
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	String getSourceSemaphoreSuffix() throws UnifyException;
+    /**
+     * Returns source semaphore suffix.
+     * 
+     * @return the return value is used to check for semaphore files before file
+     *         transfer can occur. A null means no semaphore check
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String getSourceSemaphoreSuffix() throws UnifyException;
 
-	/**
-	 * Returns a target semaphore suffix.
-	 * 
-	 * @return a non-null value indicates that semaphore file should be created in
-	 *         target directory for each transfered file
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	String getTargetSemaphoreSuffix() throws UnifyException;
+    /**
+     * Returns a target semaphore suffix.
+     * 
+     * @return a non-null value indicates that semaphore file should be created in
+     *         target directory for each transfered file
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String getTargetSemaphoreSuffix() throws UnifyException;
 }

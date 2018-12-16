@@ -31,47 +31,47 @@ import com.tcdng.jacklyn.workflow.entities.WfItem;
  */
 public class WfItemObjects implements Serializable {
 
-	private static final long serialVersionUID = 161375477672079722L;
+    private static final long serialVersionUID = 161375477672079722L;
 
-	private String wfStepName;
+    private String wfStepName;
 
-	private List<WfItem> wfItemList;
+    private List<WfItem> wfItemList;
 
-	private List<WfAction> actions;
+    private List<WfAction> actions;
 
-	private Set<String> validatePageActions;
+    private Set<String> validatePageActions;
 
-	public WfItemObjects(String wfStepName, List<WfItem> wfItemList, List<WfAction> actions) {
-		this.wfStepName = wfStepName;
-		this.wfItemList = wfItemList;
-		this.actions = actions;
-		this.validatePageActions = new HashSet<String>();
-		for (WfAction wfAction : actions) {
-			if (wfAction.isValidatePage()) {
-				this.validatePageActions.add(wfAction.getName());
-			}
-		}
+    public WfItemObjects(String wfStepName, List<WfItem> wfItemList, List<WfAction> actions) {
+        this.wfStepName = wfStepName;
+        this.wfItemList = wfItemList;
+        this.actions = actions;
+        this.validatePageActions = new HashSet<String>();
+        for (WfAction wfAction : actions) {
+            if (wfAction.isValidatePage()) {
+                this.validatePageActions.add(wfAction.getName());
+            }
+        }
 
-		this.validatePageActions = Collections.unmodifiableSet(this.validatePageActions);
-	}
+        this.validatePageActions = Collections.unmodifiableSet(this.validatePageActions);
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public List<WfItem> getWfItemList() {
-		return wfItemList;
-	}
+    public List<WfItem> getWfItemList() {
+        return wfItemList;
+    }
 
-	public List<WfAction> getActionList() {
-		return actions;
-	}
+    public List<WfAction> getActionList() {
+        return actions;
+    }
 
-	public boolean isActionListItems() {
-		return !this.actions.isEmpty();
-	}
+    public boolean isActionListItems() {
+        return !this.actions.isEmpty();
+    }
 
-	public Set<String> getValidatePageActions() {
-		return validatePageActions;
-	}
+    public Set<String> getValidatePageActions() {
+        return validatePageActions;
+    }
 }

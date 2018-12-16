@@ -23,5 +23,5 @@ package com.tcdng.jacklyn.archiving.constants;
  */
 public interface FileArchiveTaskConstants {
 
-	String BUILDLOBFILEARCHIVETASK = "buildlobfilearchivetask";
+    String BUILDLOBFILEARCHIVETASK = "buildlobfilearchivetask";
 }

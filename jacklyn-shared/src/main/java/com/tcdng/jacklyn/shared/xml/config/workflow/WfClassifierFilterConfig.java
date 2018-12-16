@@ -29,63 +29,63 @@ import com.tcdng.unify.core.util.xml.adapter.FilterConditionTypeXmlAdapter;
  */
 public class WfClassifierFilterConfig {
 
-	private String field;
-	
-	private FilterConditionType op;
-	
-	private String value1;
-	
-	private String value2;
-	
-	private Boolean fieldOnly;
+    private String field;
 
-	public WfClassifierFilterConfig() {
-		this.fieldOnly = Boolean.FALSE;
-	}
+    private FilterConditionType op;
 
-	public String getField() {
-		return field;
-	}
+    private String value1;
 
-	@XmlAttribute(required=true)
-	public void setField(String field) {
-		this.field = field;
-	}
+    private String value2;
 
-	public FilterConditionType getOp() {
-		return op;
-	}
+    private Boolean fieldOnly;
+
+    public WfClassifierFilterConfig() {
+        this.fieldOnly = Boolean.FALSE;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    @XmlAttribute(required = true)
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public FilterConditionType getOp() {
+        return op;
+    }
 
     @XmlJavaTypeAdapter(FilterConditionTypeXmlAdapter.class)
-	@XmlAttribute(required=true)
-	public void setOp(FilterConditionType op) {
-		this.op = op;
-	}
+    @XmlAttribute(required = true)
+    public void setOp(FilterConditionType op) {
+        this.op = op;
+    }
 
-	public String getValue1() {
-		return value1;
-	}
+    public String getValue1() {
+        return value1;
+    }
 
-	@XmlAttribute
-	public void setValue1(String value1) {
-		this.value1 = value1;
-	}
+    @XmlAttribute
+    public void setValue1(String value1) {
+        this.value1 = value1;
+    }
 
-	public String getValue2() {
-		return value2;
-	}
+    public String getValue2() {
+        return value2;
+    }
 
-	@XmlAttribute
-	public void setValue2(String value2) {
-		this.value2 = value2;
-	}
+    @XmlAttribute
+    public void setValue2(String value2) {
+        this.value2 = value2;
+    }
 
-	public Boolean getFieldOnly() {
-		return fieldOnly;
-	}
+    public Boolean getFieldOnly() {
+        return fieldOnly;
+    }
 
-	@XmlAttribute(name="field-only")
-	public void setFieldOnly(Boolean fieldOnly) {
-		this.fieldOnly = fieldOnly;
-	}
+    @XmlAttribute(name = "field-only")
+    public void setFieldOnly(Boolean fieldOnly) {
+        this.fieldOnly = fieldOnly;
+    }
 }

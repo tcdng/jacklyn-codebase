@@ -25,25 +25,25 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class ModuleQuery extends BaseInstallEntityQuery<Module> {
 
-	public ModuleQuery() {
-		super(Module.class);
-	}
+    public ModuleQuery() {
+        super(Module.class);
+    }
 
-	@Override
-	public ModuleQuery order(String field) {
-		return (ModuleQuery) super.order(field);
-	}
+    @Override
+    public ModuleQuery order(String field) {
+        return (ModuleQuery) super.order(field);
+    }
 
-	@Override
-	public ModuleQuery select(String field) {
-		return (ModuleQuery) super.select(field);
-	}
+    @Override
+    public ModuleQuery select(String field) {
+        return (ModuleQuery) super.select(field);
+    }
 
-	public ModuleQuery name(String name) {
-		return (ModuleQuery) equals("name", name);
-	}
+    public ModuleQuery name(String name) {
+        return (ModuleQuery) equals("name", name);
+    }
 
-	public ModuleQuery descriptionLike(String description) {
-		return (ModuleQuery) like("description", description);
-	}
+    public ModuleQuery descriptionLike(String description) {
+        return (ModuleQuery) like("description", description);
+    }
 }

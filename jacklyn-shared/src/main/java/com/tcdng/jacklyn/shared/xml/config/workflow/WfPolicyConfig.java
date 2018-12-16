@@ -28,15 +28,15 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfPolicyConfig extends BaseConfig {
 
-	private String logic;
+    private String logic;
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 
-	@XmlAttribute(required = true)
-	public void setLogic(String logic) {
-		this.logic = logic;
-	}
+    @XmlAttribute(required = true)
+    public void setLogic(String logic) {
+        this.logic = logic;
+    }
 
 }

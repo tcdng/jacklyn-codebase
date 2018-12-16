@@ -30,164 +30,163 @@ import com.tcdng.unify.core.data.PackableDoc;
  */
 public class WfItemObject implements ViewableWfItem {
 
-	private WfStepDef wfStepDef;
+    private WfStepDef wfStepDef;
 
-	private Long docId;
+    private Long docId;
 
-	private Long wfItemId;
+    private Long wfItemId;
 
-	private Long wfItemHistId;
+    private Long wfItemHistId;
 
-	private Long wfHistEventId;
+    private Long wfHistEventId;
 
-	private String description;
+    private String description;
 
-	private String label;
+    private String label;
 
-	private String notes;
+    private String notes;
 
-	private PackableDoc pd;
+    private PackableDoc pd;
 
-	private WfItemReader reader;
+    private WfItemReader reader;
 
-	private WfItemReaderWriter readerWriter;
+    private WfItemReaderWriter readerWriter;
 
-	private Date createDt;
+    private Date createDt;
 
-	private Date stepDt;
+    private Date stepDt;
 
-	private String heldBy;
+    private String heldBy;
 
-	private List<WfAction> actionList;
+    private List<WfAction> actionList;
 
-	public WfItemObject(WfStepDef wfStepDef, Long docId, Long wfItemId, Long wfItemHistId,
-			Long wfHistEventId, String description, Date createDt, Date stepDt, String heldBy,
-			PackableDoc pd) {
-		this.wfStepDef = wfStepDef;
-		this.docId = docId;
-		this.wfItemId = wfItemId;
-		this.wfItemHistId = wfItemHistId;
-		this.wfHistEventId = wfHistEventId;
-		this.description = description;
-		this.createDt = createDt;
-		this.stepDt = stepDt;
-		this.heldBy = heldBy;
-		this.pd = pd;
-	}
+    public WfItemObject(WfStepDef wfStepDef, Long docId, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
+            String description, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
+        this.wfStepDef = wfStepDef;
+        this.docId = docId;
+        this.wfItemId = wfItemId;
+        this.wfItemHistId = wfItemHistId;
+        this.wfHistEventId = wfHistEventId;
+        this.description = description;
+        this.createDt = createDt;
+        this.stepDt = stepDt;
+        this.heldBy = heldBy;
+        this.pd = pd;
+    }
 
-	@Override
-	public String getTitle() {
-		return description;
-	}
+    @Override
+    public String getTitle() {
+        return description;
+    }
 
-	@Override
-	public String getDocViewer() {
-		return wfStepDef.getDocViewer();
-	}
+    @Override
+    public String getDocViewer() {
+        return wfStepDef.getDocViewer();
+    }
 
-	@Override
-	public PackableDoc getPd() {
-		return pd;
-	}
+    @Override
+    public PackableDoc getPd() {
+        return pd;
+    }
 
-	@Override
-	public WfStepDef getWfStepDef() {
-		return wfStepDef;
-	}
+    @Override
+    public WfStepDef getWfStepDef() {
+        return wfStepDef;
+    }
 
-	public WfItemReader getReader() {
-		if (reader == null) {
-			reader = new WfItemReader(pd);
-		}
+    public WfItemReader getReader() {
+        if (reader == null) {
+            reader = new WfItemReader(pd);
+        }
 
-		return reader;
-	}
+        return reader;
+    }
 
-	public WfItemReaderWriter getReaderWriter() {
-		if (readerWriter == null) {
-			readerWriter = new WfItemReaderWriter(pd);
-		}
+    public WfItemReaderWriter getReaderWriter() {
+        if (readerWriter == null) {
+            readerWriter = new WfItemReaderWriter(pd);
+        }
 
-		return readerWriter;
-	}
+        return readerWriter;
+    }
 
-	public void setWfStepDef(WfStepDef wfStepDef) {
-		this.wfStepDef = wfStepDef;
-	}
+    public void setWfStepDef(WfStepDef wfStepDef) {
+        this.wfStepDef = wfStepDef;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getDocName() {
-		return pd.getConfig().getName();
-	}
+    public String getDocName() {
+        return pd.getConfig().getName();
+    }
 
-	public Long getWfItemId() {
-		return wfItemId;
-	}
+    public Long getWfItemId() {
+        return wfItemId;
+    }
 
-	public Long getDocId() {
-		return this.docId;
-	}
+    public Long getDocId() {
+        return this.docId;
+    }
 
-	public void setDocId(Long docId) {
-		this.docId = docId;
-	}
+    public void setDocId(Long docId) {
+        this.docId = docId;
+    }
 
-	public Long getWfItemHistId() {
-		return wfItemHistId;
-	}
+    public Long getWfItemHistId() {
+        return wfItemHistId;
+    }
 
-	public void setWfItemHistId(Long wfItemHistId) {
-		this.wfItemHistId = wfItemHistId;
-	}
+    public void setWfItemHistId(Long wfItemHistId) {
+        this.wfItemHistId = wfItemHistId;
+    }
 
-	public Long getWfHistEventId() {
-		return wfHistEventId;
-	}
+    public Long getWfHistEventId() {
+        return wfHistEventId;
+    }
 
-	public void setWfHistEventId(Long wfHistEventId) {
-		this.wfHistEventId = wfHistEventId;
-	}
+    public void setWfHistEventId(Long wfHistEventId) {
+        this.wfHistEventId = wfHistEventId;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getNotes() {
-		return notes;
-	}
+    public String getNotes() {
+        return notes;
+    }
 
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
-	public Date getCreateDt() {
-		return createDt;
-	}
+    public Date getCreateDt() {
+        return createDt;
+    }
 
-	public Date getStepDt() {
-		return stepDt;
-	}
+    public Date getStepDt() {
+        return stepDt;
+    }
 
-	public String getHeldBy() {
-		return heldBy;
-	}
+    public String getHeldBy() {
+        return heldBy;
+    }
 
-	public List<WfAction> getActionList() {
-		return actionList;
-	}
+    public List<WfAction> getActionList() {
+        return actionList;
+    }
 
-	public void setActionList(List<WfAction> actionList) {
-		this.actionList = actionList;
-	}
+    public void setActionList(List<WfAction> actionList) {
+        this.actionList = actionList;
+    }
 
-	public List<WfFormPrivilegeDef> getFormPrivilegeList() {
-		return wfStepDef.getFormPrivilegeList();
-	}
+    public List<WfFormPrivilegeDef> getFormPrivilegeList() {
+        return wfStepDef.getFormPrivilegeList();
+    }
 }

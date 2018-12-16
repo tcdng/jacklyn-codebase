@@ -28,14 +28,14 @@ import com.tcdng.unify.core.ui.Tile;
  */
 public interface DashboardTileGenerator extends UnifyComponent {
 
-	/**
-	 * Generates a tile using supplied dashboard tile data.
-	 * 
-	 * @param dashboardTileData
-	 *            the dashboard data
-	 * @return a user interface tile
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Tile generate(DashboardTile dashboardTileData) throws UnifyException;
+    /**
+     * Generates a tile using supplied dashboard tile data.
+     * 
+     * @param dashboardTileData
+     *            the dashboard data
+     * @return a user interface tile
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Tile generate(DashboardTile dashboardTileData) throws UnifyException;
 }

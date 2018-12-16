@@ -28,39 +28,37 @@ import com.tcdng.unify.core.operation.OrBuilder;
  */
 public class RoleQuery extends BaseVersionedStatusEntityQuery<Role> {
 
-	public RoleQuery() {
-		super(Role.class);
-	}
+    public RoleQuery() {
+        super(Role.class);
+    }
 
-	@Override
-	public RoleQuery order(String field) {
-		return (RoleQuery) super.order(field);
-	}
+    @Override
+    public RoleQuery order(String field) {
+        return (RoleQuery) super.order(field);
+    }
 
-	@Override
-	public RoleQuery select(String field) {
-		return (RoleQuery) super.select(field);
-	}
+    @Override
+    public RoleQuery select(String field) {
+        return (RoleQuery) super.select(field);
+    }
 
-	public RoleQuery name(String name) {
-		return (RoleQuery) equals("name", name);
-	}
+    public RoleQuery name(String name) {
+        return (RoleQuery) equals("name", name);
+    }
 
-	public RoleQuery nameLike(String name) {
-		return (RoleQuery) like("name", name);
-	}
+    public RoleQuery nameLike(String name) {
+        return (RoleQuery) like("name", name);
+    }
 
-	public RoleQuery descriptionLike(String description) {
-		return (RoleQuery) like("description", description);
-	}
+    public RoleQuery descriptionLike(String description) {
+        return (RoleQuery) like("description", description);
+    }
 
-	public RoleQuery activeBefore(Date activeBefore) {
-		return (RoleQuery) add(
-				new OrBuilder().lessEqual("activeBefore", activeBefore).isNull("activeBefore"));
-	}
+    public RoleQuery activeBefore(Date activeBefore) {
+        return (RoleQuery) add(new OrBuilder().lessEqual("activeBefore", activeBefore).isNull("activeBefore"));
+    }
 
-	public RoleQuery activeAfter(Date activeAfter) {
-		return (RoleQuery) add(
-				new OrBuilder().greaterEqual("activeAfter", activeAfter).isNull("activeAfter"));
-	}
+    public RoleQuery activeAfter(Date activeAfter) {
+        return (RoleQuery) add(new OrBuilder().greaterEqual("activeAfter", activeAfter).isNull("activeAfter"));
+    }
 }

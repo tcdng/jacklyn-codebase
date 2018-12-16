@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.audit.constants;
  */
 public interface AuditModuleAuditConstants {
 
-	String ACTIVATE_AUDITTYPE = "aud-activateaudittype";
+    String ACTIVATE_AUDITTYPE = "aud-activateaudittype";
 
-	String DEACTIVATE_AUDITTYPE = "aud-deactivateaudittype";
+    String DEACTIVATE_AUDITTYPE = "aud-deactivateaudittype";
 
-	String INSPECTUSER_SEARCH = "aud-inspectusersearch";
+    String INSPECTUSER_SEARCH = "aud-inspectusersearch";
 }

@@ -29,133 +29,132 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "ROLEPRIVILEGE",
-		uniqueConstraints = { @UniqueConstraint({ "roleId", "privilegeId" }) })
+@Table(name = "ROLEPRIVILEGE", uniqueConstraints = { @UniqueConstraint({ "roleId", "privilegeId" }) })
 public class RolePrivilege extends BaseEntity {
 
-	@ForeignKey(Role.class)
-	private Long roleId;
+    @ForeignKey(Role.class)
+    private Long roleId;
 
-	@ForeignKey(Privilege.class)
-	private Long privilegeId;
+    @ForeignKey(Privilege.class)
+    private Long privilegeId;
 
-	@ListOnly(key = "roleId", property = "name")
-	private String roleName;
+    @ListOnly(key = "roleId", property = "name")
+    private String roleName;
 
-	@ListOnly(key = "roleId", property = "description")
-	private String roleDesc;
+    @ListOnly(key = "roleId", property = "description")
+    private String roleDesc;
 
-	@ListOnly(key = "privilegeId", property = "name")
-	private String privilegeName;
+    @ListOnly(key = "privilegeId", property = "name")
+    private String privilegeName;
 
-	@ListOnly(key = "privilegeId", property = "description")
-	private String privilegeDesc;
+    @ListOnly(key = "privilegeId", property = "description")
+    private String privilegeDesc;
 
-	@ListOnly(key = "privilegeId", property = "status")
-	private RecordStatus privilegeStatus;
+    @ListOnly(key = "privilegeId", property = "status")
+    private RecordStatus privilegeStatus;
 
-	@ListOnly(key = "privilegeId", property = "privilegeGroupId")
-	private Long privilegeGroupId;
+    @ListOnly(key = "privilegeId", property = "privilegeGroupId")
+    private Long privilegeGroupId;
 
-	@ListOnly(key = "privilegeId", property = "moduleId")
-	private Long moduleId;
+    @ListOnly(key = "privilegeId", property = "moduleId")
+    private Long moduleId;
 
-	@ListOnly(key = "privilegeId", property = "privilegeCategoryId")
-	private Long privilegeCategoryId;
+    @ListOnly(key = "privilegeId", property = "privilegeCategoryId")
+    private Long privilegeCategoryId;
 
-	@ListOnly(key = "privilegeId", property = "categoryName")
-	private String categoryName;
+    @ListOnly(key = "privilegeId", property = "categoryName")
+    private String categoryName;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate(roleDesc, " - ", privilegeDesc);
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate(roleDesc, " - ", privilegeDesc);
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
+    public Long getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-	public String getRoleName() {
-		return roleName;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
-	public Long getPrivilegeId() {
-		return privilegeId;
-	}
+    public Long getPrivilegeId() {
+        return privilegeId;
+    }
 
-	public void setPrivilegeId(Long privilegeId) {
-		this.privilegeId = privilegeId;
-	}
+    public void setPrivilegeId(Long privilegeId) {
+        this.privilegeId = privilegeId;
+    }
 
-	public String getRoleDesc() {
-		return roleDesc;
-	}
+    public String getRoleDesc() {
+        return roleDesc;
+    }
 
-	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
-	}
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
+    }
 
-	public String getPrivilegeName() {
-		return privilegeName;
-	}
+    public String getPrivilegeName() {
+        return privilegeName;
+    }
 
-	public void setPrivilegeName(String privilegeName) {
-		this.privilegeName = privilegeName;
-	}
+    public void setPrivilegeName(String privilegeName) {
+        this.privilegeName = privilegeName;
+    }
 
-	public String getPrivilegeDesc() {
-		return privilegeDesc;
-	}
+    public String getPrivilegeDesc() {
+        return privilegeDesc;
+    }
 
-	public void setPrivilegeDesc(String privilegeDesc) {
-		this.privilegeDesc = privilegeDesc;
-	}
+    public void setPrivilegeDesc(String privilegeDesc) {
+        this.privilegeDesc = privilegeDesc;
+    }
 
-	public RecordStatus getPrivilegeStatus() {
-		return privilegeStatus;
-	}
+    public RecordStatus getPrivilegeStatus() {
+        return privilegeStatus;
+    }
 
-	public void setPrivilegeStatus(RecordStatus privilegeStatus) {
-		this.privilegeStatus = privilegeStatus;
-	}
+    public void setPrivilegeStatus(RecordStatus privilegeStatus) {
+        this.privilegeStatus = privilegeStatus;
+    }
 
-	public Long getPrivilegeGroupId() {
-		return privilegeGroupId;
-	}
+    public Long getPrivilegeGroupId() {
+        return privilegeGroupId;
+    }
 
-	public void setPrivilegeGroupId(Long privilegeGroupId) {
-		this.privilegeGroupId = privilegeGroupId;
-	}
+    public void setPrivilegeGroupId(Long privilegeGroupId) {
+        this.privilegeGroupId = privilegeGroupId;
+    }
 
-	public Long getPrivilegeCategoryId() {
-		return privilegeCategoryId;
-	}
+    public Long getPrivilegeCategoryId() {
+        return privilegeCategoryId;
+    }
 
-	public void setPrivilegeCategoryId(Long privilegeCategoryId) {
-		this.privilegeCategoryId = privilegeCategoryId;
-	}
+    public void setPrivilegeCategoryId(Long privilegeCategoryId) {
+        this.privilegeCategoryId = privilegeCategoryId;
+    }
 
-	public String getCategoryName() {
-		return categoryName;
-	}
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 }

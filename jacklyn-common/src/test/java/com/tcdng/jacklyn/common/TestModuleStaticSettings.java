@@ -28,9 +28,8 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class TestModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public TestModuleStaticSettings() {
-		super("test-customerservice", "config/customer-module.xml",
-				"com.tcdng.jacklyn.resources.testmessage");
-	}
+    public TestModuleStaticSettings() {
+        super("test-customerservice", "config/customer-module.xml", "com.tcdng.jacklyn.resources.testmessage");
+    }
 
 }

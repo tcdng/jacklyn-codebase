@@ -28,9 +28,9 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class WorkflowModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public WorkflowModuleStaticSettings() {
-		super(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE, "config/workflow-module.xml",
-				"com.tcdng.jacklyn.resources.workflow-messages");
-	}
+    public WorkflowModuleStaticSettings() {
+        super(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE, "config/workflow-module.xml",
+                "com.tcdng.jacklyn.resources.workflow-messages");
+    }
 
 }

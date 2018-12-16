@@ -23,15 +23,15 @@ package com.tcdng.jacklyn.service.constants;
  */
 public interface ServiceModuleErrorConstants {
 
-	/** Application is unknown. Application name = {0} */
-	String APPLICATION_UNKNOWN = "SERVICE_0001";
+    /** Application is unknown. Application name = {0} */
+    String APPLICATION_UNKNOWN = "SERVICE_0001";
 
-	/** Application as no such asset. Application name = {0}, Asset name = {1} */
-	String APPLICATION_NO_SUCH_ASSET = "SERVICE_0002";
+    /** Application as no such asset. Application name = {0}, Asset name = {1} */
+    String APPLICATION_NO_SUCH_ASSET = "SERVICE_0002";
 
-	/** Application is inactive. Application name = {0} */
-	String APPLICATION_INACTIVE = "SERVICE_0003";
+    /** Application is inactive. Application name = {0} */
+    String APPLICATION_INACTIVE = "SERVICE_0003";
 
-	/** Application asset is inactive. Application name = {0}, Asset name = {1} */
-	String APPLICATION_ASSET_INACTIVE = "SERVICE_0004";
+    /** Application asset is inactive. Application name = {0}, Asset name = {1} */
+    String APPLICATION_ASSET_INACTIVE = "SERVICE_0004";
 }

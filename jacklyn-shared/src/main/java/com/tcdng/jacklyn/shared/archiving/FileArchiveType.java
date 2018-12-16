@@ -23,5 +23,5 @@ package com.tcdng.jacklyn.shared.archiving;
  */
 public enum FileArchiveType {
 
-	LOB_FILE_ARCHIVE
+    LOB_FILE_ARCHIVE
 }

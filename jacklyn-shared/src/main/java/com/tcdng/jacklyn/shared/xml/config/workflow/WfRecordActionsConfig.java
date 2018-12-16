@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfRecordActionsConfig {
 
-	private List<WfRecordActionConfig> wfRecordActionConfigList;
+    private List<WfRecordActionConfig> wfRecordActionConfigList;
 
-	public List<WfRecordActionConfig> getWfRecordActionConfigList() {
-		return wfRecordActionConfigList;
-	}
+    public List<WfRecordActionConfig> getWfRecordActionConfigList() {
+        return wfRecordActionConfigList;
+    }
 
-	@XmlElement(name = "record-action", required = true)
-	public void setWfRecordActionConfigList(List<WfRecordActionConfig> wfRecordActionConfigList) {
-		this.wfRecordActionConfigList = wfRecordActionConfigList;
-	}
+    @XmlElement(name = "record-action", required = true)
+    public void setWfRecordActionConfigList(List<WfRecordActionConfig> wfRecordActionConfigList) {
+        this.wfRecordActionConfigList = wfRecordActionConfigList;
+    }
 }

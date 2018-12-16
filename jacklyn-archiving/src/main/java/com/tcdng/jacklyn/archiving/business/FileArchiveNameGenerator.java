@@ -29,19 +29,19 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface FileArchiveNameGenerator extends UnifyComponent {
 
-	/**
-	 * Generates a file archive name.
-	 * 
-	 * @param fileArchiveType
-	 *            the file archive type
-	 * @param fileArchiveConfigName
-	 *            the file archive configuration name
-	 * @param workingDt
-	 *            the working date
-	 * @return the generated file name
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	String generateFileArchiveName(FileArchiveType fileArchiveType, String fileArchiveConfigName,
-			Date workingDt) throws UnifyException;
+    /**
+     * Generates a file archive name.
+     * 
+     * @param fileArchiveType
+     *            the file archive type
+     * @param fileArchiveConfigName
+     *            the file archive configuration name
+     * @param workingDt
+     *            the working date
+     * @return the generated file name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String generateFileArchiveName(FileArchiveType fileArchiveType, String fileArchiveConfigName, Date workingDt)
+            throws UnifyException;
 }

@@ -25,11 +25,10 @@ import com.tcdng.unify.web.data.AssignParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractAssignParamsWorkflowListCommand
-		extends AbstractWorkflowListCommand<AssignParams> {
+public abstract class AbstractAssignParamsWorkflowListCommand extends AbstractWorkflowListCommand<AssignParams> {
 
-	public AbstractAssignParamsWorkflowListCommand() {
-		super(AssignParams.class);
-	}
+    public AbstractAssignParamsWorkflowListCommand() {
+        super(AssignParams.class);
+    }
 
 }

@@ -33,12 +33,12 @@ import com.tcdng.unify.core.data.FileAttachment;
 @Component(NotificationModuleNameConstants.SYSTEMMESSAGINGCHANNEL)
 public class SystemMessagingChannel extends AbstractMessagingChannel {
 
-	@Override
-	public boolean sendMessage(MessagingChannelDef notificationChannelDef, String subject,
-			String senderContact, List<String> recipientContactList, String messageBody,
-			boolean isHtml, List<FileAttachment> fileAttachmentList) throws UnifyException {
-		// TODO Auto-generated method stub
-		return true;
-	}
+    @Override
+    public boolean sendMessage(MessagingChannelDef notificationChannelDef, String subject, String senderContact,
+            List<String> recipientContactList, String messageBody, boolean isHtml,
+            List<FileAttachment> fileAttachmentList) throws UnifyException {
+        // TODO Auto-generated method stub
+        return true;
+    }
 
 }

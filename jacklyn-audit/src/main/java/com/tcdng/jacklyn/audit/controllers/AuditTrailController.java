@@ -39,118 +39,118 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/audit/audittrail")
 @UplBinding("web/audit/upl/manageaudittrail.upl")
-@ResultMappings({ @ResultMapping(name = "showusersearch",
-		response = { "!showpopupresponse popup:$s{userSearchBoxPopup}" }) })
+@ResultMappings({
+        @ResultMapping(name = "showusersearch", response = { "!showpopupresponse popup:$s{userSearchBoxPopup}" }) })
 public class AuditTrailController extends AbstractAuditRecordController<AuditTrail> {
 
-	private Date searchCreateDt;
+    private Date searchCreateDt;
 
-	private String searchUserLoginId;
+    private String searchUserLoginId;
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private EventType searchEventType;
+    private EventType searchEventType;
 
-	private List<AuditDetail> auditDetailList;
+    private List<AuditDetail> auditDetailList;
 
-	public AuditTrailController() {
-		super(AuditTrail.class, "audit.audittrail.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public AuditTrailController() {
+        super(AuditTrail.class, "audit.audittrail.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Date getSearchCreateDt() {
-		return searchCreateDt;
-	}
+    public Date getSearchCreateDt() {
+        return searchCreateDt;
+    }
 
-	public void setSearchCreateDt(Date searchCreateDt) {
-		this.searchCreateDt = searchCreateDt;
-	}
+    public void setSearchCreateDt(Date searchCreateDt) {
+        this.searchCreateDt = searchCreateDt;
+    }
 
-	public String getSearchUserLoginId() {
-		return searchUserLoginId;
-	}
+    public String getSearchUserLoginId() {
+        return searchUserLoginId;
+    }
 
-	public void setSearchUserLoginId(String searchUserLoginId) {
-		this.searchUserLoginId = searchUserLoginId;
-	}
+    public void setSearchUserLoginId(String searchUserLoginId) {
+        this.searchUserLoginId = searchUserLoginId;
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public EventType getSearchEventType() {
-		return searchEventType;
-	}
+    public EventType getSearchEventType() {
+        return searchEventType;
+    }
 
-	public void setSearchEventType(EventType searchEventType) {
-		this.searchEventType = searchEventType;
-	}
+    public void setSearchEventType(EventType searchEventType) {
+        this.searchEventType = searchEventType;
+    }
 
-	public List<AuditDetail> getAuditDetailList() {
-		return auditDetailList;
-	}
+    public List<AuditDetail> getAuditDetailList() {
+        return auditDetailList;
+    }
 
-	@Override
-	protected List<AuditTrail> find() throws UnifyException {
-		AuditTrailQuery query = new AuditTrailQuery();
-		if (QueryUtils.isValidStringCriteria(searchUserLoginId)) {
-			query.userLoginId(searchUserLoginId);
-		}
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
+    @Override
+    protected List<AuditTrail> find() throws UnifyException {
+        AuditTrailQuery query = new AuditTrailQuery();
+        if (QueryUtils.isValidStringCriteria(searchUserLoginId)) {
+            query.userLoginId(searchUserLoginId);
+        }
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
 
-		if (searchEventType != null) {
-			query.eventType(searchEventType);
-		}
-		query.createdOn(searchCreateDt);
-		return getAuditModule().findAuditTrail(query);
-	}
+        if (searchEventType != null) {
+            query.eventType(searchEventType);
+        }
+        query.createdOn(searchCreateDt);
+        return getAuditModule().findAuditTrail(query);
+    }
 
-	@Override
-	protected AuditTrail find(Long id) throws UnifyException {
-		return getAuditModule().findAuditTrail(id);
-	}
+    @Override
+    protected AuditTrail find(Long id) throws UnifyException {
+        return getAuditModule().findAuditTrail(id);
+    }
 
-	@Override
-	protected AuditTrail prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected AuditTrail prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(AuditTrail auditTrailData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(AuditTrail auditTrailData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(AuditTrail auditTrailData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(AuditTrail auditTrailData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(AuditTrail auditTrailData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(AuditTrail auditTrailData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected void onPrepareView(AuditTrail auditTrailData, boolean paste) throws UnifyException {
-		auditDetailList = getAuditModule().findAuditDetails(auditTrailData.getId());
-	}
+    @Override
+    protected void onPrepareView(AuditTrail auditTrailData, boolean paste) throws UnifyException {
+        auditDetailList = getAuditModule().findAuditDetails(auditTrailData.getId());
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		super.onOpenPage();
-		if (searchCreateDt == null) {
-			searchCreateDt = CalendarUtils.getCurrentMidnightDate();
-		}
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        super.onOpenPage();
+        if (searchCreateDt == null) {
+            searchCreateDt = CalendarUtils.getCurrentMidnightDate();
+        }
+    }
 
-	@Override
-	protected void onLoseView(AuditTrail auditTrailData) throws UnifyException {
-		auditDetailList = null;
-	}
+    @Override
+    protected void onLoseView(AuditTrail auditTrailData) throws UnifyException {
+        auditDetailList = null;
+    }
 }

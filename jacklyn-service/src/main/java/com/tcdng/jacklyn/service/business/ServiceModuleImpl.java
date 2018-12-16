@@ -52,164 +52,155 @@ import com.tcdng.unify.web.util.WebUtils;
  */
 @Transactional
 @Component(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
-public class ServiceModuleImpl extends AbstractJacklynBusinessModule
-		implements ServiceModule {
+public class ServiceModuleImpl extends AbstractJacklynBusinessModule implements ServiceModule {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	@Configurable(ApplicationComponents.APPLICATION_LISTMANAGER)
-	private ListManager listManager;
+    @Configurable(ApplicationComponents.APPLICATION_LISTMANAGER)
+    private ListManager listManager;
 
-	private Map<String, Set<String>> clientAppAccessFlags;
+    private Map<String, Set<String>> clientAppAccessFlags;
 
-	public ServiceModuleImpl() {
-		clientAppAccessFlags = new HashMap<String, Set<String>>();
-	}
+    public ServiceModuleImpl() {
+        clientAppAccessFlags = new HashMap<String, Set<String>>();
+    }
 
-	@Override
-	public Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
-		Long clientAppId = (Long) db().create(clientAppLargeData.getData());
-		updateClientAppAssets(clientAppId, clientAppLargeData.getSystemAssetIdList());
-		return clientAppId;
-	}
+    @Override
+    public Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
+        Long clientAppId = (Long) db().create(clientAppLargeData.getData());
+        updateClientAppAssets(clientAppId, clientAppLargeData.getSystemAssetIdList());
+        return clientAppId;
+    }
 
-	@Override
-	public ClientAppLargeData findClientApp(Long id) throws UnifyException {
-		ClientApp clientApp = db().list(ClientApp.class, id);
-		List<Long> clientAppAssetIdList = db().valueList(Long.class, "systemAssetId",
-				new ClientAppAssetQuery().clientAppId(id));
-		return new ClientAppLargeData(clientApp, clientAppAssetIdList);
-	}
+    @Override
+    public ClientAppLargeData findClientApp(Long id) throws UnifyException {
+        ClientApp clientApp = db().list(ClientApp.class, id);
+        List<Long> clientAppAssetIdList = db().valueList(Long.class, "systemAssetId",
+                new ClientAppAssetQuery().clientAppId(id));
+        return new ClientAppLargeData(clientApp, clientAppAssetIdList);
+    }
 
-	@Override
-	public List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException {
-		return db().listAll(query);
-	}
+    @Override
+    public List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
 
-	@Override
-	public int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
-		int result = db().updateByIdVersion(clientAppLargeData.getData());
-		updateClientAppAssets(clientAppLargeData.getId(),
-				clientAppLargeData.getSystemAssetIdList());
-		clearClientAppAssetAccess(clientAppLargeData.getData().getName());
-		return result;
-	}
+    @Override
+    public int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
+        int result = db().updateByIdVersion(clientAppLargeData.getData());
+        updateClientAppAssets(clientAppLargeData.getId(), clientAppLargeData.getSystemAssetIdList());
+        clearClientAppAssetAccess(clientAppLargeData.getData().getName());
+        return result;
+    }
 
-	@Override
-	public int deleteClientApp(Long id) throws UnifyException {
-		db().deleteAll(new ClientAppAssetQuery().clientAppId(id));
-		return db().delete(ClientApp.class, id);
-	}
+    @Override
+    public int deleteClientApp(Long id) throws UnifyException {
+        db().deleteAll(new ClientAppAssetQuery().clientAppId(id));
+        return db().delete(ClientApp.class, id);
+    }
 
-	@Override
-	public boolean accessSystemAsset(String clientAppName, SystemAssetType systemAssetType,
-			String assetName) throws UnifyException {
-		Set<String> accessFlags = clientAppAccessFlags.get(clientAppName);
-		if (accessFlags == null) {
-			accessFlags = new HashSet<String>();
-			clientAppAccessFlags.put(clientAppName, accessFlags);
-		}
+    @Override
+    public boolean accessSystemAsset(String clientAppName, SystemAssetType systemAssetType, String assetName)
+            throws UnifyException {
+        Set<String> accessFlags = clientAppAccessFlags.get(clientAppName);
+        if (accessFlags == null) {
+            accessFlags = new HashSet<String>();
+            clientAppAccessFlags.put(clientAppName, accessFlags);
+        }
 
-		String assetCheckKey = StringUtils.dotify(systemAssetType, assetName);
-		if (!accessFlags.contains(assetCheckKey)) {
-			if (db().countAll(new ClientAppQuery().name(clientAppName)) == 0) {
-				throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_UNKNOWN,
-						clientAppName);
-			}
+        String assetCheckKey = StringUtils.dotify(systemAssetType, assetName);
+        if (!accessFlags.contains(assetCheckKey)) {
+            if (db().countAll(new ClientAppQuery().name(clientAppName)) == 0) {
+                throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_UNKNOWN, clientAppName);
+            }
 
-			ClientAppAsset clientAppAsset = db().list(new ClientAppAssetQuery()
-					.clientAppName(clientAppName).assetType(systemAssetType).assetName(assetName));
-			if (clientAppAsset == null) {
-				throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_NO_SUCH_ASSET,
-						clientAppName, assetName);
-			}
+            ClientAppAsset clientAppAsset = db().list(new ClientAppAssetQuery().clientAppName(clientAppName)
+                    .assetType(systemAssetType).assetName(assetName));
+            if (clientAppAsset == null) {
+                throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_NO_SUCH_ASSET, clientAppName,
+                        assetName);
+            }
 
-			if (RecordStatus.INACTIVE.equals(clientAppAsset.getClientAppStatus())) {
-				throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_INACTIVE,
-						clientAppName);
-			}
+            if (RecordStatus.INACTIVE.equals(clientAppAsset.getClientAppStatus())) {
+                throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_INACTIVE, clientAppName);
+            }
 
-			if (RecordStatus.INACTIVE.equals(clientAppAsset.getAssetStatus())) {
-				throw new UnifyException(
-						ServiceModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
-						assetName);
-			}
+            if (RecordStatus.INACTIVE.equals(clientAppAsset.getAssetStatus())) {
+                throw new UnifyException(ServiceModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
+                        assetName);
+            }
 
-			accessFlags.add(assetCheckKey);
-		}
+            accessFlags.add(assetCheckKey);
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public OSInstallationReqResult processOSInstallationRequest(
-			OSInstallationReqParams oSInstallationReqParams) throws UnifyException {
-		logDebug("Processing OS installation request for [{0}]...",
-				oSInstallationReqParams.getOsName());
+    @Override
+    public OSInstallationReqResult processOSInstallationRequest(OSInstallationReqParams oSInstallationReqParams)
+            throws UnifyException {
+        logDebug("Processing OS installation request for [{0}]...", oSInstallationReqParams.getOsName());
 
-		// Create application here
-		boolean isAlreadyInstalled = true;
-		Long clientAppId = null;
-		ClientApp oldClientApp = db().list(new ClientAppQuery()
-				.name(oSInstallationReqParams.getClientAppCode()).type(ClientAppType.OS));
-		if (oldClientApp == null) {
-			logDebug("Creating application of type OS...");
-			ClientApp clientApp = new ClientApp();
-			clientApp.setName(oSInstallationReqParams.getClientAppCode());
-			clientApp.setDescription(oSInstallationReqParams.getOsName());
-			clientApp.setType(ClientAppType.OS);
-			clientAppId = (Long) db().create(clientApp);
-			isAlreadyInstalled = false;
-		} else {
-			logDebug("...application [{0}] of type OS is already installed.",
-					oSInstallationReqParams.getOsName());
-			oldClientApp.setDescription(oSInstallationReqParams.getOsName());
-			db().updateByIdVersion(oldClientApp);
-			clientAppId = oldClientApp.getId();
-		}
+        // Create application here
+        boolean isAlreadyInstalled = true;
+        Long clientAppId = null;
+        ClientApp oldClientApp = db()
+                .list(new ClientAppQuery().name(oSInstallationReqParams.getClientAppCode()).type(ClientAppType.OS));
+        if (oldClientApp == null) {
+            logDebug("Creating application of type OS...");
+            ClientApp clientApp = new ClientApp();
+            clientApp.setName(oSInstallationReqParams.getClientAppCode());
+            clientApp.setDescription(oSInstallationReqParams.getOsName());
+            clientApp.setType(ClientAppType.OS);
+            clientAppId = (Long) db().create(clientApp);
+            isAlreadyInstalled = false;
+        } else {
+            logDebug("...application [{0}] of type OS is already installed.", oSInstallationReqParams.getOsName());
+            oldClientApp.setDescription(oSInstallationReqParams.getOsName());
+            db().updateByIdVersion(oldClientApp);
+            clientAppId = oldClientApp.getId();
+        }
 
-		// Grant OS access to all remote calls.
-		List<Long> systemAssetIdList = systemModule
-				.findSystemAssetIds(new SystemAssetQuery().type(SystemAssetType.REMOTECALLMETHOD));
-		updateClientAppAssets(clientAppId, systemAssetIdList);
+        // Grant OS access to all remote calls.
+        List<Long> systemAssetIdList = systemModule
+                .findSystemAssetIds(new SystemAssetQuery().type(SystemAssetType.REMOTECALLMETHOD));
+        updateClientAppAssets(clientAppId, systemAssetIdList);
 
-		// Return result
-		logDebug("Preparing installation result...");
-		OSInstallationReqResult airResult = new OSInstallationReqResult();
-		airResult.setAppName(getApplicationName());
-		airResult.setAppName(getApplicationName());
-		String bannerFilename
-				= WebUtils.expandThemeTag(systemModule.getSysParameterValue(String.class,
-						SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
-		byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
-		airResult.setAppIcon(icon);
-		airResult.setAlreadyInstalled(isAlreadyInstalled);
-		logDebug("OS installation for [{0}] completed.", oSInstallationReqParams.getOsName());
-		return airResult;
-	}
+        // Return result
+        logDebug("Preparing installation result...");
+        OSInstallationReqResult airResult = new OSInstallationReqResult();
+        airResult.setAppName(getApplicationName());
+        airResult.setAppName(getApplicationName());
+        String bannerFilename = WebUtils.expandThemeTag(systemModule.getSysParameterValue(String.class,
+                SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
+        byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
+        airResult.setAppIcon(icon);
+        airResult.setAlreadyInstalled(isAlreadyInstalled);
+        logDebug("OS installation for [{0}] completed.", oSInstallationReqParams.getOsName());
+        return airResult;
+    }
 
-	@Override
-	public void installFeatures(List<ModuleConfig> featureDefinitions) throws UnifyException {
+    @Override
+    public void installFeatures(List<ModuleConfig> featureDefinitions) throws UnifyException {
 
-	}
+    }
 
-	@Broadcast
-	public void clearClientAppAssetAccess(String... params) throws UnifyException {
-		for (String clientAppCode : params) {
-			clientAppAccessFlags.remove(clientAppCode);
-		}
-	}
+    @Broadcast
+    public void clearClientAppAssetAccess(String... params) throws UnifyException {
+        for (String clientAppCode : params) {
+            clientAppAccessFlags.remove(clientAppCode);
+        }
+    }
 
-	private void updateClientAppAssets(Long clientAppId, List<Long> systemAssetIdList)
-			throws UnifyException {
-		db().deleteAll(new ClientAppAssetQuery().clientAppId(clientAppId));
-		ClientAppAsset clientAppAsset = new ClientAppAsset();
-		clientAppAsset.setClientAppId(clientAppId);
-		for (Long systemAssetId : systemAssetIdList) {
-			clientAppAsset.setSystemAssetId(systemAssetId);
-			db().create(clientAppAsset);
-		}
-	}
+    private void updateClientAppAssets(Long clientAppId, List<Long> systemAssetIdList) throws UnifyException {
+        db().deleteAll(new ClientAppAssetQuery().clientAppId(clientAppId));
+        ClientAppAsset clientAppAsset = new ClientAppAsset();
+        clientAppAsset.setClientAppId(clientAppId);
+        for (Long systemAssetId : systemAssetIdList) {
+            clientAppAsset.setSystemAssetId(systemAssetId);
+            db().create(clientAppAsset);
+        }
+    }
 
 }

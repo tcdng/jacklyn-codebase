@@ -31,23 +31,23 @@ import com.tcdng.unify.core.annotation.Component;
 @Component(name = "wildcard-filetransferpolicy", description = "$m{file.wildcard.transfer}")
 public class WildcardFileTransferPolicy extends AbstractFileTransferPolicy {
 
-	@Override
-	public Set<String> getFilePrefixes(Date workingDt) throws UnifyException {
-		return null;
-	}
+    @Override
+    public Set<String> getFilePrefixes(Date workingDt) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	public Set<String> getFileSuffixes(Date workingDt) throws UnifyException {
-		return null;
-	}
+    @Override
+    public Set<String> getFileSuffixes(Date workingDt) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	public String getSourceSemaphoreSuffix() throws UnifyException {
-		return null;
-	}
+    @Override
+    public String getSourceSemaphoreSuffix() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	public String getTargetSemaphoreSuffix() throws UnifyException {
-		return null;
-	}
+    @Override
+    public String getTargetSemaphoreSuffix() throws UnifyException {
+        return null;
+    }
 }

@@ -32,20 +32,20 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Table(name = "AUDITTYPE", uniqueConstraints = { @UniqueConstraint({ "recordName" }) })
 public class AuditType extends BaseInstallEntity {
 
-	@Column(name = "RECORD_NM", length = 128)
-	private String recordName;
+    @Column(name = "RECORD_NM", length = 128)
+    private String recordName;
 
-	@Override
-	public String getDescription() {
-		return this.recordName;
-	}
+    @Override
+    public String getDescription() {
+        return this.recordName;
+    }
 
-	public String getRecordName() {
-		return recordName;
-	}
+    public String getRecordName() {
+        return recordName;
+    }
 
-	public void setRecordName(String recordName) {
-		this.recordName = recordName;
-	}
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
 
 }

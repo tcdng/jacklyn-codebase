@@ -33,11 +33,9 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("wfcategorylist")
 public class WfCategoryListCommand extends AbstractZeroParamsWorkflowListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getWorkflowModule().findWfCategories(
-				(WfCategoryQuery) new WfCategoryQuery().ignoreEmptyCriteria(true));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getWorkflowModule().findWfCategories((WfCategoryQuery) new WfCategoryQuery().ignoreEmptyCriteria(true));
+    }
 
 }

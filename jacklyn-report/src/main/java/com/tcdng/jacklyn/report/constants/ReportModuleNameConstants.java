@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.report.constants;
  */
 public interface ReportModuleNameConstants {
 
-	String REPORT_MODULE = "report";
+    String REPORT_MODULE = "report";
 
-	String REPORTBUSINESSMODULE = "jacklyn-reportbusinessmodule";
+    String REPORTBUSINESSMODULE = "jacklyn-reportbusinessmodule";
 }

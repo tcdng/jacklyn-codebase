@@ -26,11 +26,10 @@ import com.tcdng.unify.core.list.AbstractTypeListCommand;
  * @since 1.0
  */
 @Component("filearchivenamegeneratorlist")
-public class FileArchiveNameGeneratorListCommand
-		extends AbstractTypeListCommand<FileArchiveNameGenerator> {
+public class FileArchiveNameGeneratorListCommand extends AbstractTypeListCommand<FileArchiveNameGenerator> {
 
-	public FileArchiveNameGeneratorListCommand() {
-		super(FileArchiveNameGenerator.class);
-	}
+    public FileArchiveNameGeneratorListCommand() {
+        super(FileArchiveNameGenerator.class);
+    }
 
 }

@@ -30,141 +30,141 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Application Menu Item",
-		reportable = true, auditable = true)
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Application Menu Item", reportable = true,
+        auditable = true)
 @Table(name = "MENUITEM", uniqueConstraints = { @UniqueConstraint({ "menuId", "name" }) })
 public class ApplicationMenuItem extends BaseInstallEntity {
 
-	@ForeignKey(ApplicationMenu.class)
-	private Long menuId;
+    @ForeignKey(ApplicationMenu.class)
+    private Long menuId;
 
-	@Column(nullable = true)
-	private Long parentMenuItemId;
+    @Column(nullable = true)
+    private Long parentMenuItemId;
 
-	@Column(name = "MENUITEM_NM", length = 48)
-	private String name;
+    @Column(name = "MENUITEM_NM", length = 48)
+    private String name;
 
-	@Column(name = "MENUITEM_DESC", length = 64)
-	private String description;
+    @Column(name = "MENUITEM_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64)
-	private String pageCaption;
+    @Column(length = 64)
+    private String pageCaption;
 
-	@Column(length = 64)
-	private String caption;
+    @Column(length = 64)
+    private String caption;
 
-	@Column(length = 128)
-	private String path;
+    @Column(length = 128)
+    private String path;
 
-	@Column(length = 128, nullable = true)
-	private String remotePath;
+    @Column(length = 128, nullable = true)
+    private String remotePath;
 
-	@Column
-	private int displayOrder;
+    @Column
+    private int displayOrder;
 
-	@ListOnly(key = "menuId", property = "moduleId")
-	private Long moduleId;
+    @ListOnly(key = "menuId", property = "moduleId")
+    private Long moduleId;
 
-	@ListOnly(name = "MODULE_NM", key = "menuId", property = "moduleName")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "menuId", property = "moduleName")
+    private String moduleName;
 
-	@ListOnly(key = "menuId", property = "caption")
-	private String menuCaption;
+    @ListOnly(key = "menuId", property = "caption")
+    private String menuCaption;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Long getMenuId() {
-		return menuId;
-	}
+    public Long getMenuId() {
+        return menuId;
+    }
 
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
-	}
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 
-	public Long getParentMenuItemId() {
-		return parentMenuItemId;
-	}
+    public Long getParentMenuItemId() {
+        return parentMenuItemId;
+    }
 
-	public void setParentMenuItemId(Long parentMenuItemId) {
-		this.parentMenuItemId = parentMenuItemId;
-	}
+    public void setParentMenuItemId(Long parentMenuItemId) {
+        this.parentMenuItemId = parentMenuItemId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getCaption() {
-		return caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	public String getPageCaption() {
-		return pageCaption;
-	}
+    public String getPageCaption() {
+        return pageCaption;
+    }
 
-	public void setPageCaption(String pageCaption) {
-		this.pageCaption = pageCaption;
-	}
+    public void setPageCaption(String pageCaption) {
+        this.pageCaption = pageCaption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getRemotePath() {
-		return remotePath;
-	}
+    public String getRemotePath() {
+        return remotePath;
+    }
 
-	public void setRemotePath(String remotePath) {
-		this.remotePath = remotePath;
-	}
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
+    }
 
-	public int getDisplayOrder() {
-		return displayOrder;
-	}
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
 
-	public void setDisplayOrder(int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getMenuCaption() {
-		return menuCaption;
-	}
+    public String getMenuCaption() {
+        return menuCaption;
+    }
 
-	public void setMenuCaption(String menuCaption) {
-		this.menuCaption = menuCaption;
-	}
+    public void setMenuCaption(String menuCaption) {
+        this.menuCaption = menuCaption;
+    }
 }

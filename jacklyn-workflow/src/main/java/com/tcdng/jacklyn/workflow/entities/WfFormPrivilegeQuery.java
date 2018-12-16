@@ -26,11 +26,11 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfFormPrivilegeQuery extends BaseEntityQuery<WfFormPrivilege> {
 
-	public WfFormPrivilegeQuery() {
-		super(WfFormPrivilege.class);
-	}
+    public WfFormPrivilegeQuery() {
+        super(WfFormPrivilege.class);
+    }
 
-	public WfFormPrivilegeQuery wfStepId(Long wfStepId) {
-		return (WfFormPrivilegeQuery) equals("wfStepId", wfStepId);
-	}
+    public WfFormPrivilegeQuery wfStepId(Long wfStepId) {
+        return (WfFormPrivilegeQuery) equals("wfStepId", wfStepId);
+    }
 }

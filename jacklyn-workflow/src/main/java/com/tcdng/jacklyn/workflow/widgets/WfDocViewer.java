@@ -27,13 +27,13 @@ import com.tcdng.unify.web.ui.panel.StandalonePanel;
  */
 public interface WfDocViewer extends StandalonePanel {
 
-	/**
-	 * Sets viewer document mode based on privileges in supplied step.
-	 * 
-	 * @param wfStepDef
-	 *            the step definition
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void setDocumentMode(WfStepDef wfStepDef) throws UnifyException;
+    /**
+     * Sets viewer document mode based on privileges in supplied step.
+     * 
+     * @param wfStepDef
+     *            the step definition
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void setDocumentMode(WfStepDef wfStepDef) throws UnifyException;
 }

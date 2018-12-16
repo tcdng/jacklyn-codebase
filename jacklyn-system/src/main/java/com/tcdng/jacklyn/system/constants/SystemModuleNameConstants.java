@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemModuleNameConstants {
 
-	String SYSTEM_MODULE = "system";
+    String SYSTEM_MODULE = "system";
 
-	String SYSTEMBUSINESSMODULE = "jacklyn-systembusinessmodule";
+    String SYSTEMBUSINESSMODULE = "jacklyn-systembusinessmodule";
 }

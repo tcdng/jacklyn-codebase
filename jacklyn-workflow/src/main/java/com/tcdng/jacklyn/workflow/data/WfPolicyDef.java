@@ -24,16 +24,16 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfPolicyDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 9168747124616981593L;
+    private static final long serialVersionUID = 9168747124616981593L;
 
-	private String logic;
+    private String logic;
 
-	public WfPolicyDef(String name, String description, String logic) {
-		super(name, description);
-		this.logic = logic;
-	}
+    public WfPolicyDef(String name, String description, String logic) {
+        super(name, description);
+        this.logic = logic;
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 }

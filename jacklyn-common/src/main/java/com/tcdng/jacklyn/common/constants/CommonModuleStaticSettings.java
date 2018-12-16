@@ -27,8 +27,8 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class CommonModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public CommonModuleStaticSettings() {
-		super(null, "config/common-module.xml", "com.tcdng.jacklyn.resources.common-messages");
-	}
+    public CommonModuleStaticSettings() {
+        super(null, "config/common-module.xml", "com.tcdng.jacklyn.resources.common-messages");
+    }
 
 }

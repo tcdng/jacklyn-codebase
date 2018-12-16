@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class InputControlsConfig {
 
-	private List<InputControlConfig> inputControlList;
+    private List<InputControlConfig> inputControlList;
 
-	public List<InputControlConfig> getInputControlList() {
-		return inputControlList;
-	}
+    public List<InputControlConfig> getInputControlList() {
+        return inputControlList;
+    }
 
-	@XmlElement(name = "input-control", required = true)
-	public void setInputControlList(List<InputControlConfig> inputControlList) {
-		this.inputControlList = inputControlList;
-	}
+    @XmlElement(name = "input-control", required = true)
+    public void setInputControlList(List<InputControlConfig> inputControlList) {
+        this.inputControlList = inputControlList;
+    }
 }

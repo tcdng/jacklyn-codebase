@@ -30,68 +30,68 @@ import com.tcdng.unify.core.database.AbstractTestEntity;
 @Table(name = "TEST_BANK", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class TestBank extends AbstractTestEntity implements BatchItemRecord {
 
-	@Column
-	private String name;
+    @Column
+    private String name;
 
-	@Column
-	private String description;
+    @Column
+    private String description;
 
-	@Column
-	private String shortName;
+    @Column
+    private String shortName;
 
-	@Column
-	private String hoRoutingNo;
+    @Column
+    private String hoRoutingNo;
 
-	@Column
-	private String country;
+    @Column
+    private String country;
 
-	@Override
-	public Object getBatchId() {
-		return null;
-	}
+    @Override
+    public Object getBatchId() {
+        return null;
+    }
 
-	@Override
-	public void setBatchId(Object id) {
+    @Override
+    public void setBatchId(Object id) {
 
-	}
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getShortName() {
-		return shortName;
-	}
+    public String getShortName() {
+        return shortName;
+    }
 
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
 
-	public String getHoRoutingNo() {
-		return hoRoutingNo;
-	}
+    public String getHoRoutingNo() {
+        return hoRoutingNo;
+    }
 
-	public void setHoRoutingNo(String hoRoutingNo) {
-		this.hoRoutingNo = hoRoutingNo;
-	}
+    public void setHoRoutingNo(String hoRoutingNo) {
+        this.hoRoutingNo = hoRoutingNo;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }

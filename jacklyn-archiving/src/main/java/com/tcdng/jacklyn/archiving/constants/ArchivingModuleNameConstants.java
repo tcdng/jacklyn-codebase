@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.archiving.constants;
  */
 public interface ArchivingModuleNameConstants {
 
-	String ARCHIVING_MODULE = "archiving";
+    String ARCHIVING_MODULE = "archiving";
 
-	String ARCHIVINGBUSINESSMODULE = "jacklyn-archivingbusinessmodule";
+    String ARCHIVINGBUSINESSMODULE = "jacklyn-archivingbusinessmodule";
 }

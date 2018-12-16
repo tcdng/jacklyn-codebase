@@ -29,17 +29,16 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractServiceRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractServiceRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
-	private ServiceModule serviceModule;
+    @Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
+    private ServiceModule serviceModule;
 
-	public AbstractServiceRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractServiceRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected ServiceModule getServiceModule() throws UnifyException {
-		return serviceModule;
-	}
+    protected ServiceModule getServiceModule() throws UnifyException {
+        return serviceModule;
+    }
 }

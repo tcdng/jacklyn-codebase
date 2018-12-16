@@ -26,10 +26,10 @@ import com.tcdng.unify.core.list.SingleStringParams;
  * @since 1.0
  */
 public abstract class AbstractSingleStringParamsNotificationListCommand
-		extends AbstractNotificationListCommand<SingleStringParams> {
+        extends AbstractNotificationListCommand<SingleStringParams> {
 
-	public AbstractSingleStringParamsNotificationListCommand() {
-		super(SingleStringParams.class);
-	}
+    public AbstractSingleStringParamsNotificationListCommand() {
+        super(SingleStringParams.class);
+    }
 
 }

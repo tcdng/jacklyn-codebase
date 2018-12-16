@@ -25,19 +25,19 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class FileArchiveEntryQuery extends BaseEntityQuery<FileArchiveEntry> {
 
-	public FileArchiveEntryQuery() {
-		super(FileArchiveEntry.class);
-	}
+    public FileArchiveEntryQuery() {
+        super(FileArchiveEntry.class);
+    }
 
-	public FileArchiveEntryQuery archivedItemId(Long archivedItemId) {
-		return (FileArchiveEntryQuery) equals("archivedItemId", archivedItemId);
-	}
+    public FileArchiveEntryQuery archivedItemId(Long archivedItemId) {
+        return (FileArchiveEntryQuery) equals("archivedItemId", archivedItemId);
+    }
 
-	public FileArchiveEntryQuery recordName(String recordName) {
-		return (FileArchiveEntryQuery) equals("recordName", recordName);
-	}
+    public FileArchiveEntryQuery recordName(String recordName) {
+        return (FileArchiveEntryQuery) equals("recordName", recordName);
+    }
 
-	public FileArchiveEntryQuery fieldName(String fieldName) {
-		return (FileArchiveEntryQuery) equals("fieldName", fieldName);
-	}
+    public FileArchiveEntryQuery fieldName(String fieldName) {
+        return (FileArchiveEntryQuery) equals("fieldName", fieldName);
+    }
 }

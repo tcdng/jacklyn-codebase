@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class NotificationTemplatesConfig {
 
-	private List<NotificationTemplateConfig> notificationTemplateList;
+    private List<NotificationTemplateConfig> notificationTemplateList;
 
-	public List<NotificationTemplateConfig> getNotificationTemplateList() {
-		return notificationTemplateList;
-	}
+    public List<NotificationTemplateConfig> getNotificationTemplateList() {
+        return notificationTemplateList;
+    }
 
-	@XmlElement(name = "notification-template", required = true)
-	public void setNotificationTemplateList(List<NotificationTemplateConfig> notificationTemplateList) {
-		this.notificationTemplateList = notificationTemplateList;
-	}
+    @XmlElement(name = "notification-template", required = true)
+    public void setNotificationTemplateList(List<NotificationTemplateConfig> notificationTemplateList) {
+        this.notificationTemplateList = notificationTemplateList;
+    }
 }

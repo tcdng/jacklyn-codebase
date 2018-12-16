@@ -28,78 +28,78 @@ import com.tcdng.jacklyn.shared.xml.adapter.WorkflowFormElementTypeXmlAdapter;
  * @since 1.0
  */
 public class WfFormPrivilegeConfig {
-	
-	private WorkflowFormElementType type;
 
-	private String name;
-	
-	private Boolean visible;
-	
-	private Boolean editable;
-	
-	private Boolean disabled;
-	
-	private Boolean required;
+    private WorkflowFormElementType type;
 
-	public WfFormPrivilegeConfig() {
-		this.visible = Boolean.TRUE;
-		this.editable = Boolean.TRUE;
-		this.disabled = Boolean.FALSE;
-		this.required = Boolean.TRUE;
-	}
+    private String name;
 
-	public WorkflowFormElementType getType() {
-		return type;
-	}
+    private Boolean visible;
 
-	@XmlJavaTypeAdapter(WorkflowFormElementTypeXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setType(WorkflowFormElementType type) {
-		this.type = type;
-	}
+    private Boolean editable;
 
-	public String getName() {
-		return name;
-	}
+    private Boolean disabled;
 
-	@XmlAttribute(name="name", required=true)
-	public void setName(String name) {
-		this.name = name;
-	}
+    private Boolean required;
 
-	public Boolean getVisible() {
-		return visible;
-	}
+    public WfFormPrivilegeConfig() {
+        this.visible = Boolean.TRUE;
+        this.editable = Boolean.TRUE;
+        this.disabled = Boolean.FALSE;
+        this.required = Boolean.TRUE;
+    }
 
-	@XmlAttribute(required=true)
-	public void setVisible(Boolean visible) {
-		this.visible = visible;
-	}
+    public WorkflowFormElementType getType() {
+        return type;
+    }
 
-	public Boolean getEditable() {
-		return editable;
-	}
+    @XmlJavaTypeAdapter(WorkflowFormElementTypeXmlAdapter.class)
+    @XmlAttribute(required = true)
+    public void setType(WorkflowFormElementType type) {
+        this.type = type;
+    }
 
-	@XmlAttribute(required=true)
-	public void setEditable(Boolean editable) {
-		this.editable = editable;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Boolean getDisabled() {
-		return disabled;
-	}
+    @XmlAttribute(name = "name", required = true)
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@XmlAttribute(required=true)
-	public void setDisabled(Boolean disabled) {
-		this.disabled = disabled;
-	}
+    public Boolean getVisible() {
+        return visible;
+    }
 
-	public Boolean getRequired() {
-		return required;
-	}
+    @XmlAttribute(required = true)
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
 
-	@XmlAttribute(required=true)
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
+    public Boolean getEditable() {
+        return editable;
+    }
+
+    @XmlAttribute(required = true)
+    public void setEditable(Boolean editable) {
+        this.editable = editable;
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    @XmlAttribute(required = true)
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public Boolean getRequired() {
+        return required;
+    }
+
+    @XmlAttribute(required = true)
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
 }

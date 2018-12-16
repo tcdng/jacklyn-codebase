@@ -28,70 +28,70 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface ServiceModule extends JacklynBusinessModule, RemoteCallSystemAssetProvider {
 
-	/**
-	 * Creates a new client application.
-	 * 
-	 * @param clientAppLargeData
-	 *            the client application data
-	 * @return the created client application ID
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
+    /**
+     * Creates a new client application.
+     * 
+     * @param clientAppLargeData
+     *            the client application data
+     * @return the created client application ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
 
-	/**
-	 * Finds an client application by ID.
-	 * 
-	 * @param id
-	 *            the client application ID
-	 * @return the client application data
-	 * @throws UnifyException
-	 *             if client application with ID is not found
-	 */
-	ClientAppLargeData findClientApp(Long id) throws UnifyException;
+    /**
+     * Finds an client application by ID.
+     * 
+     * @param id
+     *            the client application ID
+     * @return the client application data
+     * @throws UnifyException
+     *             if client application with ID is not found
+     */
+    ClientAppLargeData findClientApp(Long id) throws UnifyException;
 
-	/**
-	 * Finds client applications by query.
-	 * 
-	 * @param query
-	 *            the client application query
-	 * @return the list of applications found
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException;
+    /**
+     * Finds client applications by query.
+     * 
+     * @param query
+     *            the client application query
+     * @return the list of applications found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException;
 
-	/**
-	 * Updates an client application.
-	 * 
-	 * @param clientAppLargeData
-	 *            the client application data
-	 * @return the update count
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
+    /**
+     * Updates an client application.
+     * 
+     * @param clientAppLargeData
+     *            the client application data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
 
-	/**
-	 * Deletes an client application.
-	 * 
-	 * @param id
-	 *            the client application ID
-	 * @return the delete count
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int deleteClientApp(Long id) throws UnifyException;
+    /**
+     * Deletes an client application.
+     * 
+     * @param id
+     *            the client application ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteClientApp(Long id) throws UnifyException;
 
-	/**
-	 * Processes an OS installation request.
-	 * 
-	 * @param oSInstallationReqParams
-	 *            the OS request parameters
-	 * @return the request result
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	OSInstallationReqResult processOSInstallationRequest(
-			OSInstallationReqParams oSInstallationReqParams) throws UnifyException;
+    /**
+     * Processes an OS installation request.
+     * 
+     * @param oSInstallationReqParams
+     *            the OS request parameters
+     * @return the request result
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    OSInstallationReqResult processOSInstallationRequest(OSInstallationReqParams oSInstallationReqParams)
+            throws UnifyException;
 }

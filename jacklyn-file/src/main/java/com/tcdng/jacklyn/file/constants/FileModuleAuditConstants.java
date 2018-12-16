@@ -23,15 +23,15 @@ package com.tcdng.jacklyn.file.constants;
  */
 public interface FileModuleAuditConstants {
 
-	String START_FILETRANSFERTASK = "fil-filetransferstarttask";
+    String START_FILETRANSFERTASK = "fil-filetransferstarttask";
 
-	String CANCEL_FILETRANSFERTASK = "fil-filetransfercanceltask";
+    String CANCEL_FILETRANSFERTASK = "fil-filetransfercanceltask";
 
-	String TEST_FILETRANSFERCONFIG = "fil-filetransferconfigstarttest";
+    String TEST_FILETRANSFERCONFIG = "fil-filetransferconfigstarttest";
 
-	String CANCEL_FILETRANSFERCONFIG = "fil-filetransfercanceltest";
+    String CANCEL_FILETRANSFERCONFIG = "fil-filetransfercanceltest";
 
-	String FILEINBOX_MARKREAD = "fil-fileinboxread";
+    String FILEINBOX_MARKREAD = "fil-fileinboxread";
 
-	String FILEINBOX_MARKUNREAD = "fil-fileinboxunread";
+    String FILEINBOX_MARKUNREAD = "fil-fileinboxunread";
 }

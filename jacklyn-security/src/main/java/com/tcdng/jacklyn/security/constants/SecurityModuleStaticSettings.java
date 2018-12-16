@@ -28,11 +28,11 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class SecurityModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public static final int INSTALLATION_INDEX = 16;
+    public static final int INSTALLATION_INDEX = 16;
 
-	public SecurityModuleStaticSettings() {
-		super(SecurityModuleNameConstants.SECURITYBUSINESSMODULE, "config/security-module.xml",
-				"com.tcdng.jacklyn.resources.security-messages", INSTALLATION_INDEX);
-	}
+    public SecurityModuleStaticSettings() {
+        super(SecurityModuleNameConstants.SECURITYBUSINESSMODULE, "config/security-module.xml",
+                "com.tcdng.jacklyn.resources.security-messages", INSTALLATION_INDEX);
+    }
 
 }

@@ -28,37 +28,37 @@ import com.tcdng.jacklyn.security.entities.User;
  */
 public class UserLargeData extends BaseLargeData<User> {
 
-	private byte[] photograph;
+    private byte[] photograph;
 
-	private List<Long> roleIdList;
+    private List<Long> roleIdList;
 
-	public UserLargeData() {
-		super(new User());
-	}
+    public UserLargeData() {
+        super(new User());
+    }
 
-	public UserLargeData(User userData) {
-		super(userData);
-	}
+    public UserLargeData(User userData) {
+        super(userData);
+    }
 
-	public UserLargeData(User userData, byte[] photograph, List<Long> roleIdList) {
-		super(userData);
-		this.photograph = photograph;
-		this.roleIdList = roleIdList;
-	}
+    public UserLargeData(User userData, byte[] photograph, List<Long> roleIdList) {
+        super(userData);
+        this.photograph = photograph;
+        this.roleIdList = roleIdList;
+    }
 
-	public byte[] getPhotograph() {
-		return photograph;
-	}
+    public byte[] getPhotograph() {
+        return photograph;
+    }
 
-	public void setPhotograph(byte[] photograph) {
-		this.photograph = photograph;
-	}
+    public void setPhotograph(byte[] photograph) {
+        this.photograph = photograph;
+    }
 
-	public List<Long> getRoleIdList() {
-		return roleIdList;
-	}
+    public List<Long> getRoleIdList() {
+        return roleIdList;
+    }
 
-	public void setRoleIdList(List<Long> roleIdList) {
-		this.roleIdList = roleIdList;
-	}
+    public void setRoleIdList(List<Long> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
 }

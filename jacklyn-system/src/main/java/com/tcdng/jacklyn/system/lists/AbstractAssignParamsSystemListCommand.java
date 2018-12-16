@@ -24,11 +24,10 @@ import com.tcdng.unify.web.data.AssignParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractAssignParamsSystemListCommand
-		extends AbstractSystemListCommand<AssignParams> {
+public abstract class AbstractAssignParamsSystemListCommand extends AbstractSystemListCommand<AssignParams> {
 
-	public AbstractAssignParamsSystemListCommand() {
-		super(AssignParams.class);
-	}
+    public AbstractAssignParamsSystemListCommand() {
+        super(AssignParams.class);
+    }
 
 }

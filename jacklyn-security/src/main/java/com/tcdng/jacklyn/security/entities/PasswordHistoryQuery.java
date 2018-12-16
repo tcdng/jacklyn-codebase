@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class PasswordHistoryQuery extends BaseEntityQuery<PasswordHistory> {
 
-	public PasswordHistoryQuery() {
-		super(PasswordHistory.class);
-	}
+    public PasswordHistoryQuery() {
+        super(PasswordHistory.class);
+    }
 
-	public PasswordHistoryQuery userId(Long userId) {
-		return (PasswordHistoryQuery) equals("userId", userId);
-	}
+    public PasswordHistoryQuery userId(Long userId) {
+        return (PasswordHistoryQuery) equals("userId", userId);
+    }
 
-	public PasswordHistoryQuery password(String password) {
-		return (PasswordHistoryQuery) equals("password", password);
-	}
+    public PasswordHistoryQuery password(String password) {
+        return (PasswordHistoryQuery) equals("password", password);
+    }
 }

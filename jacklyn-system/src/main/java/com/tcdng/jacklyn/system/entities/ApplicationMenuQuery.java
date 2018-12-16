@@ -25,32 +25,32 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class ApplicationMenuQuery extends BaseInstallEntityQuery<ApplicationMenu> {
 
-	public ApplicationMenuQuery() {
-		super(ApplicationMenu.class);
-	}
+    public ApplicationMenuQuery() {
+        super(ApplicationMenu.class);
+    }
 
-	@Override
-	public ApplicationMenuQuery order(String field) {
-		return (ApplicationMenuQuery) super.order(field);
-	}
+    @Override
+    public ApplicationMenuQuery order(String field) {
+        return (ApplicationMenuQuery) super.order(field);
+    }
 
-	public ApplicationMenuQuery moduleId(Long moduleId) {
-		return (ApplicationMenuQuery) equals("moduleId", moduleId);
-	}
+    public ApplicationMenuQuery moduleId(Long moduleId) {
+        return (ApplicationMenuQuery) equals("moduleId", moduleId);
+    }
 
-	public ApplicationMenuQuery moduleName(String moduleName) {
-		return (ApplicationMenuQuery) equals("moduleName", moduleName);
-	}
+    public ApplicationMenuQuery moduleName(String moduleName) {
+        return (ApplicationMenuQuery) equals("moduleName", moduleName);
+    }
 
-	public ApplicationMenuQuery name(String name) {
-		return (ApplicationMenuQuery) equals("name", name);
-	}
+    public ApplicationMenuQuery name(String name) {
+        return (ApplicationMenuQuery) equals("name", name);
+    }
 
-	public ApplicationMenuQuery orderByDisplayOrder() {
-		return (ApplicationMenuQuery) order("displayOrder");
-	}
+    public ApplicationMenuQuery orderByDisplayOrder() {
+        return (ApplicationMenuQuery) order("displayOrder");
+    }
 
-	public ApplicationMenuQuery orderByModuleDesc() {
-		return (ApplicationMenuQuery) order("moduleDesc");
-	}
+    public ApplicationMenuQuery orderByModuleDesc() {
+        return (ApplicationMenuQuery) order("moduleDesc");
+    }
 }

@@ -33,37 +33,37 @@ import com.tcdng.unify.core.resource.ImageFormat;
 @Component("userphoto-generator")
 public class UserPhotoGenerator extends AbstractImageGenerator {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
+    private SecurityModule securityModule;
 
-	private byte[] photo;
+    private byte[] photo;
 
-	@Override
-	public ImageFormat generate(OutputStream outputStream) throws UnifyException {
-		try {
-			outputStream.write(photo);
-			outputStream.flush();
-		} catch (IOException e) {
-			throwOperationErrorException(e);
-		} finally {
-			photo = null;
-		}
+    @Override
+    public ImageFormat generate(OutputStream outputStream) throws UnifyException {
+        try {
+            outputStream.write(photo);
+            outputStream.flush();
+        } catch (IOException e) {
+            throwOperationErrorException(e);
+        } finally {
+            photo = null;
+        }
 
-		return ImageFormat.WILDCARD;
-	}
+        return ImageFormat.WILDCARD;
+    }
 
-	@Override
-	public boolean isReady() throws UnifyException {
-		Long userId = getUserId();
-		if (userId != null && userId > 0) {
-			photo = securityModule.findUserPhotograph(userId);
-			return photo != null;
-		}
+    @Override
+    public boolean isReady() throws UnifyException {
+        Long userId = getUserId();
+        if (userId != null && userId > 0) {
+            photo = securityModule.findUserPhotograph(userId);
+            return photo != null;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private Long getUserId() throws UnifyException {
-		return (Long) getSessionAttribute(JacklynSessionAttributeConstants.USERID);
-	}
+    private Long getUserId() throws UnifyException {
+        return (Long) getSessionAttribute(JacklynSessionAttributeConstants.USERID);
+    }
 }

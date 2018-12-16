@@ -25,36 +25,35 @@ import com.tcdng.unify.core.util.CalendarUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseTimestampedEntityQuery<T extends BaseTimestampedEntity>
-		extends BaseEntityQuery<T> {
+public abstract class BaseTimestampedEntityQuery<T extends BaseTimestampedEntity> extends BaseEntityQuery<T> {
 
-	public BaseTimestampedEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseTimestampedEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseTimestampedEntityQuery<T> createdOn(Date date) {
-		return (BaseTimestampedEntityQuery<T>) between("createDt",
-				CalendarUtils.getMidnightDate(date), CalendarUtils.getLastSecondDate(date));
-	}
+    public BaseTimestampedEntityQuery<T> createdOn(Date date) {
+        return (BaseTimestampedEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
 
-	public BaseTimestampedEntityQuery<T> createdBetween(Date fromDate, Date toDate) {
-		return (BaseTimestampedEntityQuery<T>) between("createDt",
-				CalendarUtils.getMidnightDate(fromDate), CalendarUtils.getLastSecondDate(toDate));
-	}
+    public BaseTimestampedEntityQuery<T> createdBetween(Date fromDate, Date toDate) {
+        return (BaseTimestampedEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(fromDate),
+                CalendarUtils.getLastSecondDate(toDate));
+    }
 
-	public BaseTimestampedEntityQuery<T> createdBefore(Date date) {
-		return (BaseTimestampedEntityQuery<T>) less("createDt", date);
-	}
+    public BaseTimestampedEntityQuery<T> createdBefore(Date date) {
+        return (BaseTimestampedEntityQuery<T>) less("createDt", date);
+    }
 
-	public BaseTimestampedEntityQuery<T> createdOnBefore(Date date) {
-		return (BaseTimestampedEntityQuery<T>) lessEqual("createDt", date);
-	}
+    public BaseTimestampedEntityQuery<T> createdOnBefore(Date date) {
+        return (BaseTimestampedEntityQuery<T>) lessEqual("createDt", date);
+    }
 
-	public BaseTimestampedEntityQuery<T> createdAfter(Date date) {
-		return (BaseTimestampedEntityQuery<T>) greater("createDt", date);
-	}
+    public BaseTimestampedEntityQuery<T> createdAfter(Date date) {
+        return (BaseTimestampedEntityQuery<T>) greater("createDt", date);
+    }
 
-	public BaseTimestampedEntityQuery<T> createdOnAfter(Date date) {
-		return (BaseTimestampedEntityQuery<T>) greaterEqual("createDt", date);
-	}
+    public BaseTimestampedEntityQuery<T> createdOnAfter(Date date) {
+        return (BaseTimestampedEntityQuery<T>) greaterEqual("createDt", date);
+    }
 }

@@ -30,23 +30,23 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class OSInstallationReqParams extends RemoteCallParams {
 
-	private String osName;
+    private String osName;
 
-	public OSInstallationReqParams(String osName) {
-		super(ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL);
-		this.osName = osName;
-	}
+    public OSInstallationReqParams(String osName) {
+        super(ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL);
+        this.osName = osName;
+    }
 
-	public OSInstallationReqParams() {
-		super(ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL);
-	}
+    public OSInstallationReqParams() {
+        super(ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL);
+    }
 
-	public String getOsName() {
-		return osName;
-	}
+    public String getOsName() {
+        return osName;
+    }
 
-	@XmlElement(required = true)
-	public void setOsName(String osName) {
-		this.osName = osName;
-	}
+    @XmlElement(required = true)
+    public void setOsName(String osName) {
+        this.osName = osName;
+    }
 }

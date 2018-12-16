@@ -30,8 +30,8 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetToolingAttachmentGenParams extends RemoteCallParams {
 
-	public GetToolingAttachmentGenParams() {
-		super(NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST);
-	}
+    public GetToolingAttachmentGenParams() {
+        super(NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST);
+    }
 
 }

@@ -30,24 +30,24 @@ import com.tcdng.unify.core.database.Entity;
 @Component("timestampedentity-policy")
 public class BaseTimestampedEntityPolicy extends BaseEntityPolicy {
 
-	public BaseTimestampedEntityPolicy() {
-		super(true); // Set now
-	}
+    public BaseTimestampedEntityPolicy() {
+        super(true); // Set now
+    }
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		BaseTimestampedEntity baseTimestampedRecord = (BaseTimestampedEntity) record;
-		if (baseTimestampedRecord.getCreateDt() == null) {
-			baseTimestampedRecord.setCreateDt(now);
-		}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        BaseTimestampedEntity baseTimestampedRecord = (BaseTimestampedEntity) record;
+        if (baseTimestampedRecord.getCreateDt() == null) {
+            baseTimestampedRecord.setCreateDt(now);
+        }
 
-		baseTimestampedRecord.setUpdateDt(now);
-		return super.preCreate(record, now);
-	}
+        baseTimestampedRecord.setUpdateDt(now);
+        return super.preCreate(record, now);
+    }
 
-	@Override
-	public void preUpdate(Entity record, Date now) throws UnifyException {
-		((BaseTimestampedEntity) record).setUpdateDt(now);
-		super.preUpdate(record, now);
-	}
+    @Override
+    public void preUpdate(Entity record, Date now) throws UnifyException {
+        ((BaseTimestampedEntity) record).setUpdateDt(now);
+        super.preUpdate(record, now);
+    }
 }

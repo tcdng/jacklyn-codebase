@@ -24,11 +24,10 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractZeroParamsSystemListCommand
-		extends AbstractSystemListCommand<ZeroParams> {
+public abstract class AbstractZeroParamsSystemListCommand extends AbstractSystemListCommand<ZeroParams> {
 
-	public AbstractZeroParamsSystemListCommand() {
-		super(ZeroParams.class);
-	}
+    public AbstractZeroParamsSystemListCommand() {
+        super(ZeroParams.class);
+    }
 
 }

@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfformtabcrudpanel.upl")
 public class WfFormTabCrudPanel extends AbstractInMemoryTableCrudPanel<WfFormTab> {
 
-	public WfFormTabCrudPanel() {
-		super(WfFormTab.class, "workflow.wfform.wfformtab", false);
-	}
+    public WfFormTabCrudPanel() {
+        super(WfFormTab.class, "workflow.wfform.wfformtab", false);
+    }
 
 }

@@ -23,21 +23,21 @@ package com.tcdng.jacklyn.common;
  */
 public class TestCustomerSignature {
 
-	private byte[] image;
+    private byte[] image;
 
-	public TestCustomerSignature(byte[] image) {
-		this.image = image;
-	}
+    public TestCustomerSignature(byte[] image) {
+        this.image = image;
+    }
 
-	public TestCustomerSignature() {
+    public TestCustomerSignature() {
 
-	}
+    }
 
-	public byte[] getImage() {
-		return image;
-	}
+    public byte[] getImage() {
+        return image;
+    }
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

@@ -47,71 +47,67 @@ import com.tcdng.unify.web.ui.control.Table;
 @Component("/application")
 @UplBinding("web/security/upl/application.upl")
 @ResultMappings({
-		@ResultMapping(name = "forwardtohome",
-				response = { "!forwardresponse path:$x{application.web.home}" }),
-		@ResultMapping(name = "showuserroleoptions",
-				response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
-		@ResultMapping(name = "showuserdetails",
-				response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
+        @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
+        @ResultMapping(name = "showuserroleoptions",
+                response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
+        @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
 public class ApplicationController extends AbstractApplicationForwarderController {
 
-	@Configurable("userphoto-generator")
-	private ImageGenerator userPhotoGenerator;
+    @Configurable("userphoto-generator")
+    private ImageGenerator userPhotoGenerator;
 
-	private Table selectRoleTableState;
+    private Table selectRoleTableState;
 
-	public ApplicationController() {
-		super(true, false);
-	}
+    public ApplicationController() {
+        super(true, false);
+    }
 
-	public ImageGenerator getUserPhotoGenerator() {
-		return userPhotoGenerator;
-	}
+    public ImageGenerator getUserPhotoGenerator() {
+        return userPhotoGenerator;
+    }
 
-	@Action
-	public String logOut() throws UnifyException {
-		logUserEvent(SecurityModuleAuditConstants.LOGOUT);
-		getSecurityModule().logout(true);
-		return "forwardtohome";
-	}
+    @Action
+    public String logOut() throws UnifyException {
+        logUserEvent(SecurityModuleAuditConstants.LOGOUT);
+        getSecurityModule().logout(true);
+        return "forwardtohome";
+    }
 
-	@Action
-	public String prepareUserRoleOptions() throws UnifyException {
-		// Get user roles that are active based on current time
-		UserToken userToken = getUserToken();
+    @Action
+    public String prepareUserRoleOptions() throws UnifyException {
+        // Get user roles that are active based on current time
+        UserToken userToken = getUserToken();
 
-		UserRoleQuery query = new UserRoleQuery();
-		String roleName = (String) userToken.getRoleCode();
-		if (QueryUtils.isValidStringCriteria(roleName)) {
-			query.roleNameNot(roleName);
-		}
-		query.userLoginId(userToken.getUserLoginId());
-		query.roleStatus(RecordStatus.ACTIVE);
-		query.roleActiveTime(new Date());
-		List<UserRole> userRoleList = getSecurityModule().findUserRoles(query);
-		UserRoleOptions userRoleOptions = new UserRoleOptions();
-		userRoleOptions.setUserRoleList(userRoleList);
-		setSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS, userRoleOptions);
-		return "showuserroleoptions";
-	}
+        UserRoleQuery query = new UserRoleQuery();
+        String roleName = (String) userToken.getRoleCode();
+        if (QueryUtils.isValidStringCriteria(roleName)) {
+            query.roleNameNot(roleName);
+        }
+        query.userLoginId(userToken.getUserLoginId());
+        query.roleStatus(RecordStatus.ACTIVE);
+        query.roleActiveTime(new Date());
+        List<UserRole> userRoleList = getSecurityModule().findUserRoles(query);
+        UserRoleOptions userRoleOptions = new UserRoleOptions();
+        userRoleOptions.setUserRoleList(userRoleList);
+        setSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS, userRoleOptions);
+        return "showuserroleoptions";
+    }
 
-	@Action
-	public String showUserDetails() throws UnifyException {
-		return "showuserdetails";
-	}
+    @Action
+    public String showUserDetails() throws UnifyException {
+        return "showuserdetails";
+    }
 
-	@Action
-	public String switchUserRole() throws UnifyException {
-		UserRoleOptions userRoleOptions = (UserRoleOptions) getSessionAttribute(
-				JacklynSessionAttributeConstants.USERROLEOPTIONS);
-		UserRole userRoleData
-				= userRoleOptions.getUserRoleList().get(selectRoleTableState.getViewIndex());
-		return forwardToApplication(userRoleData);
-	}
+    @Action
+    public String switchUserRole() throws UnifyException {
+        UserRoleOptions userRoleOptions = (UserRoleOptions) getSessionAttribute(
+                JacklynSessionAttributeConstants.USERROLEOPTIONS);
+        UserRole userRoleData = userRoleOptions.getUserRoleList().get(selectRoleTableState.getViewIndex());
+        return forwardToApplication(userRoleData);
+    }
 
-	@Override
-	protected void onSetPage() throws UnifyException {
-		selectRoleTableState = getPageWidgetByShortName(Table.class,
-				"userRoleOptionsPopup.roleTablePanel.contentTbl");
-	}
+    @Override
+    protected void onSetPage() throws UnifyException {
+        selectRoleTableState = getPageWidgetByShortName(Table.class, "userRoleOptionsPopup.roleTablePanel.contentTbl");
+    }
 }

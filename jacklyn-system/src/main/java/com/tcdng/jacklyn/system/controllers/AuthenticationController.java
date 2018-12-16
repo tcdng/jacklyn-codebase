@@ -38,105 +38,103 @@ import com.tcdng.unify.core.util.QueryUtils;
 @UplBinding("web/system/upl/manageauthentication.upl")
 public class AuthenticationController extends AbstractSystemRecordController<Authentication> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	private AuthenticationLargeData largeData;
+    private AuthenticationLargeData largeData;
 
-	public AuthenticationController() {
-		super(Authentication.class, "system.authentication.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-		largeData = new AuthenticationLargeData();
-	}
+    public AuthenticationController() {
+        super(Authentication.class, "system.authentication.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
+                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+        largeData = new AuthenticationLargeData();
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	public AuthenticationLargeData getLargeData() {
-		return largeData;
-	}
+    public AuthenticationLargeData getLargeData() {
+        return largeData;
+    }
 
-	public void setLargeData(AuthenticationLargeData largeData) {
-		this.largeData = largeData;
-	}
+    public void setLargeData(AuthenticationLargeData largeData) {
+        this.largeData = largeData;
+    }
 
-	@Override
-	protected List<Authentication> find() throws UnifyException {
-		AuthenticationQuery query = new AuthenticationQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.order("description").ignoreEmptyCriteria(true);
-		return getSystemModule().findAuthentications(query);
-	}
+    @Override
+    protected List<Authentication> find() throws UnifyException {
+        AuthenticationQuery query = new AuthenticationQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.order("description").ignoreEmptyCriteria(true);
+        return getSystemModule().findAuthentications(query);
+    }
 
-	@Override
-	protected Authentication find(Long id) throws UnifyException {
-		largeData = getSystemModule().findAuthentication(id);
-		return largeData.getData();
-	}
+    @Override
+    protected Authentication find(Long id) throws UnifyException {
+        largeData = getSystemModule().findAuthentication(id);
+        return largeData.getData();
+    }
 
-	@Override
-	protected Authentication prepareCreate() throws UnifyException {
-		largeData = new AuthenticationLargeData();
-		return largeData.getData();
-	}
+    @Override
+    protected Authentication prepareCreate() throws UnifyException {
+        largeData = new AuthenticationLargeData();
+        return largeData.getData();
+    }
 
-	@Override
-	protected void onPrepareView(Authentication authenticationData, boolean onPaste)
-			throws UnifyException {
+    @Override
+    protected void onPrepareView(Authentication authenticationData, boolean onPaste) throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onLoseView(Authentication authenticationData) throws UnifyException {
-		this.largeData = new AuthenticationLargeData();
-	}
+    @Override
+    protected void onLoseView(Authentication authenticationData) throws UnifyException {
+        this.largeData = new AuthenticationLargeData();
+    }
 
-	@Override
-	protected Object create(Authentication authenticationData) throws UnifyException {
-		return getSystemModule().createAuthentication(largeData);
-	}
+    @Override
+    protected Object create(Authentication authenticationData) throws UnifyException {
+        return getSystemModule().createAuthentication(largeData);
+    }
 
-	@Override
-	protected int update(Authentication authenticationData) throws UnifyException {
-		return getSystemModule().updateAuthentication(largeData);
-	}
+    @Override
+    protected int update(Authentication authenticationData) throws UnifyException {
+        return getSystemModule().updateAuthentication(largeData);
+    }
 
-	@Override
-	protected int delete(Authentication authenticationData) throws UnifyException {
-		return getSystemModule().deleteAuthentication(authenticationData.getId());
-	}
+    @Override
+    protected int delete(Authentication authenticationData) throws UnifyException {
+        return getSystemModule().deleteAuthentication(authenticationData.getId());
+    }
 }

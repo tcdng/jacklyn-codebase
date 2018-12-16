@@ -28,15 +28,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractNotificationListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
-	private NotificationModule notificationModule;
+    @Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
+    private NotificationModule notificationModule;
 
-	public AbstractNotificationListCommand(Class<T> type) {
-		super(type);
-	}
+    public AbstractNotificationListCommand(Class<T> type) {
+        super(type);
+    }
 
-	protected NotificationModule getNotificationModule() {
-		return notificationModule;
-	}
+    protected NotificationModule getNotificationModule() {
+        return notificationModule;
+    }
 
 }

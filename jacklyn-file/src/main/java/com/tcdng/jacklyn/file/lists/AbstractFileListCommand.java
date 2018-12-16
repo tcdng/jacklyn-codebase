@@ -28,14 +28,14 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractFileListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
-	private FileModule fileModule;
+    @Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
+    private FileModule fileModule;
 
-	public AbstractFileListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractFileListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected FileModule getFileModule() {
-		return fileModule;
-	}
+    protected FileModule getFileModule() {
+        return fileModule;
+    }
 }

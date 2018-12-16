@@ -32,139 +32,139 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Dashboard Tile", reportable = true,
-		auditable = true)
+        auditable = true)
 @Table(name = "DASHBOARDTILE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class DashboardTile extends BaseInstallEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "DASHBOARDTILE_NM", length = 40)
-	private String name;
+    @Column(name = "DASHBOARDTILE_NM", length = 40)
+    private String name;
 
-	@Column(name = "DASHBOARDTILE_DESC", length = 64)
-	private String description;
+    @Column(name = "DASHBOARDTILE_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64, nullable = true)
-	private String imageSrc;
+    @Column(length = 64, nullable = true)
+    private String imageSrc;
 
-	@Column(length = 255, nullable = true)
-	private String caption;
+    @Column(length = 255, nullable = true)
+    private String caption;
 
-	@Column(length = 128)
-	private String path;
+    @Column(length = 128)
+    private String path;
 
-	@Column(nullable = true)
-	private String generator;
+    @Column(nullable = true)
+    private String generator;
 
-	@Column
-	private boolean landscape;
+    @Column
+    private boolean landscape;
 
-	@Column
-	private int displayOrder;
+    @Column
+    private int displayOrder;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	@ListOnly(key = "moduleId", property = "status")
-	private RecordStatus moduleStatus;
+    @ListOnly(key = "moduleId", property = "status")
+    private RecordStatus moduleStatus;
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getGenerator() {
-		return generator;
-	}
+    public String getGenerator() {
+        return generator;
+    }
 
-	public void setGenerator(String generator) {
-		this.generator = generator;
-	}
+    public void setGenerator(String generator) {
+        this.generator = generator;
+    }
 
-	public String getImageSrc() {
-		return imageSrc;
-	}
+    public String getImageSrc() {
+        return imageSrc;
+    }
 
-	public void setImageSrc(String imageSrc) {
-		this.imageSrc = imageSrc;
-	}
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
+    }
 
-	public String getCaption() {
-		return caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public boolean isLandscape() {
-		return landscape;
-	}
+    public boolean isLandscape() {
+        return landscape;
+    }
 
-	public void setLandscape(boolean landscape) {
-		this.landscape = landscape;
-	}
+    public void setLandscape(boolean landscape) {
+        this.landscape = landscape;
+    }
 
-	public int getDisplayOrder() {
-		return displayOrder;
-	}
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
 
-	public void setDisplayOrder(int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
 
-	public RecordStatus getModuleStatus() {
-		return moduleStatus;
-	}
+    public RecordStatus getModuleStatus() {
+        return moduleStatus;
+    }
 
-	public void setModuleStatus(RecordStatus moduleStatus) {
-		this.moduleStatus = moduleStatus;
-	}
+    public void setModuleStatus(RecordStatus moduleStatus) {
+        this.moduleStatus = moduleStatus;
+    }
 }

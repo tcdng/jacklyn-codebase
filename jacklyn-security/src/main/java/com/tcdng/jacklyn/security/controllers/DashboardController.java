@@ -39,30 +39,29 @@ import com.tcdng.unify.core.ui.Tile;
 @UplBinding("web/security/upl/dashboardlanding.upl")
 public class DashboardController extends AbstractSecurityController {
 
-	public DashboardController() {
-		super(true, false);// Secure and read-only
-	}
+    public DashboardController() {
+        super(true, false);// Secure and read-only
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		List<Tile> tileList = Collections.emptyList();
-		DashboardTileQuery query = new DashboardTileQuery().orderByDisplayOrder();
-		if (getUserToken().isReservedUser()) {
-			query.ignoreEmptyCriteria(true);
-			tileList = getSystemBusinessModule().generateTiles(query);
-		} else {
-			Set<String> dashboardNames
-					= getPrivilegeCodes(PrivilegeCategoryConstants.DASHBOARD);
-			if (!dashboardNames.isEmpty()) {
-				query.nameIn(dashboardNames);
-				tileList = getSystemBusinessModule().generateTiles(query);
-			}
-		}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        List<Tile> tileList = Collections.emptyList();
+        DashboardTileQuery query = new DashboardTileQuery().orderByDisplayOrder();
+        if (getUserToken().isReservedUser()) {
+            query.ignoreEmptyCriteria(true);
+            tileList = getSystemBusinessModule().generateTiles(query);
+        } else {
+            Set<String> dashboardNames = getPrivilegeCodes(PrivilegeCategoryConstants.DASHBOARD);
+            if (!dashboardNames.isEmpty()) {
+                query.nameIn(dashboardNames);
+                tileList = getSystemBusinessModule().generateTiles(query);
+            }
+        }
 
-		setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
-	}
+        setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
+    }
 
-	protected SystemModule getSystemBusinessModule() throws UnifyException {
-		return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
-	}
+    protected SystemModule getSystemBusinessModule() throws UnifyException {
+        return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
+    }
 }

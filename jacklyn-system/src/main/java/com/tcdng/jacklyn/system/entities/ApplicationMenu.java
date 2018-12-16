@@ -31,118 +31,118 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Application Menu", reportable = true,
-		auditable = true)
+        auditable = true)
 @Table(name = "MENU", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class ApplicationMenu extends BaseInstallEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "MENU_NM", length = 48)
-	private String name;
+    @Column(name = "MENU_NM", length = 48)
+    private String name;
 
-	@Column(name = "MENU_DESC", length = 64)
-	private String description;
+    @Column(name = "MENU_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64, nullable = true)
-	private String pageCaption;
+    @Column(length = 64, nullable = true)
+    private String pageCaption;
 
-	@Column(length = 64)
-	private String caption;
+    @Column(length = 64)
+    private String caption;
 
-	@Column(length = 128, nullable = true)
-	private String path;
+    @Column(length = 128, nullable = true)
+    private String path;
 
-	@Column(length = 128, nullable = true)
-	private String remotePath;
+    @Column(length = 128, nullable = true)
+    private String remotePath;
 
-	@Column
-	private int displayOrder;
+    @Column
+    private int displayOrder;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getPageCaption() {
-		return pageCaption;
-	}
+    public String getPageCaption() {
+        return pageCaption;
+    }
 
-	public void setPageCaption(String pageCaption) {
-		this.pageCaption = pageCaption;
-	}
+    public void setPageCaption(String pageCaption) {
+        this.pageCaption = pageCaption;
+    }
 
-	public String getCaption() {
-		return caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getRemotePath() {
-		return remotePath;
-	}
+    public String getRemotePath() {
+        return remotePath;
+    }
 
-	public void setRemotePath(String remotePath) {
-		this.remotePath = remotePath;
-	}
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
+    }
 
-	public int getDisplayOrder() {
-		return displayOrder;
-	}
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
 
-	public void setDisplayOrder(int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 }

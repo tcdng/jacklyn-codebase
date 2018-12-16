@@ -24,17 +24,17 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public abstract class BaseLabelWfDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 1312440847632214392L;
+    private static final long serialVersionUID = 1312440847632214392L;
 
-	private String label;
+    private String label;
 
-	public BaseLabelWfDef(String name, String description, String label) {
-		super(name, description);
-		this.label = label;
-	}
+    public BaseLabelWfDef(String name, String description, String label) {
+        super(name, description);
+        this.label = label;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
 }

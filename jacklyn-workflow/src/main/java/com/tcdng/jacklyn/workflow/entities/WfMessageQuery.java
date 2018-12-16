@@ -28,39 +28,39 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfMessageQuery extends BaseEntityQuery<WfMessage> {
 
-	public WfMessageQuery() {
-		super(WfMessage.class);
-	}
+    public WfMessageQuery() {
+        super(WfMessage.class);
+    }
 
-	public WfMessageQuery wfTemplateId(Long wfTemplateId) {
-		return (WfMessageQuery) equals("wfTemplateId", wfTemplateId);
-	}
+    public WfMessageQuery wfTemplateId(Long wfTemplateId) {
+        return (WfMessageQuery) equals("wfTemplateId", wfTemplateId);
+    }
 
-	public WfMessageQuery wfCategoryId(Long wfCategoryId) {
-		return (WfMessageQuery) equals("wfCategoryId", wfCategoryId);
-	}
+    public WfMessageQuery wfCategoryId(Long wfCategoryId) {
+        return (WfMessageQuery) equals("wfCategoryId", wfCategoryId);
+    }
 
-	public WfMessageQuery wfCategoryName(String wfCategoryName) {
-		return (WfMessageQuery) equals("wfCategoryName", wfCategoryName);
-	}
+    public WfMessageQuery wfCategoryName(String wfCategoryName) {
+        return (WfMessageQuery) equals("wfCategoryName", wfCategoryName);
+    }
 
-	public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
-		return (WfMessageQuery) equals("wfCategoryVersion", wfCategoryVersion);
-	}
+    public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfMessageQuery) equals("wfCategoryVersion", wfCategoryVersion);
+    }
 
-	public WfMessageQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-		return (WfMessageQuery) equals("wfCategoryStatus", wfCategoryStatus);
-	}
+    public WfMessageQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+        return (WfMessageQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
 
-	public WfMessageQuery name(String name) {
-		return (WfMessageQuery) equals("name", name);
-	}
+    public WfMessageQuery name(String name) {
+        return (WfMessageQuery) equals("name", name);
+    }
 
-	public WfMessageQuery namesIn(Collection<String> names) {
-		return (WfMessageQuery) amongst("name", names);
-	}
+    public WfMessageQuery namesIn(Collection<String> names) {
+        return (WfMessageQuery) amongst("name", names);
+    }
 
-	public WfMessageQuery descriptionLike(String description) {
-		return (WfMessageQuery) like("description", description);
-	}
+    public WfMessageQuery descriptionLike(String description) {
+        return (WfMessageQuery) like("description", description);
+    }
 }

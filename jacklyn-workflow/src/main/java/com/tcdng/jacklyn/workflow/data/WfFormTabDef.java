@@ -27,28 +27,28 @@ import java.util.List;
  */
 public class WfFormTabDef extends BaseLabelWfDef {
 
-	private static final long serialVersionUID = 5412600207864222636L;
+    private static final long serialVersionUID = 5412600207864222636L;
 
-	private boolean pseudo;
+    private boolean pseudo;
 
-	private List<WfFormSectionDef> sectionList;
+    private List<WfFormSectionDef> sectionList;
 
-	public WfFormTabDef(String name, String description, String label,
-			List<WfFormSectionDef> sectionList, boolean pseudo) {
-		super(name, description, label);
-		this.pseudo = pseudo;
-		if (sectionList != null) {
-			this.sectionList = Collections.unmodifiableList(sectionList);
-		} else {
-			this.sectionList = Collections.emptyList();
-		}
-	}
+    public WfFormTabDef(String name, String description, String label, List<WfFormSectionDef> sectionList,
+            boolean pseudo) {
+        super(name, description, label);
+        this.pseudo = pseudo;
+        if (sectionList != null) {
+            this.sectionList = Collections.unmodifiableList(sectionList);
+        } else {
+            this.sectionList = Collections.emptyList();
+        }
+    }
 
-	public List<WfFormSectionDef> getSectionList() {
-		return sectionList;
-	}
+    public List<WfFormSectionDef> getSectionList() {
+        return sectionList;
+    }
 
-	public boolean isPseudo() {
-		return this.pseudo;
-	}
+    public boolean isPseudo() {
+        return this.pseudo;
+    }
 }

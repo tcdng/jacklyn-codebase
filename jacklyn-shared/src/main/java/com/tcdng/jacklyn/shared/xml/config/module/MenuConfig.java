@@ -30,58 +30,58 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class MenuConfig extends BaseConfig {
 
-	private String pageCaption;
+    private String pageCaption;
 
-	private String caption;
+    private String caption;
 
-	private String path;
+    private String path;
 
-	private String remotePath;
+    private String remotePath;
 
-	private List<MenuItemConfig> menuItemList;
+    private List<MenuItemConfig> menuItemList;
 
-	public String getPageCaption() {
-		return pageCaption;
-	}
+    public String getPageCaption() {
+        return pageCaption;
+    }
 
-	@XmlAttribute
-	public void setPageCaption(String pageCaption) {
-		this.pageCaption = pageCaption;
-	}
+    @XmlAttribute
+    public void setPageCaption(String pageCaption) {
+        this.pageCaption = pageCaption;
+    }
 
-	public String getCaption() {
-		return caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	@XmlAttribute(required = true)
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    @XmlAttribute(required = true)
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	@XmlAttribute
-	public void setPath(String path) {
-		this.path = path;
-	}
+    @XmlAttribute
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getRemotePath() {
-		return remotePath;
-	}
+    public String getRemotePath() {
+        return remotePath;
+    }
 
-	@XmlAttribute
-	public void setRemotePath(String remotePath) {
-		this.remotePath = remotePath;
-	}
+    @XmlAttribute
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
+    }
 
-	public List<MenuItemConfig> getMenuItemList() {
-		return menuItemList;
-	}
+    public List<MenuItemConfig> getMenuItemList() {
+        return menuItemList;
+    }
 
-	@XmlElement(name = "menuitem", required = true)
-	public void setMenuItemList(List<MenuItemConfig> menuItemList) {
-		this.menuItemList = menuItemList;
-	}
+    @XmlElement(name = "menuitem", required = true)
+    public void setMenuItemList(List<MenuItemConfig> menuItemList) {
+        this.menuItemList = menuItemList;
+    }
 }

@@ -27,54 +27,53 @@ import com.tcdng.unify.core.data.Listable;
  */
 public class WfItemSummary implements Listable, Serializable {
 
-	private static final long serialVersionUID = -5355531853254797968L;
+    private static final long serialVersionUID = -5355531853254797968L;
 
-	private String description;
+    private String description;
 
-	private String globalStepName;
+    private String globalStepName;
 
-	private String stepDesc;
+    private String stepDesc;
 
-	private int itemCount;
+    private int itemCount;
 
-	private int holdCount;
+    private int holdCount;
 
-	public WfItemSummary(String description, String globalStepName, String stepDesc, int itemCount,
-			int holdCount) {
-		this.description = description;
-		this.globalStepName = globalStepName;
-		this.stepDesc = stepDesc;
-		this.itemCount = itemCount;
-		this.holdCount = holdCount;
-	}
+    public WfItemSummary(String description, String globalStepName, String stepDesc, int itemCount, int holdCount) {
+        this.description = description;
+        this.globalStepName = globalStepName;
+        this.stepDesc = stepDesc;
+        this.itemCount = itemCount;
+        this.holdCount = holdCount;
+    }
 
-	@Override
-	public String getListKey() {
-		return globalStepName;
-	}
+    @Override
+    public String getListKey() {
+        return globalStepName;
+    }
 
-	@Override
-	public String getListDescription() {
-		return this.description;
-	}
+    @Override
+    public String getListDescription() {
+        return this.description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getGlobalStepName() {
-		return globalStepName;
-	}
+    public String getGlobalStepName() {
+        return globalStepName;
+    }
 
-	public String getStepDesc() {
-		return stepDesc;
-	}
+    public String getStepDesc() {
+        return stepDesc;
+    }
 
-	public int getItemCount() {
-		return itemCount;
-	}
+    public int getItemCount() {
+        return itemCount;
+    }
 
-	public int getHoldCount() {
-		return holdCount;
-	}
+    public int getHoldCount() {
+        return holdCount;
+    }
 }

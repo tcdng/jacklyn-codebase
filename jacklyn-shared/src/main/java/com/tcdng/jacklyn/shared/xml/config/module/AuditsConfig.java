@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class AuditsConfig {
 
-	private List<AuditConfig> auditList;
+    private List<AuditConfig> auditList;
 
-	public List<AuditConfig> getAuditList() {
-		return auditList;
-	}
+    public List<AuditConfig> getAuditList() {
+        return auditList;
+    }
 
-	@XmlElement(name = "audit", required = true)
-	public void setAuditList(List<AuditConfig> auditList) {
-		this.auditList = auditList;
-	}
+    @XmlElement(name = "audit", required = true)
+    public void setAuditList(List<AuditConfig> auditList) {
+        this.auditList = auditList;
+    }
 }

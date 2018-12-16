@@ -30,8 +30,8 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetToolingListTypeParams extends RemoteCallParams {
 
-	public GetToolingListTypeParams() {
-		super(SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES);
-	}
+    public GetToolingListTypeParams() {
+        super(SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES);
+    }
 
 }

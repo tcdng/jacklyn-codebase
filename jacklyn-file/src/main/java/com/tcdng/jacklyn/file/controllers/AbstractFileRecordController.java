@@ -28,17 +28,16 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractFileRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractFileRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
-	private FileModule fileModule;
+    @Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
+    private FileModule fileModule;
 
-	public AbstractFileRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractFileRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected FileModule getFileModule() throws UnifyException {
-		return fileModule;
-	}
+    protected FileModule getFileModule() throws UnifyException {
+        return fileModule;
+    }
 }

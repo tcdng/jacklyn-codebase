@@ -28,8 +28,8 @@ import com.tcdng.unify.core.list.AbstractDBSearchProvider;
 @Component("userbyname-searchprovider")
 public class UserByNameSearchProvider extends AbstractDBSearchProvider {
 
-	public UserByNameSearchProvider() {
-		super(User.class, "loginId", "fullName");
-	}
+    public UserByNameSearchProvider() {
+        super(User.class, "loginId", "fullName");
+    }
 
 }

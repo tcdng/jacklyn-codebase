@@ -32,22 +32,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetToolingEnrichmentLogicResult extends RemoteCallResult {
 
-	private List<ToolingEnrichmentLogicItem> enrichmentLogicList;
+    private List<ToolingEnrichmentLogicItem> enrichmentLogicList;
 
-	public GetToolingEnrichmentLogicResult(List<ToolingEnrichmentLogicItem> enrichmentLogicList) {
-		this.enrichmentLogicList = enrichmentLogicList;
-	}
+    public GetToolingEnrichmentLogicResult(List<ToolingEnrichmentLogicItem> enrichmentLogicList) {
+        this.enrichmentLogicList = enrichmentLogicList;
+    }
 
-	public GetToolingEnrichmentLogicResult() {
+    public GetToolingEnrichmentLogicResult() {
 
-	}
+    }
 
-	public List<ToolingEnrichmentLogicItem> getEnrichmentLogicList() {
-		return enrichmentLogicList;
-	}
+    public List<ToolingEnrichmentLogicItem> getEnrichmentLogicList() {
+        return enrichmentLogicList;
+    }
 
-	@XmlElement(name = "enrichmentLogic")
-	public void setEnrichmentLogicList(List<ToolingEnrichmentLogicItem> enrichmentLogicList) {
-		this.enrichmentLogicList = enrichmentLogicList;
-	}
+    @XmlElement(name = "enrichmentLogic")
+    public void setEnrichmentLogicList(List<ToolingEnrichmentLogicItem> enrichmentLogicList) {
+        this.enrichmentLogicList = enrichmentLogicList;
+    }
 }

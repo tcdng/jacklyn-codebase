@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynPropertyConstants {
 
-	String COMMON_REPORT_PROVIDER = "jacklyn-commonreportprovider";
+    String COMMON_REPORT_PROVIDER = "jacklyn-commonreportprovider";
 
-	String COMMON_REPORT_SERVER = "jacklyn-commonreportserver";
+    String COMMON_REPORT_SERVER = "jacklyn-commonreportserver";
 
-	String MODULE_CONFIGURATION = "jacklyn-modules";
+    String MODULE_CONFIGURATION = "jacklyn-modules";
 
-	String RC_SYSTEMASSET_PROVIDER = "jacklyn-rcsystemassetprovider";
+    String RC_SYSTEMASSET_PROVIDER = "jacklyn-rcsystemassetprovider";
 }

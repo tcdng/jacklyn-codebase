@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class NotificationRecipientQuery extends BaseEntityQuery<NotificationRecipient> {
 
-	public NotificationRecipientQuery() {
-		super(NotificationRecipient.class);
-	}
+    public NotificationRecipientQuery() {
+        super(NotificationRecipient.class);
+    }
 
-	public NotificationRecipientQuery notificationId(Long notificationId) {
-		return (NotificationRecipientQuery) equals("notificationId", notificationId);
-	}
+    public NotificationRecipientQuery notificationId(Long notificationId) {
+        return (NotificationRecipientQuery) equals("notificationId", notificationId);
+    }
 
-	public NotificationRecipientQuery recipientNameLike(String recipientName) {
-		return (NotificationRecipientQuery) like("recipientName", recipientName);
-	}
+    public NotificationRecipientQuery recipientNameLike(String recipientName) {
+        return (NotificationRecipientQuery) like("recipientName", recipientName);
+    }
 }

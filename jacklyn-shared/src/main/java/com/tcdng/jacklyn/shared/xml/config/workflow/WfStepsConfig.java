@@ -29,15 +29,15 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfStepsConfig extends BaseConfig {
 
-	private List<WfStepConfig> wfStepConfigList;
+    private List<WfStepConfig> wfStepConfigList;
 
-	public List<WfStepConfig> getWfStepConfigList() {
-		return wfStepConfigList;
-	}
+    public List<WfStepConfig> getWfStepConfigList() {
+        return wfStepConfigList;
+    }
 
-	@XmlElement(name="step", required=true)
-	public void setWfStepConfigList(List<WfStepConfig> wfStepConfigList) {
-		this.wfStepConfigList = wfStepConfigList;
-	}
+    @XmlElement(name = "step", required = true)
+    public void setWfStepConfigList(List<WfStepConfig> wfStepConfigList) {
+        this.wfStepConfigList = wfStepConfigList;
+    }
 
 }

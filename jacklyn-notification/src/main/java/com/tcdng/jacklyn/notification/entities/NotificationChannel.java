@@ -35,97 +35,97 @@ import com.tcdng.unify.core.constant.NetworkSecurityType;
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Channel",
-		reportable = true, auditable = true)
+        reportable = true, auditable = true)
 @Table(name = "NOTIFCHANNEL",
-		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+        uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class NotificationChannel extends BaseVersionedStatusEntity {
 
-	@ForeignKey
-	private NotificationType notificationType;
+    @ForeignKey
+    private NotificationType notificationType;
 
-	@ForeignKey(nullable = true)
-	private NetworkSecurityType securityType;
+    @ForeignKey(nullable = true)
+    private NetworkSecurityType securityType;
 
-	@ForeignKey(type = Authentication.class, nullable = true)
-	private Long authenticationId;
-	@Column(name = "CHANNEL_NM", length = 48)
-	private String name;
+    @ForeignKey(type = Authentication.class, nullable = true)
+    private Long authenticationId;
+    @Column(name = "CHANNEL_NM", length = 48)
+    private String name;
 
-	@Column(name = "CHANNEL_DESC", length = 64)
-	private String description;
+    @Column(name = "CHANNEL_DESC", length = 64)
+    private String description;
 
-	@Column(nullable = true)
-	private String hostAddress;
+    @Column(nullable = true)
+    private String hostAddress;
 
-	@Column(nullable = true)
-	private Integer hostPort;
+    @Column(nullable = true)
+    private Integer hostPort;
 
-	@ListOnly(key = "notificationType", property = "description")
-	private String notificationTypeDesc;
+    @ListOnly(key = "notificationType", property = "description")
+    private String notificationTypeDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public NotificationType getNotificationType() {
-		return notificationType;
-	}
+    public NotificationType getNotificationType() {
+        return notificationType;
+    }
 
-	public void setNotificationType(NotificationType notificationType) {
-		this.notificationType = notificationType;
-	}
+    public void setNotificationType(NotificationType notificationType) {
+        this.notificationType = notificationType;
+    }
 
-	public NetworkSecurityType getSecurityType() {
-		return securityType;
-	}
+    public NetworkSecurityType getSecurityType() {
+        return securityType;
+    }
 
-	public void setSecurityType(NetworkSecurityType securityType) {
-		this.securityType = securityType;
-	}
+    public void setSecurityType(NetworkSecurityType securityType) {
+        this.securityType = securityType;
+    }
 
-	public Long getAuthenticationId() {
-		return authenticationId;
-	}
+    public Long getAuthenticationId() {
+        return authenticationId;
+    }
 
-	public void setAuthenticationId(Long authenticationId) {
-		this.authenticationId = authenticationId;
-	}
+    public void setAuthenticationId(Long authenticationId) {
+        this.authenticationId = authenticationId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getHostAddress() {
-		return hostAddress;
-	}
+    public String getHostAddress() {
+        return hostAddress;
+    }
 
-	public void setHostAddress(String hostAddress) {
-		this.hostAddress = hostAddress;
-	}
+    public void setHostAddress(String hostAddress) {
+        this.hostAddress = hostAddress;
+    }
 
-	public Integer getHostPort() {
-		return hostPort;
-	}
+    public Integer getHostPort() {
+        return hostPort;
+    }
 
-	public void setHostPort(Integer hostPort) {
-		this.hostPort = hostPort;
-	}
+    public void setHostPort(Integer hostPort) {
+        this.hostPort = hostPort;
+    }
 
-	public String getNotificationTypeDesc() {
-		return notificationTypeDesc;
-	}
+    public String getNotificationTypeDesc() {
+        return notificationTypeDesc;
+    }
 
-	public void setNotificationTypeDesc(String notificationTypeDesc) {
-		this.notificationTypeDesc = notificationTypeDesc;
-	}
+    public void setNotificationTypeDesc(String notificationTypeDesc) {
+        this.notificationTypeDesc = notificationTypeDesc;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

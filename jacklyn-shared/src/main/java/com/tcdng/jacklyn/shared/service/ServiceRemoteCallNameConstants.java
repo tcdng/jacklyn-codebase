@@ -23,5 +23,5 @@ package com.tcdng.jacklyn.shared.service;
  */
 public interface ServiceRemoteCallNameConstants {
 
-	String OS_REQUEST_INSTALL = "srvOSInstall";
+    String OS_REQUEST_INSTALL = "srvOSInstall";
 }

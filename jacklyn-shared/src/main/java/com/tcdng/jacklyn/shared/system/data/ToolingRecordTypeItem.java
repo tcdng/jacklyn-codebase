@@ -28,59 +28,58 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ToolingRecordTypeItem {
 
-	private String title;
+    private String title;
 
-	private String type;
+    private String type;
 
-	private String idField;
+    private String idField;
 
-	private List<String> fieldList;
+    private List<String> fieldList;
 
-	public ToolingRecordTypeItem(String title, String type, String idField,
-			List<String> fieldList) {
-		this.title = title;
-		this.type = type;
-		this.idField = idField;
-		this.fieldList = fieldList;
-	}
+    public ToolingRecordTypeItem(String title, String type, String idField, List<String> fieldList) {
+        this.title = title;
+        this.type = type;
+        this.idField = idField;
+        this.fieldList = fieldList;
+    }
 
-	public ToolingRecordTypeItem() {
+    public ToolingRecordTypeItem() {
 
-	}
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	@XmlElement
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @XmlElement
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	@XmlElement
-	public void setType(String type) {
-		this.type = type;
-	}
+    @XmlElement
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getIdField() {
-		return idField;
-	}
+    public String getIdField() {
+        return idField;
+    }
 
-	@XmlElement
-	public void setIdField(String idField) {
-		this.idField = idField;
-	}
+    @XmlElement
+    public void setIdField(String idField) {
+        this.idField = idField;
+    }
 
-	public List<String> getFieldList() {
-		return fieldList;
-	}
+    public List<String> getFieldList() {
+        return fieldList;
+    }
 
-	@XmlElement(name = "field")
-	public void setFieldList(List<String> fieldList) {
-		this.fieldList = fieldList;
-	}
+    @XmlElement(name = "field")
+    public void setFieldList(List<String> fieldList) {
+        this.fieldList = fieldList;
+    }
 }

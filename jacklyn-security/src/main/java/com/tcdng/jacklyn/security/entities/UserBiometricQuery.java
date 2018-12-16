@@ -26,15 +26,15 @@ import com.tcdng.jacklyn.shared.security.BiometricType;
  */
 public class UserBiometricQuery extends BaseEntityQuery<UserBiometric> {
 
-	public UserBiometricQuery() {
-		super(UserBiometric.class);
-	}
+    public UserBiometricQuery() {
+        super(UserBiometric.class);
+    }
 
-	public UserBiometricQuery userId(Long userId) {
-		return (UserBiometricQuery) equals("userId", userId);
-	}
+    public UserBiometricQuery userId(Long userId) {
+        return (UserBiometricQuery) equals("userId", userId);
+    }
 
-	public UserBiometricQuery typeName(BiometricType typeName) {
-		return (UserBiometricQuery) equals("typeName", typeName);
-	}
+    public UserBiometricQuery typeName(BiometricType typeName) {
+        return (UserBiometricQuery) equals("typeName", typeName);
+    }
 }

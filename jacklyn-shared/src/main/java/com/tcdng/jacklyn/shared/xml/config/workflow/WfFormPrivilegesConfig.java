@@ -28,15 +28,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfFormPrivilegesConfig {
 
-	private List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList;
+    private List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList;
 
-	public List<WfFormPrivilegeConfig> getWfFormPrivilegesConfigList() {
-		return wfFormPrivilegesConfigList;
-	}
+    public List<WfFormPrivilegeConfig> getWfFormPrivilegesConfigList() {
+        return wfFormPrivilegesConfigList;
+    }
 
-	@XmlElement(name="form-privilege")
-	public void setWfFormPrivilegesConfigList(
-			List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList) {
-		this.wfFormPrivilegesConfigList = wfFormPrivilegesConfigList;
-	}
+    @XmlElement(name = "form-privilege")
+    public void setWfFormPrivilegesConfigList(List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList) {
+        this.wfFormPrivilegesConfigList = wfFormPrivilegesConfigList;
+    }
 }

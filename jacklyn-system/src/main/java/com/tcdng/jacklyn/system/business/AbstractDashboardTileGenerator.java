@@ -24,16 +24,15 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractDashboardTileGenerator extends AbstractUnifyComponent
-		implements DashboardTileGenerator {
+public abstract class AbstractDashboardTileGenerator extends AbstractUnifyComponent implements DashboardTileGenerator {
 
-	@Override
-	protected void onInitialize() throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 }

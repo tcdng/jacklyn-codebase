@@ -28,7 +28,7 @@ import com.tcdng.unify.core.list.AbstractTypeListCommand;
 @Component("filetransferpolicylist")
 public class FilePolicyListCommand extends AbstractTypeListCommand<FileTransferPolicy> {
 
-	public FilePolicyListCommand() {
-		super(FileTransferPolicy.class);
-	}
+    public FilePolicyListCommand() {
+        super(FileTransferPolicy.class);
+    }
 }

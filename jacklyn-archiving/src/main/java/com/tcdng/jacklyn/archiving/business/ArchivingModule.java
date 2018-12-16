@@ -34,137 +34,133 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface ArchivingModule extends JacklynBusinessModule {
 
-	/**
-	 * Finds archivable definitions by query.
-	 * 
-	 * @param query
-	 *            the search query
-	 * @return list of archivable definition that match query
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<ArchivableDefinition> findArchivableDefinitions(ArchivableDefinitionQuery query)
-			throws UnifyException;
+    /**
+     * Finds archivable definitions by query.
+     * 
+     * @param query
+     *            the search query
+     * @return list of archivable definition that match query
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ArchivableDefinition> findArchivableDefinitions(ArchivableDefinitionQuery query) throws UnifyException;
 
-	/**
-	 * Finds archivable definition by ID
-	 * 
-	 * @param archivableDefId
-	 *            the
-	 * @return archivable definition data
-	 * @throws UnifyException
-	 *             if record with id is not found
-	 */
-	ArchivableDefinition findArchivableDefinition(Long archivableDefId) throws UnifyException;
+    /**
+     * Finds archivable definition by ID
+     * 
+     * @param archivableDefId
+     *            the
+     * @return archivable definition data
+     * @throws UnifyException
+     *             if record with id is not found
+     */
+    ArchivableDefinition findArchivableDefinition(Long archivableDefId) throws UnifyException;
 
-	/**
-	 * Finds archiving fields by query.
-	 * 
-	 * @param query
-	 *            the search query
-	 * @return list of archive fields that match query
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<ArchivingField> findArchivingFields(ArchivingFieldQuery query) throws UnifyException;
+    /**
+     * Finds archiving fields by query.
+     * 
+     * @param query
+     *            the search query
+     * @return list of archive fields that match query
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ArchivingField> findArchivingFields(ArchivingFieldQuery query) throws UnifyException;
 
-	/**
-	 * Finds archiving field by ID
-	 * 
-	 * @param archivingFieldId
-	 *            the
-	 * @return archiving field data
-	 * @throws UnifyException
-	 *             if record with id is not found
-	 */
-	ArchivingField findArchivingField(Long archivingFieldId) throws UnifyException;
+    /**
+     * Finds archiving field by ID
+     * 
+     * @param archivingFieldId
+     *            the
+     * @return archiving field data
+     * @throws UnifyException
+     *             if record with id is not found
+     */
+    ArchivingField findArchivingField(Long archivingFieldId) throws UnifyException;
 
-	/**
-	 * Creates a new file archive config.
-	 * 
-	 * @param fileArchiveConfig
-	 *            the file archive config
-	 * @return the created file archive config ID otherwise a null value if no items
-	 *         found to archive
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	Long createFileArchiveConfig(FileArchiveConfig fileArchiveConfig) throws UnifyException;
+    /**
+     * Creates a new file archive config.
+     * 
+     * @param fileArchiveConfig
+     *            the file archive config
+     * @return the created file archive config ID otherwise a null value if no items
+     *         found to archive
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createFileArchiveConfig(FileArchiveConfig fileArchiveConfig) throws UnifyException;
 
-	/**
-	 * Finds file archive config by ID.
-	 * 
-	 * @param fileArchiveConfigId
-	 *            the file archive config ID
-	 * @return the file archive config data
-	 * @throws UnifyException
-	 *             if file archive config with ID is not found
-	 */
-	FileArchiveConfig findFileArchiveConfig(Long fileArchiveConfigId) throws UnifyException;
+    /**
+     * Finds file archive config by ID.
+     * 
+     * @param fileArchiveConfigId
+     *            the file archive config ID
+     * @return the file archive config data
+     * @throws UnifyException
+     *             if file archive config with ID is not found
+     */
+    FileArchiveConfig findFileArchiveConfig(Long fileArchiveConfigId) throws UnifyException;
 
-	/**
-	 * Finds file archive configs by query.
-	 * 
-	 * @param query
-	 *            the file archive config query
-	 * @return the list of file archive configs found
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<FileArchiveConfig> findFileArchiveConfigs(FileArchiveConfigQuery query)
-			throws UnifyException;
+    /**
+     * Finds file archive configs by query.
+     * 
+     * @param query
+     *            the file archive config query
+     * @return the list of file archive configs found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<FileArchiveConfig> findFileArchiveConfigs(FileArchiveConfigQuery query) throws UnifyException;
 
-	/**
-	 * Updates a file archive config.
-	 * 
-	 * @param fileArchiveConfig
-	 *            the file archive config
-	 * @return the update count
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int updateFileArchiveConfig(FileArchiveConfig fileArchiveConfig) throws UnifyException;
+    /**
+     * Updates a file archive config.
+     * 
+     * @param fileArchiveConfig
+     *            the file archive config
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateFileArchiveConfig(FileArchiveConfig fileArchiveConfig) throws UnifyException;
 
-	/**
-	 * Deletes a file archive config.
-	 * 
-	 * @param id
-	 *            the file archive config ID
-	 * @return the delete count
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	int deleteFileArchiveConfig(Long id) throws UnifyException;
+    /**
+     * Deletes a file archive config.
+     * 
+     * @param id
+     *            the file archive config ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteFileArchiveConfig(Long id) throws UnifyException;
 
-	/**
-	 * Retrieves an archived BLOB.
-	 * 
-	 * @param recordName
-	 *            the record type canonical name
-	 * @param fieldName
-	 *            the record field name
-	 * @param archivedItemId
-	 *            the original archived item ID
-	 * @return the retrieved BLOB if archive entry exists otherwise null
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	byte[] retriveArchivedBlob(String recordName, String fieldName, Long archivedItemId)
-			throws UnifyException;
+    /**
+     * Retrieves an archived BLOB.
+     * 
+     * @param recordName
+     *            the record type canonical name
+     * @param fieldName
+     *            the record field name
+     * @param archivedItemId
+     *            the original archived item ID
+     * @return the retrieved BLOB if archive entry exists otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    byte[] retriveArchivedBlob(String recordName, String fieldName, Long archivedItemId) throws UnifyException;
 
-	/**
-	 * Retrieves an archived CLOB.
-	 * 
-	 * @param recordName
-	 *            the record type canonical name
-	 * @param fieldName
-	 *            the record field name
-	 * @param archivedItemId
-	 *            the original archived item ID
-	 * @return the retrieved CLOB if archive entry exists otherwise null
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	String retriveArchivedClob(String recordName, String fieldName, Long archivedItemId)
-			throws UnifyException;
+    /**
+     * Retrieves an archived CLOB.
+     * 
+     * @param recordName
+     *            the record type canonical name
+     * @param fieldName
+     *            the record field name
+     * @param archivedItemId
+     *            the original archived item ID
+     * @return the retrieved CLOB if archive entry exists otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String retriveArchivedClob(String recordName, String fieldName, Long archivedItemId) throws UnifyException;
 }

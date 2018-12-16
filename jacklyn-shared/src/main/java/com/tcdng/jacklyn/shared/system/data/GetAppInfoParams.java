@@ -29,7 +29,7 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetAppInfoParams extends RemoteCallParams {
 
-	public GetAppInfoParams() {
-		super(SystemRemoteCallNameConstants.GET_APPLICATION_INFO);
-	}
+    public GetAppInfoParams() {
+        super(SystemRemoteCallNameConstants.GET_APPLICATION_INFO);
+    }
 }

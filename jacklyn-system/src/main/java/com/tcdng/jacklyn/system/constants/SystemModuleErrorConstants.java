@@ -23,24 +23,24 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemModuleErrorConstants {
 
-	/** Module [{0}] is not deactivatable */
-	String MODULE_DATA_NOT_DEACTIVATABLE = "SYSTEM_0001";
+    /** Module [{0}] is not deactivatable */
+    String MODULE_DATA_NOT_DEACTIVATABLE = "SYSTEM_0001";
 
-	/** Unknown module referenced. Managed name = {0}. */
-	String MODULE_UNKNOWN_MODULE_NAME_REFERENCED = "SYSTEM_0002";
+    /** Unknown module referenced. Managed name = {0}. */
+    String MODULE_UNKNOWN_MODULE_NAME_REFERENCED = "SYSTEM_0002";
 
-	/**
-	 * MenuItemSet with name {0} is unknown. Referencing menu item name {1} and
-	 * definition class is {2}
-	 */
-	String MENU_WITH_NAME_UNKNOWN = "SYSTEM_0003";
+    /**
+     * MenuItemSet with name {0} is unknown. Referencing menu item name {1} and
+     * definition class is {2}
+     */
+    String MENU_WITH_NAME_UNKNOWN = "SYSTEM_0003";
 
-	/** System parameter with name {0} is unknown. */
-	String SYSPARAM_WITH_NAME_UNKNOWN = "SYSTEM_0004";
+    /** System parameter with name {0} is unknown. */
+    String SYSPARAM_WITH_NAME_UNKNOWN = "SYSTEM_0004";
 
-	/**
-	 * Multiple module configurations with module name {0} found. Only extension can
-	 * use existing name.
-	 */
-	String MODULE_MULTIPLE_CONFIGURATIONS_WITH_NAME = "SYSTEM_0005";
+    /**
+     * Multiple module configurations with module name {0} found. Only extension can
+     * use existing name.
+     */
+    String MODULE_MULTIPLE_CONFIGURATIONS_WITH_NAME = "SYSTEM_0005";
 }

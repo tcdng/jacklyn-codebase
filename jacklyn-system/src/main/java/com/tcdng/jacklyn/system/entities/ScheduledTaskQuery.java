@@ -27,23 +27,23 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  */
 public class ScheduledTaskQuery extends BaseVersionedStatusEntityQuery<ScheduledTask> {
 
-	public ScheduledTaskQuery() {
-		super(ScheduledTask.class);
-	}
+    public ScheduledTaskQuery() {
+        super(ScheduledTask.class);
+    }
 
-	public ScheduledTaskQuery descriptionLike(String description) {
-		return (ScheduledTaskQuery) like("description", description);
-	}
+    public ScheduledTaskQuery descriptionLike(String description) {
+        return (ScheduledTaskQuery) like("description", description);
+    }
 
-	public ScheduledTaskQuery taskName(String taskName) {
-		return (ScheduledTaskQuery) equals("taskName", taskName);
-	}
+    public ScheduledTaskQuery taskName(String taskName) {
+        return (ScheduledTaskQuery) equals("taskName", taskName);
+    }
 
-	public ScheduledTaskQuery updated(Boolean updated) {
-		return (ScheduledTaskQuery) equals("updated", updated);
-	}
+    public ScheduledTaskQuery updated(Boolean updated) {
+        return (ScheduledTaskQuery) equals("updated", updated);
+    }
 
-	public ScheduledTaskQuery startTimeBeforeOrOn(Date date) {
-		return (ScheduledTaskQuery) lessEqual("startTime", date);
-	}
+    public ScheduledTaskQuery startTimeBeforeOrOn(Date date) {
+        return (ScheduledTaskQuery) lessEqual("startTime", date);
+    }
 }

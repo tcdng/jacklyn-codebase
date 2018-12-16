@@ -26,66 +26,66 @@ import java.util.Date;
  */
 public class WfItemHistEvent implements Serializable {
 
-	private static final long serialVersionUID = 8850442281117998741L;
+    private static final long serialVersionUID = 8850442281117998741L;
 
-	private Long id;
+    private Long id;
 
-	private String wfStep;
+    private String wfStep;
 
-	private Date stepDt;
+    private Date stepDt;
 
-	private Date actionDt;
+    private Date actionDt;
 
-	private String actor;
+    private String actor;
 
-	private String wfAction;
+    private String wfAction;
 
-	private String wfActionDesc;
+    private String wfActionDesc;
 
-	private String notes;
+    private String notes;
 
-	public WfItemHistEvent(Long id, String wfStep, Date stepDt, Date actionDt, String actor,
-			String wfAction, String wfActionDesc, String notes) {
-		this.id = id;
-		this.wfStep = wfStep;
-		this.stepDt = stepDt;
-		this.actionDt = actionDt;
-		this.actor = actor;
-		this.wfAction = wfAction;
-		this.wfActionDesc = wfActionDesc;
-		this.notes = notes;
-	}
+    public WfItemHistEvent(Long id, String wfStep, Date stepDt, Date actionDt, String actor, String wfAction,
+            String wfActionDesc, String notes) {
+        this.id = id;
+        this.wfStep = wfStep;
+        this.stepDt = stepDt;
+        this.actionDt = actionDt;
+        this.actor = actor;
+        this.wfAction = wfAction;
+        this.wfActionDesc = wfActionDesc;
+        this.notes = notes;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getWfStep() {
-		return wfStep;
-	}
+    public String getWfStep() {
+        return wfStep;
+    }
 
-	public Date getStepDt() {
-		return stepDt;
-	}
+    public Date getStepDt() {
+        return stepDt;
+    }
 
-	public Date getActionDt() {
-		return actionDt;
-	}
+    public Date getActionDt() {
+        return actionDt;
+    }
 
-	public String getActor() {
-		return actor;
-	}
+    public String getActor() {
+        return actor;
+    }
 
-	public String getWfAction() {
-		return wfAction;
-	}
+    public String getWfAction() {
+        return wfAction;
+    }
 
-	public String getWfActionDesc() {
-		return wfActionDesc;
-	}
+    public String getWfActionDesc() {
+        return wfActionDesc;
+    }
 
-	public String getNotes() {
-		return notes;
-	}
+    public String getNotes() {
+        return notes;
+    }
 
 }

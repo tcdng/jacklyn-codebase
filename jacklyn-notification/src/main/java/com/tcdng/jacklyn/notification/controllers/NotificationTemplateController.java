@@ -34,98 +34,96 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/notification/notificationtemplate")
 @UplBinding("web/notification/upl/managenotificationtemplate.upl")
-public class NotificationTemplateController
-		extends AbstractNotificationRecordController<NotificationTemplate> {
+public class NotificationTemplateController extends AbstractNotificationRecordController<NotificationTemplate> {
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public NotificationTemplateController() {
-		super(NotificationTemplate.class, "notification.notificationtemplate.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.CLIPBOARD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public NotificationTemplateController() {
+        super(NotificationTemplate.class, "notification.notificationtemplate.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.COPY_TO_ADD
+                        | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<NotificationTemplate> find() throws UnifyException {
-		NotificationTemplateQuery query = new NotificationTemplateQuery();
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getNotificationModule().findNotificationTemplates(query);
-	}
+    @Override
+    protected List<NotificationTemplate> find() throws UnifyException {
+        NotificationTemplateQuery query = new NotificationTemplateQuery();
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getNotificationModule().findNotificationTemplates(query);
+    }
 
-	@Override
-	protected NotificationTemplate find(Long id) throws UnifyException {
-		return getNotificationModule().findNotificationTemplate(id);
-	}
+    @Override
+    protected NotificationTemplate find(Long id) throws UnifyException {
+        return getNotificationModule().findNotificationTemplate(id);
+    }
 
-	@Override
-	protected NotificationTemplate prepareCreate() throws UnifyException {
-		return new NotificationTemplate();
-	}
+    @Override
+    protected NotificationTemplate prepareCreate() throws UnifyException {
+        return new NotificationTemplate();
+    }
 
-	@Override
-	protected Object create(NotificationTemplate notificationTemplateData) throws UnifyException {
-		return getNotificationModule().createNotificationTemplate(notificationTemplateData);
-	}
+    @Override
+    protected Object create(NotificationTemplate notificationTemplateData) throws UnifyException {
+        return getNotificationModule().createNotificationTemplate(notificationTemplateData);
+    }
 
-	@Override
-	protected int update(NotificationTemplate notificationTemplateData) throws UnifyException {
-		return getNotificationModule().updateNotificationTemplate(notificationTemplateData);
-	}
+    @Override
+    protected int update(NotificationTemplate notificationTemplateData) throws UnifyException {
+        return getNotificationModule().updateNotificationTemplate(notificationTemplateData);
+    }
 
-	@Override
-	protected int delete(NotificationTemplate notificationTemplateData) throws UnifyException {
-		return getNotificationModule().deleteNotificationTemplate(notificationTemplateData.getId());
-	}
+    @Override
+    protected int delete(NotificationTemplate notificationTemplateData) throws UnifyException {
+        return getNotificationModule().deleteNotificationTemplate(notificationTemplateData.getId());
+    }
 
 }

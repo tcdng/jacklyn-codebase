@@ -32,9 +32,8 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("userwfitemsummarylist")
 public class UserWorkItemSummaryListCommand extends AbstractZeroParamsWorkflowListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getWorkflowModule().getCurrentUserWorkItemSummary();
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getWorkflowModule().getCurrentUserWorkItemSummary();
+    }
 }

@@ -25,11 +25,10 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractZeroParamsWorkflowListCommand
-		extends AbstractWorkflowListCommand<ZeroParams> {
+public abstract class AbstractZeroParamsWorkflowListCommand extends AbstractWorkflowListCommand<ZeroParams> {
 
-	public AbstractZeroParamsWorkflowListCommand() {
-		super(ZeroParams.class);
-	}
+    public AbstractZeroParamsWorkflowListCommand() {
+        super(ZeroParams.class);
+    }
 
 }

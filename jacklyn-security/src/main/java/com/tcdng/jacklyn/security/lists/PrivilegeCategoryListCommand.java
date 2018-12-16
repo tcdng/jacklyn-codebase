@@ -34,11 +34,9 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("privilegecategorylist")
 public class PrivilegeCategoryListCommand extends AbstractZeroParamsSecurityListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		return getSecurityBusinessModule()
-				.findPrivilegeCategories((PrivilegeCategoryQuery) new PrivilegeCategoryQuery()
-						.status(RecordStatus.ACTIVE).order("description"));
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getSecurityBusinessModule().findPrivilegeCategories(
+                (PrivilegeCategoryQuery) new PrivilegeCategoryQuery().status(RecordStatus.ACTIVE).order("description"));
+    }
 }

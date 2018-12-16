@@ -29,24 +29,24 @@ import com.tcdng.unify.core.util.CalendarUtils;
  */
 public class ScheduledTaskHistQuery extends BaseTimestampedEntityQuery<ScheduledTaskHist> {
 
-	public ScheduledTaskHistQuery() {
-		super(ScheduledTaskHist.class);
-	}
+    public ScheduledTaskHistQuery() {
+        super(ScheduledTaskHist.class);
+    }
 
-	public ScheduledTaskHistQuery taskStatus(TaskStatus taskStatus) {
-		return (ScheduledTaskHistQuery) equals("taskStatus", taskStatus);
-	}
+    public ScheduledTaskHistQuery taskStatus(TaskStatus taskStatus) {
+        return (ScheduledTaskHistQuery) equals("taskStatus", taskStatus);
+    }
 
-	public ScheduledTaskHistQuery taskName(String taskName) {
-		return (ScheduledTaskHistQuery) equals("taskName", taskName);
-	}
+    public ScheduledTaskHistQuery taskName(String taskName) {
+        return (ScheduledTaskHistQuery) equals("taskName", taskName);
+    }
 
-	public ScheduledTaskHistQuery scheduledTaskId(Long scheduledTaskId) {
-		return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
-	}
+    public ScheduledTaskHistQuery scheduledTaskId(Long scheduledTaskId) {
+        return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
+    }
 
-	public ScheduledTaskHistQuery createdOn(Date date) {
-		return (ScheduledTaskHistQuery) between("createDt", CalendarUtils.getMidnightDate(date),
-				CalendarUtils.getLastSecondDate(date));
-	}
+    public ScheduledTaskHistQuery createdOn(Date date) {
+        return (ScheduledTaskHistQuery) between("createDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
 }

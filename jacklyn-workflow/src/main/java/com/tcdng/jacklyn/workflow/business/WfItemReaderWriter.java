@@ -28,17 +28,16 @@ import com.tcdng.unify.core.format.Formatter;
  */
 public class WfItemReaderWriter extends WfItemReader {
 
-	public WfItemReaderWriter(PackableDoc pd) {
-		super(pd);
-	}
+    public WfItemReaderWriter(PackableDoc pd) {
+        super(pd);
+    }
 
-	public void writeFieldValue(String name, Object value) throws UnifyException {
-		getPd().writeFieldValue(name, value);
-	}
+    public void writeFieldValue(String name, Object value) throws UnifyException {
+        getPd().writeFieldValue(name, value);
+    }
 
-	public void writeFieldValue(String name, Object value, Formatter<?> formatter)
-			throws UnifyException {
-		getPd().writeFieldValue(name, value, formatter);
-	}
+    public void writeFieldValue(String name, Object value, Formatter<?> formatter) throws UnifyException {
+        getPd().writeFieldValue(name, value, formatter);
+    }
 
 }

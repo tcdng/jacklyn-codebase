@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("notificationtypelist")
 public enum NotificationType implements EnumConst {
 
-	SYSTEM("X"), EMAIL("E"), SMS("S");
+    SYSTEM("X"), EMAIL("E"), SMS("S");
 
-	private final String code;
+    private final String code;
 
-	private NotificationType(String code) {
-		this.code = code;
-	}
+    private NotificationType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return code;
-	}
+    @Override
+    public String code() {
+        return code;
+    }
 
-	public static NotificationType fromCode(String code) {
-		return EnumUtils.fromCode(NotificationType.class, code);
-	}
+    public static NotificationType fromCode(String code) {
+        return EnumUtils.fromCode(NotificationType.class, code);
+    }
 
-	public static NotificationType fromName(String name) {
-		return EnumUtils.fromName(NotificationType.class, name);
-	}
+    public static NotificationType fromName(String name) {
+        return EnumUtils.fromName(NotificationType.class, name);
+    }
 }

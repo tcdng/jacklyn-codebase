@@ -35,92 +35,92 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wfdoc")
 @UplBinding("web/workflow/upl/managewfdoc.upl")
-@SessionLoading(crudPanelLists = {
-		@CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
-		@CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList") })
+@SessionLoading(
+        crudPanelLists = { @CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
+                @CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList") })
 public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
 
-	private Long searchWfCategoryId;
+    private Long searchWfCategoryId;
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	public WfDocController() {
-		super(WfDoc.class, "workflow.wfdoc.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public WfDocController() {
+        super(WfDoc.class, "workflow.wfdoc.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchWfCategoryId() {
-		return searchWfCategoryId;
-	}
+    public Long getSearchWfCategoryId() {
+        return searchWfCategoryId;
+    }
 
-	public void setSearchWfCategoryId(Long searchWfCategoryId) {
-		this.searchWfCategoryId = searchWfCategoryId;
-	}
+    public void setSearchWfCategoryId(Long searchWfCategoryId) {
+        this.searchWfCategoryId = searchWfCategoryId;
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	@Override
-	protected List<WfDoc> find() throws UnifyException {
-		WfDocQuery query = new WfDocQuery();
-		if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
-			query.wfCategoryId(searchWfCategoryId);
-		}
+    @Override
+    protected List<WfDoc> find() throws UnifyException {
+        WfDocQuery query = new WfDocQuery();
+        if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
+            query.wfCategoryId(searchWfCategoryId);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		query.order("description").ignoreEmptyCriteria(true);
-		return getWorkflowModule().findWfDocs(query);
-	}
+        query.order("description").ignoreEmptyCriteria(true);
+        return getWorkflowModule().findWfDocs(query);
+    }
 
-	@Override
-	protected WfDoc find(Long wfDocId) throws UnifyException {
-		return getWorkflowModule().findWfDoc(wfDocId);
-	}
+    @Override
+    protected WfDoc find(Long wfDocId) throws UnifyException {
+        return getWorkflowModule().findWfDoc(wfDocId);
+    }
 
-	@Override
-	protected WfDoc prepareCreate() throws UnifyException {
-		return new WfDoc();
-	}
+    @Override
+    protected WfDoc prepareCreate() throws UnifyException {
+        return new WfDoc();
+    }
 
-	@Override
-	protected void onPrepareView(WfDoc wfDocData, boolean onPaste) throws UnifyException {
+    @Override
+    protected void onPrepareView(WfDoc wfDocData, boolean onPaste) throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected Object create(WfDoc wfDocData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(WfDoc wfDocData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(WfDoc wfDocData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(WfDoc wfDocData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(WfDoc record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(WfDoc record) throws UnifyException {
+        return 0;
+    }
 }

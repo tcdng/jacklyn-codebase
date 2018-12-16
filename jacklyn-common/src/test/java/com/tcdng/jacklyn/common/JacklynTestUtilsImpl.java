@@ -30,23 +30,23 @@ import com.tcdng.unify.core.annotation.Component;
 @Component("jacklyn-testutils")
 public class JacklynTestUtilsImpl extends AbstractUnifyComponent implements JacklynTestUtils {
 
-	@Override
-	public void swapApplicationSystemAnonymousUserTokens() throws UnifyException {
-		UserToken userToken = (UserToken) getApplicationAttribute(
-				JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN);
-		setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN,
-				getApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN));
-		setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN, userToken);
-	}
+    @Override
+    public void swapApplicationSystemAnonymousUserTokens() throws UnifyException {
+        UserToken userToken = (UserToken) getApplicationAttribute(
+                JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN);
+        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN,
+                getApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN));
+        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN, userToken);
+    }
 
-	@Override
-	protected void onInitialize() throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 
 }

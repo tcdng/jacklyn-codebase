@@ -37,21 +37,20 @@ import com.tcdng.unify.web.data.AssignParams;
 @Component("privilegeinlist")
 public class PrivilegeInListCommand extends AbstractAssignParamsSecurityListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, AssignParams params)
-			throws UnifyException {
-		if (params.isAssignedIdList() && QueryUtils.isValidStringCriteria(params.getFilterId1())) {
-			PrivilegeQuery query = new PrivilegeQuery();
-			query.privilegeCategoryId(params.getFilterId1(Long.class));
-			if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
-				query.moduleId(params.getFilterId2(Long.class));
-			}
+    @Override
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        if (params.isAssignedIdList() && QueryUtils.isValidStringCriteria(params.getFilterId1())) {
+            PrivilegeQuery query = new PrivilegeQuery();
+            query.privilegeCategoryId(params.getFilterId1(Long.class));
+            if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
+                query.moduleId(params.getFilterId2(Long.class));
+            }
 
-			query.idIn(params.getAssignedIdList(Long.class));
-			query.select("id", "description").order("description");
-			return getSecurityBusinessModule().findPrivileges(query);
-		}
+            query.idIn(params.getAssignedIdList(Long.class));
+            query.select("id", "description").order("description");
+            return getSecurityBusinessModule().findPrivileges(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 }

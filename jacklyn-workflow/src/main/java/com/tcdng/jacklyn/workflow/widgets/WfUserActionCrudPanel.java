@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfuseractioncrudpanel.upl")
 public class WfUserActionCrudPanel extends AbstractInMemoryTableCrudPanel<WfUserAction> {
 
-	public WfUserActionCrudPanel() {
-		super(WfUserAction.class, "workflow.wftemplate.wfstep.wfuseraction", false);
-	}
+    public WfUserActionCrudPanel() {
+        super(WfUserAction.class, "workflow.wftemplate.wfstep.wfuseraction", false);
+    }
 
 }

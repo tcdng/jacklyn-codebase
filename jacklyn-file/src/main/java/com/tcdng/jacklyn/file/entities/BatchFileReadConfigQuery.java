@@ -25,19 +25,19 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  */
 public class BatchFileReadConfigQuery extends BaseVersionedStatusEntityQuery<BatchFileReadConfig> {
 
-	public BatchFileReadConfigQuery() {
-		super(BatchFileReadConfig.class);
-	}
+    public BatchFileReadConfigQuery() {
+        super(BatchFileReadConfig.class);
+    }
 
-	public BatchFileReadConfigQuery name(String name) {
-		return (BatchFileReadConfigQuery) equals("name", name);
-	}
+    public BatchFileReadConfigQuery name(String name) {
+        return (BatchFileReadConfigQuery) equals("name", name);
+    }
 
-	public BatchFileReadConfigQuery nameLike(String name) {
-		return (BatchFileReadConfigQuery) like("name", name);
-	}
+    public BatchFileReadConfigQuery nameLike(String name) {
+        return (BatchFileReadConfigQuery) like("name", name);
+    }
 
-	public BatchFileReadConfigQuery descriptionLike(String description) {
-		return (BatchFileReadConfigQuery) like("description", description);
-	}
+    public BatchFileReadConfigQuery descriptionLike(String description) {
+        return (BatchFileReadConfigQuery) like("description", description);
+    }
 }

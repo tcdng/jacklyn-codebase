@@ -27,27 +27,27 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class AuditFieldQuery extends BaseInstallEntityQuery<AuditField> {
 
-	public AuditFieldQuery() {
-		super(AuditField.class);
-	}
+    public AuditFieldQuery() {
+        super(AuditField.class);
+    }
 
-	public AuditFieldQuery auditTypeId(Long auditTypeId) {
-		return (AuditFieldQuery) equals("auditTypeId", auditTypeId);
-	}
+    public AuditFieldQuery auditTypeId(Long auditTypeId) {
+        return (AuditFieldQuery) equals("auditTypeId", auditTypeId);
+    }
 
-	public AuditFieldQuery fieldName(String fieldName) {
-		return (AuditFieldQuery) equals("fieldName", fieldName);
-	}
+    public AuditFieldQuery fieldName(String fieldName) {
+        return (AuditFieldQuery) equals("fieldName", fieldName);
+    }
 
-	public AuditFieldQuery fieldNameLike(String fieldName) {
-		return (AuditFieldQuery) like("fieldName", fieldName);
-	}
+    public AuditFieldQuery fieldNameLike(String fieldName) {
+        return (AuditFieldQuery) like("fieldName", fieldName);
+    }
 
-	public AuditFieldQuery fieldNameIn(Collection<String> fieldNames) {
-		return (AuditFieldQuery) amongst("fieldName", fieldNames);
-	}
+    public AuditFieldQuery fieldNameIn(Collection<String> fieldNames) {
+        return (AuditFieldQuery) amongst("fieldName", fieldNames);
+    }
 
-	public AuditFieldQuery fieldNameNotIn(Collection<String> fieldNames) {
-		return (AuditFieldQuery) notAmongst("fieldName", fieldNames);
-	}
+    public AuditFieldQuery fieldNameNotIn(Collection<String> fieldNames) {
+        return (AuditFieldQuery) notAmongst("fieldName", fieldNames);
+    }
 }

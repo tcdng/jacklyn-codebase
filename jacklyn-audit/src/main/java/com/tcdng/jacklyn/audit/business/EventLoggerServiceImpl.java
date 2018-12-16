@@ -48,136 +48,121 @@ import com.tcdng.unify.core.util.ReflectUtils;
 @Component(ApplicationComponents.APPLICATION_EVENTSLOGGER)
 public class EventLoggerServiceImpl extends AbstractBusinessModule implements EventLoggerService {
 
-	@Override
-	public boolean logUserEvent(String eventName, List<String> details) throws UnifyException {
-		return logUserEvent(eventName, details.toArray(new String[details.size()]));
-	}
+    @Override
+    public boolean logUserEvent(String eventName, List<String> details) throws UnifyException {
+        return logUserEvent(eventName, details.toArray(new String[details.size()]));
+    }
 
-	@Override
-	public boolean logUserEvent(String eventName, String... details) throws UnifyException {
-		AuditDefinition auditDefinition = db().find(new AuditDefinitionQuery().name(eventName));
-		if (auditDefinition == null) {
-			throw new UnifyException(AuditModuleErrorConstants.AUDITTYPE_IS_UNKNOWN, eventName);
-		}
+    @Override
+    public boolean logUserEvent(String eventName, String... details) throws UnifyException {
+        AuditDefinition auditDefinition = db().find(new AuditDefinitionQuery().name(eventName));
+        if (auditDefinition == null) {
+            throw new UnifyException(AuditModuleErrorConstants.AUDITTYPE_IS_UNKNOWN, eventName);
+        }
 
-		if (RecordStatus.ACTIVE.equals(auditDefinition.getStatus())) {
-			createAuditTrail(auditDefinition.getId(), details, null);
-			return true;
-		}
+        if (RecordStatus.ACTIVE.equals(auditDefinition.getStatus())) {
+            createAuditTrail(auditDefinition.getId(), details, null);
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public boolean logUserEvent(EventType eventType, Class<? extends Entity> entityClass)
-			throws UnifyException {
-		AuditDefinition auditDefinitionData
-				= db().find(new AuditDefinitionQuery().recordName(entityClass.getName())
-						.eventType(eventType).status(RecordStatus.ACTIVE));
-		if (auditDefinitionData != null) {
-			createAuditTrail(auditDefinitionData.getId(), null, null);
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean logUserEvent(EventType eventType, Class<? extends Entity> entityClass) throws UnifyException {
+        AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery().recordName(entityClass.getName())
+                .eventType(eventType).status(RecordStatus.ACTIVE));
+        if (auditDefinitionData != null) {
+            createAuditTrail(auditDefinitionData.getId(), null, null);
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public boolean logUserEvent(EventType eventType, Entity record, boolean isNewRecord)
-			throws UnifyException {
-		AuditDefinition auditDefinitionData
-				= db().find(new AuditDefinitionQuery().recordName(record.getClass().getName())
-						.eventType(eventType).status(RecordStatus.ACTIVE));
-		if (auditDefinitionData != null) {
-			Long auditTypeId = auditDefinitionData.getAuditTypeId();
-			String[] narration = null;
-			if (isNewRecord) {
-				List<AuditField> auditFieldList
-						= db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId));
-				narration = new String[auditFieldList.size()];
-				for (int i = 0; i < narration.length; i++) {
-					AuditField auditFieldData = auditFieldList.get(i);
-					String name = auditFieldData.getFieldName();
-					String auditValue
-							= convert(String.class, ReflectUtils.getBeanProperty(record, name),
-									auditFieldData.getFormatter());
-					narration[i] = getApplicationMessage("eventloggerservice.narration.message.new",
-							name, auditValue);
-				}
-			}
-			createAuditTrail(auditDefinitionData.getId(), narration, (Long) record.getId());
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean logUserEvent(EventType eventType, Entity record, boolean isNewRecord) throws UnifyException {
+        AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery()
+                .recordName(record.getClass().getName()).eventType(eventType).status(RecordStatus.ACTIVE));
+        if (auditDefinitionData != null) {
+            Long auditTypeId = auditDefinitionData.getAuditTypeId();
+            String[] narration = null;
+            if (isNewRecord) {
+                List<AuditField> auditFieldList = db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId));
+                narration = new String[auditFieldList.size()];
+                for (int i = 0; i < narration.length; i++) {
+                    AuditField auditFieldData = auditFieldList.get(i);
+                    String name = auditFieldData.getFieldName();
+                    String auditValue = convert(String.class, ReflectUtils.getBeanProperty(record, name),
+                            auditFieldData.getFormatter());
+                    narration[i] = getApplicationMessage("eventloggerservice.narration.message.new", name, auditValue);
+                }
+            }
+            createAuditTrail(auditDefinitionData.getId(), narration, (Long) record.getId());
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public <T extends Entity> boolean logUserEvent(EventType eventType, T oldRecord, T newRecord)
-			throws UnifyException {
-		if (newRecord != null && !oldRecord.getClass().equals(newRecord.getClass())) {
-			throw new UnifyException(AuditModuleErrorConstants.CANNOT_AUDIT_DIFFERENT_RECORD_TYPES,
-					oldRecord.getClass(), newRecord.getClass());
-		}
+    @Override
+    public <T extends Entity> boolean logUserEvent(EventType eventType, T oldRecord, T newRecord)
+            throws UnifyException {
+        if (newRecord != null && !oldRecord.getClass().equals(newRecord.getClass())) {
+            throw new UnifyException(AuditModuleErrorConstants.CANNOT_AUDIT_DIFFERENT_RECORD_TYPES,
+                    oldRecord.getClass(), newRecord.getClass());
+        }
 
-		AuditDefinition auditDefinitionData
-				= db().find(new AuditDefinitionQuery().recordName(oldRecord.getClass().getName())
-						.eventType(eventType).status(RecordStatus.ACTIVE));
-		if (auditDefinitionData != null) {
-			Long auditTypeId = auditDefinitionData.getAuditTypeId();
-			List<String> narrationList = new ArrayList<String>();
-			List<AuditField> list = db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId));
-			for (AuditField auditFieldData : list) {
-				String name = auditFieldData.getFieldName();
-				Object oldValue
-						= ReflectUtils.getBeanProperty(oldRecord, auditFieldData.getFieldName());
-				Object newValue
-						= ReflectUtils.getBeanProperty(newRecord, auditFieldData.getFieldName());
-				if ((oldValue != null && !oldValue.equals(newValue))
-						|| (newValue != null && !newValue.equals(oldValue))) {
-					String oldAuditValue
-							= convert(String.class, oldValue, auditFieldData.getFormatter());
-					String newAuditValue
-							= convert(String.class, newValue, auditFieldData.getFormatter());
-					narrationList.add(
-							getApplicationMessage("eventloggerservice.narration.message.difference",
-									name, oldAuditValue, newAuditValue));
-				}
-			}
+        AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery()
+                .recordName(oldRecord.getClass().getName()).eventType(eventType).status(RecordStatus.ACTIVE));
+        if (auditDefinitionData != null) {
+            Long auditTypeId = auditDefinitionData.getAuditTypeId();
+            List<String> narrationList = new ArrayList<String>();
+            List<AuditField> list = db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId));
+            for (AuditField auditFieldData : list) {
+                String name = auditFieldData.getFieldName();
+                Object oldValue = ReflectUtils.getBeanProperty(oldRecord, auditFieldData.getFieldName());
+                Object newValue = ReflectUtils.getBeanProperty(newRecord, auditFieldData.getFieldName());
+                if ((oldValue != null && !oldValue.equals(newValue))
+                        || (newValue != null && !newValue.equals(oldValue))) {
+                    String oldAuditValue = convert(String.class, oldValue, auditFieldData.getFormatter());
+                    String newAuditValue = convert(String.class, newValue, auditFieldData.getFormatter());
+                    narrationList.add(getApplicationMessage("eventloggerservice.narration.message.difference", name,
+                            oldAuditValue, newAuditValue));
+                }
+            }
 
-			createAuditTrail(auditDefinitionData.getId(),
-					narrationList.toArray(new String[narrationList.size()]),
-					(Long) oldRecord.getId());
+            createAuditTrail(auditDefinitionData.getId(), narrationList.toArray(new String[narrationList.size()]),
+                    (Long) oldRecord.getId());
 
-			return true;
-		}
-		return false;
-	}
+            return true;
+        }
+        return false;
+    }
 
-	private Long createAuditTrail(Long auditDefinitionId, String[] details, Long recordId)
-			throws UnifyException {
-		AuditTrail auditTrailData = new AuditTrail();
-		auditTrailData.setAuditDefinitionId(auditDefinitionId);
-		;
-		auditTrailData.setRecordId(recordId);
-		UserToken userToken = getUserToken();
-		if (userToken != null) {
-			auditTrailData.setUserLoginId(userToken.getUserLoginId());
-			auditTrailData.setIpAddress(userToken.getIpAddress());
-			auditTrailData.setRemoteEvent(userToken.isRemote());
-		} else {
-			auditTrailData.setUserLoginId(SystemReservedUserConstants.ANONYMOUS_LOGINID);
-			auditTrailData.setIpAddress(getSessionContext().getRemoteAddress());
-			auditTrailData.setRemoteEvent(null);
-		}
-		Long auditTrailId = (Long) db().create(auditTrailData);
+    private Long createAuditTrail(Long auditDefinitionId, String[] details, Long recordId) throws UnifyException {
+        AuditTrail auditTrailData = new AuditTrail();
+        auditTrailData.setAuditDefinitionId(auditDefinitionId);
+        ;
+        auditTrailData.setRecordId(recordId);
+        UserToken userToken = getUserToken();
+        if (userToken != null) {
+            auditTrailData.setUserLoginId(userToken.getUserLoginId());
+            auditTrailData.setIpAddress(userToken.getIpAddress());
+            auditTrailData.setRemoteEvent(userToken.isRemote());
+        } else {
+            auditTrailData.setUserLoginId(SystemReservedUserConstants.ANONYMOUS_LOGINID);
+            auditTrailData.setIpAddress(getSessionContext().getRemoteAddress());
+            auditTrailData.setRemoteEvent(null);
+        }
+        Long auditTrailId = (Long) db().create(auditTrailData);
 
-		if (QueryUtils.isValidStringArrayCriteria(details)) {
-			AuditDetail auditDetailData = new AuditDetail();
-			auditDetailData.setAuditTrailId(auditTrailId);
-			for (String detail : details) {
-				auditDetailData.setDetail(detail);
-				db().create(auditDetailData);
-			}
-		}
-		return auditTrailId;
-	}
+        if (QueryUtils.isValidStringArrayCriteria(details)) {
+            AuditDetail auditDetailData = new AuditDetail();
+            auditDetailData.setAuditTrailId(auditTrailId);
+            for (String detail : details) {
+                auditDetailData.setDetail(detail);
+                db().create(auditDetailData);
+            }
+        }
+        return auditTrailId;
+    }
 }

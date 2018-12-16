@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfUserActionsConfig {
 
-	private List<WfUserActionConfig> wfUserActionConfigList;
+    private List<WfUserActionConfig> wfUserActionConfigList;
 
-	public List<WfUserActionConfig> getWfUserActionConfigList() {
-		return wfUserActionConfigList;
-	}
+    public List<WfUserActionConfig> getWfUserActionConfigList() {
+        return wfUserActionConfigList;
+    }
 
-	@XmlElement(name = "user-action", required = true)
-	public void setWfUserActionConfigList(List<WfUserActionConfig> wfUserActionConfigList) {
-		this.wfUserActionConfigList = wfUserActionConfigList;
-	}
+    @XmlElement(name = "user-action", required = true)
+    public void setWfUserActionConfigList(List<WfUserActionConfig> wfUserActionConfigList) {
+        this.wfUserActionConfigList = wfUserActionConfigList;
+    }
 
 }

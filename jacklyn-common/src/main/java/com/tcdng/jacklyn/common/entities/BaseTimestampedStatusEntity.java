@@ -31,28 +31,28 @@ import com.tcdng.unify.core.annotation.Policy;
 @Policy("timestampedstatusentity-policy")
 public abstract class BaseTimestampedStatusEntity extends BaseStatusEntity {
 
-	@Format(formatter = "!datetimeformat")
-	@Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-	private Date createDt;
+    @Format(formatter = "!datetimeformat")
+    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private Date createDt;
 
-	@Format(formatter = "!datetimeformat")
-	@Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-	private Date updateDt;
+    @Format(formatter = "!datetimeformat")
+    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private Date updateDt;
 
-	public Date getCreateDt() {
-		return createDt;
-	}
+    public Date getCreateDt() {
+        return createDt;
+    }
 
-	public void setCreateDt(Date createDt) {
-		this.createDt = createDt;
-	}
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
+    }
 
-	public Date getUpdateDt() {
-		return updateDt;
-	}
+    public Date getUpdateDt() {
+        return updateDt;
+    }
 
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
+    public void setUpdateDt(Date updateDt) {
+        this.updateDt = updateDt;
+    }
 
 }

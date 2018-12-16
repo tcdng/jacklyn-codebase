@@ -28,76 +28,74 @@ import com.tcdng.jacklyn.common.entities.BaseLargeData;
  */
 public class WfTemplateLargeData extends BaseLargeData<WfTemplate> {
 
-	private List<WfStep> stepList;
+    private List<WfStep> stepList;
 
-	private List<WfEnrichment> enrichmentList;
+    private List<WfEnrichment> enrichmentList;
 
-	private List<WfRouting> routingList;
+    private List<WfRouting> routingList;
 
-	private List<WfRecordAction> recordActionList;
+    private List<WfRecordAction> recordActionList;
 
-	private List<WfUserAction> userActionList;
+    private List<WfUserAction> userActionList;
 
-	private List<WfFormPrivilege> formPrivilegeList;
+    private List<WfFormPrivilege> formPrivilegeList;
 
-	private List<WfPolicy> policyList;
+    private List<WfPolicy> policyList;
 
-	private List<WfAlert> alertList;
+    private List<WfAlert> alertList;
 
-	public WfTemplateLargeData() {
-		this(new WfTemplate());
-	}
+    public WfTemplateLargeData() {
+        this(new WfTemplate());
+    }
 
-	public WfTemplateLargeData(WfTemplate wfTemplateData) {
-		super(wfTemplateData);
-	}
+    public WfTemplateLargeData(WfTemplate wfTemplateData) {
+        super(wfTemplateData);
+    }
 
-	public WfTemplateLargeData(WfTemplate wfTemplateData, List<WfStep> stepList,
-			List<WfEnrichment> enrichmentList, List<WfRouting> routingList,
-			List<WfRecordAction> recordActionList, List<WfUserAction> userActionList,
-			List<WfFormPrivilege> formPrivilegeList, List<WfPolicy> policyList,
-			List<WfAlert> alertList) {
-		super(wfTemplateData);
-		this.stepList = stepList;
-		this.enrichmentList = enrichmentList;
-		this.routingList = routingList;
-		this.recordActionList = recordActionList;
-		this.userActionList = userActionList;
-		this.formPrivilegeList = formPrivilegeList;
-		this.policyList = policyList;
-		this.alertList = alertList;
-	}
+    public WfTemplateLargeData(WfTemplate wfTemplateData, List<WfStep> stepList, List<WfEnrichment> enrichmentList,
+            List<WfRouting> routingList, List<WfRecordAction> recordActionList, List<WfUserAction> userActionList,
+            List<WfFormPrivilege> formPrivilegeList, List<WfPolicy> policyList, List<WfAlert> alertList) {
+        super(wfTemplateData);
+        this.stepList = stepList;
+        this.enrichmentList = enrichmentList;
+        this.routingList = routingList;
+        this.recordActionList = recordActionList;
+        this.userActionList = userActionList;
+        this.formPrivilegeList = formPrivilegeList;
+        this.policyList = policyList;
+        this.alertList = alertList;
+    }
 
-	public List<WfStep> getStepList() {
-		return stepList;
-	}
+    public List<WfStep> getStepList() {
+        return stepList;
+    }
 
-	public List<WfRouting> getRoutingList() {
-		return routingList;
-	}
+    public List<WfRouting> getRoutingList() {
+        return routingList;
+    }
 
-	public List<WfRecordAction> getRecordActionList() {
-		return recordActionList;
-	}
+    public List<WfRecordAction> getRecordActionList() {
+        return recordActionList;
+    }
 
-	public List<WfUserAction> getUserActionList() {
-		return userActionList;
-	}
+    public List<WfUserAction> getUserActionList() {
+        return userActionList;
+    }
 
-	public List<WfFormPrivilege> getFormPrivilegeList() {
-		return formPrivilegeList;
-	}
+    public List<WfFormPrivilege> getFormPrivilegeList() {
+        return formPrivilegeList;
+    }
 
-	public List<WfEnrichment> getEnrichmentList() {
-		return enrichmentList;
-	}
+    public List<WfEnrichment> getEnrichmentList() {
+        return enrichmentList;
+    }
 
-	public List<WfPolicy> getPolicyList() {
-		return policyList;
-	}
+    public List<WfPolicy> getPolicyList() {
+        return policyList;
+    }
 
-	public List<WfAlert> getAlertList() {
-		return alertList;
-	}
+    public List<WfAlert> getAlertList() {
+        return alertList;
+    }
 
 }

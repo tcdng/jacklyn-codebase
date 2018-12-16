@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class PrivilegeConfig extends BaseConfig {
 
-	public PrivilegeConfig(String name, String description) {
-		super(name, description);
-	}
+    public PrivilegeConfig(String name, String description) {
+        super(name, description);
+    }
 
-	public PrivilegeConfig() {
+    public PrivilegeConfig() {
 
-	}
+    }
 }

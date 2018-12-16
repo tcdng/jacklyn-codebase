@@ -28,10 +28,9 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryRackCrudPanel;
  */
 @Component("ui-batchfilefielddefcrudpanel")
 @UplBinding("web/file/upl/batchfilefielddefcrudpanel.upl")
-public class BatchFileFieldDefinitionCrudPanel
-		extends AbstractInMemoryRackCrudPanel<BatchFileFieldDefinition> {
+public class BatchFileFieldDefinitionCrudPanel extends AbstractInMemoryRackCrudPanel<BatchFileFieldDefinition> {
 
-	public BatchFileFieldDefinitionCrudPanel() {
-		super(BatchFileFieldDefinition.class, "file.batchfilefielddefinition", true);
-	}
+    public BatchFileFieldDefinitionCrudPanel() {
+        super(BatchFileFieldDefinition.class, "file.batchfilefielddefinition", true);
+    }
 }

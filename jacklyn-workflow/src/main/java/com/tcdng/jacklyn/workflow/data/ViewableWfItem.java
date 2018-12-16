@@ -26,23 +26,23 @@ import com.tcdng.unify.core.data.PackableDoc;
  */
 public interface ViewableWfItem {
 
-	/**
-	 * Returns the item label
-	 */
-	String getTitle();
+    /**
+     * Returns the item label
+     */
+    String getTitle();
 
-	/**
-	 * Returns the document viewer name
-	 */
-	String getDocViewer();
+    /**
+     * Returns the document viewer name
+     */
+    String getDocViewer();
 
-	/**
-	 * Returns workflow item packable document.
-	 */
-	PackableDoc getPd();
+    /**
+     * Returns workflow item packable document.
+     */
+    PackableDoc getPd();
 
-	/**
-	 * Returns the workflow item step.
-	 */
-	WfStepDef getWfStepDef();
+    /**
+     * Returns the workflow item step.
+     */
+    WfStepDef getWfStepDef();
 }

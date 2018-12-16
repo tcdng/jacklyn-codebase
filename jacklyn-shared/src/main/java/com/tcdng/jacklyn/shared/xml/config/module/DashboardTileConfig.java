@@ -27,57 +27,57 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class DashboardTileConfig extends BaseConfig {
 
-	private String caption;
+    private String caption;
 
-	private String path;
+    private String path;
 
-	private String image;
+    private String image;
 
-	private String generator;
+    private String generator;
 
-	private boolean landscape;
+    private boolean landscape;
 
-	public String getCaption() {
-		return caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	@XmlAttribute(required = true)
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    @XmlAttribute(required = true)
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	@XmlAttribute(required = true)
-	public void setPath(String path) {
-		this.path = path;
-	}
+    @XmlAttribute(required = true)
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	@XmlAttribute
-	public void setImage(String image) {
-		this.image = image;
-	}
+    @XmlAttribute
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public String getGenerator() {
-		return generator;
-	}
+    public String getGenerator() {
+        return generator;
+    }
 
-	@XmlAttribute
-	public void setGenerator(String generator) {
-		this.generator = generator;
-	}
+    @XmlAttribute
+    public void setGenerator(String generator) {
+        this.generator = generator;
+    }
 
-	public boolean isLandscape() {
-		return landscape;
-	}
+    public boolean isLandscape() {
+        return landscape;
+    }
 
-	public void setLandscape(boolean landscape) {
-		this.landscape = landscape;
-	}
+    public void setLandscape(boolean landscape) {
+        this.landscape = landscape;
+    }
 }

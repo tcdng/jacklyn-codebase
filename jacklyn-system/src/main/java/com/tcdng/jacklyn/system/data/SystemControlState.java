@@ -24,40 +24,39 @@ package com.tcdng.jacklyn.system.data;
  */
 public class SystemControlState {
 
-	private int index;
+    private int index;
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private boolean enabled;
+    private boolean enabled;
 
-	public SystemControlState(int index, String name, String description, boolean enabled) {
-		this.index = index;
-		this.name = name;
-		this.description = description;
-		this.enabled = enabled;
-	}
+    public SystemControlState(int index, String name, String description, boolean enabled) {
+        this.index = index;
+        this.name = name;
+        this.description = description;
+        this.enabled = enabled;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	@Override
-	public String toString() {
-		return "SystemControlState [name=" + name + ", description=" + description + ", enabled="
-				+ enabled + "]";
-	}
+    @Override
+    public String toString() {
+        return "SystemControlState [name=" + name + ", description=" + description + ", enabled=" + enabled + "]";
+    }
 }

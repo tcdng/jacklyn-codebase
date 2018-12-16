@@ -33,34 +33,30 @@ import com.tcdng.unify.web.ui.data.FileAttachmentInfo;
 @Component(WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMATTACHMENTHANDLER)
 public class WfItemFileAttachmentHandler extends AbstractFileAttachmentHandler {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
+    private WorkflowModule workflowModule;
 
-	@Override
-	public void handleAttach(Object parentId, FileAttachmentInfo fileAttachmentInfo)
-			throws UnifyException {
-		WfItemAttachmentInfo wfItemAttachment = new WfItemAttachmentInfo(
-				fileAttachmentInfo.getName(), null, fileAttachmentInfo.getFilename(),
-				fileAttachmentInfo.getType(), fileAttachmentInfo.getAttachment());
-		workflowModule.attachToWorkflowItem((Long) parentId, wfItemAttachment);
-	}
+    @Override
+    public void handleAttach(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
+        WfItemAttachmentInfo wfItemAttachment = new WfItemAttachmentInfo(fileAttachmentInfo.getName(), null,
+                fileAttachmentInfo.getFilename(), fileAttachmentInfo.getType(), fileAttachmentInfo.getAttachment());
+        workflowModule.attachToWorkflowItem((Long) parentId, wfItemAttachment);
+    }
 
-	@Override
-	public FileAttachmentInfo handleView(Object parentId, FileAttachmentInfo fileAttachmentInfo)
-			throws UnifyException {
-		WfItemAttachmentInfo wfItemAttachment = workflowModule
-				.fetchWorkflowItemAttachment((Long) parentId, fileAttachmentInfo.getName());
-		FileAttachmentInfo retAttachmentInfo = new FileAttachmentInfo(wfItemAttachment.getName(),
-				resolveSessionMessage(wfItemAttachment.getLabel()), wfItemAttachment.getType());
-		retAttachmentInfo.setFilename(wfItemAttachment.getFilename());
-		retAttachmentInfo.setAttachment(wfItemAttachment.getData());
-		return retAttachmentInfo;
-	}
+    @Override
+    public FileAttachmentInfo handleView(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
+        WfItemAttachmentInfo wfItemAttachment = workflowModule.fetchWorkflowItemAttachment((Long) parentId,
+                fileAttachmentInfo.getName());
+        FileAttachmentInfo retAttachmentInfo = new FileAttachmentInfo(wfItemAttachment.getName(),
+                resolveSessionMessage(wfItemAttachment.getLabel()), wfItemAttachment.getType());
+        retAttachmentInfo.setFilename(wfItemAttachment.getFilename());
+        retAttachmentInfo.setAttachment(wfItemAttachment.getData());
+        return retAttachmentInfo;
+    }
 
-	@Override
-	public void handleDetach(Object parentId, FileAttachmentInfo fileAttachmentInfo)
-			throws UnifyException {
-		workflowModule.deleteWorkflowItemAttachment((Long) parentId, fileAttachmentInfo.getName());
-	}
+    @Override
+    public void handleDetach(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
+        workflowModule.deleteWorkflowItemAttachment((Long) parentId, fileAttachmentInfo.getName());
+    }
 
 }

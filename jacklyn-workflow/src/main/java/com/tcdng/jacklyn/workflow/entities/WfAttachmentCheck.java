@@ -30,56 +30,56 @@ import com.tcdng.unify.core.constant.RequirementType;
  * @since 1.0
  */
 @Table(name = "WFATTACHMENTCHECK",
-		uniqueConstraints = { @UniqueConstraint({ "wfUserActionId", "wfDocAttachmentName" }) })
+        uniqueConstraints = { @UniqueConstraint({ "wfUserActionId", "wfDocAttachmentName" }) })
 public class WfAttachmentCheck extends BaseEntity {
 
-	@ForeignKey(WfUserAction.class)
-	private Long wfUserActionId;
+    @ForeignKey(WfUserAction.class)
+    private Long wfUserActionId;
 
-	@ForeignKey
-	private RequirementType requirementType;
+    @ForeignKey
+    private RequirementType requirementType;
 
-	@Column(name = "ATTACHMENT_NM")
-	private String wfDocAttachmentName;
+    @Column(name = "ATTACHMENT_NM")
+    private String wfDocAttachmentName;
 
-	@ListOnly(key = "requirementType", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "requirementType", property = "description")
+    private String typeDesc;
 
-	@Override
-	public String getDescription() {
-		return this.wfDocAttachmentName;
-	}
+    @Override
+    public String getDescription() {
+        return this.wfDocAttachmentName;
+    }
 
-	public Long getWfUserActionId() {
-		return wfUserActionId;
-	}
+    public Long getWfUserActionId() {
+        return wfUserActionId;
+    }
 
-	public void setWfUserActionId(Long wfUserActionId) {
-		this.wfUserActionId = wfUserActionId;
-	}
+    public void setWfUserActionId(Long wfUserActionId) {
+        this.wfUserActionId = wfUserActionId;
+    }
 
-	public RequirementType getRequirementType() {
-		return requirementType;
-	}
+    public RequirementType getRequirementType() {
+        return requirementType;
+    }
 
-	public void setRequirementType(RequirementType requirementType) {
-		this.requirementType = requirementType;
-	}
+    public void setRequirementType(RequirementType requirementType) {
+        this.requirementType = requirementType;
+    }
 
-	public String getWfDocAttachmentName() {
-		return wfDocAttachmentName;
-	}
+    public String getWfDocAttachmentName() {
+        return wfDocAttachmentName;
+    }
 
-	public void setWfDocAttachmentName(String wfDocAttachmentName) {
-		this.wfDocAttachmentName = wfDocAttachmentName;
-	}
+    public void setWfDocAttachmentName(String wfDocAttachmentName) {
+        this.wfDocAttachmentName = wfDocAttachmentName;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
 }

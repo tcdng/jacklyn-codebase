@@ -29,141 +29,140 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFMESSAGE",
-		uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
-				@UniqueConstraint({ "wfTemplateId", "description" }) })
+@Table(name = "WFMESSAGE", uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
+        @UniqueConstraint({ "wfTemplateId", "description" }) })
 public class WfMessage extends BaseEntity {
 
-	@ForeignKey(WfTemplate.class)
-	private Long wfTemplateId;
+    @ForeignKey(WfTemplate.class)
+    private Long wfTemplateId;
 
-	@Column(name = "MESSAGE_NM", length = 64)
-	private String name;
+    @Column(name = "MESSAGE_NM", length = 64)
+    private String name;
 
-	@Column(name = "MESSAGE_DESC", length = 64)
-	private String description;
+    @Column(name = "MESSAGE_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64)
-	private String subject;
+    @Column(length = 64)
+    private String subject;
 
-	@Column(length = 2048)
-	private String template;
+    @Column(length = 2048)
+    private String template;
 
-	@Column(name = "HTML_FG")
-	private Boolean htmlFlag;
+    @Column(name = "HTML_FG")
+    private Boolean htmlFlag;
 
-	@Column(length = 32, nullable = true)
-	private String attachmentGenerator;
-	
-	@ListOnly(key = "wfTemplateId", property = "name")
-	private String wfTemplateName;
+    @Column(length = 32, nullable = true)
+    private String attachmentGenerator;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryId")
-	private Long wfCategoryId;
+    @ListOnly(key = "wfTemplateId", property = "name")
+    private String wfTemplateName;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryStatus")
-	private RecordStatus wfCategoryStatus;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryId")
+    private Long wfCategoryId;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryVersion")
-	private String wfCategoryVersion;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryStatus")
+    private RecordStatus wfCategoryStatus;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-	private String wfCategoryName;
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryVersion")
+    private String wfCategoryVersion;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
+    private String wfCategoryName;
 
-	public Long getWfTemplateId() {
-		return wfTemplateId;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setWfTemplateId(Long wfTemplateId) {
-		this.wfTemplateId = wfTemplateId;
-	}
+    public Long getWfTemplateId() {
+        return wfTemplateId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setWfTemplateId(Long wfTemplateId) {
+        this.wfTemplateId = wfTemplateId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	public Boolean getHtmlFlag() {
-		return htmlFlag;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setHtmlFlag(Boolean htmlFlag) {
-		this.htmlFlag = htmlFlag;
-	}
+    public Boolean getHtmlFlag() {
+        return htmlFlag;
+    }
 
-	public String getAttachmentGenerator() {
-		return attachmentGenerator;
-	}
+    public void setHtmlFlag(Boolean htmlFlag) {
+        this.htmlFlag = htmlFlag;
+    }
 
-	public void setAttachmentGenerator(String attachmentGenerator) {
-		this.attachmentGenerator = attachmentGenerator;
-	}
+    public String getAttachmentGenerator() {
+        return attachmentGenerator;
+    }
 
-	public String getWfTemplateName() {
-		return wfTemplateName;
-	}
+    public void setAttachmentGenerator(String attachmentGenerator) {
+        this.attachmentGenerator = attachmentGenerator;
+    }
 
-	public void setWfTemplateName(String wfTemplateName) {
-		this.wfTemplateName = wfTemplateName;
-	}
+    public String getWfTemplateName() {
+        return wfTemplateName;
+    }
 
-	public Long getWfCategoryId() {
-		return wfCategoryId;
-	}
+    public void setWfTemplateName(String wfTemplateName) {
+        this.wfTemplateName = wfTemplateName;
+    }
 
-	public void setWfCategoryId(Long wfCategoryId) {
-		this.wfCategoryId = wfCategoryId;
-	}
+    public Long getWfCategoryId() {
+        return wfCategoryId;
+    }
 
-	public String getWfCategoryName() {
-		return wfCategoryName;
-	}
+    public void setWfCategoryId(Long wfCategoryId) {
+        this.wfCategoryId = wfCategoryId;
+    }
 
-	public void setWfCategoryName(String wfCategoryName) {
-		this.wfCategoryName = wfCategoryName;
-	}
+    public String getWfCategoryName() {
+        return wfCategoryName;
+    }
 
-	public RecordStatus getWfCategoryStatus() {
-		return wfCategoryStatus;
-	}
+    public void setWfCategoryName(String wfCategoryName) {
+        this.wfCategoryName = wfCategoryName;
+    }
 
-	public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
-		this.wfCategoryStatus = wfCategoryStatus;
-	}
+    public RecordStatus getWfCategoryStatus() {
+        return wfCategoryStatus;
+    }
 
-	public String getWfCategoryVersion() {
-		return wfCategoryVersion;
-	}
+    public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
+        this.wfCategoryStatus = wfCategoryStatus;
+    }
 
-	public void setWfCategoryVersion(String wfCategoryVersion) {
-		this.wfCategoryVersion = wfCategoryVersion;
-	}
+    public String getWfCategoryVersion() {
+        return wfCategoryVersion;
+    }
+
+    public void setWfCategoryVersion(String wfCategoryVersion) {
+        this.wfCategoryVersion = wfCategoryVersion;
+    }
 }

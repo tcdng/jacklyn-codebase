@@ -27,28 +27,26 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractFileTransferPolicy extends AbstractUnifyComponent
-		implements FileTransferPolicy {
+public abstract class AbstractFileTransferPolicy extends AbstractUnifyComponent implements FileTransferPolicy {
 
-	@Override
-	public String getExtendedRemotePath(String serverPath, String workingDtFormat, Date workingDt)
-			throws UnifyException {
-		return JacklynUtils.getExtendedFilePath(serverPath, workingDtFormat, workingDt);
-	}
+    @Override
+    public String getExtendedRemotePath(String serverPath, String workingDtFormat, Date workingDt)
+            throws UnifyException {
+        return JacklynUtils.getExtendedFilePath(serverPath, workingDtFormat, workingDt);
+    }
 
-	@Override
-	public String getExtendedLocalPath(String localPath, String workingDtFormat, Date workingDt)
-			throws UnifyException {
-		return JacklynUtils.getExtendedFilePath(localPath, workingDtFormat, workingDt);
-	}
+    @Override
+    public String getExtendedLocalPath(String localPath, String workingDtFormat, Date workingDt) throws UnifyException {
+        return JacklynUtils.getExtendedFilePath(localPath, workingDtFormat, workingDt);
+    }
 
-	@Override
-	protected void onInitialize() throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected void onTerminate() throws UnifyException {
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-	}
+    }
 }

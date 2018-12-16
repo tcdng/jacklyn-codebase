@@ -31,17 +31,16 @@ import com.tcdng.unify.core.database.Entity;
 @Component("versionedtimestampedstatusentity-policy")
 public class BaseVersionedTimestampedStatusEntityPolicy extends BaseTimestampedStatusEntityPolicy {
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		((BaseVersionedTimestampedStatusEntity) record).setVersionNo(1L);
-		return super.preCreate(record, now);
-	}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        ((BaseVersionedTimestampedStatusEntity) record).setVersionNo(1L);
+        return super.preCreate(record, now);
+    }
 
-	@Override
-	public void preUpdate(Entity record, Date now) throws UnifyException {
-		BaseVersionedTimestampedStatusEntity versionedRecord
-				= (BaseVersionedTimestampedStatusEntity) record;
-		versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
-		super.preUpdate(versionedRecord, now);
-	}
+    @Override
+    public void preUpdate(Entity record, Date now) throws UnifyException {
+        BaseVersionedTimestampedStatusEntity versionedRecord = (BaseVersionedTimestampedStatusEntity) record;
+        versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
+        super.preUpdate(versionedRecord, now);
+    }
 }

@@ -26,34 +26,34 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ToolingListTypeItem {
 
-	private String name;
-	
-	private String description;
+    private String name;
 
-	public ToolingListTypeItem(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
+    private String description;
 
-	public ToolingListTypeItem() {
+    public ToolingListTypeItem(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-	}
+    public ToolingListTypeItem() {
 
-	public String getName() {
-		return name;
-	}
+    }
 
-	@XmlElement
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
+
+    @XmlElement
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

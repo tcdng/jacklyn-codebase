@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ParametersConfig {
 
-	private List<ParameterConfig> parameterList;
+    private List<ParameterConfig> parameterList;
 
-	public List<ParameterConfig> getParameterList() {
-		return parameterList;
-	}
+    public List<ParameterConfig> getParameterList() {
+        return parameterList;
+    }
 
-	@XmlElement(name = "parameter", required = true)
-	public void setParameterList(List<ParameterConfig> parameterList) {
-		this.parameterList = parameterList;
-	}
+    @XmlElement(name = "parameter", required = true)
+    public void setParameterList(List<ParameterConfig> parameterList) {
+        this.parameterList = parameterList;
+    }
 }

@@ -32,22 +32,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetToolingAttachmentGenResult extends RemoteCallResult {
 
-	private List<ToolingAttachmentGenItem> attachmentGenList;
+    private List<ToolingAttachmentGenItem> attachmentGenList;
 
-	public GetToolingAttachmentGenResult(List<ToolingAttachmentGenItem> attachmentGenList) {
-		this.attachmentGenList = attachmentGenList;
-	}
+    public GetToolingAttachmentGenResult(List<ToolingAttachmentGenItem> attachmentGenList) {
+        this.attachmentGenList = attachmentGenList;
+    }
 
-	public GetToolingAttachmentGenResult() {
+    public GetToolingAttachmentGenResult() {
 
-	}
+    }
 
-	public List<ToolingAttachmentGenItem> getAttachmentGenList() {
-		return attachmentGenList;
-	}
+    public List<ToolingAttachmentGenItem> getAttachmentGenList() {
+        return attachmentGenList;
+    }
 
-	@XmlElement(name = "attachmentGen")
-	public void setAttachmentGenList(List<ToolingAttachmentGenItem> attachmentGenList) {
-		this.attachmentGenList = attachmentGenList;
-	}
+    @XmlElement(name = "attachmentGen")
+    public void setAttachmentGenList(List<ToolingAttachmentGenItem> attachmentGenList) {
+        this.attachmentGenList = attachmentGenList;
+    }
 }

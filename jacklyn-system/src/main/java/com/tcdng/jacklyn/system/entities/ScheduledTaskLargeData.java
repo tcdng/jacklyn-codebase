@@ -26,26 +26,26 @@ import com.tcdng.unify.core.data.Inputs;
  */
 public class ScheduledTaskLargeData extends BaseLargeData<ScheduledTask> {
 
-	private Inputs scheduledTaskParams;
+    private Inputs scheduledTaskParams;
 
-	public ScheduledTaskLargeData() {
-		super(new ScheduledTask());
-	}
+    public ScheduledTaskLargeData() {
+        super(new ScheduledTask());
+    }
 
-	public ScheduledTaskLargeData(ScheduledTask scheduledTaskData) {
-		super(scheduledTaskData);
-	}
+    public ScheduledTaskLargeData(ScheduledTask scheduledTaskData) {
+        super(scheduledTaskData);
+    }
 
-	public ScheduledTaskLargeData(ScheduledTask scheduledTaskData, Inputs scheduledTaskParams) {
-		super(scheduledTaskData);
-		this.scheduledTaskParams = scheduledTaskParams;
-	}
+    public ScheduledTaskLargeData(ScheduledTask scheduledTaskData, Inputs scheduledTaskParams) {
+        super(scheduledTaskData);
+        this.scheduledTaskParams = scheduledTaskParams;
+    }
 
-	public Inputs getScheduledTaskParams() {
-		return scheduledTaskParams;
-	}
+    public Inputs getScheduledTaskParams() {
+        return scheduledTaskParams;
+    }
 
-	public void setScheduledTaskParams(Inputs scheduledTaskParams) {
-		this.scheduledTaskParams = scheduledTaskParams;
-	}
+    public void setScheduledTaskParams(Inputs scheduledTaskParams) {
+        this.scheduledTaskParams = scheduledTaskParams;
+    }
 }

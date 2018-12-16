@@ -31,27 +31,27 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfRecordActionConfig extends BaseConfig {
 
-	private WorkflowRecordActionType actionType;
+    private WorkflowRecordActionType actionType;
 
-	private String docMappingName;
+    private String docMappingName;
 
-	public WorkflowRecordActionType getActionType() {
-		return actionType;
-	}
+    public WorkflowRecordActionType getActionType() {
+        return actionType;
+    }
 
-	@XmlJavaTypeAdapter(WorkflowPersistenceTypeXmlAdapter.class)
-	@XmlAttribute(name="type", required=true)
-	public void setActionType(WorkflowRecordActionType actionType) {
-		this.actionType = actionType;
-	}
+    @XmlJavaTypeAdapter(WorkflowPersistenceTypeXmlAdapter.class)
+    @XmlAttribute(name = "type", required = true)
+    public void setActionType(WorkflowRecordActionType actionType) {
+        this.actionType = actionType;
+    }
 
-	public String getDocMappingName() {
-		return docMappingName;
-	}
+    public String getDocMappingName() {
+        return docMappingName;
+    }
 
-	@XmlAttribute(name="mapping", required=true)
-	public void setDocMappingName(String docMappingName) {
-		this.docMappingName = docMappingName;
-	}
+    @XmlAttribute(name = "mapping", required = true)
+    public void setDocMappingName(String docMappingName) {
+        this.docMappingName = docMappingName;
+    }
 
 }

@@ -29,14 +29,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractWorkflowController extends BasePageController {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
+    private WorkflowModule workflowModule;
 
-	public AbstractWorkflowController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractWorkflowController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected WorkflowModule getWorkflowModule() throws UnifyException {
-		return workflowModule;
-	}
+    protected WorkflowModule getWorkflowModule() throws UnifyException {
+        return workflowModule;
+    }
 }

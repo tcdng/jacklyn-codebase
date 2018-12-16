@@ -31,31 +31,30 @@ import com.tcdng.unify.core.annotation.Transactional;
  */
 @Transactional
 @Component("test-customerservice")
-public class TestCustomerModuleImpl extends AbstractJacklynBusinessModule
-		implements TestCustomerModule {
+public class TestCustomerModuleImpl extends AbstractJacklynBusinessModule implements TestCustomerModule {
 
-	@Override
-	public Long createCustomer(TestCustomer customer) throws UnifyException {
-		return (Long) db().create(customer);
-	}
+    @Override
+    public Long createCustomer(TestCustomer customer) throws UnifyException {
+        return (Long) db().create(customer);
+    }
 
-	@Override
-	public TestCustomer findCustomer(String firstName) throws UnifyException {
-		return db().find(new TestCustomerQuery().firstName(firstName));
-	}
+    @Override
+    public TestCustomer findCustomer(String firstName) throws UnifyException {
+        return db().find(new TestCustomerQuery().firstName(firstName));
+    }
 
-	@Override
-	public TestCustomer findCustomer(Long customerId) throws UnifyException {
-		return db().find(TestCustomer.class, customerId);
-	}
+    @Override
+    public TestCustomer findCustomer(Long customerId) throws UnifyException {
+        return db().find(TestCustomer.class, customerId);
+    }
 
-	@Override
-	public int updateCustomer(TestCustomer customer) throws UnifyException {
-		return db().updateByIdVersion(customer);
-	}
+    @Override
+    public int updateCustomer(TestCustomer customer) throws UnifyException {
+        return db().updateByIdVersion(customer);
+    }
 
-	@Override
-	public void installFeatures(List<ModuleConfig> featureDefinitions) throws UnifyException {
+    @Override
+    public void installFeatures(List<ModuleConfig> featureDefinitions) throws UnifyException {
 
-	}
+    }
 }

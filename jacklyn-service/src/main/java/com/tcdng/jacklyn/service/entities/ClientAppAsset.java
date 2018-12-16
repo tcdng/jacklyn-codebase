@@ -32,123 +32,122 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "CLIENTAPPASSET",
-		uniqueConstraints = { @UniqueConstraint({ "clientAppId", "systemAssetId" }) })
+@Table(name = "CLIENTAPPASSET", uniqueConstraints = { @UniqueConstraint({ "clientAppId", "systemAssetId" }) })
 public class ClientAppAsset extends BaseEntity implements Describable {
 
-	@ForeignKey(ClientApp.class)
-	private Long clientAppId;
+    @ForeignKey(ClientApp.class)
+    private Long clientAppId;
 
-	@ForeignKey(SystemAsset.class)
-	private Long systemAssetId;
+    @ForeignKey(SystemAsset.class)
+    private Long systemAssetId;
 
-	@ListOnly(key = "clientAppId", property = "name")
-	private String clientAppName;
+    @ListOnly(key = "clientAppId", property = "name")
+    private String clientAppName;
 
-	@ListOnly(key = "clientAppId", property = "description")
-	private String clientAppDesc;
+    @ListOnly(key = "clientAppId", property = "description")
+    private String clientAppDesc;
 
-	@ListOnly(key = "clientAppId", property = "status")
-	private RecordStatus clientAppStatus;
+    @ListOnly(key = "clientAppId", property = "status")
+    private RecordStatus clientAppStatus;
 
-	@ListOnly(key = "systemAssetId", property = "name")
-	private String assetName;
+    @ListOnly(key = "systemAssetId", property = "name")
+    private String assetName;
 
-	@ListOnly(key = "systemAssetId", property = "description")
-	private String assetDesc;
+    @ListOnly(key = "systemAssetId", property = "description")
+    private String assetDesc;
 
-	@ListOnly(key = "systemAssetId", property = "type")
-	private SystemAssetType assetType;
+    @ListOnly(key = "systemAssetId", property = "type")
+    private SystemAssetType assetType;
 
-	@ListOnly(key = "systemAssetId", property = "typeDesc")
-	private String assetTypeDesc;
+    @ListOnly(key = "systemAssetId", property = "typeDesc")
+    private String assetTypeDesc;
 
-	@ListOnly(key = "systemAssetId", property = "status")
-	private RecordStatus assetStatus;
+    @ListOnly(key = "systemAssetId", property = "status")
+    private RecordStatus assetStatus;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate(clientAppDesc, " - ", assetTypeDesc, " - ", assetName);
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate(clientAppDesc, " - ", assetTypeDesc, " - ", assetName);
+    }
 
-	public Long getClientAppId() {
-		return clientAppId;
-	}
+    public Long getClientAppId() {
+        return clientAppId;
+    }
 
-	public void setClientAppId(Long clientAppId) {
-		this.clientAppId = clientAppId;
-	}
+    public void setClientAppId(Long clientAppId) {
+        this.clientAppId = clientAppId;
+    }
 
-	public Long getSystemAssetId() {
-		return systemAssetId;
-	}
+    public Long getSystemAssetId() {
+        return systemAssetId;
+    }
 
-	public void setSystemAssetId(Long systemAssetId) {
-		this.systemAssetId = systemAssetId;
-	}
+    public void setSystemAssetId(Long systemAssetId) {
+        this.systemAssetId = systemAssetId;
+    }
 
-	public String getClientAppName() {
-		return clientAppName;
-	}
+    public String getClientAppName() {
+        return clientAppName;
+    }
 
-	public void setClientAppName(String clientAppName) {
-		this.clientAppName = clientAppName;
-	}
+    public void setClientAppName(String clientAppName) {
+        this.clientAppName = clientAppName;
+    }
 
-	public String getClientAppDesc() {
-		return clientAppDesc;
-	}
+    public String getClientAppDesc() {
+        return clientAppDesc;
+    }
 
-	public void setClientAppDesc(String clientAppDesc) {
-		this.clientAppDesc = clientAppDesc;
-	}
+    public void setClientAppDesc(String clientAppDesc) {
+        this.clientAppDesc = clientAppDesc;
+    }
 
-	public RecordStatus getClientAppStatus() {
-		return clientAppStatus;
-	}
+    public RecordStatus getClientAppStatus() {
+        return clientAppStatus;
+    }
 
-	public void setClientAppStatus(RecordStatus clientAppStatus) {
-		this.clientAppStatus = clientAppStatus;
-	}
+    public void setClientAppStatus(RecordStatus clientAppStatus) {
+        this.clientAppStatus = clientAppStatus;
+    }
 
-	public String getAssetName() {
-		return assetName;
-	}
+    public String getAssetName() {
+        return assetName;
+    }
 
-	public void setAssetName(String assetName) {
-		this.assetName = assetName;
-	}
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
+    }
 
-	public String getAssetDesc() {
-		return assetDesc;
-	}
+    public String getAssetDesc() {
+        return assetDesc;
+    }
 
-	public void setAssetDesc(String assetDesc) {
-		this.assetDesc = assetDesc;
-	}
+    public void setAssetDesc(String assetDesc) {
+        this.assetDesc = assetDesc;
+    }
 
-	public SystemAssetType getAssetType() {
-		return assetType;
-	}
+    public SystemAssetType getAssetType() {
+        return assetType;
+    }
 
-	public void setAssetType(SystemAssetType assetType) {
-		this.assetType = assetType;
-	}
+    public void setAssetType(SystemAssetType assetType) {
+        this.assetType = assetType;
+    }
 
-	public String getAssetTypeDesc() {
-		return assetTypeDesc;
-	}
+    public String getAssetTypeDesc() {
+        return assetTypeDesc;
+    }
 
-	public void setAssetTypeDesc(String assetTypeDesc) {
-		this.assetTypeDesc = assetTypeDesc;
-	}
+    public void setAssetTypeDesc(String assetTypeDesc) {
+        this.assetTypeDesc = assetTypeDesc;
+    }
 
-	public RecordStatus getAssetStatus() {
-		return assetStatus;
-	}
+    public RecordStatus getAssetStatus() {
+        return assetStatus;
+    }
 
-	public void setAssetStatus(RecordStatus assetStatus) {
-		this.assetStatus = assetStatus;
-	}
+    public void setAssetStatus(RecordStatus assetStatus) {
+        this.assetStatus = assetStatus;
+    }
 
 }

@@ -27,13 +27,13 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface WfItemPolicyLogic extends UnifyComponent {
 
-	/**
-	 * Executes workflow policy using data from workflow item.
-	 * 
-	 * @param wfItemReader
-	 *            the workflow item reader
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void executePolicy(WfItemReader wfItemReader) throws UnifyException;
+    /**
+     * Executes workflow policy using data from workflow item.
+     * 
+     * @param wfItemReader
+     *            the workflow item reader
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void executePolicy(WfItemReader wfItemReader) throws UnifyException;
 }

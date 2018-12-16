@@ -37,176 +37,175 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Document",
-		reportable = true)
+@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Document", reportable = true)
 @Table(name = "WFDOC", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
-		@UniqueConstraint({ "wfCategoryId", "description"}) })
+        @UniqueConstraint({ "wfCategoryId", "description" }) })
 public class WfDoc extends BaseEntity {
 
-	@ForeignKey(WfCategory.class)
-	private Long wfCategoryId;
+    @ForeignKey(WfCategory.class)
+    private Long wfCategoryId;
 
-	@Column(name = "DOCUMENT_NM", length = 32)
-	private String name;
+    @Column(name = "DOCUMENT_NM", length = 32)
+    private String name;
 
-	@Column(name = "DOCUMENT_DESC", length = 64)
-	private String description;
+    @Column(name = "DOCUMENT_DESC", length = 64)
+    private String description;
 
-	@Column(name = "ITEM_DESC_FORMAT", length = 64)
-	private String itemDescFormat;
+    @Column(name = "ITEM_DESC_FORMAT", length = 64)
+    private String itemDescFormat;
 
-	@ListOnly(key = "wfCategoryId", property = "name")
-	private String wfCategoryName;
+    @ListOnly(key = "wfCategoryId", property = "name")
+    private String wfCategoryName;
 
-	@ListOnly(key = "wfCategoryId", property = "description")
-	private String wfCategoryDesc;
+    @ListOnly(key = "wfCategoryId", property = "description")
+    private String wfCategoryDesc;
 
-	@ListOnly(key = "wfCategoryId", property = "version")
-	private String wfCategoryVersion;
+    @ListOnly(key = "wfCategoryId", property = "version")
+    private String wfCategoryVersion;
 
-	@ListOnly(key = "wfCategoryId", property = "status")
-	private RecordStatus wfCategoryStatus;
+    @ListOnly(key = "wfCategoryId", property = "status")
+    private RecordStatus wfCategoryStatus;
 
-	@ListOnly(key = "wfCategoryId", property = "statusDesc")
-	private String wfCategoryStatusDesc;
+    @ListOnly(key = "wfCategoryId", property = "statusDesc")
+    private String wfCategoryStatusDesc;
 
-	@ListOnly(key = "wfCategoryId", property = "updateDt")
-	private Date wfCategoryUpdateDt;
-	
-	@Child
-	private WfForm wfForm;
-	
-	@ChildList
-	private List<WfDocField> fieldList;
+    @ListOnly(key = "wfCategoryId", property = "updateDt")
+    private Date wfCategoryUpdateDt;
 
-	@ChildList
-	private List<WfDocAttachment> attachmentList;
+    @Child
+    private WfForm wfForm;
 
-	@ChildList
-	private List<WfDocClassifier> classifierList;
+    @ChildList
+    private List<WfDocField> fieldList;
 
-	@ChildList
-	private List<WfDocBeanMapping> beanMappingList;
+    @ChildList
+    private List<WfDocAttachment> attachmentList;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @ChildList
+    private List<WfDocClassifier> classifierList;
 
-	public Long getWfCategoryId() {
-		return wfCategoryId;
-	}
+    @ChildList
+    private List<WfDocBeanMapping> beanMappingList;
 
-	public void setWfCategoryId(Long wfCategoryId) {
-		this.wfCategoryId = wfCategoryId;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getWfCategoryId() {
+        return wfCategoryId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setWfCategoryId(Long wfCategoryId) {
+        this.wfCategoryId = wfCategoryId;
+    }
 
-	public String getItemDescFormat() {
-		return itemDescFormat;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setItemDescFormat(String itemDescFormat) {
-		this.itemDescFormat = itemDescFormat;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getWfCategoryVersion() {
-		return wfCategoryVersion;
-	}
+    public String getItemDescFormat() {
+        return itemDescFormat;
+    }
 
-	public void setWfCategoryVersion(String wfCategoryVersion) {
-		this.wfCategoryVersion = wfCategoryVersion;
-	}
+    public void setItemDescFormat(String itemDescFormat) {
+        this.itemDescFormat = itemDescFormat;
+    }
 
-	public RecordStatus getWfCategoryStatus() {
-		return wfCategoryStatus;
-	}
+    public String getWfCategoryVersion() {
+        return wfCategoryVersion;
+    }
 
-	public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
-		this.wfCategoryStatus = wfCategoryStatus;
-	}
+    public void setWfCategoryVersion(String wfCategoryVersion) {
+        this.wfCategoryVersion = wfCategoryVersion;
+    }
 
-	public String getWfCategoryStatusDesc() {
-		return wfCategoryStatusDesc;
-	}
+    public RecordStatus getWfCategoryStatus() {
+        return wfCategoryStatus;
+    }
 
-	public void setWfCategoryStatusDesc(String wfCategoryStatusDesc) {
-		this.wfCategoryStatusDesc = wfCategoryStatusDesc;
-	}
+    public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
+        this.wfCategoryStatus = wfCategoryStatus;
+    }
 
-	public Date getWfCategoryUpdateDt() {
-		return wfCategoryUpdateDt;
-	}
+    public String getWfCategoryStatusDesc() {
+        return wfCategoryStatusDesc;
+    }
 
-	public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
-		this.wfCategoryUpdateDt = wfCategoryUpdateDt;
-	}
+    public void setWfCategoryStatusDesc(String wfCategoryStatusDesc) {
+        this.wfCategoryStatusDesc = wfCategoryStatusDesc;
+    }
 
-	public List<WfDocField> getFieldList() {
-		return fieldList;
-	}
+    public Date getWfCategoryUpdateDt() {
+        return wfCategoryUpdateDt;
+    }
 
-	public void setFieldList(List<WfDocField> fieldList) {
-		this.fieldList = fieldList;
-	}
+    public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
+        this.wfCategoryUpdateDt = wfCategoryUpdateDt;
+    }
 
-	public WfForm getWfForm() {
-		return wfForm;
-	}
+    public List<WfDocField> getFieldList() {
+        return fieldList;
+    }
 
-	public void setWfForm(WfForm wfForm) {
-		this.wfForm = wfForm;
-	}
+    public void setFieldList(List<WfDocField> fieldList) {
+        this.fieldList = fieldList;
+    }
 
-	public List<WfDocAttachment> getAttachmentList() {
-		return attachmentList;
-	}
+    public WfForm getWfForm() {
+        return wfForm;
+    }
 
-	public void setAttachmentList(List<WfDocAttachment> attachmentList) {
-		this.attachmentList = attachmentList;
-	}
+    public void setWfForm(WfForm wfForm) {
+        this.wfForm = wfForm;
+    }
 
-	public List<WfDocClassifier> getClassifierList() {
-		return classifierList;
-	}
+    public List<WfDocAttachment> getAttachmentList() {
+        return attachmentList;
+    }
 
-	public void setClassifierList(List<WfDocClassifier> classifierList) {
-		this.classifierList = classifierList;
-	}
+    public void setAttachmentList(List<WfDocAttachment> attachmentList) {
+        this.attachmentList = attachmentList;
+    }
 
-	public List<WfDocBeanMapping> getBeanMappingList() {
-		return beanMappingList;
-	}
+    public List<WfDocClassifier> getClassifierList() {
+        return classifierList;
+    }
 
-	public void setBeanMappingList(List<WfDocBeanMapping> beanMappingList) {
-		this.beanMappingList = beanMappingList;
-	}
+    public void setClassifierList(List<WfDocClassifier> classifierList) {
+        this.classifierList = classifierList;
+    }
 
-	public String getWfCategoryName() {
-		return wfCategoryName;
-	}
+    public List<WfDocBeanMapping> getBeanMappingList() {
+        return beanMappingList;
+    }
 
-	public void setWfCategoryName(String wfCategoryName) {
-		this.wfCategoryName = wfCategoryName;
-	}
+    public void setBeanMappingList(List<WfDocBeanMapping> beanMappingList) {
+        this.beanMappingList = beanMappingList;
+    }
 
-	public String getWfCategoryDesc() {
-		return wfCategoryDesc;
-	}
+    public String getWfCategoryName() {
+        return wfCategoryName;
+    }
 
-	public void setWfCategoryDesc(String wfCategoryDesc) {
-		this.wfCategoryDesc = wfCategoryDesc;
-	}
+    public void setWfCategoryName(String wfCategoryName) {
+        this.wfCategoryName = wfCategoryName;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getWfCategoryDesc() {
+        return wfCategoryDesc;
+    }
+
+    public void setWfCategoryDesc(String wfCategoryDesc) {
+        this.wfCategoryDesc = wfCategoryDesc;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

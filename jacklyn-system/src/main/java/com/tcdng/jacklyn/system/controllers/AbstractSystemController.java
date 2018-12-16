@@ -29,15 +29,15 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractSystemController extends BasePageController {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	public AbstractSystemController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractSystemController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected SystemModule getSystemModule() throws UnifyException {
-		return systemModule;
-	}
+    protected SystemModule getSystemModule() throws UnifyException {
+        return systemModule;
+    }
 
 }

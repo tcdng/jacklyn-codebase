@@ -23,5 +23,5 @@ package com.tcdng.jacklyn.common.entities;
  */
 public interface ColumnPositionConstants {
 
-	int BASE_COLUMN_POSITION = 16;
+    int BASE_COLUMN_POSITION = 16;
 }

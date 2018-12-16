@@ -29,32 +29,32 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfbeanmappingtypelist")
 public enum WorkflowBeanMappingType implements EnumConst {
 
-	PRIMARY("PRI"), ENTRY("ENT"), NONENTRY("NON");
+    PRIMARY("PRI"), ENTRY("ENT"), NONENTRY("NON");
 
-	private final String code;
+    private final String code;
 
-	private WorkflowBeanMappingType(String code) {
-		this.code = code;
-	}
+    private WorkflowBeanMappingType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public boolean isEntry() {
-		return PRIMARY.equals(this) || ENTRY.equals(this);
-	}
+    public boolean isEntry() {
+        return PRIMARY.equals(this) || ENTRY.equals(this);
+    }
 
-	public boolean isPrimary() {
-		return PRIMARY.equals(this);
-	}
-	
-	public static WorkflowBeanMappingType fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowBeanMappingType.class, code);
-	}
+    public boolean isPrimary() {
+        return PRIMARY.equals(this);
+    }
 
-	public static WorkflowBeanMappingType fromName(String name) {
-		return EnumUtils.fromName(WorkflowBeanMappingType.class, name);
-	}
+    public static WorkflowBeanMappingType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowBeanMappingType.class, code);
+    }
+
+    public static WorkflowBeanMappingType fromName(String name) {
+        return EnumUtils.fromName(WorkflowBeanMappingType.class, name);
+    }
 }

@@ -22,13 +22,13 @@ package com.tcdng.jacklyn.common.entities;
  * @since 1.0
  */
 public abstract class BaseVersionedTimestampedEntityQuery<T extends BaseVersionedTimestampedEntity>
-		extends BaseTimestampedEntityQuery<T> {
+        extends BaseTimestampedEntityQuery<T> {
 
-	public BaseVersionedTimestampedEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseVersionedTimestampedEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseVersionedTimestampedEntityQuery<T> versionNo(long versionNo) {
-		return (BaseVersionedTimestampedEntityQuery<T>) equals("versionNo", versionNo);
-	}
+    public BaseVersionedTimestampedEntityQuery<T> versionNo(long versionNo) {
+        return (BaseVersionedTimestampedEntityQuery<T>) equals("versionNo", versionNo);
+    }
 }

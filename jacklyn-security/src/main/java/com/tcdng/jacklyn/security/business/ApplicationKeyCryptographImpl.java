@@ -33,12 +33,12 @@ import com.tcdng.unify.core.security.TwoWayStringCryptographImpl;
 @Component(name = "applicationkey-cryptograph", description = "$m{applicationkey.cryptograph}")
 public class ApplicationKeyCryptographImpl extends TwoWayStringCryptographImpl {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
+    private SystemModule systemModule;
 
-	@Override
-	protected String getEncryptionKey() throws UnifyException {
-		return systemModule.getSysParameterValue(String.class,
-				SecurityModuleSysParamConstants.APPLICATION_SECURITY_KEY);
-	}
+    @Override
+    protected String getEncryptionKey() throws UnifyException {
+        return systemModule.getSysParameterValue(String.class,
+                SecurityModuleSysParamConstants.APPLICATION_SECURITY_KEY);
+    }
 }

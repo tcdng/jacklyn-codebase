@@ -28,17 +28,16 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractArchivingRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractArchivingRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
-	private ArchivingModule archivingModule;
+    @Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
+    private ArchivingModule archivingModule;
 
-	public AbstractArchivingRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractArchivingRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected ArchivingModule getArchivingModule() throws UnifyException {
-		return archivingModule;
-	}
+    protected ArchivingModule getArchivingModule() throws UnifyException {
+        return archivingModule;
+    }
 }

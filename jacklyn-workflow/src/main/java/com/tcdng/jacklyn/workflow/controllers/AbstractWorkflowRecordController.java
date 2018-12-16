@@ -28,18 +28,17 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWorkflowRecordController<T extends Entity>
-		extends ManageRecordController<T, Long> {
+public abstract class AbstractWorkflowRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
+    private WorkflowModule workflowModule;
 
-	public AbstractWorkflowRecordController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractWorkflowRecordController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	protected WorkflowModule getWorkflowModule() throws UnifyException {
-		return workflowModule;
-	}
+    protected WorkflowModule getWorkflowModule() throws UnifyException {
+        return workflowModule;
+    }
 
 }

@@ -36,38 +36,38 @@ import com.tcdng.unify.core.util.QueryUtils;
 @UplBinding("web/file/upl/managefileoutbox.upl")
 public class FileOutboxController extends AbstractFileTransferBoxController<FileOutbox> {
 
-	private FileOutboxStatus searchStatus;
+    private FileOutboxStatus searchStatus;
 
-	public FileOutboxController() {
-		super(FileOutbox.class, "file.fileoutbox.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public FileOutboxController() {
+        super(FileOutbox.class, "file.fileoutbox.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public FileOutboxStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public FileOutboxStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(FileOutboxStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(FileOutboxStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<FileOutbox> find() throws UnifyException {
-		FileOutboxQuery query = new FileOutboxQuery();
-		if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
-			query.fileTransferConfigId(getSearchFileTransferConfigId());
-		}
+    @Override
+    protected List<FileOutbox> find() throws UnifyException {
+        FileOutboxQuery query = new FileOutboxQuery();
+        if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
+            query.fileTransferConfigId(getSearchFileTransferConfigId());
+        }
 
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
 
-		query.createdOn(getSearchCreateDt());
-		return getFileModule().findFileOutboxItems(query);
-	}
+        query.createdOn(getSearchCreateDt());
+        return getFileModule().findFileOutboxItems(query);
+    }
 
-	@Override
-	protected FileOutbox find(Long id) throws UnifyException {
-		return getFileModule().findFileOutboxItem(id);
-	}
+    @Override
+    protected FileOutbox find(Long id) throws UnifyException {
+        return getFileModule().findFileOutboxItem(id);
+    }
 }

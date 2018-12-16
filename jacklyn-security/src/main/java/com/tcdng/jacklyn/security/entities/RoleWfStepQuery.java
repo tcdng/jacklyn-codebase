@@ -27,27 +27,27 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class RoleWfStepQuery extends BaseEntityQuery<RoleWfStep> {
 
-	public RoleWfStepQuery() {
-		super(RoleWfStep.class);
-	}
+    public RoleWfStepQuery() {
+        super(RoleWfStep.class);
+    }
 
-	public RoleWfStepQuery roleId(Long roleId) {
-		return (RoleWfStepQuery) equals("roleId", roleId);
-	}
+    public RoleWfStepQuery roleId(Long roleId) {
+        return (RoleWfStepQuery) equals("roleId", roleId);
+    }
 
-	public RoleWfStepQuery roleName(String roleName) {
-		return (RoleWfStepQuery) equals("roleName", roleName);
-	}
+    public RoleWfStepQuery roleName(String roleName) {
+        return (RoleWfStepQuery) equals("roleName", roleName);
+    }
 
-	public RoleWfStepQuery wfTemplateId(Long wfTemplateId) {
-		return (RoleWfStepQuery) equals("wfTemplateId", wfTemplateId);
-	}
+    public RoleWfStepQuery wfTemplateId(Long wfTemplateId) {
+        return (RoleWfStepQuery) equals("wfTemplateId", wfTemplateId);
+    }
 
-	public RoleWfStepQuery wfStepNameIn(Collection<String> stepName) {
-		return (RoleWfStepQuery) amongst("stepName", stepName);
-	}
+    public RoleWfStepQuery wfStepNameIn(Collection<String> stepName) {
+        return (RoleWfStepQuery) amongst("stepName", stepName);
+    }
 
-	public RoleWfStepQuery wfStepNameNotIn(Collection<String> stepName) {
-		return (RoleWfStepQuery) notAmongst("stepName", stepName);
-	}
+    public RoleWfStepQuery wfStepNameNotIn(Collection<String> stepName) {
+        return (RoleWfStepQuery) notAmongst("stepName", stepName);
+    }
 }

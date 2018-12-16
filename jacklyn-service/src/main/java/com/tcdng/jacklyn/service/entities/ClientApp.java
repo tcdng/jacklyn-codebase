@@ -31,55 +31,54 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = ServiceModuleNameConstants.SERVICE_MODULE, title = "Client Application",
-		reportable = true, auditable = true)
-@Table(name = "CLIENTAPP",
-		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+@Managed(module = ServiceModuleNameConstants.SERVICE_MODULE, title = "Client Application", reportable = true,
+        auditable = true)
+@Table(name = "CLIENTAPP", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class ClientApp extends BaseVersionedStatusEntity {
 
-	@ForeignKey(name = "CLIENTAPP_TY")
-	private ClientAppType type;
+    @ForeignKey(name = "CLIENTAPP_TY")
+    private ClientAppType type;
 
-	@Column(name = "CLIENTAPP_NM", length = 32)
-	private String name;
+    @Column(name = "CLIENTAPP_NM", length = 32)
+    private String name;
 
-	@Column(name = "CLIENTAPP_DESC", length = 48)
-	private String description;
+    @Column(name = "CLIENTAPP_DESC", length = 48)
+    private String description;
 
-	@ListOnly(key = "type", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "type", property = "description")
+    private String typeDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public ClientAppType getType() {
-		return type;
-	}
+    public ClientAppType getType() {
+        return type;
+    }
 
-	public void setType(ClientAppType type) {
-		this.type = type;
-	}
+    public void setType(ClientAppType type) {
+        this.type = type;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
 }

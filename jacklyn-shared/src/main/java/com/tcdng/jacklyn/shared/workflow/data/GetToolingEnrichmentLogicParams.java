@@ -30,8 +30,8 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class GetToolingEnrichmentLogicParams extends RemoteCallParams {
 
-	public GetToolingEnrichmentLogicParams() {
-		super(WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST);
-	}
+    public GetToolingEnrichmentLogicParams() {
+        super(WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST);
+    }
 
 }

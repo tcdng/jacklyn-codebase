@@ -41,91 +41,89 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/file/upl/managefiletransferconfig.upl")
 public class FileTransferConfigController extends AbstractFileRecordController<FileTransferConfig> {
 
-	private String searchName;
+    private String searchName;
 
-	private FileTransferDirection searchDirection;
+    private FileTransferDirection searchDirection;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public FileTransferConfigController() {
-		super(FileTransferConfig.class, "file.filetransferconfig.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public FileTransferConfigController() {
+        super(FileTransferConfig.class, "file.filetransferconfig.hint",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
+                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
 
-	@Action
-	public String testFileTransferConfig() throws UnifyException {
-		TaskSetup taskSetup = TaskSetup.newBuilder()
-				.addTask(FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK)
-				.setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, getRecord())
-				.logEvent(FileModuleAuditConstants.TEST_FILETRANSFERCONFIG, getRecord().getName())
-				.logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "file.filetransferconfig.test");
-	}
+    @Action
+    public String testFileTransferConfig() throws UnifyException {
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK)
+                .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, getRecord())
+                .logEvent(FileModuleAuditConstants.TEST_FILETRANSFERCONFIG, getRecord().getName()).logMessages()
+                .build();
+        return launchTaskWithMonitorBox(taskSetup, "file.filetransferconfig.test");
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public FileTransferDirection getSearchDirection() {
-		return searchDirection;
-	}
+    public FileTransferDirection getSearchDirection() {
+        return searchDirection;
+    }
 
-	public void setSearchDirection(FileTransferDirection searchDirection) {
-		this.searchDirection = searchDirection;
-	}
+    public void setSearchDirection(FileTransferDirection searchDirection) {
+        this.searchDirection = searchDirection;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<FileTransferConfig> find() throws UnifyException {
-		FileTransferConfigQuery query = new FileTransferConfigQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
-		if (getSearchDirection() != null) {
-			query.direction(searchDirection);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getFileModule().findFileTransferConfigs(query);
-	}
+    @Override
+    protected List<FileTransferConfig> find() throws UnifyException {
+        FileTransferConfigQuery query = new FileTransferConfigQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
+        if (getSearchDirection() != null) {
+            query.direction(searchDirection);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getFileModule().findFileTransferConfigs(query);
+    }
 
-	@Override
-	protected FileTransferConfig find(Long id) throws UnifyException {
-		return getFileModule().findFileTransferConfig(id);
-	}
+    @Override
+    protected FileTransferConfig find(Long id) throws UnifyException {
+        return getFileModule().findFileTransferConfig(id);
+    }
 
-	@Override
-	protected FileTransferConfig prepareCreate() throws UnifyException {
-		return new FileTransferConfig();
-	}
+    @Override
+    protected FileTransferConfig prepareCreate() throws UnifyException {
+        return new FileTransferConfig();
+    }
 
-	@Override
-	protected Object create(FileTransferConfig fileTransferConfigData) throws UnifyException {
-		return getFileModule().createFileTransferConfig(fileTransferConfigData);
-	}
+    @Override
+    protected Object create(FileTransferConfig fileTransferConfigData) throws UnifyException {
+        return getFileModule().createFileTransferConfig(fileTransferConfigData);
+    }
 
-	@Override
-	protected int update(FileTransferConfig fileTransferConfigData) throws UnifyException {
-		return getFileModule().updateFileTransferConfig(fileTransferConfigData);
-	}
+    @Override
+    protected int update(FileTransferConfig fileTransferConfigData) throws UnifyException {
+        return getFileModule().updateFileTransferConfig(fileTransferConfigData);
+    }
 
-	@Override
-	protected int delete(FileTransferConfig fileTransferConfigData) throws UnifyException {
-		return getFileModule().deleteFileTransferConfig(fileTransferConfigData.getId());
-	}
+    @Override
+    protected int delete(FileTransferConfig fileTransferConfigData) throws UnifyException {
+        return getFileModule().deleteFileTransferConfig(fileTransferConfigData.getId());
+    }
 }

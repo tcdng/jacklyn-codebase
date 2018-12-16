@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfAlertsConfig {
 
-	private List<WfAlertConfig> wfAlertConfigList;
+    private List<WfAlertConfig> wfAlertConfigList;
 
-	public List<WfAlertConfig> getWfAlertConfigList() {
-		return wfAlertConfigList;
-	}
+    public List<WfAlertConfig> getWfAlertConfigList() {
+        return wfAlertConfigList;
+    }
 
-	@XmlElement(name="alert", required=true)
-	public void setWfAlertConfigList(List<WfAlertConfig> wfAlertConfigList) {
-		this.wfAlertConfigList = wfAlertConfigList;
-	}
+    @XmlElement(name = "alert", required = true)
+    public void setWfAlertConfigList(List<WfAlertConfig> wfAlertConfigList) {
+        this.wfAlertConfigList = wfAlertConfigList;
+    }
 
 }

@@ -34,85 +34,84 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "Role", reportable = true,
-		auditable = true)
+@Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "Role", reportable = true, auditable = true)
 @Table(name = "ROLE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Role extends BaseVersionedStatusEntity {
 
-	@ForeignKey(type = Theme.class, nullable = true)
-	private Long themeId;
+    @ForeignKey(type = Theme.class, nullable = true)
+    private Long themeId;
 
-	@Column(name = "ROLE_NM", length = 40)
-	private String name;
+    @Column(name = "ROLE_NM", length = 40)
+    private String name;
 
-	@Column(name = "ROLE_DESC", length = 64)
-	private String description;
+    @Column(name = "ROLE_DESC", length = 64)
+    private String description;
 
-	@Column(type = ColumnType.TIMESTAMP, transformer = "timeofday-transformer", nullable = true)
-	private Date activeAfter;
+    @Column(type = ColumnType.TIMESTAMP, transformer = "timeofday-transformer", nullable = true)
+    private Date activeAfter;
 
-	@Column(type = ColumnType.TIMESTAMP, transformer = "timeofday-transformer", nullable = true)
-	private Date activeBefore;
+    @Column(type = ColumnType.TIMESTAMP, transformer = "timeofday-transformer", nullable = true)
+    private Date activeBefore;
 
-	@Column(length = 64, nullable = true)
-	private String application;
+    @Column(length = 64, nullable = true)
+    private String application;
 
-	@ListOnly(key = "themeId", property = "description")
-	private String themeDesc;
+    @ListOnly(key = "themeId", property = "description")
+    private String themeDesc;
 
-	public Long getThemeId() {
-		return themeId;
-	}
+    public Long getThemeId() {
+        return themeId;
+    }
 
-	public void setThemeId(Long themeId) {
-		this.themeId = themeId;
-	}
+    public void setThemeId(Long themeId) {
+        this.themeId = themeId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Date getActiveAfter() {
-		return activeAfter;
-	}
+    public Date getActiveAfter() {
+        return activeAfter;
+    }
 
-	public void setActiveAfter(Date activeAfter) {
-		this.activeAfter = activeAfter;
-	}
+    public void setActiveAfter(Date activeAfter) {
+        this.activeAfter = activeAfter;
+    }
 
-	public Date getActiveBefore() {
-		return activeBefore;
-	}
+    public Date getActiveBefore() {
+        return activeBefore;
+    }
 
-	public void setActiveBefore(Date activeBefore) {
-		this.activeBefore = activeBefore;
-	}
+    public void setActiveBefore(Date activeBefore) {
+        this.activeBefore = activeBefore;
+    }
 
-	public String getApplication() {
-		return application;
-	}
+    public String getApplication() {
+        return application;
+    }
 
-	public void setApplication(String application) {
-		this.application = application;
-	}
+    public void setApplication(String application) {
+        this.application = application;
+    }
 
-	public String getThemeDesc() {
-		return themeDesc;
-	}
+    public String getThemeDesc() {
+        return themeDesc;
+    }
 
-	public void setThemeDesc(String themeDesc) {
-		this.themeDesc = themeDesc;
-	}
+    public void setThemeDesc(String themeDesc) {
+        this.themeDesc = themeDesc;
+    }
 }

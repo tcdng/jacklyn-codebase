@@ -30,76 +30,76 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Input Control Definition",
-		reportable = true, auditable = true)
-@Table(name = "INPUTCTRLDEF", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
-		@UniqueConstraint({ "description" }) })
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Input Control Definition", reportable = true,
+        auditable = true)
+@Table(name = "INPUTCTRLDEF",
+        uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }), @UniqueConstraint({ "description" }) })
 public class InputCtrlDef extends BaseVersionedStatusEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "INPUTCTRLDEF_NM")
-	private String name;
+    @Column(name = "INPUTCTRLDEF_NM")
+    private String name;
 
-	@Column(name = "INPUTCTRLDEF_DESC", length = 48)
-	private String description;
+    @Column(name = "INPUTCTRLDEF_DESC", length = 48)
+    private String description;
 
-	@Column(name = "CONTROL_DSCR", length = 80)
-	private String control;
+    @Column(name = "CONTROL_DSCR", length = 80)
+    private String control;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getControl() {
-		return control;
-	}
+    public String getControl() {
+        return control;
+    }
 
-	public void setControl(String control) {
-		this.control = control;
-	}
+    public void setControl(String control) {
+        this.control = control;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 }

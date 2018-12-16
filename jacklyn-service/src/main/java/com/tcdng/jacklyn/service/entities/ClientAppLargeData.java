@@ -28,27 +28,27 @@ import com.tcdng.jacklyn.common.entities.BaseLargeData;
  */
 public class ClientAppLargeData extends BaseLargeData<ClientApp> {
 
-	private List<Long> systemAssetIdList;
+    private List<Long> systemAssetIdList;
 
-	public ClientAppLargeData() {
-		super(new ClientApp());
-	}
+    public ClientAppLargeData() {
+        super(new ClientApp());
+    }
 
-	public ClientAppLargeData(ClientApp data) {
-		super(data);
-	}
+    public ClientAppLargeData(ClientApp data) {
+        super(data);
+    }
 
-	public ClientAppLargeData(ClientApp data, List<Long> systemAssetIdList) {
-		super(data);
-		this.systemAssetIdList = systemAssetIdList;
-	}
+    public ClientAppLargeData(ClientApp data, List<Long> systemAssetIdList) {
+        super(data);
+        this.systemAssetIdList = systemAssetIdList;
+    }
 
-	public List<Long> getSystemAssetIdList() {
-		return systemAssetIdList;
-	}
+    public List<Long> getSystemAssetIdList() {
+        return systemAssetIdList;
+    }
 
-	public void setSystemAssetIdList(List<Long> systemAssetIdList) {
-		this.systemAssetIdList = systemAssetIdList;
-	}
+    public void setSystemAssetIdList(List<Long> systemAssetIdList) {
+        this.systemAssetIdList = systemAssetIdList;
+    }
 
 }

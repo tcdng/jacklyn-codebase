@@ -25,11 +25,10 @@ import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WorkflowBeanMappingTypeXmlAdapter
-		extends AbstractEnumConstXmlAdapter<WorkflowBeanMappingType> {
+public class WorkflowBeanMappingTypeXmlAdapter extends AbstractEnumConstXmlAdapter<WorkflowBeanMappingType> {
 
-	public WorkflowBeanMappingTypeXmlAdapter() {
-		super(WorkflowBeanMappingType.class);
-	}
+    public WorkflowBeanMappingTypeXmlAdapter() {
+        super(WorkflowBeanMappingType.class);
+    }
 
 }

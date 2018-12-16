@@ -26,46 +26,46 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class AppModule {
 
-	private String name;
-	
-	private String description;
-	
-	private String status;
+    private String name;
 
-	public AppModule(String name, String description, String status) {
-		this.name = name;
-		this.description = description;
-		this.status = status;
-	}
+    private String description;
 
-	public AppModule() {
+    private String status;
 
-	}
+    public AppModule(String name, String description, String status) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public AppModule() {
 
-	@XmlElement
-	public void setName(String name) {
-		this.name = name;
-	}
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@XmlElement
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    @XmlElement
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    @XmlElement
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

@@ -23,6 +23,6 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynRequestAttributeConstants {
 
-	/** Report options */
-	String REPORTOPTIONS = "REPORTOPTIONS";
+    /** Report options */
+    String REPORTOPTIONS = "REPORTOPTIONS";
 }

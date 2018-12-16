@@ -34,144 +34,143 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "File Archive Entry")
-@Table(name = "FILEARCHIVEENTRY",
-		uniqueConstraints = { @UniqueConstraint({ "fileArchiveId", "archivedItemId" }) })
+@Table(name = "FILEARCHIVEENTRY", uniqueConstraints = { @UniqueConstraint({ "fileArchiveId", "archivedItemId" }) })
 public class FileArchiveEntry extends BaseEntity {
 
-	@ForeignKey(FileArchive.class)
-	private Long fileArchiveId;
+    @ForeignKey(FileArchive.class)
+    private Long fileArchiveId;
 
-	@Column
-	private Long fileIndex;
+    @Column
+    private Long fileIndex;
 
-	@Column
-	private Long archivedItemId;
+    @Column
+    private Long archivedItemId;
 
-	@Column
-	private Integer archivedItemLength;
+    @Column
+    private Integer archivedItemLength;
 
-	@ListOnly(key = "fileArchiveId", property = "archiveDt")
-	private Date archiveDt;
+    @ListOnly(key = "fileArchiveId", property = "archiveDt")
+    private Date archiveDt;
 
-	@ListOnly(key = "fileArchiveId", property = "fieldName")
-	private String fieldName;
+    @ListOnly(key = "fileArchiveId", property = "fieldName")
+    private String fieldName;
 
-	@ListOnly(key = "fileArchiveId", property = "fieldType")
-	private ArchivingFieldType fieldType;
+    @ListOnly(key = "fileArchiveId", property = "fieldType")
+    private ArchivingFieldType fieldType;
 
-	@ListOnly(key = "fileArchiveId", property = "recordName")
-	private String recordName;
+    @ListOnly(key = "fileArchiveId", property = "recordName")
+    private String recordName;
 
-	@ListOnly(key = "fileArchiveId", property = "localArchivePath")
-	private String localArchivePath;
+    @ListOnly(key = "fileArchiveId", property = "localArchivePath")
+    private String localArchivePath;
 
-	@ListOnly(key = "fileArchiveId", property = "localArchiveDateFormat")
-	private String localArchiveDateFormat;
+    @ListOnly(key = "fileArchiveId", property = "localArchiveDateFormat")
+    private String localArchiveDateFormat;
 
-	@ListOnly(key = "fileArchiveId", property = "filename")
-	private String filename;
+    @ListOnly(key = "fileArchiveId", property = "filename")
+    private String filename;
 
-	@ListOnly(key = "fileArchiveId", property = "backupFileTransferCfgId")
-	private Long backupFileTransferCfgId;
+    @ListOnly(key = "fileArchiveId", property = "backupFileTransferCfgId")
+    private Long backupFileTransferCfgId;
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	public Long getFileArchiveId() {
-		return fileArchiveId;
-	}
+    public Long getFileArchiveId() {
+        return fileArchiveId;
+    }
 
-	public void setFileArchiveId(Long fileArchiveId) {
-		this.fileArchiveId = fileArchiveId;
-	}
+    public void setFileArchiveId(Long fileArchiveId) {
+        this.fileArchiveId = fileArchiveId;
+    }
 
-	public Long getFileIndex() {
-		return fileIndex;
-	}
+    public Long getFileIndex() {
+        return fileIndex;
+    }
 
-	public void setFileIndex(Long fileIndex) {
-		this.fileIndex = fileIndex;
-	}
+    public void setFileIndex(Long fileIndex) {
+        this.fileIndex = fileIndex;
+    }
 
-	public Long getArchivedItemId() {
-		return archivedItemId;
-	}
+    public Long getArchivedItemId() {
+        return archivedItemId;
+    }
 
-	public void setArchivedItemId(Long archivedItemId) {
-		this.archivedItemId = archivedItemId;
-	}
+    public void setArchivedItemId(Long archivedItemId) {
+        this.archivedItemId = archivedItemId;
+    }
 
-	public Integer getArchivedItemLength() {
-		return archivedItemLength;
-	}
+    public Integer getArchivedItemLength() {
+        return archivedItemLength;
+    }
 
-	public void setArchivedItemLength(Integer archivedItemLength) {
-		this.archivedItemLength = archivedItemLength;
-	}
+    public void setArchivedItemLength(Integer archivedItemLength) {
+        this.archivedItemLength = archivedItemLength;
+    }
 
-	public Date getArchiveDt() {
-		return archiveDt;
-	}
+    public Date getArchiveDt() {
+        return archiveDt;
+    }
 
-	public void setArchiveDt(Date archiveDt) {
-		this.archiveDt = archiveDt;
-	}
+    public void setArchiveDt(Date archiveDt) {
+        this.archiveDt = archiveDt;
+    }
 
-	public String getFieldName() {
-		return fieldName;
-	}
+    public String getFieldName() {
+        return fieldName;
+    }
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
-	public ArchivingFieldType getFieldType() {
-		return fieldType;
-	}
+    public ArchivingFieldType getFieldType() {
+        return fieldType;
+    }
 
-	public void setFieldType(ArchivingFieldType fieldType) {
-		this.fieldType = fieldType;
-	}
+    public void setFieldType(ArchivingFieldType fieldType) {
+        this.fieldType = fieldType;
+    }
 
-	public String getRecordName() {
-		return recordName;
-	}
+    public String getRecordName() {
+        return recordName;
+    }
 
-	public void setRecordName(String recordName) {
-		this.recordName = recordName;
-	}
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
 
-	public String getLocalArchivePath() {
-		return localArchivePath;
-	}
+    public String getLocalArchivePath() {
+        return localArchivePath;
+    }
 
-	public void setLocalArchivePath(String localArchivePath) {
-		this.localArchivePath = localArchivePath;
-	}
+    public void setLocalArchivePath(String localArchivePath) {
+        this.localArchivePath = localArchivePath;
+    }
 
-	public String getLocalArchiveDateFormat() {
-		return localArchiveDateFormat;
-	}
+    public String getLocalArchiveDateFormat() {
+        return localArchiveDateFormat;
+    }
 
-	public void setLocalArchiveDateFormat(String localArchiveDateFormat) {
-		this.localArchiveDateFormat = localArchiveDateFormat;
-	}
+    public void setLocalArchiveDateFormat(String localArchiveDateFormat) {
+        this.localArchiveDateFormat = localArchiveDateFormat;
+    }
 
-	public String getFilename() {
-		return filename;
-	}
+    public String getFilename() {
+        return filename;
+    }
 
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
-	public Long getBackupFileTransferCfgId() {
-		return backupFileTransferCfgId;
-	}
+    public Long getBackupFileTransferCfgId() {
+        return backupFileTransferCfgId;
+    }
 
-	public void setBackupFileTransferCfgId(Long backupFileTransferCfgId) {
-		this.backupFileTransferCfgId = backupFileTransferCfgId;
-	}
+    public void setBackupFileTransferCfgId(Long backupFileTransferCfgId) {
+        this.backupFileTransferCfgId = backupFileTransferCfgId;
+    }
 }
