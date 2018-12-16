@@ -31,6 +31,8 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 public class WfDocumentConfig extends BaseConfig {
 
 	private String version;
+
+	private String itemDescFormat;
 	
 	private WfFieldsConfig wfFieldsConfig;
 
@@ -41,6 +43,15 @@ public class WfDocumentConfig extends BaseConfig {
 	private WfBeanMappingsConfig wfBeanMappingsConfig;
 
 	private WfFormConfig wfFormConfig;
+
+	public String getItemDescFormat() {
+		return itemDescFormat;
+	}
+
+	@XmlElement(name = "item-description-format", required = true)
+	public void setItemDescFormat(String itemDescFormat) {
+		this.itemDescFormat = itemDescFormat;
+	}
 
 	public String getVersion() {
 		return version;

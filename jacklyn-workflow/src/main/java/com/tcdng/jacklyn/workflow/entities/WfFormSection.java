@@ -19,7 +19,6 @@ package com.tcdng.jacklyn.workflow.entities;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
-import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
@@ -50,12 +49,6 @@ public class WfFormSection extends BaseEntity {
 
 	@Column(name = "BINDING", nullable = true)
 	private String binding;
-
-	@ListOnly(key = "wfFormId", property = "name")
-	private String wfFormName;
-
-	@ListOnly(key = "wfFormId", property = "description")
-	private String wfFormDesc;
 
 	@Override
 	public String getDescription() {
@@ -104,22 +97,6 @@ public class WfFormSection extends BaseEntity {
 
 	public void setBinding(String binding) {
 		this.binding = binding;
-	}
-
-	public String getWfFormName() {
-		return wfFormName;
-	}
-
-	public void setWfFormName(String wfFormName) {
-		this.wfFormName = wfFormName;
-	}
-
-	public String getWfFormDesc() {
-		return wfFormDesc;
-	}
-
-	public void setWfFormDesc(String wfFormDesc) {
-		this.wfFormDesc = wfFormDesc;
 	}
 
 }

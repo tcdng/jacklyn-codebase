@@ -52,7 +52,7 @@ public class WfDoc extends BaseEntity {
 	@Column(name = "DOCUMENT_DESC", length = 64)
 	private String description;
 
-	@Column(name = "ITEM_DESC_FORMAT", length = 64, nullable = true)
+	@Column(name = "ITEM_DESC_FORMAT", length = 64)
 	private String itemDescFormat;
 
 	@ListOnly(key = "wfCategoryId", property = "name")

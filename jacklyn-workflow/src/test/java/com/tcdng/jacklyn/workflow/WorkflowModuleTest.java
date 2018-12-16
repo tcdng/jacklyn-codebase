@@ -30,6 +30,7 @@ import org.junit.Test;
 import com.tcdng.jacklyn.common.AbstractJacklynTest;
 import com.tcdng.jacklyn.common.TestCustomer;
 import com.tcdng.jacklyn.common.TestCustomerModule;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
@@ -105,7 +106,9 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		WfCategory wfCategory = wfCategoryList.get(0);
 		assertNotNull(wfCategory);
 		assertEquals("customerCategory", wfCategory.getName());
-		assertEquals("Customer Category", wfCategory.getDescription());
+		assertEquals("Customer Workflow Category", wfCategory.getDescription());
+		assertEquals("1.0", wfCategory.getVersion());
+		assertEquals(RecordStatus.ACTIVE, wfCategory.getStatus());
 
 		/* Documents */
 		Long wfCategoryId = wfCategory.getId();
@@ -293,9 +296,9 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		/* Forms */
 		WfForm wfForm = wfDoc.getWfForm();
 		assertNotNull(wfForm);
-		assertNull(wfForm.getTabList());
-		assertNull(wfForm.getSectionList());
-		assertNull(wfForm.getFieldList());
+		assertNotNull(wfForm.getTabList());
+		assertNotNull(wfForm.getSectionList());
+		assertNotNull(wfForm.getFieldList());
 
 		/* Tabs */
 		List<WfFormTab> tabList = wfForm.getTabList();
@@ -955,11 +958,11 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 	protected void onSetup() throws Exception {
 		if (!published) {
 			WfCategoryConfig custWfCategoryConfig
-					= readWfCategoryConfig("xml/wfcategory-customer.xml");
+					= readWfCategoryConfig("xml/wfcustomer.xml");
 			publish(custWfCategoryConfig);
 
 			WfCategoryConfig custRecActionWfCategoryConfig
-					= readWfCategoryConfig("xml/wfcategory-customer-recordaction.xml");
+					= readWfCategoryConfig("xml/wfcustomer-recordaction.xml");
 			publish(custRecActionWfCategoryConfig);
 			published = true;
 		}

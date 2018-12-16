@@ -1054,11 +1054,13 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
 				wfDoc.setWfCategoryId(wfCategoryId);
 				wfDoc.setName(wfDocName);
 				wfDoc.setDescription(description);
+				wfDoc.setItemDescFormat(wfDocConfig.getItemDescFormat());
 				populateChildList(wfDoc, wfDocConfig);
 				db().create(wfDoc);
 			} else {
 				addTaskMessage(taskMonitor, "Updating existing document...");
 				oldWfDoc.setDescription(description);
+				oldWfDoc.setItemDescFormat(wfDocConfig.getItemDescFormat());
 				populateChildList(oldWfDoc, wfDocConfig);
 				db().updateById(oldWfDoc);
 			}
@@ -1072,13 +1074,14 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
 		for (WfTemplateConfig wfTemplateConfig : wfCategoryConfig.getWfTemplatesConfig().getWfTemplateConfigList()) {
 			addTaskMessage(taskMonitor, "Template name: " + wfTemplateConfig.getName());
 			String wfDocName = WfNameUtils.getDocNameParts(wfTemplateConfig.getDocument()).getDocName();
+			String wfTemplateName = WfNameUtils.getTemplateNameParts(wfTemplateConfig.getName()).getTemplateName();
 			wdQuery.clear();
-			WfTemplate oldWfTemplate = db().find(wdQuery.wfCategoryId(wfCategoryId).name(wfTemplateConfig.getName()));
+			WfTemplate oldWfTemplate = db().find(wdQuery.wfCategoryId(wfCategoryId).name(wfTemplateName));
 			description = resolveApplicationMessage(wfTemplateConfig.getDescription());
 			if (oldWfTemplate == null) {
 				addTaskMessage(taskMonitor, "Creating new template...");
 				wfTemplate.setWfCategoryId(wfCategoryId);
-				wfTemplate.setName(wfTemplateConfig.getName());
+				wfTemplate.setName(wfTemplateName);
 				wfTemplate.setDescription(description);
 				wfTemplate.setWfDocName(wfDocName);
 				populateChildList(wfTemplate, wfTemplateConfig);
