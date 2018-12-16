@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.Table;
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "TestChequeImage",
 		archivable = true)
 @Table("TEST_CHEQUE_IMAGE")
-public class TestChequeImageData extends BaseTimestampedEntity {
+public class TestChequeImage extends BaseTimestampedEntity {
 
 	@Column(nullable = true)
 	private byte[] image;

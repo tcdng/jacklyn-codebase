@@ -19,15 +19,11 @@ package com.tcdng.jacklyn.workflow.entities;
 import java.util.Date;
 import java.util.List;
 
-import com.tcdng.jacklyn.common.annotation.Managed;
-import com.tcdng.jacklyn.common.entities.BaseStatusEntity;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.annotation.ChildList;
-import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
-import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
  * Workflow form definition.
@@ -35,22 +31,20 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Form", reportable = true)
-@Table(name = "WFFORM", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
-		@UniqueConstraint({ "wfCategoryId", "description" }) })
-public class WfForm extends BaseStatusEntity {
-
-	@ForeignKey(WfCategory.class)
-	private Long wfCategoryId;
+@Table("WFFORM")
+public class WfForm extends BaseEntity {
 
 	@ForeignKey(WfDoc.class)
 	private Long wfDocId;
 
-	@Column(name = "FORM_NM", length = 32)
-	private String name;
+	@ListOnly(key = "wfDocId", property = "name")
+	private String wfDocName;
 
-	@Column(name = "FORM_DESC", length = 64)
-	private String description;
+	@ListOnly(key = "wfDocId", property = "description")
+	private String wfDocDesc;
+
+	@ListOnly(key = "wfDocId", property = "wfCategoryUpdateDt")
+	private Date wfCategoryUpdateDt;
 
 	@ChildList
 	private List<WfFormTab> tabList;
@@ -61,32 +55,9 @@ public class WfForm extends BaseStatusEntity {
 	@ChildList
 	private List<WfFormField> fieldList;
 
-	@ListOnly(key = "wfCategoryId", property = "name")
-	private String wfCategoryName;
-
-	@ListOnly(key = "wfCategoryId", property = "description")
-	private String wfCategoryDesc;
-
-	@ListOnly(key = "wfCategoryId", property = "updateDt")
-	private Date updateDt;
-
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
-
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
-
 	@Override
 	public String getDescription() {
-		return this.description;
-	}
-
-	public Long getWfCategoryId() {
-		return wfCategoryId;
-	}
-
-	public void setWfCategoryId(Long wfCategoryId) {
-		this.wfCategoryId = wfCategoryId;
+		return wfDocName;
 	}
 
 	public Long getWfDocId() {
@@ -95,14 +66,6 @@ public class WfForm extends BaseStatusEntity {
 
 	public void setWfDocId(Long wfDocId) {
 		this.wfDocId = wfDocId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public List<WfFormTab> getTabList() {
@@ -145,32 +108,12 @@ public class WfForm extends BaseStatusEntity {
 		this.wfDocDesc = wfDocDesc;
 	}
 
-	public String getWfCategoryName() {
-		return wfCategoryName;
+	public Date getWfCategoryUpdateDt() {
+		return wfCategoryUpdateDt;
 	}
 
-	public void setWfCategoryName(String wfCategoryName) {
-		this.wfCategoryName = wfCategoryName;
-	}
-
-	public String getWfCategoryDesc() {
-		return wfCategoryDesc;
-	}
-
-	public void setWfCategoryDesc(String wfCategoryDesc) {
-		this.wfCategoryDesc = wfCategoryDesc;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Date getUpdateDt() {
-		return updateDt;
-	}
-
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
+	public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
+		this.wfCategoryUpdateDt = wfCategoryUpdateDt;
 	}
 
 }

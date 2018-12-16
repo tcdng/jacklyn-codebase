@@ -313,4 +313,84 @@ public interface WfTemplateErrorConstants {
 	 * Workflow template user action target refers to self step. Index = {0}, step = {1}, name = {2}, target = {3}.
 	 */
 	String WFTEMPLATE_USERACTION_TARGET_SELF = "WFTMPL_003A";
+
+	/**
+	 * Workflow template record action has no name. Index = {0}, step = {1}.
+	 */
+	String WFTEMPLATE_RECORDACTION_NO_NAME = "WFTMPL_003B";
+
+	/**
+	 * Workflow template record action has no description. Index = {0}, step = {1}.
+	 */
+	String WFTEMPLATE_RECORDACTION_NO_DESC = "WFTMPL_003C";
+
+	/**
+	 * Workflow template record action with name already exists. Index = {0}, step = {1}, name = {2}.
+	 */
+	String WFTEMPLATE_RECORDACTION_EXIST = "WFTMPL_003D";
+
+	/**
+	 * Workflow template record action with invalid name. Index = {0}, step = {1}, name = {2}.
+	 */
+	String WFTEMPLATE_RECORDACTION_INVALID_NAME = "WFTMPL_003E";
+
+	/**
+	 * Workflow template record action has no type. Index = {0}, step = {1}, name = {2}.
+	 */
+	String WFTEMPLATE_RECORDACTION_NO_TYPE = "WFTMPL_003F";
+
+	/**
+	 * Workflow template record action has no mapping. Index = {0}, step = {1}, name = {2}.
+	 */
+	String WFTEMPLATE_RECORDACTION_NO_MAPPING = "WFTMPL_0040";
+
+	/**
+	 * Workflow template form privilege has no element name. Index = {0}, step = {1}.
+	 */
+	String WFTEMPLATE_FORMPRIVILEGE_NO_ELEMENT_NAME = "WFTMPL_0041";
+
+	/**
+	 * Workflow template form privilege has no element type. Index = {0}, step = {1}.
+	 */
+	String WFTEMPLATE_FORMPRIVILEGE_NO_ELEMENT_TYPE = "WFTMPL_0042";
+
+	/**
+	 * Workflow template step has routings. Index = {0}, step = {1}, type = {2}.
+	 */
+	String WFTEMPLATE_STEP_ROUTINGS_EXIST = "WFTMPL_0043";
+
+	/**
+	 * Workflow template step has user actions. Index = {0}, step = {1}, type = {2}.
+	 */
+	String WFTEMPLATE_STEP_USERACTIONS_EXIST = "WFTMPL_0044";
+
+	/**
+	 * Workflow template step has record actions. Index = {0}, step = {1}, type = {2}.
+	 */
+	String WFTEMPLATE_STEP_RECORDACTIONS_EXIST = "WFTMPL_0045";
+
+	/**
+	 * Workflow template step has enrichments. Index = {0}, step = {1}, type = {2}.
+	 */
+	String WFTEMPLATE_STEP_ENRICHMENTS_EXIST = "WFTMPL_0046";
+
+	/**
+	 * Workflow template step has policies. Index = {0}, step = {1}, type = {2}.
+	 */
+	String WFTEMPLATE_STEP_POLICIES_EXIST = "WFTMPL_0047";
+
+	/**
+	 * Workflow template step has form privileges. Index = {0}, step = {1}, type = {2}.
+	 */
+	String WFTEMPLATE_STEP_FORMPRIVILEGES_EXIST = "WFTMPL_0048";
+
+	/**
+	 * Workflow template has no version.
+	 */
+	String WFTEMPLATE_NO_VERSION = "WFTMPL_0049";
+
+	/**
+	 * Workflow template has multiple manual steps.
+	 */
+	String WFTEMPLATE_STEP_MULTIPLE_MANUAL = "WFTMPL_004A";
 }

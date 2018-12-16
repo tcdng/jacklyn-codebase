@@ -72,10 +72,10 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
-		assertNotNull(moduleData);
-		assertEquals(SystemModuleNameConstants.SYSTEM_MODULE, moduleData.getName());
-		assertFalse("$m{system.module}".equals(moduleData.getDescription()));
+		Module module = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
+		assertNotNull(module);
+		assertEquals(SystemModuleNameConstants.SYSTEM_MODULE, module.getName());
+		assertFalse("$m{system.module}".equals(module.getDescription()));
 	}
 
 	@Test
@@ -83,10 +83,10 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
+		Module module = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
 		Long moduleId = systemModule.getModuleId(SystemModuleNameConstants.SYSTEM_MODULE);
-		assertNotNull(moduleData);
-		assertEquals(moduleData.getId(), moduleId);
+		assertNotNull(module);
+		assertEquals(module.getId(), moduleId);
 	}
 
 	@Test
@@ -94,11 +94,11 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
-		assertNotNull(moduleData);
-		Module fetchedModuleData = systemModule.findModule(moduleData.getId());
-		assertNotNull(fetchedModuleData);
-		assertEquals(moduleData, fetchedModuleData);
+		Module module = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
+		assertNotNull(module);
+		Module fetchedModule = systemModule.findModule(module.getId());
+		assertNotNull(fetchedModule);
+		assertEquals(module, fetchedModule);
 	}
 
 	@Test
@@ -106,13 +106,13 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
+		Module module = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
 
 		List<Module> moduleList = systemModule
 				.findModules(new ModuleQuery().name(SystemModuleNameConstants.SYSTEM_MODULE));
 		assertNotNull(moduleList);
 		assertEquals(1, moduleList.size());
-		assertEquals(moduleData, moduleList.get(0));
+		assertEquals(module, moduleList.get(0));
 	}
 
 	@Test
@@ -120,15 +120,15 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
+		Module module = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
 
 		Map<Long, Module> moduleMap = systemModule.findModules(Long.class, "id",
 				(ModuleQuery) new ModuleQuery().name(SystemModuleNameConstants.SYSTEM_MODULE));
 		assertNotNull(moduleMap);
 		assertEquals(1, moduleMap.size());
 
-		Module fetchedModuleData = moduleMap.get(moduleData.getId());
-		assertEquals(moduleData, fetchedModuleData);
+		Module fetchedModule = moduleMap.get(module.getId());
+		assertEquals(module, fetchedModule);
 	}
 
 	@Test
@@ -136,12 +136,12 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
-		assertEquals(RecordStatus.ACTIVE, moduleData.getStatus());
+		Module module = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
+		assertEquals(RecordStatus.ACTIVE, module.getStatus());
 
 		systemModule.deactivateModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
-		moduleData = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
-		assertEquals(RecordStatus.INACTIVE, moduleData.getStatus());
+		module = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
+		assertEquals(RecordStatus.INACTIVE, module.getStatus());
 	}
 
 	@Test(expected = UnifyException.class)
@@ -149,8 +149,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Module moduleData = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
-		assertEquals(RecordStatus.ACTIVE, moduleData.getStatus());
+		Module module = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE);
+		assertEquals(RecordStatus.ACTIVE, module.getStatus());
 
 		systemModule.deactivateModule(SystemModuleNameConstants.SYSTEM_MODULE);
 	}
@@ -161,13 +161,13 @@ public class SystemModuleTest extends AbstractJacklynTest {
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
 		systemModule.deactivateModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
-		Module moduleData = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
-		assertEquals(RecordStatus.INACTIVE, moduleData.getStatus());
+		Module module = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
+		assertEquals(RecordStatus.INACTIVE, module.getStatus());
 
 		systemModule.activateModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
 
-		moduleData = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
-		assertEquals(RecordStatus.ACTIVE, moduleData.getStatus());
+		module = systemModule.findModule(TestCustomerModuleNameConstants.CUSTOMER_MODULE);
+		assertEquals(RecordStatus.ACTIVE, module.getStatus());
 	}
 
 	@Test
@@ -191,8 +191,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
 		List<ApplicationMenu> menuList = systemModule.findMenus(query);
 
-		ApplicationMenu menuData = systemModule.findMenu(menuList.get(0).getId());
-		assertEquals(menuList.get(0), menuData);
+		ApplicationMenu menu = systemModule.findMenu(menuList.get(0).getId());
+		assertEquals(menuList.get(0), menu);
 	}
 
 	@Test
@@ -217,8 +217,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		List<ApplicationMenuItem> menuItemList = systemModule.findMenuItems(query);
 		assertFalse(menuItemList.isEmpty());
 
-		ApplicationMenuItem menuItemData = systemModule.findMenuItem(menuItemList.get(0).getId());
-		assertEquals(menuItemList.get(0), menuItemData);
+		ApplicationMenuItem menuItem = systemModule.findMenuItem(menuItemList.get(0).getId());
+		assertEquals(menuItemList.get(0), menuItem);
 	}
 
 	@Test
@@ -265,17 +265,17 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		SystemParameter sysParameterData = systemModule
+		SystemParameter sysParameter = systemModule
 				.findSysParameter(SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION);
-		assertNotNull(sysParameterData);
+		assertNotNull(sysParameter);
 		assertEquals(SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION,
-				sysParameterData.getName());
+				sysParameter.getName());
 		assertFalse(
-				"$m{system.sysparam.applicationversion}".equals(sysParameterData.getDescription()));
-		assertEquals("!ui-text size:24", sysParameterData.getEditor());
-		assertEquals("1.0.0", sysParameterData.getValue());
-		assertEquals(Boolean.FALSE, sysParameterData.getControl());
-		assertEquals(Boolean.FALSE, sysParameterData.getEditable());
+				"$m{system.sysparam.applicationversion}".equals(sysParameter.getDescription()));
+		assertEquals("!ui-text size:24", sysParameter.getEditor());
+		assertEquals("1.0.0", sysParameter.getValue());
+		assertEquals(Boolean.FALSE, sysParameter.getControl());
+		assertEquals(Boolean.FALSE, sysParameter.getEditable());
 	}
 
 	@Test
@@ -283,11 +283,11 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		SystemParameter sysParameterData = systemModule
+		SystemParameter sysParameter = systemModule
 				.findSysParameter(SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION);
-		SystemParameter fetchedSysParameterData
-				= systemModule.findSysParameter(sysParameterData.getId());
-		assertEquals(sysParameterData, fetchedSysParameterData);
+		SystemParameter fetchedSysParameter
+				= systemModule.findSysParameter(sysParameter.getId());
+		assertEquals(sysParameter, fetchedSysParameter);
 	}
 
 	@Test
@@ -353,9 +353,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		Inputs paramValues = document.getScheduledTaskParams();
 		assertNotNull(paramValues);
 		assertEquals(1, paramValues.size());
@@ -371,9 +371,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		Inputs paramValues = document.getScheduledTaskParams();
 		paramValues.setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
@@ -385,9 +385,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		systemModule.createScheduledTask(document);
 	}
 
@@ -396,9 +396,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		Inputs paramValues = document.getScheduledTaskParams();
 		paramValues.setInputValue("batchSize", "400");
 		systemModule.createScheduledTask(document);
@@ -406,10 +406,10 @@ public class SystemModuleTest extends AbstractJacklynTest {
 				.findScheduledTasks(new ScheduledTaskQuery().taskName("testschedulabletask"));
 		assertNotNull(scheduledTaskList);
 		assertEquals(1, scheduledTaskList.size());
-		assertEquals(scheduledTaskData.getDescription(), scheduledTaskList.get(0).getDescription());
-		assertEquals(scheduledTaskData.getExpires(), scheduledTaskList.get(0).getExpires());
-		assertEquals(scheduledTaskData.getStartTime(), scheduledTaskList.get(0).getStartTime());
-		assertEquals(scheduledTaskData.getTaskName(), scheduledTaskList.get(0).getTaskName());
+		assertEquals(scheduledTask.getDescription(), scheduledTaskList.get(0).getDescription());
+		assertEquals(scheduledTask.getExpires(), scheduledTaskList.get(0).getExpires());
+		assertEquals(scheduledTask.getStartTime(), scheduledTaskList.get(0).getStartTime());
+		assertEquals(scheduledTask.getTaskName(), scheduledTaskList.get(0).getTaskName());
 	}
 
 	@Test
@@ -417,16 +417,16 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		Inputs paramValues = document.getScheduledTaskParams();
 		paramValues.setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
-		ScheduledTask fetchedScheduledTaskData = systemModule.findScheduledTask(scheduledTaskId);
-		assertNotNull(fetchedScheduledTaskData);
-		assertEquals(scheduledTaskData, fetchedScheduledTaskData);
+		ScheduledTask fetchedScheduledTask = systemModule.findScheduledTask(scheduledTaskId);
+		assertNotNull(fetchedScheduledTask);
+		assertEquals(scheduledTask, fetchedScheduledTask);
 	}
 
 	@Test
@@ -434,28 +434,28 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		Inputs paramValues = document.getScheduledTaskParams();
 		paramValues.setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
 		ScheduledTaskLargeData fetchDocument
 				= systemModule.findScheduledTaskDocument(scheduledTaskId);
-		ScheduledTask fetchedScheduledTaskData = fetchDocument.getData();
-		fetchedScheduledTaskData.setFrequency(Integer.valueOf(2));
-		fetchedScheduledTaskData.setFrequencyUnit(FrequencyUnit.HOUR);
-		fetchedScheduledTaskData.setStartTime(new Date());
+		ScheduledTask fetchedScheduledTask = fetchDocument.getData();
+		fetchedScheduledTask.setFrequency(Integer.valueOf(2));
+		fetchedScheduledTask.setFrequencyUnit(FrequencyUnit.HOUR);
+		fetchedScheduledTask.setStartTime(new Date());
 		fetchDocument.getScheduledTaskParams().setInputValue("batchSize", "1000");
 
 		systemModule.updateScheduledTask(fetchDocument);
 
 		ScheduledTaskLargeData updateDocument
 				= systemModule.findScheduledTaskDocument(scheduledTaskId);
-		ScheduledTask updatedScheduledTaskData = updateDocument.getData();
-		assertFalse(scheduledTaskData.equals(updatedScheduledTaskData));
-		assertEquals(fetchedScheduledTaskData, updatedScheduledTaskData);
+		ScheduledTask updatedScheduledTask = updateDocument.getData();
+		assertFalse(scheduledTask.equals(updatedScheduledTask));
+		assertEquals(fetchedScheduledTask, updatedScheduledTask);
 		assertEquals("1000", updateDocument.getScheduledTaskParams().getInputValue("batchSize"));
 	}
 
@@ -464,9 +464,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		document.getScheduledTaskParams().setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
@@ -479,19 +479,19 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		document.getScheduledTaskParams().setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
-		ScheduledTask fetchedScheduledTaskData = systemModule.findScheduledTask(scheduledTaskId);
-		assertEquals(RecordStatus.ACTIVE, fetchedScheduledTaskData.getStatus());
+		ScheduledTask fetchedScheduledTask = systemModule.findScheduledTask(scheduledTaskId);
+		assertEquals(RecordStatus.ACTIVE, fetchedScheduledTask.getStatus());
 
 		systemModule.deactivateScheduledTask(scheduledTaskId);
 
-		fetchedScheduledTaskData = systemModule.findScheduledTask(scheduledTaskId);
-		assertEquals(RecordStatus.INACTIVE, fetchedScheduledTaskData.getStatus());
+		fetchedScheduledTask = systemModule.findScheduledTask(scheduledTaskId);
+		assertEquals(RecordStatus.INACTIVE, fetchedScheduledTask.getStatus());
 	}
 
 	@Test
@@ -499,20 +499,20 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		document.getScheduledTaskParams().setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
-		ScheduledTask fetchedScheduledTaskData = systemModule.findScheduledTask(scheduledTaskId);
-		assertEquals(RecordStatus.ACTIVE, fetchedScheduledTaskData.getStatus());
+		ScheduledTask fetchedScheduledTask = systemModule.findScheduledTask(scheduledTaskId);
+		assertEquals(RecordStatus.ACTIVE, fetchedScheduledTask.getStatus());
 
 		systemModule.deactivateScheduledTask(scheduledTaskId);
 		systemModule.activateScheduledTask(scheduledTaskId);
 
-		fetchedScheduledTaskData = systemModule.findScheduledTask(scheduledTaskId);
-		assertEquals(RecordStatus.ACTIVE, fetchedScheduledTaskData.getStatus());
+		fetchedScheduledTask = systemModule.findScheduledTask(scheduledTaskId);
+		assertEquals(RecordStatus.ACTIVE, fetchedScheduledTask.getStatus());
 	}
 
 	@Test
@@ -520,9 +520,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		document.getScheduledTaskParams().setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
@@ -536,9 +536,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		document.getScheduledTaskParams().setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
@@ -552,17 +552,17 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		assertNotNull(scheduledTaskHistList);
 		assertEquals(2, scheduledTaskHistList.size());
 
-		ScheduledTaskHist scheduledTaskHistData = scheduledTaskHistList.get(0);
-		assertEquals(scheduledTaskId, scheduledTaskHistData.getScheduledTaskId());
-		assertEquals("testschedulabletask", scheduledTaskHistData.getTaskName());
-		assertNull(scheduledTaskHistData.getErrorMsg());
-		assertEquals(TaskStatus.INITIALISED, scheduledTaskHistData.getTaskStatus());
+		ScheduledTaskHist scheduledTaskHist = scheduledTaskHistList.get(0);
+		assertEquals(scheduledTaskId, scheduledTaskHist.getScheduledTaskId());
+		assertEquals("testschedulabletask", scheduledTaskHist.getTaskName());
+		assertNull(scheduledTaskHist.getErrorMsg());
+		assertEquals(TaskStatus.INITIALISED, scheduledTaskHist.getTaskStatus());
 
-		scheduledTaskHistData = scheduledTaskHistList.get(1);
-		assertEquals(scheduledTaskId, scheduledTaskHistData.getScheduledTaskId());
-		assertEquals("testschedulabletask", scheduledTaskHistData.getTaskName());
-		assertEquals("Some message!", scheduledTaskHistData.getErrorMsg());
-		assertEquals(TaskStatus.CANCELED, scheduledTaskHistData.getTaskStatus());
+		scheduledTaskHist = scheduledTaskHistList.get(1);
+		assertEquals(scheduledTaskId, scheduledTaskHist.getScheduledTaskId());
+		assertEquals("testschedulabletask", scheduledTaskHist.getTaskName());
+		assertEquals("Some message!", scheduledTaskHist.getErrorMsg());
+		assertEquals(TaskStatus.CANCELED, scheduledTaskHist.getTaskStatus());
 	}
 
 	@Test
@@ -570,20 +570,20 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		ScheduledTask scheduledTaskData = this.getScheduledTaskData();
+		ScheduledTask scheduledTask = this.getScheduledTask();
 		ScheduledTaskLargeData document = systemModule
-				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTaskData));
+				.loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
 		document.getScheduledTaskParams().setInputValue("batchSize", "400");
 		Long scheduledTaskId = systemModule.createScheduledTask(document);
 
 		Long scheduledTaskHistId = systemModule.createScheduledTaskHistory(scheduledTaskId,
 				TaskStatus.INITIALISED, "Started!");
-		ScheduledTaskHist scheduledTaskHistData
+		ScheduledTaskHist scheduledTaskHist
 				= systemModule.findScheduledTaskHist(scheduledTaskHistId);
-		assertEquals(scheduledTaskId, scheduledTaskHistData.getScheduledTaskId());
-		assertEquals("testschedulabletask", scheduledTaskHistData.getTaskName());
-		assertEquals("Started!", scheduledTaskHistData.getErrorMsg());
-		assertEquals(TaskStatus.INITIALISED, scheduledTaskHistData.getTaskStatus());
+		assertEquals(scheduledTaskId, scheduledTaskHist.getScheduledTaskId());
+		assertEquals("testschedulabletask", scheduledTaskHist.getTaskName());
+		assertEquals("Started!", scheduledTaskHist.getErrorMsg());
+		assertEquals(TaskStatus.INITIALISED, scheduledTaskHist.getTaskStatus());
 	}
 
 	@Test
@@ -591,8 +591,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Theme themeData = this.getThemeData();
-		Long themeId = systemModule.createTheme(themeData);
+		Theme theme = this.getTheme();
+		Long themeId = systemModule.createTheme(theme);
 		assertNotNull(themeId);
 	}
 
@@ -601,12 +601,12 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Theme themeData = this.getThemeData();
-		Long themeId = systemModule.createTheme(themeData);
+		Theme theme = this.getTheme();
+		Long themeId = systemModule.createTheme(theme);
 
-		Theme fetchedThemeData = systemModule.findTheme(themeId);
-		assertNotNull(fetchedThemeData);
-		assertEquals(themeData, fetchedThemeData);
+		Theme fetchedTheme = systemModule.findTheme(themeId);
+		assertNotNull(fetchedTheme);
+		assertEquals(theme, fetchedTheme);
 	}
 
 	@Test
@@ -614,14 +614,14 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Theme themeData = this.getThemeData();
-		systemModule.createTheme(themeData);
+		Theme theme = this.getTheme();
+		systemModule.createTheme(theme);
 
 		List<Theme> themeList = systemModule.findThemes(new ThemeQuery().name("thm001"));
 		assertNotNull(themeList);
 		assertEquals(1, themeList.size());
-		assertEquals(themeData.getName(), themeList.get(0).getName());
-		assertEquals(themeData.getDescription(), themeList.get(0).getDescription());
+		assertEquals(theme.getName(), themeList.get(0).getName());
+		assertEquals(theme.getDescription(), themeList.get(0).getDescription());
 	}
 
 	@Test
@@ -629,18 +629,18 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Theme themeData = this.getThemeData();
-		Long themeId = systemModule.createTheme(themeData);
+		Theme theme = this.getTheme();
+		Long themeId = systemModule.createTheme(theme);
 
-		Theme fetchedThemeData = systemModule.findTheme(themeId);
-		fetchedThemeData.setDescription("Red Boat");
-		fetchedThemeData.setResourcePath("/redboat");
-		int count = systemModule.updateTheme(fetchedThemeData);
+		Theme fetchedTheme = systemModule.findTheme(themeId);
+		fetchedTheme.setDescription("Red Boat");
+		fetchedTheme.setResourcePath("/redboat");
+		int count = systemModule.updateTheme(fetchedTheme);
 		assertEquals(1, count);
 
-		Theme updatedThemeData = systemModule.findTheme(themeId);
-		assertEquals(fetchedThemeData, updatedThemeData);
-		assertFalse(themeData.equals(updatedThemeData));
+		Theme updatedTheme = systemModule.findTheme(themeId);
+		assertEquals(fetchedTheme, updatedTheme);
+		assertFalse(theme.equals(updatedTheme));
 	}
 
 	@Test
@@ -648,8 +648,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		Theme themeData = this.getThemeData();
-		Long themeId = systemModule.createTheme(themeData);
+		Theme theme = this.getTheme();
+		Long themeId = systemModule.createTheme(theme);
 
 		int count = systemModule.deleteTheme(themeId);
 		assertEquals(1, count);
@@ -660,8 +660,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		Long dashboardTileId = systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		Long dashboardTileId = systemModule.createDashboardTile(dashboardTile);
 		assertNotNull(dashboardTileId);
 	}
 
@@ -670,17 +670,17 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		Long dashboardTileId = systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		Long dashboardTileId = systemModule.createDashboardTile(dashboardTile);
 
-		DashboardTile fetchedDashboardTileData = systemModule.findDashboardTile(dashboardTileId);
-		assertNotNull(fetchedDashboardTileData);
-		assertEquals(dashboardTileData.getName(), fetchedDashboardTileData.getName());
-		assertEquals(dashboardTileData.getCaption(), fetchedDashboardTileData.getCaption());
-		assertEquals(dashboardTileData.getDescription(), fetchedDashboardTileData.getDescription());
-		assertEquals(dashboardTileData.getGenerator(), fetchedDashboardTileData.getGenerator());
-		assertEquals(dashboardTileData.getImageSrc(), fetchedDashboardTileData.getImageSrc());
-		assertEquals(dashboardTileData.getStatus(), fetchedDashboardTileData.getStatus());
+		DashboardTile fetchedDashboardTile = systemModule.findDashboardTile(dashboardTileId);
+		assertNotNull(fetchedDashboardTile);
+		assertEquals(dashboardTile.getName(), fetchedDashboardTile.getName());
+		assertEquals(dashboardTile.getCaption(), fetchedDashboardTile.getCaption());
+		assertEquals(dashboardTile.getDescription(), fetchedDashboardTile.getDescription());
+		assertEquals(dashboardTile.getGenerator(), fetchedDashboardTile.getGenerator());
+		assertEquals(dashboardTile.getImageSrc(), fetchedDashboardTile.getImageSrc());
+		assertEquals(dashboardTile.getStatus(), fetchedDashboardTile.getStatus());
 	}
 
 	@Test
@@ -688,20 +688,20 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		systemModule.createDashboardTile(dashboardTile);
 
 		List<DashboardTile> dashboardTileList
 				= systemModule.findDashboardTiles(new DashboardTileQuery().name("tile001"));
 		assertNotNull(dashboardTileList);
 		assertEquals(1, dashboardTileList.size());
-		DashboardTile fetchedDashboardTileData = dashboardTileList.get(0);
-		assertEquals(dashboardTileData.getName(), fetchedDashboardTileData.getName());
-		assertEquals(dashboardTileData.getCaption(), fetchedDashboardTileData.getCaption());
-		assertEquals(dashboardTileData.getDescription(), fetchedDashboardTileData.getDescription());
-		assertEquals(dashboardTileData.getGenerator(), fetchedDashboardTileData.getGenerator());
-		assertEquals(dashboardTileData.getImageSrc(), fetchedDashboardTileData.getImageSrc());
-		assertEquals(dashboardTileData.getStatus(), fetchedDashboardTileData.getStatus());
+		DashboardTile fetchedDashboardTile = dashboardTileList.get(0);
+		assertEquals(dashboardTile.getName(), fetchedDashboardTile.getName());
+		assertEquals(dashboardTile.getCaption(), fetchedDashboardTile.getCaption());
+		assertEquals(dashboardTile.getDescription(), fetchedDashboardTile.getDescription());
+		assertEquals(dashboardTile.getGenerator(), fetchedDashboardTile.getGenerator());
+		assertEquals(dashboardTile.getImageSrc(), fetchedDashboardTile.getImageSrc());
+		assertEquals(dashboardTile.getStatus(), fetchedDashboardTile.getStatus());
 	}
 
 	@Test
@@ -709,17 +709,17 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		Long dashboardTileId = systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		Long dashboardTileId = systemModule.createDashboardTile(dashboardTile);
 
-		DashboardTile fetchedDashboardTileData = systemModule.findDashboardTile(dashboardTileId);
-		fetchedDashboardTileData.setDescription("New Currencies");
-		int count = systemModule.updateDashboardTile(fetchedDashboardTileData);
+		DashboardTile fetchedDashboardTile = systemModule.findDashboardTile(dashboardTileId);
+		fetchedDashboardTile.setDescription("New Currencies");
+		int count = systemModule.updateDashboardTile(fetchedDashboardTile);
 		assertEquals(1, count);
 
-		DashboardTile updatedDashboardTileData = systemModule.findDashboardTile(dashboardTileId);
-		assertEquals(fetchedDashboardTileData, updatedDashboardTileData);
-		assertFalse(dashboardTileData.equals(updatedDashboardTileData));
+		DashboardTile updatedDashboardTile = systemModule.findDashboardTile(dashboardTileId);
+		assertEquals(fetchedDashboardTile, updatedDashboardTile);
+		assertFalse(dashboardTile.equals(updatedDashboardTile));
 	}
 
 	@Test
@@ -727,8 +727,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		Long dashboardTileId = systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		Long dashboardTileId = systemModule.createDashboardTile(dashboardTile);
 
 		int count = systemModule.deleteDashboardTile(dashboardTileId);
 		assertEquals(1, count);
@@ -739,8 +739,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		systemModule.createDashboardTile(dashboardTile);
 
 		List<DashboardTile> dashboardTileList
 				= systemModule.findDashboardTiles(new DashboardTileQuery().name("tile001"));
@@ -757,8 +757,8 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 
-		DashboardTile dashboardTileData = this.getDashboardTileData();
-		systemModule.createDashboardTile(dashboardTileData);
+		DashboardTile dashboardTile = this.getDashboardTile();
+		systemModule.createDashboardTile(dashboardTile);
 
 		List<DashboardTile> dashboardTileList
 				= systemModule.findDashboardTiles(new DashboardTileQuery().name("tile001"));
@@ -768,9 +768,9 @@ public class SystemModuleTest extends AbstractJacklynTest {
 		assertEquals(1, tileList.size());
 
 		Tile tile = tileList.get(0);
-		assertEquals(dashboardTileData.getCaption(), tile.getCaption());
-		assertEquals(dashboardTileData.getPath(), tile.getActionPath());
-		assertEquals(dashboardTileData.getImageSrc(), tile.getImageSrc());
+		assertEquals(dashboardTile.getCaption(), tile.getCaption());
+		assertEquals(dashboardTile.getPath(), tile.getActionPath());
+		assertEquals(dashboardTile.getImageSrc(), tile.getImageSrc());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -785,36 +785,36 @@ public class SystemModuleTest extends AbstractJacklynTest {
 
 	}
 
-	private ScheduledTask getScheduledTaskData() {
-		ScheduledTask scheduledTaskData = new ScheduledTask();
-		scheduledTaskData.setDescription("Test Scheduled Taskable");
-		scheduledTaskData.setExpires(Boolean.FALSE);
-		scheduledTaskData.setStartTime(new Date());
-		scheduledTaskData.setTaskName("testschedulabletask");
-		return scheduledTaskData;
+	private ScheduledTask getScheduledTask() {
+		ScheduledTask scheduledTask = new ScheduledTask();
+		scheduledTask.setDescription("Test Scheduled Taskable");
+		scheduledTask.setExpires(Boolean.FALSE);
+		scheduledTask.setStartTime(new Date());
+		scheduledTask.setTaskName("testschedulabletask");
+		return scheduledTask;
 	}
 
-	private Theme getThemeData() {
-		Theme themeData = new Theme();
-		themeData.setName("thm001");
-		themeData.setDescription("Blue Boat");
-		themeData.setResourcePath("/blueboat");
-		themeData.setStatus(RecordStatus.ACTIVE);
-		return themeData;
+	private Theme getTheme() {
+		Theme theme = new Theme();
+		theme.setName("thm001");
+		theme.setDescription("Blue Boat");
+		theme.setResourcePath("/blueboat");
+		theme.setStatus(RecordStatus.ACTIVE);
+		return theme;
 	}
 
-	private DashboardTile getDashboardTileData() throws Exception {
+	private DashboardTile getDashboardTile() throws Exception {
 		SystemModule systemModule = (SystemModule) this
 				.getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 		Long moduleId = systemModule.getModuleId(SystemModuleNameConstants.SYSTEM_MODULE);
-		DashboardTile dashboardTileData = new DashboardTile();
-		dashboardTileData.setModuleId(moduleId);
-		dashboardTileData.setName("tile001");
-		dashboardTileData.setDescription("Currencies");
-		dashboardTileData.setImageSrc("/currencies.png");
-		dashboardTileData.setCaption("Manage Currencies");
-		dashboardTileData.setPath("/accounts/currencies");
-		dashboardTileData.setStatus(RecordStatus.ACTIVE);
-		return dashboardTileData;
+		DashboardTile dashboardTile = new DashboardTile();
+		dashboardTile.setModuleId(moduleId);
+		dashboardTile.setName("tile001");
+		dashboardTile.setDescription("Currencies");
+		dashboardTile.setImageSrc("/currencies.png");
+		dashboardTile.setCaption("Manage Currencies");
+		dashboardTile.setPath("/accounts/currencies");
+		dashboardTile.setStatus(RecordStatus.ACTIVE);
+		return dashboardTile;
 	}
 }

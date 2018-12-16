@@ -13,12 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.notification.entities;
+package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.annotation.Managed;
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
-import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
-import com.tcdng.jacklyn.system.entities.Module;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -26,25 +24,23 @@ import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
- * Message template entity.
+ * Workflow message entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
-		reportable = true, auditable = true)
-@Table(name = "NOTIFTEMPLATE",
-		uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
-				@UniqueConstraint({ "moduleId", "description" }) })
-public class NotificationTemplate extends BaseVersionedStatusEntity {
+@Table(name = "WFMESSAGE",
+		uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
+				@UniqueConstraint({ "wfTemplateId", "description" }) })
+public class WfMessage extends BaseEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+	@ForeignKey(WfTemplate.class)
+	private Long wfTemplateId;
 
-	@Column(name = "TEMPLATE_NM", length = 96)
+	@Column(name = "MESSAGE_NM", length = 64)
 	private String name;
 
-	@Column(name = "TEMPLATE_DESC", length = 64)
+	@Column(name = "MESSAGE_DESC", length = 64)
 	private String description;
 
 	@Column(length = 64)
@@ -58,24 +54,33 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
 	@Column(length = 32, nullable = true)
 	private String attachmentGenerator;
+	
+	@ListOnly(key = "wfTemplateId", property = "name")
+	private String wfTemplateName;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+	@ListOnly(key = "wfTemplateId", property = "wfCategoryId")
+	private Long wfCategoryId;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDescription;
+	@ListOnly(key = "wfTemplateId", property = "wfCategoryStatus")
+	private RecordStatus wfCategoryStatus;
+
+	@ListOnly(key = "wfTemplateId", property = "wfCategoryVersion")
+	private String wfCategoryVersion;
+
+	@ListOnly(key = "wfTemplateId", property = "wfCategoryName")
+	private String wfCategoryName;
 
 	@Override
 	public String getDescription() {
 		return this.description;
 	}
 
-	public Long getModuleId() {
-		return moduleId;
+	public Long getWfTemplateId() {
+		return wfTemplateId;
 	}
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
+	public void setWfTemplateId(Long wfTemplateId) {
+		this.wfTemplateId = wfTemplateId;
 	}
 
 	public String getName() {
@@ -102,22 +107,6 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 		this.template = template;
 	}
 
-	public String getModuleName() {
-		return moduleName;
-	}
-
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
-
-	public String getModuleDescription() {
-		return moduleDescription;
-	}
-
-	public void setModuleDescription(String moduleDescription) {
-		this.moduleDescription = moduleDescription;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -136,5 +125,45 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
 	public void setAttachmentGenerator(String attachmentGenerator) {
 		this.attachmentGenerator = attachmentGenerator;
+	}
+
+	public String getWfTemplateName() {
+		return wfTemplateName;
+	}
+
+	public void setWfTemplateName(String wfTemplateName) {
+		this.wfTemplateName = wfTemplateName;
+	}
+
+	public Long getWfCategoryId() {
+		return wfCategoryId;
+	}
+
+	public void setWfCategoryId(Long wfCategoryId) {
+		this.wfCategoryId = wfCategoryId;
+	}
+
+	public String getWfCategoryName() {
+		return wfCategoryName;
+	}
+
+	public void setWfCategoryName(String wfCategoryName) {
+		this.wfCategoryName = wfCategoryName;
+	}
+
+	public RecordStatus getWfCategoryStatus() {
+		return wfCategoryStatus;
+	}
+
+	public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
+		this.wfCategoryStatus = wfCategoryStatus;
+	}
+
+	public String getWfCategoryVersion() {
+		return wfCategoryVersion;
+	}
+
+	public void setWfCategoryVersion(String wfCategoryVersion) {
+		this.wfCategoryVersion = wfCategoryVersion;
 	}
 }

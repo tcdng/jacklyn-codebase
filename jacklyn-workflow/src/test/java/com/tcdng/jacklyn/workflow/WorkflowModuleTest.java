@@ -30,9 +30,7 @@ import org.junit.Test;
 import com.tcdng.jacklyn.common.AbstractJacklynTest;
 import com.tcdng.jacklyn.common.TestCustomer;
 import com.tcdng.jacklyn.common.TestCustomerModule;
-import com.tcdng.jacklyn.notification.business.NotificationModule;
-import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
-import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
@@ -40,7 +38,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepPriority;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
-import com.tcdng.jacklyn.shared.xml.util.WfDocumentConfigUtils;
+import com.tcdng.jacklyn.shared.xml.util.WfCategoryConfigUtils;
 import com.tcdng.jacklyn.workflow.TestOpenAccountPolicyLogic.OpenAccountDetails;
 import com.tcdng.jacklyn.workflow.business.WorkflowModule;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
@@ -67,13 +65,13 @@ import com.tcdng.jacklyn.workflow.entities.WfItem;
 import com.tcdng.jacklyn.workflow.entities.WfItemAttachment;
 import com.tcdng.jacklyn.workflow.entities.WfItemEvent;
 import com.tcdng.jacklyn.workflow.entities.WfItemPackedDoc;
+import com.tcdng.jacklyn.workflow.entities.WfMessage;
 import com.tcdng.jacklyn.workflow.entities.WfPolicy;
 import com.tcdng.jacklyn.workflow.entities.WfRecordAction;
 import com.tcdng.jacklyn.workflow.entities.WfRouting;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.jacklyn.workflow.entities.WfUserAction;
-import com.tcdng.jacklyn.workflow.utils.WorkflowUtils;
 import com.tcdng.unify.core.UnifyCoreErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.constant.DataType;
@@ -105,321 +103,294 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		assertNotNull(wfCategoryList);
 		assertEquals(1, wfCategoryList.size());
 
-		WfCategory wfCategoryData = wfCategoryList.get(0);
-		assertNotNull(wfCategoryData);
-		assertEquals("customerCategory", wfCategoryData.getName());
-		assertEquals("Customer Category", wfCategoryData.getDescription());
+		WfCategory wfCategory = wfCategoryList.get(0);
+		assertNotNull(wfCategory);
+		assertEquals("customerCategory", wfCategory.getName());
+		assertEquals("Customer Workflow Category", wfCategory.getDescription());
+		assertEquals("1.0", wfCategory.getVersion());
+		assertEquals(RecordStatus.ACTIVE, wfCategory.getStatus());
 
 		/* Documents */
-		Long wfCategoryId = wfCategoryData.getId();
+		Long wfCategoryId = wfCategory.getId();
 		List<WfDoc> wfDocList = wbModule.findWfDocs(wfCategoryId);
 		assertNotNull(wfDocList);
 		assertEquals(1, wfDocList.size());
 
-		WfDoc wfDocData = wfDocList.get(0);
-		assertNotNull(wfDocData);
-		assertEquals("custInfo", wfDocData.getName());
-		assertEquals("Customer Information", wfDocData.getDescription());
-		assertNull(wfDocData.getFieldList());
-		assertNull(wfDocData.getClassifierList());
-		assertNull(wfDocData.getAttachmentList());
-		assertNull(wfDocData.getBeanMappingList());
+		WfDoc wfDoc = wfDocList.get(0);
+		assertNotNull(wfDoc);
+		assertEquals("custInfo", wfDoc.getName());
+		assertEquals("Customer Information", wfDoc.getDescription());
+		assertNull(wfDoc.getFieldList());
+		assertNull(wfDoc.getClassifierList());
+		assertNull(wfDoc.getAttachmentList());
+		assertNull(wfDoc.getBeanMappingList());
 
-		wfDocData = wbModule.findWfDoc(wfDocData.getId());
-		assertNotNull(wfDocData);
-		assertEquals("custInfo", wfDocData.getName());
-		assertEquals("Customer Information", wfDocData.getDescription());
+		wfDoc = wbModule.findWfDoc(wfDoc.getId());
+		assertNotNull(wfDoc);
+		assertEquals("custInfo", wfDoc.getName());
+		assertEquals("Customer Information", wfDoc.getDescription());
 
 		/* Document fields */
-		List<WfDocField> docFieldList = wfDocData.getFieldList();
+		List<WfDocField> docFieldList = wfDoc.getFieldList();
 		assertNotNull(docFieldList);
 		assertEquals(11, docFieldList.size());
 
-		WfDocField wfDocFieldData = docFieldList.get(0);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("id", wfDocFieldData.getName());
-		assertEquals("Customer ID", wfDocFieldData.getDescription());
-		assertEquals(DataType.LONG, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		WfDocField wfDocField = docFieldList.get(0);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("id", wfDocField.getName());
+		assertEquals("Customer ID", wfDocField.getDescription());
+		assertEquals(DataType.LONG, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(1);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("firstName", wfDocFieldData.getName());
-		assertEquals("First Name", wfDocFieldData.getDescription());
-		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(1);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("firstName", wfDocField.getName());
+		assertEquals("First Name", wfDocField.getDescription());
+		assertEquals(DataType.STRING, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(2);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("lastName", wfDocFieldData.getName());
-		assertEquals("Last Name", wfDocFieldData.getDescription());
-		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(2);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("lastName", wfDocField.getName());
+		assertEquals("Last Name", wfDocField.getDescription());
+		assertEquals(DataType.STRING, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(3);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("age", wfDocFieldData.getName());
-		assertEquals("Age", wfDocFieldData.getDescription());
-		assertEquals(DataType.INTEGER, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(3);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("age", wfDocField.getName());
+		assertEquals("Age", wfDocField.getDescription());
+		assertEquals(DataType.INTEGER, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(4);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("height", wfDocFieldData.getName());
-		assertEquals("Height", wfDocFieldData.getDescription());
-		assertEquals(DataType.DOUBLE, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(4);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("height", wfDocField.getName());
+		assertEquals("Height", wfDocField.getDescription());
+		assertEquals(DataType.DOUBLE, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(5);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("accountNo", wfDocFieldData.getName());
-		assertEquals("Account Number", wfDocFieldData.getDescription());
-		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(5);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("accountNo", wfDocField.getName());
+		assertEquals("Account Number", wfDocField.getDescription());
+		assertEquals(DataType.STRING, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(6);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("fullName", wfDocFieldData.getName());
-		assertEquals("Full Name", wfDocFieldData.getDescription());
-		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(6);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("fullName", wfDocField.getName());
+		assertEquals("Full Name", wfDocField.getDescription());
+		assertEquals(DataType.STRING, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(7);
-		assertNotNull(wfDocFieldData);
-		assertNull(wfDocFieldData.getParentName());
-		assertEquals("driversLicense", wfDocFieldData.getName());
-		assertEquals("Driver's License", wfDocFieldData.getDescription());
-		assertEquals(DataType.COMPLEX, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(7);
+		assertNotNull(wfDocField);
+		assertNull(wfDocField.getParentName());
+		assertEquals("driversLicense", wfDocField.getName());
+		assertEquals("Driver's License", wfDocField.getDescription());
+		assertEquals(DataType.COMPLEX, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(8);
-		assertNotNull(wfDocFieldData);
-		System.out.println(wfDocFieldData);
-		assertEquals("driversLicense", wfDocFieldData.getParentName());
-		assertEquals("licenseNo", wfDocFieldData.getName());
-		assertEquals("License No.", wfDocFieldData.getDescription());
-		assertEquals(DataType.STRING, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(8);
+		assertNotNull(wfDocField);
+		assertEquals("driversLicense", wfDocField.getParentName());
+		assertEquals("licenseNo", wfDocField.getName());
+		assertEquals("License No.", wfDocField.getDescription());
+		assertEquals(DataType.STRING, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(9);
-		assertNotNull(wfDocFieldData);
-		assertEquals("driversLicense", wfDocFieldData.getParentName());
-		assertEquals("issueDt", wfDocFieldData.getName());
-		assertEquals("Issue Date", wfDocFieldData.getDescription());
-		assertEquals(DataType.DATE, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(9);
+		assertNotNull(wfDocField);
+		assertEquals("driversLicense", wfDocField.getParentName());
+		assertEquals("issueDt", wfDocField.getName());
+		assertEquals("Issue Date", wfDocField.getDescription());
+		assertEquals(DataType.DATE, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
-		wfDocFieldData = docFieldList.get(10);
-		assertNotNull(wfDocFieldData);
-		assertEquals("driversLicense", wfDocFieldData.getParentName());
-		assertEquals("expiryDt", wfDocFieldData.getName());
-		assertEquals("Expiry Date", wfDocFieldData.getDescription());
-		assertEquals(DataType.DATE, wfDocFieldData.getDataType());
-		assertFalse(wfDocFieldData.getArrayFlag());
+		wfDocField = docFieldList.get(10);
+		assertNotNull(wfDocField);
+		assertEquals("driversLicense", wfDocField.getParentName());
+		assertEquals("expiryDt", wfDocField.getName());
+		assertEquals("Expiry Date", wfDocField.getDescription());
+		assertEquals(DataType.DATE, wfDocField.getDataType());
+		assertFalse(wfDocField.getArrayFlag());
 
 		/* Classifier */
-		List<WfDocClassifier> classifierList = wfDocData.getClassifierList();
+		List<WfDocClassifier> classifierList = wfDoc.getClassifierList();
 		assertNotNull(classifierList);
 		assertEquals(1, classifierList.size());
 
-		WfDocClassifier wfDocClassifierData = classifierList.get(0);
-		assertEquals("validAge", wfDocClassifierData.getName());
-		assertEquals("Valid Age", wfDocClassifierData.getDescription());
-		assertNull(wfDocClassifierData.getLogic());
-		List<WfDocClassifierFilter> filterList = wfDocClassifierData.getFilterList();
+		WfDocClassifier wfDocClassifier = classifierList.get(0);
+		assertEquals("validAge", wfDocClassifier.getName());
+		assertEquals("Valid Age", wfDocClassifier.getDescription());
+		assertNull(wfDocClassifier.getLogic());
+		List<WfDocClassifierFilter> filterList = wfDocClassifier.getFilterList();
 		assertNotNull(filterList);
 		assertEquals(1, filterList.size());
-		WfDocClassifierFilter wfDocClassifierFilterData = filterList.get(0);
-		assertNotNull(wfDocClassifierFilterData);
-		assertEquals("age", wfDocClassifierFilterData.getFieldName());
-		assertEquals(FilterConditionType.BETWEEN, wfDocClassifierFilterData.getOp());
-		assertEquals("18", wfDocClassifierFilterData.getValue1());
-		assertEquals("40", wfDocClassifierFilterData.getValue2());
-		assertFalse(wfDocClassifierFilterData.getFieldOnly());
+		WfDocClassifierFilter wfDocClassifierFilter = filterList.get(0);
+		assertNotNull(wfDocClassifierFilter);
+		assertEquals("age", wfDocClassifierFilter.getFieldName());
+		assertEquals(FilterConditionType.BETWEEN, wfDocClassifierFilter.getOp());
+		assertEquals("18", wfDocClassifierFilter.getValue1());
+		assertEquals("40", wfDocClassifierFilter.getValue2());
+		assertFalse(wfDocClassifierFilter.getFieldOnly());
 
 		/* Attachments */
-		List<WfDocAttachment> attachmentList = wfDocData.getAttachmentList();
+		List<WfDocAttachment> attachmentList = wfDoc.getAttachmentList();
 		assertNotNull(attachmentList);
 		assertEquals(1, attachmentList.size());
-		WfDocAttachment wfDocAttachmentData = attachmentList.get(0);
-		assertNotNull(wfDocAttachmentData);
-		assertEquals("birthCert", wfDocAttachmentData.getName());
-		assertEquals("Birth Certificate", wfDocAttachmentData.getDescription());
-		assertEquals("Certificate", wfDocAttachmentData.getLabel());
-		assertEquals(FileAttachmentType.PDF, wfDocAttachmentData.getAttachmentType());
+		WfDocAttachment wfDocAttachment = attachmentList.get(0);
+		assertNotNull(wfDocAttachment);
+		assertEquals("birthCert", wfDocAttachment.getName());
+		assertEquals("Birth Certificate", wfDocAttachment.getDescription());
+		assertEquals("Certificate", wfDocAttachment.getLabel());
+		assertEquals(FileAttachmentType.PDF, wfDocAttachment.getAttachmentType());
 
 		/* Bean mappings */
-		List<WfDocBeanMapping> beanMappingList = wfDocData.getBeanMappingList();
+		List<WfDocBeanMapping> beanMappingList = wfDoc.getBeanMappingList();
 		assertNotNull(beanMappingList);
 		assertEquals(1, beanMappingList.size());
-		WfDocBeanMapping wfDocBeanMappingData = beanMappingList.get(0);
-		assertNotNull(wfDocBeanMappingData);
-		assertEquals("custBeanMapping", wfDocBeanMappingData.getName());
-		assertEquals("Customer Bean Mapping", wfDocBeanMappingData.getDescription());
-		assertEquals("com.tcdng.jacklyn.common.TestCustomer", wfDocBeanMappingData.getBeanType());
-		assertEquals(WorkflowBeanMappingType.PRIMARY, wfDocBeanMappingData.getType());
-		List<WfDocFieldMapping> fieldMappingList = wfDocBeanMappingData.getFieldMappingList();
+		WfDocBeanMapping wfDocBeanMapping = beanMappingList.get(0);
+		assertNotNull(wfDocBeanMapping);
+		assertEquals("custBeanMapping", wfDocBeanMapping.getName());
+		assertEquals("Customer Bean Mapping", wfDocBeanMapping.getDescription());
+		assertEquals("com.tcdng.jacklyn.common.TestCustomer", wfDocBeanMapping.getBeanType());
+		assertEquals(WorkflowBeanMappingType.PRIMARY, wfDocBeanMapping.getType());
+		List<WfDocFieldMapping> fieldMappingList = wfDocBeanMapping.getFieldMappingList();
 		assertNotNull(fieldMappingList);
 		assertEquals(5, fieldMappingList.size());
 
-		WfDocFieldMapping wfDocFieldMappingData = fieldMappingList.get(0);
-		assertNotNull(wfDocFieldMappingData);
-		assertEquals("id", wfDocFieldMappingData.getDocFieldName());
-		assertEquals("id", wfDocFieldMappingData.getBeanFieldName());
+		WfDocFieldMapping wfDocFieldMapping = fieldMappingList.get(0);
+		assertNotNull(wfDocFieldMapping);
+		assertEquals("id", wfDocFieldMapping.getDocFieldName());
+		assertEquals("id", wfDocFieldMapping.getBeanFieldName());
 
-		wfDocFieldMappingData = fieldMappingList.get(1);
-		assertNotNull(wfDocFieldMappingData);
-		assertEquals("firstName", wfDocFieldMappingData.getDocFieldName());
-		assertEquals("firstName", wfDocFieldMappingData.getBeanFieldName());
+		wfDocFieldMapping = fieldMappingList.get(1);
+		assertNotNull(wfDocFieldMapping);
+		assertEquals("firstName", wfDocFieldMapping.getDocFieldName());
+		assertEquals("firstName", wfDocFieldMapping.getBeanFieldName());
 
-		wfDocFieldMappingData = fieldMappingList.get(2);
-		assertNotNull(wfDocFieldMappingData);
-		assertEquals("lastName", wfDocFieldMappingData.getDocFieldName());
-		assertEquals("lastName", wfDocFieldMappingData.getBeanFieldName());
+		wfDocFieldMapping = fieldMappingList.get(2);
+		assertNotNull(wfDocFieldMapping);
+		assertEquals("lastName", wfDocFieldMapping.getDocFieldName());
+		assertEquals("lastName", wfDocFieldMapping.getBeanFieldName());
 
-		wfDocFieldMappingData = fieldMappingList.get(3);
-		assertNotNull(wfDocFieldMappingData);
-		assertEquals("age", wfDocFieldMappingData.getDocFieldName());
-		assertEquals("age", wfDocFieldMappingData.getBeanFieldName());
+		wfDocFieldMapping = fieldMappingList.get(3);
+		assertNotNull(wfDocFieldMapping);
+		assertEquals("age", wfDocFieldMapping.getDocFieldName());
+		assertEquals("age", wfDocFieldMapping.getBeanFieldName());
 
-		wfDocFieldMappingData = fieldMappingList.get(4);
-		assertNotNull(wfDocFieldMappingData);
-		assertEquals("height", wfDocFieldMappingData.getDocFieldName());
-		assertEquals("height", wfDocFieldMappingData.getBeanFieldName());
+		wfDocFieldMapping = fieldMappingList.get(4);
+		assertNotNull(wfDocFieldMapping);
+		assertEquals("height", wfDocFieldMapping.getDocFieldName());
+		assertEquals("height", wfDocFieldMapping.getBeanFieldName());
 
 		/* Forms */
-		List<WfForm> wfFormList = wbModule.findWfForms(wfCategoryId);
-		assertNotNull(wfFormList);
-		assertEquals(1, wfFormList.size());
-
-		WfForm wfFormData = wfFormList.get(0);
-		assertNotNull(wfFormData);
-		assertEquals("custForm", wfFormData.getName());
-		assertEquals("Customer Form", wfFormData.getDescription());
-		assertNull(wfFormData.getTabList());
-		assertNull(wfFormData.getSectionList());
-		assertNull(wfFormData.getFieldList());
-
-		wfFormData = wbModule.findWfForm(wfFormData.getId());
-		assertNotNull(wfFormData);
-		assertEquals("custForm", wfFormData.getName());
-		assertEquals("Customer Form", wfFormData.getDescription());
-		assertEquals("custInfo", wfFormData.getWfDocName());
+		WfForm wfForm = wfDoc.getWfForm();
+		assertNotNull(wfForm);
+		assertNotNull(wfForm.getTabList());
+		assertNotNull(wfForm.getSectionList());
+		assertNotNull(wfForm.getFieldList());
 
 		/* Tabs */
-		List<WfFormTab> tabList = wfFormData.getTabList();
+		List<WfFormTab> tabList = wfForm.getTabList();
 		assertNotNull(tabList);
 		assertEquals(1, tabList.size());
 
-		WfFormTab wfFormTabData = tabList.get(0);
-		assertNotNull(wfFormTabData);
-		assertEquals("main", wfFormTabData.getName());
-		assertEquals("Main Tab", wfFormTabData.getDescription());
-		assertEquals("Main", wfFormTabData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormTabData.getPseudo());
+		WfFormTab wfFormTab = tabList.get(0);
+		assertNotNull(wfFormTab);
+		assertEquals("main", wfFormTab.getName());
+		assertEquals("Main Tab", wfFormTab.getDescription());
+		assertEquals("Main", wfFormTab.getLabel());
+		assertEquals(Boolean.TRUE, wfFormTab.getPseudo());
 
 		/* Sections */
-		List<WfFormSection> sectionList = wfFormData.getSectionList();
+		List<WfFormSection> sectionList = wfForm.getSectionList();
 		assertNotNull(sectionList);
 		assertEquals(2, sectionList.size());
 
-		WfFormSection wfFormSectionData = sectionList.get(0);
-		assertNotNull(wfFormSectionData);
-		assertEquals("basicDetails", wfFormSectionData.getName());
-		assertEquals("Basic Details", wfFormSectionData.getDescription());
-		assertNull(wfFormSectionData.getBinding());
-		assertNull(wfFormSectionData.getLabel());
+		WfFormSection wfFormSection = sectionList.get(0);
+		assertNotNull(wfFormSection);
+		assertEquals("basicDetails", wfFormSection.getName());
+		assertEquals("Basic Details", wfFormSection.getDescription());
+		assertNull(wfFormSection.getBinding());
+		assertNull(wfFormSection.getLabel());
 
-		wfFormSectionData = sectionList.get(1);
-		assertNotNull(wfFormSectionData);
-		assertEquals("licenseDetails", wfFormSectionData.getName());
-		assertEquals("License Details", wfFormSectionData.getDescription());
-		assertEquals("driversLicense", wfFormSectionData.getBinding());
-		assertNull(wfFormSectionData.getLabel());
+		wfFormSection = sectionList.get(1);
+		assertNotNull(wfFormSection);
+		assertEquals("licenseDetails", wfFormSection.getName());
+		assertEquals("License Details", wfFormSection.getDescription());
+		assertEquals("driversLicense", wfFormSection.getBinding());
+		assertNull(wfFormSection.getLabel());
 
 		/* Form fields */
-		List<WfFormField> formFieldList = wfFormData.getFieldList();
+		List<WfFormField> formFieldList = wfForm.getFieldList();
 		assertNotNull(formFieldList);
 		assertEquals(7, formFieldList.size());
 
-		WfFormField wfFormFieldData = formFieldList.get(0);
-		assertNotNull(wfFormFieldData);
-		assertEquals("basicDetails", wfFormFieldData.getSectionName());
-		assertEquals("firstName", wfFormFieldData.getBinding());
-		assertEquals("!ui-text", wfFormFieldData.getEditorUpl());
-		assertEquals("First Name", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+		WfFormField wfFormField = formFieldList.get(0);
+		assertNotNull(wfFormField);
+		assertEquals("basicDetails", wfFormField.getSectionName());
+		assertEquals("firstName", wfFormField.getBinding());
+		assertEquals("!ui-text", wfFormField.getEditorUpl());
+		assertEquals("First Name", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-		wfFormFieldData = formFieldList.get(1);
-		assertNotNull(wfFormFieldData);
-		assertEquals("basicDetails", wfFormFieldData.getSectionName());
-		assertEquals("lastName", wfFormFieldData.getBinding());
-		assertEquals("!ui-text", wfFormFieldData.getEditorUpl());
-		assertEquals("Last Name", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+		wfFormField = formFieldList.get(1);
+		assertNotNull(wfFormField);
+		assertEquals("basicDetails", wfFormField.getSectionName());
+		assertEquals("lastName", wfFormField.getBinding());
+		assertEquals("!ui-text", wfFormField.getEditorUpl());
+		assertEquals("Last Name", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-		wfFormFieldData = formFieldList.get(2);
-		assertNotNull(wfFormFieldData);
-		assertEquals("basicDetails", wfFormFieldData.getSectionName());
-		assertEquals("age", wfFormFieldData.getBinding());
-		assertEquals("!ui-integer", wfFormFieldData.getEditorUpl());
-		assertEquals("Age", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+		wfFormField = formFieldList.get(2);
+		assertNotNull(wfFormField);
+		assertEquals("basicDetails", wfFormField.getSectionName());
+		assertEquals("age", wfFormField.getBinding());
+		assertEquals("!ui-integer", wfFormField.getEditorUpl());
+		assertEquals("Age", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-		wfFormFieldData = formFieldList.get(3);
-		assertNotNull(wfFormFieldData);
-		assertEquals("basicDetails", wfFormFieldData.getSectionName());
-		assertEquals("height", wfFormFieldData.getBinding());
-		assertEquals("!ui-decimal", wfFormFieldData.getEditorUpl());
-		assertEquals("Height", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+		wfFormField = formFieldList.get(3);
+		assertNotNull(wfFormField);
+		assertEquals("basicDetails", wfFormField.getSectionName());
+		assertEquals("height", wfFormField.getBinding());
+		assertEquals("!ui-decimal", wfFormField.getEditorUpl());
+		assertEquals("Height", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-		wfFormFieldData = formFieldList.get(4);
-		assertNotNull(wfFormFieldData);
-		assertEquals("licenseDetails", wfFormFieldData.getSectionName());
-		assertEquals("licenseNo", wfFormFieldData.getBinding());
-		assertEquals("!ui-text", wfFormFieldData.getEditorUpl());
-		assertEquals("License No.", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+		wfFormField = formFieldList.get(4);
+		assertNotNull(wfFormField);
+		assertEquals("licenseDetails", wfFormField.getSectionName());
+		assertEquals("licenseNo", wfFormField.getBinding());
+		assertEquals("!ui-text", wfFormField.getEditorUpl());
+		assertEquals("License No.", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-		wfFormFieldData = formFieldList.get(5);
-		assertNotNull(wfFormFieldData);
-		assertEquals("licenseDetails", wfFormFieldData.getSectionName());
-		assertEquals("issueDt", wfFormFieldData.getBinding());
-		assertEquals("!ui-date", wfFormFieldData.getEditorUpl());
-		assertEquals("Issue Date", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
+		wfFormField = formFieldList.get(5);
+		assertNotNull(wfFormField);
+		assertEquals("licenseDetails", wfFormField.getSectionName());
+		assertEquals("issueDt", wfFormField.getBinding());
+		assertEquals("!ui-date", wfFormField.getEditorUpl());
+		assertEquals("Issue Date", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-		wfFormFieldData = formFieldList.get(6);
-		assertNotNull(wfFormFieldData);
-		assertEquals("licenseDetails", wfFormFieldData.getSectionName());
-		assertEquals("expiryDt", wfFormFieldData.getBinding());
-		assertEquals("!ui-date", wfFormFieldData.getEditorUpl());
-		assertEquals("Expiry Date", wfFormFieldData.getLabel());
-		assertEquals(Boolean.TRUE, wfFormFieldData.getRequired());
-
-		/* Messages */
-		NotificationModule nbModule = getNotificationModule();
-		String messageName
-				= WorkflowUtils.getGlobalMessageName("customerCategory", "awaitCustApproval");
-		NotificationTemplate notificationTemplateData
-				= nbModule.findNotificationTemplate("workflow", messageName);
-		assertNotNull(notificationTemplateData);
-		assertEquals(messageName, notificationTemplateData.getName());
-		assertEquals("Awaiting Customer Approval", notificationTemplateData.getDescription());
-		assertEquals("Awaiting Customer Approval", notificationTemplateData.getSubject());
-		assertEquals("Awaiting approval for {firstName} {lastName}",
-				notificationTemplateData.getTemplate());
-		assertEquals("default-attachmentgenerator",
-				notificationTemplateData.getAttachmentGenerator());
-		assertEquals(Boolean.FALSE, notificationTemplateData.getHtmlFlag());
+		wfFormField = formFieldList.get(6);
+		assertNotNull(wfFormField);
+		assertEquals("licenseDetails", wfFormField.getSectionName());
+		assertEquals("expiryDt", wfFormField.getBinding());
+		assertEquals("!ui-date", wfFormField.getEditorUpl());
+		assertEquals("Expiry Date", wfFormField.getLabel());
+		assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
 		/* Templates */
 		List<WfTemplate> wfTemplateList = wbModule.findWfTemplates(wfCategoryId);
@@ -427,201 +398,212 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		assertEquals(1, wfTemplateList.size());
 
 		// Template 1
-		WfTemplate wfTemplateData = wfTemplateList.get(0);
-		assertNotNull(wfTemplateData);
-		assertEquals("custOnboarding", wfTemplateData.getName());
-		assertEquals("Customer Onboarding", wfTemplateData.getDescription());
-		assertEquals("custInfo", wfTemplateData.getWfDocName());
-		assertEquals("Customer:{firstName} {lastName}", wfTemplateData.getItemDescFormat());
-		assertNull(wfTemplateData.getStepList());
+		WfTemplate wfTemplate = wfTemplateList.get(0);
+		assertNotNull(wfTemplate);
+		assertEquals("custOnboarding", wfTemplate.getName());
+		assertEquals("Customer Onboarding", wfTemplate.getDescription());
+		assertEquals("custInfo", wfTemplate.getWfDocName());
+		assertNull(wfTemplate.getStepList());
 
-		wfTemplateData = wbModule.findWfTemplate(wfTemplateData.getId());
-		assertNotNull(wfTemplateData);
-		assertEquals("custOnboarding", wfTemplateData.getName());
-		assertEquals("Customer Onboarding", wfTemplateData.getDescription());
-		assertEquals("custInfo", wfTemplateData.getWfDocName());
-		assertEquals("Customer:{firstName} {lastName}", wfTemplateData.getItemDescFormat());
-		List<WfStep> stepList = wfTemplateData.getStepList();
+		wfTemplate = wbModule.findWfTemplate(wfTemplate.getId());
+		assertNotNull(wfTemplate);
+		assertEquals("custOnboarding", wfTemplate.getName());
+		assertEquals("Customer Onboarding", wfTemplate.getDescription());
+		assertEquals("custInfo", wfTemplate.getWfDocName());
+		List<WfStep> stepList = wfTemplate.getStepList();
 		assertNotNull(stepList);
 		assertEquals(4, stepList.size());
 
+		/* Messages */
+		List<WfMessage> messageList = wfTemplate.getMessageList();
+		assertNotNull(messageList);
+		assertEquals(1, messageList.size());
+		
+		WfMessage wfMessage = messageList.get(0);
+		assertNotNull(wfMessage);
+		assertEquals("awaitCustApproval", wfMessage.getName());
+		assertEquals("Awaiting Customer Approval", wfMessage.getDescription());
+		assertEquals("Awaiting Customer Approval", wfMessage.getSubject());
+		assertEquals("Awaiting approval for {firstName} {lastName}",
+				wfMessage.getTemplate());
+		assertEquals("default-attachmentgenerator",
+				wfMessage.getAttachmentGenerator());
+		assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
+		
 		/* Steps */
 		// 1
-		WfStep wfStepData = stepList.get(0);
-		assertNotNull(wfStepData);
-		assertEquals("start", wfStepData.getName());
-		assertEquals("Start Step", wfStepData.getDescription());
-		assertNull(wfStepData.getLabel());
-		assertNull(wfStepData.getWfFormName());
-		assertEquals(WorkflowStepType.START, wfStepData.getStepType());
-		assertEquals(WorkflowParticipantType.NONE, wfStepData.getParticipantType());
-		assertEquals(WorkflowStepPriority.NORMAL, wfStepData.getPriorityLevel());
-		assertEquals(Integer.valueOf(0), wfStepData.getItemsPerSession());
-		assertEquals(Integer.valueOf(0), wfStepData.getExpiryHours());
-		assertFalse(wfStepData.getAudit());
-		assertFalse(wfStepData.getBranchOnly());
-		assertFalse(wfStepData.getIncludeForwarder());
-		assertTrue(DataUtils.isBlank(wfStepData.getFormPrivilegeList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getRecordActionList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getUserActionList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getPolicyList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getAlertList()));
+		WfStep wfStep = stepList.get(0);
+		assertNotNull(wfStep);
+		assertEquals("start", wfStep.getName());
+		assertEquals("Start Step", wfStep.getDescription());
+		assertNull(wfStep.getLabel());
+		assertEquals(WorkflowStepType.START, wfStep.getStepType());
+		assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
+		assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
+		assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+		assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+		assertFalse(wfStep.getAudit());
+		assertFalse(wfStep.getBranchOnly());
+		assertFalse(wfStep.getIncludeForwarder());
+		assertTrue(DataUtils.isBlank(wfStep.getFormPrivilegeList()));
+		assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+		assertTrue(DataUtils.isBlank(wfStep.getUserActionList()));
+		assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
+		assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
 
-		List<WfEnrichment> enrichmentList = wfStepData.getEnrichmentList();
+		List<WfEnrichment> enrichmentList = wfStep.getEnrichmentList();
 		assertNotNull(enrichmentList);
 		assertEquals(1, enrichmentList.size());
 
-		WfEnrichment wfEnrichmentData = enrichmentList.get(0);
-		assertNotNull(wfEnrichmentData);
-		assertEquals("testEnrichment", wfEnrichmentData.getName());
-		assertEquals("Test Enrichment", wfEnrichmentData.getDescription());
-		assertEquals("testcustomer-enrichmentlogic", wfEnrichmentData.getLogic());
+		WfEnrichment wfEnrichment = enrichmentList.get(0);
+		assertNotNull(wfEnrichment);
+		assertEquals("testEnrichment", wfEnrichment.getName());
+		assertEquals("Test Enrichment", wfEnrichment.getDescription());
+		assertEquals("testcustomer-enrichmentlogic", wfEnrichment.getLogic());
 
-		List<WfRouting> routingList = wfStepData.getRoutingList();
+		List<WfRouting> routingList = wfStep.getRoutingList();
 		assertNotNull(routingList);
 		assertEquals(2, routingList.size());
 
-		WfRouting wfRoutingData = routingList.get(0);
-		assertNotNull(wfRoutingData);
-		assertEquals("routToCreate", wfRoutingData.getName());
-		assertEquals("Route to Create", wfRoutingData.getDescription());
-		assertEquals("validAge", wfRoutingData.getClassifierName());
-		assertEquals("createCust", wfRoutingData.getTargetWfStepName());
+		WfRouting wfRouting = routingList.get(0);
+		assertNotNull(wfRouting);
+		assertEquals("routToCreate", wfRouting.getName());
+		assertEquals("Route to Create", wfRouting.getDescription());
+		assertEquals("validAge", wfRouting.getClassifierName());
+		assertEquals("createCust", wfRouting.getTargetWfStepName());
 
-		wfRoutingData = routingList.get(1);
-		assertNotNull(wfRoutingData);
-		assertEquals("routToApproval", wfRoutingData.getName());
-		assertEquals("Route to Approval", wfRoutingData.getDescription());
-		assertNull(wfRoutingData.getClassifierName());
-		assertEquals("custApproval", wfRoutingData.getTargetWfStepName());
+		wfRouting = routingList.get(1);
+		assertNotNull(wfRouting);
+		assertEquals("routToApproval", wfRouting.getName());
+		assertEquals("Route to Approval", wfRouting.getDescription());
+		assertNull(wfRouting.getClassifierName());
+		assertEquals("custApproval", wfRouting.getTargetWfStepName());
 
 		// 2
-		wfStepData = stepList.get(1);
-		assertNotNull(wfStepData);
-		assertEquals("createCust", wfStepData.getName());
-		assertEquals("Create Customer", wfStepData.getDescription());
-		assertNull(wfStepData.getLabel());
-		assertNull(wfStepData.getWfFormName());
-		assertEquals(WorkflowStepType.AUTOMATIC, wfStepData.getStepType());
-		assertEquals(WorkflowParticipantType.NONE, wfStepData.getParticipantType());
-		assertEquals(WorkflowStepPriority.NORMAL, wfStepData.getPriorityLevel());
-		assertEquals(Integer.valueOf(0), wfStepData.getItemsPerSession());
-		assertEquals(Integer.valueOf(0), wfStepData.getExpiryHours());
-		assertFalse(wfStepData.getAudit());
-		assertFalse(wfStepData.getBranchOnly());
-		assertFalse(wfStepData.getIncludeForwarder());
-		assertTrue(DataUtils.isBlank(wfStepData.getFormPrivilegeList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getUserActionList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getAlertList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getEnrichmentList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getAlertList()));
+		wfStep = stepList.get(1);
+		assertNotNull(wfStep);
+		assertEquals("createCust", wfStep.getName());
+		assertEquals("Create Customer", wfStep.getDescription());
+		assertNull(wfStep.getLabel());
+		assertEquals(WorkflowStepType.AUTOMATIC, wfStep.getStepType());
+		assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
+		assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
+		assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+		assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+		assertFalse(wfStep.getAudit());
+		assertFalse(wfStep.getBranchOnly());
+		assertFalse(wfStep.getIncludeForwarder());
+		assertTrue(DataUtils.isBlank(wfStep.getFormPrivilegeList()));
+		assertTrue(DataUtils.isBlank(wfStep.getUserActionList()));
+		assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
+		assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
+		assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
 
-		List<WfPolicy> policyList = wfStepData.getPolicyList();
+		List<WfPolicy> policyList = wfStep.getPolicyList();
 		assertNotNull(policyList);
 		assertEquals(1, policyList.size());
 
-		WfPolicy wfPolicyData = policyList.get(0);
-		assertNotNull(wfPolicyData);
-		assertEquals("testOpenAccount", wfPolicyData.getName());
-		assertEquals("Open Account", wfPolicyData.getDescription());
-		assertEquals("testopenaccount-policylogic", wfPolicyData.getLogic());
+		WfPolicy wfPolicy = policyList.get(0);
+		assertNotNull(wfPolicy);
+		assertEquals("testOpenAccount", wfPolicy.getName());
+		assertEquals("Open Account", wfPolicy.getDescription());
+		assertEquals("testopenaccount-policylogic", wfPolicy.getLogic());
 
-		List<WfRecordAction> recordActionList = wfStepData.getRecordActionList();
+		List<WfRecordAction> recordActionList = wfStep.getRecordActionList();
 		assertNotNull(recordActionList);
 		assertEquals(1, recordActionList.size());
-		WfRecordAction wfRecordActionData = recordActionList.get(0);
-		assertNotNull(wfRecordActionData);
-		assertEquals("createCust", wfRecordActionData.getName());
-		assertEquals("Create Customer", wfRecordActionData.getDescription());
-		assertEquals(WorkflowRecordActionType.CREATE, wfRecordActionData.getActionType());
-		assertEquals("custBeanMapping", wfRecordActionData.getDocMappingName());
+		WfRecordAction wfRecordAction = recordActionList.get(0);
+		assertNotNull(wfRecordAction);
+		assertEquals("createCust", wfRecordAction.getName());
+		assertEquals("Create Customer", wfRecordAction.getDescription());
+		assertEquals(WorkflowRecordActionType.CREATE, wfRecordAction.getActionType());
+		assertEquals("custBeanMapping", wfRecordAction.getDocMappingName());
 
-		routingList = wfStepData.getRoutingList();
+		routingList = wfStep.getRoutingList();
 		assertNotNull(routingList);
 		assertEquals(1, routingList.size());
 
-		wfRoutingData = routingList.get(0);
-		assertNotNull(wfRoutingData);
-		assertEquals("routToEnd", wfRoutingData.getName());
-		assertEquals("Route to End", wfRoutingData.getDescription());
-		assertNull(wfRoutingData.getClassifierName());
-		assertEquals("end", wfRoutingData.getTargetWfStepName());
+		wfRouting = routingList.get(0);
+		assertNotNull(wfRouting);
+		assertEquals("routToEnd", wfRouting.getName());
+		assertEquals("Route to End", wfRouting.getDescription());
+		assertNull(wfRouting.getClassifierName());
+		assertEquals("end", wfRouting.getTargetWfStepName());
 
 		// 3
-		wfStepData = stepList.get(2);
-		assertNotNull(wfStepData);
-		assertEquals("custApproval", wfStepData.getName());
-		assertEquals("Customer Approval", wfStepData.getDescription());
-		assertNull(wfStepData.getLabel());
-		assertEquals("custForm", wfStepData.getWfFormName());
-		assertEquals(WorkflowStepType.INTERACTIVE, wfStepData.getStepType());
-		assertEquals(WorkflowParticipantType.ALL, wfStepData.getParticipantType());
-		assertEquals(WorkflowStepPriority.HIGH, wfStepData.getPriorityLevel());
-		assertEquals(Integer.valueOf(0), wfStepData.getItemsPerSession());
-		assertEquals(Integer.valueOf(0), wfStepData.getExpiryHours());
-		assertFalse(wfStepData.getAudit());
-		assertFalse(wfStepData.getBranchOnly());
-		assertFalse(wfStepData.getIncludeForwarder());
-		assertTrue(DataUtils.isBlank(wfStepData.getRoutingList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getRecordActionList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getEnrichmentList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getPolicyList()));
+		wfStep = stepList.get(2);
+		assertNotNull(wfStep);
+		assertEquals("custApproval", wfStep.getName());
+		assertEquals("Customer Approval", wfStep.getDescription());
+		assertNull(wfStep.getLabel());
+		assertEquals(WorkflowStepType.INTERACTIVE, wfStep.getStepType());
+		assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
+		assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
+		assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+		assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+		assertFalse(wfStep.getAudit());
+		assertFalse(wfStep.getBranchOnly());
+		assertFalse(wfStep.getIncludeForwarder());
+		assertTrue(DataUtils.isBlank(wfStep.getRoutingList()));
+		assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+		assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
+		assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
 
-		List<WfAlert> alertList = wfStepData.getAlertList();
+		List<WfAlert> alertList = wfStep.getAlertList();
 		assertNotNull(alertList);
 		assertEquals(1, alertList.size());
 
-		WfAlert wfAlertData = alertList.get(0);
-		assertNotNull(wfAlertData);
-		assertEquals("awaitApproval", wfAlertData.getName());
-		assertEquals("Awaiting Approval", wfAlertData.getDescription());
-		assertEquals("awaitCustApproval", wfAlertData.getNotificationTemplateCode());
-		assertEquals(NotificationType.SYSTEM, wfAlertData.getType());
+		WfAlert wfAlert = alertList.get(0);
+		assertNotNull(wfAlert);
+		assertEquals("awaitApproval", wfAlert.getName());
+		assertEquals("Awaiting Approval", wfAlert.getDescription());
+		assertEquals("awaitCustApproval", wfAlert.getNotificationTemplateCode());
+		assertEquals(NotificationType.SYSTEM, wfAlert.getType());
 
-		List<WfUserAction> userActionList = wfStepData.getUserActionList();
+		List<WfUserAction> userActionList = wfStep.getUserActionList();
 		assertNotNull(userActionList);
 		assertEquals(2, userActionList.size());
 
-		WfUserAction wfUserActionData = userActionList.get(0);
-		assertNotNull(wfUserActionData);
-		assertEquals("approveCust", wfUserActionData.getName());
-		assertEquals("Approve Customer", wfUserActionData.getDescription());
-		assertEquals("Approve", wfUserActionData.getLabel());
-		assertEquals("createCust", wfUserActionData.getTargetWfStepName());
-		assertEquals(RequirementType.OPTIONAL, wfUserActionData.getNoteReqType());
-		assertTrue(DataUtils.isBlank(wfUserActionData.getAttachmentCheckList()));
+		WfUserAction wfUserAction = userActionList.get(0);
+		assertNotNull(wfUserAction);
+		assertEquals("approveCust", wfUserAction.getName());
+		assertEquals("Approve Customer", wfUserAction.getDescription());
+		assertEquals("Approve", wfUserAction.getLabel());
+		assertEquals("createCust", wfUserAction.getTargetWfStepName());
+		assertEquals(RequirementType.OPTIONAL, wfUserAction.getNoteReqType());
+		assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
 
-		wfUserActionData = userActionList.get(1);
-		assertNotNull(wfUserActionData);
-		assertEquals("rejectCust", wfUserActionData.getName());
-		assertEquals("Reject Customer", wfUserActionData.getDescription());
-		assertEquals("Reject", wfUserActionData.getLabel());
-		assertEquals("end", wfUserActionData.getTargetWfStepName());
-		assertEquals(RequirementType.MANDATORY, wfUserActionData.getNoteReqType());
-		assertTrue(DataUtils.isBlank(wfUserActionData.getAttachmentCheckList()));
+		wfUserAction = userActionList.get(1);
+		assertNotNull(wfUserAction);
+		assertEquals("rejectCust", wfUserAction.getName());
+		assertEquals("Reject Customer", wfUserAction.getDescription());
+		assertEquals("Reject", wfUserAction.getLabel());
+		assertEquals("end", wfUserAction.getTargetWfStepName());
+		assertEquals(RequirementType.MANDATORY, wfUserAction.getNoteReqType());
+		assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
 
 		// 4
-		wfStepData = stepList.get(3);
-		assertNotNull(wfStepData);
-		assertEquals("end", wfStepData.getName());
-		assertEquals("End Step", wfStepData.getDescription());
-		assertNull(wfStepData.getLabel());
-		assertEquals(WorkflowStepType.END, wfStepData.getStepType());
-		assertEquals(WorkflowParticipantType.NONE, wfStepData.getParticipantType());
-		assertEquals(WorkflowStepPriority.NORMAL, wfStepData.getPriorityLevel());
-		assertEquals(Integer.valueOf(0), wfStepData.getItemsPerSession());
-		assertEquals(Integer.valueOf(0), wfStepData.getExpiryHours());
-		assertFalse(wfStepData.getAudit());
-		assertFalse(wfStepData.getBranchOnly());
-		assertFalse(wfStepData.getIncludeForwarder());
-		assertTrue(DataUtils.isBlank(wfStepData.getUserActionList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getFormPrivilegeList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getRoutingList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getRecordActionList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getAlertList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getEnrichmentList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getPolicyList()));
-		assertTrue(DataUtils.isBlank(wfStepData.getAlertList()));
+		wfStep = stepList.get(3);
+		assertNotNull(wfStep);
+		assertEquals("end", wfStep.getName());
+		assertEquals("End Step", wfStep.getDescription());
+		assertNull(wfStep.getLabel());
+		assertEquals(WorkflowStepType.END, wfStep.getStepType());
+		assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
+		assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
+		assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+		assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+		assertFalse(wfStep.getAudit());
+		assertFalse(wfStep.getBranchOnly());
+		assertFalse(wfStep.getIncludeForwarder());
+		assertTrue(DataUtils.isBlank(wfStep.getUserActionList()));
+		assertTrue(DataUtils.isBlank(wfStep.getFormPrivilegeList()));
+		assertTrue(DataUtils.isBlank(wfStep.getRoutingList()));
+		assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+		assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
+		assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
+		assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
+		assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
 	}
 
 	@Test
@@ -976,11 +958,11 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 	protected void onSetup() throws Exception {
 		if (!published) {
 			WfCategoryConfig custWfCategoryConfig
-					= readWfCategoryConfig("xml/wfcategory-customer.xml");
+					= readWfCategoryConfig("xml/wfcustomer.xml");
 			publish(custWfCategoryConfig);
 
 			WfCategoryConfig custRecActionWfCategoryConfig
-					= readWfCategoryConfig("xml/wfcategory-customer-recordaction.xml");
+					= readWfCategoryConfig("xml/wfcustomer-recordaction.xml");
 			publish(custRecActionWfCategoryConfig);
 			published = true;
 		}
@@ -1002,16 +984,11 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 		return (WorkflowModule) getComponent(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE);
 	}
 
-	private NotificationModule getNotificationModule() throws Exception {
-		return (NotificationModule) getComponent(
-				NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE);
-	}
-
 	private WfCategoryConfig readWfCategoryConfig(String resourceName) throws Exception {
 		InputStream inputStream = null;
 		try {
 			inputStream = IOUtils.openClassLoaderResourceInputStream(resourceName);
-			return WfDocumentConfigUtils.readXmlWfCategoryConfig(inputStream);
+			return WfCategoryConfigUtils.readWfCategoryConfig(inputStream);
 		} finally {
 			IOUtils.close(inputStream);
 		}
@@ -1019,7 +996,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
 
 	private void publish(WfCategoryConfig wfCategoryConfig) throws Exception {
 		TaskMonitor taskMonitor
-				= getWorkflowModule().startWorkflowCategoryPublication(wfCategoryConfig);
+				= getWorkflowModule().startWorkflowCategoryPublication(wfCategoryConfig, true);
 		while (!taskMonitor.isDone()) {
 			ThreadUtils.yield();
 		}

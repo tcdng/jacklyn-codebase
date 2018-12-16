@@ -58,27 +58,27 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testCreateNotificationChannel() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationChannel notificationChannelData = getNotificationChannelData();
-		Long id = notificationModule.createNotificationChannel(notificationChannelData);
+		NotificationChannel notificationChannel = getNotificationChannel();
+		Long id = notificationModule.createNotificationChannel(notificationChannel);
 		assertNotNull(id);
 	}
 
 	@Test
 	public void testFindNotificationChannel() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationChannel notificationChannelData = getNotificationChannelData();
-		Long id = notificationModule.createNotificationChannel(notificationChannelData);
+		NotificationChannel notificationChannel = getNotificationChannel();
+		Long id = notificationModule.createNotificationChannel(notificationChannel);
 
-		NotificationChannel fetchedNotificationChannelData
+		NotificationChannel fetchedNotificationChannel
 				= notificationModule.findNotificationChannel(id);
-		assertEquals(notificationChannelData, fetchedNotificationChannelData);
+		assertEquals(notificationChannel, fetchedNotificationChannel);
 	}
 
 	@Test
 	public void testFindNotificationChannels() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationChannel notificationChannelData = getNotificationChannelData();
-		Long id = notificationModule.createNotificationChannel(notificationChannelData);
+		NotificationChannel notificationChannel = getNotificationChannel();
+		Long id = notificationModule.createNotificationChannel(notificationChannel);
 
 		NotificationChannel notificationChannel1 = notificationModule.findNotificationChannel(id);
 
@@ -98,27 +98,27 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testUpdateNotificationChannel() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationChannel notificationChannelData = getNotificationChannelData();
-		Long id = notificationModule.createNotificationChannel(notificationChannelData);
+		NotificationChannel notificationChannel = getNotificationChannel();
+		Long id = notificationModule.createNotificationChannel(notificationChannel);
 
-		NotificationChannel fetchedNotificationChannelData
+		NotificationChannel fetchedNotificationChannel
 				= notificationModule.findNotificationChannel(id);
-		fetchedNotificationChannelData.setDescription("Online Credit Alert Channel");
-		int count = notificationModule.updateNotificationChannel(fetchedNotificationChannelData);
+		fetchedNotificationChannel.setDescription("Online Credit Alert Channel");
+		int count = notificationModule.updateNotificationChannel(fetchedNotificationChannel);
 		assertEquals(1, count);
 
-		NotificationChannel updatedNotificationChannelData
+		NotificationChannel updatedNotificationChannel
 				= notificationModule.findNotificationChannel(id);
-		assertFalse(fetchedNotificationChannelData.equals(notificationChannelData));
-		assertEquals(fetchedNotificationChannelData, updatedNotificationChannelData);
+		assertFalse(fetchedNotificationChannel.equals(notificationChannel));
+		assertEquals(fetchedNotificationChannel, updatedNotificationChannel);
 	}
 
 	@Test
 	public void testDeleteNotificationChannel() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
 
-		NotificationChannel notificationChannelData = getNotificationChannelData();
-		Long id = notificationModule.createNotificationChannel(notificationChannelData);
+		NotificationChannel notificationChannel = getNotificationChannel();
+		Long id = notificationModule.createNotificationChannel(notificationChannel);
 
 		int count = notificationModule.deleteNotificationChannel(id);
 		assertEquals(1, count);
@@ -127,27 +127,27 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testCreateNotificationTemplate() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationTemplate notificationTemplateData = getNotificationTemplateData();
-		Long id = notificationModule.createNotificationTemplate(notificationTemplateData);
+		NotificationTemplate notificationTemplate = getNotificationTemplate();
+		Long id = notificationModule.createNotificationTemplate(notificationTemplate);
 		assertNotNull(id);
 	}
 
 	@Test
 	public void testFindNotificationTemplate() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationTemplate notificationTemplateData = getNotificationTemplateData();
-		Long id = notificationModule.createNotificationTemplate(notificationTemplateData);
+		NotificationTemplate notificationTemplate = getNotificationTemplate();
+		Long id = notificationModule.createNotificationTemplate(notificationTemplate);
 
-		NotificationTemplate fetchedNotificationTemplateData
+		NotificationTemplate fetchedNotificationTemplate
 				= notificationModule.findNotificationTemplate(id);
-		assertEquals(notificationTemplateData, fetchedNotificationTemplateData);
+		assertEquals(notificationTemplate, fetchedNotificationTemplate);
 	}
 
 	@Test
 	public void testFindNotificationTemplates() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationTemplate notificationTemplateData = getNotificationTemplateData();
-		Long id = notificationModule.createNotificationTemplate(notificationTemplateData);
+		NotificationTemplate notificationTemplate = getNotificationTemplate();
+		Long id = notificationModule.createNotificationTemplate(notificationTemplate);
 
 		NotificationTemplate notificationTemplate1
 				= notificationModule.findNotificationTemplate(id);
@@ -171,20 +171,20 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testUpdateNotificationTemplate() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		NotificationTemplate notificationTemplateData = getNotificationTemplateData();
-		Long id = notificationModule.createNotificationTemplate(notificationTemplateData);
+		NotificationTemplate notificationTemplate = getNotificationTemplate();
+		Long id = notificationModule.createNotificationTemplate(notificationTemplate);
 
-		NotificationTemplate fetchedNotificationTemplateData
+		NotificationTemplate fetchedNotificationTemplate
 				= notificationModule.findNotificationTemplate(id);
-		fetchedNotificationTemplateData.setDescription("Online Credit Alert");
-		fetchedNotificationTemplateData.setSubject("Credit Alert");
-		int count = notificationModule.updateNotificationTemplate(fetchedNotificationTemplateData);
+		fetchedNotificationTemplate.setDescription("Online Credit Alert");
+		fetchedNotificationTemplate.setSubject("Credit Alert");
+		int count = notificationModule.updateNotificationTemplate(fetchedNotificationTemplate);
 		assertEquals(1, count);
 
-		NotificationTemplate updatedNotificationTemplateData
+		NotificationTemplate updatedNotificationTemplate
 				= notificationModule.findNotificationTemplate(id);
-		assertFalse(fetchedNotificationTemplateData.equals(notificationTemplateData));
-		assertEquals(fetchedNotificationTemplateData, updatedNotificationTemplateData);
+		assertFalse(fetchedNotificationTemplate.equals(notificationTemplate));
+		assertEquals(fetchedNotificationTemplate, updatedNotificationTemplate);
 	}
 
 	@Test
@@ -193,8 +193,8 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 		NotificationTemplateQuery query = new NotificationTemplateQuery();
 		query.moduleName("test");
 
-		NotificationTemplate notificationTemplateData = getNotificationTemplateData();
-		Long id = notificationModule.createNotificationTemplate(notificationTemplateData);
+		NotificationTemplate notificationTemplate = getNotificationTemplate();
+		Long id = notificationModule.createNotificationTemplate(notificationTemplate);
 
 		int count = notificationModule.deleteNotificationTemplate(id);
 		assertEquals(1, count);
@@ -203,8 +203,8 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testSendNotification() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		notificationModule.createNotificationChannel(getNotificationChannelData());
-		notificationModule.createNotificationTemplate(getNotificationTemplateData());
+		notificationModule.createNotificationChannel(getNotificationChannel());
+		notificationModule.createNotificationTemplate(getNotificationTemplate());
 
 		com.tcdng.jacklyn.notification.data.Message notification
 				= new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
@@ -218,8 +218,8 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 	@Test
 	public void testFindNotifications() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		notificationModule.createNotificationChannel(getNotificationChannelData());
-		notificationModule.createNotificationTemplate(getNotificationTemplateData());
+		notificationModule.createNotificationChannel(getNotificationChannel());
+		notificationModule.createNotificationTemplate(getNotificationTemplate());
 
 		com.tcdng.jacklyn.notification.data.Message notification
 				= new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
@@ -245,28 +245,28 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 		assertNotNull(outwardMessageList);
 		assertEquals(2, outwardMessageList.size());
 
-		Notification messageData = outwardMessageList.get(0);
-		assertEquals("info", messageData.getSenderName());
-		assertEquals("info@tcdng.com", messageData.getSenderContact());
-		assertEquals(Integer.valueOf(0), messageData.getAttempts());
-		assertNotNull(messageData.getDueDt());
-		assertNull(messageData.getSentDt());
-		assertEquals(NotificationStatus.NOT_SENT, messageData.getStatus());
+		Notification message = outwardMessageList.get(0);
+		assertEquals("info", message.getSenderName());
+		assertEquals("info@tcdng.com", message.getSenderContact());
+		assertEquals(Integer.valueOf(0), message.getAttempts());
+		assertNotNull(message.getDueDt());
+		assertNull(message.getSentDt());
+		assertEquals(NotificationStatus.NOT_SENT, message.getStatus());
 
-		messageData = outwardMessageList.get(1);
-		assertEquals("info", messageData.getSenderName());
-		assertEquals("info@tcdng.com", messageData.getSenderContact());
-		assertEquals(Integer.valueOf(0), messageData.getAttempts());
-		assertNotNull(messageData.getDueDt());
-		assertNull(messageData.getSentDt());
-		assertEquals(NotificationStatus.NOT_SENT, messageData.getStatus());
+		message = outwardMessageList.get(1);
+		assertEquals("info", message.getSenderName());
+		assertEquals("info@tcdng.com", message.getSenderContact());
+		assertEquals(Integer.valueOf(0), message.getAttempts());
+		assertNotNull(message.getDueDt());
+		assertNull(message.getSentDt());
+		assertEquals(NotificationStatus.NOT_SENT, message.getStatus());
 	}
 
 	@Test
 	public void testFindNotification() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		notificationModule.createNotificationChannel(getNotificationChannelData());
-		notificationModule.createNotificationTemplate(getNotificationTemplateData());
+		notificationModule.createNotificationChannel(getNotificationChannel());
+		notificationModule.createNotificationTemplate(getNotificationTemplate());
 
 		com.tcdng.jacklyn.notification.data.Message notification
 				= new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
@@ -282,21 +282,21 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 		query.orderById();
 		List<Notification> outwardMessageList = notificationModule.findNotifications(query);
 
-		Notification messageData
+		Notification message
 				= notificationModule.findNotification(outwardMessageList.get(0).getId());
-		assertEquals("info", messageData.getSenderName());
-		assertEquals("info@tcdng.com", messageData.getSenderContact());
-		assertEquals(Integer.valueOf(0), messageData.getAttempts());
-		assertNotNull(messageData.getDueDt());
-		assertNull(messageData.getSentDt());
-		assertEquals(NotificationStatus.NOT_SENT, messageData.getStatus());
+		assertEquals("info", message.getSenderName());
+		assertEquals("info@tcdng.com", message.getSenderContact());
+		assertEquals(Integer.valueOf(0), message.getAttempts());
+		assertNotNull(message.getDueDt());
+		assertNull(message.getSentDt());
+		assertEquals(NotificationStatus.NOT_SENT, message.getStatus());
 	}
 
 	@Test
 	public void testSetNotificationStatus() throws Exception {
 		NotificationModule notificationModule = getNotificationModule();
-		notificationModule.createNotificationChannel(getNotificationChannelData());
-		notificationModule.createNotificationTemplate(getNotificationTemplateData());
+		notificationModule.createNotificationChannel(getNotificationChannel());
+		notificationModule.createNotificationTemplate(getNotificationTemplate());
 
 		com.tcdng.jacklyn.notification.data.Message notification
 				= new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
@@ -360,27 +360,27 @@ public class NotificationModuleTest extends AbstractJacklynTest {
 		return notificationModule;
 	}
 
-	private NotificationChannel getNotificationChannelData() throws Exception {
-		NotificationChannel notificationChannelData = new NotificationChannel();
-		notificationChannelData.setName(NOTIFICATION_CHANNEL_NAME);
-		notificationChannelData.setDescription("Message Messaging Channel");
-		notificationChannelData.setNotificationType(NotificationType.SYSTEM);
-		return notificationChannelData;
+	private NotificationChannel getNotificationChannel() throws Exception {
+		NotificationChannel notificationChannel = new NotificationChannel();
+		notificationChannel.setName(NOTIFICATION_CHANNEL_NAME);
+		notificationChannel.setDescription("Message Messaging Channel");
+		notificationChannel.setNotificationType(NotificationType.SYSTEM);
+		return notificationChannel;
 	}
 
-	private NotificationTemplate getNotificationTemplateData() throws Exception {
+	private NotificationTemplate getNotificationTemplate() throws Exception {
 		SystemModule systemModule
 				= (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
 		Long moduleId = systemModule.getModuleId(SystemModuleNameConstants.SYSTEM_MODULE);
 
-		NotificationTemplate notificationTemplateData = new NotificationTemplate();
-		notificationTemplateData.setModuleId(moduleId);
-		notificationTemplateData.setName("ACC-SMRY-001");
-		notificationTemplateData.setDescription("Monthly Account Summary");
-		notificationTemplateData.setSubject("Account Summary");
-		notificationTemplateData.setTemplate("Your balance is {balance}");
-		notificationTemplateData.setHtmlFlag(Boolean.FALSE);
-		notificationTemplateData.setStatus(RecordStatus.ACTIVE);
-		return notificationTemplateData;
+		NotificationTemplate notificationTemplate = new NotificationTemplate();
+		notificationTemplate.setModuleId(moduleId);
+		notificationTemplate.setName("ACC-SMRY-001");
+		notificationTemplate.setDescription("Monthly Account Summary");
+		notificationTemplate.setSubject("Account Summary");
+		notificationTemplate.setTemplate("Your balance is {balance}");
+		notificationTemplate.setHtmlFlag(Boolean.FALSE);
+		notificationTemplate.setStatus(RecordStatus.ACTIVE);
+		return notificationTemplate;
 	}
 }

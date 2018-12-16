@@ -14,23 +14,29 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.entities;
+package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Query class for workflow step form privilege definitions.
+ * Workflow documents configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfFormPrivilegeQuery extends BaseEntityQuery<WfFormPrivilege> {
+public class WfDocumentsConfig {
 
-	public WfFormPrivilegeQuery() {
-		super(WfFormPrivilege.class);
+	private List<WfDocumentConfig> wfDocumentConfigList;
+
+	public List<WfDocumentConfig> getWfDocumentConfigList() {
+		return wfDocumentConfigList;
 	}
 
-	public WfFormPrivilegeQuery wfStepId(Long wfStepId) {
-		return (WfFormPrivilegeQuery) equals("wfStepId", wfStepId);
+	@XmlElement(name="document", required=true)
+	public void setWfDocumentConfigList(List<WfDocumentConfig> wfDocumentConfigList) {
+		this.wfDocumentConfigList = wfDocumentConfigList;
 	}
+
 }

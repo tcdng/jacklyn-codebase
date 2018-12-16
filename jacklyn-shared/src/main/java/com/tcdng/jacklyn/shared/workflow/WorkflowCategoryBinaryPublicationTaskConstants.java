@@ -27,4 +27,6 @@ public interface WorkflowCategoryBinaryPublicationTaskConstants {
 	String TASK_NAME = "wfcategorybinarypublicationtask";
 
 	String WFCATEGORY_BIN = "wfCategoryBin";
+
+	String WFCATEGORY_ACTIVATE = "wfActivate";
 }

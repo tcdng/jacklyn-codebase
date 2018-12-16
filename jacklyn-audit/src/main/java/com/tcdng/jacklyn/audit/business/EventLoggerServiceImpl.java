@@ -55,13 +55,13 @@ public class EventLoggerServiceImpl extends AbstractBusinessModule implements Ev
 
 	@Override
 	public boolean logUserEvent(String eventName, String... details) throws UnifyException {
-		AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery().name(eventName));
-		if (auditDefinitionData == null) {
+		AuditDefinition auditDefinition = db().find(new AuditDefinitionQuery().name(eventName));
+		if (auditDefinition == null) {
 			throw new UnifyException(AuditModuleErrorConstants.AUDITTYPE_IS_UNKNOWN, eventName);
 		}
 
-		if (RecordStatus.ACTIVE.equals(auditDefinitionData.getStatus())) {
-			createAuditTrail(auditDefinitionData.getId(), details, null);
+		if (RecordStatus.ACTIVE.equals(auditDefinition.getStatus())) {
+			createAuditTrail(auditDefinition.getId(), details, null);
 			return true;
 		}
 

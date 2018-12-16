@@ -52,11 +52,11 @@ public class WfDocBeanMapping extends BaseEntity {
 	@Column(name = "BEAN_TY", length = 128)
 	private String beanType;
 
-	@ChildList
-	private List<WfDocFieldMapping> fieldMappingList;
-
 	@ListOnly(key = "type", property = "description")
 	private String typeDesc;
+
+	@ChildList
+	private List<WfDocFieldMapping> fieldMappingList;
 
 	@Override
 	public String getDescription() {

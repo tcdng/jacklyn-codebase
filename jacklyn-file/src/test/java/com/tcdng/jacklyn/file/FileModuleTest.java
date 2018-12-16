@@ -27,7 +27,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.tcdng.jacklyn.common.AbstractJacklynTest;
-import com.tcdng.jacklyn.common.TestBankData;
+import com.tcdng.jacklyn.common.TestBank;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.file.business.FileModule;
 import com.tcdng.jacklyn.file.constants.BatchFileReadTaskConstants;
@@ -72,16 +72,16 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testCreateFileTransferConfig() throws Exception {
-		FileTransferConfig fileTransferConfigData = getUploadFileTransferConfigData();
+		FileTransferConfig fileTransferConfig = getUploadFileTransferConfig();
 		Long fileTransferConfigId
-				= getFileModule().createFileTransferConfig(fileTransferConfigData);
+				= getFileModule().createFileTransferConfig(fileTransferConfig);
 		assertNotNull(fileTransferConfigId);
 	}
 
 	@Test
 	public void testFindFileTransferConfigs() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
-		FileTransferConfig uploadConfig = getUploadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
 		getFileModule().createFileTransferConfig(downloadConfig);
 		getFileModule().createFileTransferConfig(uploadConfig);
 
@@ -130,7 +130,7 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testFindFileTransferConfig() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		Long id = getFileModule().createFileTransferConfig(downloadConfig);
 
 		FileTransferConfig fetchedDownloadConfig = getFileModule().findFileTransferConfig(id);
@@ -140,7 +140,7 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testUpdateFileTransferConfig() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		Long id = getFileModule().createFileTransferConfig(downloadConfig);
 
 		FileTransferConfig fetchedDownloadConfig = getFileModule().findFileTransferConfig(id);
@@ -157,7 +157,7 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testDeleteFileTransferConfig() throws Exception {
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		Long id = getFileModule().createFileTransferConfig(downloadConfig);
 		int updateCount = getFileModule().deleteFileTransferConfig(id);
 		assertEquals(1, updateCount);
@@ -170,16 +170,16 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testCreateBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
 		assertNotNull(batchFileDefinitionId);
 	}
 
 	@Test
 	public void testFindBatchFileDefinitions() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
-		getFileModule().createBatchFileDefinition(batchFileDefinitionData);
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+		getFileModule().createBatchFileDefinition(batchFileDefinition);
 
 		BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
 		query.orderById();
@@ -189,28 +189,28 @@ public class FileModuleTest extends AbstractJacklynTest {
 		assertNotNull(batchFileDefinitionList);
 		assertEquals(1, batchFileDefinitionList.size());
 
-		assertEquals(batchFileDefinitionData.getName(), batchFileDefinitionList.get(0).getName());
-		assertEquals(batchFileDefinitionData.getDescription(),
+		assertEquals(batchFileDefinition.getName(), batchFileDefinitionList.get(0).getName());
+		assertEquals(batchFileDefinition.getDescription(),
 				batchFileDefinitionList.get(0).getDescription());
 	}
 
 	@Test
 	public void testFindBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
-		Long id = getFileModule().createBatchFileDefinition(batchFileDefinitionData);
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+		Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
 
-		BatchFileDefinition fetchBatchFileDefinitionData
+		BatchFileDefinition fetchBatchFileDefinition
 				= getFileModule().findBatchFileDefinition(id);
-		assertNotNull(fetchBatchFileDefinitionData);
-		assertEquals(batchFileDefinitionData.getName(), fetchBatchFileDefinitionData.getName());
-		assertEquals(batchFileDefinitionData.getDescription(),
-				fetchBatchFileDefinitionData.getDescription());
+		assertNotNull(fetchBatchFileDefinition);
+		assertEquals(batchFileDefinition.getName(), fetchBatchFileDefinition.getName());
+		assertEquals(batchFileDefinition.getDescription(),
+				fetchBatchFileDefinition.getDescription());
 	}
 
 	@Test
 	public void testUpdateBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
-		Long id = getFileModule().createBatchFileDefinition(batchFileDefinitionData);
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+		Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
 
 		BatchFileDefinition fetchedBatchFileDefinition
 				= getFileModule().findBatchFileDefinition(id);
@@ -220,14 +220,14 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 		BatchFileDefinition updatedBatchFileDefinition
 				= getFileModule().findBatchFileDefinition(id);
-		assertFalse(batchFileDefinitionData.equals(updatedBatchFileDefinition));
+		assertFalse(batchFileDefinition.equals(updatedBatchFileDefinition));
 		assertEquals(fetchedBatchFileDefinition, updatedBatchFileDefinition);
 	}
 
 	@Test
 	public void testDeleteBatchFileDefinition() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
-		Long id = getFileModule().createBatchFileDefinition(batchFileDefinitionData);
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
+		Long id = getFileModule().createBatchFileDefinition(batchFileDefinition);
 		int updateCount = getFileModule().deleteBatchFileDefinition(id);
 		assertEquals(1, updateCount);
 
@@ -239,24 +239,24 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testCreateBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
 		Long batchUploadConfigId
-				= getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 		assertNotNull(batchUploadConfigId);
 	}
 
 	@Test
 	public void testFindBatchFileReadConfigs() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
-		getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
+		getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 
 		BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
 		query.orderById();
@@ -266,43 +266,43 @@ public class FileModuleTest extends AbstractJacklynTest {
 		assertNotNull(batchUploadConfigList);
 		assertEquals(1, batchUploadConfigList.size());
 
-		BatchFileReadConfig foundBatchFileReadConfigData = batchUploadConfigList.get(0);
-		assertEquals(batchFileReadConfigData.getBatchFileDefinitionId(),
-				foundBatchFileReadConfigData.getBatchFileDefinitionId());
-		assertEquals(batchFileReadConfigData.getReadProcessor(),
-				foundBatchFileReadConfigData.getReadProcessor());
-		assertEquals(batchFileReadConfigData.getConstraintAction(),
-				foundBatchFileReadConfigData.getConstraintAction());
-		assertEquals(batchFileReadConfigData.getDescription(),
-				foundBatchFileReadConfigData.getDescription());
-		assertEquals(batchFileReadConfigData.getFileReader(),
-				foundBatchFileReadConfigData.getFileReader());
-		assertEquals(batchFileReadConfigData.getName(), foundBatchFileReadConfigData.getName());
-		assertEquals(batchFileReadConfigData.getStatus(), foundBatchFileReadConfigData.getStatus());
+		BatchFileReadConfig foundBatchFileReadConfig = batchUploadConfigList.get(0);
+		assertEquals(batchFileReadConfig.getBatchFileDefinitionId(),
+				foundBatchFileReadConfig.getBatchFileDefinitionId());
+		assertEquals(batchFileReadConfig.getReadProcessor(),
+				foundBatchFileReadConfig.getReadProcessor());
+		assertEquals(batchFileReadConfig.getConstraintAction(),
+				foundBatchFileReadConfig.getConstraintAction());
+		assertEquals(batchFileReadConfig.getDescription(),
+				foundBatchFileReadConfig.getDescription());
+		assertEquals(batchFileReadConfig.getFileReader(),
+				foundBatchFileReadConfig.getFileReader());
+		assertEquals(batchFileReadConfig.getName(), foundBatchFileReadConfig.getName());
+		assertEquals(batchFileReadConfig.getStatus(), foundBatchFileReadConfig.getStatus());
 	}
 
 	@Test
 	public void testFindBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
-		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
+		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 
 		BatchFileReadConfig fetchedDownloadConfig = getFileModule().findBatchFileReadConfig(id);
 		assertNotNull(fetchedDownloadConfig);
-		assertEquals(batchFileReadConfigData, fetchedDownloadConfig);
+		assertEquals(batchFileReadConfig, fetchedDownloadConfig);
 	}
 
 	@Test
 	public void testUpdateBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
-		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
+		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 
 		BatchFileReadConfig fetchedBatchFileReadConfig
 				= getFileModule().findBatchFileReadConfig(id);
@@ -312,18 +312,18 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 		BatchFileReadConfig updatedBatchFileReadConfig
 				= getFileModule().findBatchFileReadConfig(id);
-		assertFalse(batchFileReadConfigData.equals(updatedBatchFileReadConfig));
+		assertFalse(batchFileReadConfig.equals(updatedBatchFileReadConfig));
 		assertEquals(fetchedBatchFileReadConfig, updatedBatchFileReadConfig);
 	}
 
 	@Test
 	public void testDeleteBatchFileReadConfig() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
-		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
+		Long id = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 		int updateCount = getFileModule().deleteBatchFileReadConfig(id);
 		assertEquals(1, updateCount);
 
@@ -335,12 +335,12 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testGetBatchFileReadInputParameters() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
-		Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
+		Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 
 		BatchFileReadInputParameters buip
 				= getFileModule().getBatchFileReadInputParameters(batchConfigId);
@@ -361,7 +361,7 @@ public class FileModuleTest extends AbstractJacklynTest {
 	public void testFindFileInboxItems() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		fileModule.createFileTransferConfig(downloadConfig);
 
 		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
@@ -375,27 +375,27 @@ public class FileModuleTest extends AbstractJacklynTest {
 		assertNotNull(fileInboxList);
 		assertEquals(3, fileInboxList.size());
 
-		FileInbox fileInboxData = fileInboxList.get(0);
-		assertEquals("butterfly.png", fileInboxData.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInboxData.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInboxData.getStatus());
+		FileInbox fileInbox = fileInboxList.get(0);
+		assertEquals("butterfly.png", fileInbox.getFilename());
+		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
 
-		fileInboxData = fileInboxList.get(1);
-		assertEquals("customer.html", fileInboxData.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInboxData.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInboxData.getStatus());
+		fileInbox = fileInboxList.get(1);
+		assertEquals("customer.html", fileInbox.getFilename());
+		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
 
-		fileInboxData = fileInboxList.get(2);
-		assertEquals("hello.txt", fileInboxData.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInboxData.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInboxData.getStatus());
+		fileInbox = fileInboxList.get(2);
+		assertEquals("hello.txt", fileInbox.getFilename());
+		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
 	}
 
 	@Test(timeout = 4000)
 	public void testFindFileInboxItem() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		fileModule.createFileTransferConfig(downloadConfig);
 
 		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
@@ -406,16 +406,16 @@ public class FileModuleTest extends AbstractJacklynTest {
 		query.fileTransferConfigName("downloadFileTransfer");
 		List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
 
-		FileInbox fileInboxData = fileInboxList.get(0);
-		FileInbox fetchedFileInboxData = fileModule.findFileInboxItem(fileInboxData.getId());
-		assertEquals(fileInboxData, fetchedFileInboxData);
+		FileInbox fileInbox = fileInboxList.get(0);
+		FileInbox fetchedFileInbox = fileModule.findFileInboxItem(fileInbox.getId());
+		assertEquals(fileInbox, fetchedFileInbox);
 	}
 
 	@Test(timeout = 4000)
 	public void testUpdateFileInboxItemsReadStatus() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		fileModule.createFileTransferConfig(downloadConfig);
 
 		TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
@@ -432,27 +432,27 @@ public class FileModuleTest extends AbstractJacklynTest {
 		query.order("filename");
 		List<FileInbox> fileInboxList = fileModule.findFileInboxItems(query);
 
-		FileInbox fileInboxData = fileInboxList.get(0);
-		assertEquals("butterfly.png", fileInboxData.getFilename());
-		assertEquals(FileInboxReadStatus.READ, fileInboxData.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInboxData.getStatus());
+		FileInbox fileInbox = fileInboxList.get(0);
+		assertEquals("butterfly.png", fileInbox.getFilename());
+		assertEquals(FileInboxReadStatus.READ, fileInbox.getReadStatus());
+		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
 
-		fileInboxData = fileInboxList.get(1);
-		assertEquals("customer.html", fileInboxData.getFilename());
-		assertEquals(FileInboxReadStatus.NOT_READ, fileInboxData.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInboxData.getStatus());
+		fileInbox = fileInboxList.get(1);
+		assertEquals("customer.html", fileInbox.getFilename());
+		assertEquals(FileInboxReadStatus.NOT_READ, fileInbox.getReadStatus());
+		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
 
-		fileInboxData = fileInboxList.get(2);
-		assertEquals("hello.txt", fileInboxData.getFilename());
-		assertEquals(FileInboxReadStatus.READ, fileInboxData.getReadStatus());
-		assertEquals(FileInboxStatus.RECEIVED, fileInboxData.getStatus());
+		fileInbox = fileInboxList.get(2);
+		assertEquals("hello.txt", fileInbox.getFilename());
+		assertEquals(FileInboxReadStatus.READ, fileInbox.getReadStatus());
+		assertEquals(FileInboxStatus.RECEIVED, fileInbox.getStatus());
 	}
 
 	@Test(timeout = 4000)
 	public void testFindFileOutboxItems() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig uploadConfig = getUploadFileTransferConfigData();
+		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
 		fileModule.createFileTransferConfig(uploadConfig);
 
 		TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
@@ -466,20 +466,20 @@ public class FileModuleTest extends AbstractJacklynTest {
 		assertNotNull(fileOutboxList);
 		assertEquals(2, fileOutboxList.size());
 
-		FileOutbox fileOutboxData = fileOutboxList.get(0);
-		assertEquals("doctor.png", fileOutboxData.getFilename());
-		assertEquals(FileOutboxStatus.SENT, fileOutboxData.getStatus());
+		FileOutbox fileOutbox = fileOutboxList.get(0);
+		assertEquals("doctor.png", fileOutbox.getFilename());
+		assertEquals(FileOutboxStatus.SENT, fileOutbox.getStatus());
 
-		fileOutboxData = fileOutboxList.get(1);
-		assertEquals("transactions.txt", fileOutboxData.getFilename());
-		assertEquals(FileOutboxStatus.SENT, fileOutboxData.getStatus());
+		fileOutbox = fileOutboxList.get(1);
+		assertEquals("transactions.txt", fileOutbox.getFilename());
+		assertEquals(FileOutboxStatus.SENT, fileOutbox.getStatus());
 	}
 
 	@Test(timeout = 4000)
 	public void testFindFileOutboxItem() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig uploadConfig = getUploadFileTransferConfigData();
+		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
 		fileModule.createFileTransferConfig(uploadConfig);
 
 		TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
@@ -490,16 +490,16 @@ public class FileModuleTest extends AbstractJacklynTest {
 		query.fileTransferConfigName("uploadFileTransfer");
 		List<FileOutbox> fileInboxList = fileModule.findFileOutboxItems(query);
 
-		FileOutbox fileOutboxData = fileInboxList.get(0);
-		FileOutbox fetchedFileOutboxData = fileModule.findFileOutboxItem(fileOutboxData.getId());
-		assertEquals(fileOutboxData, fetchedFileOutboxData);
+		FileOutbox fileOutbox = fileInboxList.get(0);
+		FileOutbox fetchedFileOutbox = fileModule.findFileOutboxItem(fileOutbox.getId());
+		assertEquals(fileOutbox, fetchedFileOutbox);
 	}
 
 	@Test(timeout = 4000)
 	public void testStartTestFileTransferConfigTask() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
 		fileModule.createFileTransferConfig(downloadConfig);
 		TaskMonitor tm
 				= ((TaskLauncher) getComponent(ApplicationComponents.APPLICATION_TASKLAUNCHER))
@@ -517,8 +517,8 @@ public class FileModuleTest extends AbstractJacklynTest {
 	public void testStartUpdateFileTransferListTask() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
-		FileTransferConfig uploadConfig = getUploadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
 		fileModule.createFileTransferConfig(downloadConfig);
 		fileModule.createFileTransferConfig(uploadConfig);
 
@@ -537,8 +537,8 @@ public class FileModuleTest extends AbstractJacklynTest {
 	public void testStartExecuteFileTransferTask() throws Exception {
 		FileModule fileModule
 				= (FileModule) getComponent(FileModuleNameConstants.FILEBUSINESSMODULE);
-		FileTransferConfig downloadConfig = getDownloadFileTransferConfigData();
-		FileTransferConfig uploadConfig = getUploadFileTransferConfigData();
+		FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
+		FileTransferConfig uploadConfig = getUploadFileTransferConfig();
 		fileModule.createFileTransferConfig(downloadConfig);
 		fileModule.createFileTransferConfig(uploadConfig);
 
@@ -555,12 +555,12 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testStartBatchFileReadTask() throws Exception {
-		BatchFileDefinition batchFileDefinitionData = newBatchFileDefinitionData();
+		BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
 		Long batchFileDefinitionId
-				= getFileModule().createBatchFileDefinition(batchFileDefinitionData);
-		BatchFileReadConfig batchFileReadConfigData
-				= getBatchFileReadConfigData(batchFileDefinitionId);
-		Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfigData);
+				= getFileModule().createBatchFileDefinition(batchFileDefinition);
+		BatchFileReadConfig batchFileReadConfig
+				= getBatchFileReadConfig(batchFileDefinitionId);
+		Long batchConfigId = getFileModule().createBatchFileReadConfig(batchFileReadConfig);
 
 		BatchFileReadInputParameters buip
 				= getFileModule().getBatchFileReadInputParameters(batchConfigId);
@@ -581,31 +581,31 @@ public class FileModuleTest extends AbstractJacklynTest {
 
 		GenericBusinessModule genericBusinessModule = (GenericBusinessModule) this
 				.getComponent(ApplicationComponents.APPLICATION_GENERICBUSINESSMODULE);
-		List<TestBankData> bankList = genericBusinessModule.listAll(
-				new Query<TestBankData>(TestBankData.class).order("id").ignoreEmptyCriteria(true));
+		List<TestBank> bankList = genericBusinessModule.listAll(
+				new Query<TestBank>(TestBank.class).order("id").ignoreEmptyCriteria(true));
 		assertNotNull(bankList);
 		assertEquals(3, bankList.size());
 
-		TestBankData bankData = bankList.get(0);
-		assertEquals("011", bankData.getName());
-		assertEquals("First Bank", bankData.getDescription());
-		assertEquals("FBN", bankData.getShortName());
-		assertEquals("011000001", bankData.getHoRoutingNo());
-		assertEquals("Nigeria", bankData.getCountry());
+		TestBank bank = bankList.get(0);
+		assertEquals("011", bank.getName());
+		assertEquals("First Bank", bank.getDescription());
+		assertEquals("FBN", bank.getShortName());
+		assertEquals("011000001", bank.getHoRoutingNo());
+		assertEquals("Nigeria", bank.getCountry());
 
-		bankData = bankList.get(1);
-		assertEquals("032", bankData.getName());
-		assertEquals("Union Bank", bankData.getDescription());
-		assertEquals("UBN", bankData.getShortName());
-		assertEquals("032000001", bankData.getHoRoutingNo());
-		assertEquals("Nigeria", bankData.getCountry());
+		bank = bankList.get(1);
+		assertEquals("032", bank.getName());
+		assertEquals("Union Bank", bank.getDescription());
+		assertEquals("UBN", bank.getShortName());
+		assertEquals("032000001", bank.getHoRoutingNo());
+		assertEquals("Nigeria", bank.getCountry());
 
-		bankData = bankList.get(2);
-		assertEquals("044", bankData.getName());
-		assertEquals("Access Bank", bankData.getDescription());
-		assertEquals("ACC", bankData.getShortName());
-		assertEquals("044000001", bankData.getHoRoutingNo());
-		assertEquals("Nigeria", bankData.getCountry());
+		bank = bankList.get(2);
+		assertEquals("044", bank.getName());
+		assertEquals("Access Bank", bank.getDescription());
+		assertEquals("ACC", bank.getShortName());
+		assertEquals("044000001", bank.getHoRoutingNo());
+		assertEquals("Nigeria", bank.getCountry());
 	}
 
 	@Override
@@ -630,70 +630,70 @@ public class FileModuleTest extends AbstractJacklynTest {
 				BatchFileDefinition.class, FileTransferConfig.class);
 	}
 
-	private FileTransferConfig getUploadFileTransferConfigData() {
-		FileTransferConfig fileTransferConfigData = new FileTransferConfig();
-		fileTransferConfigData.setName("uploadFileTransfer");
-		fileTransferConfigData.setDeleteSourceOnTransfer(Boolean.FALSE);
-		fileTransferConfigData.setDescription("EOD Report DataTransfer");
-		fileTransferConfigData.setDirection(FileTransferDirection.UPLOAD);
-		fileTransferConfigData.setFileTransferPolicy("wildcard-filetransferpolicy");
-		fileTransferConfigData.setFileTransferServer("test-filetransferserver");
-		fileTransferConfigData.setLocalPath("c:\\data\\reports");
-		fileTransferConfigData.setMaxTransferAttempts(Integer.valueOf(10));
-		fileTransferConfigData.setRemoteHost("192.168.1.1");
-		fileTransferConfigData.setRemotePath("/eodreports");
-		fileTransferConfigData.setStatus(RecordStatus.ACTIVE);
-		return fileTransferConfigData;
+	private FileTransferConfig getUploadFileTransferConfig() {
+		FileTransferConfig fileTransferConfig = new FileTransferConfig();
+		fileTransferConfig.setName("uploadFileTransfer");
+		fileTransferConfig.setDeleteSourceOnTransfer(Boolean.FALSE);
+		fileTransferConfig.setDescription("EOD Report Transfer");
+		fileTransferConfig.setDirection(FileTransferDirection.UPLOAD);
+		fileTransferConfig.setFileTransferPolicy("wildcard-filetransferpolicy");
+		fileTransferConfig.setFileTransferServer("test-filetransferserver");
+		fileTransferConfig.setLocalPath("c:\\data\\reports");
+		fileTransferConfig.setMaxTransferAttempts(Integer.valueOf(10));
+		fileTransferConfig.setRemoteHost("192.168.1.1");
+		fileTransferConfig.setRemotePath("/eodreports");
+		fileTransferConfig.setStatus(RecordStatus.ACTIVE);
+		return fileTransferConfig;
 	}
 
-	private FileTransferConfig getDownloadFileTransferConfigData() {
-		FileTransferConfig fileTransferConfigData = new FileTransferConfig();
-		fileTransferConfigData.setName("downloadFileTransfer");
-		fileTransferConfigData.setDeleteSourceOnTransfer(Boolean.FALSE);
-		fileTransferConfigData.setDescription("BPXF File DataTransfer");
-		fileTransferConfigData.setDirection(FileTransferDirection.DOWNLOAD);
-		fileTransferConfigData.setFileTransferPolicy("wildcard-filetransferpolicy");
-		fileTransferConfigData.setFileTransferServer("test-filetransferserver");
-		fileTransferConfigData.setLocalPath("c:\\truncation\\bpxf");
-		fileTransferConfigData.setMaxTransferAttempts(Integer.valueOf(4));
-		fileTransferConfigData.setRemoteHost("10.0.2.15");
-		fileTransferConfigData.setRemotePath("/incoming/bfxf");
-		fileTransferConfigData.setStatus(RecordStatus.ACTIVE);
-		return fileTransferConfigData;
+	private FileTransferConfig getDownloadFileTransferConfig() {
+		FileTransferConfig fileTransferConfig = new FileTransferConfig();
+		fileTransferConfig.setName("downloadFileTransfer");
+		fileTransferConfig.setDeleteSourceOnTransfer(Boolean.FALSE);
+		fileTransferConfig.setDescription("BPXF File Transfer");
+		fileTransferConfig.setDirection(FileTransferDirection.DOWNLOAD);
+		fileTransferConfig.setFileTransferPolicy("wildcard-filetransferpolicy");
+		fileTransferConfig.setFileTransferServer("test-filetransferserver");
+		fileTransferConfig.setLocalPath("c:\\truncation\\bpxf");
+		fileTransferConfig.setMaxTransferAttempts(Integer.valueOf(4));
+		fileTransferConfig.setRemoteHost("10.0.2.15");
+		fileTransferConfig.setRemotePath("/incoming/bfxf");
+		fileTransferConfig.setStatus(RecordStatus.ACTIVE);
+		return fileTransferConfig;
 	}
 
-	private BatchFileDefinition newBatchFileDefinitionData() {
-		BatchFileDefinition batchFileDefinitionData = new BatchFileDefinition();
-		batchFileDefinitionData.setName("fil-001");
-		batchFileDefinitionData.setDescription("Test Definition");
+	private BatchFileDefinition newBatchFileDefinition() {
+		BatchFileDefinition batchFileDefinition = new BatchFileDefinition();
+		batchFileDefinition.setName("fil-001");
+		batchFileDefinition.setDescription("Test Definition");
 
 		List<BatchFileFieldDefinition> fieldDefList = new ArrayList<BatchFileFieldDefinition>();
 		fieldDefList.add(newBatchFileFieldDefinition("name", 3));
 		fieldDefList.add(newBatchFileFieldDefinition("description", 20));
 		fieldDefList.add(newBatchFileFieldDefinition("shortName", 4));
 		fieldDefList.add(newBatchFileFieldDefinition("hoRoutingNo", 9));
-		batchFileDefinitionData.setFieldDefList(fieldDefList);
+		batchFileDefinition.setFieldDefList(fieldDefList);
 
-		return batchFileDefinitionData;
+		return batchFileDefinition;
 	}
 
 	private BatchFileFieldDefinition newBatchFileFieldDefinition(String name, int length) {
-		BatchFileFieldDefinition batchFileFieldDefinitionData = new BatchFileFieldDefinition();
-		batchFileFieldDefinitionData.setName(name);
-		batchFileFieldDefinitionData.setLength(length);
-		batchFileFieldDefinitionData.setTrim(true);
-		return batchFileFieldDefinitionData;
+		BatchFileFieldDefinition batchFileFieldDefinition = new BatchFileFieldDefinition();
+		batchFileFieldDefinition.setName(name);
+		batchFileFieldDefinition.setLength(length);
+		batchFileFieldDefinition.setTrim(true);
+		return batchFileFieldDefinition;
 	}
 
-	private BatchFileReadConfig getBatchFileReadConfigData(Long batchFileDefinitionId) {
-		BatchFileReadConfig batchFileReadConfigData = new BatchFileReadConfig();
-		batchFileReadConfigData.setBatchFileDefinitionId(batchFileDefinitionId);
-		batchFileReadConfigData.setReadProcessor("test-bankbatchfilereadprocessor");
-		batchFileReadConfigData.setFileReader("fixedlength-batchfilereader");
-		batchFileReadConfigData.setConstraintAction(ConstraintAction.FAIL);
-		batchFileReadConfigData.setDescription("Bank Batch Config");
-		batchFileReadConfigData.setName("BankBatchConfig");
-		return batchFileReadConfigData;
+	private BatchFileReadConfig getBatchFileReadConfig(Long batchFileDefinitionId) {
+		BatchFileReadConfig batchFileReadConfig = new BatchFileReadConfig();
+		batchFileReadConfig.setBatchFileDefinitionId(batchFileDefinitionId);
+		batchFileReadConfig.setReadProcessor("test-bankbatchfilereadprocessor");
+		batchFileReadConfig.setFileReader("fixedlength-batchfilereader");
+		batchFileReadConfig.setConstraintAction(ConstraintAction.FAIL);
+		batchFileReadConfig.setDescription("Bank Batch Config");
+		batchFileReadConfig.setName("BankBatchConfig");
+		return batchFileReadConfig;
 	}
 
 	private FileModule getFileModule() throws Exception {

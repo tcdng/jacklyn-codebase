@@ -33,8 +33,8 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Message", reportable = true)
-@Table("NOTIFICATION")
+@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification", reportable = true)
+@Table("NOTIF")
 public class Notification extends BaseTimestampedEntity {
 
 	@ForeignKey(NotificationTemplate.class)

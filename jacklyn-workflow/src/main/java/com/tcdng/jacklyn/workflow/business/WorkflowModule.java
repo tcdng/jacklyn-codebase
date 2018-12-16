@@ -33,8 +33,6 @@ import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfDocQuery;
-import com.tcdng.jacklyn.workflow.entities.WfForm;
-import com.tcdng.jacklyn.workflow.entities.WfFormQuery;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
@@ -58,22 +56,26 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 * 
 	 * @param wfCategoryConfigBin
 	 *            the category configuration binary
+	 * @param activate
+	 *            indicates if category should be activated after publication
 	 * @return the task monitor
 	 * @throws UnifyException
 	 *             if an error occurs
 	 */
-	TaskMonitor startWorkflowCategoryPublication(byte[] wfCategoryConfigBin) throws UnifyException;
+	TaskMonitor startWorkflowCategoryPublication(byte[] wfCategoryConfigBin, boolean activate) throws UnifyException;
 
 	/**
 	 * Starts a workflow category publication task.
 	 * 
 	 * @param wfCategoryConfig
 	 *            the category configuration
+	 * @param activate
+	 *            indicates if category should be activated after publication
 	 * @return the task monitor
 	 * @throws UnifyException
 	 *             if an error occurs
 	 */
-	TaskMonitor startWorkflowCategoryPublication(WfCategoryConfig wfCategoryConfig)
+	TaskMonitor startWorkflowCategoryPublication(WfCategoryConfig wfCategoryConfig, boolean activate)
 			throws UnifyException;
 
 	/**
@@ -83,12 +85,14 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 *            optional task monitor
 	 * @param wfCategoryConfigBin
 	 *            binary to publish
+	 * @param activate
+	 *            indicates if category should be activated after publication
 	 * @return a true if value
 	 * @throws UnifyException
 	 *             if an error occurs
 	 */
-	boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor,
-			byte[] wfCategoryConfigBin) throws UnifyException;
+	boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, byte[] wfCategoryConfigBin,
+			boolean activate) throws UnifyException;
 
 	/**
 	 * Executes a workflow category publication.
@@ -97,12 +101,26 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 *            optional task monitor
 	 * @param wfCategoryConfig
 	 *            the category configuration
+	 * @param activate
+	 *            indicates if category should be activated after publication
 	 * @return a true if value
 	 * @throws UnifyException
 	 *             if an error occurs
 	 */
-	boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor,
-			WfCategoryConfig wfCategoryConfig) throws UnifyException;
+	boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, WfCategoryConfig wfCategoryConfig,
+			boolean activate) throws UnifyException;
+
+	/**
+	 * Activates a workflow category.
+	 * 
+	 * @param wfCategoryName
+	 *            the workflow category name
+	 * @param wfCategoryVersion
+	 *            the workflow category version
+	 * @throws UnifyException
+	 *             if an error occurs
+	 */
+	void activateWfCategory(String wfCategoryName, String wfCategoryVersion) throws UnifyException;
 
 	/**
 	 * Finds workflow category by ID.
@@ -169,39 +187,6 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 *             if an error occurs
 	 */
 	List<WfDoc> findWfDocs(Long wfCategoryId) throws UnifyException;
-
-	/**
-	 * Find workflow forms by ID.
-	 * 
-	 * @param wfFormId
-	 *            the workflow form ID
-	 * @return the workflow form
-	 * @throws UnifyException
-	 *             if form with ID is not found. if an error occurs
-	 */
-	WfForm findWfForm(Long wfFormId) throws UnifyException;
-
-	/**
-	 * Finds workflow forms by criteria.
-	 * 
-	 * @param query
-	 *            the the search criteria
-	 * @return list of workflow forms
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<WfForm> findWfForms(WfFormQuery query) throws UnifyException;
-
-	/**
-	 * Finds workflow forms by category.
-	 * 
-	 * @param wfCategoryId
-	 *            the category ID
-	 * @return list of workflow forms
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<WfForm> findWfForms(Long wfCategoryId) throws UnifyException;
 
 	/**
 	 * Finds workflow templates by criteria.
@@ -285,13 +270,14 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	/**
 	 * Gets the workflow form object.
 	 * 
-	 * @param globalFormName
-	 *            the global form name
+	 * @param globalDocName
+	 *            the global document name
 	 * @return the runtime object
 	 * @throws UnifyException
-	 *             if form with global name is unknown
+	 *             if document with global name is unknown. If document definition
+	 *             has no form
 	 */
-	WfFormDef getRuntimeWfFormDef(String globalFormName) throws UnifyException;
+	WfFormDef getRuntimeWfFormDef(String globalDocName) throws UnifyException;
 
 	/**
 	 * Creates a manual initiation item for the supplied workflow template.
@@ -377,8 +363,7 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 * @throws UnifyException
 	 *             if current user is not a participant in step if an error occurs
 	 */
-	int releaseCurrentUserWorkItems(String globalStepName, List<Long> wfItemIds)
-			throws UnifyException;
+	int releaseCurrentUserWorkItems(String globalStepName, List<Long> wfItemIds) throws UnifyException;
 
 	/**
 	 * Returns the current user work item list for particular step.
@@ -435,8 +420,7 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 * @throws UnifyException
 	 *             if an error occurs
 	 */
-	WfItemHistObject findWorkflowItemHistory(Long wfItemHistId, boolean notesOnly)
-			throws UnifyException;
+	WfItemHistObject findWorkflowItemHistory(Long wfItemHistId, boolean notesOnly) throws UnifyException;
 
 	/**
 	 * Attaches item to workflow item.
@@ -478,8 +462,7 @@ public interface WorkflowModule extends JacklynBusinessModule {
 	 *             if workflow item does not exist. if attachment with name is
 	 *             unknown if an error occurs
 	 */
-	WfItemAttachmentInfo fetchWorkflowItemAttachment(Long wfItemId, String name)
-			throws UnifyException;
+	WfItemAttachmentInfo fetchWorkflowItemAttachment(Long wfItemId, String name) throws UnifyException;
 
 	/**
 	 * Delete workflow item attachment.

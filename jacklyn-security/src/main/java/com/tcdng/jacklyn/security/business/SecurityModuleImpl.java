@@ -70,6 +70,7 @@ import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
+import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
 import com.tcdng.jacklyn.system.business.SystemModule;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
@@ -77,7 +78,6 @@ import com.tcdng.jacklyn.workflow.business.WorkflowModule;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
-import com.tcdng.jacklyn.workflow.utils.WorkflowUtils;
 import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.PrivilegeSettings;
 import com.tcdng.unify.core.RoleAttributes;
@@ -400,21 +400,21 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 	}
 
 	@Override
-	public Long createUser(User userData) throws UnifyException {
-		String password = generatePassword(userData,
+	public Long createUser(User user) throws UnifyException {
+		String password = generatePassword(user,
 				SecurityModuleSysParamConstants.NEW_PASSWORD_MESSAGE_TEMPLATE);
-		userData.setPassword(passwordCryptograph.encrypt(password));
-		return (Long) db().create(userData);
+		user.setPassword(passwordCryptograph.encrypt(password));
+		return (Long) db().create(user);
 	}
 
 	@Override
 	public Long createUser(UserLargeData userDocument) throws UnifyException {
 		// Create user
-		User userData = userDocument.getData();
-		String password = generatePassword(userData,
+		User user = userDocument.getData();
+		String password = generatePassword(user,
 				SecurityModuleSysParamConstants.NEW_PASSWORD_MESSAGE_TEMPLATE);
-		userData.setPassword(passwordCryptograph.encrypt(password));
-		Long userId = (Long) db().create(userData);
+		user.setPassword(passwordCryptograph.encrypt(password));
+		Long userId = (Long) db().create(user);
 
 		// Create biometric record
 		UserBiometric userBiometric = new UserBiometric();
@@ -446,16 +446,16 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 	}
 
 	@Override
-	public int updateUser(User userData) throws UnifyException {
-		return db().updateByIdVersion(userData);
+	public int updateUser(User user) throws UnifyException {
+		return db().updateByIdVersion(user);
 	}
 
 	@Override
 	public int updateUser(UserLargeData userDocument) throws UnifyException {
-		User userData = userDocument.getData();
-		int result = db().updateByIdVersion(userData);
-		updateUserPhotograph(userData.getId(), userDocument.getPhotograph());
-		updateUserRoles(userData.getId(), userDocument.getRoleIdList());
+		User user = userDocument.getData();
+		int result = db().updateByIdVersion(user);
+		updateUserPhotograph(user.getId(), userDocument.getPhotograph());
+		updateUserRoles(user.getId(), userDocument.getRoleIdList());
 		return result;
 	}
 
@@ -520,12 +520,12 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 
 	@Override
 	public UserLargeData findUserDocument(Long userId) throws UnifyException {
-		User userData = db().list(User.class, userId);
+		User user = db().list(User.class, userId);
 		byte[] photograph = db().value(byte[].class, "biometric", new UserBiometricQuery()
 				.userId(userId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
 		List<Long> roleIdList = db().valueList(Long.class, "roleId",
 				new UserRoleQuery().userId(userId).orderById());
-		return new UserLargeData(userData, photograph, roleIdList);
+		return new UserLargeData(user, photograph, roleIdList);
 	}
 
 	@Override
@@ -546,29 +546,29 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 
 	@Override
 	public User login(String loginId, String password) throws UnifyException {
-		User userData = db().list(new UserQuery().loginId(loginId));
-		if (userData == null) {
+		User user = db().list(new UserQuery().loginId(loginId));
+		if (user == null) {
 			throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
 		}
 
 		boolean accountLockingEnabled = systemModule.getSysParameterValue(boolean.class,
 				SecurityModuleSysParamConstants.ENABLE_ACCOUNT_LOCKING);
-		if (accountLockingEnabled && userData.getLoginLocked()) {
+		if (accountLockingEnabled && user.getLoginLocked()) {
 			throw new UnifyException(SecurityModuleErrorConstants.USER_ACCOUNT_IS_LOCKED);
 		}
 
-		if (!RecordStatus.ACTIVE.equals(userData.getStatus())) {
+		if (!RecordStatus.ACTIVE.equals(user.getStatus())) {
 			throw new UnifyException(SecurityModuleErrorConstants.USER_ACCOUNT_NOT_ACTIVE);
 		}
 
-		if (SystemReservedUserConstants.ANONYMOUS_ID.equals(userData.getId())) {
+		if (SystemReservedUserConstants.ANONYMOUS_ID.equals(user.getId())) {
 			throw new UnifyException(SecurityModuleErrorConstants.LOGIN_AS_ANONYMOUS_NOT_ALLOWED);
 		}
 
 		password = passwordCryptograph.encrypt(password);
-		if (!userData.getPassword().equals(password)) {
+		if (!user.getPassword().equals(password)) {
 			if (accountLockingEnabled) {
-				updateLoginAttempts(userData);
+				updateLoginAttempts(user);
 			}
 
 			throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
@@ -576,38 +576,38 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 
 		Update update = new Update().add("lastLoginDt", new Date()).add("loginAttempts",
 				Integer.valueOf(0));
-		Date paswwordExpiryDt = userData.getPasswordExpiryDt();
+		Date paswwordExpiryDt = user.getPasswordExpiryDt();
 		if (paswwordExpiryDt != null && paswwordExpiryDt.before(new Date())) {
 			update.add("changePassword", Boolean.TRUE);
-			userData.setChangePassword(Boolean.TRUE);
+			user.setChangePassword(Boolean.TRUE);
 		}
-		db().updateAll(new UserQuery().id(userData.getId()), update);
+		db().updateAll(new UserQuery().id(user.getId()), update);
 
 		// Login to session and set session attributes
-		userSessionManager.logIn(createUserToken(userData));
-		setSessionAttribute(JacklynSessionAttributeConstants.USERID, userData.getId());
-		setSessionAttribute(JacklynSessionAttributeConstants.USERNAME, userData.getFullName());
-		setSessionAttribute(JacklynSessionAttributeConstants.BRANCHID, userData.getBranchId());
-		String branchDesc = userData.getBranchDesc();
+		userSessionManager.logIn(createUserToken(user));
+		setSessionAttribute(JacklynSessionAttributeConstants.USERID, user.getId());
+		setSessionAttribute(JacklynSessionAttributeConstants.USERNAME, user.getFullName());
+		setSessionAttribute(JacklynSessionAttributeConstants.BRANCHID, user.getBranchId());
+		String branchDesc = user.getBranchDesc();
 		if (StringUtils.isBlank(branchDesc)) {
 			branchDesc = getApplicationMessage("application.no.branch");
 		}
 		setSessionAttribute(JacklynSessionAttributeConstants.BRANCHDESC, branchDesc);
-		setSessionAttribute(JacklynSessionAttributeConstants.RESERVEDFLAG, userData.isReserved());
+		setSessionAttribute(JacklynSessionAttributeConstants.RESERVEDFLAG, user.isReserved());
 		setSessionAttribute(JacklynSessionAttributeConstants.SUPERVISORFLAG,
-				userData.getSupervisor());
+				user.getSupervisor());
 		setSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS, null);
 		setSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS, null);
 		setSessionAttribute(JacklynSessionAttributeConstants.MESSAGEBOX, null);
 		setSessionAttribute(JacklynSessionAttributeConstants.TASKMONITORINFO, null);
 		setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, null);
 
-		return userData;
+		return user;
 	}
 
 	@Transactional(TransactionAttribute.REQUIRES_NEW)
-	public void updateLoginAttempts(User userData) throws UnifyException {
-		int loginAttempts = userData.getLoginAttempts() + 1;
+	public void updateLoginAttempts(User user) throws UnifyException {
+		int loginAttempts = user.getLoginAttempts() + 1;
 		Update update = new Update();
 		update.add("loginAttempts", Integer.valueOf(loginAttempts));
 		if (systemModule.getSysParameterValue(int.class,
@@ -615,7 +615,7 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 			update.add("loginLocked", Boolean.TRUE);
 		}
 
-		db().updateAll(new UserQuery().id(userData.getId()), update);
+		db().updateAll(new UserQuery().id(user.getId()), update);
 	}
 
 	@Override
@@ -626,13 +626,13 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 	@Override
 	public void changeUserPassword(String oldPassword, String newPassword) throws UnifyException {
 		oldPassword = passwordCryptograph.encrypt(oldPassword);
-		User userData = db().find(
+		User user = db().find(
 				new UserQuery().password(oldPassword).loginId(getUserToken().getUserLoginId()));
-		if (userData == null) {
+		if (user == null) {
 			throw new UnifyException(SecurityModuleErrorConstants.INVALID_OLD_PASSWORD);
 		}
 
-		Long userId = userData.getId();
+		Long userId = user.getId();
 		newPassword = passwordCryptograph.encrypt(newPassword);
 		if (systemModule.getSysParameterValue(boolean.class,
 				SecurityModuleSysParamConstants.ENABLE_PASSWORD_HISTORY)) {
@@ -658,23 +658,23 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 		}
 
 		// Update user
-		userData.setPassword(newPassword);
-		userData.setPasswordExpiryDt(null);
-		userData.setChangePassword(Boolean.FALSE);
-		db().updateByIdVersion(userData);
+		user.setPassword(newPassword);
+		user.setPasswordExpiryDt(null);
+		user.setChangePassword(Boolean.FALSE);
+		db().updateByIdVersion(user);
 	}
 
 	@Override
 	public void resetUserPassword(Long userId) throws UnifyException {
 		// Reset password.
-		User userData = db().find(User.class, userId);
-		String password = generatePassword(userData,
+		User user = db().find(User.class, userId);
+		String password = generatePassword(user,
 				SecurityModuleSysParamConstants.RESET_PASSWORD_MESSAGE_TEMPLATE);
 		password = passwordCryptograph.encrypt(password);
-		userData.setPassword(password);
-		userData.setChangePassword(Boolean.TRUE);
-		userData.setLoginLocked(Boolean.FALSE);
-		db().updateByIdVersion(userData);
+		user.setPassword(password);
+		user.setChangePassword(Boolean.TRUE);
+		user.setLoginLocked(Boolean.FALSE);
+		db().updateByIdVersion(user);
 	}
 
 	@Override
@@ -751,7 +751,7 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 				List<RoleWfStep> roleWfStepList
 						= db().listAll(new RoleWfStepQuery().roleName(roleName));
 				for (RoleWfStep roleWfStep : roleWfStepList) {
-					wfStepNames.add(WorkflowUtils.getGlobalStepName(roleWfStep.getWfCategoryName(),
+					wfStepNames.add(WfNameUtils.getGlobalStepName(roleWfStep.getWfCategoryName(),
 							roleWfStep.getWfTemplateName(), roleWfStep.getStepName()));
 				}
 
@@ -803,16 +803,16 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 						.getPrivilegeGroupList()) {
 					Long privilegeCategoryId
 							= categoryMap.get(privilegeGroupConfig.getCategory()).getId();
-					PrivilegeGroup oldPrivilegeGroupData = db().find(new PrivilegeGroupQuery()
+					PrivilegeGroup oldPrivilegeGroup = db().find(new PrivilegeGroupQuery()
 							.moduleId(moduleId).privilegeCategoryId(privilegeCategoryId));
 					Long privilegeGroupId = null;
-					if (oldPrivilegeGroupData == null) {
+					if (oldPrivilegeGroup == null) {
 						privilegeGroup.setPrivilegeCategoryId(privilegeCategoryId);
 						privilegeGroupId = (Long) db().create(privilegeGroup);
 					} else {
-						oldPrivilegeGroupData.setPrivilegeCategoryId(privilegeCategoryId);
-						db().updateByIdVersion(oldPrivilegeGroupData);
-						privilegeGroupId = oldPrivilegeGroupData.getId();
+						oldPrivilegeGroup.setPrivilegeCategoryId(privilegeCategoryId);
+						db().updateByIdVersion(oldPrivilegeGroup);
+						privilegeGroupId = oldPrivilegeGroup.getId();
 					}
 
 					privilege.setPrivilegeGroupId(privilegeGroupId);
@@ -873,10 +873,10 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 
 	}
 
-	private UserToken createUserToken(User userData) throws UnifyException {
-		boolean allowMultipleLogin = userData.isReserved();
+	private UserToken createUserToken(User user) throws UnifyException {
+		boolean allowMultipleLogin = user.isReserved();
 		if (!allowMultipleLogin) {
-			allowMultipleLogin = Boolean.TRUE.equals(userData.getAllowMultipleLogin());
+			allowMultipleLogin = Boolean.TRUE.equals(user.getAllowMultipleLogin());
 		}
 
 		if (systemModule.getSysParameterValue(boolean.class,
@@ -885,12 +885,12 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 					SecurityModuleSysParamConstants.SYSTEMWIDE_MULTILOGIN);
 		}
 
-		return new UserToken(userData.getLoginId(), userData.getFullName(),
-				getSessionContext().getRemoteAddress(), userData.getId(), userData.getBranchId(),
-				userData.isReserved(), allowMultipleLogin, false);
+		return new UserToken(user.getLoginId(), user.getFullName(),
+				getSessionContext().getRemoteAddress(), user.getId(), user.getBranchId(),
+				user.isReserved(), allowMultipleLogin, false);
 	}
 
-	private String generatePassword(User userData, String sysParamNotificationTemplateName)
+	private String generatePassword(User user, String sysParamNotificationTemplateName)
 			throws UnifyException {
 		PasswordGenerator passwordGenerator
 				= (PasswordGenerator) getComponent(systemModule.getSysParameterValue(String.class,
@@ -898,7 +898,7 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 		int passwordLength = systemModule.getSysParameterValue(int.class,
 				SecurityModuleSysParamConstants.USER_PASSWORD_LENGTH);
 
-		String password = passwordGenerator.generatePassword(userData.getLoginId(), passwordLength);
+		String password = passwordGenerator.generatePassword(user.getLoginId(), passwordLength);
 
 		// Send email if necessary
 		if (systemModule.getSysParameterValue(boolean.class,
@@ -914,8 +914,8 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 			Message message = new Message.Builder(NotificationUtils.getGlobalTemplateName(
 					SecurityModuleNameConstants.SECURITY_MODULE, notificationTemplateName))
 							.fromSender(administratorName, administratorEmail)
-							.toRecipient(userData.getFullName(), userData.getEmail())
-							.usingDictionaryEntry("loginId", userData.getLoginId())
+							.toRecipient(user.getFullName(), user.getEmail())
+							.usingDictionaryEntry("loginId", user.getLoginId())
 							.usingDictionaryEntry("password", password)
 							.sendVia(notificationChannelName).build();
 			notificationModule.sendNotification(message);

@@ -39,7 +39,7 @@ public class WfUserAction extends BaseEntity {
 	@ForeignKey(WfStep.class)
 	private Long wfStepId;
 
-	@Column(name = "TARGET_STEP_NM", length = 96)
+	@Column(name = "TARGET_STEP_NM", length = 32)
 	private String targetWfStepName;
 
 	@ForeignKey
@@ -57,9 +57,6 @@ public class WfUserAction extends BaseEntity {
 	@Column(name = "VALIDATE_PAGE_FG")
 	private Boolean validatePage;
 
-	@ChildList
-	private List<WfAttachmentCheck> attachmentCheckList;
-
 	@ListOnly(key = "wfStepId", property = "name")
 	private String wfStepName;
 
@@ -68,6 +65,9 @@ public class WfUserAction extends BaseEntity {
 
 	@ListOnly(key = "noteReqType", property = "description")
 	private String noteReqTypeDesc;
+
+	@ChildList
+	private List<WfAttachmentCheck> attachmentCheckList;
 
 	@Override
 	public String getDescription() {

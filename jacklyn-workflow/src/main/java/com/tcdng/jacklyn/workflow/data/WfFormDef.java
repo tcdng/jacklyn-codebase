@@ -16,8 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import java.io.Serializable;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,26 +26,18 @@ import java.util.List;
  * @author Lateef
  * @since 1.0
  */
-public class WfFormDef extends BaseWfDef {
+public class WfFormDef implements Serializable{
 
 	private static final long serialVersionUID = 5731603377730336455L;
 
 	private Long wfFormId;
 
-	private String globalName;
-
-	private Date timestamp;
-
 	private List<WfFormTabDef> tabs;
 
 	private boolean read;
 
-	public WfFormDef(Long wfFormId, String globalName, String name, String description,
-			Date timestamp, List<WfFormTabDef> tabList) {
-		super(name, description);
+	public WfFormDef(Long wfFormId, List<WfFormTabDef> tabList) {
 		this.wfFormId = wfFormId;
-		this.globalName = globalName;
-		this.timestamp = timestamp;
 		if (tabList != null) {
 			tabs = Collections.unmodifiableList(tabList);
 		} else {
@@ -61,14 +53,6 @@ public class WfFormDef extends BaseWfDef {
 
 	public List<WfFormTabDef> getTabs() {
 		return tabs;
-	}
-
-	public String getGlobalName() {
-		return globalName;
-	}
-
-	public Date getTimestamp() {
-		return timestamp;
 	}
 
 	public List<WfFormTabDef> getTabList() {

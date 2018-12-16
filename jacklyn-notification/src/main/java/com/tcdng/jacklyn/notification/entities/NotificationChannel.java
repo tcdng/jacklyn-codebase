@@ -34,9 +34,9 @@ import com.tcdng.unify.core.constant.NetworkSecurityType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Message Channel",
+@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Channel",
 		reportable = true, auditable = true)
-@Table(name = "NOTIFICATIONCHANNEL",
+@Table(name = "NOTIFCHANNEL",
 		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class NotificationChannel extends BaseVersionedStatusEntity {
 
@@ -48,10 +48,10 @@ public class NotificationChannel extends BaseVersionedStatusEntity {
 
 	@ForeignKey(type = Authentication.class, nullable = true)
 	private Long authenticationId;
-	@Column(name = "NOTIFICATIONCHANNEL_NM", length = 48)
+	@Column(name = "CHANNEL_NM", length = 48)
 	private String name;
 
-	@Column(name = "NOTIFICATIONCHANNEL_DESC", length = 64)
+	@Column(name = "CHANNEL_DESC", length = 64)
 	private String description;
 
 	@Column(nullable = true)

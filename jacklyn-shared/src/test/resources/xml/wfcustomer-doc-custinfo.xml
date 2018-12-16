@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
-<document description="Customer Information"
-	version="1">
+<document name="customerCategory.custInfo" description="Customer Information"
+	version="1.0">
 	<fields>
-		<field name="id" type="long" />
-		<field description="First Name" type="string" />
-		<field name="lastName" description="Last Name"/>
+		<field name="id" description="Customer ID" type="long" />
+		<field name="firstName" description="First Name" type="string" />
+		<field name="lastName" description="Last Name" type="string" />
 		<field name="age" description="Age" type="integer" />
 		<field name="height" description="Height" type="double" />
-		<field name="lastName" description="Last Name Old"/>
 		<complex-field name="driversLicense" description="Driver's License">
 			<field name="licenseNo" description="License No." type="string" />
 			<field name="issueDt" description="Issue Date" type="date" />
@@ -17,24 +16,14 @@
 
 	<classifiers>
 		<classifier name="validAge" description="Valid Age">
-			<filter field="dob" op="between" value1="18" value2="40"
+			<filter field="age" op="between" value1="18" value2="40"
 				field-only="false" />
-		</classifier>
-		<classifier name="validAge" description="Valid Age 2">
-			<filter field="dob" value1="18" value2="40"
-				field-only="false" />
-		</classifier>
-		<classifier description="Some Classifier">
 		</classifier>
 	</classifiers>
 
 	<attachments>
 		<attachment name="birthCert" description="Birth Certificate"
 			label="Certificate" type="pdf" />
-		<attachment name="birthCert" description="Birth Certificate"
-			label="Certificate" />
-		<attachment description="Origin Certificate"
-			type="xls" />
 	</attachments>
 
 	<bean-mappings>
@@ -42,7 +31,7 @@
 			type="primary" bean-type="com.tcdng.jacklyn.test.TestCustomer">
 			<field-mapping doc-field="firstName" bean-field="firstName" />
 			<field-mapping doc-field="lastName" bean-field="lastName" />
-			<field-mapping doc-field="ages" bean-field="age" />
+			<field-mapping doc-field="age" bean-field="age" />
 			<field-mapping doc-field="height" bean-field="height" />
 		</bean-mapping>
 	</bean-mappings>
@@ -52,14 +41,14 @@
 			<section name="basicDetails" description="Basic Details">
 				<field binding="firstName" editor="!ui-text" required="true" />
 				<field binding="lastName" editor="!ui-text" required="true" />
-				<field binding="age" required="true" />
+				<field binding="age" editor="!ui-integer" required="true" />
 				<field binding="height" editor="!ui-decimal" required="true" />
 			</section>
 			<section name="licenseDetails" description="License Details"
 				binding="driversLicense">
 				<field binding="licenseNo" editor="!ui-text" label="License No."
 					required="true" />
-				<field binding="height" editor="!ui-decimal" label="Issue Date"
+				<field binding="issueDt" editor="!ui-date" label="Issue Date"
 					required="true" />
 				<field binding="expiryDt" editor="!ui-date" label="Expiry Date"
 					required="true" />

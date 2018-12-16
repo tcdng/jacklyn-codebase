@@ -33,6 +33,8 @@ public class PublishWfCategoryParams extends RemoteCallParams {
 
 	private byte[] wfCategoryXml;
 
+	private boolean activate;
+	
 	public PublishWfCategoryParams() {
 		this(null);
 	}
@@ -49,6 +51,14 @@ public class PublishWfCategoryParams extends RemoteCallParams {
 	@XmlElement
 	public void setWfCategoryXml(byte[] wfCategoryXml) {
 		this.wfCategoryXml = wfCategoryXml;
+	}
+
+	public boolean isActivate() {
+		return activate;
+	}
+
+	public void setActivate(boolean activate) {
+		this.activate = activate;
 	}
 
 }

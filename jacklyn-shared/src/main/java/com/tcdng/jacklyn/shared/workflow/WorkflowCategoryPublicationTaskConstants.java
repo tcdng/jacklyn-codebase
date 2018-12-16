@@ -27,4 +27,6 @@ public interface WorkflowCategoryPublicationTaskConstants {
 	String TASK_NAME = "wfcategorypublicationtask";
 
 	String WFCATEGORY_CONFIG = "wfCategoryConfig";
+
+	String WFCATEGORY_ACTIVATE = "wfActivate";
 }

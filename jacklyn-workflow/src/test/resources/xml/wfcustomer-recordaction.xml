@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<category name="customerRecActionCategory" description="Customer Record Action Category"
+	version="1.0">
+	<documents>
+		<document name="customerRecActionCategory.custInfo"
+			description="Customer Information" version="1.0">
+			<item-description-format>Customer:{firstName} {lastName}</item-description-format>
+			<fields>
+				<field name="id" description="Customer ID" type="long"
+					multiple="false" />
+				<field name="firstName" description="First Name" type="string"
+					multiple="false" />
+				<field name="lastName" description="Last Name" type="string"
+					multiple="false" />
+				<field name="age" description="Age" type="integer" multiple="false" />
+				<field name="height" description="Height" type="double"
+					multiple="false" />
+			</fields>
+			<classifiers>
+				<classifier name="class1" description="Class 1">
+					<filter field="age" op="greater" value1="60" field-only="false" />
+				</classifier>
+				<classifier name="class2" description="Class 2">
+					<filter field="age" op="greater" value1="40" field-only="false" />
+				</classifier>
+			</classifiers>
+			<bean-mappings>
+				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
+					type="primary" bean-type="com.tcdng.jacklyn.common.TestCustomer">
+					<field-mapping doc-field="id" bean-field="id" />
+					<field-mapping doc-field="firstName" bean-field="firstName" />
+					<field-mapping doc-field="lastName" bean-field="lastName" />
+					<field-mapping doc-field="age" bean-field="age" />
+					<field-mapping doc-field="height" bean-field="height" />
+				</bean-mapping>
+			</bean-mappings>
+		</document>
+	</documents>
+	<templates>
+		<template name="customerRecActionCategory.manageCust"
+			description="Manage Customer" document="customerRecActionCategory.custInfo"
+			version="1.0">
+			<steps>
+				<step name="start" description="Start Step" type="start">
+					<routings>
+						<routing name="routToUpdate" description="Route to Update"
+							target="updateCust" classifier="class1" />
+						<routing name="routToRead" description="Route to Read"
+							target="readCust" classifier="class2" />
+						<routing name="routToDelete" description="Route to Delete"
+							target="deleteCust" />
+					</routings>
+				</step>
+				<step name="updateCust" description="Update Customer" type="automatic">
+					<record-actions>
+						<record-action name="updateCust" description="Update Customer"
+							mapping="custBeanMapping" type="update" />
+					</record-actions>
+					<routings>
+						<routing name="routToEnd" description="Route to End"
+							target="end" />
+					</routings>
+				</step>
+				<step name="readCust" description="Read Customer" type="automatic">
+					<record-actions>
+						<record-action name="readCust" description="Read Customer"
+							mapping="custBeanMapping" type="read" />
+					</record-actions>
+					<routings>
+						<routing name="routToEnd" description="Route to End"
+							target="end" />
+					</routings>
+				</step>
+				<step name="deleteCust" description="Delete Customer" type="automatic">
+					<record-actions>
+						<record-action name="deleteCust" description="Delete Customer"
+							mapping="custBeanMapping" type="delete" />
+					</record-actions>
+					<routings>
+						<routing name="routToEnd" description="Route to End"
+							target="end" />
+					</routings>
+				</step>
+				<step name="end" description="End Step" type="end" />
+			</steps>
+		</template>
+	</templates>
+</category>

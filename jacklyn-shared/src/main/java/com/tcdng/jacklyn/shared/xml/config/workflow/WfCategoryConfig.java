@@ -22,30 +22,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
- * Workflow template configuration.
+ * Workflow category configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-@XmlRootElement(name = "template")
-public class WfTemplateConfig extends BaseConfig {
+@XmlRootElement(name = "category")
+public class WfCategoryConfig extends BaseConfig {
 	
-	private String document;
-
 	private String version;
 
-	private WfMessagesConfig wfMessagesConfig;
+	private WfDocumentsConfig wfDocumentsConfig;
 
-	private WfStepsConfig wfStepsConfig;
-
-	public String getDocument() {
-		return document;
-	}
-
-	@XmlAttribute(name = "document", required = true)
-	public void setDocument(String document) {
-		this.document = document;
-	}
+	private WfTemplatesConfig wfTemplatesConfig;
 
 	public String getVersion() {
 		return version;
@@ -56,22 +45,22 @@ public class WfTemplateConfig extends BaseConfig {
 		this.version = version;
 	}
 
-	public WfMessagesConfig getWfMessagesConfig() {
-		return wfMessagesConfig;
+	public WfDocumentsConfig getWfDocumentsConfig() {
+		return wfDocumentsConfig;
 	}
 
-	@XmlElement(name = "messages")
-	public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
-		this.wfMessagesConfig = wfMessagesConfig;
+	@XmlElement(name = "documents")
+	public void setWfDocumentsConfig(WfDocumentsConfig wfDocumentsConfig) {
+		this.wfDocumentsConfig = wfDocumentsConfig;
 	}
 
-	public WfStepsConfig getWfStepsConfig() {
-		return wfStepsConfig;
+	public WfTemplatesConfig getWfTemplatesConfig() {
+		return wfTemplatesConfig;
 	}
 
-	@XmlElement(name = "steps", required = true)
-	public void setWfStepsConfig(WfStepsConfig wfStepsConfig) {
-		this.wfStepsConfig = wfStepsConfig;
+	@XmlElement(name = "templates", required = true)
+	public void setWfTemplatesConfig(WfTemplatesConfig wfTemplatesConfig) {
+		this.wfTemplatesConfig = wfTemplatesConfig;
 	}
 
 }

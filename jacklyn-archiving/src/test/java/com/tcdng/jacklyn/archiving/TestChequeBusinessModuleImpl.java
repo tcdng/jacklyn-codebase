@@ -35,13 +35,13 @@ public class TestChequeBusinessModuleImpl extends AbstractJacklynBusinessModule
 		implements TestChequeBusinessModule {
 
 	@Override
-	public Long createChequeImage(TestChequeImageData record) throws UnifyException {
+	public Long createChequeImage(TestChequeImage record) throws UnifyException {
 		return (Long) db().create(record);
 	}
 
 	@Override
-	public TestChequeImageData findChequeImage(Long id) throws UnifyException {
-		return db().find(TestChequeImageData.class, id);
+	public TestChequeImage findChequeImage(Long id) throws UnifyException {
+		return db().find(TestChequeImage.class, id);
 	}
 
 	@Override

@@ -58,11 +58,12 @@ public class WfDocumentConfigUtilsTest {
 
 	@Test
 	public void testReadWfDocumentConfig() throws Exception {
-		WfDocumentConfig wfDocumentConfig = WfDocumentConfigUtils.readWfDocumentConfig("xml/wfdocument-custinfo.xml");
+		WfDocumentConfig wfDocumentConfig = WfDocumentConfigUtils.readWfDocumentConfig("xml/wfcustomer-doc-custinfo.xml");
 		assertNotNull(wfDocumentConfig);
 
 		assertEquals("customerCategory.custInfo", wfDocumentConfig.getName());
 		assertEquals("Customer Information", wfDocumentConfig.getDescription());
+		assertEquals("1.0", wfDocumentConfig.getVersion());
 
 		// Fields
 		WfFieldsConfig wfFieldsConfig = wfDocumentConfig.getWfFieldsConfig();
@@ -312,7 +313,7 @@ public class WfDocumentConfigUtilsTest {
 
 	@Test
 	public void testValidateWfDocumentConfig() throws Exception {
-		WfDocumentConfig wfDocumentConfig = WfDocumentConfigUtils.readWfDocumentConfig("xml/wfdocument-custinfo.xml");
+		WfDocumentConfig wfDocumentConfig = WfDocumentConfigUtils.readWfDocumentConfig("xml/wfcustomer-doc-custinfo.xml");
 		List<UnifyError> errorList = WfDocumentConfigUtils.validate(wfDocumentConfig);
 		assertNotNull(errorList);
 		assertEquals(0, errorList.size());
@@ -321,7 +322,7 @@ public class WfDocumentConfigUtilsTest {
 	@Test
 	public void testValidateWfDocumentConfigWithErrors() throws Exception {
 		WfDocumentConfig wfDocumentConfig = WfDocumentConfigUtils
-				.readWfDocumentConfig("xml/wfdocument-custinfo-err.xml");
+				.readWfDocumentConfig("xml/wfcustomer-doc-custinfo-err.xml");
 		List<UnifyError> errorList = WfDocumentConfigUtils.validate(wfDocumentConfig);
 		assertNotNull(errorList);
 		assertEquals(21, errorList.size());

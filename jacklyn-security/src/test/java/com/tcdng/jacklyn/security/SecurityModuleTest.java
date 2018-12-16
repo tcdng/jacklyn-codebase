@@ -67,8 +67,8 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 	public void testCreateRole() throws Exception {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
-		Role roleData = getRoleData("sec-001", "Supervisor");
-		Long roleId = securityModule.createRole(roleData);
+		Role role = getRole("sec-001", "Supervisor");
+		Long roleId = securityModule.createRole(role);
 		assertNotNull(roleId);
 	}
 
@@ -76,21 +76,21 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 	public void testFindRole() throws Exception {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
-		Role roleData = getRoleData("sec-001", "Supervisor");
-		Long roleId = securityModule.createRole(roleData);
+		Role role = getRole("sec-001", "Supervisor");
+		Long roleId = securityModule.createRole(role);
 
-		Role fetchedRoleData = securityModule.findRole(roleId);
-		assertNotNull(fetchedRoleData);
-		assertEquals(roleData.getName(), fetchedRoleData.getName());
-		assertEquals(roleData.getDescription(), fetchedRoleData.getDescription());
+		Role fetchedRole = securityModule.findRole(roleId);
+		assertNotNull(fetchedRole);
+		assertEquals(role.getName(), fetchedRole.getName());
+		assertEquals(role.getDescription(), fetchedRole.getDescription());
 	}
 
 	@Test
 	public void testFindRoles() throws Exception {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
-		Role roleData = getRoleData("sec-001", "Supervisor");
-		securityModule.createRole(roleData);
+		Role role = getRole("sec-001", "Supervisor");
+		securityModule.createRole(role);
 
 		RoleQuery query = new RoleQuery();
 		query.ignoreEmptyCriteria(true);
@@ -98,41 +98,41 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		List<Role> roleList = securityModule.findRoles(query);
 		assertNotNull(roleList);
 		assertEquals(1, roleList.size());
-		assertEquals(roleData.getName(), roleList.get(0).getName());
-		assertEquals(roleData.getDescription(), roleList.get(0).getDescription());
+		assertEquals(role.getName(), roleList.get(0).getName());
+		assertEquals(role.getDescription(), roleList.get(0).getDescription());
 
-		roleData = getRoleData("sec-002", "Adminstrator");
-		securityModule.createRole(roleData);
+		role = getRole("sec-002", "Adminstrator");
+		securityModule.createRole(role);
 		roleList = securityModule.findRoles(query);
 		assertNotNull(roleList);
 		assertEquals(2, roleList.size());
-		assertEquals(roleData.getName(), roleList.get(1).getName());
-		assertEquals(roleData.getDescription(), roleList.get(1).getDescription());
+		assertEquals(role.getName(), roleList.get(1).getName());
+		assertEquals(role.getDescription(), roleList.get(1).getDescription());
 	}
 
 	@Test
 	public void testUpdateRole() throws Exception {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
-		Role roleData = getRoleData("sec-001", "Supervisor");
-		Long roleId = securityModule.createRole(roleData);
+		Role role = getRole("sec-001", "Supervisor");
+		Long roleId = securityModule.createRole(role);
 
-		Role fetchedRoleData = securityModule.findRole(roleId);
-		fetchedRoleData.setDescription("Supervisor (Advanced)");
-		int count = securityModule.updateRole(fetchedRoleData);
+		Role fetchedRole = securityModule.findRole(roleId);
+		fetchedRole.setDescription("Supervisor (Advanced)");
+		int count = securityModule.updateRole(fetchedRole);
 		assertEquals(1, count);
 
-		Role updatedRoleData = securityModule.findRole(roleId);
-		assertEquals(fetchedRoleData, updatedRoleData);
-		assertFalse(roleData.equals(updatedRoleData));
+		Role updatedRole = securityModule.findRole(roleId);
+		assertEquals(fetchedRole, updatedRole);
+		assertFalse(role.equals(updatedRole));
 	}
 
 	@Test
 	public void testDeleteRole() throws Exception {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
-		Role roleData = getRoleData("sec-001", "Supervisor");
-		Long roleId = securityModule.createRole(roleData);
+		Role role = getRole("sec-001", "Supervisor");
+		Long roleId = securityModule.createRole(role);
 
 		int count = securityModule.deleteRole(roleId);
 		assertEquals(1, count);
@@ -147,7 +147,7 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		Long moduleId = systemModule.findModule("customer").getId();
 		List<Long> privilegeIdList = securityModule.findPrivilegeIds(
 				(PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
-		RoleLargeData roleDoc = new RoleLargeData(getRoleData("sec-001", "Supervisor"));
+		RoleLargeData roleDoc = new RoleLargeData(getRole("sec-001", "Supervisor"));
 		roleDoc.setPrivilegeIdList(privilegeIdList);
 		Long roleId = securityModule.createRole(roleDoc);
 		securityModule.updateRolePrivileges(roleId, privilegeIdList);
@@ -162,7 +162,7 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		Long moduleId = systemModule.findModule(SystemModuleNameConstants.SYSTEM_MODULE).getId();
 		List<Long> privilegeIdList = securityModule.findPrivilegeIds(
 				(PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
-		RoleLargeData roleDoc = new RoleLargeData(getRoleData("sec-001", "Supervisor"));
+		RoleLargeData roleDoc = new RoleLargeData(getRole("sec-001", "Supervisor"));
 		roleDoc.setPrivilegeIdList(privilegeIdList);
 		securityModule.createRole(roleDoc);
 
@@ -219,20 +219,20 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 
 	@Test
 	public void testCreateUser() throws Exception {
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
-		Long id = securityModule.createUser(userData);
+		Long id = securityModule.createUser(user);
 
 		// Check if versioned record policy was applied
 		assertNotNull(id);
 
 		// Check if user record policy was applied
-		assertEquals(Boolean.TRUE, userData.getChangePassword());
-		assertEquals(Integer.valueOf(0), userData.getLoginAttempts());
-		assertFalse(userData.getLoginLocked());
+		assertEquals(Boolean.TRUE, user.getChangePassword());
+		assertEquals(Integer.valueOf(0), user.getLoginAttempts());
+		assertFalse(user.getLoginLocked());
 	}
 
 	@Test
@@ -240,25 +240,25 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "JOEMOE", "joe.moe@thecodedepartment.com.ng", false);
 		byte[] photograph = { (byte) 0x89, (byte) 0x4E, (byte) 0xBD };
 		List<Long> roleIdList = new ArrayList<Long>();
-		roleIdList.add(securityModule.createRole(getRoleData("sec-001", "Supervisor")));
-		roleIdList.add(securityModule.createRole(getRoleData("sec-002", "Adminstrator")));
+		roleIdList.add(securityModule.createRole(getRole("sec-001", "Supervisor")));
+		roleIdList.add(securityModule.createRole(getRole("sec-002", "Adminstrator")));
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setPhotograph(photograph);
 		userDoc.setRoleIdList(roleIdList);
 		Long userId = securityModule.createUser(userDoc);
 		assertNotNull(userId);
 
-		User fetchedUserData = securityModule.findUser(userId);
-		assertEquals(userData.getLoginId(), fetchedUserData.getLoginId());
-		assertEquals(userData.getFullName(), fetchedUserData.getFullName());
-		assertEquals(userData.getEmail(), fetchedUserData.getEmail());
-		assertEquals(userData.getPassword(), fetchedUserData.getPassword());
-		assertEquals(userData.getPasswordExpires(), fetchedUserData.getPasswordExpires());
+		User fetchedUser = securityModule.findUser(userId);
+		assertEquals(user.getLoginId(), fetchedUser.getLoginId());
+		assertEquals(user.getFullName(), fetchedUser.getFullName());
+		assertEquals(user.getEmail(), fetchedUser.getEmail());
+		assertEquals(user.getPassword(), fetchedUser.getPassword());
+		assertEquals(user.getPasswordExpires(), fetchedUser.getPasswordExpires());
 	}
 
 	@Test
@@ -266,11 +266,11 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 		byte[] photograph = { (byte) 0x89, (byte) 0x4E, (byte) 0xBD };
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setPhotograph(photograph);
 		Long userId = securityModule.createUser(userDoc);
 		byte[] fetchedPhotograph = securityModule.findUserPhotograph(userId);
@@ -283,13 +283,13 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 		List<Long> roleIdList = new ArrayList<Long>();
-		roleIdList.add(securityModule.createRole(getRoleData("sec-001", "Supervisor")));
-		roleIdList.add(securityModule.createRole(getRoleData("sec-002", "Adminstrator")));
+		roleIdList.add(securityModule.createRole(getRole("sec-001", "Supervisor")));
+		roleIdList.add(securityModule.createRole(getRole("sec-002", "Adminstrator")));
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setRoleIdList(roleIdList);
 		Long userId = securityModule.createUser(userDoc);
 
@@ -302,13 +302,13 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 		List<Long> roleIdList = new ArrayList<Long>();
-		roleIdList.add(securityModule.createRole(getRoleData("sec-001", "Supervisor")));
-		roleIdList.add(securityModule.createRole(getRoleData("sec-002", "Adminstrator")));
+		roleIdList.add(securityModule.createRole(getRole("sec-001", "Supervisor")));
+		roleIdList.add(securityModule.createRole(getRole("sec-002", "Adminstrator")));
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setRoleIdList(roleIdList);
 		Long userId = securityModule.createUser(userDoc);
 
@@ -319,19 +319,19 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		assertNotNull(userRoleList);
 		assertEquals(2, userRoleList.size());
 
-		UserRole userRoleData = userRoleList.get(0);
-		assertEquals(userId, userRoleData.getUserId());
-		assertEquals(roleIdList.get(0), userRoleData.getRoleId());
-		assertEquals("Joe Moe", userRoleData.getUserName());
-		assertEquals("sec-001", userRoleData.getRoleName());
-		assertEquals("Supervisor", userRoleData.getRoleDesc());
+		UserRole userRole = userRoleList.get(0);
+		assertEquals(userId, userRole.getUserId());
+		assertEquals(roleIdList.get(0), userRole.getRoleId());
+		assertEquals("Joe Moe", userRole.getUserName());
+		assertEquals("sec-001", userRole.getRoleName());
+		assertEquals("Supervisor", userRole.getRoleDesc());
 
-		userRoleData = userRoleList.get(1);
-		assertEquals(userId, userRoleData.getUserId());
-		assertEquals(roleIdList.get(1), userRoleData.getRoleId());
-		assertEquals("Joe Moe", userRoleData.getUserName());
-		assertEquals("sec-002", userRoleData.getRoleName());
-		assertEquals("Adminstrator", userRoleData.getRoleDesc());
+		userRole = userRoleList.get(1);
+		assertEquals(userId, userRole.getUserId());
+		assertEquals(roleIdList.get(1), userRole.getRoleId());
+		assertEquals("Joe Moe", userRole.getUserName());
+		assertEquals("sec-002", userRole.getRoleName());
+		assertEquals("Adminstrator", userRole.getRoleDesc());
 	}
 
 	@Test
@@ -384,15 +384,15 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		Long id = securityModule.createUser(userA);
 
 		// Update user
-		User userData = securityModule.findUser(id);
-		userData.setFullName("Joel Spolsky");
-		userData.setEmail("joel@spolsky.com");
-		securityModule.updateUser(userData);
+		User user = securityModule.findUser(id);
+		user.setFullName("Joel Spolsky");
+		user.setEmail("joel@spolsky.com");
+		securityModule.updateUser(user);
 
 		// Changes should have taken effect immediately since no workflow
-		User updatedUserData = securityModule.findUser(id);
-		assertEquals("Joel Spolsky", updatedUserData.getFullName());
-		assertEquals("joel@spolsky.com", updatedUserData.getEmail());
+		User updatedUser = securityModule.findUser(id);
+		assertEquals("Joel Spolsky", updatedUser.getFullName());
+		assertEquals("joel@spolsky.com", updatedUser.getEmail());
 	}
 
 	@Test
@@ -400,12 +400,12 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 		byte[] photograph1 = { (byte) 0x89, (byte) 0x4E, (byte) 0xBD };
 		byte[] photograph2 = { (byte) 0xD2, (byte) 0x33 };
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setPhotograph(photograph1);
 		Long userId = securityModule.createUser(userDoc);
 		securityModule.updateUserPhotograph(userId, photograph2);
@@ -418,14 +418,14 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 
-		User userData
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 		List<Long> roleIdList1 = new ArrayList<Long>();
 		List<Long> roleIdList2 = new ArrayList<Long>();
-		roleIdList1.add(securityModule.createRole(getRoleData("sec-001", "Supervisor")));
-		roleIdList1.add(securityModule.createRole(getRoleData("sec-002", "Adminstrator")));
+		roleIdList1.add(securityModule.createRole(getRole("sec-001", "Supervisor")));
+		roleIdList1.add(securityModule.createRole(getRole("sec-002", "Adminstrator")));
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setRoleIdList(roleIdList1);
 		Long userId = securityModule.createUser(userDoc);
 		securityModule.updateUserRoles(userId, roleIdList2);
@@ -452,12 +452,12 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		int count = securityModule.updateUsers(query, update);
 		assertEquals(2, count); // Only 2 record (A & B) should be
 								// updated
-		User userData = securityModule.findUser(userA.getId());
-		assertEquals("croc.doc@thecodedepartment.com.ng", userData.getEmail());
-		userData = securityModule.findUser(userB.getId());
-		assertEquals("croc.doc@thecodedepartment.com.ng", userData.getEmail());
-		userData = securityModule.findUser(userC.getId());
-		assertFalse("croc.doc@thecodedepartment.com.ng".equals(userData.getEmail()));
+		User user = securityModule.findUser(userA.getId());
+		assertEquals("croc.doc@thecodedepartment.com.ng", user.getEmail());
+		user = securityModule.findUser(userB.getId());
+		assertEquals("croc.doc@thecodedepartment.com.ng", user.getEmail());
+		user = securityModule.findUser(userC.getId());
+		assertFalse("croc.doc@thecodedepartment.com.ng".equals(user.getEmail()));
 	}
 
 	@Test
@@ -522,12 +522,12 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		query.notReserved();
 		List<User> userList = securityModule.findUsers(query);
 		assertEquals(1, userList.size());
-		User userData = userList.get(0);
-		assertEquals(userData.getLoginId(), userC.getLoginId());
-		assertEquals(userData.getFullName(), userC.getFullName());
-		assertEquals(userData.getEmail(), userC.getEmail());
-		assertEquals(userData.getPassword(), userC.getPassword());
-		assertEquals(userData.getPasswordExpires(), userC.getPasswordExpires());
+		User user = userList.get(0);
+		assertEquals(user.getLoginId(), userC.getLoginId());
+		assertEquals(user.getFullName(), userC.getFullName());
+		assertEquals(user.getEmail(), userC.getEmail());
+		assertEquals(user.getPassword(), userC.getPassword());
+		assertEquals(user.getPasswordExpires(), userC.getPasswordExpires());
 	}
 
 	@Test
@@ -775,11 +775,11 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 		SecurityModule securityModule = (SecurityModule) this
 				.getComponent(SecurityModuleNameConstants.SECURITYBUSINESSMODULE);
 		List<Long> roleIdList = new ArrayList<Long>();
-		roleIdList.add(securityModule.createRole(getRoleData("sec-001", "Supervisor")));
-		User userData
+		roleIdList.add(securityModule.createRole(getRole("sec-001", "Supervisor")));
+		User user
 				= new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 
-		UserLargeData userDoc = new UserLargeData(userData);
+		UserLargeData userDoc = new UserLargeData(user);
 		userDoc.setRoleIdList(roleIdList);
 		Long userId = securityModule.createUser(userDoc);
 		securityModule.login("joemoe", "joemoe");
@@ -805,11 +805,11 @@ public class SecurityModuleTest extends AbstractJacklynTest {
 				RolePrivilegeWidget.class, RolePrivilege.class, Role.class);
 	}
 
-	private Role getRoleData(String name, String description) {
-		Role roleData = new Role();
-		roleData.setName(name);
-		roleData.setDescription(description);
-		roleData.setStatus(RecordStatus.ACTIVE);
-		return roleData;
+	private Role getRole(String name, String description) {
+		Role role = new Role();
+		role.setName(name);
+		role.setDescription(description);
+		role.setStatus(RecordStatus.ACTIVE);
+		return role;
 	}
 }

@@ -41,8 +41,8 @@ public class UserNameFormatter extends AbstractFormatter<String> {
 
 	@Override
 	public String format(String value) throws UnifyException {
-		User userData = getSecurityModule().findUser(value);
-		return userData.getFullName();
+		User user = getSecurityModule().findUser(value);
+		return user.getFullName();
 	}
 
 	@Override

@@ -19,7 +19,6 @@ package com.tcdng.jacklyn.workflow.entities;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
-import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
@@ -41,7 +40,7 @@ public class WfFormField extends BaseEntity {
 	@Column
 	private String binding;
 
-	@Column(name = "FIELD_LABEL", length = 64)
+	@Column(name = "FIELD_LABEL", length = 64, nullable = true)
 	private String label;
 
 	@Column(length = 128, nullable = true)
@@ -49,12 +48,6 @@ public class WfFormField extends BaseEntity {
 
 	@Column(name = "REQUIRED_FG")
 	private Boolean required;
-
-	@ListOnly(key = "wfFormId", property = "name")
-	private String wfFormName;
-
-	@ListOnly(key = "wfFormId", property = "description")
-	private String wfFormDesc;
 
 	@Override
 	public String getDescription() {
@@ -107,22 +100,6 @@ public class WfFormField extends BaseEntity {
 
 	public void setRequired(Boolean required) {
 		this.required = required;
-	}
-
-	public String getWfFormName() {
-		return wfFormName;
-	}
-
-	public void setWfFormName(String wfFormName) {
-		this.wfFormName = wfFormName;
-	}
-
-	public String getWfFormDesc() {
-		return wfFormDesc;
-	}
-
-	public void setWfFormDesc(String wfFormDesc) {
-		this.wfFormDesc = wfFormDesc;
 	}
 
 }

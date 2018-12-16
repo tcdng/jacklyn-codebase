@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseTimestampedStatusEntityQuery;
+import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
 
 /**
  * Workflow category query.
@@ -23,10 +23,14 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedStatusEntityQuery;
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class WfCategoryQuery extends BaseTimestampedStatusEntityQuery<WfCategory> {
+public class WfCategoryQuery extends BaseStatusEntityQuery<WfCategory> {
 
 	public WfCategoryQuery() {
 		super(WfCategory.class);
+	}
+
+	public WfCategoryQuery version(String version) {
+		return (WfCategoryQuery) equals("version", version);
 	}
 
 	public WfCategoryQuery name(String name) {

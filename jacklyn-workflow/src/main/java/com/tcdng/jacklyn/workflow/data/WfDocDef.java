@@ -27,6 +27,7 @@ import java.util.Set;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.PackableDocConfig;
+import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
  * Workflow document definition.
@@ -46,6 +47,10 @@ public class WfDocDef extends BaseWfDef {
 
 	private Date timestamp;
 
+	private WfFormDef wfFormDef;
+	
+	private List<StringToken> itemDescFormat;
+
 	private Map<Class<?>, WfDocBeanMappingDef> entryBeanMappings;
 
 	private Map<String, WfDocBeanMappingDef> beanMappings;
@@ -55,13 +60,16 @@ public class WfDocDef extends BaseWfDef {
 	private Map<String, WfDocClassifierDef> classifiers;
 
 	public WfDocDef(Long wfDocId, String globalName, String name, String description,
-			PackableDocConfig docConfig, Date timestamp, List<WfDocBeanMappingDef> beanMappingList,
+			PackableDocConfig docConfig, Date timestamp, WfFormDef wfFormDef,
+			List<StringToken> itemDescFormat, List<WfDocBeanMappingDef> beanMappingList,
 			List<WfDocAttachmentDef> attachmentList, List<WfDocClassifierDef> classifierList) {
 		super(name, description);
 		this.wfDocId = wfDocId;
 		this.globalName = globalName;
 		this.docConfig = docConfig;
 		this.timestamp = timestamp;
+		this.wfFormDef = wfFormDef;
+		this.itemDescFormat = itemDescFormat;
 
 		if (beanMappingList != null) {
 			entryBeanMappings = new HashMap<Class<?>, WfDocBeanMappingDef>();
@@ -117,6 +125,14 @@ public class WfDocDef extends BaseWfDef {
 		return timestamp;
 	}
 
+	public WfFormDef getWfFormDef() {
+		return wfFormDef;
+	}
+
+	public List<StringToken> getItemDescFormat() {
+		return itemDescFormat;
+	}
+
 	public Map<String, WfDocAttachmentDef> getAttachments() {
 		return attachments;
 	}
@@ -163,5 +179,9 @@ public class WfDocDef extends BaseWfDef {
 
 	public int getFieldCount() {
 		return docConfig.getFieldCount();
+	}
+	
+	public boolean isForm() {
+		return wfFormDef != null;
 	}
 }
