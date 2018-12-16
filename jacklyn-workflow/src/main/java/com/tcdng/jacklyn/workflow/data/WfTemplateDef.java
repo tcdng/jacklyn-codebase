@@ -24,7 +24,6 @@ import java.util.Set;
 
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
  * Workflow template definition.
@@ -50,11 +49,8 @@ public class WfTemplateDef extends BaseWfDef {
 
 	private Map<String, WfStepDef> steps;
 
-	private List<StringToken> itemDescFormat;
-
 	public WfTemplateDef(Long wfTemplateId, String globalName, String name, String description,
-			Date timestamp, WfDocDef wfDocDef, List<WfStepDef> stepList,
-			List<StringToken> itemDescFormat) {
+			Date timestamp, WfDocDef wfDocDef, List<WfStepDef> stepList) {
 		super(name, description);
 		this.wfTemplateId = wfTemplateId;
 		this.globalName = globalName;
@@ -75,8 +71,6 @@ public class WfTemplateDef extends BaseWfDef {
 		} else {
 			this.steps = Collections.emptyMap();
 		}
-
-		this.itemDescFormat = itemDescFormat;
 	}
 
 	public Long getWfTemplateId() {
@@ -110,10 +104,6 @@ public class WfTemplateDef extends BaseWfDef {
 		}
 
 		return manualInitDef;
-	}
-
-	public List<StringToken> getItemDescFormat() {
-		return itemDescFormat;
 	}
 
 	public boolean isSupportManualInit() {

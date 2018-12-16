@@ -35,7 +35,7 @@ public class WfRouting extends BaseEntity {
 	@ForeignKey(WfStep.class)
 	private Long wfStepId;
 
-	@Column(name = "TARGET_STEP_NM", length = 96)
+	@Column(name = "TARGET_STEP_NM", length = 32)
 	private String targetWfStepName;
 
 	@Column(name = "ROUTING_NM", length = 32)

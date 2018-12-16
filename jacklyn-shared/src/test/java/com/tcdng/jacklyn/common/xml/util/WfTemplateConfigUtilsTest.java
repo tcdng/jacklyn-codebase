@@ -58,7 +58,7 @@ public class WfTemplateConfigUtilsTest {
 	@Test
 	public void testReadWfTemplateConfig() throws Exception {
 		WfTemplateConfig wfTemplateConfig = WfTemplateConfigUtils
-				.readWfTemplateConfig("xml/wftemplate-custonboarding.xml");
+				.readWfTemplateConfig("xml/wfcustomer-tmpl-custonboarding.xml");
 		assertNotNull(wfTemplateConfig);
 
 		assertEquals("customerCategory.custOnboarding", wfTemplateConfig.getName());
@@ -257,7 +257,7 @@ public class WfTemplateConfigUtilsTest {
 	@Test
 	public void testValidateWfTemplateConfig() throws Exception {
 		WfTemplateConfig wfTemplateConfig = WfTemplateConfigUtils
-				.readWfTemplateConfig("xml/wftemplate-custonboarding.xml");
+				.readWfTemplateConfig("xml/wfcustomer-tmpl-custonboarding.xml");
 		List<UnifyError> errorList = WfTemplateConfigUtils.validate(wfTemplateConfig);
 		assertNotNull(errorList);
 		assertEquals(0, errorList.size());
@@ -266,7 +266,7 @@ public class WfTemplateConfigUtilsTest {
 	@Test
 	public void testValidateWfTemplateConfigWithErrors() throws Exception {
 		WfTemplateConfig wfTemplateConfig = WfTemplateConfigUtils
-				.readWfTemplateConfig("xml/wftemplate-custonboarding-err.xml");
+				.readWfTemplateConfig("xml/wfcustomer-tmpl-custonboarding-err.xml");
 		List<UnifyError> errorList = WfTemplateConfigUtils.validate(wfTemplateConfig);
 		assertNotNull(errorList);
 		assertEquals(14, errorList.size());

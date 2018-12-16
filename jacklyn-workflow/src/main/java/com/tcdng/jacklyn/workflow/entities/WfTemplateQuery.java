@@ -15,7 +15,8 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 
 /**
  * Query class for workflow templates.
@@ -23,7 +24,7 @@ import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfTemplateQuery extends BaseStatusEntityQuery<WfTemplate> {
+public class WfTemplateQuery extends BaseEntityQuery<WfTemplate> {
 
 	public WfTemplateQuery() {
 		super(WfTemplate.class);
@@ -35,6 +36,14 @@ public class WfTemplateQuery extends BaseStatusEntityQuery<WfTemplate> {
 
 	public WfTemplateQuery wfCategoryName(String wfCategoryName) {
 		return (WfTemplateQuery) equals("wfCategoryName", wfCategoryName);
+	}
+
+	public WfTemplateQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+		return (WfTemplateQuery) equals("wfCategoryStatus", wfCategoryStatus);
+	}
+
+	public WfTemplateQuery wfCategoryVersion(String wfCategoryVersion) {
+		return (WfTemplateQuery) equals("wfCategoryVersion", wfCategoryVersion);
 	}
 
 	public WfTemplateQuery name(String name) {

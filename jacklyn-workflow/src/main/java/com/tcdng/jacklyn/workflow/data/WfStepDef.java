@@ -213,6 +213,10 @@ public class WfStepDef extends BaseLabelWfDef {
 		return WorkflowStepType.INTERACTIVE.equals(stepType);
 	}
 
+	public boolean isUserInteractive() {
+		return stepType.isUserInteractive();
+	}
+
 	public boolean isEnd() {
 		return stepType.isEnd();
 	}

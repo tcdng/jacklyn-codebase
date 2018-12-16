@@ -29,16 +29,23 @@ public class WfFormSectionDef extends BaseLabelWfDef {
 
 	private static final long serialVersionUID = 800388073154871802L;
 
+	private String binding;
+	
 	private List<WfFormFieldDef> fieldList;
 
 	public WfFormSectionDef(String name, String description, String label,
-			List<WfFormFieldDef> fieldList) {
+			String binding, List<WfFormFieldDef> fieldList) {
 		super(name, description, label);
+		this.binding = binding;
 		if (fieldList != null && !fieldList.isEmpty()) {
 			this.fieldList = Collections.unmodifiableList(fieldList);
 		} else {
 			this.fieldList = Collections.emptyList();
 		}
+	}
+
+	public String getBinding() {
+		return binding;
 	}
 
 	public List<WfFormFieldDef> getFieldList() {

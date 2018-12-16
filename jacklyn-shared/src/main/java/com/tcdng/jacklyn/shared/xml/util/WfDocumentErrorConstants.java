@@ -292,5 +292,5 @@ public interface WfDocumentErrorConstants {
 	/**
 	 * Workflow document has no version.
 	 */
-	String WFDOCUMENT_NO_VERSION = "WFDOC_0036	";
+	String WFDOCUMENT_NO_VERSION = "WFDOC_0036";
 }

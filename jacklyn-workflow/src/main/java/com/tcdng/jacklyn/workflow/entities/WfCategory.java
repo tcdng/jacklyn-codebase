@@ -31,16 +31,16 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Category",
 		reportable = true, auditable = true)
 @Table(name = "WFCATEGORY",
-		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+		uniqueConstraints = { @UniqueConstraint({ "name", "version" }), @UniqueConstraint({ "description", "version" }) })
 public class WfCategory extends BaseTimestampedStatusEntity {
 
-	@Column(name = "WFCATEGORY_NM", length = 32)
+	@Column(name = "CATEGORY_NM", length = 32)
 	private String name;
 
-	@Column(name = "WFCATEGORY_DESC", length = 64)
+	@Column(name = "CATEGORY_DESC", length = 64)
 	private String description;
 
-	@Column(name = "WFCATEGORY_VERSION")
+	@Column(name = "CATEGORY_VERSION", length = 32)
 	private String version;
 
 	@Override

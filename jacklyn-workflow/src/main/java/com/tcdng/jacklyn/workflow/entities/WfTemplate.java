@@ -19,7 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
-import com.tcdng.jacklyn.common.entities.BaseStatusEntity;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
@@ -34,26 +35,25 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Template",
-		reportable = true, auditable = true)
+@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Template", reportable = true, auditable = true)
 @Table(name = "WFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
 		@UniqueConstraint({ "wfCategoryId", "description" }) })
-public class WfTemplate extends BaseStatusEntity {
+public class WfTemplate extends BaseEntity {
 
 	@ForeignKey(WfCategory.class)
 	private Long wfCategoryId;
 
-	@Column(name = "WFTEMPLATE_NM", length = 32)
+	@Column(name = "DOCUMENT_NM", length = 32)
+	private String wfDocName;
+
+	@Column(name = "TEMPLATE_NM", length = 32)
 	private String name;
 
-	@Column(name = "WFTEMPLATE_DESC", length = 64)
+	@Column(name = "TEMPLATE_DESC", length = 64)
 	private String description;
 
 	@Column(name = "MANUAL_OPTION_FG")
 	private Boolean manualOption;
-
-	@ChildList
-	private List<WfStep> stepList;
 
 	@ListOnly(key = "wfCategoryId", property = "name")
 	private String wfCategoryName;
@@ -61,8 +61,23 @@ public class WfTemplate extends BaseStatusEntity {
 	@ListOnly(key = "wfCategoryId", property = "description")
 	private String wfCategoryDesc;
 
+	@ListOnly(key = "wfCategoryId", property = "version")
+	private String wfCategoryVersion;
+
+	@ListOnly(key = "wfCategoryId", property = "status")
+	private RecordStatus wfCategoryStatus;
+
+	@ListOnly(key = "wfCategoryId", property = "statusDesc")
+	private String wfCategoryStatusDesc;
+
 	@ListOnly(key = "wfCategoryId", property = "updateDt")
-	private Date updateDt;
+	private Date wfCategoryUpdateDt;
+
+	@ChildList
+	private List<WfMessage> messageList;
+
+	@ChildList
+	private List<WfStep> stepList;
 
 	@Override
 	public String getDescription() {
@@ -81,6 +96,14 @@ public class WfTemplate extends BaseStatusEntity {
 		this.wfCategoryId = wfCategoryId;
 	}
 
+	public String getWfDocName() {
+		return wfDocName;
+	}
+
+	public void setWfDocName(String wfDocName) {
+		this.wfDocName = wfDocName;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -95,14 +118,6 @@ public class WfTemplate extends BaseStatusEntity {
 
 	public void setManualOption(Boolean manualOption) {
 		this.manualOption = manualOption;
-	}
-
-	public List<WfStep> getStepList() {
-		return stepList;
-	}
-
-	public void setStepList(List<WfStep> stepList) {
-		this.stepList = stepList;
 	}
 
 	public String getWfCategoryName() {
@@ -121,12 +136,52 @@ public class WfTemplate extends BaseStatusEntity {
 		this.wfCategoryDesc = wfCategoryDesc;
 	}
 
-	public Date getUpdateDt() {
-		return updateDt;
+	public String getWfCategoryVersion() {
+		return wfCategoryVersion;
 	}
 
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
+	public void setWfCategoryVersion(String wfCategoryVersion) {
+		this.wfCategoryVersion = wfCategoryVersion;
+	}
+
+	public RecordStatus getWfCategoryStatus() {
+		return wfCategoryStatus;
+	}
+
+	public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
+		this.wfCategoryStatus = wfCategoryStatus;
+	}
+
+	public String getWfCategoryStatusDesc() {
+		return wfCategoryStatusDesc;
+	}
+
+	public void setWfCategoryStatusDesc(String wfCategoryStatusDesc) {
+		this.wfCategoryStatusDesc = wfCategoryStatusDesc;
+	}
+
+	public Date getWfCategoryUpdateDt() {
+		return wfCategoryUpdateDt;
+	}
+
+	public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
+		this.wfCategoryUpdateDt = wfCategoryUpdateDt;
+	}
+
+	public List<WfMessage> getMessageList() {
+		return messageList;
+	}
+
+	public void setMessageList(List<WfMessage> messageList) {
+		this.messageList = messageList;
+	}
+
+	public List<WfStep> getStepList() {
+		return stepList;
+	}
+
+	public void setStepList(List<WfStep> stepList) {
+		this.stepList = stepList;
 	}
 
 }

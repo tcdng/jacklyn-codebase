@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import java.util.Collection;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
@@ -39,6 +40,10 @@ public class WfStepQuery extends BaseEntityQuery<WfStep> {
 
 	public WfStepQuery wfCategoryId(Long wfCategoryId) {
 		return (WfStepQuery) equals("wfCategoryId", wfCategoryId);
+	}
+
+	public WfStepQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+		return (WfStepQuery) equals("wfCategoryStatus", wfCategoryStatus);
 	}
 
 	public WfStepQuery name(String name) {

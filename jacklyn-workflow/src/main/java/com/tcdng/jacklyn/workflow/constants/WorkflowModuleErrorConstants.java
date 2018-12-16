@@ -114,4 +114,14 @@ public interface WorkflowModuleErrorConstants {
 	 * Workflow document with name {0} is unknown.
 	 */
 	String WORKFLOW_DOCUMENT_WITH_NAME_UNKNOWN = "WORKFLOW_0012";
+
+	/**
+	 * Workflow document with name {0} has no form.
+	 */
+	String WORKFLOW_DOCUMENT_NO_FORM = "WORKFLOW_0013";
+
+	/**
+	 * Workflow category with name {0} and version {1} is unknown.
+	 */
+	String WORKFLOW_CATEGORY_NAME_VERSION_UNKNOWN = "WORKFLOW_0014";
 }

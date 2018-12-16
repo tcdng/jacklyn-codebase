@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import java.util.List;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepPriority;
@@ -104,8 +105,11 @@ public class WfStep extends BaseEntity {
 	@ListOnly(key = "wfTemplateId", property = "wfCategoryName")
 	private String wfCategoryName;
 
-	@ListOnly(key = "wfFormId", property = "name")
-	private String wfFormName;
+	@ListOnly(key = "wfTemplateId", property = "wfCategoryStatus")
+	private RecordStatus wfCategoryStatus;
+
+	@ListOnly(key = "wfTemplateId", property = "wfCategoryVersion")
+	private String wfCategoryVersion;
 
 	@ListOnly(key = "stepType", property = "description")
 	private String stepTypeDesc;
@@ -289,14 +293,6 @@ public class WfStep extends BaseEntity {
 		this.wfCategoryName = wfCategoryName;
 	}
 
-	public String getWfFormName() {
-		return wfFormName;
-	}
-
-	public void setWfFormName(String wfFormName) {
-		this.wfFormName = wfFormName;
-	}
-
 	public String getStepTypeDesc() {
 		return stepTypeDesc;
 	}
@@ -323,6 +319,22 @@ public class WfStep extends BaseEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public RecordStatus getWfCategoryStatus() {
+		return wfCategoryStatus;
+	}
+
+	public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
+		this.wfCategoryStatus = wfCategoryStatus;
+	}
+
+	public String getWfCategoryVersion() {
+		return wfCategoryVersion;
+	}
+
+	public void setWfCategoryVersion(String wfCategoryVersion) {
+		this.wfCategoryVersion = wfCategoryVersion;
 	}
 
 }

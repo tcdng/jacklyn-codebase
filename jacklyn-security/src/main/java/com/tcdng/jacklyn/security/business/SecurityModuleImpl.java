@@ -70,6 +70,7 @@ import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
+import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
 import com.tcdng.jacklyn.system.business.SystemModule;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
@@ -77,7 +78,6 @@ import com.tcdng.jacklyn.workflow.business.WorkflowModule;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
-import com.tcdng.jacklyn.workflow.utils.WorkflowUtils;
 import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.PrivilegeSettings;
 import com.tcdng.unify.core.RoleAttributes;
@@ -751,7 +751,7 @@ public class SecurityModuleImpl extends AbstractJacklynBusinessModule implements
 				List<RoleWfStep> roleWfStepList
 						= db().listAll(new RoleWfStepQuery().roleName(roleName));
 				for (RoleWfStep roleWfStep : roleWfStepList) {
-					wfStepNames.add(WorkflowUtils.getGlobalStepName(roleWfStep.getWfCategoryName(),
+					wfStepNames.add(WfNameUtils.getGlobalStepName(roleWfStep.getWfCategoryName(),
 							roleWfStep.getWfTemplateName(), roleWfStep.getStepName()));
 				}
 

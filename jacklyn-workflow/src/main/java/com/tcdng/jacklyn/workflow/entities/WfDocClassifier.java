@@ -47,14 +47,14 @@ public class WfDocClassifier extends BaseEntity {
 	@Column(nullable = true)
 	private String logic;
 
-	@ChildList
-	private List<WfDocClassifierFilter> filterList;
-
 	@ListOnly(key = "wfDocId", property = "name")
 	private String wfDocName;
 
 	@ListOnly(key = "wfDocId", property = "description")
 	private String wfDocDesc;
+
+	@ChildList
+	private List<WfDocClassifierFilter> filterList;
 
 	@Override
 	public String getDescription() {

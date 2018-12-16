@@ -47,8 +47,7 @@ public final class WfNameUtils {
 		templateNames = new FactoryMap<String, TemplateNameParts>() {
 
 			@Override
-			protected TemplateNameParts create(String globalName, Object... params)
-					throws Exception {
+			protected TemplateNameParts create(String globalName, Object... params) throws Exception {
 				String[] names = StringUtils.dotSplit(globalName);
 				return new TemplateNameParts(names[0], names[1]);
 			}
@@ -82,12 +81,11 @@ public final class WfNameUtils {
 		return StringUtils.dotify(categoryName, templateName);
 	}
 
-	public static String getGlobalMessageName(String categoryName, String messageName) {
-		return StringUtils.dotify(categoryName, messageName);
+	public static String getGlobalMessageName(String categoryName, String templateName, String messageName) {
+		return StringUtils.dotify(categoryName, templateName, messageName);
 	}
 
-	public static String getGlobalStepName(String categoryName, String templateName,
-			String stepName) {
+	public static String getGlobalStepName(String categoryName, String templateName, String stepName) {
 		return StringUtils.dotify(categoryName, templateName, stepName);
 	}
 

@@ -30,11 +30,11 @@ import com.tcdng.unify.core.constant.RequirementType;
  * @since 1.0
  */
 @Table(name = "WFATTACHMENTCHECK",
-		uniqueConstraints = { @UniqueConstraint({ "wfActionId", "wfDocAttachmentName" }) })
+		uniqueConstraints = { @UniqueConstraint({ "wfUserActionId", "wfDocAttachmentName" }) })
 public class WfAttachmentCheck extends BaseEntity {
 
 	@ForeignKey(WfUserAction.class)
-	private Long wfActionId;
+	private Long wfUserActionId;
 
 	@ForeignKey
 	private RequirementType requirementType;
@@ -50,12 +50,12 @@ public class WfAttachmentCheck extends BaseEntity {
 		return this.wfDocAttachmentName;
 	}
 
-	public Long getWfActionId() {
-		return wfActionId;
+	public Long getWfUserActionId() {
+		return wfUserActionId;
 	}
 
-	public void setWfActionId(Long wfActionId) {
-		this.wfActionId = wfActionId;
+	public void setWfUserActionId(Long wfUserActionId) {
+		this.wfUserActionId = wfUserActionId;
 	}
 
 	public RequirementType getRequirementType() {

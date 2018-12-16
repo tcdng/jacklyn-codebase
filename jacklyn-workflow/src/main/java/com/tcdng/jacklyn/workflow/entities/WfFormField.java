@@ -41,7 +41,7 @@ public class WfFormField extends BaseEntity {
 	@Column
 	private String binding;
 
-	@Column(name = "FIELD_LABEL", length = 64)
+	@Column(name = "FIELD_LABEL", length = 64, nullable = true)
 	private String label;
 
 	@Column(length = 128, nullable = true)

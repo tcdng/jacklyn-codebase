@@ -39,6 +39,7 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfRoutingConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfStepConfig;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -56,11 +57,11 @@ public final class WfTemplateConfigUtils {
 
 	}
 
-	public static WfTemplateConfig readWfTemplateConfig(File file) throws Exception {
+	public static WfTemplateConfig readWfTemplateConfig(File file) throws UnifyException {
 		return XMLConfigUtils.readXmlConfig(WfTemplateConfig.class, file);
 	}
 
-	public static WfTemplateConfig readWfTemplateConfig(InputStream in) throws Exception {
+	public static WfTemplateConfig readWfTemplateConfig(InputStream in) throws UnifyException {
 		try {
 			return XMLConfigUtils.readXmlConfig(WfTemplateConfig.class, in);
 		} finally {
@@ -68,7 +69,7 @@ public final class WfTemplateConfigUtils {
 		}
 	}
 
-	public static WfTemplateConfig readWfTemplateConfig(Reader reader) throws Exception {
+	public static WfTemplateConfig readWfTemplateConfig(Reader reader) throws UnifyException {
 		try {
 			return XMLConfigUtils.readXmlConfig(WfTemplateConfig.class, reader);
 		} finally {
@@ -76,7 +77,7 @@ public final class WfTemplateConfigUtils {
 		}
 	}
 
-	public static WfTemplateConfig readWfTemplateConfig(String resourceName) throws Exception {
+	public static WfTemplateConfig readWfTemplateConfig(String resourceName) throws UnifyException {
 		InputStream inputStream = null;
 		try {
 			inputStream = IOUtils.openClassLoaderResourceInputStream(resourceName);
@@ -87,7 +88,12 @@ public final class WfTemplateConfigUtils {
 	}
 
 	public static List<UnifyError> validate(WfTemplateConfig wfTemplateConfig) throws UnifyException {
-		WfTemplateValidationContext ctx = new WfTemplateValidationContext();
+		return WfTemplateConfigUtils.validate(null, wfTemplateConfig);
+	}
+
+	public static List<UnifyError> validate(TaskMonitor taskMonitor, WfTemplateConfig wfTemplateConfig)
+			throws UnifyException {
+		WfTemplateValidationContext ctx = new WfTemplateValidationContext(taskMonitor);
 		// Template name and description
 		String name = wfTemplateConfig.getName();
 		if (StringUtils.isBlank(name)) {
@@ -137,7 +143,9 @@ public final class WfTemplateConfigUtils {
 		return ctx.getErrorList();
 	}
 
-	private static class WfTemplateValidationContext {
+	public static class WfTemplateValidationContext {
+
+		private TaskMonitor taskMonitor;
 
 		private List<UnifyError> errorList;
 
@@ -155,14 +163,19 @@ public final class WfTemplateConfigUtils {
 
 		private int messageCounter;
 
-		public WfTemplateValidationContext() {
+		public WfTemplateValidationContext(TaskMonitor taskMonitor) {
+			this.taskMonitor = taskMonitor;
 			errorList = new ArrayList<UnifyError>();
 			wfStepConfigs = new HashMap<String, WfStepConfig>();
 			wfMessageConfigs = new HashSet<String>();
 		}
 
 		public void addError(String errorCode, Object... params) {
-			errorList.add(new UnifyError(errorCode, params));
+			UnifyError ue = new UnifyError(errorCode, params);
+			if (taskMonitor != null) {
+				taskMonitor.addErrorMessage(ue);
+			}
+			errorList.add(ue);
 		}
 
 		public void addMessage(WfMessageConfig wfMessageConfig) {
@@ -314,7 +327,7 @@ public final class WfTemplateConfigUtils {
 			if (manualCount > 1) {
 				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_MULTIPLE_MANUAL);
 			}
-			
+
 			if (endCount == 0) {
 				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_END);
 			} else if (endCount > 1) {
@@ -541,7 +554,7 @@ public final class WfTemplateConfigUtils {
 						wfStepConfig.getName(), wfStepConfig.getType());
 			}
 		}
-		
+
 		private void validateEnrichments(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfEnrichmentsConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
@@ -587,7 +600,7 @@ public final class WfTemplateConfigUtils {
 						wfStepConfig.getName(), wfStepConfig.getType());
 			}
 		}
-		
+
 		private void validatePolicies(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfPoliciesConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
@@ -628,11 +641,11 @@ public final class WfTemplateConfigUtils {
 		private void invalidatePolicies(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfPoliciesConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
-				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_POLICIES_EXIST, stepCounter,
-						wfStepConfig.getName(), wfStepConfig.getType());
+				addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_POLICIES_EXIST, stepCounter, wfStepConfig.getName(),
+						wfStepConfig.getType());
 			}
 		}
-		
+
 		private void validateAlerts(WfStepConfig wfStepConfig) {
 			if (wfStepConfig.getWfAlertsConfig() != null
 					&& !DataUtils.isBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {

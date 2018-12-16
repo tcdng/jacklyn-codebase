@@ -56,6 +56,10 @@ public enum WorkflowStepType implements EnumConst {
 	public boolean isEnd() {
 		return END.equals(this);
 	}
+
+	public boolean isUserInteractive() {
+		return MANUAL.equals(this) || INTERACTIVE.equals(this);
+	}
 	
 	public static WorkflowStepType fromCode(String code) {
 		return EnumUtils.fromCode(WorkflowStepType.class, code);

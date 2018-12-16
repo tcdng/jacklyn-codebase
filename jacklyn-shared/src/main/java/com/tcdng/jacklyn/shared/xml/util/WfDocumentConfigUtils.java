@@ -40,6 +40,7 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfFormTabConfig;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.constant.DataType;
+import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -57,11 +58,11 @@ public final class WfDocumentConfigUtils {
 
 	}
 
-	public static WfDocumentConfig readWfDocumentConfig(File file) throws Exception {
+	public static WfDocumentConfig readWfDocumentConfig(File file) throws UnifyException {
 		return XMLConfigUtils.readXmlConfig(WfDocumentConfig.class, file);
 	}
 
-	public static WfDocumentConfig readWfDocumentConfig(InputStream in) throws Exception {
+	public static WfDocumentConfig readWfDocumentConfig(InputStream in) throws UnifyException {
 		try {
 			return XMLConfigUtils.readXmlConfig(WfDocumentConfig.class, in);
 		} finally {
@@ -69,7 +70,7 @@ public final class WfDocumentConfigUtils {
 		}
 	}
 
-	public static WfDocumentConfig readWfDocumentConfig(Reader reader) throws Exception {
+	public static WfDocumentConfig readWfDocumentConfig(Reader reader) throws UnifyException {
 		try {
 			return XMLConfigUtils.readXmlConfig(WfDocumentConfig.class, reader);
 		} finally {
@@ -77,7 +78,7 @@ public final class WfDocumentConfigUtils {
 		}
 	}
 
-	public static WfDocumentConfig readWfDocumentConfig(String resourceName) throws Exception {
+	public static WfDocumentConfig readWfDocumentConfig(String resourceName) throws UnifyException {
 		InputStream inputStream = null;
 		try {
 			inputStream = IOUtils.openClassLoaderResourceInputStream(resourceName);
@@ -88,7 +89,12 @@ public final class WfDocumentConfigUtils {
 	}
 
 	public static List<UnifyError> validate(WfDocumentConfig wfDocumentConfig) throws UnifyException {
-		WfDocumentValidationContext ctx = new WfDocumentValidationContext();
+		return WfDocumentConfigUtils.validate(null, wfDocumentConfig);
+	}
+
+	public static List<UnifyError> validate(TaskMonitor taskMonitor, WfDocumentConfig wfDocumentConfig)
+			throws UnifyException {
+		WfDocumentValidationContext ctx = new WfDocumentValidationContext(taskMonitor);
 		// Document name and description
 		String name = wfDocumentConfig.getName();
 		if (StringUtils.isBlank(name)) {
@@ -176,7 +182,9 @@ public final class WfDocumentConfigUtils {
 		return ctx.getErrorList();
 	}
 
-	private static class WfDocumentValidationContext {
+	public static class WfDocumentValidationContext {
+
+		private TaskMonitor taskMonitor;
 
 		private List<UnifyError> errorList;
 
@@ -204,7 +212,8 @@ public final class WfDocumentConfigUtils {
 
 		private int sectionCounter;
 
-		public WfDocumentValidationContext() {
+		public WfDocumentValidationContext(TaskMonitor taskMonitor) {
+			this.taskMonitor = taskMonitor;
 			errorList = new ArrayList<UnifyError>();
 			wfFieldConfigs = new HashMap<String, WfFieldConfigInfo>();
 			wfClassifierConfigs = new HashSet<String>();
@@ -215,7 +224,12 @@ public final class WfDocumentConfigUtils {
 		}
 
 		public void addError(String errorCode, Object... params) {
-			errorList.add(new UnifyError(errorCode, params));
+			UnifyError ue = new UnifyError(errorCode, params);
+			if (taskMonitor != null) {
+				taskMonitor.addErrorMessage(ue);
+			}
+
+			errorList.add(ue);
 		}
 
 		public void addField(WfFieldConfig wfFieldConfig, String parentName) {
