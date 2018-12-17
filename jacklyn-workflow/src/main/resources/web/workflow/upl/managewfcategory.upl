@@ -3,29 +3,35 @@
 !ui-page caption:$m{workflow.wfcategory.manage}
     searchByList:$c{searchName searchDescription searchStatus}
     searchClearList:$c{searchName searchDescription searchStatus}
-    tableColumnList:$c{name description statusDesc}
-    formSection:$d{!ui-section caption:$m{workflow.wfcategory.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
+    tableColumnList:$c{name description version statusDesc}
+    formSection:$d{!ui-section caption:$m{workflow.wfcategory.section.basicdetails}
+        components:$c{frmName frmDescription frmVersion frmStatus}}
     addPrivilege:$s{wf-wfcategory-add} editPrivilege:$s{wf-wfcategory-edit}
     viewPrivilege:$s{wf-wfcategory-view} deletePrivilege:$s{wf-wfcategory-delete}
     addValidations:$c{frmNameVal frmDescVal}
     saveValidations:$c{frmNameVal frmDescVal}
 
 //Search
-!ui-text:searchName caption:$m{workflow.wfcategory.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
-!ui-text:searchDescription caption:$m{workflow.wfcategory.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
-!ui-select:searchStatus caption:$m{workflow.wfcategory.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-text:searchName caption:$m{workflow.wfcategory.name} binding:searchName
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{workflow.wfcategory.description} binding:searchDescription
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{workflow.wfcategory.status} binding:searchStatus
+    list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:name caption:$m{workflow.wfcategory.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{workflow.wfcategory.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:version caption:$m{workflow.wfcategory.version} binding:version style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 !ui-label:statusDesc caption:$m{workflow.wfcategory.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
 !ui-name:frmName caption:$m{workflow.wfcategory.name} binding:name case:upper minLen:3 maxLen:32 required:true
 !ui-text:frmDescription caption:$m{workflow.wfcategory.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-text:frmVersion caption:$m{workflow.wfcategory.version} binding:version minLen:1 maxLen:48 size:32 required:true
 !ui-select:frmStatus caption:$m{workflow.wfcategory.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
 //Validations
-!ui-uniquevalidation:frmNameVal components:$c{frmName}
-!ui-uniquevalidation:frmDescVal components:$c{frmDescription}
+!ui-uniquevalidation:frmNameVal components:$c{frmName frmVersion}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription frmVersion}

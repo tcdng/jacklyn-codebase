@@ -52,6 +52,12 @@ public class WfDocBeanMapping extends BaseEntity {
     @Column(name = "BEAN_TY", length = 128)
     private String beanType;
 
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
+
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
+
     @ListOnly(key = "type", property = "description")
     private String typeDesc;
 
@@ -105,6 +111,22 @@ public class WfDocBeanMapping extends BaseEntity {
 
     public void setBeanType(String beanType) {
         this.beanType = beanType;
+    }
+
+    public String getWfDocName() {
+        return wfDocName;
+    }
+
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
+
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
+
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
     }
 
     public List<WfDocFieldMapping> getFieldMappingList() {

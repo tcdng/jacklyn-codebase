@@ -35,9 +35,11 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wfdoc")
 @UplBinding("web/workflow/upl/managewfdoc.upl")
-@SessionLoading(
-        crudPanelLists = { @CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
-                @CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList") })
+@SessionLoading(crudPanelLists = {
+        @CrudPanelList(panel = "frmWfDocFieldListPanel", field = "record.fieldList"),
+        @CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
+        @CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList"),
+        @CrudPanelList(panel = "frmWfDocBeanMappingListPanel", field = "record.beanMappingList")})
 public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
 
     private Long searchWfCategoryId;

@@ -35,6 +35,8 @@ public class WfPublishCategoryController extends AbstractWorkflowController {
 
     private byte[] wfCategoryBin;
 
+    private boolean activate;
+
     public WfPublishCategoryController() {
         super(true, false);
     }
@@ -42,7 +44,8 @@ public class WfPublishCategoryController extends AbstractWorkflowController {
     @Action
     public String startWfPublishCategoryTask() throws UnifyException {
         TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
-                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryBin).logMessages()
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryBin)
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).logMessages()
                 .build();
         return launchTaskWithMonitorBox(taskSetup, "workflow.wfcategory.publish");
     }
@@ -53,5 +56,13 @@ public class WfPublishCategoryController extends AbstractWorkflowController {
 
     public void setWfCategoryBin(byte[] wfCategoryBin) {
         this.wfCategoryBin = wfCategoryBin;
+    }
+
+    public boolean isActivate() {
+        return activate;
+    }
+
+    public void setActivate(boolean activate) {
+        this.activate = activate;
     }
 }
