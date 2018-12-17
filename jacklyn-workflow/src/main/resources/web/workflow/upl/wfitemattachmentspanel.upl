@@ -1,15 +1,15 @@
 // UPL template for workflow item attachments panel
 // Copyright 2018 The Code Department
 !ui-wfitemattachmentspanel
-	dialogCaption:$m{common.workflow.attachments}
-	dialogBodyComponents:$c{attachmentsPanel}
-	dialogActionComponents:$c{closeBtn}
+    dialogCaption:$m{common.workflow.attachments}
+    dialogBodyComponents:$c{attachmentsPanel}
+    dialogActionComponents:$c{closeBtn}
 
 // Attachments panel
 !ui-panel:attachmentsPanel styleClass:$e{abody} style:$g{attachmentsBodyStyle} components:$c{frmAttachmentList}
 !ui-fileattachment:frmAttachmentList binding:$g{attachmentsInfoProperty}
-	handler:$j{com.tcdng.jacklyn.WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMATTACHMENTHANDLER}
+    handler:$j{com.tcdng.jacklyn.WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMATTACHMENTHANDLER}
 
 // Action components
 !ui-button:closeBtn styleClass:$e{ui-button-alert} caption:$m{button.close}
-	eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}

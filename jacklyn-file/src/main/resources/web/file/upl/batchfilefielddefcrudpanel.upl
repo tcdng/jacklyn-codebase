@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-batchfilefielddefcrudpanel
-	formSection:$d{!ui-section components:$c{frmName frmMappedField frmFormatter frmLength frmUpdateOnConstraint frmPadChar frmPadDirection frmPad frmTrim}}
-	tableColumnList:$c{name mappedField length formatter}
+    formSection:$d{!ui-section components:$c{frmName frmMappedField frmFormatter frmLength frmUpdateOnConstraint frmPadChar frmPadDirection frmPad frmTrim}}
+    tableColumnList:$c{name mappedField length formatter}
 
 //Table columns
 !ui-label:name caption:$m{file.batchfilefielddefinition.name} binding:name  columnStyle:$s{width:120px;} sortable:true
@@ -19,7 +19,7 @@
 !ui-integer:frmLength caption:$m{file.batchfilefielddefinition.length} binding:length size:4 maxLen:4
 !ui-text:frmPadChar caption:$m{file.batchfilefielddefinition.padchar} binding:padChar size:2  maxLen:1
 !ui-select:frmPadDirection caption:$m{file.batchfilefielddefinition.paddirection} binding:padDirection
-	list:paddirectionlist blankOption:$s{}
+    list:paddirectionlist blankOption:$s{}
 !ui-checkbox:frmPad caption:$m{file.batchfilefielddefinition.pad} binding:pad layoutCaption:true
 !ui-checkbox:frmTrim caption:$m{file.batchfilefielddefinition.trim} binding:trim layoutCaption:true
 !ui-checkbox:frmUpdateOnConstraint caption:$m{file.batchfilefielddefinition.updateonconstraint} binding:updateOnConstraint layoutCaption:true

@@ -1,8 +1,8 @@
 // UPL template for workflow document field definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfdocfieldcrudpanel
-	formSection:$d{!ui-section components:$c{frmWfDocName frmSectionName frmName frmDescription frmLabel frmEditor frmTypeDesc frmMultiple frmRequired}}
-	tableColumnList:$c{wfDocName name description sectionName}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmSectionName frmName frmDescription frmLabel frmEditor frmTypeDesc frmMultiple frmRequired}}
+    tableColumnList:$c{wfDocName name description sectionName}
 
 //Table columns
 !ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocfield.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true

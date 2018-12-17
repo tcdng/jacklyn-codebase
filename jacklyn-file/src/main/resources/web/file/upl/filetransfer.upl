@@ -8,7 +8,7 @@
 !ui-panel:basePanel layout:$d{!ui-vertical} components:$c{maintainTypeLabel fileTransferPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
-	caption:$m{file.filetransfer.performfiletransfer}
+    caption:$m{file.filetransfer.performfiletransfer}
 
 !ui-formpanel:fileTransferPanel 
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}

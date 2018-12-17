@@ -3,9 +3,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.dashboardtile.manage}
-	searchByList:$c{searchModuleId searchStatus}
-	searchClearList:$c{searchModuleId searchStatus}
-	tableColumnList:$c{moduleDesc name description statusDesc}
+    searchByList:$c{searchModuleId searchStatus}
+    searchClearList:$c{searchModuleId searchStatus}
+    tableColumnList:$c{moduleDesc name description statusDesc}
     formSection:$d{!ui-section caption:$m{system.dashboardtile.section.basicdetails} components:$c{frmModule frmDescription frmImage frmGist frmPath frmGenerator frmLandscape frmStatus}}
     moreSearchActionComponentList:$c{setOrderBtn}
     moreTableSelDependentList:$c{setOrderBtn}
@@ -13,9 +13,9 @@
 
 //Search
 !ui-select:searchModuleId caption:$m{system.dashboardtile.module} binding:searchModuleId list:modulelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.dashboardtile.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{system.dashboardtile.module} binding:moduleDesc  columnStyle:$s{width:120px;} sortable:true

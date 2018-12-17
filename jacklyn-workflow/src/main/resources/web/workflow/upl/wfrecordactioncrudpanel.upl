@@ -1,8 +1,8 @@
 // UPL template for workflow action definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfrecordactioncrudpanel
-	formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmDocMappingName frmActionType}}
-	tableColumnList:$c{wfStepName name description docMappingName actionTypeDesc}
+    formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmDocMappingName frmActionType}}
+    tableColumnList:$c{wfStepName name description docMappingName actionTypeDesc}
 
 //Table columns
 !ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfrecordaction.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
@@ -17,5 +17,5 @@
 !ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfrecordaction.description} binding:description size:40 maxLen:56 required:true
 !ui-text:frmDocMappingName caption:$m{workflow.wftemplate.wfstep.wfrecordaction.mapping} size:32 binding:docMappingName required:true
 !ui-select:frmActionType caption:$m{workflow.wftemplate.wfstep.wfrecordaction.type} binding:actionType
-	list:wfrecordactiontypelist blankOption:$s{}
-	
+    list:wfrecordactiontypelist blankOption:$s{}
+    

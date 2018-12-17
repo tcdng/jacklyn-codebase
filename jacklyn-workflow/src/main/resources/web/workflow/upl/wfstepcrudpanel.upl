@@ -1,10 +1,10 @@
 // UPL template for workflow step definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfstepcrudpanel
-	formSection:$d{!ui-section components:$c{frmWfTemplate frmName frmDescription frmLabel frmTypeCode frmParticipantType
-		frmPriorityLevel frmFormMode frmItemsPerSession frmExpiryHours frmAudit frmBranchOnly frmIncludeForwarder}}
-	formColumns:2
-	tableColumnList:$c{name description stepTypeDesc participantTypeDesc priorityLevelDesc}
+    formSection:$d{!ui-section components:$c{frmWfTemplate frmName frmDescription frmLabel frmTypeCode frmParticipantType
+        frmPriorityLevel frmFormMode frmItemsPerSession frmExpiryHours frmAudit frmBranchOnly frmIncludeForwarder}}
+    formColumns:2
+    tableColumnList:$c{name description stepTypeDesc participantTypeDesc priorityLevelDesc}
 
 //Table columns
 !ui-label:name caption:$m{workflow.wftemplate.wfstep.name} binding:name columnStyle:$s{width:120px;} sortable:true

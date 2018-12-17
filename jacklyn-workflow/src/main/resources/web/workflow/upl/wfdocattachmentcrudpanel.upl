@@ -1,8 +1,8 @@
 // UPL template for workflow attachment definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfdocattachmentcrudpanel
-	formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmLabel frmTypeDesc}}
-	tableColumnList:$c{wfDocName name description typeDesc}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmLabel frmTypeDesc}}
+    tableColumnList:$c{wfDocName name description typeDesc}
 
 //Table columns
 !ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocattachment.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true

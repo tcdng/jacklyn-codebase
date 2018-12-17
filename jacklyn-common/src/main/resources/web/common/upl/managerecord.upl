@@ -3,9 +3,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$s{} components:$c{manageRecordPanel}
-	tableSerialNumbers:true
-	tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
-	formColumns:2 formBinding:record
+    tableSerialNumbers:true
+    tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
+    formColumns:2 formBinding:record
 
 !ui-panel:manageRecordPanel style:$s{height:100%;}
     layout:$d{!ui-vertical style:$s{height:100%;margin-bottom:-2px;} heights:$l{100%}}
@@ -16,7 +16,7 @@
 // Search Panel
 !ui-panel:searchBodyPanel style:$s{height:100%;}
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
-	components:$c{searchPanel searchResultPanel}
+    components:$c{searchPanel searchResultPanel}
 
 !ui-searchcriteriapanel:searchPanel style:$s{margin-top:4px; margin-left:4px; display:block;}
     layout:$d{!ui-vertical style:$s{padding-left: 8px;}}
@@ -38,7 +38,7 @@
     tableSelDependentList:$f{moreTableSelDependentList}
    
 !ui-panel:actionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
-	components:$c{actionPanel reportPanel}
+    components:$c{actionPanel reportPanel}
 !ui-panel:actionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
     components:$c{addTblBtn viewTblBtn editTblBtn deleteTblBtn}
     components:$f{moreSearchActionComponentList}
@@ -52,23 +52,23 @@
     components:$c{crudBasePanel crudActionsGrpPanel}
 
 !ui-panel:crudBasePanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-	components:$c{maintainTypeLabel crudFormPanel}
+    components:$c{maintainTypeLabel crudFormPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} binding:modeDescription styleClassBinding:modeStyle
 
 !ui-formpanel:crudFormPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-	formBinding:$f{formBinding} formAttachment:$f{formAttachment}
-	formColumns:$f{formColumns} formSection:$f{formSection}
-	formSection:$d{!ui-section components:$c{frmId} hidden:true}
+    formBinding:$f{formBinding} formAttachment:$f{formAttachment}
+    formColumns:$f{formColumns} formSection:$f{formSection}
+    formSection:$d{!ui-section components:$c{frmId} hidden:true}
 
 !ui-panel:crudActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
-	components:$c{topActionPanel bottomActionPanel}
+    components:$c{topActionPanel bottomActionPanel}
 !ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
     components:$c{itemOfLabel pasteFrmBtn firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn copyFrmBtn}
     components:$f{moreCrudHeaderComponentList}
 !ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
-	components:$c{createNextFrmBtn createCloseFrmBtn saveNextFrmBtn saveCloseFrmBtn deleteFrmBtn}
-	components:$c{activateFrmBtn deactivateFrmBtn cancelFrmBtn doneFrmBtn}
+    components:$c{createNextFrmBtn createCloseFrmBtn saveNextFrmBtn saveCloseFrmBtn deleteFrmBtn}
+    components:$c{activateFrmBtn deactivateFrmBtn cancelFrmBtn doneFrmBtn}
     components:$f{moreCrudFooterComponentList}
 
 //Common form components
@@ -79,50 +79,50 @@
 
 //Action buttons    
 !ui-button:addTblBtn styleClass:$e{jk-button} privilege:$f{addPrivilege} caption:$m{button.add}
-	eventHandler:$d{!ui-event event:onclick action:$c{prepareAddAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareAddAct}}
 !ui-button:editTblBtn styleClass:$e{jk-button} privilege:$f{editPrivilege} caption:$m{button.edit}
-	eventHandler:$d{!ui-event event:onclick action:$c{prepareEditAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareEditAct}}
 !ui-button:viewTblBtn styleClass:$e{jk-button} privilege:$f{viewPrivilege} caption:$m{button.view}
-	eventHandler:$d{!ui-event event:onclick action:$c{prepareViewAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareViewAct}}
 !ui-button:deleteTblBtn styleClass:$e{jk-button} privilege:$f{deletePrivilege} caption:$m{button.delete}
-	eventHandler:$d{!ui-event event:onclick action:$c{prepareDeleteAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareDeleteAct}}
 !ui-button:doneTblBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
-	eventHandler:$d{!ui-event event:onclick action:$c{manageDoneAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{manageDoneAct}}
 
 //Report buttons
 !ui-hidden:reportType binding:reportType
 !ui-button:reportBtn styleClass:$e{jk-button} caption:$m{button.report}
-	eventHandler:$d{!ui-event event:onclick action:$c{preparePdfRpt}} hint:$m{hint.report}
+    eventHandler:$d{!ui-event event:onclick action:$c{preparePdfRpt}} hint:$m{hint.report}
 
 
 !ui-button:firstFrmBtn styleClass:$e{jk-button} caption:$m{button.first}
-	eventHandler:$d{!ui-event event:onclick action:$c{firstAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{firstAct}}
 !ui-button:prevFrmBtn styleClass:$e{jk-button} caption:$m{button.prev}
-	eventHandler:$d{!ui-event event:onclick action:$c{prevAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{prevAct}}
 !ui-button:nextFrmBtn styleClass:$e{jk-button} caption:$m{button.next}
-	eventHandler:$d{!ui-event event:onclick action:$c{nextAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{nextAct}}
 !ui-button:lastFrmBtn styleClass:$e{jk-button} caption:$m{button.last}
-	eventHandler:$d{!ui-event event:onclick action:$c{lastAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{lastAct}}
 
 !ui-button:copyFrmBtn styleClass:$e{jk-button} privilege:$f{addPrivilege} caption:$m{button.copy}
-	eventHandler:$d{!ui-event event:onclick action:$c{copyAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{copyAct}}
 !ui-button:pasteFrmBtn styleClass:$e{jk-button} privilege:$f{addPrivilege} caption:$m{button.paste}
-	eventHandler:$d{!ui-event event:onclick action:$c{pasteAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{pasteAct}}
         
 !ui-button:createCloseFrmBtn styleClass:$e{jk-button} caption:$m{button.saveandclose}
-	eventHandler:$d{!ui-event event:onclick action:$c{addCloseAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{addCloseAct}}
 !ui-button:createNextFrmBtn styleClass:$e{jk-button} caption:$m{button.saveandnext}
-	eventHandler:$d{!ui-event event:onclick action:$c{addNextAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{addNextAct}}
 !ui-button:saveCloseFrmBtn styleClass:$e{jk-button} caption:$m{button.saveandclose}
-	eventHandler:$d{!ui-event event:onclick action:$c{saveCloseAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{saveCloseAct}}
 !ui-button:saveNextFrmBtn styleClass:$e{jk-button} caption:$m{button.saveandnext}
-	eventHandler:$d{!ui-event event:onclick action:$c{saveNextAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{saveNextAct}}
 !ui-button:deleteFrmBtn styleClass:$e{jk-button} caption:$m{button.delete}
-	eventHandler:$d{!ui-event event:onclick action:$c{deleteAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{deleteAct}}
 !ui-button:doneFrmBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
-	eventHandler:$d{!ui-event event:onclick action:$c{doneAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{doneAct}}
 !ui-button:cancelFrmBtn styleClass:$e{jk-button-alert} caption:$m{button.cancel}
-	eventHandler:$d{!ui-event event:onclick action:$c{cancelAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{cancelAct}}
 !ui-button:activateFrmBtn styleClass:$e{jk-button} caption:$m{button.activate} privilege:$f{activatePrivilege}
     eventHandler:$d{!ui-event event:onclick action:$c{activateAct}}
 !ui-button:deactivateFrmBtn styleClass:$e{jk-button} caption:$m{button.deactivate} privilege:$f{deactivatePrivilege}

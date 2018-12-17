@@ -12,8 +12,8 @@
     components:$c{userInfoBand clockInfoBand}
 
 !ui-image:userImg  src:$t{/images/user_small.png} styleClass:$e{jk-topuserimg}
-	binding:userPhotoGenerator
-	eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
+    binding:userPhotoGenerator
+    eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
 
 !ui-panel:clockInfoBand styleClass:$e{jk-userinfoband} components:$c{clock}
 !ui-textclock:clock
@@ -28,9 +28,9 @@
 
 !ui-panel:navigationBand styleClass:$e{jk-topnavcontrol} components:$c{switchRoleLabel logoutLabel}
 !ui-button:switchRoleLabel caption:$m{application.switchrole} styleClass:$e{jk-switchrole}
-	eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}}
 !ui-button:logoutLabel caption:$m{application.logout} styleClass:$e{jk-logout}
-	eventHandler:$d{!ui-event event:onclick action:$c{logoutAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{logoutAct}}
 
 // Menu
 !ui-verticalflyoutmenu:menuBar
@@ -40,7 +40,7 @@
     
 // Show user details popup
 !ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}
-	imageGenBinding:userPhotoGenerator
+    imageGenBinding:userPhotoGenerator
 
 //Select user role popup
 !ui-selectrolepanel:userRoleOptionsPopup dialogCaption:$m{security.switch.role}

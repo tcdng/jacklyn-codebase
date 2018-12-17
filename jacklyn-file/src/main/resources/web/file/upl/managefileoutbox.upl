@@ -3,11 +3,11 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{file.fileoutbox.manage}
-	searchByList:$c{searchCreateDt searchFileTransferConfigId searchStatus}
-	searchClearList:$c{searchFileTransferConfigId searchStatus}
-	tableColumnList:$c{filename fileLength uploadAttempts statusDesc}
-	formSection:$d{!ui-section caption:$m{file.fileoutbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmUploadAttempts frmUploadedOn frmFileStatus}}
-	viewPrivilege:$s{fil-fileoutboxview}
+    searchByList:$c{searchCreateDt searchFileTransferConfigId searchStatus}
+    searchClearList:$c{searchFileTransferConfigId searchStatus}
+    tableColumnList:$c{filename fileLength uploadAttempts statusDesc}
+    formSection:$d{!ui-section caption:$m{file.fileoutbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmUploadAttempts frmUploadedOn frmFileStatus}}
+    viewPrivilege:$s{fil-fileoutboxview}
 
 //Search
 !ui-date:searchCreateDt caption:$m{file.fileoutbox.createdt} binding:searchCreateDt eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}

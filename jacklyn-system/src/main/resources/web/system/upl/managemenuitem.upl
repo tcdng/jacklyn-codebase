@@ -3,19 +3,19 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.menuitem.manage}
-	searchByList:$c{searchMenuId searchStatus}
+    searchByList:$c{searchMenuId searchStatus}
     searchClearList:$c{searchStatus}
-	tableColumnList:$c{menuCaption name caption path statusDesc}
-	formSection:$d{!ui-section caption:$m{system.menuitem.section.basicdetails} components:$c{frmMenuCaption frmName frmCaption frmPath frmStatus}}
+    tableColumnList:$c{menuCaption name caption path statusDesc}
+    formSection:$d{!ui-section caption:$m{system.menuitem.section.basicdetails} components:$c{frmMenuCaption frmName frmCaption frmPath frmStatus}}
     moreSearchActionComponentList:$c{setOrderBtn}
     moreTableSelDependentList:$c{setOrderBtn}
-	viewPrivilege:$s{sys-menuitemview}
+    viewPrivilege:$s{sys-menuitemview}
 
 //Search
 !ui-select:searchMenuId caption:$m{system.menuitem.menucaption} binding:searchMenuId list:menulist
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.menuitem.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table renderer
 !ui-label:menuCaption caption:$m{system.menuitem.menucaption} binding:menuCaption formatter:$d{!messageformat} columnStyle:$s{width:90px;} sortable:true
@@ -41,7 +41,7 @@
 
 //More order action buttons
 !ui-button:setOrderBtn styleClass:$e{jk-button} caption:$m{button.set.display.order}
-	eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
     privilege:$s{sys-menuitemedit}
 
 //Actions

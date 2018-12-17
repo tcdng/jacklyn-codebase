@@ -10,7 +10,7 @@
 
 //Task monitor box popup
 !ui-taskmonitorpanel:taskMonitorInfoPopup
-   	binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.TASKMONITORINFO}
+       binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.TASKMONITORINFO}
     
 //Report runner popup
 !ui-reportrunnerpanel:reportRunnerPopup generateReportPath:$n{/generateReport} closeDialogPath:$n{/closeReport}

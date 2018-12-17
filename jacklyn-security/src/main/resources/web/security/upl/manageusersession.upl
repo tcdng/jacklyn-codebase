@@ -3,21 +3,21 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{security.usersession.manage}
-	searchByList:$c{searchNodeId searchLoginId }
+    searchByList:$c{searchNodeId searchLoginId }
     searchClearList:$c{searchLoginId searchNodeId}
-	tableColumnList:$c{node userLoginId userName remoteAddress createTime lastAccessTime}
-	formSection:$d{!ui-section caption:$m{security.usersession.section.basicdetails} components:$c{frmNode frmUserLoginId frmUserName frmRemoteAddress frmCreateTime frmLastAccessTime}}
-	formColumns:1
-	viewPrivilege:$s{sec-user-viewsession}
-	moreSearchActionComponentList:$c{forceLogoutBtn forceLogoutAllBtn}
-	tableMultiSelect:true tableMultiSelDependentList:$c{forceLogoutBtn}
+    tableColumnList:$c{node userLoginId userName remoteAddress createTime lastAccessTime}
+    formSection:$d{!ui-section caption:$m{security.usersession.section.basicdetails} components:$c{frmNode frmUserLoginId frmUserName frmRemoteAddress frmCreateTime frmLastAccessTime}}
+    formColumns:1
+    viewPrivilege:$s{sec-user-viewsession}
+    moreSearchActionComponentList:$c{forceLogoutBtn forceLogoutAllBtn}
+    tableMultiSelect:true tableMultiSelDependentList:$c{forceLogoutBtn}
 
 //Search
 !ui-search:searchLoginId caption:$m{security.usersession.username} binding:searchLoginId
-	list:$s{userbyname-searchprovider}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    list:$s{userbyname-searchprovider}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchNodeId caption:$m{security.usersession.node} binding:searchNodeId list:clusternodelist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:node caption:$m{security.usersession.node} binding:node columnStyle:$s{width:150px;} sortable:true
@@ -35,17 +35,17 @@
 !ui-text:frmUserName caption:$m{security.usersession.username} binding:userName size:32
 !ui-text:frmRemoteAddress caption:$m{security.usersession.remoteaddress} binding:remoteAddress size:40
 !ui-text:frmCreateTime caption:$m{security.usersession.createtime} binding:createTime 
- 	formatter:$d{!datetimeformat style:medium} size:32
+     formatter:$d{!datetimeformat style:medium} size:32
 !ui-text:frmLastAccessTime caption:$m{security.usersession.lastaccesstime} binding:lastAccessTime
     formatter:$d{!datetimeformat style:medium} size:32
 
 //More modify action buttons
 !ui-button:forceLogoutBtn styleClass:$e{jk-button} caption:$m{button.forcelogout}
-	eventHandler:$d{!ui-event event:onclick action:$c{forceLogOutAct}}
-	privilege:$s{sec-forcelogout}
+    eventHandler:$d{!ui-event event:onclick action:$c{forceLogOutAct}}
+    privilege:$s{sec-forcelogout}
 !ui-button:forceLogoutAllBtn styleClass:$e{jk-button} caption:$m{button.forcelogout.all}
-	eventHandler:$d{!ui-event event:onclick action:$c{forceLogOutAllAct}}
-	privilege:$s{sec-forcelogoutall}
+    eventHandler:$d{!ui-event event:onclick action:$c{forceLogOutAllAct}}
+    privilege:$s{sec-forcelogoutall}
 
 //Actions
 !ui-post:forceLogOutAct path:$n{/forceLogOut} components:$c{tablePanel}

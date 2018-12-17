@@ -3,19 +3,19 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.menu.manage}
-	searchByList:$c{searchModuleId searchStatus}
+    searchByList:$c{searchModuleId searchStatus}
     searchClearList:$c{searchModuleId searchStatus}
-	tableColumnList:$c{moduleDesc name caption path statusDesc}
-	formSection:$d{!ui-section caption:$m{system.menu.section.basicdetails} components:$c{frmModule frmName frmCaption frmPath frmStatus}}
+    tableColumnList:$c{moduleDesc name caption path statusDesc}
+    formSection:$d{!ui-section caption:$m{system.menu.section.basicdetails} components:$c{frmModule frmName frmCaption frmPath frmStatus}}
     moreSearchActionComponentList:$c{menuItemBtn setOrderBtn}
     moreTableSelDependentList:$c{menuItemBtn setOrderBtn}
-	viewPrivilege:$s{sys-menuview}
+    viewPrivilege:$s{sys-menuview}
 
 //Search
 !ui-select:searchModuleId caption:$m{system.menu.module} binding:searchModuleId list:modulelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.menu.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table renderer
 !ui-label:moduleDesc caption:$m{system.menu.module} binding:moduleDesc  columnStyle:$s{width:90px;} sortable:true
@@ -41,11 +41,11 @@
 
 //More action buttons
 !ui-button:menuItemBtn styleClass:$e{jk-button} caption:$m{button.menuitems}
-	eventHandler:$d{!ui-event event:onclick action:$c{menuItemAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{menuItemAct}}
     privilege:$s{sys-managemenuitem}
 
 !ui-button:setOrderBtn styleClass:$e{jk-button} caption:$m{button.set.display.order}
-	eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
     privilege:$s{dashboard-editdashboardtile}
 
 //Actions

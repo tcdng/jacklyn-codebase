@@ -4,13 +4,13 @@
 // you may not use this file except in compliance with the License.
 
 !ui-page caption:$m{file.fileinbox.manage}
-	searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
+    searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
     searchClearList:$c{searchFileTransferConfigId searchReadStatus searchStatus}
     moreSearchActionComponentList:$c{markReadBtn markUnreadBtn}
     tableColumnList:$c{filename fileLength downloadAttempts readStatusDesc statusDesc}
     tableMultiSelect:true tableMultiSelDependentList:$c{markReadBtn markUnreadBtn}
-	formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}
-	viewPrivilege:$s{fil-fileinboxview}
+    formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}
+    viewPrivilege:$s{fil-fileinboxview}
 
 //Search
 !ui-date:searchCreateDt caption:$m{file.fileinbox.createdt} binding:searchCreateDt

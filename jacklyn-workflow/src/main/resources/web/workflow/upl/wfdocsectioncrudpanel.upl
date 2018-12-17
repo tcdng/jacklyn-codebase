@@ -1,8 +1,8 @@
 // UPL template for workflow form section definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfformsectioncrudpanel
-	formSection:$d{!ui-section components:$c{frmWfDocName frmTabName frmName frmDescription frmLabel}}
-	tableColumnList:$c{wfDocName name description tabName}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmTabName frmName frmDescription frmLabel}}
+    tableColumnList:$c{wfDocName name description tabName}
 
 //Table columns
 !ui-label:wfDocName caption:$m{workflow.wfdoc.wfformsection.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true

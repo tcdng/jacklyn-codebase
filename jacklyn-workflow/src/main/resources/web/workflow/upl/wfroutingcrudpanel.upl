@@ -1,8 +1,8 @@
 // UPL template for workflow action definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfroutingcrudpanel
-	formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmTargetWfStepName frmClassifierName}}
-	tableColumnList:$c{wfStepName name description targetWfStepName classifierName}
+    formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmTargetWfStepName frmClassifierName}}
+    tableColumnList:$c{wfStepName name description targetWfStepName classifierName}
 
 //Table columns
 !ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfrouting.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
@@ -17,4 +17,4 @@
 !ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfrouting.description} binding:description size:40 required:true
 !ui-text:frmTargetWfStepName caption:$m{workflow.wftemplate.wfstep.wfrouting.targetstep} size:32 binding:targetWfStepName required:true
 !ui-text:frmClassifierName caption:$m{workflow.wftemplate.wfstep.wfrouting.classifier} size:32 binding:classifierName
-	
+    

@@ -3,35 +3,35 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{audit.inspectuser.menu.title} layout:$d{!ui-vertical}
-	components:$c{maintainTypeLabel mainPanel}
+    components:$c{maintainTypeLabel mainPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
-	caption:$m{audit.inspectuser.inspectusertrail}
+    caption:$m{audit.inspectuser.inspectusertrail}
 
 !ui-panel:mainPanel layout:$d{!ui-horizontal widths:$l{none 100%}}
-	components:$c{searchPanel auditPanel}
+    components:$c{searchPanel auditPanel}
 
 
 //Search
 !ui-panel:searchPanel layout:$d{!ui-vertical}
-	components:$c{searchDetailsPanel userDetailsPanel}
+    components:$c{searchDetailsPanel userDetailsPanel}
 !ui-panel:searchDetailsPanel layout:$d{!ui-vertical showCaption:true captionSuffix:$s{:}}
-	components:$c{searchCreateDt searchUserLoginId searchModuleId searchEventType}
+    components:$c{searchCreateDt searchUserLoginId searchModuleId searchEventType}
 
 !ui-date:searchCreateDt caption:$m{audit.audittrail.createdt} binding:searchCreateDt
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchModuleId caption:$m{audit.audittrail.module} binding:searchModuleId list:modulelist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchEventType caption:$m{audit.auditsettings.action} binding:searchEventType list:auditactionlist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-search:searchUserLoginId caption:$m{audit.audittrail.user} binding:searchUserLoginId
-	list:$s{userbyname-searchprovider}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    list:$s{userbyname-searchprovider}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 // User details
 !ui-panel:userDetailsPanel  layout:$d{!ui-vertical} components:$c{userImg fullNameLabel emailLabel activityLabel}
 !ui-image:userImg src:$t{/images/user_small.png} styleClass:$e{jk-inpectuserimg}
-	binding:inspectUserInfo.photo
+    binding:inspectUserInfo.photo
 !ui-labeledtext:fullNameLabel styleClass:$e{jk-inspecttext} caption:$m{audit.inspectuser.fullname}
     binding:inspectUserInfo.fullName
 !ui-labeledtext:emailLabel styleClass:$e{jk-inspecttext} caption:$m{audit.inspectuser.email}
@@ -42,16 +42,16 @@
 // Audit trail
 !ui-panel:auditPanel style:$s{height:calc(100vh - 100px);max-height:calc(100vh - 100px);overflow:auto;} components:$c{auditTrailPanel}
 !ui-repeatpanel:auditTrailPanel layout:$d{!ui-grid columns:4}
-	components:$c{auditItemPanel} binding:inspectUserInfo.auditItems
+    components:$c{auditItemPanel} binding:inspectUserInfo.auditItems
 !ui-panel:auditItemPanel style:$s{width:320px; border:1px solid #DDD;padding:2px;background-color:#F8F8F8;}
-	layout:$d{!ui-vertical} components:$c{eventTypeLabel itemDesc itemModule itemIpAddress itemTimestamp}
+    layout:$d{!ui-vertical} components:$c{eventTypeLabel itemDesc itemModule itemIpAddress itemTimestamp}
 !ui-label:eventTypeLabel styleClass:$e{jk-inspecttype} binding:actionDesc styleClassBinding:eventStyle
 !ui-label:itemDesc style:$s{font-size:11pt;font-weight:bold;color:#222;} binding:description
 !ui-labeledtext:itemModule styleClass:$e{jk-inspecttext} caption:$m{audit.inspectuser.module} binding:moduleName
 !ui-labeledtext:itemIpAddress styleClass:$e{jk-inspecttext} caption:$m{audit.inspectuser.ipaddress} binding:ipAddress
 !ui-labeledtext:itemTimestamp styleClass:$e{jk-inspecttext} caption:$m{audit.inspectuser.time} 
-	formatter:$d{!timeformat style:medium} binding:timestamp
-	
+    formatter:$d{!timeformat style:medium} binding:timestamp
+    
 
 // Actions
 !ui-post:searchAct path:$n{/fetchInspectUserInfo} components:$c{searchCreateDt searchModuleId searchEventType searchUserLoginId}
