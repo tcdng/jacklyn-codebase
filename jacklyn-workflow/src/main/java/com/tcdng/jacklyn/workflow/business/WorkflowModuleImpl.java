@@ -569,31 +569,22 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
                 return Collections.emptyList();
             }
 
+            Set<String> categoryNames = new HashSet<String>();
             Set<String> templateNames = new HashSet<String>();
             for (String globalStepName : steps) {
                 StepNameParts stepNameParts = WfNameUtils.getStepNameParts(globalStepName);
-                templateNames.add(stepNameParts.getGlobalTemplateName());
+                categoryNames.add(stepNameParts.getCategoryName());
+                templateNames.add(stepNameParts.getTemplateName());
             }
 
-            List<WfTemplate> wfTemplateList = new ArrayList<WfTemplate>();
-            for (String globalTemplateName : templateNames) {
-                TemplateNameParts templateNameParts = WfNameUtils.getTemplateNameParts(globalTemplateName);
-                query.clear();
-                query.wfCategoryName(templateNameParts.getCategoryName());
-                query.name(templateNameParts.getTemplateName());
-                query.select("id", "name", "description", "wfCategoryName", "moduleName", "moduleDesc");
-                query.manualOption(Boolean.TRUE);
-                query.order("description");
-                wfTemplateList.addAll(db().listAll(query));
-            }
-
-            return wfTemplateList;
+            query.wfCategoryNameIn(categoryNames);
+            query.nameIn(templateNames);
         }
 
-        query.select("id", "name", "description", "wfCategoryName", "moduleName", "moduleDesc");
+        query.select("id", "name", "description", "wfCategoryName", "wfCategoryDesc");
+        query.wfCategoryStatus(RecordStatus.ACTIVE);
         query.manualOption(Boolean.TRUE);
-        query.order("description");
-        query.ignoreEmptyCriteria(true);
+        query.order("wfCategoryDesc", "description");
         return db().listAll(query);
     }
 

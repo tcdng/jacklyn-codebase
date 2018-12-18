@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
+import java.util.Collection;
+
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 
@@ -38,6 +40,10 @@ public class WfTemplateQuery extends BaseEntityQuery<WfTemplate> {
         return (WfTemplateQuery) equals("wfCategoryName", wfCategoryName);
     }
 
+    public WfTemplateQuery wfCategoryNameIn(Collection<String> wfCategoryName) {
+        return (WfTemplateQuery) amongst("wfCategoryName", wfCategoryName);
+    }
+
     public WfTemplateQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
         return (WfTemplateQuery) equals("wfCategoryStatus", wfCategoryStatus);
     }
@@ -48,6 +54,10 @@ public class WfTemplateQuery extends BaseEntityQuery<WfTemplate> {
 
     public WfTemplateQuery name(String name) {
         return (WfTemplateQuery) equals("name", name);
+    }
+
+    public WfTemplateQuery nameIn(Collection<String> name) {
+        return (WfTemplateQuery) amongst("name", name);
     }
 
     public WfTemplateQuery nameLike(String name) {

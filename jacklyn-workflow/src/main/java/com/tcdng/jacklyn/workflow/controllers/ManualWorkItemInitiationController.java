@@ -16,8 +16,6 @@
 
 package com.tcdng.jacklyn.workflow.controllers;
 
-import java.util.List;
-
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
@@ -138,8 +136,7 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 
     private void buildUserRoleTemplateListing() throws UnifyException {
         LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
-        List<WfTemplate> wfTemplateList = getWorkflowModule().findUserRoleManualInitWfTemplates();
-        for (WfTemplate wfTemplateData : wfTemplateList) {
+        for (WfTemplate wfTemplateData : getWorkflowModule().findUserRoleManualInitWfTemplates()) {
             String categoryName = wfTemplateData.getWfCategoryName();
             if (!lb.isCategory(categoryName)) {
                 lb.addCategory(categoryName, wfTemplateData.getWfCategoryDesc(),
