@@ -4,21 +4,21 @@
 // you may not use this file except in compliance with the License.
 
 !ui-systemcontrolpanel layout:$d{!ui-vertical} components:$c{systemControlTbl}
-	descriptionCaptionStyle:$s{width:200px;}
+    descriptionCaptionStyle:$s{width:200px;}
 
 !ui-table:systemControlTbl serialNumbers:false
     rowSelectable:false windowed:false pagination:false multiSelect:false sortable:false
     binding:$g{systemControlProperty} components:$c{controlDesc statusIndicator controlBtn}
 
 !ui-toggleimage:statusIndicator caption:$m{system.systemcontrol.status} binding:enabled
-	columnStyle:$s{width:48px;}
+    columnStyle:$s{width:48px;}
 !ui-label:controlDesc caption:$m{system.systemcontrol.control} binding:description
-	columnStyle:$f{descriptionCaptionStyle}
+    columnStyle:$f{descriptionCaptionStyle}
 !ui-togglebutton:controlBtn caption:$m{system.systemcontrol.action}
-	onMessageKey:$m{button.disable} offMessageKey:$m{button.enable}
-	toggleProperty:enabled binding:index
+    onMessageKey:$m{button.disable} offMessageKey:$m{button.enable}
+    toggleProperty:enabled binding:index
     eventHandler:$d{!ui-event event:onclick action:$c{toggleSystemControlAct}}
-	columnStyle:$s{width:100px;text-align:center;}
-	 
+    columnStyle:$s{width:100px;text-align:center;}
+     
 !ui-post:toggleSystemControlAct path:$g{toggleSystemControlPath} confirm:$m{system.systemcontrol.action.confirm}
-	
+    

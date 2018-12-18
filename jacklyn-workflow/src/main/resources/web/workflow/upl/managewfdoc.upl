@@ -1,33 +1,45 @@
 // UPL template for managing workflow document definition
 // Copyright 2018 The Code Department
 !ui-page caption:$m{workflow.wfdoc.manage}
-	searchByList:$c{searchWfCategoryId searchName searchDescription}
-    searchClearList:$c{searchWfCategoryId searchName searchDescription}
-	tableColumnList:$c{wfCategoryDesc name description}
-	formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.basicdetails} components:$c{frmWfCategoryId frmName frmDescription}}
-	formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.classifiers} components:$c{frmWfDocClassifierListPanel}}
-	formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.attachments} components:$c{frmWfDocAttachmentListPanel}}
-	viewPrivilege:$s{wf-wfdoc-view}
+    searchByList:$c{searchWfCategoryId searchName searchDescription searchStatus}
+    searchClearList:$c{searchWfCategoryId searchName searchDescription searchStatus}
+    tableColumnList:$c{wfCategoryDesc name description wfCategoryVersion wfCategoryStatusDesc}
+    formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.basicdetails}
+        components:$c{frmWfCategoryId frmName frmDescription frmVersion frmWfCategoryStatusDesc}}
+    formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.fields} components:$c{frmWfDocFieldListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.classifiers} components:$c{frmWfDocClassifierListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.attachments} components:$c{frmWfDocAttachmentListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wfdoc.section.beanmappings} components:$c{frmWfDocBeanMappingListPanel}}
+    viewPrivilege:$s{wf-wfdoc-view}
 
 // Search
 !ui-select:searchWfCategoryId caption:$m{workflow.wfdoc.category}
-	list:wfcategorylist blankOption:$s{} binding:searchWfCategoryId
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    list:wfcategorylist blankOption:$s{} binding:searchWfCategoryId
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-text:searchName caption:$m{workflow.wfdoc.name} binding:searchName
-	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{workflow.wfdoc.description} binding:searchDescription
-	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{workflow.wfdoc.status} binding:searchStatus
+    list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 // Table columns
 !ui-label:wfCategoryDesc caption:$m{workflow.wfdoc.category} binding:wfCategoryDesc columnStyle:$s{width:120px;} sortable:true
 !ui-label:name caption:$m{workflow.wfdoc.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{workflow.wfdoc.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:wfCategoryVersion caption:$m{workflow.wfdoc.version} binding:wfCategoryVersion style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:wfCategoryStatusDesc caption:$m{workflow.wfdoc.status} binding:wfCategoryStatusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 // Form components   
 !ui-select:frmWfCategoryId caption:$m{workflow.wfdoc.category} list:wfcategorylist blankOption:$s{}
-	binding:wfCategoryId required:true focus:true
+    binding:wfCategoryId required:true focus:true
 !ui-name:frmName caption:$m{workflow.wfdoc.name} binding:name case:upper minLen:3 maxLen:32 required:true
 !ui-text:frmDescription caption:$m{workflow.wfdoc.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-text:frmVersion caption:$m{workflow.wfdoc.version} binding:wfCategoryVersion minLen:1 maxLen:48 size:32 required:true
+!ui-text:frmWfCategoryStatusDesc caption:$m{workflow.wfdoc.status} binding:wfCategoryStatusDesc minLen:1 maxLen:48 size:32 required:true
 
-!ui-wfdocclassifiercrudpanel:frmWfDocClassifierListPanel
-!ui-wfdocattachmentcrudpanel:frmWfDocAttachmentListPanel
+!ui-wfdocfieldcrudpanel:frmWfDocFieldListPanel crudTableStyle:$s{width:80%;}
+!ui-wfdocclassifiercrudpanel:frmWfDocClassifierListPanel crudTableStyle:$s{width:80%;}
+!ui-wfdocattachmentcrudpanel:frmWfDocAttachmentListPanel crudTableStyle:$s{width:80%;}
+!ui-wfdocbeanmappingcrudpanel:frmWfDocBeanMappingListPanel crudTableStyle:$s{width:80%;}

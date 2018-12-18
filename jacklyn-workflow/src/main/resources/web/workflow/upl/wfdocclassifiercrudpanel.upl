@@ -1,8 +1,8 @@
 // UPL template for workflow item classifier definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfdocclassifiercrudpanel
-	tableColumnList:$c{wfDocName name description logic}
-	formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmLogic frmFilterPanel}}
+    tableColumnList:$c{wfDocName name description logic}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmLogic frmFilterPanel}}
 
 // Table columns
 !ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocclassifier.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true

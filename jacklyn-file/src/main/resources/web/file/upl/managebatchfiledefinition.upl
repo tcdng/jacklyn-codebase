@@ -3,13 +3,13 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{file.batchfiledefinition.manage}
-	searchByList:$c{searchName searchDescription searchStatus}
+    searchByList:$c{searchName searchDescription searchStatus}
     searchClearList:$c{searchName searchDescription searchStatus}
-	tableColumnList:$c{name description statusDesc}
+    tableColumnList:$c{name description statusDesc}
     formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.basicdetails} components:$c{frmName frmDescription frmSkipFirst frmStatus}}
- 	formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.fields} components:$c{frmBatchFileFieldDefPanel}}
-	addPrivilege:$s{fil-batchfiledefinitionadd} editPrivilege:$s{fil-batchfiledefinitionedit}
-	viewPrivilege:$s{fil-batchfiledefinitionview} deletePrivilege:$s{fil-batchfiledefinitiondelete}
+     formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.fields} components:$c{frmBatchFileFieldDefPanel}}
+    addPrivilege:$s{fil-batchfiledefinitionadd} editPrivilege:$s{fil-batchfiledefinitionedit}
+    viewPrivilege:$s{fil-batchfiledefinitionview} deletePrivilege:$s{fil-batchfiledefinitiondelete}
     addValidations:$c{frmNameVal frmDescVal}
     saveValidations:$c{frmNameVal frmDescVal}
  

@@ -3,23 +3,25 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{workflow.wfcategory.publish.manage} layout:$d{!ui-vertical}
-	components:$c{publishCategoryPanel}
+    components:$c{publishCategoryPanel}
 
 !ui-formpanel:publishCategoryPanel
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-    formSection:$d{!ui-section caption:$m{workflow.wfcategory.publish.section.basicdetails} components:$c{fileSelect}}
+    formSection:$d{!ui-section caption:$m{workflow.wfcategory.publish.section.basicdetails}
+        components:$c{frmFileSelect frmActivate}}
     footerComponentList:$c{publishBtn doneBtn}
 
-!ui-fileupload:fileSelect caption:$m{workflow.wfcategory.publish.configfile} binding:wfCategoryBin
-	selectOnly:true required:true style:$s{width:296px;}
+!ui-fileupload:frmFileSelect caption:$m{workflow.wfcategory.publish.configfile} binding:wfCategoryBin
+    selectOnly:true required:true style:$s{width:296px;}
+!ui-checkbox:frmActivate caption:$m{workflow.wfcategory.publish.activate} binding:activate
     
 !ui-button:publishBtn caption:$m{button.publish} eventHandler:$d{!ui-event event:onclick action:$c{startPublishAct}}
 !ui-button:doneBtn caption:$m{button.done} eventHandler:$d{!ui-event event:onclick action:$c{publishDoneAct}}
 
 //Validations
-!ui-validation:publishVal components:$c{fileSelect}
+!ui-validation:publishVal components:$c{frmFileSelect}
 
 // Actions    
 !ui-post:startPublishAct path:$n{/startWfPublishCategoryTask} components:$c{publishCategoryPanel}
-	 validations:$c{publishVal}
+     validations:$c{publishVal}
 !ui-post:publishDoneAct path:$n{/closePage}

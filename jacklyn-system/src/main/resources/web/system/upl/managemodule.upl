@@ -3,18 +3,18 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.module.manage}
-	searchByList:$c{searchDescription searchStatus}
-   	searchClearList:$c{searchDescription searchStatus}
-	tableColumnList:$c{name description statusDesc}
-	formSection:$d{!ui-section caption:$m{system.module.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
-	addPrivilege:$s{add-module} editPrivilege:$s{sys-moduleedit}
-	viewPrivilege:$s{sys-moduleview} deletePrivilege:$s{delete-module}
+    searchByList:$c{searchDescription searchStatus}
+       searchClearList:$c{searchDescription searchStatus}
+    tableColumnList:$c{name description statusDesc}
+    formSection:$d{!ui-section caption:$m{system.module.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
+    addPrivilege:$s{add-module} editPrivilege:$s{sys-moduleedit}
+    viewPrivilege:$s{sys-moduleview} deletePrivilege:$s{delete-module}
  
 //Search
 !ui-text:searchDescription caption:$m{system.module.description} binding:searchDescription
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.module.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:name caption:$m{system.module.name} binding:name columnStyle:$s{width:80px;} sortable:true

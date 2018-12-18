@@ -3,14 +3,14 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{file.batchupload.manage} layout:$d{!ui-vertical}
-	components:$c{maintainTypeLabel batchUploadFramePanel}
+    components:$c{maintainTypeLabel batchUploadFramePanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
-	caption:$m{file.batchupload.performbatchupload}
+    caption:$m{file.batchupload.performbatchupload}
 
 !ui-panel:batchUploadFramePanel layout:$d{!ui-horizontal}
-	components:$c{batchUploadPanel batchParamPanel}
-	
+    components:$c{batchUploadPanel batchParamPanel}
+    
 !ui-formpanel:batchUploadPanel
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
     formSection:$d{!ui-section caption:$m{file.batchupload.section.basicdetails} components:$c{batchUploadConfigId fileSelect}}

@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfDocQuery;
@@ -35,9 +36,11 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wfdoc")
 @UplBinding("web/workflow/upl/managewfdoc.upl")
-@SessionLoading(
-        crudPanelLists = { @CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
-                @CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList") })
+@SessionLoading(crudPanelLists = {
+        @CrudPanelList(panel = "frmWfDocFieldListPanel", field = "record.fieldList"),
+        @CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
+        @CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList"),
+        @CrudPanelList(panel = "frmWfDocBeanMappingListPanel", field = "record.beanMappingList")})
 public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
 
     private Long searchWfCategoryId;
@@ -45,6 +48,8 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
     private String searchName;
 
     private String searchDescription;
+
+    private RecordStatus searchStatus;
 
     public WfDocController() {
         super(WfDoc.class, "workflow.wfdoc.hint",
@@ -75,6 +80,14 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
         this.searchDescription = searchDescription;
     }
 
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
+
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
+
     @Override
     protected List<WfDoc> find() throws UnifyException {
         WfDocQuery query = new WfDocQuery();
@@ -88,6 +101,10 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
 
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
             query.descriptionLike(searchDescription);
+        }
+
+        if (searchStatus != null) {
+            query.wfCategoryStatus(searchStatus);
         }
 
         query.order("description").ignoreEmptyCriteria(true);

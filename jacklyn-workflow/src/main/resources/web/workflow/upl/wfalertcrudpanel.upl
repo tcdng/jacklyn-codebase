@@ -1,8 +1,8 @@
 // UPL template for workflow alert definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfalertcrudpanel
-	formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmType frmMessage}}
-	tableColumnList:$c{wfStepName name description typeDesc}
+    formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmType frmMessage}}
+    tableColumnList:$c{wfStepName name description typeDesc}
 
 //Table columns
 !ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfalert.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
@@ -15,6 +15,6 @@
 !ui-text:frmName caption:$m{workflow.wftemplate.wfstep.wfalert.name} binding:name size:32 required:true
 !ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfalert.description} binding:description size:40 required:true
 !ui-select:frmType caption:$m{workflow.wftemplate.wfstep.wfalert.type} binding:type required:true
-	list:notificationtypelist blankOption:$s{}
+    list:notificationtypelist blankOption:$s{}
 !ui-text:frmMessage caption:$m{workflow.wftemplate.wfstep.wfalert.message} size:32 binding:notificationTemplateCode required:true
-	
+    

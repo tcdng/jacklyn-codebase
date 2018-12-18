@@ -3,14 +3,14 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-recordorderpanel dialogBodyComponents:$c{recordRack}
-	dialogActionComponents:$c{saveOrderBtn cancelOrderBtn}
+    dialogActionComponents:$c{saveOrderBtn cancelOrderBtn}
      
 !ui-rack:recordRack style:$s{width:520px;} binding:$g{recordList}
-    bodyStyle:$s{height:200px;}	components:$g{recordColumnList} windowed:true
+    bodyStyle:$s{height:200px;}    components:$g{recordColumnList} windowed:true
 
 !ui-button:saveOrderBtn caption:$m{button.save} eventHandler:$d{!ui-event event:onclick action:$c{saveOrderAct}}
 !ui-button:cancelOrderBtn styleClass:$e{ui-button-alert} caption:$m{button.cancel}
-	eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
-	 
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+     
 //Actions
 !ui-post:saveOrderAct path:$g{saveOrderPath}

@@ -1,44 +1,52 @@
 // Copyright 2018 The Code Department
 !ui-page caption:$m{workflow.wftemplate.manage}
-	searchByList:$c{searchWfCategoryId searchName searchDescription}
-	searchClearList:$c{searchWfCategoryId searchName searchDescription}
-	tableColumnList:$c{wfCategoryDesc name description}
-    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.basicdetails} components:$c{frmWfCategoryId frmName frmDescription}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.steps} components:$c{frmWfStepListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.enrichments} components:$c{frmWfEnrichmentListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.routings} components:$c{frmWfRoutingListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.useractions} components:$c{frmWfUserActionListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.recordactions} components:$c{frmWfRecordActionListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.formprivileges} components:$c{frmWfFormPrivilegeListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.policies} components:$c{frmWfPolicyListPanel}}
-  	formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.alerts} components:$c{frmWfAlertListPanel}}
- 	viewPrivilege:$s{wf-wftemplate-view}
+    searchByList:$c{searchWfCategoryId searchName searchDescription searchStatus}
+    searchClearList:$c{searchWfCategoryId searchName searchDescription searchStatus}
+    tableColumnList:$c{wfCategoryDesc name description wfCategoryVersion wfCategoryStatusDesc}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.basicdetails}
+        components:$c{frmWfCategoryId frmName frmDescription frmVersion frmWfCategoryStatusDesc}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.steps} components:$c{frmWfStepListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.enrichments} components:$c{frmWfEnrichmentListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.routings} components:$c{frmWfRoutingListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.useractions} components:$c{frmWfUserActionListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.recordactions} components:$c{frmWfRecordActionListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.formprivileges} components:$c{frmWfFormPrivilegeListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.policies} components:$c{frmWfPolicyListPanel}}
+    formSection:$d{!ui-section caption:$m{workflow.wftemplate.section.alerts} components:$c{frmWfAlertListPanel}}
+     viewPrivilege:$s{wf-wftemplate-view}
 
 //Search
 !ui-select:searchWfCategoryId caption:$m{workflow.wftemplate.category} list:wfcategorylist blankOption:$s{} binding:searchWfCategoryId
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-text:searchName caption:$m{workflow.wftemplate.name} binding:searchName maxLen:40
-	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{workflow.wftemplate.description} binding:searchDescription maxLen:48
-	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{workflow.wftemplate.status} binding:searchStatus
+    list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:wfCategoryDesc caption:$m{workflow.wftemplate.category} binding:wfCategoryDesc columnStyle:$s{width:120px;} sortable:true
 !ui-label:name caption:$m{workflow.wftemplate.name} binding:name columnStyle:$s{width:100px;} sortable:true
 !ui-label:description caption:$m{workflow.wftemplate.description} binding:description columnStyle:$s{width:180px;} sortable:true
+!ui-label:wfCategoryVersion caption:$m{workflow.wftemplate.version} binding:wfCategoryVersion style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:wfCategoryStatusDesc caption:$m{workflow.wftemplate.status} binding:wfCategoryStatusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components
 !ui-select:frmWfCategoryId caption:$m{workflow.wftemplate.category} list:wfcategorylist blankOption:$s{}
-	binding:wfCategoryId focus:true
+    binding:wfCategoryId focus:true
 !ui-text:frmName caption:$m{workflow.wftemplate.name} binding:name case:upper size:32
 !ui-text:frmDescription caption:$m{workflow.wftemplate.description} binding:description size:40
+!ui-text:frmVersion caption:$m{workflow.wftemplate.version} binding:wfCategoryVersion minLen:1 maxLen:48 size:32 required:true
+!ui-text:frmWfCategoryStatusDesc caption:$m{workflow.wftemplate.status} binding:wfCategoryStatusDesc minLen:1 maxLen:48 size:32 required:true
 
-!ui-wfstepcrudpanel:frmWfStepListPanel
-!ui-wfenrichmentcrudpanel:frmWfEnrichmentListPanel
-!ui-wfroutingcrudpanel:frmWfRoutingListPanel
-!ui-wfuseractioncrudpanel:frmWfUserActionListPanel
-!ui-wfrecordactioncrudpanel:frmWfRecordActionListPanel
-!ui-wfformprivilegecrudpanel:frmWfFormPrivilegeListPanel
-!ui-wfpolicycrudpanel:frmWfPolicyListPanel
-!ui-wfalertcrudpanel:frmWfAlertListPanel
+!ui-wfstepcrudpanel:frmWfStepListPanel crudTableStyle:$s{width:80%;}
+!ui-wfenrichmentcrudpanel:frmWfEnrichmentListPanel crudTableStyle:$s{width:80%;}
+!ui-wfroutingcrudpanel:frmWfRoutingListPanel crudTableStyle:$s{width:80%;}
+!ui-wfuseractioncrudpanel:frmWfUserActionListPanel crudTableStyle:$s{width:80%;}
+!ui-wfrecordactioncrudpanel:frmWfRecordActionListPanel crudTableStyle:$s{width:80%;}
+!ui-wfformprivilegecrudpanel:frmWfFormPrivilegeListPanel crudTableStyle:$s{width:80%;}
+!ui-wfpolicycrudpanel:frmWfPolicyListPanel crudTableStyle:$s{width:80%;}
+!ui-wfalertcrudpanel:frmWfAlertListPanel crudTableStyle:$s{width:80%;}
 

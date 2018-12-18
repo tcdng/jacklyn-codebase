@@ -1,23 +1,19 @@
 // UPL template for workflow document field definition CRUD panel
 // Copyright 2018 The Code Department
 !ui-wfdocfieldcrudpanel
-	formSection:$d{!ui-section components:$c{frmWfDocName frmSectionName frmName frmDescription frmLabel frmEditor frmTypeDesc frmMultiple frmRequired}}
-	tableColumnList:$c{wfDocName name description sectionName}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmParent frmTypeDesc frmMultiple}}
+    tableColumnList:$c{wfDocName name description typeDesc}
 
 //Table columns
 !ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocfield.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true
 !ui-label:name caption:$m{workflow.wfdoc.wfdocfield.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{workflow.wfdoc.wfdocfield.description} binding:description columnStyle:$s{width:200px;} sortable:true
-!ui-label:sectionName caption:$m{workflow.wfdoc.wfdocfield.section} binding:sectionName columnStyle:$s{width:120px;} sortable:true
-//!ui-label:typeDesc caption:$m{workflow.wfdoc.wfdocfield.type} binding:typeDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:typeDesc caption:$m{workflow.wfdoc.wfdocfield.type} binding:typeDesc columnStyle:$s{width:120px;} sortable:true
 
 //Form components
 !ui-text:frmWfDocName caption:$m{workflow.wfdoc.wfdocfield.document} size:32 binding:wfDocName required:true
-!ui-text:frmSectionName caption:$m{workflow.wfdoc.wfdocfield.section} size:32 binding:sectionName required:true
 !ui-text:frmName caption:$m{workflow.wfdoc.wfdocfield.name} size:32 binding:name required:true
 !ui-text:frmDescription caption:$m{workflow.wfdoc.wfdocfield.description} binding:description size:40 required:true
-!ui-text:frmLabel caption:$m{workflow.wfdoc.wfdocfield.label} binding:label size:32 required:true
-!ui-text:frmEditor caption:$m{workflow.wfdoc.wfdocfield.editor} binding:editorUpl size:32 required:true
+!ui-text:frmParent caption:$m{workflow.wfdoc.wfdocfield.parent} binding:parentName size:32
 !ui-text:frmTypeDesc caption:$m{workflow.wfdoc.wfdocfield.type} binding:typeDesc size:32 required:true
 !ui-checkbox:frmMultiple caption:$m{workflow.wfdoc.wfdocfield.multiple} binding:arrayFlag
-!ui-checkbox:frmRequired caption:$m{workflow.wfdoc.wfdocfield.required} binding:required

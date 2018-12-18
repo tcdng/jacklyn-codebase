@@ -3,12 +3,12 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.theme.manage}
-	searchByList:$c{searchName searchDescription searchStatus}
+    searchByList:$c{searchName searchDescription searchStatus}
     searchClearList:$c{searchName searchDescription searchStatus}
-	tableColumnList:$c{name description resourcePath statusDesc}
-	formSection:$d{!ui-section caption:$m{system.theme.section.basicdetails} components:$c{frmName frmDescription frmResourcePath frmStatus}}
-	addPrivilege:$s{sys-themeadd} editPrivilege:$s{sys-themeedit}
-	viewPrivilege:$s{sys-themeview} deletePrivilege:$s{sys-themedelete}
+    tableColumnList:$c{name description resourcePath statusDesc}
+    formSection:$d{!ui-section caption:$m{system.theme.section.basicdetails} components:$c{frmName frmDescription frmResourcePath frmStatus}}
+    addPrivilege:$s{sys-themeadd} editPrivilege:$s{sys-themeedit}
+    viewPrivilege:$s{sys-themeview} deletePrivilege:$s{sys-themedelete}
     addValidations:$c{frmNameVal frmDescVal}
     saveValidations:$c{frmNameVal frmDescVal}
 
@@ -16,7 +16,7 @@
 !ui-text:searchName caption:$m{system.theme.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{system.theme.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.theme.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:name caption:$m{system.theme.name} binding:name columnStyle:$s{width:80px;} sortable:true

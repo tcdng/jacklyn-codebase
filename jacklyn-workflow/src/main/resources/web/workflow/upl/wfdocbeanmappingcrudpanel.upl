@@ -1,0 +1,28 @@
+// UPL template for workflow document bean mapping CRUD panel
+// Copyright 2018 The Code Department
+!ui-wfdocbeanmappingcrudpanel
+    tableColumnList:$c{wfDocName name description typeDesc}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmBeanType frmTypeDesc frmMappingPanel}}
+
+// Table columns
+!ui-label:wfDocName caption:$m{workflow.wfdoc.wfdocbeanmapping.document} binding:wfDocName columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{workflow.wfdoc.wfdocbeanmapping.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{workflow.wfdoc.wfdocbeanmapping.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:typeDesc caption:$m{workflow.wfdoc.wfdocbeanmapping.type} binding:typeDesc columnStyle:$s{width:120px;}
+
+// Form components
+!ui-text:frmWfDocName caption:$m{workflow.wfdoc.wfdocbeanmapping.document} size:32 binding:wfDocName required:true
+!ui-text:frmName caption:$m{workflow.wfdoc.wfdocbeanmapping.name} binding:name size:32 required:true
+!ui-text:frmDescription caption:$m{workflow.wfdoc.wfdocbeanmapping.description} binding:description size:40 required:true
+!ui-text:frmBeanType caption:$m{workflow.wfdoc.wfdocbeanmapping.beantype} binding:beanType size:56 required:true
+!ui-text:frmTypeDesc caption:$m{workflow.wfdoc.wfdocbeanmapping.type} binding:typeDesc size:32 maxLen:56
+
+!ui-tablepanel:frmMappingPanel style:$s{height:100%;} caption:$m{workflow.wfdoc.wfdocbeanmapping.mappings}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:420px;height:200px;}  heights:$l{100%}}
+    tableBinding:fieldMappingList tableColumnList:$c{docFieldName beanFieldName}
+    tableWindowed:true tablePagination:false
+    tableSortable:true
+!ui-label:docFieldName caption:$m{workflow.wfdoc.wfdocbeanmapping.wfmapping.docfieldname}
+    binding:docFieldName columnStyle:$s{width:120px;} sortable:true
+!ui-label:beanFieldName caption:$m{workflow.wfdoc.wfdocbeanmapping.wfmapping.beanfieldname}
+    binding:beanFieldName columnStyle:$s{width:120px;} sortable:true
