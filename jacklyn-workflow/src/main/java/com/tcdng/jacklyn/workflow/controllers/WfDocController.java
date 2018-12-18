@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfDocQuery;
@@ -47,6 +48,8 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
     private String searchName;
 
     private String searchDescription;
+
+    private RecordStatus searchStatus;
 
     public WfDocController() {
         super(WfDoc.class, "workflow.wfdoc.hint",
@@ -77,6 +80,14 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
         this.searchDescription = searchDescription;
     }
 
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
+
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
+
     @Override
     protected List<WfDoc> find() throws UnifyException {
         WfDocQuery query = new WfDocQuery();
@@ -90,6 +101,10 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
 
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
             query.descriptionLike(searchDescription);
+        }
+
+        if (searchStatus != null) {
+            query.wfCategoryStatus(searchStatus);
         }
 
         query.order("description").ignoreEmptyCriteria(true);

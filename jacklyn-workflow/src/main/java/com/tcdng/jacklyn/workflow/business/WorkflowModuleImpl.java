@@ -1031,6 +1031,7 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
             wfCategory.setName(wfCategoryConfig.getName());
             wfCategory.setDescription(description);
             wfCategory.setVersion(wfCategoryConfig.getVersion());
+            wfCategory.setStatus(RecordStatus.INACTIVE);
             wfCategoryId = (Long) db().create(wfCategory);
         } else {
             addTaskMessage(taskMonitor, "Updating existing category...");

@@ -2,7 +2,7 @@
 // Copyright 2018 The Code Department
 !ui-wfstepcrudpanel
     formSection:$d{!ui-section components:$c{frmWfTemplate frmName frmDescription frmLabel frmTypeCode frmParticipantType
-        frmPriorityLevel frmFormMode frmItemsPerSession frmExpiryHours frmAudit frmBranchOnly frmIncludeForwarder}}
+        frmPriorityLevel frmItemsPerSession frmExpiryHours frmAudit frmBranchOnly frmIncludeForwarder}}
     formColumns:2
     tableColumnList:$c{name description stepTypeDesc participantTypeDesc priorityLevelDesc}
 
@@ -19,7 +19,6 @@
 !ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.description} binding:description size:40 required:true
 !ui-text:frmLabel caption:$m{workflow.wftemplate.wfstep.label} binding:label size:40 required:true
 !ui-select:frmTypeCode caption:$m{workflow.wftemplate.wfstep.type} list:wfsteptypelist blankOption:$s{} binding:stepType required:true
-!ui-select:frmFormMode caption:$m{workflow.wftemplate.wfstep.formmode} list:wfformmodelist blankOption:$s{} binding:formMode
 !ui-select:frmPriorityLevel caption:$m{workflow.wftemplate.wfstep.prioritylevel} list:wfstepprioritylist blankOption:$s{} binding:priorityLevel
 !ui-select:frmParticipantType caption:$m{workflow.wftemplate.wfstep.participanttype} list:wfparticipanttypelist blankOption:$s{} binding:participantType
 !ui-integer:frmItemsPerSession caption:$m{workflow.wftemplate.wfstep.itemspersession} binding:itemsPerSession required:true
