@@ -41,6 +41,10 @@ public enum WorkflowParticipantType implements EnumConst {
         return this.code;
     }
 
+    public boolean isParticipant() {
+        return !NONE.equals(this);
+    }
+    
     public static WorkflowParticipantType fromCode(String code) {
         return EnumUtils.fromCode(WorkflowParticipantType.class, code);
     }

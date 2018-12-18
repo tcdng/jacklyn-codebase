@@ -409,9 +409,6 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
         assertEquals("custOnboarding", wfTemplate.getName());
         assertEquals("Customer Onboarding", wfTemplate.getDescription());
         assertEquals("custInfo", wfTemplate.getWfDocName());
-        List<WfStep> stepList = wfTemplate.getStepList();
-        assertNotNull(stepList);
-        assertEquals(4, stepList.size());
 
         /* Messages */
         List<WfMessage> messageList = wfTemplate.getMessageList();
@@ -428,8 +425,55 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
         assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
 
         /* Steps */
-        // 1
+        List<WfStep> stepList = wfTemplate.getStepList();
+        assertNotNull(stepList);
+        assertEquals(5, stepList.size());
+        // 0
         WfStep wfStep = stepList.get(0);
+        assertNotNull(wfStep);
+        assertEquals("manual", wfStep.getName());
+        assertEquals("Manual Create Customer", wfStep.getDescription());
+        assertNull(wfStep.getLabel());
+        assertEquals(WorkflowStepType.MANUAL, wfStep.getStepType());
+        assertEquals(WorkflowParticipantType.PERSONNEL, wfStep.getParticipantType());
+        assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
+        assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertFalse(wfStep.getAudit());
+        assertFalse(wfStep.getBranchOnly());
+        assertFalse(wfStep.getIncludeForwarder());
+        assertTrue(DataUtils.isBlank(wfStep.getFormPrivilegeList()));
+        assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+        assertTrue(DataUtils.isBlank(wfStep.getRoutingList()));
+        assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
+        assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
+        assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
+        
+        // Implicit user actions for manual step
+        List<WfUserAction> userActionList = wfStep.getUserActionList();
+        assertNotNull(userActionList);
+        assertEquals(2, userActionList.size());
+
+        WfUserAction wfUserAction = userActionList.get(0);
+        assertNotNull(wfUserAction);
+        assertEquals("submit", wfUserAction.getName());
+        assertEquals("Manual Submit", wfUserAction.getDescription());
+        assertEquals("Submit", wfUserAction.getLabel());
+        assertEquals("start", wfUserAction.getTargetWfStepName());
+        assertEquals(RequirementType.NONE, wfUserAction.getNoteReqType());
+        assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
+
+        wfUserAction = userActionList.get(1);
+        assertNotNull(wfUserAction);
+        assertEquals("discard", wfUserAction.getName());
+        assertEquals("Manual Discard", wfUserAction.getDescription());
+        assertEquals("Discard", wfUserAction.getLabel());
+        assertEquals("end", wfUserAction.getTargetWfStepName());
+        assertEquals(RequirementType.NONE, wfUserAction.getNoteReqType());
+        assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
+        
+        // 1
+        wfStep = stepList.get(1);
         assertNotNull(wfStep);
         assertEquals("start", wfStep.getName());
         assertEquals("Start Step", wfStep.getDescription());
@@ -477,7 +521,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
         assertEquals("custApproval", wfRouting.getTargetWfStepName());
 
         // 2
-        wfStep = stepList.get(1);
+        wfStep = stepList.get(2);
         assertNotNull(wfStep);
         assertEquals("createCust", wfStep.getName());
         assertEquals("Create Customer", wfStep.getDescription());
@@ -528,7 +572,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
         assertEquals("end", wfRouting.getTargetWfStepName());
 
         // 3
-        wfStep = stepList.get(2);
+        wfStep = stepList.get(3);
         assertNotNull(wfStep);
         assertEquals("custApproval", wfStep.getName());
         assertEquals("Customer Approval", wfStep.getDescription());
@@ -557,11 +601,11 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
         assertEquals("awaitCustApproval", wfAlert.getNotificationTemplateCode());
         assertEquals(NotificationType.SYSTEM, wfAlert.getType());
 
-        List<WfUserAction> userActionList = wfStep.getUserActionList();
+        userActionList = wfStep.getUserActionList();
         assertNotNull(userActionList);
         assertEquals(2, userActionList.size());
 
-        WfUserAction wfUserAction = userActionList.get(0);
+        wfUserAction = userActionList.get(0);
         assertNotNull(wfUserAction);
         assertEquals("approveCust", wfUserAction.getName());
         assertEquals("Approve Customer", wfUserAction.getDescription());
@@ -580,7 +624,7 @@ public class WorkflowModuleTest extends AbstractJacklynTest {
         assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
 
         // 4
-        wfStep = stepList.get(3);
+        wfStep = stepList.get(4);
         assertNotNull(wfStep);
         assertEquals("end", wfStep.getName());
         assertEquals("End Step", wfStep.getDescription());

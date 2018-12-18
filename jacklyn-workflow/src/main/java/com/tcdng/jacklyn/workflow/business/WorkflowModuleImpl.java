@@ -149,6 +149,7 @@ import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericBusinessModule;
+import com.tcdng.unify.core.constant.RequirementType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.PackableDoc;
@@ -952,7 +953,8 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
         return getToolingTypes(ToolingPolicyLogicItem.class, WfItemPolicyLogic.class);
     }
 
-    @Taskable(name = WorkflowApplyActionTaskConstants.TASK_NAME,
+    @Taskable(
+            name = WorkflowApplyActionTaskConstants.TASK_NAME,
             description = "Apply Action to Multiple Workflow Items Task",
             parameters = { @Parameter(name = WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, type = List.class),
                     @Parameter(WorkflowApplyActionTaskConstants.WFACTION_NAME),
@@ -983,12 +985,14 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
     }
 
     @Override
-    @Taskable(name = WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME,
+    @Taskable(
+            name = WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME,
             description = "Workflow Category Binary Publication Task",
             parameters = {
-                    @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN,
-                            type = byte[].class),
-                    @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
+                    @Parameter(
+                            name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, type = byte[].class),
+                    @Parameter(
+                            name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
                             type = boolean.class) },
             limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, byte[] wfCategoryConfigBin,
@@ -1000,12 +1004,13 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
     }
 
     @Override
-    @Taskable(name = WorkflowCategoryPublicationTaskConstants.TASK_NAME,
+    @Taskable(
+            name = WorkflowCategoryPublicationTaskConstants.TASK_NAME,
             description = "Workflow Category Publication Task",
-            parameters = {
-                    @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG,
-                            type = WfCategoryConfig.class),
-                    @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
+            parameters = { @Parameter(
+                    name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG, type = WfCategoryConfig.class),
+                    @Parameter(
+                            name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
                             type = boolean.class) },
             limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, WfCategoryConfig wfCategoryConfig,
@@ -1320,7 +1325,9 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
     }
 
     private void populateChildList(WfTemplate wfTemplate, WfTemplateConfig wfTemplateConfig) throws UnifyException {
-        Boolean manualOption = Boolean.FALSE;
+        WfStep startWfStep = null;
+        WfStep endWfStep = null;
+        WfStep manualWfStep = null;
 
         // Messages
         List<WfMessage> messageList = null;
@@ -1356,8 +1363,12 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
             wfStep.setAudit(wfStepConfig.getAudit());
             wfStep.setBranchOnly(wfStepConfig.getBranchOnly());
 
-            if (wfStepConfig.getType().isManual()) {
-                manualOption = Boolean.TRUE;
+            if (wfStepConfig.getType().isStart()) {
+                startWfStep = wfStep;
+            } else if (wfStepConfig.getType().isEnd()) {
+                endWfStep = wfStep;
+            } else if (wfStepConfig.getType().isManual()) {
+                manualWfStep = wfStep;
             }
 
             // Enrichments
@@ -1495,7 +1506,32 @@ public class WorkflowModuleImpl extends AbstractJacklynBusinessModule implements
             stepList.add(wfStep);
         }
 
-        wfTemplate.setManualOption(manualOption);
+        wfTemplate.setManualOption(Boolean.FALSE);
+        if (manualWfStep != null) {
+            wfTemplate.setManualOption(Boolean.TRUE);
+            // Add implicit user actions to manual step
+            List<WfUserAction> userActionList = new ArrayList<WfUserAction>();
+            WfUserAction wfUserAction = new WfUserAction();
+            wfUserAction.setName("submit");
+            wfUserAction.setDescription(getApplicationMessage("workflow.wftemplate.wfstep.manualsubmit"));
+            wfUserAction.setLabel(getApplicationMessage("label.submit"));
+            wfUserAction.setNoteReqType(RequirementType.NONE);
+            wfUserAction.setTargetWfStepName(startWfStep.getName());
+            wfUserAction.setValidatePage(Boolean.TRUE);
+            userActionList.add(wfUserAction);
+
+            wfUserAction = new WfUserAction();
+            wfUserAction.setName("discard");
+            wfUserAction.setDescription(getApplicationMessage("workflow.wftemplate.wfstep.manualdiscard"));
+            wfUserAction.setLabel(getApplicationMessage("label.discard"));
+            wfUserAction.setNoteReqType(RequirementType.NONE);
+            wfUserAction.setTargetWfStepName(endWfStep.getName());
+            wfUserAction.setValidatePage(Boolean.TRUE);
+            userActionList.add(wfUserAction);
+
+            manualWfStep.setUserActionList(userActionList);
+        }
+
         wfTemplate.setStepList(stepList);
     }
 
