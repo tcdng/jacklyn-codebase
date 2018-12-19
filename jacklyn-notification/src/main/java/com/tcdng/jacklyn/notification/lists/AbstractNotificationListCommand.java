@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.notification.lists;
 
 import com.tcdng.jacklyn.notification.business.NotificationService;
-import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,7 +27,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractNotificationListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
+    @Configurable
     private NotificationService notificationService;
 
     public AbstractNotificationListCommand(Class<T> type) {

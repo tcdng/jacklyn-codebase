@@ -34,6 +34,12 @@ public class AuditConfig extends BaseConfig {
 
     private String auditable;
 
+    private boolean active;
+    
+    public AuditConfig() {
+        active = true;
+    }
+    
     public EventType getAction() {
         return action;
     }
@@ -55,5 +61,14 @@ public class AuditConfig extends BaseConfig {
 
     public boolean isType() {
         return this.auditable != null;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    @XmlAttribute
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

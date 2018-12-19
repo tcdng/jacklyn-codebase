@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.security.business;
 
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -33,7 +32,7 @@ import com.tcdng.unify.core.security.TwoWayStringCryptographImpl;
 @Component(name = "applicationkey-cryptograph", description = "$m{applicationkey.cryptograph}")
 public class ApplicationKeyCryptographImpl extends TwoWayStringCryptographImpl {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     @Override

@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/service/gate")
 public class ServiceRemoteCallController extends BaseRemoteCallController {
 
-    @Configurable(ServiceModuleNameConstants.MICROSERVICESERVICE)
+    @Configurable
     private MicroserviceService microserviceService;
 
     @GatewayAction(name = ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL,

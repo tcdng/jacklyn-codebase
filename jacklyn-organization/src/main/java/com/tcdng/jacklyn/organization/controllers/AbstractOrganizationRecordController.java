@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.organization.controllers;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
-import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -31,7 +30,7 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractOrganizationRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(OrganizationModuleNameConstants.ORGANIZATIONSERVICE)
+    @Configurable
     private OrganizationService organizationService;
 
     private RecordStatus searchStatus;

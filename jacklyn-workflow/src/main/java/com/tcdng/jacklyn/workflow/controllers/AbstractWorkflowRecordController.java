@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.workflow.controllers;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -30,7 +29,7 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractWorkflowRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    @Configurable
     private WorkflowService workflowService;
 
     public AbstractWorkflowRecordController(Class<T> entityClass, String hintKey, int modifier) {

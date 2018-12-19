@@ -16,27 +16,26 @@
 package com.tcdng.jacklyn.archiving.lists;
 
 import com.tcdng.jacklyn.archiving.business.ArchivingService;
-import com.tcdng.jacklyn.archiving.constants.ArchivingModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
- * Abstract base class for archiving module list commands.
+ * Abstract base class for archiving service list commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public abstract class AbstractArchivingListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(ArchivingModuleNameConstants.ARCHIVINGSERVICE)
-    private ArchivingService archivingModule;
+    @Configurable
+    private ArchivingService archivingService;
 
     public AbstractArchivingListCommand(Class<T> paramType) {
         super(paramType);
     }
 
-    protected ArchivingService getArchivingBusinessModule() {
-        return archivingModule;
+    protected ArchivingService getArchivingService() {
+        return archivingService;
     }
 
 }

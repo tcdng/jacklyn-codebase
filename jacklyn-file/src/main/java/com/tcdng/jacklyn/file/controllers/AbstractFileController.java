@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.file.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
 import com.tcdng.jacklyn.file.business.FileService;
-import com.tcdng.jacklyn.file.constants.FileModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,7 +28,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractFileController extends BasePageController {
 
-    @Configurable(FileModuleNameConstants.FILESERVICE)
+    @Configurable
     private FileService fileService;
 
     public AbstractFileController(boolean secured, boolean readOnly) {

@@ -357,11 +357,11 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                     auditsConfig.setAuditList(auditConfigList = new ArrayList<AuditConfig>());
                 }
 
-                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.SEARCH));
-                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.CREATE));
-                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.VIEW));
-                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.UPDATE));
-                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.DELETE));
+                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.SEARCH, false));
+                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.CREATE, true));
+                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.VIEW, false));
+                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.UPDATE, true));
+                auditConfigList.add(createAuditConfig(namePrefix, titleLowCase, type, EventType.DELETE, true));
             }
 
             // Reportable configuration
@@ -396,7 +396,7 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
         }
     }
 
-    private AuditConfig createAuditConfig(String namePrefix, String titleLowCase, String type, EventType eventType)
+    private AuditConfig createAuditConfig(String namePrefix, String titleLowCase, String type, EventType eventType, boolean active)
             throws UnifyException {
         AuditConfig ac = new AuditConfig();
         String action = eventType.name().toLowerCase();
@@ -404,6 +404,7 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
         ac.setAuditable(type);
         ac.setName(namePrefix + '-' + action);
         ac.setDescription(resolveApplicationMessage("$m{module.managedaudit." + action + "}", titleLowCase));
+        ac.setActive(active);
         return ac;
     }
 

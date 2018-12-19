@@ -40,7 +40,7 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/notification/gate")
 public class NotificationRemoteGateController extends BaseRemoteCallController {
 
-    @Configurable(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
+    @Configurable
     private NotificationService notificationService;
 
     @GatewayAction(

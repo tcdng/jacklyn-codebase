@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.report.controllers;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.report.business.ReportService;
-import com.tcdng.jacklyn.report.constants.ReportModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
@@ -30,7 +29,7 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractReportRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(ReportModuleNameConstants.REPORTSERVICE)
+    @Configurable
     private ReportService reportService;
 
     public AbstractReportRecordController(Class<T> entityClass, String hintKey, int modifier) {

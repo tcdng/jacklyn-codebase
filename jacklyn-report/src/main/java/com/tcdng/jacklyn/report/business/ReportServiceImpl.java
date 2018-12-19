@@ -40,7 +40,6 @@ import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ParameterConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ReportConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -70,7 +69,7 @@ import com.tcdng.unify.web.util.WebUtils;
 @Component(ReportModuleNameConstants.REPORTSERVICE)
 public class ReportServiceImpl extends AbstractJacklynBusinessService implements ReportService {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     @Override

@@ -37,14 +37,12 @@ import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.utils.JacklynUtils;
 import com.tcdng.jacklyn.security.business.SecurityService;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.shared.xml.config.module.AuditConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.FieldConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ManagedConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -64,10 +62,10 @@ import com.tcdng.unify.core.util.StringUtils;
 @Component(AuditModuleNameConstants.AUDITSERVICE)
 public class AuditServiceImpl extends AbstractJacklynBusinessService implements AuditService {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
-    @Configurable(SecurityModuleNameConstants.SECURITYSERVICE)
+    @Configurable
     private SecurityService securityService;
 
     @Override
@@ -186,6 +184,11 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
                         auditDefinition.setName(auditConfig.getName());
                         auditDefinition.setDescription(description);
                         auditDefinition.setEventType(auditConfig.getAction());
+                        if (auditConfig.isActive()) {
+                            auditDefinition.setStatus(RecordStatus.ACTIVE);
+                        } else {
+                            auditDefinition.setStatus(RecordStatus.INACTIVE);
+                        }
                         db().create(auditDefinition);
                     } else {
                         oldAuditDefinition.setModuleId(moduleId);
