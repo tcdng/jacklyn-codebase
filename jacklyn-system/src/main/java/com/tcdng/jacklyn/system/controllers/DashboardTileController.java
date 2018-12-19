@@ -62,13 +62,13 @@ public class DashboardTileController extends AbstractSystemRecordController<Dash
         }
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);
-        dashboardTileOrderList = getSystemModule().findDashboardTiles(query);
+        dashboardTileOrderList = getSystemService().findDashboardTiles(query);
         return "showorderpopup";
     }
 
     @Action
     public String saveDashboardTileOrder() throws UnifyException {
-        getSystemModule().saveDashboardTileOrder(dashboardTileOrderList);
+        getSystemService().saveDashboardTileOrder(dashboardTileOrderList);
         logUserEvent(SystemModuleAuditConstants.AUDIT_SET_DASHBOARDTILE_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, dashboardTileOrderList, "description"));
         hintUser("system.order.dashboardtile.saved");
@@ -107,13 +107,13 @@ public class DashboardTileController extends AbstractSystemRecordController<Dash
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getSystemModule().findDashboardTiles(query);
+        return getSystemService().findDashboardTiles(query);
 
     }
 
     @Override
     protected DashboardTile find(Long id) throws UnifyException {
-        return getSystemModule().findDashboardTile(id);
+        return getSystemService().findDashboardTile(id);
     }
 
     @Override

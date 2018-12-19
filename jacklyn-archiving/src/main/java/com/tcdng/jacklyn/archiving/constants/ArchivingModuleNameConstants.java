@@ -25,5 +25,5 @@ public interface ArchivingModuleNameConstants {
 
     String ARCHIVING_MODULE = "archiving";
 
-    String ARCHIVINGBUSINESSMODULE = "jacklyn-archivingbusinessmodule";
+    String ARCHIVINGSERVICE = "jacklyn-archivingservice";
 }

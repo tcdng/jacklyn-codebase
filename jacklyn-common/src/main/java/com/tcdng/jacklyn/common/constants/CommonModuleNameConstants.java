@@ -25,7 +25,7 @@ public interface CommonModuleNameConstants {
 
     String JACKLYNAPPLICATIONSERVICEGATE = "jacklyn-applicationservicegate";
 
-    String JACKLYNBOOTMODULE = "jacklyn-bootmodule";
+    String JACKLYNBOOTSERVICE = "jacklyn-bootservice";
 
     String PAGECONTROLLERSESSIONUTILS = "pagecontroller-sessionutils";
 }

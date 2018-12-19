@@ -109,12 +109,12 @@ public class SystemParameterController extends AbstractSystemRecordController<Sy
             query.descriptionLike(searchDescription);
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemModule().findSysParameters(query);
+        return getSystemService().findSysParameters(query);
     }
 
     @Override
     protected SystemParameter find(Long id) throws UnifyException {
-        return getSystemModule().findSysParameter(id);
+        return getSystemService().findSysParameter(id);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class SystemParameterController extends AbstractSystemRecordController<Sy
 
     @Override
     protected int update(SystemParameter sysParameterData) throws UnifyException {
-        return getSystemModule().setSysParameterValue(sysParameterData.getName(), sysParameterData.getValue());
+        return getSystemService().setSysParameterValue(sysParameterData.getName(), sysParameterData.getValue());
     }
 
     @Override

@@ -104,12 +104,12 @@ public class ScheduledTaskController extends AbstractSystemRecordController<Sche
         }
         query.ignoreEmptyCriteria(true);
 
-        return getSystemModule().findScheduledTasks(query);
+        return getSystemService().findScheduledTasks(query);
     }
 
     @Override
     protected ScheduledTask find(Long id) throws UnifyException {
-        largeData = getSystemModule().findScheduledTaskDocument(id);
+        largeData = getSystemService().findScheduledTaskDocument(id);
         return largeData.getData();
     }
 
@@ -121,12 +121,12 @@ public class ScheduledTaskController extends AbstractSystemRecordController<Sche
 
     @Override
     protected Object create(ScheduledTask scheduledTaskData) throws UnifyException {
-        return getSystemModule().createScheduledTask(largeData);
+        return getSystemService().createScheduledTask(largeData);
     }
 
     @Override
     protected int update(ScheduledTask scheduledTaskData) throws UnifyException {
-        return getSystemModule().updateScheduledTask(largeData);
+        return getSystemService().updateScheduledTask(largeData);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class ScheduledTaskController extends AbstractSystemRecordController<Sche
         if (onPaste) {
             largeData.setScheduledTaskParams(clipboardLargeData.getScheduledTaskParams());
         } else {
-            largeData = getSystemModule().loadScheduledTaskDocumentValues(largeData);
+            largeData = getSystemService().loadScheduledTaskDocumentValues(largeData);
         }
 
         boolean isDisabled = ManageRecordModifier.VIEW == getMode() || ManageRecordModifier.DELETE == getMode();

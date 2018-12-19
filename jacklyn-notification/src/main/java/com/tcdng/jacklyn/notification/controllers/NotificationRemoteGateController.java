@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.controllers.BaseRemoteCallController;
-import com.tcdng.jacklyn.notification.business.NotificationModule;
+import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.jacklyn.shared.notification.data.GetToolingAttachmentGenParams;
 import com.tcdng.jacklyn.shared.notification.data.GetToolingAttachmentGenResult;
@@ -40,15 +40,15 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/notification/gate")
 public class NotificationRemoteGateController extends BaseRemoteCallController {
 
-    @Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
-    private NotificationModule notificationModule;
+    @Configurable(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
+    private NotificationService notificationService;
 
     @GatewayAction(
             name = com.tcdng.jacklyn.shared.notification.NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST,
             description = "$m{notification.gate.remotecall.gettoolingattachmentgen}")
     public GetToolingAttachmentGenResult getToolingAttachmentGenList(GetToolingAttachmentGenParams params)
             throws UnifyException {
-        List<ToolingAttachmentGenItem> list = notificationModule.findToolingAttachmentGenTypes();
+        List<ToolingAttachmentGenItem> list = notificationService.findToolingAttachmentGenTypes();
         return new GetToolingAttachmentGenResult(list);
     }
 

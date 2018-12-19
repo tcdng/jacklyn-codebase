@@ -60,7 +60,7 @@ public class NotificationController extends AbstractNotificationRecordController
     public String markAsUnsent() throws UnifyException {
         List<Long> messageIds = getSelectedIds();
         if (!messageIds.isEmpty()) {
-            getNotificationModule().setNotificationStatus(messageIds, NotificationStatus.NOT_SENT);
+            getNotificationService().setNotificationStatus(messageIds, NotificationStatus.NOT_SENT);
             logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_UNSENT, getSelectedDescription());
             hintUser("hint.message.marked.unsent");
         }
@@ -71,7 +71,7 @@ public class NotificationController extends AbstractNotificationRecordController
     public String markAsSent() throws UnifyException {
         List<Long> messageIds = getSelectedIds();
         if (!messageIds.isEmpty()) {
-            getNotificationModule().setNotificationStatus(messageIds, NotificationStatus.SENT);
+            getNotificationService().setNotificationStatus(messageIds, NotificationStatus.SENT);
             logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_SENT, getSelectedDescription());
             hintUser("hint.message.marked.sent");
         }
@@ -82,7 +82,7 @@ public class NotificationController extends AbstractNotificationRecordController
     public String markAsAborted() throws UnifyException {
         List<Long> messageIds = getSelectedIds();
         if (!messageIds.isEmpty()) {
-            getNotificationModule().setNotificationStatus(messageIds, NotificationStatus.ABORTED);
+            getNotificationService().setNotificationStatus(messageIds, NotificationStatus.ABORTED);
             logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_ABORT, getSelectedDescription());
             hintUser("hint.message.marked.abort");
         }
@@ -153,12 +153,12 @@ public class NotificationController extends AbstractNotificationRecordController
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        return getNotificationModule().findNotifications(query);
+        return getNotificationService().findNotifications(query);
     }
 
     @Override
     protected Notification find(Long id) throws UnifyException {
-        return getNotificationModule().findNotification(id);
+        return getNotificationService().findNotification(id);
     }
 
     @Override

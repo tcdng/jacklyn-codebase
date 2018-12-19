@@ -52,7 +52,7 @@ public class BatchFileUploadController extends AbstractFileController {
     public String prepareBatchUpload() throws UnifyException {
         batchUploadParameters = null;
         if (QueryUtils.isValidLongCriteria(batchUploadConfigId)) {
-            batchUploadParameters = getFileModule().getBatchFileReadInputParameters(batchUploadConfigId);
+            batchUploadParameters = getFileService().getBatchFileReadInputParameters(batchUploadConfigId);
         }
         return "refreshinputparameters";
     }

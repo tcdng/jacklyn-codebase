@@ -108,12 +108,12 @@ public class AuditTrailController extends AbstractAuditRecordController<AuditTra
             query.eventType(searchEventType);
         }
         query.createdOn(searchCreateDt);
-        return getAuditModule().findAuditTrail(query);
+        return getAuditService().findAuditTrail(query);
     }
 
     @Override
     protected AuditTrail find(Long id) throws UnifyException {
-        return getAuditModule().findAuditTrail(id);
+        return getAuditService().findAuditTrail(id);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class AuditTrailController extends AbstractAuditRecordController<AuditTra
 
     @Override
     protected void onPrepareView(AuditTrail auditTrailData, boolean paste) throws UnifyException {
-        auditDetailList = getAuditModule().findAuditDetails(auditTrailData.getId());
+        auditDetailList = getAuditService().findAuditDetails(auditTrailData.getId());
     }
 
     @Override

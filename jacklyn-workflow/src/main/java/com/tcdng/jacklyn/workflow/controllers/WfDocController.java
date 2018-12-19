@@ -108,12 +108,12 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
         }
 
         query.order("description").ignoreEmptyCriteria(true);
-        return getWorkflowModule().findWfDocs(query);
+        return getWorkflowService().findWfDocs(query);
     }
 
     @Override
     protected WfDoc find(Long wfDocId) throws UnifyException {
-        return getWorkflowModule().findWfDoc(wfDocId);
+        return getWorkflowService().findWfDoc(wfDocId);
     }
 
     @Override

@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.service.controllers;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.service.business.ServiceModule;
+import com.tcdng.jacklyn.service.business.MicroserviceService;
 import com.tcdng.jacklyn.service.constants.ServiceModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -31,14 +31,14 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractServiceRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
-    private ServiceModule serviceModule;
+    @Configurable(ServiceModuleNameConstants.MICROSERVICESERVICE)
+    private MicroserviceService microserviceService;
 
     public AbstractServiceRecordController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected ServiceModule getServiceModule() throws UnifyException {
-        return serviceModule;
+    protected MicroserviceService getMicroserviceService() throws UnifyException {
+        return microserviceService;
     }
 }

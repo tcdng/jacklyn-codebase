@@ -25,5 +25,5 @@ public interface SecurityModuleNameConstants {
 
     String SECURITY_MODULE = "security";
 
-    String SECURITYBUSINESSMODULE = "jacklyn-securitybusinessmodule";
+    String SECURITYSERVICE = "jacklyn-securityservice";
 }

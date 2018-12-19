@@ -17,22 +17,22 @@ package com.tcdng.jacklyn.organization.controllers;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.organization.business.OrganizationModule;
+import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Abstract base organization module record management page controller.
+ * Abstract base organization service record management page controller.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public abstract class AbstractOrganizationRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(OrganizationModuleNameConstants.ORGANIZATIONBUSINESSMODULE)
-    private OrganizationModule organizationModule;
+    @Configurable(OrganizationModuleNameConstants.ORGANIZATIONSERVICE)
+    private OrganizationService organizationService;
 
     private RecordStatus searchStatus;
 
@@ -48,7 +48,7 @@ public abstract class AbstractOrganizationRecordController<T extends Entity> ext
         this.searchStatus = searchStatus;
     }
 
-    protected OrganizationModule getOrganizationModule() throws UnifyException {
-        return organizationModule;
+    protected OrganizationService getOrganizationService() throws UnifyException {
+        return organizationService;
     }
 }

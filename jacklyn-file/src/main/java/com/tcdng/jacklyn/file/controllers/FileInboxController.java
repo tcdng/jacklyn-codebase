@@ -68,7 +68,7 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
     public String markRead() throws UnifyException {
         List<Long> fileInboxIds = getSelectedIds();
         if (!fileInboxIds.isEmpty()) {
-            getFileModule().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
+            getFileService().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
                     FileInboxReadStatus.READ);
             logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKREAD, getSelectedDescription());
             hintUser("hint.records.markedread");
@@ -80,7 +80,7 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
     public String markUnread() throws UnifyException {
         List<Long> fileInboxIds = getSelectedIds();
         if (!fileInboxIds.isEmpty()) {
-            getFileModule().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
+            getFileService().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
                     FileInboxReadStatus.NOT_READ);
             logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKUNREAD, getSelectedDescription());
             hintUser("hint.records.markedunread");
@@ -104,11 +104,11 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
         }
 
         query.createdOn(getSearchCreateDt());
-        return getFileModule().findFileInboxItems(query);
+        return getFileService().findFileInboxItems(query);
     }
 
     @Override
     protected FileInbox find(Long id) throws UnifyException {
-        return getFileModule().findFileInboxItem(id);
+        return getFileService().findFileInboxItem(id);
     }
 }

@@ -25,5 +25,5 @@ public interface SystemModuleNameConstants {
 
     String SYSTEM_MODULE = "system";
 
-    String SYSTEMBUSINESSMODULE = "jacklyn-systembusinessmodule";
+    String SYSTEMSERVICE = "jacklyn-systemservice";
 }

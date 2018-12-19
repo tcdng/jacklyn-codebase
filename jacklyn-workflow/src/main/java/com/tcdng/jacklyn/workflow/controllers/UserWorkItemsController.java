@@ -103,7 +103,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     @Action
     public String refreshWorkflowItems() throws UnifyException {
         if (QueryUtils.isValidStringCriteria(wfStepName)) {
-            csWorkItems = getWorkflowModule().getCurrentUserWorkItems(wfStepName);
+            csWorkItems = getWorkflowService().getCurrentUserWorkItems(wfStepName);
             ((UserWorkItemsPage) getPage()).setPageValidationActions(csWorkItems.getValidatePageActions());
         } else {
             csWorkItems = null;
@@ -162,21 +162,21 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     @Action
     public String fetchWorkflowItems() throws UnifyException {
-        getWorkflowModule().grabCurrentUserWorkItems(wfStepName);
+        getWorkflowService().grabCurrentUserWorkItems(wfStepName);
         return refreshWorkflowItemSummary();
     }
 
     @Action
     public String releaseWorkflowItems() throws UnifyException {
         List<Long> wfItemIds = getSelectedIds();
-        getWorkflowModule().releaseCurrentUserWorkItems(wfStepName, wfItemIds);
+        getWorkflowService().releaseCurrentUserWorkItems(wfStepName, wfItemIds);
         return refreshWorkflowItemSummary();
     }
 
     @Action
     public String showWorkflowItemAttachments() throws UnifyException {
         Long wfItemId = wfItemIds.get(viewIndex);
-        List<WfItemAttachmentInfo> wfAttachmentList = getWorkflowModule().fetchWorkflowItemAttachments(wfItemId, true);
+        List<WfItemAttachmentInfo> wfAttachmentList = getWorkflowService().fetchWorkflowItemAttachments(wfItemId, true);
         List<FileAttachmentInfo> filaAttachmentInfoList = new ArrayList<FileAttachmentInfo>();
         for (WfItemAttachmentInfo workflowItemAttachment : wfAttachmentList) {
             FileAttachmentInfo fileAttachmentInfo = new FileAttachmentInfo(workflowItemAttachment.getName(),
@@ -281,7 +281,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     }
 
     private String showNotes(boolean isAddNotes) throws UnifyException {
-        WfItemHistObject wih = getWorkflowModule().findWorkflowItemHistory(workflowItem.getWfItemHistId(), true);
+        WfItemHistObject wih = getWorkflowService().findWorkflowItemHistory(workflowItem.getWfItemHistId(), true);
         notesInfo.setNotesHistEventList(wih.getEventList());
         wfItemNotesPanel.setAddNotes(isAddNotes);
         return "shownotes";
@@ -293,7 +293,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         if (workingCache != null && workingCache.containsKey(wfItemId)) {
             workflowItem = workingCache.get(wfItemId);
         } else {
-            workflowItem = getWorkflowModule().findWorkflowItem(wfItemId);
+            workflowItem = getWorkflowService().findWorkflowItem(wfItemId);
             workflowItem.setActionList(csWorkItems.getActionList());
 
             if (workingCache == null) {
@@ -308,7 +308,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     }
 
     private String internalApplyActionToWorkflowItem() throws UnifyException {
-        getWorkflowModule().applyWorkflowAction(workflowItem, actionName);
+        getWorkflowService().applyWorkflowAction(workflowItem, actionName);
         Long wfItemId = wfItemIds.remove(viewIndex);
         workingCache.remove(wfItemId);
 

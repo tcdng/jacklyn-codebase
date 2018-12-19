@@ -98,12 +98,12 @@ public class AuthenticationController extends AbstractSystemRecordController<Aut
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemModule().findAuthentications(query);
+        return getSystemService().findAuthentications(query);
     }
 
     @Override
     protected Authentication find(Long id) throws UnifyException {
-        largeData = getSystemModule().findAuthentication(id);
+        largeData = getSystemService().findAuthentication(id);
         return largeData.getData();
     }
 
@@ -125,16 +125,16 @@ public class AuthenticationController extends AbstractSystemRecordController<Aut
 
     @Override
     protected Object create(Authentication authenticationData) throws UnifyException {
-        return getSystemModule().createAuthentication(largeData);
+        return getSystemService().createAuthentication(largeData);
     }
 
     @Override
     protected int update(Authentication authenticationData) throws UnifyException {
-        return getSystemModule().updateAuthentication(largeData);
+        return getSystemService().updateAuthentication(largeData);
     }
 
     @Override
     protected int delete(Authentication authenticationData) throws UnifyException {
-        return getSystemModule().deleteAuthentication(authenticationData.getId());
+        return getSystemService().deleteAuthentication(authenticationData.getId());
     }
 }

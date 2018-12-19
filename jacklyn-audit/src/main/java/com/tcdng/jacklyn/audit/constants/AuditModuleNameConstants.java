@@ -25,6 +25,6 @@ public interface AuditModuleNameConstants {
 
     String AUDIT_MODULE = "audit";
 
-    String AUDITBUSINESSMODULE = "jacklyn-auditbusinessmodule";
+    String AUDITSERVICE = "jacklyn-auditservice";
 
 }

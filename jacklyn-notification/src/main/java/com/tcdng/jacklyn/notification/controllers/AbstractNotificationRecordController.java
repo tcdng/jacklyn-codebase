@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.notification.controllers;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.notification.business.NotificationModule;
+import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -30,14 +30,14 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractNotificationRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
-    private NotificationModule notificationModule;
+    @Configurable(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
+    private NotificationService notificationService;
 
     public AbstractNotificationRecordController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected NotificationModule getNotificationModule() throws UnifyException {
-        return notificationModule;
+    protected NotificationService getNotificationService() throws UnifyException {
+        return notificationService;
     }
 }

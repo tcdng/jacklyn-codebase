@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.widgets;
 
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.BaseLabelWfDef;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
@@ -33,8 +33,8 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public abstract class AbstractWorkflowUplGenerator extends AbstractUplGenerator {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-    private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    private WorkflowService workflowService;
 
     public AbstractWorkflowUplGenerator(String uplComponentName) {
         super(uplComponentName);
@@ -42,19 +42,19 @@ public abstract class AbstractWorkflowUplGenerator extends AbstractUplGenerator 
 
     @Override
     public boolean isNewerVersion(String target) throws UnifyException {
-        WfFormDef wfFormDef = workflowModule.getRuntimeWfFormDef(target);
+        WfFormDef wfFormDef = workflowService.getRuntimeWfFormDef(target);
         return !wfFormDef.isRead();
     }
 
     @Override
     protected void generateBody(StringBuilder sb, String target) throws UnifyException {
-        WfFormDef wfFormDef = workflowModule.getRuntimeWfFormDef(target);
+        WfFormDef wfFormDef = workflowService.getRuntimeWfFormDef(target);
         wfFormDef.read(); // Indicate generation has been done for this document instance
         doGenerateBody(sb, wfFormDef);
     }
 
-    protected WorkflowModule getWorkflowModule() {
-        return workflowModule;
+    protected WorkflowService getWorkflowModule() {
+        return workflowService;
     }
 
     protected void appendLabel(StringBuilder sb, BaseLabelWfDef baseWfDef) throws UnifyException {

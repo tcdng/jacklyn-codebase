@@ -25,7 +25,7 @@ public interface WorkflowModuleNameConstants {
 
     String WORKFLOW_MODULE = "workflow";
 
-    String WORKFLOWBUSINESSMODULE = "jacklyn-workflowbusinessmodule";
+    String WORKFLOWSERVICE = "jacklyn-workflowservice";
 
     String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
 

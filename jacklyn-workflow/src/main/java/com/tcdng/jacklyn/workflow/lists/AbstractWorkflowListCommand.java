@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.lists;
 
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
@@ -28,15 +28,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractWorkflowListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-    private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    private WorkflowService workflowService;
 
     public AbstractWorkflowListCommand(Class<T> paramType) {
         super(paramType);
     }
 
-    protected WorkflowModule getWorkflowModule() {
-        return workflowModule;
+    protected WorkflowService getWorkflowModule() {
+        return workflowService;
     }
 
 }

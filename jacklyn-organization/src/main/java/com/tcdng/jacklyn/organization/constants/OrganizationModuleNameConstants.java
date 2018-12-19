@@ -25,5 +25,5 @@ public interface OrganizationModuleNameConstants {
 
     String ORGANIZATION_MODULE = "organization";
 
-    String ORGANIZATIONBUSINESSMODULE = "jacklyn-organizationbusinessmodule";
+    String ORGANIZATIONSERVICE = "jacklyn-organizationservice";
 }

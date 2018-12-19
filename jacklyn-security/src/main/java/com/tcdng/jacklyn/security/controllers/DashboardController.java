@@ -21,7 +21,7 @@ import java.util.Set;
 
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
-import com.tcdng.jacklyn.system.business.SystemModule;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
 import com.tcdng.unify.core.UnifyException;
@@ -61,7 +61,7 @@ public class DashboardController extends AbstractSecurityController {
         setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
     }
 
-    protected SystemModule getSystemBusinessModule() throws UnifyException {
-        return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
+    protected SystemService getSystemBusinessModule() throws UnifyException {
+        return (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
     }
 }
