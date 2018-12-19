@@ -53,7 +53,7 @@ public class ChangeUserPasswordController extends AbstractSecurityController {
     public String changeUserPassword() throws UnifyException {
         try {
             setDisplayMessage(null);
-            getSecurityModule().changeUserPassword(oldPassword, newPassword);
+            getSecurityService().changeUserPassword(oldPassword, newPassword);
             logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
             hintUser("security.changepassword.hint.passwordchanged");
         } catch (UnifyException e) {

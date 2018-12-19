@@ -118,12 +118,12 @@ public class WfTemplateController extends AbstractWorkflowRecordController<WfTem
         }
 
         query.ignoreEmptyCriteria(true);
-        return getWorkflowModule().findWfTemplates(query);
+        return getWorkflowService().findWfTemplates(query);
     }
 
     @Override
     protected WfTemplate find(Long id) throws UnifyException {
-        largeData = getWorkflowModule().findLargeWfTemplate(id);
+        largeData = getWorkflowService().findLargeWfTemplate(id);
         return largeData.getData();
     }
 

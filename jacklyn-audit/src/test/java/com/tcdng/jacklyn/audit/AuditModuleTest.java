@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.tcdng.jacklyn.audit.business.AuditModule;
+import com.tcdng.jacklyn.audit.business.AuditService;
 import com.tcdng.jacklyn.audit.business.EventLoggerService;
 import com.tcdng.jacklyn.audit.constants.AuditModuleNameConstants;
 import com.tcdng.jacklyn.audit.entities.AuditDefinition;
@@ -39,7 +39,7 @@ import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.logging.EventType;
 
 /**
- * Audit business module tests.
+ * Audit business service tests.
  * 
  * @author Lateef Ojulari
  * @since 1.0
@@ -48,17 +48,17 @@ public class AuditModuleTest extends AbstractJacklynTest {
 
     @Test
     public void testFindAuditTypes() throws Exception {
-        AuditModule auditModule = (AuditModule) getComponent(AuditModuleNameConstants.AUDITBUSINESSMODULE);
+        AuditService auditService = (AuditService) getComponent(AuditModuleNameConstants.AUDITSERVICE);
         AuditDefinitionQuery query = new AuditDefinitionQuery();
         query.moduleName("customer");
-        List<AuditDefinition> auditTypeList = auditModule.findAuditTypes(query);
+        List<AuditDefinition> auditTypeList = auditService.findAuditTypes(query);
         assertNotNull(auditTypeList);
         assertEquals(3 + 5, auditTypeList.size());
 
         query.clear();
         query.name("customer-search");
         query.moduleName("customer");
-        auditTypeList = auditModule.findAuditTypes(query);
+        auditTypeList = auditService.findAuditTypes(query);
         assertNotNull(auditTypeList);
         assertEquals(1, auditTypeList.size());
         AuditDefinition auditDefinition = auditTypeList.get(0);
@@ -71,12 +71,12 @@ public class AuditModuleTest extends AbstractJacklynTest {
 
     @Test
     public void testFindAuditType() throws Exception {
-        AuditModule auditModule = (AuditModule) getComponent(AuditModuleNameConstants.AUDITBUSINESSMODULE);
+        AuditService auditService = (AuditService) getComponent(AuditModuleNameConstants.AUDITSERVICE);
         AuditDefinitionQuery query = new AuditDefinitionQuery();
         query.name("customer-search");
         query.moduleName("customer");
-        AuditDefinition auditDefinition = auditModule.findAuditType(query);
-        auditDefinition = auditModule.findAuditType(auditDefinition.getId());
+        AuditDefinition auditDefinition = auditService.findAuditType(query);
+        auditDefinition = auditService.findAuditType(auditDefinition.getId());
         assertNotNull(auditDefinition);
         assertEquals("customer-search", auditDefinition.getName());
         assertEquals("Customer Search", auditDefinition.getDescription());
@@ -87,64 +87,64 @@ public class AuditModuleTest extends AbstractJacklynTest {
 
     @Test
     public void testSetAuditTypeStatus() throws Exception {
-        AuditModule auditModule = (AuditModule) getComponent(AuditModuleNameConstants.AUDITBUSINESSMODULE);
+        AuditService auditService = (AuditService) getComponent(AuditModuleNameConstants.AUDITSERVICE);
         AuditDefinitionQuery query = new AuditDefinitionQuery();
         query.nameIn(Arrays.asList(new String[] { "customer-create", "customer-view" }));
         query.moduleName("customer");
-        auditModule.setAuditTypeStatus(query, RecordStatus.INACTIVE);
+        auditService.setAuditTypeStatus(query, RecordStatus.INACTIVE);
 
         // Test statuses
         query.clear();
         query.name("customer-search");
         query.moduleName("customer");
-        AuditDefinition auditDefinition = auditModule.findAuditType(query);
+        AuditDefinition auditDefinition = auditService.findAuditType(query);
         assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 
         query.clear();
         query.name("customer-create");
         query.moduleName("customer");
-        auditDefinition = auditModule.findAuditType(query);
+        auditDefinition = auditService.findAuditType(query);
         assertEquals(RecordStatus.INACTIVE, auditDefinition.getStatus());
 
         query.clear();
         query.name("customer-view");
         query.moduleName("customer");
-        auditDefinition = auditModule.findAuditType(query);
+        auditDefinition = auditService.findAuditType(query);
         assertEquals(RecordStatus.INACTIVE, auditDefinition.getStatus());
 
         // Flip status back
         query.clear();
         query.name("customer-view");
         query.moduleName("customer");
-        auditModule.setAuditTypeStatus(query, RecordStatus.ACTIVE);
+        auditService.setAuditTypeStatus(query, RecordStatus.ACTIVE);
 
         // Test statuses
         query.clear();
         query.name("customer-search");
         query.moduleName("customer");
-        auditDefinition = auditModule.findAuditType(query);
+        auditDefinition = auditService.findAuditType(query);
         assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
 
         query.clear();
         query.name("customer-create");
         query.moduleName("customer");
-        auditDefinition = auditModule.findAuditType(query);
+        auditDefinition = auditService.findAuditType(query);
         assertEquals(RecordStatus.INACTIVE, auditDefinition.getStatus());
 
         query.clear();
         query.name("customer-view");
         query.moduleName("customer");
-        auditDefinition = auditModule.findAuditType(query);
+        auditDefinition = auditService.findAuditType(query);
         assertEquals(RecordStatus.ACTIVE, auditDefinition.getStatus());
     }
 
     @Test
     public void testFindAuditTrail() throws Exception {
-        AuditModule auditModule = (AuditModule) getComponent(AuditModuleNameConstants.AUDITBUSINESSMODULE);
+        AuditService auditService = (AuditService) getComponent(AuditModuleNameConstants.AUDITSERVICE);
         // Update all statuses to active
         AuditDefinitionQuery query = new AuditDefinitionQuery();
         query.moduleName("customer");
-        auditModule.setAuditTypeStatus(query, RecordStatus.ACTIVE);
+        auditService.setAuditTypeStatus(query, RecordStatus.ACTIVE);
 
         EventLoggerService eventLoggerService = (EventLoggerService) this
                 .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
@@ -157,11 +157,11 @@ public class AuditModuleTest extends AbstractJacklynTest {
 
         AuditTrailQuery trailQuery = new AuditTrailQuery();
         trailQuery.moduleName("customer");
-        List<AuditTrail> auditTrailList = auditModule.findAuditTrail(trailQuery);
+        List<AuditTrail> auditTrailList = auditService.findAuditTrail(trailQuery);
         assertNotNull(auditTrailList);
         assertEquals(2, auditTrailList.size());
 
-        AuditTrail auditTrail = auditModule.findAuditTrail(auditTrailList.get(0).getId());
+        AuditTrail auditTrail = auditService.findAuditTrail(auditTrailList.get(0).getId());
         assertNotNull(auditTrail);
     }
 
@@ -171,15 +171,15 @@ public class AuditModuleTest extends AbstractJacklynTest {
                 .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
         eventLoggerService.logUserEvent("customer-view", "On a Sunday", "By age");
 
-        AuditModule auditModule = (AuditModule) getComponent(AuditModuleNameConstants.AUDITBUSINESSMODULE);
+        AuditService auditService = (AuditService) getComponent(AuditModuleNameConstants.AUDITSERVICE);
         AuditTrailQuery query = new AuditTrailQuery();
         query.moduleName("customer");
         query.auditDefinitionName("customer-view");
-        List<AuditTrail> auditTrailList = auditModule.findAuditTrail(query);
+        List<AuditTrail> auditTrailList = auditService.findAuditTrail(query);
         assertNotNull(auditTrailList);
 
         Long auditTrailId = auditTrailList.get(0).getId();
-        List<AuditDetail> auditDetailList = auditModule.findAuditDetails(auditTrailId);
+        List<AuditDetail> auditDetailList = auditService.findAuditDetails(auditTrailId);
         assertNotNull(auditDetailList);
         assertEquals(2, auditDetailList.size());
         assertEquals("On a Sunday", auditDetailList.get(0).getDetail());

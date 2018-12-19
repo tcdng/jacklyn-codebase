@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.widgets;
 
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.unify.core.UnifyException;
@@ -33,19 +33,19 @@ import com.tcdng.unify.web.ui.data.FileAttachmentInfo;
 @Component(WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMATTACHMENTHANDLER)
 public class WfItemFileAttachmentHandler extends AbstractFileAttachmentHandler {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-    private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    private WorkflowService workflowService;
 
     @Override
     public void handleAttach(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
         WfItemAttachmentInfo wfItemAttachment = new WfItemAttachmentInfo(fileAttachmentInfo.getName(), null,
                 fileAttachmentInfo.getFilename(), fileAttachmentInfo.getType(), fileAttachmentInfo.getAttachment());
-        workflowModule.attachToWorkflowItem((Long) parentId, wfItemAttachment);
+        workflowService.attachToWorkflowItem((Long) parentId, wfItemAttachment);
     }
 
     @Override
     public FileAttachmentInfo handleView(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
-        WfItemAttachmentInfo wfItemAttachment = workflowModule.fetchWorkflowItemAttachment((Long) parentId,
+        WfItemAttachmentInfo wfItemAttachment = workflowService.fetchWorkflowItemAttachment((Long) parentId,
                 fileAttachmentInfo.getName());
         FileAttachmentInfo retAttachmentInfo = new FileAttachmentInfo(wfItemAttachment.getName(),
                 resolveSessionMessage(wfItemAttachment.getLabel()), wfItemAttachment.getType());
@@ -56,7 +56,7 @@ public class WfItemFileAttachmentHandler extends AbstractFileAttachmentHandler {
 
     @Override
     public void handleDetach(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
-        workflowModule.deleteWorkflowItemAttachment((Long) parentId, fileAttachmentInfo.getName());
+        workflowService.deleteWorkflowItemAttachment((Long) parentId, fileAttachmentInfo.getName());
     }
 
 }

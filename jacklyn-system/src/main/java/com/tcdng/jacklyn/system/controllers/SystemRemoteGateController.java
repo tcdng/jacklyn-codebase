@@ -34,7 +34,7 @@ import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeResult;
-import com.tcdng.jacklyn.system.business.SystemModule;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
@@ -60,16 +60,16 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/system/gate")
 public class SystemRemoteGateController extends BaseRemoteCallController {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-    private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    private SystemService systemService;
 
     @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,
             description = "$m{system.gate.remotecall.getapplicationinfo}")
     public GetAppInfoResult getApplicationInfo(GetAppInfoParams params) throws UnifyException {
         return new GetAppInfoResult(getApplicationName(),
-                systemModule.getSysParameterValue(String.class,
+                systemService.getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION),
-                systemModule.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
+                systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
     }
 
     @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MENU,
@@ -87,10 +87,10 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         menuQuery.ignoreEmptyCriteria(true);
         menuQuery.orderByDisplayOrder();
 
-        List<ApplicationMenu> menuList = systemModule.findMenus(menuQuery);
+        List<ApplicationMenu> menuList = systemService.findMenus(menuQuery);
         for (ApplicationMenu menuData : menuList) {
             List<AppMenuItem> appMenuItemList = new ArrayList<AppMenuItem>();
-            List<ApplicationMenuItem> menuItemList = systemModule
+            List<ApplicationMenuItem> menuItemList = systemService
                     .findMenuItems(new ApplicationMenuItemQuery().menuId(menuData.getId()).orderByDisplayOrder());
             for (ApplicationMenuItem menuItemData : menuItemList) {
                 String remotePath = menuItemData.getRemotePath();
@@ -118,7 +118,7 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
             description = "$m{system.gate.remotecall.getapplicationmodule}")
     public GetAppModulesResult getApplicationModules(GetAppModulesParams params) throws UnifyException {
         List<AppModule> appModuleList = new ArrayList<AppModule>();
-        List<Module> moduleList = systemModule.findModules((ModuleQuery) new ModuleQuery().ignoreEmptyCriteria(true));
+        List<Module> moduleList = systemService.findModules((ModuleQuery) new ModuleQuery().ignoreEmptyCriteria(true));
         for (Module moduleData : moduleList) {
             appModuleList.add(
                     new AppModule(moduleData.getName(), moduleData.getDescription(), moduleData.getStatus().code()));
@@ -130,13 +130,13 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
     @GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
             description = "$m{system.gate.remotecall.getrecordtypes}")
     public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
-        return new GetToolingRecordTypeResult(systemModule.findToolingRecordTypes());
+        return new GetToolingRecordTypeResult(systemService.findToolingRecordTypes());
     }
 
     @GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES,
             description = "$m{system.gate.remotecall.getlisttypes}")
     public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params) throws UnifyException {
-        return new GetToolingListTypeResult(systemModule.findToolingListTypes());
+        return new GetToolingListTypeResult(systemService.findToolingListTypes());
     }
 
 }

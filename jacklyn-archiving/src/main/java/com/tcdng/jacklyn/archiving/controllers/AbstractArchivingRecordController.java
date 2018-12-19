@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.archiving.controllers;
 
-import com.tcdng.jacklyn.archiving.business.ArchivingModule;
+import com.tcdng.jacklyn.archiving.business.ArchivingService;
 import com.tcdng.jacklyn.archiving.constants.ArchivingModuleNameConstants;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.unify.core.UnifyException;
@@ -30,14 +30,14 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractArchivingRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
-    private ArchivingModule archivingModule;
+    @Configurable(ArchivingModuleNameConstants.ARCHIVINGSERVICE)
+    private ArchivingService archivingService;
 
     public AbstractArchivingRecordController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected ArchivingModule getArchivingModule() throws UnifyException {
-        return archivingModule;
+    protected ArchivingService getArchivingService() throws UnifyException {
+        return archivingService;
     }
 }

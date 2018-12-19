@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.service.controllers;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.controllers.BaseRemoteCallController;
-import com.tcdng.jacklyn.service.business.ServiceModule;
+import com.tcdng.jacklyn.service.business.MicroserviceService;
 import com.tcdng.jacklyn.service.constants.ServiceModuleNameConstants;
 import com.tcdng.jacklyn.shared.service.ServiceRemoteCallNameConstants;
 import com.tcdng.jacklyn.shared.service.data.OSInstallationReqParams;
@@ -37,14 +37,14 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/service/gate")
 public class ServiceRemoteCallController extends BaseRemoteCallController {
 
-    @Configurable(ServiceModuleNameConstants.SERVICEBUSINESSMODULE)
-    private ServiceModule serviceModule;
+    @Configurable(ServiceModuleNameConstants.MICROSERVICESERVICE)
+    private MicroserviceService microserviceService;
 
     @GatewayAction(name = ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL,
             description = "$m{service.gate.remotecall.osrequestinstall}", restricted = false)
     public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
             throws UnifyException {
-        return serviceModule.processOSInstallationRequest(oSInstallationReqParams);
+        return microserviceService.processOSInstallationRequest(oSInstallationReqParams);
     }
 
 }

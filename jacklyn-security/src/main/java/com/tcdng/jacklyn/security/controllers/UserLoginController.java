@@ -83,7 +83,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
     @Action
     public String login() throws UnifyException {
         try {
-            User user = getSecurityModule().login(userName, password);
+            User user = getSecurityService().login(userName, password);
             userName = null;
             password = null;
 
@@ -117,7 +117,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
     public String changeUserPassword() throws UnifyException {
         try {
             setDisplayMessage(null);
-            getSecurityModule().changeUserPassword(oldPassword, newPassword);
+            getSecurityService().changeUserPassword(oldPassword, newPassword);
             logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
             return selectRole();
         } catch (UnifyException e) {
@@ -135,7 +135,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         userName = null;
         password = null;
         setDisplayMessage(null);
-        getSecurityModule().logout(false);
+        getSecurityService().logout(false);
         return "switchlogin";
     }
 
@@ -233,7 +233,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         setDisplayMessage(loginMessage);
 
         // Show/hide token field based on system parameter
-        is2FA = getSystemBusinessModule().getSysParameterValue(boolean.class,
+        is2FA = getSystemService().getSysParameterValue(boolean.class,
                 SecurityModuleSysParamConstants.ENABLE_TWOFACTOR_AUTHENTICATION);
         setVisible("loginPanel.tokenField", is2FA);
     }
@@ -249,7 +249,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         query.userLoginId(userToken.getUserLoginId());
         query.roleStatus(RecordStatus.ACTIVE);
         query.roleActiveTime(new Date());
-        List<UserRole> userRoleList = getSecurityModule().findUserRoles(query);
+        List<UserRole> userRoleList = getSecurityService().findUserRoles(query);
 
         if (userRoleList.isEmpty()) {
             if (!userToken.isReservedUser()) {

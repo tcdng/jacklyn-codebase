@@ -111,7 +111,7 @@ public class InspectUserAuditController extends AbstractAuditController {
     }
 
     private void performFetchInspectUserInfo() throws UnifyException {
-        inspectUserInfo = getAuditModule().fetchInspectUserInfo(searchUserLoginId, searchCreateDt, searchModuleId,
+        inspectUserInfo = getAuditService().fetchInspectUserInfo(searchUserLoginId, searchCreateDt, searchModuleId,
                 searchEventType);
         setVisible("userDetailsPanel", inspectUserInfo.isUser());
     }

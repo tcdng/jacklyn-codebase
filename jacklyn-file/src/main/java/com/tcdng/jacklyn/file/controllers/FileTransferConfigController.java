@@ -99,12 +99,12 @@ public class FileTransferConfigController extends AbstractFileRecordController<F
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getFileModule().findFileTransferConfigs(query);
+        return getFileService().findFileTransferConfigs(query);
     }
 
     @Override
     protected FileTransferConfig find(Long id) throws UnifyException {
-        return getFileModule().findFileTransferConfig(id);
+        return getFileService().findFileTransferConfig(id);
     }
 
     @Override
@@ -114,16 +114,16 @@ public class FileTransferConfigController extends AbstractFileRecordController<F
 
     @Override
     protected Object create(FileTransferConfig fileTransferConfigData) throws UnifyException {
-        return getFileModule().createFileTransferConfig(fileTransferConfigData);
+        return getFileService().createFileTransferConfig(fileTransferConfigData);
     }
 
     @Override
     protected int update(FileTransferConfig fileTransferConfigData) throws UnifyException {
-        return getFileModule().updateFileTransferConfig(fileTransferConfigData);
+        return getFileService().updateFileTransferConfig(fileTransferConfigData);
     }
 
     @Override
     protected int delete(FileTransferConfig fileTransferConfigData) throws UnifyException {
-        return getFileModule().deleteFileTransferConfig(fileTransferConfigData.getId());
+        return getFileService().deleteFileTransferConfig(fileTransferConfigData.getId());
     }
 }

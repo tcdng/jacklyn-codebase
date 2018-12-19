@@ -32,7 +32,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Transactional;
-import com.tcdng.unify.core.business.AbstractBusinessModule;
+import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.QueryUtils;
@@ -46,7 +46,7 @@ import com.tcdng.unify.core.util.ReflectUtils;
  */
 @Transactional
 @Component(ApplicationComponents.APPLICATION_EVENTSLOGGER)
-public class EventLoggerServiceImpl extends AbstractBusinessModule implements EventLoggerService {
+public class EventLoggerServiceImpl extends AbstractBusinessService implements EventLoggerService {
 
     @Override
     public boolean logUserEvent(String eventName, List<String> details) throws UnifyException {
@@ -141,7 +141,6 @@ public class EventLoggerServiceImpl extends AbstractBusinessModule implements Ev
     private Long createAuditTrail(Long auditDefinitionId, String[] details, Long recordId) throws UnifyException {
         AuditTrail auditTrailData = new AuditTrail();
         auditTrailData.setAuditDefinitionId(auditDefinitionId);
-        ;
         auditTrailData.setRecordId(recordId);
         UserToken userToken = getUserToken();
         if (userToken != null) {

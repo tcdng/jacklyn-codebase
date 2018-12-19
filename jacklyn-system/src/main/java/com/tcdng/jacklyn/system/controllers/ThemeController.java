@@ -75,12 +75,12 @@ public class ThemeController extends AbstractSystemRecordController<Theme> {
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemModule().findThemes(query);
+        return getSystemService().findThemes(query);
     }
 
     @Override
     protected Theme find(Long id) throws UnifyException {
-        return getSystemModule().findTheme(id);
+        return getSystemService().findTheme(id);
     }
 
     @Override
@@ -90,17 +90,17 @@ public class ThemeController extends AbstractSystemRecordController<Theme> {
 
     @Override
     protected Object create(Theme themeData) throws UnifyException {
-        return getSystemModule().createTheme(themeData);
+        return getSystemService().createTheme(themeData);
     }
 
     @Override
     protected int update(Theme themeData) throws UnifyException {
-        return getSystemModule().updateTheme(themeData);
+        return getSystemService().updateTheme(themeData);
     }
 
     @Override
     protected int delete(Theme themeData) throws UnifyException {
-        return getSystemModule().deleteTheme(themeData.getId());
+        return getSystemService().deleteTheme(themeData.getId());
     }
 
 }

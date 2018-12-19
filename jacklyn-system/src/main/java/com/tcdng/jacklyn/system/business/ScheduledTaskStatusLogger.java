@@ -36,8 +36,8 @@ import com.tcdng.unify.core.task.TaskStatus;
 @Component("scheduledtaskstatuslogger")
 public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-    private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    private SystemService systemService;
 
     @Override
     public void logTaskStatus(TaskMonitor taskMonitor, Map<String, Object> parameters) {
@@ -67,7 +67,7 @@ public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
 
             TaskStatus oldTaskStatus = (TaskStatus) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
             if (!taskStatus.equals(oldTaskStatus)) {
-                systemModule.createScheduledTaskHistory(
+                systemService.createScheduledTaskHistory(
                         (Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID), taskStatus, errorMessages);
                 parameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, taskStatus);
             }

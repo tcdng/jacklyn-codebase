@@ -100,12 +100,12 @@ public class RoleController extends AbstractSecurityRecordController<Role> {
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSecurityModule().findRoles(query);
+        return getSecurityService().findRoles(query);
     }
 
     @Override
     protected Role find(Long id) throws UnifyException {
-        largeData = getSecurityModule().findRoleForm(id);
+        largeData = getSecurityService().findRoleForm(id);
         return largeData.getData();
     }
 
@@ -138,16 +138,16 @@ public class RoleController extends AbstractSecurityRecordController<Role> {
 
     @Override
     protected Object create(Role roleData) throws UnifyException {
-        return getSecurityModule().createRole(largeData);
+        return getSecurityService().createRole(largeData);
     }
 
     @Override
     protected int update(Role roleData) throws UnifyException {
-        return getSecurityModule().updateRole(largeData);
+        return getSecurityService().updateRole(largeData);
     }
 
     @Override
     protected int delete(Role roleData) throws UnifyException {
-        return getSecurityModule().deleteRole(roleData.getId());
+        return getSecurityService().deleteRole(roleData.getId());
     }
 }

@@ -16,27 +16,27 @@
 package com.tcdng.jacklyn.workflow.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Abstract base page controller for workflow module.
+ * Abstract base page controller for workflow service.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public abstract class AbstractWorkflowController extends BasePageController {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-    private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    private WorkflowService workflowService;
 
     public AbstractWorkflowController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
 
-    protected WorkflowModule getWorkflowModule() throws UnifyException {
-        return workflowModule;
+    protected WorkflowService getWorkflowService() throws UnifyException {
+        return workflowService;
     }
 }

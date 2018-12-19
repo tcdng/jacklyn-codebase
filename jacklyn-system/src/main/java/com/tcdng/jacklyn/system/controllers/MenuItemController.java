@@ -59,13 +59,13 @@ public class MenuItemController extends AbstractSystemRecordController<Applicati
         }
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);
-        menuItemOrderList = getSystemModule().findMenuItems(query);
+        menuItemOrderList = getSystemService().findMenuItems(query);
         return "showorderpopup";
     }
 
     @Action
     public String saveMenuItemOrder() throws UnifyException {
-        getSystemModule().saveMenuItemOrder(menuItemOrderList);
+        getSystemService().saveMenuItemOrder(menuItemOrderList);
         logUserEvent(SystemModuleAuditConstants.AUDIT_SET_MENUITEM_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, menuItemOrderList, "caption"));
         hintUser("system.order.menuitem.saved");
@@ -103,12 +103,12 @@ public class MenuItemController extends AbstractSystemRecordController<Applicati
             query.status(getSearchStatus());
         }
         query.order("caption").ignoreEmptyCriteria(true);
-        return getSystemModule().findMenuItems(query);
+        return getSystemService().findMenuItems(query);
     }
 
     @Override
     protected ApplicationMenuItem find(Long id) throws UnifyException {
-        return getSystemModule().findMenuItem(id);
+        return getSystemService().findMenuItem(id);
     }
 
     @Override

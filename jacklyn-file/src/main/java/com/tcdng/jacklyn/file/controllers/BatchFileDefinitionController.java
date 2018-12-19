@@ -88,12 +88,12 @@ public class BatchFileDefinitionController extends AbstractFileRecordController<
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getFileModule().findBatchFileDefinitions(query);
+        return getFileService().findBatchFileDefinitions(query);
     }
 
     @Override
     protected BatchFileDefinition find(Long id) throws UnifyException {
-        return getFileModule().findBatchFileDefinition(id);
+        return getFileService().findBatchFileDefinition(id);
     }
 
     @Override
@@ -103,16 +103,16 @@ public class BatchFileDefinitionController extends AbstractFileRecordController<
 
     @Override
     protected Object create(BatchFileDefinition record) throws UnifyException {
-        return getFileModule().createBatchFileDefinition(record);
+        return getFileService().createBatchFileDefinition(record);
     }
 
     @Override
     protected int update(BatchFileDefinition record) throws UnifyException {
-        return getFileModule().updateBatchFileDefinition(record);
+        return getFileService().updateBatchFileDefinition(record);
     }
 
     @Override
     protected int delete(BatchFileDefinition record) throws UnifyException {
-        return getFileModule().deleteBatchFileDefinition(record.getId());
+        return getFileService().deleteBatchFileDefinition(record.getId());
     }
 }

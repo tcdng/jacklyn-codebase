@@ -31,7 +31,7 @@ public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
     protected void doAddSettingsAndDependencies() throws Exception {
         super.doAddSettingsAndDependencies();
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_NAME, "jacklyn-codebase");
-        addContainerSetting(UnifyCorePropertyConstants.APPLICATION_BOOT, CommonModuleNameConstants.JACKLYNBOOTMODULE);
+        addContainerSetting(UnifyCorePropertyConstants.APPLICATION_BOOT, CommonModuleNameConstants.JACKLYNBOOTSERVICE);
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_MESSAGES_BASE,
                 new String[] { "com.tcdng.unify.core.resources.test" });
     }

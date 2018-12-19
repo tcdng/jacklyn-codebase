@@ -69,7 +69,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Action
     public String logOut() throws UnifyException {
         logUserEvent(SecurityModuleAuditConstants.LOGOUT);
-        getSecurityModule().logout(true);
+        getSecurityService().logout(true);
         return "forwardtohome";
     }
 
@@ -86,7 +86,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
         query.userLoginId(userToken.getUserLoginId());
         query.roleStatus(RecordStatus.ACTIVE);
         query.roleActiveTime(new Date());
-        List<UserRole> userRoleList = getSecurityModule().findUserRoles(query);
+        List<UserRole> userRoleList = getSecurityService().findUserRoles(query);
         UserRoleOptions userRoleOptions = new UserRoleOptions();
         userRoleOptions.setUserRoleList(userRoleList);
         setSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS, userRoleOptions);

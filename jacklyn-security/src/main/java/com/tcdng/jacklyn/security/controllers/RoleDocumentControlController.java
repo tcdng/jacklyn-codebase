@@ -62,7 +62,7 @@ public class RoleDocumentControlController extends AbstractSecurityController {
 
     @Action
     public String savePrivileges() throws UnifyException {
-        getSecurityModule().updateRoleDocumentControls(rolePrivilegeWidgetList);
+        getSecurityService().updateRoleDocumentControls(rolePrivilegeWidgetList);
         hintUser("hint.security.roleprivilege.saved");
         doFindPrivileges();
         return "refreshtable";
@@ -118,7 +118,7 @@ public class RoleDocumentControlController extends AbstractSecurityController {
             query.roleId(searchRoleId);
             query.moduleId(searchModuleId);
             query.categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL);
-            rolePrivilegeWidgetList = getSecurityModule().findRoleDocumentControls(query);
+            rolePrivilegeWidgetList = getSecurityService().findRoleDocumentControls(query);
         } else {
             rolePrivilegeWidgetList = Collections.emptyList();
         }

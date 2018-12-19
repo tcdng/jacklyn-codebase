@@ -31,7 +31,7 @@ public class SystemModuleStaticSettings extends AbstractJacklynModuleStaticSetti
     public static final int INSTALLATION_INDEX = 0;
 
     public SystemModuleStaticSettings() {
-        super(SystemModuleNameConstants.SYSTEMBUSINESSMODULE, "config/system-module.xml",
+        super(SystemModuleNameConstants.SYSTEMSERVICE, "config/system-module.xml",
                 "com.tcdng.jacklyn.resources.system-messages", INSTALLATION_INDEX);
     }
 

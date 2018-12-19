@@ -63,11 +63,11 @@ public class FileOutboxController extends AbstractFileTransferBoxController<File
         }
 
         query.createdOn(getSearchCreateDt());
-        return getFileModule().findFileOutboxItems(query);
+        return getFileService().findFileOutboxItems(query);
     }
 
     @Override
     protected FileOutbox find(Long id) throws UnifyException {
-        return getFileModule().findFileOutboxItem(id);
+        return getFileService().findFileOutboxItem(id);
     }
 }

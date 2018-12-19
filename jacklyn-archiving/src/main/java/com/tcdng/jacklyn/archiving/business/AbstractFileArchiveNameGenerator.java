@@ -22,10 +22,10 @@ import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.format.DateFormatter;
-import com.tcdng.unify.core.system.SequenceNumberBusinessModule;
+import com.tcdng.unify.core.system.SequenceNumberService;
 
 /**
- * Abstract base class for a file archive name generatror.
+ * Abstract base class for a file archive name generator.
  * 
  * @author Lateef Ojulari
  * @since 1.0
@@ -33,8 +33,8 @@ import com.tcdng.unify.core.system.SequenceNumberBusinessModule;
 public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComponent
         implements FileArchiveNameGenerator {
 
-    @Configurable(ApplicationComponents.APPLICATION_SEQUENCENUMBERBUSINESSMODULE)
-    private SequenceNumberBusinessModule sequenceNumberBusinessModule;
+    @Configurable(ApplicationComponents.APPLICATION_SEQUENCENUMBERSERVICE)
+    private SequenceNumberService sequenceNumberService;
 
     @Configurable("!fixeddatetimeformat pattern:$s{yyyyMMdd}")
     private String namingDateFormatter;
@@ -77,7 +77,7 @@ public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComp
      *             if an error occurs
      */
     protected String getNextSequenceIdPart(String fileArchiveConfigName, Date workingDt) throws UnifyException {
-        long nextSequenceNo = sequenceNumberBusinessModule.getNextSequenceNumber(fileArchiveConfigName, workingDt);
+        long nextSequenceNo = sequenceNumberService.getNextSequenceNumber(fileArchiveConfigName, workingDt);
         return String.format("%0" + minSequenceLength + "d", nextSequenceNo);
     }
 

@@ -75,12 +75,12 @@ public class BranchController extends AbstractOrganizationRecordController<Branc
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getOrganizationModule().findBranches(query);
+        return getOrganizationService().findBranches(query);
     }
 
     @Override
     protected Branch find(Long id) throws UnifyException {
-        return getOrganizationModule().findBranch(id);
+        return getOrganizationService().findBranch(id);
     }
 
     @Override
@@ -90,17 +90,17 @@ public class BranchController extends AbstractOrganizationRecordController<Branc
 
     @Override
     protected Object create(Branch branchData) throws UnifyException {
-        return getOrganizationModule().createBranch(branchData);
+        return getOrganizationService().createBranch(branchData);
     }
 
     @Override
     protected int update(Branch branchData) throws UnifyException {
-        return getOrganizationModule().updateBranch(branchData);
+        return getOrganizationService().updateBranch(branchData);
     }
 
     @Override
     protected int delete(Branch branchData) throws UnifyException {
-        return getOrganizationModule().deleteBranch(branchData.getId());
+        return getOrganizationService().deleteBranch(branchData.getId());
     }
 
 }

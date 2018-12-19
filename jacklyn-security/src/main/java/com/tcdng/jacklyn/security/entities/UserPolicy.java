@@ -20,7 +20,7 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntityPolicy;
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
-import com.tcdng.jacklyn.system.business.SystemModule;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -36,8 +36,8 @@ import com.tcdng.unify.core.database.Entity;
 @Component("userpolicy")
 public class UserPolicy extends BaseVersionedTimestampedStatusEntityPolicy {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-    private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    private SystemService systemService;
 
     @Override
     public Object preCreate(Entity record, Date now) throws UnifyException {
@@ -72,12 +72,12 @@ public class UserPolicy extends BaseVersionedTimestampedStatusEntityPolicy {
     }
 
     private void calcPasswordExpiryDate(User user) throws UnifyException {
-        if (user.getPasswordExpires() && user.getPasswordExpiryDt() == null && systemModule
+        if (user.getPasswordExpires() && user.getPasswordExpiryDt() == null && systemService
                 .getSysParameterValue(boolean.class, SecurityModuleSysParamConstants.ENABLE_PASSWORD_EXPIRY)) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             cal.add(Calendar.DAY_OF_YEAR,
-                    systemModule.getSysParameterValue(int.class, SecurityModuleSysParamConstants.PASSWORD_EXPIRY_DAYS));
+                    systemService.getSysParameterValue(int.class, SecurityModuleSysParamConstants.PASSWORD_EXPIRY_DAYS));
             user.setPasswordExpiryDt(cal.getTime());
         } else {
             user.setPasswordExpiryDt(null);

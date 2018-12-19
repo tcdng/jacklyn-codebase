@@ -25,5 +25,5 @@ public interface ReportModuleNameConstants {
 
     String REPORT_MODULE = "report";
 
-    String REPORTBUSINESSMODULE = "jacklyn-reportbusinessmodule";
+    String REPORTSERVICE = "jacklyn-reportservice";
 }

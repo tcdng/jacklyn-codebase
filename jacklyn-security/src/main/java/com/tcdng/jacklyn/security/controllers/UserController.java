@@ -66,7 +66,7 @@ public class UserController extends AbstractSecurityRecordController<User> {
     @Action
     public String resetUserPassword() throws UnifyException {
         User userData = getRecord();
-        getSecurityModule().resetUserPassword(userData.getId());
+        getSecurityService().resetUserPassword(userData.getId());
         logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, userData.getFullName());
         hintUser("security.user.hint.passwordreset", userData.getFullName());
         return noResult();
@@ -117,12 +117,12 @@ public class UserController extends AbstractSecurityRecordController<User> {
             query.status(getSearchStatus());
         }
         query.order("fullName").ignoreEmptyCriteria(true);
-        return getSecurityModule().findUsers(query);
+        return getSecurityService().findUsers(query);
     }
 
     @Override
     protected User find(Long id) throws UnifyException {
-        largeData = getSecurityModule().findUserDocument(id);
+        largeData = getSecurityService().findUserDocument(id);
         return largeData.getData();
     }
 
@@ -168,17 +168,17 @@ public class UserController extends AbstractSecurityRecordController<User> {
 
     @Override
     protected Object create(User userData) throws UnifyException {
-        return getSecurityModule().createUser(largeData);
+        return getSecurityService().createUser(largeData);
     }
 
     @Override
     protected int update(User userData) throws UnifyException {
-        return getSecurityModule().updateUser(largeData);
+        return getSecurityService().updateUser(largeData);
     }
 
     @Override
     protected int delete(User userData) throws UnifyException {
-        return getSecurityModule().deleteUser(userData.getId());
+        return getSecurityService().deleteUser(userData.getId());
     }
 
     @Override

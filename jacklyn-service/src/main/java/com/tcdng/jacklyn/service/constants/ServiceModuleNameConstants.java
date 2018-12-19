@@ -25,5 +25,5 @@ public interface ServiceModuleNameConstants {
 
     String SERVICE_MODULE = "service";
 
-    String SERVICEBUSINESSMODULE = "jacklyn-servicebusinessmodule";
+    String MICROSERVICESERVICE = "jacklyn-microserviceservice";
 }

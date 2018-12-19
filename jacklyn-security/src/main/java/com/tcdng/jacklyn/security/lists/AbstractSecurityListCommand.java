@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.security.lists;
 
-import com.tcdng.jacklyn.security.business.SecurityModule;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
@@ -28,14 +28,14 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractSecurityListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-    private SecurityModule securityModule;
+    @Configurable(SecurityModuleNameConstants.SECURITYSERVICE)
+    private SecurityService securityModule;
 
     public AbstractSecurityListCommand(Class<T> paramType) {
         super(paramType);
     }
 
-    protected SecurityModule getSecurityBusinessModule() {
+    protected SecurityService getSecurityBusinessModule() {
         return securityModule;
     }
 }

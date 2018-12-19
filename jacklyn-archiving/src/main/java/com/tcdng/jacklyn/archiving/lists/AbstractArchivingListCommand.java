@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.archiving.lists;
 
-import com.tcdng.jacklyn.archiving.business.ArchivingModule;
+import com.tcdng.jacklyn.archiving.business.ArchivingService;
 import com.tcdng.jacklyn.archiving.constants.ArchivingModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
@@ -28,14 +28,14 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractArchivingListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
-    private ArchivingModule archivingModule;
+    @Configurable(ArchivingModuleNameConstants.ARCHIVINGSERVICE)
+    private ArchivingService archivingModule;
 
     public AbstractArchivingListCommand(Class<T> paramType) {
         super(paramType);
     }
 
-    protected ArchivingModule getArchivingBusinessModule() {
+    protected ArchivingService getArchivingBusinessModule() {
         return archivingModule;
     }
 
