@@ -230,15 +230,22 @@ public final class WfTemplateConfigUtils {
             }
 
             if (wfStepConfig.getType() == null) {
-                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_TYPE, messageCounter, name);
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_TYPE, stepCounter, name);
             }
 
             if (wfStepConfig.getParticipant() == null) {
-                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_PARTICIPANT, messageCounter, name);
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_PARTICIPANT, stepCounter, name);
+            } else {
+                if (!wfStepConfig.getParticipant().isParticipant()) {
+                    if (wfStepConfig.getType() != null && wfStepConfig.getType().isUserInteractive()) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_ACTUAL_PARTICIPANT, stepCounter, name,
+                                wfStepConfig.getType());
+                    }
+                }
             }
 
             if (wfStepConfig.getPriority() == null) {
-                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_PRIORITY, messageCounter, name);
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_PRIORITY, stepCounter, name);
             }
 
             if (WorkflowStepType.START.equals(wfStepConfig.getType())) {
@@ -252,6 +259,8 @@ public final class WfTemplateConfigUtils {
             if (WorkflowStepType.END.equals(wfStepConfig.getType())) {
                 endCount++;
             }
+
+            stepCounter++;
         }
 
         public void addStepSecondPass(WfStepConfig wfStepConfig) {

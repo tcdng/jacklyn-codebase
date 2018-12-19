@@ -25,7 +25,7 @@ public interface FileModuleNameConstants {
 
     String FILE_MODULE = "file";
 
-    String FILEBUSINESSMODULE = "jacklyn-filebusinessmodule";
+    String FILESERVICE = "jacklyn-fileservice";
 
     String RECEPTACLEBATCHITEMFILEREADPROCESSOR = "receptacle-batchitemfilereadprocessor";
 }

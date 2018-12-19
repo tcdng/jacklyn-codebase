@@ -16,8 +16,6 @@
 
 package com.tcdng.jacklyn.workflow.controllers;
 
-import java.util.List;
-
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
@@ -120,26 +118,25 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
     }
 
     private String prepareCreate() throws UnifyException {
-        manualInitItem = getWorkflowModule().createManualInitItem(templateName);
+        manualInitItem = getWorkflowService().createManualInitItem(templateName);
         mode = CREATE_ITEM_MODE;
         setPageValidationEnabled(true);
         return "switchworkitem";
     }
 
     private void pendItem() throws UnifyException {
-        getWorkflowModule().pendManualInitItem(manualInitItem);
+        getWorkflowService().pendManualInitItem(manualInitItem);
         hintUser("hint.workflow.manualinit.pend.success", manualInitItem.getTitle());
     }
 
     private void submitItem() throws UnifyException {
-        getWorkflowModule().submitManualInitItem(manualInitItem);
+        getWorkflowService().submitManualInitItem(manualInitItem);
         hintUser("hint.workflow.manualinit.submit.success");
     }
 
     private void buildUserRoleTemplateListing() throws UnifyException {
         LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
-        List<WfTemplate> wfTemplateList = getWorkflowModule().findUserRoleManualInitWfTemplates();
-        for (WfTemplate wfTemplateData : wfTemplateList) {
+        for (WfTemplate wfTemplateData : getWorkflowService().findUserRoleManualInitWfTemplates()) {
             String categoryName = wfTemplateData.getWfCategoryName();
             if (!lb.isCategory(categoryName)) {
                 lb.addCategory(categoryName, wfTemplateData.getWfCategoryDesc(),

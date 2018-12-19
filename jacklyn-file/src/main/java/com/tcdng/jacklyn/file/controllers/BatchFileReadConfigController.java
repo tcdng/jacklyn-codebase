@@ -113,12 +113,12 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getFileModule().findBatchFileReadConfigs(query);
+        return getFileService().findBatchFileReadConfigs(query);
     }
 
     @Override
     protected BatchFileReadConfig find(Long id) throws UnifyException {
-        formBean = getFileModule().findBatchFileReadConfigDocument(id);
+        formBean = getFileService().findBatchFileReadConfigDocument(id);
         return formBean.getData();
     }
 
@@ -130,17 +130,17 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
 
     @Override
     protected Object create(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileModule().createBatchFileReadConfig(formBean);
+        return getFileService().createBatchFileReadConfig(formBean);
     }
 
     @Override
     protected int update(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileModule().updateBatchFileReadConfig(formBean);
+        return getFileService().updateBatchFileReadConfig(formBean);
     }
 
     @Override
     protected int delete(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileModule().deleteBatchFileReadConfig(batchUploadConfig.getId());
+        return getFileService().deleteBatchFileReadConfig(batchUploadConfig.getId());
     }
 
     @Override
@@ -149,7 +149,7 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
             formBean.setFileReaderParams(clipboardFormBean.getFileReaderParams());
             ;
         } else {
-            formBean = getFileModule().loadBatchFileReadConfigDocumentValues(formBean);
+            formBean = getFileService().loadBatchFileReadConfigDocumentValues(formBean);
         }
     }
 

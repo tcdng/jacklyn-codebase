@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.audit.controllers;
 
-import com.tcdng.jacklyn.audit.business.AuditModule;
+import com.tcdng.jacklyn.audit.business.AuditService;
 import com.tcdng.jacklyn.audit.constants.AuditModuleNameConstants;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.unify.core.UnifyException;
@@ -30,14 +30,14 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractAuditRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(AuditModuleNameConstants.AUDITBUSINESSMODULE)
-    private AuditModule auditModule;
+    @Configurable(AuditModuleNameConstants.AUDITSERVICE)
+    private AuditService auditService;
 
     public AbstractAuditRecordController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected AuditModule getAuditModule() throws UnifyException {
-        return auditModule;
+    protected AuditService getAuditService() throws UnifyException {
+        return auditService;
     }
 }

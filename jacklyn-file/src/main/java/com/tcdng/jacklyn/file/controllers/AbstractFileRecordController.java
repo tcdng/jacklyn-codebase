@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.file.controllers;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.file.business.FileModule;
+import com.tcdng.jacklyn.file.business.FileService;
 import com.tcdng.jacklyn.file.constants.FileModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -30,14 +30,14 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractFileRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
-    private FileModule fileModule;
+    @Configurable(FileModuleNameConstants.FILESERVICE)
+    private FileService fileService;
 
     public AbstractFileRecordController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected FileModule getFileModule() throws UnifyException {
-        return fileModule;
+    protected FileService getFileService() throws UnifyException {
+        return fileService;
     }
 }

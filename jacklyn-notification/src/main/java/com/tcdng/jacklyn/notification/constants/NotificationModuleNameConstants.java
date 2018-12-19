@@ -25,7 +25,7 @@ public interface NotificationModuleNameConstants {
 
     String NOTIFICATION_MODULE = "notification";
 
-    String NOTIFICATIONBUSINESSMODULE = "jacklyn-notificationbusinessmodule";
+    String NOTIFICATIONSERVICE = "jacklyn-notificationservice";
 
     String EMAILMESSAGINGCHANNEL = "email-messagingchannel";
 

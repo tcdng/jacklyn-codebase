@@ -422,4 +422,9 @@ public interface WfTemplateErrorConstants {
      * Workflow template has multiple manual steps.
      */
     String WFTEMPLATE_STEP_MULTIPLE_MANUAL = "WFTMPL_004A";
+
+    /**
+     * Workflow template step has no actual participant. Index = {0}, name = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_NO_ACTUAL_PARTICIPANT = "WFTMPL_004B";
 }

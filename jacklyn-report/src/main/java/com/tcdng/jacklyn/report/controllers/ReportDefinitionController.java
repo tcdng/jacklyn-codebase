@@ -71,12 +71,12 @@ public class ReportDefinitionController extends AbstractReportRecordController<R
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getReportModule().findReportables(query);
+        return getReportService().findReportables(query);
     }
 
     @Override
     protected ReportableDefinition find(Long id) throws UnifyException {
-        return getReportModule().findReportDefinition(id);
+        return getReportService().findReportDefinition(id);
     }
 
     @Override

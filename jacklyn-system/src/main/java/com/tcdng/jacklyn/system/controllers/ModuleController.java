@@ -63,12 +63,12 @@ public class ModuleController extends AbstractSystemRecordController<Module> {
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemModule().findModules(query);
+        return getSystemService().findModules(query);
     }
 
     @Override
     protected Module find(Long id) throws UnifyException {
-        return getSystemModule().findModule(id);
+        return getSystemService().findModule(id);
     }
 
     @Override
@@ -103,14 +103,14 @@ public class ModuleController extends AbstractSystemRecordController<Module> {
 
     @Override
     protected int activate(Module moduleData) throws UnifyException {
-        getSystemModule().activateModule(moduleData.getName());
+        getSystemService().activateModule(moduleData.getName());
         moduleData.setStatus(RecordStatus.ACTIVE);
         return 1;
     }
 
     @Override
     protected int deactivate(Module moduleData) throws UnifyException {
-        getSystemModule().deactivateModule(moduleData.getName());
+        getSystemService().deactivateModule(moduleData.getName());
         moduleData.setStatus(RecordStatus.INACTIVE);
         return 1;
     }

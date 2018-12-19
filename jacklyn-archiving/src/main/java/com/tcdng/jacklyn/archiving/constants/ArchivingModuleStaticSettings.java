@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 public class ArchivingModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
     public ArchivingModuleStaticSettings() {
-        super(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE, "config/archiving-module.xml",
+        super(ArchivingModuleNameConstants.ARCHIVINGSERVICE, "config/archiving-module.xml",
                 "com.tcdng.jacklyn.resources.archiving-messages");
     }
 

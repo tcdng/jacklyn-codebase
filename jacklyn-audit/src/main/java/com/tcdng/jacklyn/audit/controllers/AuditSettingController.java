@@ -78,7 +78,7 @@ public class AuditSettingController extends AbstractAuditRecordController<AuditD
     public String activateAuditTypes() throws UnifyException {
         List<Long> auditTypeIds = getSelectedIds();
         if (!auditTypeIds.isEmpty()) {
-            getAuditModule().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
+            getAuditService().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
                     RecordStatus.ACTIVE);
             logUserEvent(AuditModuleAuditConstants.ACTIVATE_AUDITTYPE, getSelectedDescription());
             hintUser("hint.records.activated");
@@ -90,7 +90,7 @@ public class AuditSettingController extends AbstractAuditRecordController<AuditD
     public String deactivateAuditTypes() throws UnifyException {
         List<Long> auditTypeIds = getSelectedIds();
         if (!auditTypeIds.isEmpty()) {
-            getAuditModule().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
+            getAuditService().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
                     RecordStatus.INACTIVE);
             logUserEvent(AuditModuleAuditConstants.DEACTIVATE_AUDITTYPE, getSelectedDescription());
             hintUser("hint.records.deactivated");
@@ -111,12 +111,12 @@ public class AuditSettingController extends AbstractAuditRecordController<AuditD
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getAuditModule().findAuditTypes(query);
+        return getAuditService().findAuditTypes(query);
     }
 
     @Override
     protected AuditDefinition find(Long id) throws UnifyException {
-        return getAuditModule().findAuditType(id);
+        return getAuditService().findAuditType(id);
     }
 
     @Override

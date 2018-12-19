@@ -100,12 +100,12 @@ public class ClientAppController extends AbstractServiceRecordController<ClientA
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getServiceModule().findClientApps(query);
+        return getMicroserviceService().findClientApps(query);
     }
 
     @Override
     protected ClientApp find(Long id) throws UnifyException {
-        largeData = getServiceModule().findClientApp(id);
+        largeData = getMicroserviceService().findClientApp(id);
         return largeData.getData();
     }
 
@@ -137,16 +137,16 @@ public class ClientAppController extends AbstractServiceRecordController<ClientA
 
     @Override
     protected Object create(ClientApp clientAppData) throws UnifyException {
-        return (Long) getServiceModule().createClientApp(largeData);
+        return (Long) getMicroserviceService().createClientApp(largeData);
     }
 
     @Override
     protected int update(ClientApp clientAppData) throws UnifyException {
-        return getServiceModule().updateClientApp(largeData);
+        return getMicroserviceService().updateClientApp(largeData);
     }
 
     @Override
     protected int delete(ClientApp applicationData) throws UnifyException {
-        return getServiceModule().deleteClientApp(applicationData.getId());
+        return getMicroserviceService().deleteClientApp(applicationData.getId());
     }
 }

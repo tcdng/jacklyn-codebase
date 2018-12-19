@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 public class FileModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
     public FileModuleStaticSettings() {
-        super(FileModuleNameConstants.FILEBUSINESSMODULE, "config/file-module.xml",
+        super(FileModuleNameConstants.FILESERVICE, "config/file-module.xml",
                 "com.tcdng.jacklyn.resources.file-messages");
     }
 

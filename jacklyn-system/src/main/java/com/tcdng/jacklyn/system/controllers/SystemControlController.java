@@ -50,7 +50,7 @@ public class SystemControlController extends AbstractSystemController {
     public String performToggleAction() throws UnifyException {
         SystemControlState systemControlState = systemControlStateList.get(getRequestTarget(int.class));
         boolean newState = !systemControlState.isEnabled();
-        getSystemModule().setSysParameterValue(systemControlState.getName(), newState);
+        getSystemService().setSysParameterValue(systemControlState.getName(), newState);
         updateControlStatus();
         if (newState) {
             logUserEvent(SystemModuleAuditConstants.AUDIT_ENABLE_CONTROL, systemControlState.getDescription());
@@ -80,7 +80,7 @@ public class SystemControlController extends AbstractSystemController {
     }
 
     private void updateControlStatus() throws UnifyException {
-        systemControlStateList = getSystemModule()
+        systemControlStateList = getSystemService()
                 .findSystemControlStates((SystemParameterQuery) new SystemParameterQuery().ignoreEmptyCriteria(true));
     }
 }

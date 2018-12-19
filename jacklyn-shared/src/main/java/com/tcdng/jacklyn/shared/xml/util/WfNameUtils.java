@@ -59,7 +59,7 @@ public final class WfNameUtils {
             @Override
             protected StepNameParts create(String globalName, Object... params) throws Exception {
                 String[] names = StringUtils.dotSplit(globalName);
-                return new StepNameParts(StringUtils.dotify(names[0], names[1]), names[2]);
+                return new StepNameParts(names[0], names[1], getGlobalTemplateName(names[0], names[1]), names[2]);
             }
 
         };
@@ -165,13 +165,27 @@ public final class WfNameUtils {
 
     public static class StepNameParts {
 
+        private String categoryName;
+
+        private String templateName;
+
         private String globalTemplateName;
 
         private String stepName;
 
-        public StepNameParts(String globalTemplateName, String stepName) {
+        public StepNameParts(String categoryName, String templateName, String globalTemplateName, String stepName) {
+            this.categoryName = categoryName;
+            this.templateName = templateName;
             this.globalTemplateName = globalTemplateName;
             this.stepName = stepName;
+        }
+
+        public String getCategoryName() {
+            return categoryName;
+        }
+
+        public String getTemplateName() {
+            return templateName;
         }
 
         public String getGlobalTemplateName() {

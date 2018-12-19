@@ -17,22 +17,22 @@ package com.tcdng.jacklyn.system.controllers;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.system.business.SystemModule;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Abstract base system module record management page controller.
+ * Abstract base system service record management page controller.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public abstract class AbstractSystemRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-    private SystemModule systemModule;
+    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    private SystemService systemService;
 
     private RecordStatus searchStatus;
 
@@ -48,7 +48,7 @@ public abstract class AbstractSystemRecordController<T extends Entity> extends M
         this.searchStatus = searchStatus;
     }
 
-    protected SystemModule getSystemModule() throws UnifyException {
-        return systemModule;
+    protected SystemService getSystemService() throws UnifyException {
+        return systemService;
     }
 }

@@ -29,7 +29,7 @@ import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryParams;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -46,13 +46,13 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/workflow/gate")
 public class WorkflowRemoteGateController extends BaseRemoteCallController {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-    private WorkflowModule workflowModule;
+    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    private WorkflowService workflowService;
 
     @GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
             description = "$m{workflow.gate.remotecall.publishwfcategory}")
     public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
-        workflowModule.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
+        workflowService.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
         return new PublishWfCategoryResult();
     }
 
@@ -60,7 +60,7 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
             description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
     public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(GetToolingEnrichmentLogicParams params)
             throws UnifyException {
-        List<ToolingEnrichmentLogicItem> list = workflowModule.findToolingEnrichmentLogicTypes();
+        List<ToolingEnrichmentLogicItem> list = workflowService.findToolingEnrichmentLogicTypes();
         return new GetToolingEnrichmentLogicResult(list);
     }
 
@@ -68,7 +68,7 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
             description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
     public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
             throws UnifyException {
-        List<ToolingPolicyLogicItem> list = workflowModule.findToolingPolicyLogicTypes();
+        List<ToolingPolicyLogicItem> list = workflowService.findToolingPolicyLogicTypes();
         return new GetToolingPolicyLogicResult(list);
     }
 

@@ -71,12 +71,12 @@ public class ArchivableDefinitionController extends AbstractArchivingRecordContr
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getArchivingModule().findArchivableDefinitions(query);
+        return getArchivingService().findArchivableDefinitions(query);
     }
 
     @Override
     protected ArchivableDefinition find(Long id) throws UnifyException {
-        return getArchivingModule().findArchivableDefinition(id);
+        return getArchivingService().findArchivableDefinition(id);
     }
 
     @Override

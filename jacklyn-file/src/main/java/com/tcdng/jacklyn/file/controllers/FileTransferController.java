@@ -49,7 +49,7 @@ public class FileTransferController extends AbstractFileController {
 
     @Action
     public String startFileTransferTask() throws UnifyException {
-        FileTransferConfig fileTransferConfigData = getFileModule().findFileTransferConfig(fileTransferConfigId);
+        FileTransferConfig fileTransferConfigData = getFileService().findFileTransferConfig(fileTransferConfigId);
         TaskSetup taskSetup = TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERTASK)
                 .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, fileTransferConfigData.getName())
                 .setParam(FileTransferTaskConstants.WORKINGDT, workingDt)

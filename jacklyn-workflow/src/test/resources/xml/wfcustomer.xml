@@ -75,6 +75,8 @@
 				</message>
 			</messages>
 			<steps>
+				<step name="manual" description="Manual Create Customer" type="manual"
+					participant="personnel" />
 				<step name="start" description="Start Step" type="start">
 					<routings>
 						<routing name="routToCreate" description="Route to Create"

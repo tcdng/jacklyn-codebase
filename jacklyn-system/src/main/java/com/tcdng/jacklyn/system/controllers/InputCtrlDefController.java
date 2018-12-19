@@ -89,12 +89,12 @@ public class InputCtrlDefController extends AbstractSystemRecordController<Input
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemModule().findInputCtrlDefs(query);
+        return getSystemService().findInputCtrlDefs(query);
     }
 
     @Override
     protected InputCtrlDef find(Long id) throws UnifyException {
-        return getSystemModule().findInputCtrlDef(id);
+        return getSystemService().findInputCtrlDef(id);
     }
 
     @Override
@@ -104,17 +104,17 @@ public class InputCtrlDefController extends AbstractSystemRecordController<Input
 
     @Override
     protected Object create(InputCtrlDef inputCtrlDefData) throws UnifyException {
-        return getSystemModule().createInputCtrlDef(inputCtrlDefData);
+        return getSystemService().createInputCtrlDef(inputCtrlDefData);
     }
 
     @Override
     protected int update(InputCtrlDef inputCtrlDefData) throws UnifyException {
-        return getSystemModule().updateInputCtrlDef(inputCtrlDefData);
+        return getSystemService().updateInputCtrlDef(inputCtrlDefData);
     }
 
     @Override
     protected int delete(InputCtrlDef inputCtrlDefData) throws UnifyException {
-        return getSystemModule().deleteInputCtrlDef(inputCtrlDefData.getId());
+        return getSystemService().deleteInputCtrlDef(inputCtrlDefData.getId());
     }
 
 }

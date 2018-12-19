@@ -73,12 +73,12 @@ public class FileArchiveConfigController extends AbstractArchivingRecordControll
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getArchivingModule().findFileArchiveConfigs(query);
+        return getArchivingService().findFileArchiveConfigs(query);
     }
 
     @Override
     protected FileArchiveConfig find(Long id) throws UnifyException {
-        return getArchivingModule().findFileArchiveConfig(id);
+        return getArchivingService().findFileArchiveConfig(id);
     }
 
     @Override
@@ -88,16 +88,16 @@ public class FileArchiveConfigController extends AbstractArchivingRecordControll
 
     @Override
     protected Object create(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-        return getArchivingModule().createFileArchiveConfig(fileArchiveConfigData);
+        return getArchivingService().createFileArchiveConfig(fileArchiveConfigData);
     }
 
     @Override
     protected int update(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-        return getArchivingModule().updateFileArchiveConfig(fileArchiveConfigData);
+        return getArchivingService().updateFileArchiveConfig(fileArchiveConfigData);
     }
 
     @Override
     protected int delete(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-        return getArchivingModule().deleteFileArchiveConfig(fileArchiveConfigData.getId());
+        return getArchivingService().deleteFileArchiveConfig(fileArchiveConfigData.getId());
     }
 }

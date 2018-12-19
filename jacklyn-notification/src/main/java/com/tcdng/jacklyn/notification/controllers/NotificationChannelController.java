@@ -101,12 +101,12 @@ public class NotificationChannelController extends AbstractNotificationRecordCon
             query.status(searchStatus);
         }
         query.ignoreEmptyCriteria(true);
-        return getNotificationModule().findNotificationChannels(query);
+        return getNotificationService().findNotificationChannels(query);
     }
 
     @Override
     protected NotificationChannel find(Long id) throws UnifyException {
-        return getNotificationModule().findNotificationChannel(id);
+        return getNotificationService().findNotificationChannel(id);
     }
 
     @Override
@@ -116,17 +116,17 @@ public class NotificationChannelController extends AbstractNotificationRecordCon
 
     @Override
     protected Object create(NotificationChannel notificationChannelData) throws UnifyException {
-        return getNotificationModule().createNotificationChannel(notificationChannelData);
+        return getNotificationService().createNotificationChannel(notificationChannelData);
     }
 
     @Override
     protected int update(NotificationChannel notificationChannelData) throws UnifyException {
-        return getNotificationModule().updateNotificationChannel(notificationChannelData);
+        return getNotificationService().updateNotificationChannel(notificationChannelData);
     }
 
     @Override
     protected int delete(NotificationChannel notificationChannelData) throws UnifyException {
-        return getNotificationModule().deleteNotificationChannel(notificationChannelData.getId());
+        return getNotificationService().deleteNotificationChannel(notificationChannelData.getId());
     }
 
 }

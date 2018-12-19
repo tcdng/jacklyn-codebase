@@ -31,7 +31,7 @@ public class SecurityModuleStaticSettings extends AbstractJacklynModuleStaticSet
     public static final int INSTALLATION_INDEX = 16;
 
     public SecurityModuleStaticSettings() {
-        super(SecurityModuleNameConstants.SECURITYBUSINESSMODULE, "config/security-module.xml",
+        super(SecurityModuleNameConstants.SECURITYSERVICE, "config/security-module.xml",
                 "com.tcdng.jacklyn.resources.security-messages", INSTALLATION_INDEX);
     }
 

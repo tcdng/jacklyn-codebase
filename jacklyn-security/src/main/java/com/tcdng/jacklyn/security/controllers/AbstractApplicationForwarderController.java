@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.security.controllers;
 
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.UserRole;
-import com.tcdng.jacklyn.system.business.SystemModule;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.StringUtils;
@@ -65,16 +65,16 @@ public abstract class AbstractApplicationForwarderController extends AbstractSec
         }
 
         if (StringUtils.isBlank(applicationPath)) {
-            applicationPath = getSystemBusinessModule().getSysParameterValue(String.class,
+            applicationPath = getSystemService().getSysParameterValue(String.class,
                     SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
         }
 
-        getSecurityModule().setCurrentUserRole(userRoleId);
+        getSecurityService().setCurrentUserRole(userRoleId);
         return "forwardtoapplication";
     }
 
-    protected SystemModule getSystemBusinessModule() throws UnifyException {
-        return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
+    protected SystemService getSystemService() throws UnifyException {
+        return (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
     }
 
 }

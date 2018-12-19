@@ -31,7 +31,7 @@ public class NotificationModuleStaticSettings extends AbstractJacklynModuleStati
     public static final int INSTALLATION_INDEX = 8;
 
     public NotificationModuleStaticSettings() {
-        super(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE, "config/notification-module.xml",
+        super(NotificationModuleNameConstants.NOTIFICATIONSERVICE, "config/notification-module.xml",
                 "com.tcdng.jacklyn.resources.notification-messages", INSTALLATION_INDEX);
     }
 

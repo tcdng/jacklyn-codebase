@@ -98,12 +98,12 @@ public class NotificationTemplateController extends AbstractNotificationRecordCo
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getNotificationModule().findNotificationTemplates(query);
+        return getNotificationService().findNotificationTemplates(query);
     }
 
     @Override
     protected NotificationTemplate find(Long id) throws UnifyException {
-        return getNotificationModule().findNotificationTemplate(id);
+        return getNotificationService().findNotificationTemplate(id);
     }
 
     @Override
@@ -113,17 +113,17 @@ public class NotificationTemplateController extends AbstractNotificationRecordCo
 
     @Override
     protected Object create(NotificationTemplate notificationTemplateData) throws UnifyException {
-        return getNotificationModule().createNotificationTemplate(notificationTemplateData);
+        return getNotificationService().createNotificationTemplate(notificationTemplateData);
     }
 
     @Override
     protected int update(NotificationTemplate notificationTemplateData) throws UnifyException {
-        return getNotificationModule().updateNotificationTemplate(notificationTemplateData);
+        return getNotificationService().updateNotificationTemplate(notificationTemplateData);
     }
 
     @Override
     protected int delete(NotificationTemplate notificationTemplateData) throws UnifyException {
-        return getNotificationModule().deleteNotificationTemplate(notificationTemplateData.getId());
+        return getNotificationService().deleteNotificationTemplate(notificationTemplateData.getId());
     }
 
 }
