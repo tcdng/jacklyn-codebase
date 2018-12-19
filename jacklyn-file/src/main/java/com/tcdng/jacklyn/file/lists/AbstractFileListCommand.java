@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.file.lists;
 
 import com.tcdng.jacklyn.file.business.FileService;
-import com.tcdng.jacklyn.file.constants.FileModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,7 +27,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractFileListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(FileModuleNameConstants.FILESERVICE)
+    @Configurable
     private FileService fileModule;
 
     public AbstractFileListCommand(Class<T> paramType) {

@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.audit;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class EventLoggerServiceTest extends AbstractJacklynTest {
     public void testLogEventWithRecordType() throws Exception {
         EventLoggerService eventLoggerService = (EventLoggerService) this
                 .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
-        assertTrue(eventLoggerService.logUserEvent(EventType.SEARCH, TestCustomer.class));
+        assertFalse(eventLoggerService.logUserEvent(EventType.SEARCH, TestCustomer.class));
     }
 
     @Test
@@ -53,7 +54,7 @@ public class EventLoggerServiceTest extends AbstractJacklynTest {
         EventLoggerService eventLoggerService = (EventLoggerService) this
                 .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
         assertTrue(eventLoggerService.logUserEvent(EventType.CREATE, new TestCustomer(), true));
-        assertTrue(eventLoggerService.logUserEvent(EventType.VIEW, new TestCustomer(), false));
+        assertFalse(eventLoggerService.logUserEvent(EventType.VIEW, new TestCustomer(), false));
     }
 
     @Test(expected = UnifyException.class)

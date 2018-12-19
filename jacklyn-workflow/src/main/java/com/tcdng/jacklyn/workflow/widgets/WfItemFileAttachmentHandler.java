@@ -33,7 +33,7 @@ import com.tcdng.unify.web.ui.data.FileAttachmentInfo;
 @Component(WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMATTACHMENTHANDLER)
 public class WfItemFileAttachmentHandler extends AbstractFileAttachmentHandler {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    @Configurable
     private WorkflowService workflowService;
 
     @Override

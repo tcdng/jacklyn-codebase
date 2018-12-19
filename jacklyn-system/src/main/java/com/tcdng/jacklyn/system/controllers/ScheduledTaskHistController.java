@@ -21,7 +21,6 @@ import java.util.List;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
 import com.tcdng.unify.core.UnifyException;
@@ -42,7 +41,7 @@ import com.tcdng.unify.core.util.QueryUtils;
 @UplBinding("web/system/upl/managescheduledtaskhist.upl")
 public class ScheduledTaskHistController extends ManageRecordController<ScheduledTaskHist, Long> {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     private Date searchExecutionDt;

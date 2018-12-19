@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.security.controllers;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.security.business.SecurityService;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -30,7 +29,7 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractSecurityRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(SecurityModuleNameConstants.SECURITYSERVICE)
+    @Configurable
     private SecurityService securityService;
 
     public AbstractSecurityRecordController(Class<T> entityClass, String hintKey, int modifier) {

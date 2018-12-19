@@ -17,7 +17,6 @@
 package com.tcdng.jacklyn.workflow.widgets;
 
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.BaseLabelWfDef;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.unify.core.UnifyException;
@@ -33,7 +32,7 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public abstract class AbstractWorkflowUplGenerator extends AbstractUplGenerator {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    @Configurable
     private WorkflowService workflowService;
 
     public AbstractWorkflowUplGenerator(String uplComponentName) {

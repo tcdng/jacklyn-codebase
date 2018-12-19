@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
-import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
@@ -42,7 +41,7 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
 
     private static final Class<?>[] TOOLING_DESCRIBABLE_PARAM_TYPE = { String.class, String.class };
 
-    @Configurable(ApplicationComponents.APPLICATION_PARAMETERSERVICE)
+    @Configurable
     private ParameterService parameterService;
 
     @Override

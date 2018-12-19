@@ -30,10 +30,8 @@ import com.tcdng.jacklyn.shared.service.data.OSInstallationReqResult;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
-import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Broadcast;
 import com.tcdng.unify.core.annotation.Component;
@@ -54,10 +52,10 @@ import com.tcdng.unify.web.util.WebUtils;
 @Component(ServiceModuleNameConstants.MICROSERVICESERVICE)
 public class MicroserviceServiceImpl extends AbstractJacklynBusinessService implements MicroserviceService {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
-    @Configurable(ApplicationComponents.APPLICATION_LISTMANAGER)
+    @Configurable
     private ListManager listManager;
 
     private Map<String, Set<String>> clientAppAccessFlags;

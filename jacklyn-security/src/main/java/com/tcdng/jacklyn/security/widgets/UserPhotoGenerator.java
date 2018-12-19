@@ -17,7 +17,6 @@ import java.io.OutputStream;
 
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.security.business.SecurityService;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -33,7 +32,7 @@ import com.tcdng.unify.core.resource.ImageFormat;
 @Component("userphoto-generator")
 public class UserPhotoGenerator extends AbstractImageGenerator {
 
-    @Configurable(SecurityModuleNameConstants.SECURITYSERVICE)
+    @Configurable
     private SecurityService securityModule;
 
     private byte[] photo;

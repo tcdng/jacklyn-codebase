@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.archiving.business;
 import java.util.Date;
 
 import com.tcdng.unify.core.AbstractUnifyComponent;
-import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.format.DateFormatter;
@@ -33,7 +32,7 @@ import com.tcdng.unify.core.system.SequenceNumberService;
 public abstract class AbstractFileArchiveNameGenerator extends AbstractUnifyComponent
         implements FileArchiveNameGenerator {
 
-    @Configurable(ApplicationComponents.APPLICATION_SEQUENCENUMBERSERVICE)
+    @Configurable
     private SequenceNumberService sequenceNumberService;
 
     @Configurable("!fixeddatetimeformat pattern:$s{yyyyMMdd}")

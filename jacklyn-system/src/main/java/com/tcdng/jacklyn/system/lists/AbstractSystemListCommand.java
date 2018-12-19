@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.system.lists;
 
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,7 +27,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractSystemListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     public AbstractSystemListCommand(Class<T> paramType) {

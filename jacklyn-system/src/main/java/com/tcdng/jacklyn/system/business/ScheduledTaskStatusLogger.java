@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.system.business;
 
 import java.util.Map;
 
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemSchedTaskConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -36,7 +35,7 @@ import com.tcdng.unify.core.task.TaskStatus;
 @Component("scheduledtaskstatuslogger")
 public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     @Override

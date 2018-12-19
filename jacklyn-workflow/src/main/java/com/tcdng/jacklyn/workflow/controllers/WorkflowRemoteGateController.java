@@ -46,7 +46,7 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/workflow/gate")
 public class WorkflowRemoteGateController extends BaseRemoteCallController {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    @Configurable
     private WorkflowService workflowService;
 
     @GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
