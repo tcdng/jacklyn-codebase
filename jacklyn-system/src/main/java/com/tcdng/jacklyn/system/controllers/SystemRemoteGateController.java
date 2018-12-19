@@ -60,7 +60,7 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/system/gate")
 public class SystemRemoteGateController extends BaseRemoteCallController {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,

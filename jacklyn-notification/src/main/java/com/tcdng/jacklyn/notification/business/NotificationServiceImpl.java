@@ -45,7 +45,6 @@ import com.tcdng.jacklyn.shared.notification.data.ToolingAttachmentGenItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.NotificationTemplateConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -72,7 +71,7 @@ import com.tcdng.unify.core.util.StringUtils;
 @Component(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
 public class NotificationServiceImpl extends AbstractJacklynBusinessService implements NotificationService {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemMService;
 
     @Configurable(NotificationModuleNameConstants.EMAILMESSAGINGCHANNEL)

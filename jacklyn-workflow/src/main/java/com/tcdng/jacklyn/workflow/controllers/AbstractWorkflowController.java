@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.workflow.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,7 +28,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractWorkflowController extends BasePageController {
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    @Configurable
     private WorkflowService workflowService;
 
     public AbstractWorkflowController(boolean secured, boolean readOnly) {

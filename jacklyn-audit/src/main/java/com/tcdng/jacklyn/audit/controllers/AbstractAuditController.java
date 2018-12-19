@@ -17,7 +17,6 @@
 package com.tcdng.jacklyn.audit.controllers;
 
 import com.tcdng.jacklyn.audit.business.AuditService;
-import com.tcdng.jacklyn.audit.constants.AuditModuleNameConstants;
 import com.tcdng.jacklyn.common.controllers.BasePageController;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,7 +28,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractAuditController extends BasePageController {
 
-    @Configurable(AuditModuleNameConstants.AUDITSERVICE)
+    @Configurable
     private AuditService auditService;
 
     public AbstractAuditController(boolean secured, boolean readOnly) {

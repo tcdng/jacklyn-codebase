@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.system.controllers;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -31,7 +30,7 @@ import com.tcdng.unify.core.database.Entity;
  */
 public abstract class AbstractSystemRecordController<T extends Entity> extends ManageRecordController<T, Long> {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     private RecordStatus searchStatus;

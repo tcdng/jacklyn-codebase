@@ -32,7 +32,6 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
 import com.tcdng.jacklyn.common.utils.JacklynUtils;
 import com.tcdng.jacklyn.notification.business.NotificationService;
-import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.jacklyn.notification.data.Message;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils;
 import com.tcdng.jacklyn.security.constants.SecurityModuleErrorConstants;
@@ -73,12 +72,9 @@ import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
-import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.PrivilegeSettings;
 import com.tcdng.unify.core.RoleAttributes;
 import com.tcdng.unify.core.UnifyException;
@@ -110,16 +106,16 @@ import com.tcdng.unify.web.constant.SessionAttributeConstants;
 @Component(SecurityModuleNameConstants.SECURITYSERVICE)
 public class SecurityServiceImpl extends AbstractJacklynBusinessService implements SecurityService {
 
-    @Configurable(ApplicationComponents.APPLICATION_USERSESSIONMANAGER)
+    @Configurable
     private UserSessionManager userSessionManager;
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
-    @Configurable(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
+    @Configurable
     private NotificationService notificationService;
 
-    @Configurable(WorkflowModuleNameConstants.WORKFLOWSERVICE)
+    @Configurable
     private WorkflowService workflowService;
 
     @Configurable("oneway-stringcryptograph")

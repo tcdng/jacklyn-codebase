@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.system.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,7 +28,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractSystemController extends BasePageController {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
     public AbstractSystemController(boolean secured, boolean readOnly) {

@@ -38,7 +38,6 @@ import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.utils.JacklynUtils;
 import com.tcdng.jacklyn.file.business.FileService;
-import com.tcdng.jacklyn.file.constants.FileModuleNameConstants;
 import com.tcdng.jacklyn.shared.archiving.ArchivingFieldType;
 import com.tcdng.jacklyn.shared.archiving.FileArchiveType;
 import com.tcdng.jacklyn.shared.xml.config.module.ArchiveConfig;
@@ -47,7 +46,6 @@ import com.tcdng.jacklyn.shared.xml.config.module.FieldConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ManagedConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -73,10 +71,10 @@ import com.tcdng.unify.core.util.ReflectUtils;
 @Component(ArchivingModuleNameConstants.ARCHIVINGSERVICE)
 public class ArchivingServiceImpl extends AbstractJacklynBusinessService implements ArchivingService {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
-    @Configurable(FileModuleNameConstants.FILESERVICE)
+    @Configurable
     private FileService fileService;
 
     @Configurable("filesystemio")

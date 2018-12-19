@@ -19,7 +19,6 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordController;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -40,7 +39,7 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/security/upl/manageusersession.upl")
 public class UserSessionController extends ManageRecordController<UserSessionTracking, String> {
 
-    @Configurable(ApplicationComponents.APPLICATION_USERSESSIONMANAGER)
+    @Configurable
     private UserSessionManager userSessionManager;
 
     private String searchLoginId;

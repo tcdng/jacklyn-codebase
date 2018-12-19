@@ -43,6 +43,6 @@ public class FileArchiveConfigListCommand extends AbstractArchivingListCommand<Z
         FileArchiveConfigQuery query = new FileArchiveConfigQuery();
         query.status(RecordStatus.ACTIVE);
         query.order("description");
-        return getArchivingBusinessModule().findFileArchiveConfigs(query);
+        return getArchivingService().findFileArchiveConfigs(query);
     }
 }

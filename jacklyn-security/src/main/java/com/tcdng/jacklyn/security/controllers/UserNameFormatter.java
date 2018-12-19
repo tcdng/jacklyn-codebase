@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.security.controllers;
 
 import com.tcdng.jacklyn.security.business.SecurityService;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -32,7 +31,7 @@ import com.tcdng.unify.core.format.AbstractFormatter;
 @Component(name = "usernameformat", description = "$m{security.format.username}")
 public class UserNameFormatter extends AbstractFormatter<String> {
 
-    @Configurable(SecurityModuleNameConstants.SECURITYSERVICE)
+    @Configurable
     private SecurityService securityModule;
 
     public UserNameFormatter() {

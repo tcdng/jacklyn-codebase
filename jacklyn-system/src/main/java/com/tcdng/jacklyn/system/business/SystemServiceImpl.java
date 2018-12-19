@@ -129,7 +129,7 @@ import com.tcdng.unify.web.constant.SessionAttributeConstants;
 @Component(SystemModuleNameConstants.SYSTEMSERVICE)
 public class SystemServiceImpl extends AbstractJacklynBusinessService implements SystemService {
 
-    @Configurable(ApplicationComponents.APPLICATION_TASKMANAGER)
+    @Configurable
     private TaskManager taskManager;
 
     @Configurable("scheduledtaskstatuslogger")

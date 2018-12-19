@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.organization.lists;
 
 import com.tcdng.jacklyn.organization.business.OrganizationService;
-import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,7 +27,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractOrganizationListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(OrganizationModuleNameConstants.ORGANIZATIONSERVICE)
+    @Configurable
     private OrganizationService organizationModule;
 
     public AbstractOrganizationListCommand(Class<T> paramType) {

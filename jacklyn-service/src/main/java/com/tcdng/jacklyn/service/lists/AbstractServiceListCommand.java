@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.service.lists;
 
 import com.tcdng.jacklyn.service.business.MicroserviceService;
-import com.tcdng.jacklyn.service.constants.ServiceModuleNameConstants;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,7 +27,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractServiceListCommand<T> extends AbstractListCommand<T> {
 
-    @Configurable(ServiceModuleNameConstants.MICROSERVICESERVICE)
+    @Configurable
     private MicroserviceService serviceModule;
 
     public AbstractServiceListCommand(Class<T> paramType) {

@@ -30,7 +30,6 @@ import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.notification.business.NotificationService;
-import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils;
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
@@ -70,7 +69,6 @@ import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.DocNameParts;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.StepNameParts;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.TemplateNameParts;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
@@ -139,7 +137,6 @@ import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateQuery;
 import com.tcdng.jacklyn.workflow.entities.WfUserAction;
-import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
@@ -176,13 +173,13 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
 @Component(WorkflowModuleNameConstants.WORKFLOWSERVICE)
 public class WorkflowServiceImpl extends AbstractJacklynBusinessService implements WorkflowService {
 
-    @Configurable(SystemModuleNameConstants.SYSTEMSERVICE)
+    @Configurable
     private SystemService systemService;
 
-    @Configurable(NotificationModuleNameConstants.NOTIFICATIONSERVICE)
+    @Configurable
     private NotificationService notificationService;
 
-    @Configurable(ApplicationComponents.APPLICATION_GENERICSERVICE)
+    @Configurable
     private GenericService genericService;
 
     @Configurable(WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC)
