@@ -75,7 +75,11 @@ public class WfSingleFormDocViewerUplGenerator extends AbstractWorkflowUplGenera
                     }
                     appendNewline(fsb);
                 }
-                sb.append("}}");
+                sb.append("}");
+                if (wfFormSectionDef.isBinding()) {
+                    sb.append(" binding:").append(wfFormSectionDef.getBinding());
+                }
+                sb.append("}");
                 appendNewline(sb);
             }
         }
