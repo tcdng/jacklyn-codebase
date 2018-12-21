@@ -32,15 +32,15 @@ public class WfFieldConfig extends BaseConfig {
 
     private DataType dataType;
 
-    private Boolean multiple;
+    private int repeat;
 
     public WfFieldConfig(DataType dataType, Boolean multiple) {
         this.dataType = dataType;
-        this.multiple = multiple;
+        this.repeat = -1;
     }
 
     public WfFieldConfig() {
-        this.multiple = Boolean.FALSE;
+        this.repeat = -1;
     }
 
     public DataType getDataType() {
@@ -53,13 +53,12 @@ public class WfFieldConfig extends BaseConfig {
         this.dataType = dataType;
     }
 
-    public Boolean getMultiple() {
-        return multiple;
+    public int getRepeat() {
+        return repeat;
     }
 
-    @XmlAttribute
-    public void setMultiple(Boolean multiple) {
-        this.multiple = multiple;
+    public void setRepeat(int repeat) {
+        this.repeat = repeat;
     }
 
 }

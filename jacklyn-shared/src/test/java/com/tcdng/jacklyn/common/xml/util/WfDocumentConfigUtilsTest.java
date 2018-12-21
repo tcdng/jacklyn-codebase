@@ -78,35 +78,35 @@ public class WfDocumentConfigUtilsTest {
         assertEquals(DataType.LONG, wfFieldConfig.getDataType());
         assertEquals("id", wfFieldConfig.getName());
         assertEquals("Customer ID", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         wfFieldConfig = wfFieldConfigList.get(1);
         assertNotNull(wfFieldConfig);
         assertEquals(DataType.STRING, wfFieldConfig.getDataType());
         assertEquals("firstName", wfFieldConfig.getName());
         assertEquals("First Name", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         wfFieldConfig = wfFieldConfigList.get(2);
         assertNotNull(wfFieldConfig);
         assertEquals(DataType.STRING, wfFieldConfig.getDataType());
         assertEquals("lastName", wfFieldConfig.getName());
         assertEquals("Last Name", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         wfFieldConfig = wfFieldConfigList.get(3);
         assertNotNull(wfFieldConfig);
         assertEquals(DataType.INTEGER, wfFieldConfig.getDataType());
         assertEquals("age", wfFieldConfig.getName());
         assertEquals("Age", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         wfFieldConfig = wfFieldConfigList.get(4);
         assertNotNull(wfFieldConfig);
         assertEquals(DataType.DOUBLE, wfFieldConfig.getDataType());
         assertEquals("height", wfFieldConfig.getName());
         assertEquals("Height", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         List<WfComplexFieldConfig> wfComplexFieldConfigList = wfFieldsConfig.getWfComplexFieldConfigList();
         assertNotNull(wfComplexFieldConfigList);
@@ -116,7 +116,7 @@ public class WfDocumentConfigUtilsTest {
         assertEquals(DataType.COMPLEX, wfComplexFieldConfig.getDataType());
         assertEquals("driversLicense", wfComplexFieldConfig.getName());
         assertEquals("Driver's License", wfComplexFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfComplexFieldConfig.getMultiple());
+        assertEquals(-1, wfComplexFieldConfig.getRepeat());
 
         wfFieldConfigList = wfComplexFieldConfig.getWfFieldConfigList();
         assertNotNull(wfFieldConfigList);
@@ -127,21 +127,21 @@ public class WfDocumentConfigUtilsTest {
         assertEquals(DataType.STRING, wfFieldConfig.getDataType());
         assertEquals("licenseNo", wfFieldConfig.getName());
         assertEquals("License No.", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         wfFieldConfig = wfFieldConfigList.get(1);
         assertNotNull(wfFieldConfig);
         assertEquals(DataType.DATE, wfFieldConfig.getDataType());
         assertEquals("issueDt", wfFieldConfig.getName());
         assertEquals("Issue Date", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         wfFieldConfig = wfFieldConfigList.get(2);
         assertNotNull(wfFieldConfig);
         assertEquals(DataType.DATE, wfFieldConfig.getDataType());
         assertEquals("expiryDt", wfFieldConfig.getName());
         assertEquals("Expiry Date", wfFieldConfig.getDescription());
-        assertEquals(Boolean.FALSE, wfFieldConfig.getMultiple());
+        assertEquals(-1, wfFieldConfig.getRepeat());
 
         // Classifiers
         WfClassifiersConfig wfClassifiersConfig = wfDocumentConfig.getWfClassifiersConfig();

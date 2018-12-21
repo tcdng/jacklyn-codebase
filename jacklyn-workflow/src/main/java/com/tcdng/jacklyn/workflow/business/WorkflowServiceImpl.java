@@ -237,14 +237,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             }
 
                             subFieldConfigList.add(new FieldConfig(subWfDocField.getName(),
-                                    subWfDocField.getDataType().javaClass(subWfDocField.getArrayFlag())));
+                                    subWfDocField.getDataType(), subWfDocField.getRepeat()));
                         }
 
                         fieldConfigList.add(new FieldConfig(wfDocField.getName(),
-                                dataType.javaClass(wfDocField.getArrayFlag()), subFieldConfigList));
+                                wfDocField.getRepeat(), subFieldConfigList));
                     } else {
                         fieldConfigList.add(
-                                new FieldConfig(wfDocField.getName(), dataType.javaClass(wfDocField.getArrayFlag())));
+                                new FieldConfig(wfDocField.getName(), dataType, wfDocField.getRepeat()));
                     }
                 }
 
@@ -1171,7 +1171,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfDocField.setName(wfDocFieldConfig.getName());
                 wfDocField.setDescription(resolveApplicationMessage(wfDocFieldConfig.getDescription()));
                 wfDocField.setDataType(wfDocFieldConfig.getDataType());
-                wfDocField.setArrayFlag(wfDocFieldConfig.getMultiple());
+                wfDocField.setRepeat(wfDocFieldConfig.getRepeat());
                 fieldList.add(wfDocField);
             }
         }
@@ -1183,7 +1183,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfDocField.setName(wfDocComplexFieldConfig.getName());
                 wfDocField.setDescription(resolveApplicationMessage(wfDocComplexFieldConfig.getDescription()));
                 wfDocField.setDataType(wfDocComplexFieldConfig.getDataType());
-                wfDocField.setArrayFlag(wfDocComplexFieldConfig.getMultiple());
+                wfDocField.setRepeat(wfDocComplexFieldConfig.getRepeat());
                 fieldList.add(wfDocField);
 
                 for (WfFieldConfig wfDocFieldConfig : wfDocComplexFieldConfig.getWfFieldConfigList()) {
@@ -1192,7 +1192,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfDocField.setName(wfDocFieldConfig.getName());
                     wfDocField.setDescription(resolveApplicationMessage(wfDocFieldConfig.getDescription()));
                     wfDocField.setDataType(wfDocFieldConfig.getDataType());
-                    wfDocField.setArrayFlag(wfDocFieldConfig.getMultiple());
+                    wfDocField.setRepeat(wfDocFieldConfig.getRepeat());
                     fieldList.add(wfDocField);
                 }
             }

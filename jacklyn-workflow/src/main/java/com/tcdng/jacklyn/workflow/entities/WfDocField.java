@@ -49,8 +49,8 @@ public class WfDocField extends BaseEntity {
     @Column(name = "FIELD_DESC", length = 64)
     private String description;
 
-    @Column(name = "MULTIPLE_FG")
-    private Boolean arrayFlag;
+    @Column(name = "REPEAT_COUNT")
+    private Integer repeat;
 
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
@@ -102,12 +102,12 @@ public class WfDocField extends BaseEntity {
         this.dataType = dataType;
     }
 
-    public Boolean getArrayFlag() {
-        return arrayFlag;
+    public Integer getRepeat() {
+        return repeat;
     }
 
-    public void setArrayFlag(Boolean arrayFlag) {
-        this.arrayFlag = arrayFlag;
+    public void setRepeat(Integer repeat) {
+        this.repeat = repeat;
     }
 
     public String getWfDocName() {
