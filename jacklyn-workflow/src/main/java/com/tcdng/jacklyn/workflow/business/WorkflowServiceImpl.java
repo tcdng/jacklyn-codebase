@@ -146,6 +146,7 @@ import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericService;
+import com.tcdng.unify.core.constant.DataType;
 import com.tcdng.unify.core.constant.RequirementType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
@@ -222,15 +223,29 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 Long wfDocId = wfDoc.getId();
                 // Fields
                 List<FieldConfig> fieldConfigList = new ArrayList<FieldConfig>();
-                for (WfDocField wfDocField : wfDoc.getFieldList()) {
-                    Class<?> type = null;
-                    if (wfDocField.getArrayFlag()) {
-                        type = wfDocField.getDataType().javaArrayClass();
-                    } else {
-                        type = wfDocField.getDataType().javaClass();
-                    }
+                int size = wfDoc.getFieldList().size();
+                for (int i = 0; i < size; i++) {
+                    WfDocField wfDocField = wfDoc.getFieldList().get(i);
+                    DataType dataType = wfDocField.getDataType();
+                    if (DataType.COMPLEX.equals(dataType)) {
+                        List<FieldConfig> subFieldConfigList = new ArrayList<FieldConfig>();
+                        for (i++; i < size; i++) {
+                            WfDocField subWfDocField = wfDoc.getFieldList().get(i);
+                            if (subWfDocField.getParentName() == null) {
+                                i--;
+                                break;
+                            }
 
-                    fieldConfigList.add(new FieldConfig(wfDocField.getName(), type));
+                            subFieldConfigList.add(new FieldConfig(subWfDocField.getName(),
+                                    subWfDocField.getDataType().javaClass(subWfDocField.getArrayFlag())));
+                        }
+
+                        fieldConfigList.add(new FieldConfig(wfDocField.getName(),
+                                dataType.javaClass(wfDocField.getArrayFlag()), subFieldConfigList));
+                    } else {
+                        fieldConfigList.add(
+                                new FieldConfig(wfDocField.getName(), dataType.javaClass(wfDocField.getArrayFlag())));
+                    }
                 }
 
                 // Bean mappings
@@ -659,7 +674,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfTemplateDef wfTemplateDef = wfTemplates.get(globalTemplateName);
         WfManualInitDef manualInitDef = wfTemplateDef.getManualInitDef();
         return new ManualWfItem(manualInitDef.getWfStepDef(),
-                new PackableDoc(manualInitDef.getWfDocDef().getDocConfig()));
+                new PackableDoc(manualInitDef.getWfDocDef().getDocConfig()).preset());
     }
 
     @Override

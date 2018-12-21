@@ -48,6 +48,10 @@ public class WfFormSectionDef extends BaseLabelWfDef {
         return binding;
     }
 
+    public boolean isBinding() {
+        return binding != null;
+    }
+    
     public List<WfFormFieldDef> getFieldList() {
         return fieldList;
     }
