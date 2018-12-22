@@ -236,15 +236,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                 break;
                             }
 
-                            subFieldConfigList.add(new FieldConfig(subWfDocField.getName(),
-                                    subWfDocField.getDataType(), subWfDocField.getRepeat()));
+                            subFieldConfigList.add(new FieldConfig(subWfDocField.getName(), subWfDocField.getDataType(),
+                                    subWfDocField.getRepeat()));
                         }
 
-                        fieldConfigList.add(new FieldConfig(wfDocField.getName(),
-                                wfDocField.getRepeat(), subFieldConfigList));
+                        fieldConfigList
+                                .add(new FieldConfig(wfDocField.getName(), wfDocField.getRepeat(), subFieldConfigList));
                     } else {
-                        fieldConfigList.add(
-                                new FieldConfig(wfDocField.getName(), dataType, wfDocField.getRepeat()));
+                        fieldConfigList.add(new FieldConfig(wfDocField.getName(), dataType, wfDocField.getRepeat()));
                     }
                 }
 
@@ -729,7 +728,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         db().updateAll(wfItemQuery, new Update().add("heldBy", userLoginID));
 
         wfItemQuery.clear();
-        wfItemQuery.wfTemplateId(wfStepDef.getWfTemplateId());
+        wfItemQuery.globalTemplateName(wfStepDef.getGlobalTemplateName());
         wfItemQuery.wfStepName(wfStepDef.getName());
         wfItemQuery.heldBy(userLoginID);
         return db().valueList(Long.class, "id", wfItemQuery);
@@ -748,7 +747,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     public WfItemObjects getCurrentUserWorkItems(String globalStepName) throws UnifyException {
         WfStepDef wfStepDef = accessCurrentUserStep(globalStepName);
         String useLoginID = getUserToken().getUserLoginId();
-        List<WfItem> wfItemList = db().listAll(new WfItemQuery().wfTemplateId(wfStepDef.getWfTemplateId())
+        List<WfItem> wfItemList = db().listAll(new WfItemQuery().globalTemplateName(wfStepDef.getGlobalTemplateName())
                 .wfStepName(wfStepDef.getName()).heldBy(useLoginID));
 
         List<WfAction> actions = new ArrayList<WfAction>();
@@ -1547,7 +1546,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Create workflow item
         WfItem wfItem = new WfItem();
-        wfItem.setWfTemplateId(wfTemplateDef.getWfTemplateId());
+        wfItem.setGlobalTemplateName(wfTemplateDef.getGlobalName());
         wfItem.setOwnerId(ownerId);
         wfItem.setDescription(packableDoc.describe(wfTemplateDef.getWfDocDef().getItemDescFormat()));
         wfItem.setCreateDt(db().getNow());
@@ -1587,7 +1586,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private WfItemQuery getCurrentUserParticipationWfItemQuery(WfStepDef wfStepDef) throws UnifyException {
-        WfItemQuery wfItemQuery = new WfItemQuery().wfTemplateId(wfStepDef.getWfTemplateId())
+        WfItemQuery wfItemQuery = new WfItemQuery().globalTemplateName(wfStepDef.getGlobalTemplateName())
                 .wfStepName(wfStepDef.getName());
         if (!getUserToken().isReservedUser()) {
             Boolean supervisor = (Boolean) this.getSessionAttribute(JacklynSessionAttributeConstants.SUPERVISORFLAG);
@@ -1756,8 +1755,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private WfDocDef getWfItemWfDocDef(Long wfItemId) throws UnifyException {
-        String wfTemplateName = db().value(String.class, "wfTemplateName", new WfItemQuery().id(wfItemId));
-        return wfTemplates.get(wfTemplateName).getWfDocDef();
+        String globalTemplateName = db().value(String.class, "globalTemplateName", new WfItemQuery().id(wfItemId));
+        return wfTemplates.get(globalTemplateName).getWfDocDef();
     }
 
     private WfStepDef getWfStepDef(String globalName) throws UnifyException {
@@ -1766,9 +1765,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private WfStepDef getWfStepDef(WfItem wfItem) throws UnifyException {
-        return wfTemplates
-                .get(WfNameUtils.getGlobalTemplateName(wfItem.getWfCategoryName(), wfItem.getWfTemplateName()))
-                .getWfStepDef(wfItem.getWfStepName());
+        return wfTemplates.get(wfItem.getGlobalTemplateName()).getWfStepDef(wfItem.getWfStepName());
     }
 
     private WfTemplateDef getWfTemplateDef(WfStepDef wfStepDef) throws UnifyException {

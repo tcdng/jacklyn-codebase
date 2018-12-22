@@ -37,8 +37,8 @@ public class WfItem extends BaseTimestampedEntity {
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
 
-    @ForeignKey(WfTemplate.class)
-    private Long wfTemplateId;
+    @Column(name = "GLOBAL_TEMPLATE_NM", length = 64)
+    private String globalTemplateName;
 
     @Column(nullable = true)
     private Long ownerId;
@@ -67,21 +67,20 @@ public class WfItem extends BaseTimestampedEntity {
     @ListOnly(key = "wfHistEventId", property = "documentId")
     private Long documentId;
 
-    @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-    private String wfCategoryName;
-
-    @ListOnly(key = "wfTemplateId", property = "name")
-    private String wfTemplateName;
-
-    @ListOnly(key = "wfTemplateId", property = "description")
-    private String wfTemplateDesc;
-
     public Long getWfItemHistId() {
         return wfItemHistId;
     }
 
     public void setWfItemHistId(Long wfItemHistId) {
         this.wfItemHistId = wfItemHistId;
+    }
+
+    public String getGlobalTemplateName() {
+        return globalTemplateName;
+    }
+
+    public void setGlobalTemplateName(String globalTemplateName) {
+        this.globalTemplateName = globalTemplateName;
     }
 
     public Long getDocumentId() {
@@ -107,14 +106,6 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
-    }
-
-    public Long getWfTemplateId() {
-        return wfTemplateId;
-    }
-
-    public void setWfTemplateId(Long wfTemplateId) {
-        this.wfTemplateId = wfTemplateId;
     }
 
     public String getWfStepName() {
@@ -163,30 +154,6 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setParticipantType(WorkflowParticipantType participantType) {
         this.participantType = participantType;
-    }
-
-    public String getWfCategoryName() {
-        return wfCategoryName;
-    }
-
-    public void setWfCategoryName(String wfCategoryName) {
-        this.wfCategoryName = wfCategoryName;
-    }
-
-    public String getWfTemplateName() {
-        return wfTemplateName;
-    }
-
-    public void setWfTemplateName(String wfTemplateName) {
-        this.wfTemplateName = wfTemplateName;
-    }
-
-    public String getWfTemplateDesc() {
-        return wfTemplateDesc;
-    }
-
-    public void setWfTemplateDesc(String wfTemplateDesc) {
-        this.wfTemplateDesc = wfTemplateDesc;
     }
 
 }

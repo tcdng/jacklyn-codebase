@@ -43,7 +43,7 @@
 !ui-label:stepDt caption:$m{workflow.userworkflowitems.stepdt} formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:180px;} binding:stepDt sortable:true
 
 // Popup panels
-!ui-wfitemattachmentspanel:attachmentsPopup attachmentsBodyStyle:$s{width:420px; height:180px;} attachmentsInfoProperty:fileAttachmentsInfo
+!ui-wfitemattachmentspanel:attachmentsPopup attachmentsBodyStyle:$s{width:420px; height:180px;} attachmentsInfoBinding:fileAttachmentsInfo
 !ui-wfitemnotespanel:notesPopup binding:notesInfo saveNotesPath:$n{/applyActionWithNotes}
                                            
 // Action panels

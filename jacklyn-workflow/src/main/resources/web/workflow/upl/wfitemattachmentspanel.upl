@@ -7,7 +7,7 @@
 
 // Attachments panel
 !ui-panel:attachmentsPanel styleClass:$e{abody} style:$g{attachmentsBodyStyle} components:$c{frmAttachmentList}
-!ui-fileattachment:frmAttachmentList binding:$g{attachmentsInfoProperty}
+!ui-fileattachment:frmAttachmentList binding:$g{attachmentsInfoBinding}
     handler:$j{com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMATTACHMENTHANDLER}
 
 // Action components
