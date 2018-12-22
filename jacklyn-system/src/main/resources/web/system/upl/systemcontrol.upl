@@ -8,5 +8,5 @@
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
     caption:$m{system.systemcontrol.performsystemcontrol}
 
-!ui-systemcontrolpanel:controlPanel systemControlProperty:systemControlStateList
+!ui-systemcontrolpanel:controlPanel systemControlBinding:systemControlStateList
     toggleSystemControlPath:$n{/performToggleAction}
