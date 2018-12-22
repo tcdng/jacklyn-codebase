@@ -30,7 +30,7 @@
 
 //Select user role popup
 !ui-selectrolepanel:userRoleOptionsPopup dialogCaption:$m{security.switch.role}
-    roleListProperty:userRoleList selectRolePath:$n{/switchUserRole}
+    roleListBinding:userRoleList selectRolePath:$n{/switchUserRole}
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.USERROLEOPTIONS}
 
 //Actions 

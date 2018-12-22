@@ -45,7 +45,7 @@ import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
                 response = { "!showpopupresponse popup:$s{reportRunnerPopup}" }),
         @ResultMapping(name = "showapplicationsearch", response = { "!showpopupresponse popup:$s{searchBoxPopup}" }),
         @ResultMapping(name = "searchdone",
-                response = { "!hidepopupresponse", "!postresponse pathProperty:$s{searchSelectPath}" }),
+                response = { "!hidepopupresponse", "!postresponse pathBinding:$s{searchSelectPath}" }),
         @ResultMapping(name = "viewreport", response = { "!commonreportresponse" }) })
 public class CommonUtilitiesController extends BasePageController {
 
