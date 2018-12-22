@@ -756,7 +756,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         dashboardTile.getGenerator());
                 tileList.add(dashboardTileGenerator.generate(dashboardTile));
             } else {
-                tileList.add(new Tile(dashboardTile.getImageSrc(), dashboardTile.getCaption(), dashboardTile.getPath(),
+                String caption = resolveSessionMessage(dashboardTile.getCaption());
+                tileList.add(new Tile(dashboardTile.getImageSrc(), caption, dashboardTile.getPath(),
                         null, dashboardTile.isLandscape()));
             }
         }
