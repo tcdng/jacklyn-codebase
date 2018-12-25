@@ -42,7 +42,7 @@ public class ModuleConfig extends BaseConfig implements FeatureDefinition {
 
     private AuditsConfig audits;
 
-    private DashboardTilesConfig dashboardTiles;
+    private ShortcutTilesConfig shortcutTiles;
 
     private InputControlsConfig inputControls;
 
@@ -108,13 +108,13 @@ public class ModuleConfig extends BaseConfig implements FeatureDefinition {
         this.audits = audits;
     }
 
-    public DashboardTilesConfig getDashboardTiles() {
-        return dashboardTiles;
+    public ShortcutTilesConfig getShortcutTiles() {
+        return shortcutTiles;
     }
 
-    @XmlElement(name = "dashboard-tiles")
-    public void setDashboardTiles(DashboardTilesConfig dashboardTiles) {
-        this.dashboardTiles = dashboardTiles;
+    @XmlElement(name = "shortcut-tiles")
+    public void setShortcutTiles(ShortcutTilesConfig shortcutTiles) {
+        this.shortcutTiles = shortcutTiles;
     }
 
     public InputControlsConfig getInputControls() {

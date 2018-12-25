@@ -50,10 +50,10 @@
 .jk-footer {display: inline-block; width: 100%; text-align: center; padding-top: 4px; padding-bottom: 4px;
     border-top: 1px solid #A9A9A9; background-color: black; color: white; font-size: 7pt;}
 
-.jk-dashboard-deck {border:1px solid #C0C0C0;border-right:none; border-top:none;border-bottom-left-radius:8px;}
-.jk-dashboard-deck .tgtile {width: 36px; margin: 4px;}
-.jk-dashboard-deck .tgtile img {width: 32px; margin: 2px; cursor: pointer;}
-.jk-dashboard-deck .tgtile span {display: block; width: 48px; margin: 2px; cursor: pointer; text-align:center;
+.jk-shortcut-deck {border:1px solid #C0C0C0;border-right:none; border-top:none;border-bottom-left-radius:8px;}
+.jk-shortcut-deck .tgtile {width: 36px; margin: 4px;}
+.jk-shortcut-deck .tgtile img {width: 32px; margin: 2px; cursor: pointer;}
+.jk-shortcut-deck .tgtile span {display: block; width: 48px; margin: 2px; cursor: pointer; text-align:center;
     font-weight:bold; color:#404040;}
 
 .jk-recordorder {background: #FFFFFF; border: 1px solid #A9A9A9;}

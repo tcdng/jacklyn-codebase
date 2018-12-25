@@ -20,12 +20,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
- * Dashboard tile configuration.
+ * Shortcut tile configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class DashboardTileConfig extends BaseConfig {
+public class ShortcutTileConfig extends BaseConfig {
 
     private String caption;
 

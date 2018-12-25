@@ -28,7 +28,7 @@ import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
 import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Component;
@@ -120,19 +120,19 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
         super.onIndexPage();
 
         List<Tile> tileList = Collections.emptyList();
-        DashboardTileQuery query = new DashboardTileQuery().orderByDisplayOrder();
+        ShortcutTileQuery query = new ShortcutTileQuery().orderByDisplayOrder();
         if (getUserToken().isReservedUser()) {
             query.ignoreEmptyCriteria(true);
             tileList = systemService.generateTiles(query);
         } else {
-            Set<String> dashboardNames = getPrivilegeCodes(PrivilegeCategoryConstants.DASHBOARD);
-            if (!dashboardNames.isEmpty()) {
-                query.nameIn(dashboardNames);
+            Set<String> shortcutNames = getPrivilegeCodes(PrivilegeCategoryConstants.SHORTCUT);
+            if (!shortcutNames.isEmpty()) {
+                query.nameIn(shortcutNames);
                 tileList = systemService.generateTiles(query);
             }
         }
 
-        setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
+        setSessionAttribute(JacklynSessionAttributeConstants.SHORTCUTDECK, tileList);
     }
 
     @Override

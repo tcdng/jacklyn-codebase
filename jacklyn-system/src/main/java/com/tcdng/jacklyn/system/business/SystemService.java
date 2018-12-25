@@ -29,8 +29,8 @@ import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
-import com.tcdng.jacklyn.system.entities.DashboardTile;
-import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -575,91 +575,91 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     int deleteTheme(Long id) throws UnifyException;
 
     /**
-     * Creates a new dashboard tile.
+     * Creates a new shortcut tile.
      * 
-     * @param dashboardTile
-     *            the dashboard tile data
-     * @return the created dashboard tile ID
+     * @param shortcutTile
+     *            the shortcut tile data
+     * @return the created shortcut tile ID
      * @throws UnifyException
      *             if an error occurs
      */
-    Long createDashboardTile(DashboardTile dashboardTile) throws UnifyException;
+    Long createShortcutTile(ShortcutTile shortcutTile) throws UnifyException;
 
     /**
-     * Finds a dashboard tile by ID.
+     * Finds a shortcut tile by ID.
      * 
-     * @param dashboardTileId
-     *            the dashboard tile ID
-     * @return the dashboard tile data
+     * @param shortcutTileId
+     *            the shortcut tile ID
+     * @return the shortcut tile data
      * @throws UnifyException
-     *             if dashboard tile with ID is not found
+     *             if shortcut tile with ID is not found
      */
-    DashboardTile findDashboardTile(Long dashboardTileId) throws UnifyException;
+    ShortcutTile findShortcutTile(Long shortcutTileId) throws UnifyException;
 
     /**
-     * Finds dashboard tiles by query.
+     * Finds shortcut tiles by query.
      * 
      * @param query
-     *            the dashboard tile query
-     * @return the list of dashboard tiles found
+     *            the shortcut tile query
+     * @return the list of shortcut tiles found
      * @throws UnifyException
      *             if an error occurs
      */
-    List<DashboardTile> findDashboardTiles(DashboardTileQuery query) throws UnifyException;
+    List<ShortcutTile> findShortcutTiles(ShortcutTileQuery query) throws UnifyException;
 
     /**
-     * Updates a dashboard tile.
+     * Updates a shortcut tile.
      * 
-     * @param dashboardTile
-     *            the dashboard tile
+     * @param shortcutTile
+     *            the shortcut tile
      * @return the update count
      * @throws UnifyException
      *             if an error occurs
      */
-    int updateDashboardTile(DashboardTile dashboardTile) throws UnifyException;
+    int updateShortcutTile(ShortcutTile shortcutTile) throws UnifyException;
 
     /**
-     * Deletes a dashboard tile.
+     * Deletes a shortcut tile.
      * 
      * @param id
-     *            the dashboard tile ID
+     *            the shortcut tile ID
      * @return the delete count
      * @throws UnifyException
      *             if an error occurs
      */
-    int deleteDashboardTile(Long id) throws UnifyException;
+    int deleteShortcutTile(Long id) throws UnifyException;
 
     /**
-     * Save the display order of dashboard tile list.
+     * Save the display order of shortcut tile list.
      * 
-     * @param dashboardTileList
-     *            the dashboard tile list
+     * @param shortcutTileList
+     *            the shortcut tile list
      * @throws UnifyException
      *             if an error occurs
      */
-    void saveDashboardTileOrder(List<DashboardTile> dashboardTileList) throws UnifyException;
+    void saveShortcutTileOrder(List<ShortcutTile> shortcutTileList) throws UnifyException;
 
     /**
-     * Generates user interface tiles for dashboard tiles that match query.
+     * Generates user interface tiles for shortcut tiles that match query.
      * 
      * @param query
-     *            the dashboard query
+     *            the shortcut query
      * @return a list of tiles
      * @throws UnifyException
      *             if an error occurs
      */
-    List<Tile> generateTiles(DashboardTileQuery query) throws UnifyException;
+    List<Tile> generateTiles(ShortcutTileQuery query) throws UnifyException;
 
     /**
-     * Generates user interface tiles using supplied dashboard tile list.
+     * Generates user interface tiles using supplied shortcut tile list.
      * 
-     * @param dashboardTileList
-     *            the dashboard tile list
+     * @param shortcutTileList
+     *            the shortcut tile list
      * @return a list of tiles
      * @throws UnifyException
      *             if an error occurs
      */
-    List<Tile> generateTiles(List<DashboardTile> dashboardTileList) throws UnifyException;
+    List<Tile> generateTiles(List<ShortcutTile> shortcutTileList) throws UnifyException;
 
     /**
      * Creates a new input control definition.

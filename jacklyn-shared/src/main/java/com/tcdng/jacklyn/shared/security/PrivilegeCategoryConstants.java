@@ -25,7 +25,7 @@ public interface PrivilegeCategoryConstants {
 
     String APPLICATIONUI = "APPUI";
 
-    String DASHBOARD = "DSHBRD";
+    String SHORTCUT = "SHRTCT";
 
     String DOCUMENTCONTROL = "DOCCTRL";
 
