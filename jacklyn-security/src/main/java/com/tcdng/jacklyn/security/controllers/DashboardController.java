@@ -15,19 +15,8 @@
  */
 package com.tcdng.jacklyn.security.controllers;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
-import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
-import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
-import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
-import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.ui.Tile;
 
 /**
  * Dashboard controller.
@@ -41,27 +30,5 @@ public class DashboardController extends AbstractSecurityController {
 
     public DashboardController() {
         super(true, false);// Secure and read-only
-    }
-
-    @Override
-    protected void onOpenPage() throws UnifyException {
-        List<Tile> tileList = Collections.emptyList();
-        DashboardTileQuery query = new DashboardTileQuery().orderByDisplayOrder();
-        if (getUserToken().isReservedUser()) {
-            query.ignoreEmptyCriteria(true);
-            tileList = getSystemBusinessModule().generateTiles(query);
-        } else {
-            Set<String> dashboardNames = getPrivilegeCodes(PrivilegeCategoryConstants.DASHBOARD);
-            if (!dashboardNames.isEmpty()) {
-                query.nameIn(dashboardNames);
-                tileList = getSystemBusinessModule().generateTiles(query);
-            }
-        }
-
-        setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
-    }
-
-    protected SystemService getSystemBusinessModule() throws UnifyException {
-        return (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
     }
 }
