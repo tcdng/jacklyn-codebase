@@ -68,6 +68,10 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
         @ResultMapping(name = "switchcrud",
                 response = { "!switchpanelresponse panels:$l{manageBodyPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
+        @ResultMapping(name = "switchsearch_io",
+                response = { "!switchpanelresponse panels:$l{mainResultPanel.searchResultPanel}"}),
+        @ResultMapping(name = "switchcrud_io",
+                response = { "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}"}),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
 public abstract class ManageRecordController<T extends Entity, U> extends BasePageController
         implements DocViewController {
