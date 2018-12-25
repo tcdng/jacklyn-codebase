@@ -5,28 +5,44 @@
 !ui-document layout:$d{!ui-desktoptype1} headerPanel:$c{topBanner} menuPanel:$c{menuBar} contentPanel:$c{content}
 
 // Header    
-!ui-panel:topBanner styleClass:$e{jk-topbanner} components:$c{topBannerImg topBannerControl}
+!ui-panel:topBanner styleClass:$e{jk-topbanner} components:$c{topBannerImg navigationBand topBannerControl userImg}
 !ui-image:topBannerImg src:$s{web/images/applicationbanner.jpg} styleClass:$e{jk-topbannerimg}
 !ui-panel:topBannerControl layout:$d{!ui-vertical style:$s{width:100%;}} styleClass:$e{jk-topbannercontrol}
-    components:$c{userInfoBand navigationBand}
+    components:$c{userInfoBand clockInfoBand}
 
-!ui-panel:userInfoBand styleClass:jk-userinfoband components:$c{userLabel roleLabel clock}
+!ui-image:userImg  src:$t{/images/user_small.png} styleClass:$e{jk-topuserimg}
+    binding:userPhotoGenerator
+    eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
+
+!ui-panel:clockInfoBand styleClass:$e{jk-userinfoband} components:$c{clock}
 !ui-textclock:clock
+!ui-panel:userInfoBand styleClass:$e{jk-userinfoband} components:$c{userLabel roleLabel branchLabel}
 !ui-labeledtext:userLabel caption:$m{application.login.user} maxLen:24
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.USERNAME}
 !ui-labeledtext:roleLabel style:$s{cursor:pointer;} caption:$m{application.login.role} hint:$m{application.switch.role}
     eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}}
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.ROLEDESCRIPTION}
+!ui-labeledtext:branchLabel caption:$m{application.login.branch}
+    binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.BRANCHDESC}
 
-!ui-panel:navigationBand styleClass:$e{jk-userinfoband} components:$c{switchRoleLabel logoutLabel}
-!ui-button:switchRoleLabel caption:$m{application.switchrole} styleClass:$e{jk-switchrole} eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}}
-!ui-button:logoutLabel caption:$m{application.logout} styleClass:$e{jk-logout} eventHandler:$d{!ui-event event:onclick action:$c{logoutAct}}
+!ui-panel:navigationBand styleClass:$e{jk-topnavcontrol} components:$c{switchRoleLabel logoutLabel}
+!ui-button:switchRoleLabel caption:$m{application.switchrole} styleClass:$e{jk-switchrole}
+    eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}}
+!ui-button:logoutLabel caption:$m{application.logout} styleClass:$e{jk-logout}
+    eventHandler:$d{!ui-event event:onclick action:$c{logoutAct}}
 
 // Menu
 !ui-horizontalflyoutmenu:menuBar
 
 // Content
-!ui-contentpanel:content styleClass:$e{jk-content} path:$s{/security/landing/openPage} tabbed:true
+!ui-contentpanel:content styleClass:$e{jk-content} path:$s{/security/landing/openPage} tabbed:true sidebar:$c{shortcutDeck}
+!ui-tilegroup:shortcutDeck columns:1 styleClass:$e{jk-shortcut-deck}
+    binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.SHORTCUTDECK}
+    
+// Show user details popup
+!ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}
+    imageGenBinding:userPhotoGenerator
+
 
 //Select user role popup
 !ui-selectrolepanel:userRoleOptionsPopup dialogCaption:$m{security.switch.role}
@@ -36,3 +52,4 @@
 //Actions 
 !ui-post:logoutAct path:$n{/logOut} confirm:$m{application.logout.confirm}
 !ui-post:switchRoleAct path:$s{/application/prepareUserRoleOptions}
+!ui-post:userDetailsAct path:$n{/showUserDetails}
