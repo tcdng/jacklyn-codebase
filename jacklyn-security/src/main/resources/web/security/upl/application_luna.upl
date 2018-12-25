@@ -36,7 +36,9 @@
 !ui-verticalflyoutmenu:menuBar
 
 // Content
-!ui-contentpanel:content styleClass:$e{jk-content} path:$s{/security/landing/openPage} tabbed:true
+!ui-contentpanel:content styleClass:$e{jk-content} path:$s{/security/landing/openPage} tabbed:true sidebar:$c{dashboardDeck}
+!ui-tilegroup:dashboardDeck columns:1 styleClass:$e{jk-dashboard-deck}
+    binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.DASHBOARDDECK}
     
 // Show user details popup
 !ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}

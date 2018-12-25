@@ -15,8 +15,10 @@
  */
 package com.tcdng.jacklyn.security.controllers;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
@@ -24,12 +26,16 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
 import com.tcdng.jacklyn.security.data.UserRoleOptions;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
+import com.tcdng.jacklyn.system.business.SystemService;
+import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.resource.ImageGenerator;
+import com.tcdng.unify.core.ui.Tile;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
@@ -47,12 +53,15 @@ import com.tcdng.unify.web.ui.control.Table;
 @Component("/application")
 @UplBinding("web/security/upl/application.upl")
 @ResultMappings({
-        @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
-        @ResultMapping(name = "showuserroleoptions",
-                response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
-        @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
+    @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
+    @ResultMapping(name = "showuserroleoptions",
+            response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
+    @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
 public class ApplicationController extends AbstractApplicationForwarderController {
 
+    @Configurable
+    private SystemService systemService;
+    
     @Configurable("userphoto-generator")
     private ImageGenerator userPhotoGenerator;
 
@@ -104,6 +113,26 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
                 JacklynSessionAttributeConstants.USERROLEOPTIONS);
         UserRole userRoleData = userRoleOptions.getUserRoleList().get(selectRoleTableState.getViewIndex());
         return forwardToApplication(userRoleData);
+    }
+
+    @Override
+    protected void onIndexPage() throws UnifyException {
+        super.onIndexPage();
+
+        List<Tile> tileList = Collections.emptyList();
+        DashboardTileQuery query = new DashboardTileQuery().orderByDisplayOrder();
+        if (getUserToken().isReservedUser()) {
+            query.ignoreEmptyCriteria(true);
+            tileList = systemService.generateTiles(query);
+        } else {
+            Set<String> dashboardNames = getPrivilegeCodes(PrivilegeCategoryConstants.DASHBOARD);
+            if (!dashboardNames.isEmpty()) {
+                query.nameIn(dashboardNames);
+                tileList = systemService.generateTiles(query);
+            }
+        }
+
+        setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
     }
 
     @Override
