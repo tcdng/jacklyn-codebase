@@ -8,11 +8,11 @@
 		<audit name="aud-inspectusersearch" description="$m{audit.auditsettings.inspectusersearch}"
 			action="search" />
 	</audits>
-	<dashboard-tiles>
-		<dashboard-tile name="aud-audittrail"
-			caption="$m{audit.dashboard.caption.audittrail}" description="$m{audit.dashboard.tile.audittrail}"
+	<shortcut-tiles>
+		<shortcut-tile name="aud-audittrail"
+			caption="$m{audit.shortcut.caption.audittrail}" description="$m{audit.shortcut.tile.audittrail}"
 			image="$t{images/manageaudittrail.png}" path="/audit/audittrail/openPage" />
-	</dashboard-tiles>
+	</shortcut-tiles>
 	<menus>
 		<menu name="aud-mainfile" description="$m{audit.menu.main}"
 			caption="$m{audit.menu.title}">

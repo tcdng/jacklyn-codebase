@@ -34,7 +34,7 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
-import com.tcdng.jacklyn.shared.xml.config.module.DashboardTileConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.InputControlConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuItemConfig;
@@ -53,8 +53,8 @@ import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
-import com.tcdng.jacklyn.system.entities.DashboardTile;
-import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -718,61 +718,61 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
-    public Long createDashboardTile(DashboardTile dashboardTile) throws UnifyException {
-        return (Long) db().create(dashboardTile);
+    public Long createShortcutTile(ShortcutTile shortcutTile) throws UnifyException {
+        return (Long) db().create(shortcutTile);
     }
 
     @Override
-    public DashboardTile findDashboardTile(Long dashboardTileId) throws UnifyException {
-        return db().list(DashboardTile.class, dashboardTileId);
+    public ShortcutTile findShortcutTile(Long shortcutTileId) throws UnifyException {
+        return db().list(ShortcutTile.class, shortcutTileId);
     }
 
     @Override
-    public List<DashboardTile> findDashboardTiles(DashboardTileQuery query) throws UnifyException {
+    public List<ShortcutTile> findShortcutTiles(ShortcutTileQuery query) throws UnifyException {
         return db().listAll(query);
     }
 
     @Override
-    public int updateDashboardTile(DashboardTile dashboardTile) throws UnifyException {
-        return db().updateById(dashboardTile);
+    public int updateShortcutTile(ShortcutTile shortcutTile) throws UnifyException {
+        return db().updateById(shortcutTile);
     }
 
     @Override
-    public int deleteDashboardTile(Long id) throws UnifyException {
-        return db().delete(DashboardTile.class, id);
+    public int deleteShortcutTile(Long id) throws UnifyException {
+        return db().delete(ShortcutTile.class, id);
     }
 
     @Override
-    public List<Tile> generateTiles(DashboardTileQuery query) throws UnifyException {
+    public List<Tile> generateTiles(ShortcutTileQuery query) throws UnifyException {
         return generateTiles(db().findAll(query));
     }
 
     @Override
-    public List<Tile> generateTiles(List<DashboardTile> dashboardTileList) throws UnifyException {
+    public List<Tile> generateTiles(List<ShortcutTile> shortcutTileList) throws UnifyException {
         List<Tile> tileList = new ArrayList<Tile>();
-        for (DashboardTile dashboardTile : dashboardTileList) {
-            if (dashboardTile.getGenerator() != null) {
-                DashboardTileGenerator dashboardTileGenerator = (DashboardTileGenerator) getComponent(
-                        dashboardTile.getGenerator());
-                tileList.add(dashboardTileGenerator.generate(dashboardTile));
+        for (ShortcutTile shortcutTile : shortcutTileList) {
+            if (shortcutTile.getGenerator() != null) {
+                ShortcutTileGenerator shortcutTileGenerator = (ShortcutTileGenerator) getComponent(
+                        shortcutTile.getGenerator());
+                tileList.add(shortcutTileGenerator.generate(shortcutTile));
             } else {
-                String caption = resolveSessionMessage(dashboardTile.getCaption());
-                tileList.add(new Tile(dashboardTile.getImageSrc(), caption, dashboardTile.getPath(),
-                        null, dashboardTile.isLandscape()));
+                String caption = resolveSessionMessage(shortcutTile.getCaption());
+                tileList.add(new Tile(shortcutTile.getImageSrc(), caption, shortcutTile.getPath(),
+                        null, shortcutTile.isLandscape()));
             }
         }
         return tileList;
     }
 
     @Override
-    public void saveDashboardTileOrder(List<DashboardTile> dashboardTileList) throws UnifyException {
-        DashboardTileQuery query = new DashboardTileQuery();
+    public void saveShortcutTileOrder(List<ShortcutTile> shortcutTileList) throws UnifyException {
+        ShortcutTileQuery query = new ShortcutTileQuery();
         Update update = new Update();
-        for (int i = 0; i < dashboardTileList.size(); i++) {
-            DashboardTile dashboardTile = dashboardTileList.get(i);
+        for (int i = 0; i < shortcutTileList.size(); i++) {
+            ShortcutTile shortcutTile = shortcutTileList.get(i);
             query.clear();
             update.clear();
-            query.id(dashboardTile.getId());
+            query.id(shortcutTile.getId());
             update.add("displayOrder", i);
             db().updateAll(query, update);
         }
@@ -808,14 +808,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         db().updateAll(new ApplicationMenuItemQuery(), update);
         db().updateAll(new SystemAssetQuery(), update);
 
-        DashboardTileQuery dtQuery = (DashboardTileQuery) new DashboardTileQuery().clear().ignoreEmptyCriteria(true);
+        ShortcutTileQuery dtQuery = (ShortcutTileQuery) new ShortcutTileQuery().clear().ignoreEmptyCriteria(true);
         db().updateAll(dtQuery, update);
 
         // Install new and update old
         Module module = new Module();
         ApplicationMenu applicationMenu = new ApplicationMenu();
         ApplicationMenuItem applicationMenuItem = new ApplicationMenuItem();
-        DashboardTile dashboardTile = new DashboardTile();
+        ShortcutTile shortcutTile = new ShortcutTile();
 
         // Detect and register modules
         logDebug("Detecting and installing modules...");
@@ -955,39 +955,39 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getDashboardTiles() != null) {
-                logDebug("Reading dashboard tile definitions for module [{0}]...",
+            if (moduleConfig.getShortcutTiles() != null) {
+                logDebug("Reading shortcut tile definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
-                dashboardTile.setModuleId(moduleId);
-                for (DashboardTileConfig dashboardTileConfig : moduleConfig.getDashboardTiles()
-                        .getDashboardTileList()) {
+                shortcutTile.setModuleId(moduleId);
+                for (ShortcutTileConfig shortcutTileConfig : moduleConfig.getShortcutTiles()
+                        .getShortcutTileList()) {
                     dtQuery.clear();
-                    DashboardTile oldDashboardTile = db().find(dtQuery.name(dashboardTileConfig.getName()));
+                    ShortcutTile oldShortcutTile = db().find(dtQuery.name(shortcutTileConfig.getName()));
 
-                    if (oldDashboardTile == null) {
-                        dashboardTile.setName(dashboardTileConfig.getName());
-                        dashboardTile.setDescription(resolveApplicationMessage(dashboardTileConfig.getDescription()));
-                        dashboardTile.setImageSrc(AnnotationUtils.getAnnotationString(dashboardTileConfig.getImage()));
-                        dashboardTile.setCaption(AnnotationUtils.getAnnotationString(dashboardTileConfig.getCaption()));
-                        dashboardTile
-                                .setGenerator(AnnotationUtils.getAnnotationString(dashboardTileConfig.getGenerator()));
-                        dashboardTile.setPath(dashboardTileConfig.getPath());
-                        dashboardTile.setLandscape(dashboardTileConfig.isLandscape());
-                        db().create(dashboardTile);
+                    if (oldShortcutTile == null) {
+                        shortcutTile.setName(shortcutTileConfig.getName());
+                        shortcutTile.setDescription(resolveApplicationMessage(shortcutTileConfig.getDescription()));
+                        shortcutTile.setImageSrc(AnnotationUtils.getAnnotationString(shortcutTileConfig.getImage()));
+                        shortcutTile.setCaption(AnnotationUtils.getAnnotationString(shortcutTileConfig.getCaption()));
+                        shortcutTile
+                                .setGenerator(AnnotationUtils.getAnnotationString(shortcutTileConfig.getGenerator()));
+                        shortcutTile.setPath(shortcutTileConfig.getPath());
+                        shortcutTile.setLandscape(shortcutTileConfig.isLandscape());
+                        db().create(shortcutTile);
                     } else {
-                        oldDashboardTile
-                                .setDescription(resolveApplicationMessage(dashboardTileConfig.getDescription()));
-                        oldDashboardTile
-                                .setImageSrc(AnnotationUtils.getAnnotationString(dashboardTileConfig.getImage()));
-                        oldDashboardTile
-                                .setCaption(AnnotationUtils.getAnnotationString(dashboardTileConfig.getCaption()));
-                        oldDashboardTile
-                                .setGenerator(AnnotationUtils.getAnnotationString(dashboardTileConfig.getGenerator()));
-                        oldDashboardTile.setPath(dashboardTileConfig.getPath());
-                        oldDashboardTile.setLandscape(dashboardTileConfig.isLandscape());
-                        oldDashboardTile.setInstalled(Boolean.TRUE);
-                        db().updateById(oldDashboardTile);
+                        oldShortcutTile
+                                .setDescription(resolveApplicationMessage(shortcutTileConfig.getDescription()));
+                        oldShortcutTile
+                                .setImageSrc(AnnotationUtils.getAnnotationString(shortcutTileConfig.getImage()));
+                        oldShortcutTile
+                                .setCaption(AnnotationUtils.getAnnotationString(shortcutTileConfig.getCaption()));
+                        oldShortcutTile
+                                .setGenerator(AnnotationUtils.getAnnotationString(shortcutTileConfig.getGenerator()));
+                        oldShortcutTile.setPath(shortcutTileConfig.getPath());
+                        oldShortcutTile.setLandscape(shortcutTileConfig.isLandscape());
+                        oldShortcutTile.setInstalled(Boolean.TRUE);
+                        db().updateById(oldShortcutTile);
                     }
                 }
             }

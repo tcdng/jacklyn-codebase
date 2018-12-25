@@ -35,5 +35,5 @@ public interface SystemModuleAuditConstants {
 
     String AUDIT_DISABLE_CONTROL = "sys-disablecontrol";
 
-    String AUDIT_SET_DASHBOARDTILE_DISPLAY_ORDER = "sys-orderdashboardtile";
+    String AUDIT_SET_SHORTCUTTILE_DISPLAY_ORDER = "sys-ordershortcuttile";
 }

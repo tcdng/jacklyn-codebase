@@ -38,8 +38,8 @@ import com.tcdng.jacklyn.system.entities.ApplicationMenu;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItem;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItemQuery;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
-import com.tcdng.jacklyn.system.entities.DashboardTile;
-import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.Module;
 import com.tcdng.jacklyn.system.entities.ModuleQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTask;
@@ -607,119 +607,119 @@ public class SystemServiceTest extends AbstractJacklynTest {
     }
 
     @Test
-    public void testCreateDashboardTile() throws Exception {
+    public void testCreateShortcutTile() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        Long dashboardTileId = systemService.createDashboardTile(dashboardTile);
-        assertNotNull(dashboardTileId);
+        ShortcutTile shortcutTile = getShortcutTile();
+        Long shortcutTileId = systemService.createShortcutTile(shortcutTile);
+        assertNotNull(shortcutTileId);
     }
 
     @Test
-    public void testFindDashboardTileById() throws Exception {
+    public void testFindShortcutTileById() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        Long dashboardTileId = systemService.createDashboardTile(dashboardTile);
+        ShortcutTile shortcutTile = getShortcutTile();
+        Long shortcutTileId = systemService.createShortcutTile(shortcutTile);
 
-        DashboardTile fetchedDashboardTile = systemService.findDashboardTile(dashboardTileId);
-        assertNotNull(fetchedDashboardTile);
-        assertEquals(dashboardTile.getName(), fetchedDashboardTile.getName());
-        assertEquals(dashboardTile.getCaption(), fetchedDashboardTile.getCaption());
-        assertEquals(dashboardTile.getDescription(), fetchedDashboardTile.getDescription());
-        assertEquals(dashboardTile.getGenerator(), fetchedDashboardTile.getGenerator());
-        assertEquals(dashboardTile.getImageSrc(), fetchedDashboardTile.getImageSrc());
-        assertEquals(dashboardTile.getStatus(), fetchedDashboardTile.getStatus());
+        ShortcutTile fetchedShortcutTile = systemService.findShortcutTile(shortcutTileId);
+        assertNotNull(fetchedShortcutTile);
+        assertEquals(shortcutTile.getName(), fetchedShortcutTile.getName());
+        assertEquals(shortcutTile.getCaption(), fetchedShortcutTile.getCaption());
+        assertEquals(shortcutTile.getDescription(), fetchedShortcutTile.getDescription());
+        assertEquals(shortcutTile.getGenerator(), fetchedShortcutTile.getGenerator());
+        assertEquals(shortcutTile.getImageSrc(), fetchedShortcutTile.getImageSrc());
+        assertEquals(shortcutTile.getStatus(), fetchedShortcutTile.getStatus());
     }
 
     @Test
-    public void testFindDashboardTiles() throws Exception {
+    public void testFindShortcutTiles() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        systemService.createDashboardTile(dashboardTile);
+        ShortcutTile shortcutTile = getShortcutTile();
+        systemService.createShortcutTile(shortcutTile);
 
-        List<DashboardTile> dashboardTileList = systemService
-                .findDashboardTiles(new DashboardTileQuery().name("tile001"));
-        assertNotNull(dashboardTileList);
-        assertEquals(1, dashboardTileList.size());
-        DashboardTile fetchedDashboardTile = dashboardTileList.get(0);
-        assertEquals(dashboardTile.getName(), fetchedDashboardTile.getName());
-        assertEquals(dashboardTile.getCaption(), fetchedDashboardTile.getCaption());
-        assertEquals(dashboardTile.getDescription(), fetchedDashboardTile.getDescription());
-        assertEquals(dashboardTile.getGenerator(), fetchedDashboardTile.getGenerator());
-        assertEquals(dashboardTile.getImageSrc(), fetchedDashboardTile.getImageSrc());
-        assertEquals(dashboardTile.getStatus(), fetchedDashboardTile.getStatus());
+        List<ShortcutTile> shortcutTileList = systemService
+                .findShortcutTiles(new ShortcutTileQuery().name("tile001"));
+        assertNotNull(shortcutTileList);
+        assertEquals(1, shortcutTileList.size());
+        ShortcutTile fetchedShortcutTile = shortcutTileList.get(0);
+        assertEquals(shortcutTile.getName(), fetchedShortcutTile.getName());
+        assertEquals(shortcutTile.getCaption(), fetchedShortcutTile.getCaption());
+        assertEquals(shortcutTile.getDescription(), fetchedShortcutTile.getDescription());
+        assertEquals(shortcutTile.getGenerator(), fetchedShortcutTile.getGenerator());
+        assertEquals(shortcutTile.getImageSrc(), fetchedShortcutTile.getImageSrc());
+        assertEquals(shortcutTile.getStatus(), fetchedShortcutTile.getStatus());
     }
 
     @Test
-    public void testUpdateDashboardTile() throws Exception {
+    public void testUpdateShortcutTile() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        Long dashboardTileId = systemService.createDashboardTile(dashboardTile);
+        ShortcutTile shortcutTile = getShortcutTile();
+        Long shortcutTileId = systemService.createShortcutTile(shortcutTile);
 
-        DashboardTile fetchedDashboardTile = systemService.findDashboardTile(dashboardTileId);
-        fetchedDashboardTile.setDescription("New Currencies");
-        int count = systemService.updateDashboardTile(fetchedDashboardTile);
+        ShortcutTile fetchedShortcutTile = systemService.findShortcutTile(shortcutTileId);
+        fetchedShortcutTile.setDescription("New Currencies");
+        int count = systemService.updateShortcutTile(fetchedShortcutTile);
         assertEquals(1, count);
 
-        DashboardTile updatedDashboardTile = systemService.findDashboardTile(dashboardTileId);
-        assertEquals(fetchedDashboardTile, updatedDashboardTile);
-        assertFalse(dashboardTile.equals(updatedDashboardTile));
+        ShortcutTile updatedShortcutTile = systemService.findShortcutTile(shortcutTileId);
+        assertEquals(fetchedShortcutTile, updatedShortcutTile);
+        assertFalse(shortcutTile.equals(updatedShortcutTile));
     }
 
     @Test
-    public void testDeleteDashboardTile() throws Exception {
+    public void testDeleteShortcutTile() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        Long dashboardTileId = systemService.createDashboardTile(dashboardTile);
+        ShortcutTile shortcutTile = getShortcutTile();
+        Long shortcutTileId = systemService.createShortcutTile(shortcutTile);
 
-        int count = systemService.deleteDashboardTile(dashboardTileId);
+        int count = systemService.deleteShortcutTile(shortcutTileId);
         assertEquals(1, count);
     }
 
     @Test
-    public void testSaveDashboardTileOrder() throws Exception {
+    public void testSaveShortcutTileOrder() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        systemService.createDashboardTile(dashboardTile);
+        ShortcutTile shortcutTile = getShortcutTile();
+        systemService.createShortcutTile(shortcutTile);
 
-        List<DashboardTile> dashboardTileList = systemService
-                .findDashboardTiles(new DashboardTileQuery().name("tile001"));
-        assertEquals(0, dashboardTileList.get(0).getDisplayOrder());
+        List<ShortcutTile> shortcutTileList = systemService
+                .findShortcutTiles(new ShortcutTileQuery().name("tile001"));
+        assertEquals(0, shortcutTileList.get(0).getDisplayOrder());
 
-        systemService.saveDashboardTileOrder(dashboardTileList);
-        dashboardTileList = systemService.findDashboardTiles(new DashboardTileQuery().name("tile001"));
-        assertEquals(0, dashboardTileList.get(0).getDisplayOrder());
+        systemService.saveShortcutTileOrder(shortcutTileList);
+        shortcutTileList = systemService.findShortcutTiles(new ShortcutTileQuery().name("tile001"));
+        assertEquals(0, shortcutTileList.get(0).getDisplayOrder());
     }
 
     @Test
     public void testGenerateTiles() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        DashboardTile dashboardTile = getDashboardTile();
-        systemService.createDashboardTile(dashboardTile);
+        ShortcutTile shortcutTile = getShortcutTile();
+        systemService.createShortcutTile(shortcutTile);
 
-        List<DashboardTile> dashboardTileList = systemService
-                .findDashboardTiles(new DashboardTileQuery().name("tile001"));
+        List<ShortcutTile> shortcutTileList = systemService
+                .findShortcutTiles(new ShortcutTileQuery().name("tile001"));
 
-        List<Tile> tileList = systemService.generateTiles(dashboardTileList);
+        List<Tile> tileList = systemService.generateTiles(shortcutTileList);
         assertNotNull(tileList);
         assertEquals(1, tileList.size());
 
         Tile tile = tileList.get(0);
-        assertEquals(dashboardTile.getCaption(), tile.getCaption());
-        assertEquals(dashboardTile.getPath(), tile.getActionPath());
-        assertEquals(dashboardTile.getImageSrc(), tile.getImageSrc());
+        assertEquals(shortcutTile.getCaption(), tile.getCaption());
+        assertEquals(shortcutTile.getPath(), tile.getActionPath());
+        assertEquals(shortcutTile.getImageSrc(), tile.getImageSrc());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onSetup() throws Exception {
-        deleteAll(DashboardTile.class, Theme.class, ScheduledTaskHist.class, ParameterValues.class,
+        deleteAll(ShortcutTile.class, Theme.class, ScheduledTaskHist.class, ParameterValues.class,
                 ScheduledTask.class);
     }
 
@@ -746,17 +746,17 @@ public class SystemServiceTest extends AbstractJacklynTest {
         return theme;
     }
 
-    private DashboardTile getDashboardTile() throws Exception {
+    private ShortcutTile getShortcutTile() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
         Long moduleId = systemService.getModuleId(SystemModuleNameConstants.SYSTEM_MODULE);
-        DashboardTile dashboardTile = new DashboardTile();
-        dashboardTile.setModuleId(moduleId);
-        dashboardTile.setName("tile001");
-        dashboardTile.setDescription("Currencies");
-        dashboardTile.setImageSrc("/currencies.png");
-        dashboardTile.setCaption("Manage Currencies");
-        dashboardTile.setPath("/accounts/currencies");
-        dashboardTile.setStatus(RecordStatus.ACTIVE);
-        return dashboardTile;
+        ShortcutTile shortcutTile = new ShortcutTile();
+        shortcutTile.setModuleId(moduleId);
+        shortcutTile.setName("tile001");
+        shortcutTile.setDescription("Currencies");
+        shortcutTile.setImageSrc("/currencies.png");
+        shortcutTile.setCaption("Manage Currencies");
+        shortcutTile.setPath("/accounts/currencies");
+        shortcutTile.setStatus(RecordStatus.ACTIVE);
+        return shortcutTile;
     }
 }

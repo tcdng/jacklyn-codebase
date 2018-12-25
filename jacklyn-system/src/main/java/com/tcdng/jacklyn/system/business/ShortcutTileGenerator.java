@@ -15,24 +15,27 @@
  */
 package com.tcdng.jacklyn.system.business;
 
-import com.tcdng.unify.core.AbstractUnifyComponent;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.ui.Tile;
 
 /**
- * Convenient base class for a dashboard tile generator.
+ * Interface for dynamically generating a shortcut tile.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractDashboardTileGenerator extends AbstractUnifyComponent implements DashboardTileGenerator {
+public interface ShortcutTileGenerator extends UnifyComponent {
 
-    @Override
-    protected void onInitialize() throws UnifyException {
-
-    }
-
-    @Override
-    protected void onTerminate() throws UnifyException {
-
-    }
+    /**
+     * Generates a tile using supplied shortcut tile data.
+     * 
+     * @param shortcutTile
+     *            the shortcut tile
+     * @return a user interface tile
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Tile generate(ShortcutTile shortcutTile) throws UnifyException;
 }

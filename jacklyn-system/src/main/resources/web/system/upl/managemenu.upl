@@ -46,7 +46,7 @@
 
 !ui-button:setOrderBtn styleClass:$e{jk-button} caption:$m{button.set.display.order}
     eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
-    privilege:$s{dashboard-editdashboardtile}
+    privilege:$s{sys-shortcuttileedit}
 
 //Actions
 !ui-post:menuItemAct path:$n{/prepareMenuItems} components:$c{tablePanel}

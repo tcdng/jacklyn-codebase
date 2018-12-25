@@ -10,14 +10,14 @@
 		<audit name="sec-resetpassword" description="$m{security.auditsettings.resetpassword}"
 			action="update" />
 	</audits>
-	<dashboard-tiles>
-		<dashboard-tile name="sec-users"
-			caption="$m{security.dashboard.caption.users}" description="$m{security.dashboard.tile.users}"
+	<shortcut-tiles>
+		<shortcut-tile name="sec-users"
+			caption="$m{security.shortcut.caption.users}" description="$m{security.shortcut.tile.users}"
 			image="$t{images/manageusers.png}" path="/security/user/openPage" />
-		<dashboard-tile name="sec-roles"
-			caption="$m{security.dashboard.caption.roles}" description="$m{security.dashboard.tile.roles}"
+		<shortcut-tile name="sec-roles"
+			caption="$m{security.shortcut.caption.roles}" description="$m{security.shortcut.tile.roles}"
 			image="$t{images/manageroles.png}" path="/security/role/openPage" />
-	</dashboard-tiles>
+	</shortcut-tiles>
 	<menus>
 		<menu name="sec-mainsecurity" caption="$m{security.menu.title}"
 			description="$m{security.menu.main}">

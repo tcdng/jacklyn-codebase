@@ -39,8 +39,8 @@ import com.tcdng.jacklyn.shared.xml.config.module.ArchiveConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ArchivesConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.AuditConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.AuditsConfig;
-import com.tcdng.jacklyn.shared.xml.config.module.DashboardTileConfig;
-import com.tcdng.jacklyn.shared.xml.config.module.DashboardTilesConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTilesConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.FieldConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ManagedConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuConfig;
@@ -202,11 +202,11 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
 
     private void addImplicitPrivilegeConfigurations(List<ModuleConfig> list) throws UnifyException {
         for (ModuleConfig mc : list) {
-            // Dashboard privileges
-            DashboardTilesConfig dtc = mc.getDashboardTiles();
+            // Shortcut privileges
+            ShortcutTilesConfig dtc = mc.getShortcutTiles();
             if (dtc != null) {
-                PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.DASHBOARD);
-                for (DashboardTileConfig dtci : dtc.getDashboardTileList()) {
+                PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.SHORTCUT);
+                for (ShortcutTileConfig dtci : dtc.getShortcutTileList()) {
                     PrivilegeConfig pc = new PrivilegeConfig(dtci.getName(), dtci.getDescription());
                     pgc.addPrivilegeConfig(pc);
                 }

@@ -20,30 +20,30 @@ import java.util.Collection;
 import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
 
 /**
- * Query class for dashboard tiles.
+ * Query class for shortcut tiles.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class DashboardTileQuery extends BaseInstallEntityQuery<DashboardTile> {
+public class ShortcutTileQuery extends BaseInstallEntityQuery<ShortcutTile> {
 
-    public DashboardTileQuery() {
-        super(DashboardTile.class);
+    public ShortcutTileQuery() {
+        super(ShortcutTile.class);
     }
 
-    public DashboardTileQuery moduleId(Long moduleId) {
-        return (DashboardTileQuery) equals("moduleId", moduleId);
+    public ShortcutTileQuery moduleId(Long moduleId) {
+        return (ShortcutTileQuery) equals("moduleId", moduleId);
     }
 
-    public DashboardTileQuery name(String name) {
-        return (DashboardTileQuery) equals("name", name);
+    public ShortcutTileQuery name(String name) {
+        return (ShortcutTileQuery) equals("name", name);
     }
 
-    public DashboardTileQuery nameIn(Collection<String> name) {
-        return (DashboardTileQuery) amongst("name", name);
+    public ShortcutTileQuery nameIn(Collection<String> name) {
+        return (ShortcutTileQuery) amongst("name", name);
     }
 
-    public DashboardTileQuery orderByDisplayOrder() {
-        return (DashboardTileQuery) order("displayOrder");
+    public ShortcutTileQuery orderByDisplayOrder() {
+        return (ShortcutTileQuery) order("displayOrder");
     }
 }

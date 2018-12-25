@@ -26,23 +26,23 @@ import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
- * Dashboard tile entity.
+ * Shortcut tile entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Dashboard Tile", reportable = true,
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Shortcut Tile", reportable = true,
         auditable = true)
-@Table(name = "DASHBOARDTILE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
-public class DashboardTile extends BaseInstallEntity {
+@Table(name = "SHORTCUTTILE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
+public class ShortcutTile extends BaseInstallEntity {
 
     @ForeignKey(Module.class)
     private Long moduleId;
 
-    @Column(name = "DASHBOARDTILE_NM", length = 40)
+    @Column(name = "SHORTCUTTILE_NM", length = 40)
     private String name;
 
-    @Column(name = "DASHBOARDTILE_DESC", length = 64)
+    @Column(name = "SHORTCUTTILE_DESC", length = 64)
     private String description;
 
     @Column(length = 64, nullable = true)

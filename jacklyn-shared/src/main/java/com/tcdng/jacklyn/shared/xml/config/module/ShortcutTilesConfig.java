@@ -20,22 +20,22 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Dashboard tiles configuration.
+ * Shortcut tiles configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class DashboardTilesConfig {
+public class ShortcutTilesConfig {
 
-    private List<DashboardTileConfig> dashboardTileList;
+    private List<ShortcutTileConfig> shortcutTileList;
 
-    public List<DashboardTileConfig> getDashboardTileList() {
-        return dashboardTileList;
+    public List<ShortcutTileConfig> getShortcutTileList() {
+        return shortcutTileList;
     }
 
-    @XmlElement(name = "dashboard-tile", required = true)
-    public void setDashboardTileList(List<DashboardTileConfig> dashboardTileList) {
-        this.dashboardTileList = dashboardTileList;
+    @XmlElement(name = "shortcut-tile", required = true)
+    public void setShortcutTileList(List<ShortcutTileConfig> shortcutTileList) {
+        this.shortcutTileList = shortcutTileList;
     }
 
 }

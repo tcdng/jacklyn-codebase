@@ -23,8 +23,8 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynSessionAttributeConstants {
 
-    /** Dashboard cards */
-    String DASHBOARDDECK = "JKLN.DASHBOARDDECK";
+    /** Shortcut deck */
+    String SHORTCUTDECK = "JKLN.SHORTCUTDECK";
 
     /** Message Box */
     String MESSAGEBOX = "JKLN.MESSAGEBOX";

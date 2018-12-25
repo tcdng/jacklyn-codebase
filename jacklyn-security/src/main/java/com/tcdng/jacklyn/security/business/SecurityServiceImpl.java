@@ -580,7 +580,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         setSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS, null);
         setSessionAttribute(JacklynSessionAttributeConstants.MESSAGEBOX, null);
         setSessionAttribute(JacklynSessionAttributeConstants.TASKMONITORINFO, null);
-        setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, null);
+        setSessionAttribute(JacklynSessionAttributeConstants.SHORTCUTDECK, null);
 
         return user;
     }
@@ -737,7 +737,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         logInfo("Managing security...");
         logDebug("Registering security privilege categories...");
         registerPrivilegeCategory(PrivilegeCategoryConstants.APPLICATIONUI, "reserved.privilegecategory.applicationui");
-        registerPrivilegeCategory(PrivilegeCategoryConstants.DASHBOARD, "reserved.privilegecategory.dashboard");
+        registerPrivilegeCategory(PrivilegeCategoryConstants.SHORTCUT, "reserved.privilegecategory.shortcut");
         registerPrivilegeCategory(PrivilegeCategoryConstants.DOCUMENTCONTROL,
                 "reserved.privilegecategory.documentcontrol");
         registerPrivilegeCategory(PrivilegeCategoryConstants.REPORTABLE, "reserved.privilegecategory.reportable");
