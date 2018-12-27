@@ -142,8 +142,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public RoleLargeData findRoleForm(Long roleId) throws UnifyException {
         Role role = db().list(Role.class, roleId);
-        List<Long> privilegeIdList = db().valueList(Long.class, "privilegeId",
-                new RolePrivilegeQuery().roleId(roleId).orderById());
+        List<Long> privilegeIdList =
+                db().valueList(Long.class, "privilegeId", new RolePrivilegeQuery().roleId(roleId).orderById());
         List<Long> wfStepIdList = getWfStepIdListForRole(roleId);
         return new RoleLargeData(role, privilegeIdList, wfStepIdList);
     }
@@ -198,8 +198,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public Long registerPrivilege(String categoryName, String moduleName, String privilegeName, String privilegeDesc)
             throws UnifyException {
-        PrivilegeGroup privilegeGroup = db()
-                .find(new PrivilegeGroupQuery().categoryName(categoryName).moduleName(moduleName));
+        PrivilegeGroup privilegeGroup =
+                db().find(new PrivilegeGroupQuery().categoryName(categoryName).moduleName(moduleName));
         Long privilegeGroupId = null;
         if (privilegeGroup == null) {
             privilegeGroup = new PrivilegeGroup();
@@ -227,8 +227,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public boolean updateRegisteredPrivilege(String categoryName, String moduleName, String privilegeName,
             String privilegeDesc) throws UnifyException {
-        Privilege privilege = db()
-                .find(new PrivilegeQuery().categoryName(categoryName).moduleName(moduleName).name(privilegeName));
+        Privilege privilege =
+                db().find(new PrivilegeQuery().categoryName(categoryName).moduleName(moduleName).name(privilegeName));
         if (privilege != null) {
             privilege.setDescription(privilegeDesc);
             db().updateById(privilege);
@@ -242,8 +242,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     public void unregisterPrivilege(String categoryName, String moduleName, String... privilegeName)
             throws UnifyException {
         for (String name : privilegeName) {
-            Privilege privilege = db()
-                    .find(new PrivilegeQuery().categoryName(categoryName).moduleName(moduleName).name(name));
+            Privilege privilege =
+                    db().find(new PrivilegeQuery().categoryName(categoryName).moduleName(moduleName).name(name));
             if (privilege != null) {
                 Long privilegeId = privilege.getId();
                 db().deleteAll(new RolePrivilegeQuery().privilegeId(privilegeId));
@@ -309,8 +309,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     public int updateRolePrivileges(Long roleId, List<Long> privilegeIdList) throws UnifyException {
         int updateCount = 0;
         if (privilegeIdList != null && !privilegeIdList.isEmpty()) {
-            Set<Long> oldPrivilegeIds = db().valueSet(Long.class, "privilegeId",
-                    new RolePrivilegeQuery().roleId(roleId));
+            Set<Long> oldPrivilegeIds =
+                    db().valueSet(Long.class, "privilegeId", new RolePrivilegeQuery().roleId(roleId));
             List<Long> existPrivilegeList = new ArrayList<Long>();
             List<Long> newPrivilegeList = new ArrayList<Long>();
             for (Long id : privilegeIdList) {
@@ -356,8 +356,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             RoleWfStep roleWfStep = new RoleWfStep();
             roleWfStep.setRoleId(roleId);
 
-            List<WfStep> wfStepList = workflowService
-                    .findSteps(((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).select("wfTemplateId", "name")));
+            List<WfStep> wfStepList =
+                    workflowService.findSteps(
+                            ((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).select("wfTemplateId", "name")));
             for (WfStep wfStepData : wfStepList) {
                 roleWfStep.setWfTemplateId(wfStepData.getWfTemplateId());
                 roleWfStep.setStepName(wfStepData.getName());
@@ -403,8 +404,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Create biometric record
         UserBiometric userBiometric = new UserBiometric();
-        Long biometricId = createBiometric(BiometricCategory.USERS, BiometricType.PHOTOGRAPH,
-                userDocument.getPhotograph());
+        Long biometricId =
+                createBiometric(BiometricCategory.USERS, BiometricType.PHOTOGRAPH, userDocument.getPhotograph());
         userBiometric.setUserId(userId);
         userBiometric.setBiometricId(biometricId);
         db().create(userBiometric);
@@ -446,8 +447,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public int updateUserPhotograph(Long userId, byte[] photograph) throws UnifyException {
-        Long biometricId = db().value(Long.class, "biometricId",
-                new UserBiometricQuery().typeName(BiometricType.PHOTOGRAPH).userId(userId));
+        Long biometricId =
+                db().value(Long.class, "biometricId",
+                        new UserBiometricQuery().typeName(BiometricType.PHOTOGRAPH).userId(userId));
         return db().updateAll(new BiometricQuery().id(biometricId), new Update().add("biometric", photograph));
     }
 
@@ -504,8 +506,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public UserLargeData findUserDocument(Long userId) throws UnifyException {
         User user = db().list(User.class, userId);
-        byte[] photograph = db().value(byte[].class, "biometric",
-                new UserBiometricQuery().userId(userId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
+        byte[] photograph =
+                db().value(byte[].class, "biometric",
+                        new UserBiometricQuery().userId(userId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
         List<Long> roleIdList = db().valueList(Long.class, "roleId", new UserRoleQuery().userId(userId).orderById());
         return new UserLargeData(user, photograph, roleIdList);
     }
@@ -533,8 +536,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
         }
 
-        boolean accountLockingEnabled = systemService.getSysParameterValue(boolean.class,
-                SecurityModuleSysParamConstants.ENABLE_ACCOUNT_LOCKING);
+        boolean accountLockingEnabled =
+                systemService.getSysParameterValue(boolean.class,
+                        SecurityModuleSysParamConstants.ENABLE_ACCOUNT_LOCKING);
         if (accountLockingEnabled && user.getLoginLocked()) {
             throw new UnifyException(SecurityModuleErrorConstants.USER_ACCOUNT_IS_LOCKED);
         }
@@ -613,7 +617,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         Long userId = user.getId();
         newPassword = passwordCryptograph.encrypt(newPassword);
-        if (systemService.getSysParameterValue(boolean.class, SecurityModuleSysParamConstants.ENABLE_PASSWORD_HISTORY)) {
+        if (systemService.getSysParameterValue(boolean.class,
+                SecurityModuleSysParamConstants.ENABLE_PASSWORD_HISTORY)) {
             PasswordHistoryQuery query = new PasswordHistoryQuery().userId(userId).password(newPassword);
             if (db().countAll(query) > 0) {
                 throw new UnifyException(SecurityModuleErrorConstants.NEW_PASSWORD_IS_STALE);
@@ -682,11 +687,12 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             for (String roleName : roleNames) {
                 // Do document privileges
                 Map<String, PrivilegeSettings> docPrivilegeSettings = new HashMap<String, PrivilegeSettings>();
-                List<Long> rolePrivilegeIdList = db().valueList(Long.class, "id", new RolePrivilegeQuery()
-                        .roleName(roleName).categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL));
+                List<Long> rolePrivilegeIdList =
+                        db().valueList(Long.class, "id", new RolePrivilegeQuery().roleName(roleName)
+                                .categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL));
                 if (!rolePrivilegeIdList.isEmpty()) {
-                    List<RolePrivilegeWidget> rolePrivilegeWidgetList = db()
-                            .listAll(new RolePrivilegeWidgetQuery().rolePrivilegeIdIn(rolePrivilegeIdList));
+                    List<RolePrivilegeWidget> rolePrivilegeWidgetList =
+                            db().listAll(new RolePrivilegeWidgetQuery().rolePrivilegeIdIn(rolePrivilegeIdList));
                     for (RolePrivilegeWidget rolePrivilegeWidget : rolePrivilegeWidgetList) {
                         docPrivilegeSettings.put(rolePrivilegeWidget.getPrivilegeName(),
                                 new PrivilegeSettings(rolePrivilegeWidget.isVisible(), rolePrivilegeWidget.isEditable(),
@@ -696,8 +702,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                 }
 
                 // Do non-document privileges
-                List<RolePrivilege> rolePrivilegeList = db().listAll(new RolePrivilegeQuery().roleName(roleName)
-                        .categoryNameNot(PrivilegeCategoryConstants.DOCUMENTCONTROL));
+                List<RolePrivilege> rolePrivilegeList =
+                        db().listAll(new RolePrivilegeQuery().roleName(roleName)
+                                .categoryNameNot(PrivilegeCategoryConstants.DOCUMENTCONTROL));
                 Map<String, Set<String>> nonWidgetPrivilegeNames = new HashMap<String, Set<String>>();
                 Set<String> allAccessWidgetPrivileges = new HashSet<String>();
                 for (RolePrivilege rpd : rolePrivilegeList) {
@@ -746,8 +753,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         db().updateAll(new PrivilegeQuery(), new Update().add("installed", Boolean.FALSE));
 
         // Install new and update old
-        Map<String, PrivilegeCategory> categoryMap = db().listAllMap(String.class, "name",
-                new PrivilegeCategoryQuery().status(RecordStatus.ACTIVE));
+        Map<String, PrivilegeCategory> categoryMap =
+                db().listAllMap(String.class, "name", new PrivilegeCategoryQuery().status(RecordStatus.ACTIVE));
 
         Privilege privilege = new Privilege();
         privilege.setStatus(RecordStatus.ACTIVE);
@@ -763,8 +770,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                 privilegeGroup.setModuleId(moduleId);
                 for (PrivilegeGroupConfig privilegeGroupConfig : moduleConfig.getPrivileges().getPrivilegeGroupList()) {
                     Long privilegeCategoryId = categoryMap.get(privilegeGroupConfig.getCategory()).getId();
-                    PrivilegeGroup oldPrivilegeGroup = db().find(
-                            new PrivilegeGroupQuery().moduleId(moduleId).privilegeCategoryId(privilegeCategoryId));
+                    PrivilegeGroup oldPrivilegeGroup =
+                            db().find(new PrivilegeGroupQuery().moduleId(moduleId)
+                                    .privilegeCategoryId(privilegeCategoryId));
                     Long privilegeGroupId = null;
                     if (oldPrivilegeGroup == null) {
                         privilegeGroup.setPrivilegeCategoryId(privilegeCategoryId);
@@ -778,8 +786,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                     privilege.setPrivilegeGroupId(privilegeGroupId);
                     for (PrivilegeConfig privilegeConfig : privilegeGroupConfig.getPrivilegeList()) {
                         pQuery.clear();
-                        Privilege oldPrivilege = db()
-                                .find(pQuery.privilegeGroupId(privilegeGroupId).name(privilegeConfig.getName()));
+                        Privilege oldPrivilege =
+                                db().find(pQuery.privilegeGroupId(privilegeGroupId).name(privilegeConfig.getName()));
                         String description = resolveApplicationMessage(privilegeConfig.getDescription());
                         if (oldPrivilege == null) {
                             privilege.setName(privilegeConfig.getName());
@@ -810,7 +818,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public void onApplicationStartup() throws UnifyException {
         // Managed privileges
-        Map<Class<? extends Entity>, ManagedEntityPrivilegeNames> managedPrivileges = new HashMap<Class<? extends Entity>, ManagedEntityPrivilegeNames>();
+        Map<Class<? extends Entity>, ManagedEntityPrivilegeNames> managedPrivileges =
+                new HashMap<Class<? extends Entity>, ManagedEntityPrivilegeNames>();
         for (Class<? extends Entity> entityClass : getAnnotatedClasses(Entity.class, Managed.class)) {
             String title = JacklynUtils.generateManagedRecordTitle(entityClass);
             title = resolveApplicationMessage(title);
@@ -835,8 +844,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         if (systemService.getSysParameterValue(boolean.class,
                 SecurityModuleSysParamConstants.ENABLE_SYSTEMWIDE_MULTILOGIN_RULE)) {
-            allowMultipleLogin = systemService.getSysParameterValue(boolean.class,
-                    SecurityModuleSysParamConstants.SYSTEMWIDE_MULTILOGIN);
+            allowMultipleLogin =
+                    systemService.getSysParameterValue(boolean.class,
+                            SecurityModuleSysParamConstants.SYSTEMWIDE_MULTILOGIN);
         }
 
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
@@ -844,30 +854,36 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {
-        PasswordGenerator passwordGenerator = (PasswordGenerator) getComponent(systemService
-                .getSysParameterValue(String.class, SecurityModuleSysParamConstants.USER_PASSWORD_GENERATOR));
-        int passwordLength = systemService.getSysParameterValue(int.class,
-                SecurityModuleSysParamConstants.USER_PASSWORD_LENGTH);
+        PasswordGenerator passwordGenerator =
+                (PasswordGenerator) getComponent(systemService.getSysParameterValue(String.class,
+                        SecurityModuleSysParamConstants.USER_PASSWORD_GENERATOR));
+        int passwordLength =
+                systemService.getSysParameterValue(int.class, SecurityModuleSysParamConstants.USER_PASSWORD_LENGTH);
 
         String password = passwordGenerator.generatePassword(user.getLoginId(), passwordLength);
 
         // Send email if necessary
         if (systemService.getSysParameterValue(boolean.class,
                 SecurityModuleSysParamConstants.USER_PASSWORD_SEND_EMAIL)) {
-            String notificationTemplateName = systemService.getSysParameterValue(String.class,
-                    sysParamNotificationTemplateName);
-            String notificationChannelName = systemService.getSysParameterValue(String.class,
-                    SecurityModuleSysParamConstants.SECURITY_EMAIL_CHANNEL);
-            String administratorName = systemService.getSysParameterValue(String.class,
-                    SecurityModuleSysParamConstants.ADMINISTRATOR_NAME);
-            String administratorEmail = systemService.getSysParameterValue(String.class,
-                    SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
-            Message message = new Message.Builder(NotificationUtils
-                    .getGlobalTemplateName(SecurityModuleNameConstants.SECURITY_MODULE, notificationTemplateName))
-                            .fromSender(administratorName, administratorEmail)
-                            .toRecipient(user.getFullName(), user.getEmail())
-                            .usingDictionaryEntry("loginId", user.getLoginId())
-                            .usingDictionaryEntry("password", password).sendVia(notificationChannelName).build();
+            String notificationTemplateName =
+                    systemService.getSysParameterValue(String.class, sysParamNotificationTemplateName);
+            String notificationChannelName =
+                    systemService.getSysParameterValue(String.class,
+                            SecurityModuleSysParamConstants.SECURITY_EMAIL_CHANNEL);
+            String administratorName =
+                    systemService.getSysParameterValue(String.class,
+                            SecurityModuleSysParamConstants.ADMINISTRATOR_NAME);
+            String administratorEmail =
+                    systemService.getSysParameterValue(String.class,
+                            SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
+            Message message =
+                    new Message.Builder(NotificationUtils.getGlobalTemplateName(
+                            SecurityModuleNameConstants.SECURITY_MODULE, notificationTemplateName))
+                                    .fromSender(administratorName, administratorEmail)
+                                    .toRecipient(user.getFullName(), user.getEmail())
+                                    .usingDictionaryEntry("loginId", user.getLoginId())
+                                    .usingDictionaryEntry("password", password).sendVia(notificationChannelName)
+                                    .build();
             notificationService.sendNotification(message);
         }
 
@@ -926,8 +942,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         List<Long> wfStepIdList = new ArrayList<Long>();
         Set<Long> wfTemplateIds = db().valueSet(Long.class, "wfTemplateId", new RoleWfStepQuery().roleId(roleId));
         for (Long wfTemplateId : wfTemplateIds) {
-            Set<String> stepNames = db().valueSet(String.class, "stepName",
-                    new RoleWfStepQuery().roleId(roleId).wfTemplateId(wfTemplateId));
+            Set<String> stepNames =
+                    db().valueSet(String.class, "stepName",
+                            new RoleWfStepQuery().roleId(roleId).wfTemplateId(wfTemplateId));
             wfStepIdList.addAll(workflowService.findStepIds(wfTemplateId, stepNames));
         }
 

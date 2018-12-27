@@ -42,7 +42,6 @@ import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.ui.Panel;
-import com.tcdng.unify.web.ui.Widget;
 import com.tcdng.unify.web.ui.container.Form;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
@@ -56,24 +55,30 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
  */
 @UplBinding("web/common/upl/managerecord.upl")
 @ResultMappings({
-        @ResultMapping(name = ManageRecordController.HIDEPOPUP_REFERESHMAIN,
+        @ResultMapping(
+                name = ManageRecordController.HIDEPOPUP_REFERESHMAIN,
                 response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{manageRecordPanel}" }),
         @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{manageRecordPanel}" }),
-        @ResultMapping(name = "refreshtable",
+        @ResultMapping(
+                name = "refreshtable",
                 response = { "!refreshpanelresponse panels:$l{searchPanel tablePanel actionPanel}" }),
         @ResultMapping(name = "refreshform", response = { "!refreshpanelresponse panels:$l{crudPanel}" }),
-        @ResultMapping(name = "switchsearch",
+        @ResultMapping(
+                name = "switchsearch",
                 response = { "!switchpanelresponse panels:$l{manageBodyPanel.searchBodyPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
-        @ResultMapping(name = "switchcrud",
+        @ResultMapping(
+                name = "switchcrud",
                 response = { "!switchpanelresponse panels:$l{manageBodyPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
-        @ResultMapping(name = "switchsearch_io",
+        @ResultMapping(
+                name = "switchsearch_io",
                 response = { "!switchpanelresponse panels:$l{mainResultPanel.searchResultPanel}",
-                        "!refreshpanelresponse panels:$l{searchPanel}"}),
-        @ResultMapping(name = "switchcrud_io",
+                        "!refreshpanelresponse panels:$l{searchPanel}" }),
+        @ResultMapping(
+                name = "switchcrud_io",
                 response = { "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}",
-                        "!refreshpanelresponse panels:$l{searchPanel}"}),
+                        "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
 public abstract class ManageRecordController<T extends Entity, U> extends BasePageController
         implements DocViewController {
@@ -397,7 +402,6 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
         recordHintName = getSessionMessage(recordHintName);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onSetPage() throws UnifyException {
         // Get reference to UPL table
@@ -407,13 +411,7 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
         getPage().setAttribute("validationClass", entityClass);
         getPage().setAttribute("validationIdClass", Long.class);
 
-        // Hide report button base on role privilege if necessary
-        ManagedEntityPrivilegeNames managedPrivilegeNames = ((Map<Class<? extends Entity>, ManagedEntityPrivilegeNames>) getApplicationAttribute(
-                JacklynApplicationAttributeConstants.MANAGED_PRIVILEGES)).get(entityClass);
-        if (managedPrivilegeNames != null) {
-            getPageWidgetByShortName(Widget.class, "reportBtn").setVisible(
-                    isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE, managedPrivilegeNames.getReportableName()));
-        }
+        manageReportable();
     }
 
     @Override
@@ -538,10 +536,7 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
         setVisible("viewTblBtn", ManageRecordModifier.isViewable(modifier));
         setVisible("deleteTblBtn", ManageRecordModifier.isDeletable(modifier));
 
-        // Report buttons
-        boolean isReportable = ManageRecordModifier.isReportable(modifier)
-                && !getCommonReportProvider().isReportable(entityClass.getName());
-        setVisible("reportBtn", isReportable);
+        manageReportable();
 
         setDisabled("searchPanel", false);
         updateModeDescription();
@@ -577,6 +572,24 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
 
     protected boolean isEditableMode() {
         return mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void manageReportable() throws UnifyException {
+        boolean isReportable = ManageRecordModifier.isReportable(modifier)
+                && !getCommonReportProvider().isReportable(entityClass.getName());
+        if (isReportable) {
+            // Hide report button base on role privilege if necessary
+            ManagedEntityPrivilegeNames managedPrivilegeNames =
+                ((Map<Class<? extends Entity>, ManagedEntityPrivilegeNames>) getApplicationAttribute(
+                JacklynApplicationAttributeConstants.MANAGED_PRIVILEGES)).get(entityClass);
+            if (managedPrivilegeNames != null) {
+                isReportable = isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
+                        managedPrivilegeNames.getReportableName());
+            }
+        }
+
+        setVisible("reportBtn", isReportable);
     }
 
     private void loadSessionOnCreate() throws UnifyException {

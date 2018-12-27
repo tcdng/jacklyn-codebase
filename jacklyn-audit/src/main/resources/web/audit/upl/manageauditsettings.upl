@@ -32,10 +32,10 @@
 //More modify action buttons
 !ui-button:activateItemsBtn styleClass:$e{jk-button} caption:$m{button.activate.items}
     eventHandler:$d{!ui-event event:onclick action:$c{activateItemsAct}}
-    hint:$m{audit.auditsettings.activate.selected.types} privilege:$s{aud-editaudittype}
+    hint:$m{audit.auditsettings.activate.selected.types} privilege:$s{aud-auditsettingsedit}
 !ui-button:deactivateItemsBtn styleClass:$e{jk-button} caption:$m{button.deactivate.items}
     eventHandler:$d{!ui-event event:onclick action:$c{deactivateItemsAct}}
-    hint:$m{audit.auditsettings.deactivate.selected.types} privilege:$s{aud-editaudittype}
+    hint:$m{audit.auditsettings.deactivate.selected.types} privilege:$s{aud-auditsettingsedit}
 
 //Actions
 !ui-post:activateItemsAct path:$n{/activateAuditTypes} components:$c{tablePanel} confirm:$m{audit.auditsettings.activate.items.confirm}
