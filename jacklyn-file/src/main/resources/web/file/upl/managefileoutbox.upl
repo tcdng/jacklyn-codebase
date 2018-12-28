@@ -13,7 +13,7 @@
 !ui-date:searchCreateDt caption:$m{file.fileoutbox.createdt} binding:searchCreateDt eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchFileTransferConfigId caption:$m{file.fileoutbox.transferconfig} binding:searchFileTransferConfigId
     list:filetransferconfiglist blankOption:$s{} eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
-!ui-select:searchStatus caption:$m{file.fileoutbox.filestatus} binding:searchStatus list:outboxfilestatuslist blankOption:$s{}
+!ui-select:searchStatus caption:$m{file.fileoutbox.filestatus} binding:searchStatus list:fileoutboxstatuslist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
@@ -28,4 +28,4 @@
 !ui-text:frmFileLength caption:$m{file.fileoutbox.filelength} binding:fileLength size:20 formatter:$d{!filesizeformat}
 !ui-integer:frmUploadAttempts precision:5 caption:$m{file.fileoutbox.uploadattempts} binding:uploadAttempts size:10
 !ui-date:frmUploadedOn caption:$m{file.fileoutbox.uploadedon} binding:uploadedOn
-!ui-select:frmFileStatus caption:$m{file.fileoutbox.filestatus} binding:status list:outboxfilestatuslist blankOption:$s{}
+!ui-select:frmFileStatus caption:$m{file.fileoutbox.filestatus} binding:status list:fileoutboxstatuslist blankOption:$s{}

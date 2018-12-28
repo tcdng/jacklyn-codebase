@@ -39,6 +39,8 @@ public class Message {
 
     private String senderContact;
 
+    private String reference;
+
     private List<Recipient> recipients;
 
     private List<Attachment> attachments;
@@ -46,11 +48,13 @@ public class Message {
     private Map<String, Object> dictionary;
 
     private Message(String notificationChannelName, String globalTemplateName, String senderName, String senderContact,
-            List<Recipient> recipients, List<Attachment> attachments, Map<String, Object> dictionary) {
+            String reference, List<Recipient> recipients, List<Attachment> attachments,
+            Map<String, Object> dictionary) {
         this.globalTemplateName = globalTemplateName;
         this.notificationChannelName = notificationChannelName;
         this.senderName = senderName;
         this.senderContact = senderContact;
+        this.reference = reference;
         this.recipients = recipients;
         this.attachments = attachments;
         this.dictionary = dictionary;
@@ -72,6 +76,10 @@ public class Message {
         return senderContact;
     }
 
+    public String getReference() {
+        return reference;
+    }
+
     public List<Recipient> getRecipients() {
         return recipients;
     }
@@ -84,6 +92,14 @@ public class Message {
         return dictionary;
     }
 
+    public boolean isDictionary() {
+        return !dictionary.isEmpty();
+    }
+
+    public static Builder newBuilder(String globalTemplateName) {
+        return new Builder(globalTemplateName);
+    }
+
     public static class Builder {
 
         private String globalTemplateName;
@@ -91,6 +107,8 @@ public class Message {
         private String senderName;
 
         private String senderContact;
+
+        private String reference;
 
         private List<Recipient> recipients;
 
@@ -100,7 +118,7 @@ public class Message {
 
         private String notificationChannelName;
 
-        public Builder(String globalTemplateName) {
+        private Builder(String globalTemplateName) {
             this.globalTemplateName = globalTemplateName;
             recipients = new ArrayList<Recipient>();
         }
@@ -113,6 +131,11 @@ public class Message {
 
         public Builder toRecipient(String name, String contact) {
             recipients.add(new Recipient(name, contact));
+            return this;
+        }
+
+        public Builder forReference(String reference) {
+            this.reference = reference;
             return this;
         }
 
@@ -137,9 +160,9 @@ public class Message {
         }
 
         public Message build() {
-            return new Message(notificationChannelName, globalTemplateName, senderName, senderContact,
-                    DataUtils.unmodifiableList(recipients), DataUtils.unmodifiableList(attachments),
-                    DataUtils.unmodifiableMap(dictionary));
+            return new Message(notificationChannelName, globalTemplateName, senderName, senderContact, reference,
+                DataUtils.unmodifiableList(recipients), DataUtils.unmodifiableList(attachments),
+                DataUtils.unmodifiableMap(dictionary));
         }
 
         private List<Attachment> getAttachments() {

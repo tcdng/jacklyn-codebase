@@ -32,6 +32,7 @@ import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.jacklyn.notification.entities.Notification;
 import com.tcdng.jacklyn.notification.entities.NotificationChannel;
 import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
+import com.tcdng.jacklyn.notification.entities.NotificationInbox;
 import com.tcdng.jacklyn.notification.entities.NotificationQuery;
 import com.tcdng.jacklyn.notification.entities.NotificationRecipient;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
@@ -196,7 +197,7 @@ public class NotificationServiceTest extends AbstractJacklynTest {
         notificationService.createNotificationChannel(getNotificationChannel());
         notificationService.createNotificationTemplate(getNotificationTemplate());
 
-        com.tcdng.jacklyn.notification.data.Message notification = new com.tcdng.jacklyn.notification.data.Message.Builder(
+        com.tcdng.jacklyn.notification.data.Message notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(
                 NOTIFICATION_TEMPLATE_NAME).fromSender("info", "info@tcdng.com")
                         .toRecipient("Altair", "altair.assassins@creed.com")
                         .usingDictionaryEntry("balance", Double.valueOf(25000.00)).sendVia(NOTIFICATION_CHANNEL_NAME)
@@ -210,14 +211,14 @@ public class NotificationServiceTest extends AbstractJacklynTest {
         notificationService.createNotificationChannel(getNotificationChannel());
         notificationService.createNotificationTemplate(getNotificationTemplate());
 
-        com.tcdng.jacklyn.notification.data.Message notification = new com.tcdng.jacklyn.notification.data.Message.Builder(
+        com.tcdng.jacklyn.notification.data.Message notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(
                 NOTIFICATION_TEMPLATE_NAME).fromSender("info", "info@tcdng.com")
                         .toRecipient("Altair", "altair.assassins@creed.com")
                         .usingDictionaryEntry("balance", Double.valueOf(25000.00)).sendVia(NOTIFICATION_CHANNEL_NAME)
                         .build();
         notificationService.sendNotification(notification);
 
-        notification = new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
+        notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(NOTIFICATION_TEMPLATE_NAME)
                 .fromSender("info", "info@tcdng.com").toRecipient("Tom and Jerry", "tom.jerry@cartoons.com")
                 .usingDictionaryEntry("balance", Double.valueOf(542000.00)).sendVia(NOTIFICATION_CHANNEL_NAME).build();
         notificationService.sendNotification(notification);
@@ -253,7 +254,7 @@ public class NotificationServiceTest extends AbstractJacklynTest {
         notificationService.createNotificationChannel(getNotificationChannel());
         notificationService.createNotificationTemplate(getNotificationTemplate());
 
-        com.tcdng.jacklyn.notification.data.Message notification = new com.tcdng.jacklyn.notification.data.Message.Builder(
+        com.tcdng.jacklyn.notification.data.Message notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(
                 NOTIFICATION_TEMPLATE_NAME).fromSender("info", "info@tcdng.com")
                         .toRecipient("Altair", "altair.assassins@creed.com")
                         .usingDictionaryEntry("balance", Double.valueOf(25000.00)).sendVia(NOTIFICATION_CHANNEL_NAME)
@@ -281,19 +282,19 @@ public class NotificationServiceTest extends AbstractJacklynTest {
         notificationService.createNotificationChannel(getNotificationChannel());
         notificationService.createNotificationTemplate(getNotificationTemplate());
 
-        com.tcdng.jacklyn.notification.data.Message notification = new com.tcdng.jacklyn.notification.data.Message.Builder(
+        com.tcdng.jacklyn.notification.data.Message notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(
                 NOTIFICATION_TEMPLATE_NAME).fromSender("info", "info@tcdng.com")
                         .toRecipient("Altair", "altair.assassins@creed.com")
                         .usingDictionaryEntry("balance", Double.valueOf(25000.00)).sendVia(NOTIFICATION_CHANNEL_NAME)
                         .build();
         notificationService.sendNotification(notification);
 
-        notification = new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
+        notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(NOTIFICATION_TEMPLATE_NAME)
                 .fromSender("info", "info@tcdng.com").toRecipient("Tom and Jerry", "tom.jerry@cartoons.com")
                 .usingDictionaryEntry("balance", Double.valueOf(542000.00)).sendVia(NOTIFICATION_CHANNEL_NAME).build();
         notificationService.sendNotification(notification);
 
-        notification = new com.tcdng.jacklyn.notification.data.Message.Builder(NOTIFICATION_TEMPLATE_NAME)
+        notification = com.tcdng.jacklyn.notification.data.Message.newBuilder(NOTIFICATION_TEMPLATE_NAME)
                 .fromSender("Edward Banfa", "edward.banfa@gmail.com").toRecipient("Ernie", "ernie@seasamestreet.com")
                 .usingDictionaryEntry("balance", Double.valueOf(542000.00)).sendVia(NOTIFICATION_CHANNEL_NAME).build();
         notificationService.sendNotification(notification);
@@ -324,7 +325,7 @@ public class NotificationServiceTest extends AbstractJacklynTest {
     @SuppressWarnings("unchecked")
     @Override
     protected void onTearDown() throws Exception {
-        deleteAll(NotificationRecipient.class, Notification.class, NotificationTemplate.class,
+        deleteAll(NotificationInbox.class, NotificationRecipient.class, Notification.class, NotificationTemplate.class,
                 NotificationChannel.class);
     }
 

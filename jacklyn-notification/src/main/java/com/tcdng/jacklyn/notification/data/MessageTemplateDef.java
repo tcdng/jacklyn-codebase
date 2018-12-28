@@ -32,16 +32,19 @@ public class MessageTemplateDef {
 
     private String subject;
 
+    private String link;
+
     private List<StringToken> tokenList;
 
     private boolean html;
 
     private long versionNo;
 
-    public MessageTemplateDef(Long notificationTemplateId, String subject, List<StringToken> tokenList, boolean html,
-            long versionNo) {
+    public MessageTemplateDef(Long notificationTemplateId, String subject, String link, List<StringToken> tokenList,
+            boolean html, long versionNo) {
         this.notificationTemplateId = notificationTemplateId;
         this.subject = subject;
+        this.link = link;
         this.tokenList = tokenList;
         this.html = html;
         this.versionNo = versionNo;
@@ -53,6 +56,10 @@ public class MessageTemplateDef {
 
     public String getSubject() {
         return subject;
+    }
+
+    public String getLink() {
+        return link;
     }
 
     public List<StringToken> getTokenList() {

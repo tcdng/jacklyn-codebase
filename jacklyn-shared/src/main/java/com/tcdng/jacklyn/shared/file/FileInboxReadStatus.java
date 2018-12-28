@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("inboxfilereadlist")
+@StaticList("fileinboxreadlist")
 public enum FileInboxReadStatus implements EnumConst {
 
     NOT_READ("N"), READ("R"), READ_FAILED("F");

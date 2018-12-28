@@ -13,23 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.notification.constants;
+
+package com.tcdng.jacklyn.common.data;
 
 /**
- * Notification module name constants.
- * 
+ * A system notification item.
+ *
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface NotificationModuleNameConstants {
+public interface SystemNotification {
 
-    String NOTIFICATION_MODULE = "notification";
+    Long getId();
 
-    String NOTIFICATIONSERVICE = "jacklyn-notificationservice";
+    String getSubject();
 
-    String EMAILMESSAGINGCHANNEL = "email-messagingchannel";
+    String getMessage();
 
-    String SMSMESSAGINGCHANNEL = "sms-messagingchannel";
+    String getLink();
 
-    String SYSTEMMESSAGINGCHANNEL = "system-messagingchannel";
+    String getTarget();
 }

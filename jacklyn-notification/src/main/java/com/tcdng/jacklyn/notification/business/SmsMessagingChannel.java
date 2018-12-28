@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.notification.business;
 
 import java.util.List;
@@ -23,39 +24,48 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.data.FileAttachment;
-import com.tcdng.unify.core.notification.Email;
-import com.tcdng.unify.core.notification.EmailRecipient.TYPE;
-import com.tcdng.unify.core.notification.EmailServer;
-import com.tcdng.unify.core.notification.EmailServerConfig;
+import com.tcdng.unify.core.notification.BulkSms;
+import com.tcdng.unify.core.notification.Sms;
+import com.tcdng.unify.core.notification.SmsServer;
+import com.tcdng.unify.core.notification.SmsServerConfig;
 
 /**
- * Email messaging channel.
+ * SMS messaging channel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(NotificationModuleNameConstants.EMAILMESSAGINGCHANNEL)
-public class EmailMessagingChannel extends AbstractMessagingChannel {
+@Component(NotificationModuleNameConstants.SMSMESSAGINGCHANNEL)
+public class SmsMessagingChannel extends AbstractMessagingChannel {
 
     @Configurable
-    private EmailServer emailServer;
+    private SmsServer smsServer;
 
     @Override
     public boolean sendMessage(NotificationChannelDef notificationChannelDef, String subject, String senderContact,
             List<String> recipientContactList, String messageBody, String link, String reference, boolean isHtml,
             List<FileAttachment> fileAttachmentList) throws UnifyException {
         String configurationCode = notificationChannelDef.getNotificationChannelName();
-        if (!emailServer.isConfigured(configurationCode)) {
-            emailServer.configure(configurationCode,
-                    new EmailServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
+        if (!smsServer.isConfigured(configurationCode)) {
+            smsServer.configure(configurationCode,
+                    new SmsServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
                             notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
                             notificationChannelDef.getPassword()));
         }
 
-        Email email = Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
-                .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
-                .build();
-        emailServer.sendEmail(configurationCode, email);
-        return email.isSent();
+        if (recipientContactList.size() == 1) {
+            Sms sms =
+                    Sms.newBuilder().fromSender(senderContact).toRecipient(recipientContactList.get(0))
+                            .containingMessage(messageBody).build();
+            smsServer.sendSms(configurationCode, sms);
+        } else {
+            BulkSms bulkSms =
+                    BulkSms.newBuilder().fromSender(senderContact).toRecipients(recipientContactList)
+                            .containingMessage(messageBody).build();
+            smsServer.sendSms(configurationCode, bulkSms);
+        }
+
+        return true;
     }
+
 }
