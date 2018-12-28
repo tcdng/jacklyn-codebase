@@ -13,10 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.service.entities;
+package com.tcdng.jacklyn.system.entities;
 
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
-import com.tcdng.jacklyn.shared.service.ClientAppType;
+import com.tcdng.jacklyn.shared.system.ClientAppType;
 
 /**
  * Query object for service client application records.

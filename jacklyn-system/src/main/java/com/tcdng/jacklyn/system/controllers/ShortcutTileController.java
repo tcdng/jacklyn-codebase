@@ -69,7 +69,7 @@ public class ShortcutTileController extends AbstractSystemRecordController<Short
     @Action
     public String saveShortcutTileOrder() throws UnifyException {
         getSystemService().saveShortcutTileOrder(shortcutTileOrderList);
-        logUserEvent(SystemModuleAuditConstants.AUDIT_SET_SHORTCUTTILE_DISPLAY_ORDER,
+        logUserEvent(SystemModuleAuditConstants.SET_SHORTCUTTILE_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, shortcutTileOrderList, "description"));
         hintUser("system.order.shortcuttile.saved");
         return cancelShortcutTileOrder();

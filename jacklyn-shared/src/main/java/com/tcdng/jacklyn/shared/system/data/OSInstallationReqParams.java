@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.service.data;
+package com.tcdng.jacklyn.shared.system.data;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.jacklyn.shared.service.ServiceRemoteCallNameConstants;
+import com.tcdng.jacklyn.shared.system.SystemRemoteCallNameConstants;
 import com.tcdng.unify.web.RemoteCallParams;
 
 /**
@@ -33,12 +33,12 @@ public class OSInstallationReqParams extends RemoteCallParams {
     private String osName;
 
     public OSInstallationReqParams(String osName) {
-        super(ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL);
+        super(SystemRemoteCallNameConstants.OS_REQUEST_INSTALL);
         this.osName = osName;
     }
 
     public OSInstallationReqParams() {
-        super(ServiceRemoteCallNameConstants.OS_REQUEST_INSTALL);
+        super(SystemRemoteCallNameConstants.OS_REQUEST_INSTALL);
     }
 
     public String getOsName() {

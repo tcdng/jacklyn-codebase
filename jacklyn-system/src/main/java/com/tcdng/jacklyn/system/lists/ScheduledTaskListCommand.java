@@ -38,6 +38,6 @@ public class ScheduledTaskListCommand extends AbstractZeroParamsSystemListComman
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ScheduledTaskQuery query = new ScheduledTaskQuery();
         query.status(RecordStatus.ACTIVE).order("description");
-        return getSystemModule().findScheduledTasks(query);
+        return getSystemService().findScheduledTasks(query);
     }
 }

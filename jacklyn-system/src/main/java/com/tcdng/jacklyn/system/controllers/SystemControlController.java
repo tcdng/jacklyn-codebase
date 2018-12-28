@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @Component("/system/systemcontrol")
 @UplBinding("web/system/upl/systemcontrol.upl")
 @ResultMappings({
-        @ResultMapping(name = "refreshcontrolpanel", response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
+    @ResultMapping(name = "refreshcontrolpanel", response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
 public class SystemControlController extends AbstractSystemController {
 
     private List<SystemControlState> systemControlStateList;
@@ -53,10 +53,10 @@ public class SystemControlController extends AbstractSystemController {
         getSystemService().setSysParameterValue(systemControlState.getName(), newState);
         updateControlStatus();
         if (newState) {
-            logUserEvent(SystemModuleAuditConstants.AUDIT_ENABLE_CONTROL, systemControlState.getDescription());
+            logUserEvent(SystemModuleAuditConstants.ENABLE_SYS_CONTROL, systemControlState.getDescription());
             hintUser("system.systemcontrol.state.enabled.hint", systemControlState.getDescription());
         } else {
-            logUserEvent(SystemModuleAuditConstants.AUDIT_DISABLE_CONTROL, systemControlState.getDescription());
+            logUserEvent(SystemModuleAuditConstants.DISABLE_SYS_CONTROL, systemControlState.getDescription());
             hintUser("system.systemcontrol.state.disabled.hint", systemControlState.getDescription());
         }
         return "refreshcontrolpanel";

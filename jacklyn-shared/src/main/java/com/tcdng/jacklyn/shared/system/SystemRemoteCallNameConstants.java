@@ -32,4 +32,6 @@ public interface SystemRemoteCallNameConstants {
     String GET_TOOLING_RECORD_TYPES = "sysGetToolingRecordTypes";
 
     String GET_TOOLING_LIST_TYPES = "sysGetToolingListTypes";
+
+    String OS_REQUEST_INSTALL = "sysOSInstall";
 }

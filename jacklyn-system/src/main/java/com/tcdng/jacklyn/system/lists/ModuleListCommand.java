@@ -38,6 +38,6 @@ public class ModuleListCommand extends AbstractZeroParamsSystemListCommand {
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ModuleQuery query = new ModuleQuery();
         query.status(RecordStatus.ACTIVE).order("description");
-        return getSystemModule().findModules(query);
+        return getSystemService().findModules(query);
     }
 }
