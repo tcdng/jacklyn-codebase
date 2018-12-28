@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.service;
+package com.tcdng.jacklyn.shared.system;
 
 import com.tcdng.unify.core.annotation.StaticList;
 import com.tcdng.unify.core.constant.EnumConst;

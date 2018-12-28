@@ -52,7 +52,7 @@ public class SystemAssetInListCommand extends AbstractAssignParamsSystemListComm
             }
 
             query.order("description");
-            return getSystemModule().findSystemAssets(query);
+            return getSystemService().findSystemAssets(query);
         }
 
         return Collections.emptyList();

@@ -43,4 +43,16 @@ public interface SystemModuleErrorConstants {
      * use existing name.
      */
     String MODULE_MULTIPLE_CONFIGURATIONS_WITH_NAME = "SYSTEM_0005";
+
+    /** Application is unknown. Application name = {0} */
+    String APPLICATION_UNKNOWN = "SYSTEM_0006";
+
+    /** Application as no such asset. Application name = {0}, Asset name = {1} */
+    String APPLICATION_NO_SUCH_ASSET = "SYSTEM_0007";
+
+    /** Application is inactive. Application name = {0} */
+    String APPLICATION_INACTIVE = "SYSTEM_0008";
+
+    /** Application asset is inactive. Application name = {0}, Asset name = {1} */
+    String APPLICATION_ASSET_INACTIVE = "SYSTEM_0009";
 }

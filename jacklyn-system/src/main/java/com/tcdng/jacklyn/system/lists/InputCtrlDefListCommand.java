@@ -38,6 +38,6 @@ public class InputCtrlDefListCommand extends AbstractZeroParamsSystemListCommand
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         InputCtrlDefQuery query = new InputCtrlDefQuery();
         query.status(RecordStatus.ACTIVE).order("description");
-        return getSystemModule().findInputCtrlDefs(query);
+        return getSystemService().findInputCtrlDefs(query);
     }
 }

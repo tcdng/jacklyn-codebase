@@ -34,7 +34,7 @@ public abstract class AbstractSystemListCommand<T> extends AbstractListCommand<T
         super(paramType);
     }
 
-    protected SystemService getSystemModule() {
+    protected SystemService getSystemService() {
         return systemService;
     }
 }

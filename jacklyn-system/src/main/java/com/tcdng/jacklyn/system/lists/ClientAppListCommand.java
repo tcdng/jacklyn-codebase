@@ -13,21 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.tcdng.jacklyn.system.lists;
 
-package com.tcdng.jacklyn.service.lists;
+import java.util.List;
+import java.util.Locale;
 
+import com.tcdng.jacklyn.system.entities.ClientAppQuery;
+import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * Abstract base class for zero parameters service module list commands.
+ * Client application list command.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractZeroParamsServiceListCommand extends AbstractServiceListCommand<ZeroParams> {
+@Component("clientapplist")
+public class ClientAppListCommand extends AbstractZeroParamsSystemListCommand {
 
-    public AbstractZeroParamsServiceListCommand() {
-        super(ZeroParams.class);
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        return getSystemService()
+                .findClientApps((ClientAppQuery) new ClientAppQuery().ignoreEmptyCriteria(true).order("description"));
     }
 
 }

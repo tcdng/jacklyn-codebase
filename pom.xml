@@ -34,7 +34,7 @@
 		<module>jacklyn-system</module>
 		<module>jacklyn-organization</module>
 		<module>jacklyn-file</module>
-		<module>jacklyn-service</module>
+		
 		<module>jacklyn-notification</module>
 		<module>jacklyn-archiving</module>
 		<module>jacklyn-workflow</module>

@@ -66,7 +66,7 @@ public class MenuItemController extends AbstractSystemRecordController<Applicati
     @Action
     public String saveMenuItemOrder() throws UnifyException {
         getSystemService().saveMenuItemOrder(menuItemOrderList);
-        logUserEvent(SystemModuleAuditConstants.AUDIT_SET_MENUITEM_DISPLAY_ORDER,
+        logUserEvent(SystemModuleAuditConstants.SET_MENUITEM_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, menuItemOrderList, "caption"));
         hintUser("system.order.menuitem.saved");
         menuItemOrderList = null;

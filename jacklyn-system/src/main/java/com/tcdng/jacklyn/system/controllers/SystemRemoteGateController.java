@@ -34,6 +34,8 @@ import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeResult;
+import com.tcdng.jacklyn.shared.system.data.OSInstallationReqParams;
+import com.tcdng.jacklyn.shared.system.data.OSInstallationReqResult;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
@@ -137,6 +139,13 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
             description = "$m{system.gate.remotecall.getlisttypes}")
     public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params) throws UnifyException {
         return new GetToolingListTypeResult(systemService.findToolingListTypes());
+    }
+
+    @GatewayAction(name = SystemRemoteCallNameConstants.OS_REQUEST_INSTALL,
+            description = "$m{system.gate.remotecall.osrequestinstall}", restricted = false)
+    public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
+            throws UnifyException {
+        return systemService.processOSInstallationRequest(oSInstallationReqParams);
     }
 
 }

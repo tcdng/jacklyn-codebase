@@ -68,6 +68,10 @@
 				caption="$m{system.systemcontrol.menu.title}" path="/system/systemcontrol/openPage"
 				pageCaption="$m{system.systemcontrol.menu.title}"
 				remotePath="/system/systemcontrol/getRemoteDoc" />
+            <menuitem name="sys-manageclientapp" caption="$m{system.clientapp.menu.title}"
+                pageCaption="$m{system.clientapp.manage}"
+                description="$m{system.menuitem.clientapp}" path="/system/clientapp/openPage"
+                remotePath="/system/clientapp/getRemoteDoc" />
 		</menu>
 	</menus>
 	<input-controls>
@@ -108,6 +112,10 @@
 			<privilege name="sys-inputctrldefedit" description="$m{system.privilege.inputctrldef.edit}" />
 			<privilege name="sys-inputctrldefview" description="$m{system.privilege.inputctrldef.view}" />
 			<privilege name="sys-inputctrldefdelete" description="$m{system.privilege.inputctrldef.delete}" />
+            <privilege name="sys-clientappadd" description="$m{system.privilege.clientapp.add}" />
+            <privilege name="sys-clientappview" description="$m{system.privilege.clientapp.view}" />
+            <privilege name="sys-clientappedit" description="$m{system.privilege.clientapp.edit}" />
+            <privilege name="sys-clientappdelete" description="$m{system.privilege.clientapp.delete}" />
 		</privilege-group>
 	</privileges>
 	<reports>

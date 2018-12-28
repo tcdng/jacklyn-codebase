@@ -13,15 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.service.controllers;
+package com.tcdng.jacklyn.system.controllers;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.service.entities.ClientApp;
-import com.tcdng.jacklyn.service.entities.ClientAppLargeData;
-import com.tcdng.jacklyn.service.entities.ClientAppQuery;
+import com.tcdng.jacklyn.system.entities.ClientApp;
+import com.tcdng.jacklyn.system.entities.ClientAppLargeData;
+import com.tcdng.jacklyn.system.entities.ClientAppQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -35,9 +35,9 @@ import com.tcdng.unify.web.annotation.Action;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/service/clientapp")
-@UplBinding("web/service/upl/manageclientapp.upl")
-public class ClientAppController extends AbstractServiceRecordController<ClientApp> {
+@Component("/system/clientapp")
+@UplBinding("web/system/upl/manageclientapp.upl")
+public class ClientAppController extends AbstractSystemRecordController<ClientApp> {
 
     private String searchName;
 
@@ -50,7 +50,7 @@ public class ClientAppController extends AbstractServiceRecordController<ClientA
     private ClientAppLargeData clipboardLargeData;
 
     public ClientAppController() {
-        super(ClientApp.class, "service.clientapp.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ClientApp.class, "system.clientapp.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
         largeData = new ClientAppLargeData();
     }
@@ -100,12 +100,12 @@ public class ClientAppController extends AbstractServiceRecordController<ClientA
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getMicroserviceService().findClientApps(query);
+        return getSystemService().findClientApps(query);
     }
 
     @Override
     protected ClientApp find(Long id) throws UnifyException {
-        largeData = getMicroserviceService().findClientApp(id);
+        largeData = getSystemService().findClientApp(id);
         return largeData.getData();
     }
 
@@ -137,16 +137,16 @@ public class ClientAppController extends AbstractServiceRecordController<ClientA
 
     @Override
     protected Object create(ClientApp clientAppData) throws UnifyException {
-        return (Long) getMicroserviceService().createClientApp(largeData);
+        return (Long) getSystemService().createClientApp(largeData);
     }
 
     @Override
     protected int update(ClientApp clientAppData) throws UnifyException {
-        return getMicroserviceService().updateClientApp(largeData);
+        return getSystemService().updateClientApp(largeData);
     }
 
     @Override
     protected int delete(ClientApp applicationData) throws UnifyException {
-        return getMicroserviceService().deleteClientApp(applicationData.getId());
+        return getSystemService().deleteClientApp(applicationData.getId());
     }
 }

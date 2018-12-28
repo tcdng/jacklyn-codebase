@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.service.entities;
+package com.tcdng.jacklyn.system.entities;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
-import com.tcdng.jacklyn.service.constants.ServiceModuleNameConstants;
-import com.tcdng.jacklyn.shared.service.ClientAppType;
+import com.tcdng.jacklyn.shared.system.ClientAppType;
+import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -31,7 +31,8 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = ServiceModuleNameConstants.SERVICE_MODULE, title = "Client Application", reportable = true,
+@Managed(
+        module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Client Application", reportable = true,
         auditable = true)
 @Table(name = "CLIENTAPP", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class ClientApp extends BaseVersionedStatusEntity {

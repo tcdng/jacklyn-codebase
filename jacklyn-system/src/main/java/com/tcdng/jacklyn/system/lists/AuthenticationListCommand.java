@@ -37,7 +37,7 @@ public class AuthenticationListCommand extends AbstractZeroParamsSystemListComma
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getSystemModule().findAuthentications(
+        return getSystemService().findAuthentications(
                 (AuthenticationQuery) new AuthenticationQuery().status(RecordStatus.ACTIVE).order("description"));
     }
 
