@@ -5,7 +5,7 @@
 !ui-document layout:$d{!ui-desktoptype1} headerPanel:$c{topBanner} menuPanel:$c{menuBar} contentPanel:$c{content}
 
 // Header    
-!ui-panel:topBanner styleClass:$e{jk-topbanner} components:$c{topBannerImg navigationBand topBannerControl userImg}
+!ui-panel:topBanner styleClass:$e{jk-topbanner} components:$c{topBannerImg navigationBand topAlert topBannerControl userImg}
 !ui-image:topBannerImg src:$s{web/images/applicationbanner.jpg} styleClass:$e{jk-topbannerimg}
 !ui-panel:topBannerControl layout:$d{!ui-vertical style:$s{width:100%;}} styleClass:$e{jk-topbannercontrol}
     components:$c{userInfoBand clockInfoBand}
@@ -13,6 +13,9 @@
 !ui-image:userImg  src:$t{/images/user_small.png} styleClass:$e{jk-topuserimg}
     binding:userPhotoGenerator
     eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
+    
+!ui-panel:topAlert styleClass:$e{jk-topalert} components:$c{alertBell}
+!ui-bell:alertBell styleClass:$e{jk-topbell} binding:alertCount hint:$m{application.notifications}
 
 !ui-panel:clockInfoBand styleClass:$e{jk-userinfoband} components:$c{clock}
 !ui-textclock:clock
