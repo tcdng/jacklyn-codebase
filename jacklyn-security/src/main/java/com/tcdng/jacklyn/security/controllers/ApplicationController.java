@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.tcdng.jacklyn.common.business.SystemNotificationProvider;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
@@ -53,15 +54,18 @@ import com.tcdng.unify.web.ui.control.Table;
 @Component("/application")
 @UplBinding("web/security/upl/application.upl")
 @ResultMappings({
-    @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
-    @ResultMapping(name = "showuserroleoptions",
-            response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
-    @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
+        @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
+        @ResultMapping(
+                name = "showuserroleoptions", response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
+        @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
 public class ApplicationController extends AbstractApplicationForwarderController {
 
     @Configurable
+    private SystemNotificationProvider systemNotificationProvider;
+
+    @Configurable
     private SystemService systemService;
-    
+
     @Configurable("userphoto-generator")
     private ImageGenerator userPhotoGenerator;
 
@@ -69,6 +73,10 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
     public ApplicationController() {
         super(true, false);
+    }
+
+    public int getAlertCount() throws UnifyException {
+        return systemNotificationProvider.countSystemNotifications(getUserToken().getUserLoginId());
     }
 
     public ImageGenerator getUserPhotoGenerator() {
@@ -109,8 +117,8 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
     @Action
     public String switchUserRole() throws UnifyException {
-        UserRoleOptions userRoleOptions = (UserRoleOptions) getSessionAttribute(
-                JacklynSessionAttributeConstants.USERROLEOPTIONS);
+        UserRoleOptions userRoleOptions =
+                (UserRoleOptions) getSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS);
         UserRole userRoleData = userRoleOptions.getUserRoleList().get(selectRoleTableState.getViewIndex());
         return forwardToApplication(userRoleData);
     }

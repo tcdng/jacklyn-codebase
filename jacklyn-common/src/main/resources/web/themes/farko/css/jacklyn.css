@@ -25,6 +25,10 @@
 
 .jk-topuserimg {float: right; width: 32px; height: 32px;padding:1px;border:solid 1px #A0A0A0;margin-right:4px;cursor:pointer;}
 
+.jk-topalert {float:right; width: 28px; height: 32px;padding-left:4px;padding-top:8px;}
+.jk-topbell {width:24px;height:24px;cursor:pointer;}
+.jk-topbell span {height:14px;min-width:14px;border-radius:8px;font-size:10px;}
+
 .jk-topbannercontrol {float: right; font-family: sans-serif; font-size: 7pt;
     font-weight: bold; text-align: right;}
 
