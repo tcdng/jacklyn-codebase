@@ -20,7 +20,7 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 
 /**
- * Message channel query class;
+ * Notification channel query class;
  * 
  * @author Lateef Ojulari
  * @since 1.0

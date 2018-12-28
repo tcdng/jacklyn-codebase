@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.notification.business;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.notification.data.MessagingChannelDef;
+import com.tcdng.jacklyn.notification.data.NotificationChannelDef;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.FileAttachment;
@@ -43,6 +43,10 @@ public interface MessagingChannel extends UnifyComponent {
      *            the recipients contact list
      * @param messageBody
      *            the message body
+     * @param link
+     *            optional reference link
+     * @param reference
+     *            optional reference
      * @param isHtml
      *            indicates if message body is HTML
      * @param fileAttachmentList
@@ -51,7 +55,7 @@ public interface MessagingChannel extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    boolean sendMessage(MessagingChannelDef messagingChannelDef, String subject, String senderContact,
-            List<String> recipientContactList, String messageBody, boolean isHtml,
+    boolean sendMessage(NotificationChannelDef messagingChannelDef, String subject, String senderContact,
+            List<String> recipientContactList, String messageBody, String link, String reference, boolean isHtml,
             List<FileAttachment> fileAttachmentList) throws UnifyException;
 }

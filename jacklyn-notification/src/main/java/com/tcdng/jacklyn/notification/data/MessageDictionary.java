@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.notification.data;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,16 +36,20 @@ public class MessageDictionary implements Serializable {
         this.dictionary = dictionary;
     }
 
+    public MessageDictionary() {
+        dictionary = new HashMap<String, Object>();
+    }
+
     public void addEntry(String entryName, Object value) {
-        this.dictionary.put(entryName, value);
+        dictionary.put(entryName, value);
     }
 
     public Set<String> getEntryNames() {
-        return this.dictionary.keySet();
+        return dictionary.keySet();
     }
 
     public Object getEntry(String entryName) {
-        return this.dictionary.get(entryName);
+        return dictionary.get(entryName);
     }
 
     public Map<String, Object> getDictionary() {

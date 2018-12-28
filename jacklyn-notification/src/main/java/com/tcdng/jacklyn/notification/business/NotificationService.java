@@ -208,6 +208,25 @@ public interface NotificationService extends JacklynBusinessService {
     int setNotificationStatus(List<Long> notificationIds, NotificationStatus status) throws UnifyException;
 
     /**
+     * Creates system notification for particular users.
+     * 
+     * @param subject
+     *            the notification subject
+     * @param message
+     *            the notification message
+     * @param link
+     *            optional reference link
+     * @param reference
+     *            optional reference
+     * @param userIdList
+     *            the user ID list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void createSystemNotifications(String subject, String message, String link, String reference,
+            List<String> userIdList) throws UnifyException;
+
+    /**
      * Finds all tooling attachment generator types.
      * 
      * @return list of attachment generator types

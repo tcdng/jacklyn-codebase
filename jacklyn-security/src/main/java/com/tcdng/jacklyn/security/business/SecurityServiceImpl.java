@@ -877,7 +877,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                     systemService.getSysParameterValue(String.class,
                             SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
             Message message =
-                    new Message.Builder(NotificationUtils.getGlobalTemplateName(
+                    Message.newBuilder(NotificationUtils.getGlobalTemplateName(
                             SecurityModuleNameConstants.SECURITY_MODULE, notificationTemplateName))
                                     .fromSender(administratorName, administratorEmail)
                                     .toRecipient(user.getFullName(), user.getEmail())

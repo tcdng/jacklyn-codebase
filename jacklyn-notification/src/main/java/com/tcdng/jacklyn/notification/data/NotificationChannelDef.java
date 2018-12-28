@@ -20,12 +20,12 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.unify.core.constant.NetworkSecurityType;
 
 /**
- * Messaging channel definition.
+ * Notification channel definition.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class MessagingChannelDef {
+public class NotificationChannelDef {
 
     private Long notificationChannelId;
 
@@ -45,7 +45,7 @@ public class MessagingChannelDef {
 
     private long versionNo;
 
-    public MessagingChannelDef(Long notificationChannelId, String notificationChannelName,
+    public NotificationChannelDef(Long notificationChannelId, String notificationChannelName,
             NotificationType notificationType, String hostAddress, Integer hostPort, NetworkSecurityType securityType,
             String username, String password, long versionNo) {
         this.notificationChannelId = notificationChannelId;

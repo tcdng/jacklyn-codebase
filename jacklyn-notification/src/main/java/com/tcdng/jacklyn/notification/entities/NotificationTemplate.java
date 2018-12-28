@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
         reportable = true, auditable = true)
-@Table(name = "NOTIFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
+@Table(name = "NOTIFICATIONTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
         @UniqueConstraint({ "moduleId", "description" }) })
 public class NotificationTemplate extends BaseVersionedStatusEntity {
 
@@ -57,6 +57,9 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
     @Column(length = 32, nullable = true)
     private String attachmentGenerator;
+
+    @Column(name="TARGET_LINK", length = 64, nullable = true)
+    private String link;
 
     @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
     private String moduleName;
@@ -135,5 +138,13 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
     public void setAttachmentGenerator(String attachmentGenerator) {
         this.attachmentGenerator = attachmentGenerator;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

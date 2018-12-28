@@ -19,9 +19,10 @@ package com.tcdng.jacklyn.notification.business;
 import java.util.List;
 
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
-import com.tcdng.jacklyn.notification.data.MessagingChannelDef;
+import com.tcdng.jacklyn.notification.data.NotificationChannelDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.data.FileAttachment;
 
 /**
@@ -33,11 +34,14 @@ import com.tcdng.unify.core.data.FileAttachment;
 @Component(NotificationModuleNameConstants.SYSTEMMESSAGINGCHANNEL)
 public class SystemMessagingChannel extends AbstractMessagingChannel {
 
+    @Configurable
+    private NotificationService notificationService;
+
     @Override
-    public boolean sendMessage(MessagingChannelDef notificationChannelDef, String subject, String senderContact,
-            List<String> recipientContactList, String messageBody, boolean isHtml,
+    public boolean sendMessage(NotificationChannelDef notificationChannelDef, String subject, String senderContact,
+            List<String> recipientContactList, String messageBody, String link, String reference, boolean isHtml,
             List<FileAttachment> fileAttachmentList) throws UnifyException {
-        // TODO Auto-generated method stub
+        notificationService.createSystemNotifications(subject, messageBody, link, reference, recipientContactList);
         return true;
     }
 

@@ -28,13 +28,13 @@ import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 
 /**
- * Message entity.
+ * Notification entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification", reportable = true)
-@Table("NOTIF")
+@Table("NOTIFICATION")
 public class Notification extends BaseTimestampedEntity {
 
     @ForeignKey(NotificationTemplate.class)
@@ -49,6 +49,9 @@ public class Notification extends BaseTimestampedEntity {
     @Column(length = 64)
     private String senderContact;
 
+    @Column(name = "TARGET_REF", length = 32, nullable=true)
+    private String reference;
+
     @Column
     private Integer attempts;
 
@@ -61,7 +64,7 @@ public class Notification extends BaseTimestampedEntity {
     @Column(name = "REC_ST")
     private NotificationStatus status;
 
-    @Column
+    @Column(nullable = true)
     private byte[] dictionary;
 
     @ListOnly(key = "notificationTemplateId", property = "moduleId")
@@ -120,6 +123,14 @@ public class Notification extends BaseTimestampedEntity {
 
     public void setSenderContact(String senderContact) {
         this.senderContact = senderContact;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public Integer getAttempts() {

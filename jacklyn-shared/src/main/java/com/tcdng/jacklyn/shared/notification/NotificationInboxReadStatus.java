@@ -13,26 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.file;
+
+package com.tcdng.jacklyn.shared.notification;
 
 import com.tcdng.unify.core.annotation.StaticList;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
 /**
- * File inbox transfer status constants.
+ * Notification inbox read status constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("fileinboxstatuslist")
-public enum FileInboxStatus implements EnumConst {
-    NOT_RECEIVED("N"), RECEIVED("R"), ABORTED("A");
+@StaticList("notificationinboxreadlist")
+public enum NotificationInboxReadStatus implements EnumConst {
+
+    NOT_READ("N"), READ("R");
 
     private final String code;
 
-    private FileInboxStatus(String constant) {
-        this.code = constant;
+    private NotificationInboxReadStatus(String code) {
+        this.code = code;
     }
 
     @Override
@@ -40,11 +42,11 @@ public enum FileInboxStatus implements EnumConst {
         return this.code;
     }
 
-    public static FileInboxStatus fromCode(String code) {
-        return EnumUtils.fromCode(FileInboxStatus.class, code);
+    public static NotificationInboxReadStatus fromCode(String code) {
+        return EnumUtils.fromCode(NotificationInboxReadStatus.class, code);
     }
 
-    public static FileInboxStatus fromName(String name) {
-        return EnumUtils.fromName(FileInboxStatus.class, name);
+    public static NotificationInboxReadStatus fromName(String name) {
+        return EnumUtils.fromName(NotificationInboxReadStatus.class, name);
     }
 }

@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("outboxfilestatuslist")
+@StaticList("fileoutboxstatuslist")
 public enum FileOutboxStatus implements EnumConst {
 
     NOT_SENT("N"), SENT("S"), ABORTED("A");
