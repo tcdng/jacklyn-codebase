@@ -32,7 +32,7 @@
 !ui-name:frmName caption:$m{system.clientapp.name} binding:data.name focus:true
     dollar:true underscore:true period:true dash:true minLen:3 maxLen:32 required:true
 !ui-text:frmDescription caption:$m{system.clientapp.description} binding:data.description maxLen:48 size:40 required:true
-!ui-select:frmType caption:$m{system.clientapp.type} binding:data.type list:clientapptypelist blankOption:$s{} required:true
+!ui-select:frmType caption:$m{system.clientapp.type} binding:data.type readOnly:true list:clientapptypelist blankOption:$s{} required:true
 !ui-select:frmStatus caption:$m{system.clientapp.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
 
 !ui-panel:frmAssetAttachment layout:$d{!ui-vertical} components:$c{assetAssignmentBox}

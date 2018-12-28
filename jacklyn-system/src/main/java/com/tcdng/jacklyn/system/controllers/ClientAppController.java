@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
+import com.tcdng.jacklyn.shared.system.ClientAppType;
 import com.tcdng.jacklyn.system.entities.ClientApp;
 import com.tcdng.jacklyn.system.entities.ClientAppLargeData;
 import com.tcdng.jacklyn.system.entities.ClientAppQuery;
@@ -112,6 +113,7 @@ public class ClientAppController extends AbstractSystemRecordController<ClientAp
     @Override
     protected ClientApp prepareCreate() throws UnifyException {
         largeData = new ClientAppLargeData();
+        largeData.getData().setType(ClientAppType.STANDARD);
         return largeData.getData();
     }
 
