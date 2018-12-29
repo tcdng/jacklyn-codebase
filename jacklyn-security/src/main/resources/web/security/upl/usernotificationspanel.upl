@@ -1,0 +1,17 @@
+// UPL template for user notifications panel
+// Copyright 2018 The Code Department
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-usernotificationspanel
+    dialogBodyComponents:$c{notificationBodyPanel}
+    dialogActionComponents:$c{cancelBtn}
+
+!ui-panel:notificationBodyPanel style:$s{width:420px;height:280px;overflow-x:auto;overflow-y:scroll;}
+    components:$c{notificationsPanel}
+!ui-repeatpanel:notificationsPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{itemPanel} binding:$g{notificationBinding}
+
+!ui-notificationitempanel:itemPanel
+   
+!ui-button:cancelBtn caption:$m{button.cancel}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
