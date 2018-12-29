@@ -85,7 +85,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
     public int getAlertCount() throws UnifyException {
         UserToken userToken = getUserToken();
-        return systemNotificationProvider.countSystemNotifications(userToken.getUserLoginId());
+        return systemNotificationProvider.countUserSystemNotifications(userToken.getUserLoginId());
     }
 
     public ImageGenerator getUserPhotoGenerator() {
@@ -102,7 +102,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Action
     public String showUserNotifications() throws UnifyException {
         UserToken userToken = getUserToken();
-        userNotifications = systemNotificationProvider.findSystemNotifications(userToken.getUserLoginId());
+        userNotifications = systemNotificationProvider.findUserSystemNotifications(userToken.getUserLoginId());
         if (!userNotifications.isEmpty()) {
             return "showusernotifications";
         }

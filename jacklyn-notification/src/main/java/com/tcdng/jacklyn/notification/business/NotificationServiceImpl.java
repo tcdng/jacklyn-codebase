@@ -243,12 +243,13 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             String messageBody =
                     StringUtils.buildParameterizedString(notificationTemplateDef.getTokenList(), dictionary);
             List<String> userIdList = new ArrayList<String>();
-            for(Message.Recipient recipient: message.getRecipients()) {
+            for (Message.Recipient recipient : message.getRecipients()) {
                 userIdList.add(recipient.getName());
             }
-            
-            createSystemNotifications(notificationTemplateDef.getMessageType(), notificationTemplateDef.getSubject(),
-                    messageBody, notificationTemplateDef.getActionLink(), message.getReference(), userIdList);
+
+            createUserSystemNotifications(notificationTemplateDef.getMessageType(),
+                    notificationTemplateDef.getSubject(), messageBody, notificationTemplateDef.getActionLink(),
+                    message.getReference(), userIdList);
         } else {
             // Put notification in external communication system
             Notification notification = new Notification();
@@ -309,18 +310,19 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
-    public List<? extends SystemNotification> findSystemNotifications(String userId) throws UnifyException {
-        return db().listAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ));
+    public List<? extends SystemNotification> findUserSystemNotifications(String userId) throws UnifyException {
+        return db().listAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ)
+                .order("createDt"));
     }
 
     @Override
-    public int countSystemNotifications(String userId) throws UnifyException {
+    public int countUserSystemNotifications(String userId) throws UnifyException {
         return db().countAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ));
     }
 
     @Override
-    public void createSystemNotifications(MessageType messageType, String subject, String message, String actionLink,
-            String reference, List<String> userIdList) throws UnifyException {
+    public void createUserSystemNotifications(MessageType messageType, String subject, String message,
+            String actionLink, String reference, List<String> userIdList) throws UnifyException {
         NotificationInbox notificationInbox = new NotificationInbox();
         notificationInbox.setSubject(subject);
         notificationInbox.setMessage(message);
