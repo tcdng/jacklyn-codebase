@@ -2,9 +2,14 @@
 // Copyright 2018 The Code Department
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-notificationitempanel layout:$d{!ui-vertical style:$s{width:100%;}}
-    components:$c{notifSubject notifMessage notifLink}
+!ui-notificationitempanel layout:$d{!ui-horizontal widths:$l{none 100%}}
+    components:$c{nIcon nBase}
 
-!ui-label:notifSubject style:$s{font-size:11pt;font-weight:bold;color:#222;} binding:subject    
-!ui-label:notifMessage binding:message
-!ui-link:notifLink caption:$m{application.notification.resolve} binding:link
+!ui-image:nIcon styleClass:$e{nipimage} srcBinding:icon
+!ui-panel:nBase layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{nSubject nMessage nActionLink nCreateDt}
+
+!ui-label:nSubject styleClass:$e{nipsubject} binding:subject    
+!ui-label:nMessage styleClass:$e{nipmessage} binding:message
+!ui-label:nCreateDt styleClass:$e{nipdate} binding:createDt
+!ui-link:nActionLink caption:$m{application.notification.resolve} styleClass:$e{niplink} binding:actionLink

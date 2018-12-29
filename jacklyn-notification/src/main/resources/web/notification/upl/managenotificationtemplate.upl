@@ -6,8 +6,10 @@
     searchByList:$c{searchModuleId searchName searchDescription searchStatus}
     searchClearList:$c{searchModuleId searchName searchDescription searchStatus}
     tableColumnList:$c{moduleDesc name description subject statusDesc}
-    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.basicdetails} components:$c{frmModule frmName frmDescription frmStatus}}
-    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.template} components:$c{frmSubject frmTemplate frmHtmlFlag}}
+    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.basicdetails}
+        components:$c{frmModule frmName frmDescription frmMessageType frmActionLink frmStatus}}
+    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.template}
+        components:$c{frmSubject frmTemplate frmHtmlFlag}}
      addPrivilege:$s{not-notificationtemplate-add} editPrivilege:$s{not-notificationtemplate-edit}
     viewPrivilege:$s{not-notificationtemplate-view} deletePrivilege:$s{not-notificationtemplate-delete}
 
@@ -33,5 +35,7 @@
 !ui-text:frmDescription caption:$m{notification.notificationtemplate.description} required:true binding:description size:40
 !ui-text:frmSubject caption:$m{notification.notificationtemplate.subject} required:true binding:subject size:40
 !ui-textarea:frmTemplate caption:$m{notification.notificationtemplate.template} required:true binding:template columns:40 rows:8
+!ui-select:frmMessageType caption:$m{notification.notificationtemplate.messagetype} binding:messageType list:messagetypelist blankOption:$s{} required:true
+!ui-text:frmActionLink caption:$m{notification.notificationtemplate.actionlink} binding:actionLink size:40
 !ui-checkbox:frmHtmlFlag caption:$m{notification.notificationtemplate.html} binding:html
 !ui-select:frmStatus caption:$m{notification.notificationtemplate.status} binding:status list:recordstatuslist blankOption:$s{}

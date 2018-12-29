@@ -38,6 +38,7 @@ import com.tcdng.jacklyn.notification.entities.NotificationRecipient;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplateQuery;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.shared.notification.NotificationStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.system.business.SystemService;
@@ -340,7 +341,7 @@ public class NotificationServiceTest extends AbstractJacklynTest {
         NotificationChannel notificationChannel = new NotificationChannel();
         notificationChannel.setName(NOTIFICATION_CHANNEL_NAME);
         notificationChannel.setDescription("Message Messaging Channel");
-        notificationChannel.setNotificationType(NotificationType.SYSTEM);
+        notificationChannel.setNotificationType(NotificationType.EMAIL);
         return notificationChannel;
     }
 
@@ -354,6 +355,7 @@ public class NotificationServiceTest extends AbstractJacklynTest {
         notificationTemplate.setDescription("Monthly Account Summary");
         notificationTemplate.setSubject("Account Summary");
         notificationTemplate.setTemplate("Your balance is {balance}");
+        notificationTemplate.setMessageType(MessageType.INFORMATION);
         notificationTemplate.setHtmlFlag(Boolean.FALSE);
         notificationTemplate.setStatus(RecordStatus.ACTIVE);
         return notificationTemplate;

@@ -25,6 +25,7 @@ import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
 import com.tcdng.jacklyn.notification.entities.NotificationQuery;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplateQuery;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.shared.notification.NotificationStatus;
 import com.tcdng.jacklyn.shared.notification.data.ToolingAttachmentGenItem;
 import com.tcdng.unify.core.UnifyException;
@@ -210,6 +211,8 @@ public interface NotificationService extends JacklynBusinessService {
     /**
      * Creates system notification for particular users.
      * 
+     * @param messageType
+     *            the message type
      * @param subject
      *            the notification subject
      * @param message
@@ -223,8 +226,8 @@ public interface NotificationService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    void createSystemNotifications(String subject, String message, String link, String reference,
-            List<String> userIdList) throws UnifyException;
+    void createSystemNotifications(MessageType messageType, String subject, String message, String link,
+            String reference, List<String> userIdList) throws UnifyException;
 
     /**
      * Finds all tooling attachment generator types.

@@ -161,8 +161,7 @@ public class Message {
 
         public Message build() {
             return new Message(notificationChannelName, globalTemplateName, senderName, senderContact, reference,
-                DataUtils.unmodifiableList(recipients), DataUtils.unmodifiableList(attachments),
-                DataUtils.unmodifiableMap(dictionary));
+                DataUtils.unmodifiableList(recipients), DataUtils.unmodifiableList(attachments), dictionary);
         }
 
         private List<Attachment> getAttachments() {

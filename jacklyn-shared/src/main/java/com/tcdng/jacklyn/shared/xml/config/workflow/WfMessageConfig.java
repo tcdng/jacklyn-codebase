@@ -18,7 +18,10 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.tcdng.jacklyn.shared.notification.MessageType;
+import com.tcdng.jacklyn.shared.xml.adapter.MessageTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -35,9 +38,14 @@ public class WfMessageConfig extends BaseConfig {
 
     private String attachmentGenerator;
 
+    private MessageType messageType;
+
+    private String actionLink;
+
     private Boolean html;
 
     public WfMessageConfig() {
+        messageType = MessageType.INFORMATION;
         html = Boolean.FALSE;
     }
 
@@ -75,5 +83,24 @@ public class WfMessageConfig extends BaseConfig {
     @XmlAttribute(required = true)
     public void setHtml(Boolean html) {
         this.html = html;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
+    @XmlAttribute(name="message-type")
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    @XmlAttribute(name="action-link")
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
     }
 }

@@ -14,31 +14,36 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.notification.entities;
 
-import com.tcdng.jacklyn.common.data.SystemNotification;
+import java.util.Date;
+
+import com.tcdng.jacklyn.common.entities.BaseEntityPolicy;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.web.ui.AbstractPanel;
+import com.tcdng.unify.core.database.Entity;
 
 /**
- * Panel for presenting a notification item.
+ * Entity policy class for notification inbox entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-notificationitempanel")
-@UplBinding("web/security/upl/notificationitempanel.upl")
-public class NotificationItemPanel extends AbstractPanel {
+@Component("notificationinbox-policy")
+public class NontificationInboxPolicy extends BaseEntityPolicy {
+
+    public NontificationInboxPolicy() {
+        super(true); // Set now
+    }
 
     @Override
-    public void switchState() throws UnifyException {
-        SystemNotification systemNotification = (SystemNotification) getValueStore().getValueObject();
-        if (systemNotification != null) {
-            setVisible("nActionLink", !StringUtils.isBlank(systemNotification.getActionLink()));
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        NotificationInbox notificationInbox = (NotificationInbox) record;
+        if (notificationInbox.getCreateDt() == null) {
+            notificationInbox.setCreateDt(now);
         }
+
+        return super.preCreate(record, now);
     }
 
 }

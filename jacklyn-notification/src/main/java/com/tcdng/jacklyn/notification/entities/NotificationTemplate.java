@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.notification.entities;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.system.entities.Module;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -40,6 +41,9 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
     @ForeignKey(Module.class)
     private Long moduleId;
 
+    @ForeignKey
+    private MessageType messageType;
+    
     @Column(name = "TEMPLATE_NM", length = 96)
     private String name;
 
@@ -51,6 +55,9 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
     @Column(length = 2048)
     private String template;
+
+    @Column(length = 64, nullable = true)
+    private String actionLink;
 
     @Column(name = "HTML_FG")
     private Boolean htmlFlag;
@@ -67,6 +74,9 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
     @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
     private String moduleDescription;
 
+    @ListOnly(key = "messageType", property = "description")
+    private String messageTypeDesc;
+    
     @Override
     public String getDescription() {
         return this.description;
@@ -78,6 +88,14 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
     public void setModuleId(Long moduleId) {
         this.moduleId = moduleId;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 
     public String getName() {
@@ -120,6 +138,14 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
         this.moduleDescription = moduleDescription;
     }
 
+    public String getMessageTypeDesc() {
+        return messageTypeDesc;
+    }
+
+    public void setMessageTypeDesc(String messageTypeDesc) {
+        this.messageTypeDesc = messageTypeDesc;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -146,5 +172,13 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
     }
 }

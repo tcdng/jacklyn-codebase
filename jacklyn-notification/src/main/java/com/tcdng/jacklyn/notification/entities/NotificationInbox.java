@@ -16,14 +16,19 @@
 
 package com.tcdng.jacklyn.notification.entities;
 
+import java.util.Date;
+
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.data.SystemNotification;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.shared.notification.NotificationInboxReadStatus;
 import com.tcdng.unify.core.annotation.Column;
+import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
+import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Table;
 
 /**
@@ -33,11 +38,15 @@ import com.tcdng.unify.core.annotation.Table;
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Inbox", reportable = true)
+@Policy("notificationinbox-policy")
 @Table("NOTIFICATIONINBOX")
 public class NotificationInbox extends BaseEntity implements SystemNotification {
 
     @ForeignKey(name = "REC_ST")
     private NotificationInboxReadStatus status;
+
+    @ForeignKey
+    private MessageType messageType;
 
     @Column(name = "NOTIF_SUBJECT", length = 64)
     private String subject;
@@ -45,17 +54,23 @@ public class NotificationInbox extends BaseEntity implements SystemNotification 
     @Column(name = "NOTIF_MESSAGE", length = 512)
     private String message;
 
-    @Column(name = "NOTIF_LINK", length = 64, nullable = true)
-    private String link;
+    @Column(length = 64, nullable = true)
+    private String actionLink;
 
-    @Column(name = "NOTIF_TARGET", nullable = true)
-    private String target;
+    @Column(nullable = true)
+    private String actionTarget;
 
     @Column(name = "USER_ID")
     private String userId;
 
+    @Column(type = ColumnType.TIMESTAMP)
+    private Date createDt;
+
     @ListOnly(key = "status", property = "description")
     private String statusDesc;
+
+    @ListOnly(key = "messageType", property = "description")
+    private String messageTypeDesc;
 
     @Override
     public String getDescription() {
@@ -80,24 +95,6 @@ public class NotificationInbox extends BaseEntity implements SystemNotification 
         this.message = message;
     }
 
-    @Override
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    @Override
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
-    }
-
     public String getUserId() {
         return userId;
     }
@@ -112,6 +109,58 @@ public class NotificationInbox extends BaseEntity implements SystemNotification 
 
     public void setStatus(NotificationInboxReadStatus status) {
         this.status = status;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    @Override
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
+    }
+
+    @Override
+    public String getActionTarget() {
+        return actionTarget;
+    }
+
+    public void setActionTarget(String actionTarget) {
+        this.actionTarget = actionTarget;
+    }
+
+    @Override
+    public String getIcon() {
+        if (messageType != null) {
+            return messageType.icon();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Date getCreateDt() {
+        return createDt;
+    }
+
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
+    }
+
+    public String getMessageTypeDesc() {
+        return messageTypeDesc;
+    }
+
+    public void setMessageTypeDesc(String messageTypeDesc) {
+        this.messageTypeDesc = messageTypeDesc;
     }
 
     public String getStatusDesc() {

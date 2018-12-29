@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.shared.notification;
 
 import com.tcdng.unify.core.annotation.StaticList;
@@ -20,23 +21,25 @@ import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
 /**
- * Notification type constants.
+ * Message type constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("notificationtypelist")
-public enum NotificationType implements EnumConst {
+@StaticList("messagetypelist")
+public enum MessageType implements EnumConst {
 
-    SYSTEM("X", true), EMAIL("E", false), SMS("S", false);
+    INFORMATION("I", "$t{images/info.png}"),
+    WARNING("W", "$t{images/warning.png}"),
+    ACTION("A", "$t{images/takeaction.png}");
 
     private final String code;
 
-    private final boolean internal;
-    
-    private NotificationType(String code, boolean internal) {
+    private final String icon;
+
+    private MessageType(String code, String icon) {
         this.code = code;
-        this.internal = internal;
+        this.icon = icon;
     }
 
     @Override
@@ -44,15 +47,15 @@ public enum NotificationType implements EnumConst {
         return code;
     }
 
-    public boolean internal() {
-        return internal;
+    public String icon() {
+        return icon;
     }
 
-    public static NotificationType fromCode(String code) {
-        return EnumUtils.fromCode(NotificationType.class, code);
+    public static MessageType fromCode(String code) {
+        return EnumUtils.fromCode(MessageType.class, code);
     }
 
-    public static NotificationType fromName(String name) {
-        return EnumUtils.fromName(NotificationType.class, name);
+    public static MessageType fromName(String name) {
+        return EnumUtils.fromName(MessageType.class, name);
     }
 }

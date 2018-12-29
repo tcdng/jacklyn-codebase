@@ -13,31 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.tcdng.jacklyn.shared.xml.adapter;
 
-package com.tcdng.jacklyn.common.data;
-
-import java.util.Date;
-
+import com.tcdng.jacklyn.shared.notification.MessageType;
+import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
 
 /**
- * A system notification item.
- *
+ * Message type XML adapter.
+ * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface SystemNotification {
+public class MessageTypeXmlAdapter extends AbstractEnumConstXmlAdapter<MessageType> {
 
-    Long getId();
+    public MessageTypeXmlAdapter() {
+        super(MessageType.class);
+    }
 
-    String getSubject();
-
-    String getMessage();
-
-    String getActionLink();
-
-    String getActionTarget();
-    
-    String getIcon();
-    
-    Date getCreateDt();
 }
