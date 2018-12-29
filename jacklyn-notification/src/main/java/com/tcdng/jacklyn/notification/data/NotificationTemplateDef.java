@@ -18,34 +18,38 @@ package com.tcdng.jacklyn.notification.data;
 
 import java.util.List;
 
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
- * Message template definition.
+ * Notification template definition.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class MessageTemplateDef {
+public class NotificationTemplateDef {
 
     private Long notificationTemplateId;
 
     private String subject;
 
-    private String link;
+    private String actionLink;
 
     private List<StringToken> tokenList;
 
+    private MessageType messageType;
+    
     private boolean html;
 
     private long versionNo;
 
-    public MessageTemplateDef(Long notificationTemplateId, String subject, String link, List<StringToken> tokenList,
-            boolean html, long versionNo) {
+    public NotificationTemplateDef(Long notificationTemplateId, String subject, String actionLink,
+            List<StringToken> tokenList, MessageType messageType, boolean html, long versionNo) {
         this.notificationTemplateId = notificationTemplateId;
         this.subject = subject;
-        this.link = link;
+        this.actionLink = actionLink;
         this.tokenList = tokenList;
+        this.messageType = messageType;
         this.html = html;
         this.versionNo = versionNo;
     }
@@ -58,8 +62,12 @@ public class MessageTemplateDef {
         return subject;
     }
 
-    public String getLink() {
-        return link;
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public String getActionLink() {
+        return actionLink;
     }
 
     public List<StringToken> getTokenList() {

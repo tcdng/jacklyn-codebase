@@ -42,7 +42,7 @@ public class EmailMessagingChannel extends AbstractMessagingChannel {
 
     @Override
     public boolean sendMessage(NotificationChannelDef notificationChannelDef, String subject, String senderContact,
-            List<String> recipientContactList, String messageBody, String link, String reference, boolean isHtml,
+            List<String> recipientContactList, String messageBody, boolean isHtml,
             List<FileAttachment> fileAttachmentList) throws UnifyException {
         String configurationCode = notificationChannelDef.getNotificationChannelName();
         if (!emailServer.isConfigured(configurationCode)) {

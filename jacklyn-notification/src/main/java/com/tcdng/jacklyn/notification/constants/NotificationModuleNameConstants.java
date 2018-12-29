@@ -30,6 +30,4 @@ public interface NotificationModuleNameConstants {
     String EMAILMESSAGINGCHANNEL = "email-messagingchannel";
 
     String SMSMESSAGINGCHANNEL = "sms-messagingchannel";
-
-    String SYSTEMMESSAGINGCHANNEL = "system-messagingchannel";
 }

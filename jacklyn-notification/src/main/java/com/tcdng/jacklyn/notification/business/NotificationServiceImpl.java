@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.business.SystemNotificationProvider;
@@ -28,7 +29,7 @@ import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleSysParamConstants;
 import com.tcdng.jacklyn.notification.data.Message;
 import com.tcdng.jacklyn.notification.data.MessageDictionary;
-import com.tcdng.jacklyn.notification.data.MessageTemplateDef;
+import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.notification.data.NotificationChannelDef;
 import com.tcdng.jacklyn.notification.entities.Notification;
 import com.tcdng.jacklyn.notification.entities.NotificationAttachment;
@@ -44,6 +45,7 @@ import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplateQuery;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils.TemplateNameParts;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.shared.notification.NotificationInboxReadStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationStatus;
 import com.tcdng.jacklyn.shared.notification.data.ToolingAttachmentGenItem;
@@ -86,18 +88,15 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     @Configurable(NotificationModuleNameConstants.SMSMESSAGINGCHANNEL)
     private MessagingChannel smsNotificationChannel;
 
-    @Configurable(NotificationModuleNameConstants.SYSTEMMESSAGINGCHANNEL)
-    private MessagingChannel systemNotificationChannel;
-
-    private FactoryMap<String, MessageTemplateDef> templates;
+    private FactoryMap<String, NotificationTemplateDef> templates;
 
     private FactoryMap<String, NotificationChannelDef> channels;
 
     public NotificationServiceImpl() {
-        templates = new FactoryMap<String, MessageTemplateDef>(true) {
+        templates = new FactoryMap<String, NotificationTemplateDef>(true) {
 
             @Override
-            protected boolean stale(String globalTemplateName, MessageTemplateDef notificationTemplateDef)
+            protected boolean stale(String globalTemplateName, NotificationTemplateDef notificationTemplateDef)
                     throws Exception {
                 boolean stale = false;
                 try {
@@ -114,7 +113,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             }
 
             @Override
-            protected MessageTemplateDef create(String globalTemplateName, Object... params) throws Exception {
+            protected NotificationTemplateDef create(String globalTemplateName, Object... params) throws Exception {
                 TemplateNameParts templateNames = NotificationUtils.getTemplateNameParts(globalTemplateName);
                 NotificationTemplate notificationTemplate =
                         db().list(new NotificationTemplateQuery().moduleName(templateNames.getModuleName())
@@ -124,10 +123,12 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                             globalTemplateName);
                 }
 
-                return new MessageTemplateDef(notificationTemplate.getId(),
-                        resolveApplicationMessage(notificationTemplate.getSubject()), notificationTemplate.getLink(),
+                return new NotificationTemplateDef(notificationTemplate.getId(),
+                        resolveApplicationMessage(notificationTemplate.getSubject()),
+                        notificationTemplate.getActionLink(),
                         StringUtils.breakdownParameterizedString(notificationTemplate.getTemplate()),
-                        notificationTemplate.getHtmlFlag(), notificationTemplate.getVersionNo());
+                        notificationTemplate.getMessageType(), notificationTemplate.getHtmlFlag(),
+                        notificationTemplate.getVersionNo());
             }
 
         };
@@ -230,44 +231,64 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
     @Override
     public void sendNotification(Message message) throws UnifyException {
-        // Put notification in communication system
-        Notification notification = new Notification();
-        Long notificationTemplateId = templates.get(message.getGlobalTemplateName()).getNotificationTemplateId();
-        notification.setNotificationTemplateId(notificationTemplateId);
+        NotificationTemplateDef notificationTemplateDef = templates.get(message.getGlobalTemplateName());
+        NotificationChannelDef notifChannelDef = channels.get(message.getNotificationChannelName());
 
-        Long notificationChannelId = channels.get(message.getNotificationChannelName()).getNotificationChannelId();
-        notification.setNotificationChannelId(notificationChannelId);
+        if (notifChannelDef.getNotificationType().internal()) {
+            // Internal system notifications
+            Map<String, Object> dictionary = message.getDictionary();
+            dictionary.put("subject", notificationTemplateDef.getSubject());
+            dictionary.put("senderContact", message.getSenderContact());
+            dictionary.put("senderName", resolveApplicationMessage(message.getSenderName()));
+            String messageBody =
+                    StringUtils.buildParameterizedString(notificationTemplateDef.getTokenList(), dictionary);
+            List<String> userIdList = new ArrayList<String>();
+            for(Message.Recipient recipient: message.getRecipients()) {
+                userIdList.add(recipient.getName());
+            }
+            
+            createSystemNotifications(notificationTemplateDef.getMessageType(), notificationTemplateDef.getSubject(),
+                    messageBody, notificationTemplateDef.getActionLink(), message.getReference(), userIdList);
+        } else {
+            // Put notification in external communication system
+            Notification notification = new Notification();
+            Long notificationTemplateId = templates.get(message.getGlobalTemplateName()).getNotificationTemplateId();
+            notification.setNotificationTemplateId(notificationTemplateId);
 
-        byte[] dictionary = null;
-        if (message.isDictionary()) {
-            dictionary = IOUtils.streamToBytes(message.getDictionary());
-        }
+            Long notificationChannelId = notifChannelDef.getNotificationChannelId();
+            notification.setNotificationChannelId(notificationChannelId);
 
-        notification.setSenderName(message.getSenderName());
-        notification.setSenderContact(message.getSenderContact());
-        notification.setReference(message.getReference());
-        notification.setDictionary(dictionary);
-        notification.setDueDt(new Date());
-        notification.setAttempts(Integer.valueOf(0));
-        notification.setStatus(NotificationStatus.NOT_SENT);
-        Long notificationId = (Long) db().create(notification);
+            byte[] dictionary = null;
+            if (message.isDictionary()) {
+                dictionary = IOUtils.streamToBytes(message.getDictionary());
+            }
 
-        NotificationRecipient notifRecipient = new NotificationRecipient();
-        notifRecipient.setNotificationId(notificationId);
-        for (com.tcdng.jacklyn.notification.data.Message.Recipient recipient : message.getRecipients()) {
-            notifRecipient.setRecipientName(recipient.getName());
-            notifRecipient.setRecipientContact(recipient.getContact());
-            db().create(notifRecipient);
-        }
+            notification.setSenderName(message.getSenderName());
+            notification.setSenderContact(message.getSenderContact());
+            notification.setReference(message.getReference());
+            notification.setDictionary(dictionary);
+            notification.setDueDt(new Date());
+            notification.setAttempts(Integer.valueOf(0));
+            notification.setStatus(NotificationStatus.NOT_SENT);
+            Long notificationId = (Long) db().create(notification);
 
-        if (!message.getAttachments().isEmpty()) {
-            NotificationAttachment notifAttachment = new NotificationAttachment();
-            notifAttachment.setNotificationId(notificationId);
-            for (com.tcdng.jacklyn.notification.data.Message.Attachment attachment : message.getAttachments()) {
-                notifAttachment.setType(attachment.getType());
-                notifAttachment.setFileName(attachment.getFileName());
-                notifAttachment.setData(attachment.getData());
-                db().create(notifAttachment);
+            NotificationRecipient notifRecipient = new NotificationRecipient();
+            notifRecipient.setNotificationId(notificationId);
+            for (com.tcdng.jacklyn.notification.data.Message.Recipient recipient : message.getRecipients()) {
+                notifRecipient.setRecipientName(recipient.getName());
+                notifRecipient.setRecipientContact(recipient.getContact());
+                db().create(notifRecipient);
+            }
+
+            if (!message.getAttachments().isEmpty()) {
+                NotificationAttachment notifAttachment = new NotificationAttachment();
+                notifAttachment.setNotificationId(notificationId);
+                for (com.tcdng.jacklyn.notification.data.Message.Attachment attachment : message.getAttachments()) {
+                    notifAttachment.setType(attachment.getType());
+                    notifAttachment.setFileName(attachment.getFileName());
+                    notifAttachment.setData(attachment.getData());
+                    db().create(notifAttachment);
+                }
             }
         }
     }
@@ -298,13 +319,14 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
-    public void createSystemNotifications(String subject, String message, String link, String reference,
-            List<String> userIdList) throws UnifyException {
+    public void createSystemNotifications(MessageType messageType, String subject, String message, String actionLink,
+            String reference, List<String> userIdList) throws UnifyException {
         NotificationInbox notificationInbox = new NotificationInbox();
         notificationInbox.setSubject(subject);
         notificationInbox.setMessage(message);
-        notificationInbox.setLink(link);
-        notificationInbox.setTarget(reference);
+        notificationInbox.setMessageType(messageType);
+        notificationInbox.setActionLink(actionLink);
+        notificationInbox.setActionTarget(reference);
         notificationInbox.setStatus(NotificationInboxReadStatus.NOT_READ);
         for (String userId : userIdList) {
             notificationInbox.setUserId(userId);
@@ -390,12 +412,16 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                         notificationTemplate.setSubject(notificationTemplateConfig.getSubject());
                         notificationTemplate.setTemplate(notificationTemplateConfig.getTemplate());
                         notificationTemplate.setHtmlFlag(notificationTemplateConfig.isHtml());
+                        notificationTemplate.setMessageType(notificationTemplateConfig.getMessageType());
+                        notificationTemplate.setActionLink(notificationTemplateConfig.getActionLink());
                         db().create(notificationTemplate);
                     } else {
                         oldNotificationTemplate.setDescription(description);
                         oldNotificationTemplate.setSubject(notificationTemplateConfig.getSubject());
                         oldNotificationTemplate.setTemplate(notificationTemplateConfig.getTemplate());
                         oldNotificationTemplate.setHtmlFlag(notificationTemplateConfig.isHtml());
+                        oldNotificationTemplate.setMessageType(notificationTemplateConfig.getMessageType());
+                        oldNotificationTemplate.setActionLink(notificationTemplateConfig.getActionLink());
                         db().updateByIdVersion(oldNotificationTemplate);
                     }
                 }
@@ -411,15 +437,12 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
     private boolean sendNotification(Notification notification, MessageDictionary messageDictionary) {
         try {
-            MessageTemplateDef notificationTemplateDef =
+            NotificationTemplateDef notificationTemplateDef =
                     templates.get(NotificationUtils.getGlobalTemplateName(notification.getModuleName(),
                             notification.getNotificationTemplateName()));
             NotificationChannelDef notificationChannelDef = channels.get(notification.getNotificationChannelName());
             MessagingChannel notificationChannel = null;
             switch (notificationChannelDef.getNotificationType()) {
-            case SYSTEM:
-                notificationChannel = systemNotificationChannel;
-                break;
             case SMS:
                 notificationChannel = smsNotificationChannel;
                 break;
@@ -472,8 +495,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
             // Send
             return notificationChannel.sendMessage(notificationChannelDef, subject, senderContact, recipientContactList,
-                    messageBody, notificationTemplateDef.getLink(), notification.getReference(),
-                    notificationTemplateDef.isHtml(), fileAttachmentList);
+                    messageBody, notificationTemplateDef.isHtml(), fileAttachmentList);
         } catch (UnifyException e) {
             logError(e);
         }

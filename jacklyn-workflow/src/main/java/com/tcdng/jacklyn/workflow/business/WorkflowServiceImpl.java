@@ -1143,6 +1143,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     notificationTemplate.setSubject(wfMessage.getSubject());
                     notificationTemplate.setTemplate(wfMessage.getTemplate());
                     notificationTemplate.setAttachmentGenerator(wfMessage.getAttachmentGenerator());
+                    notificationTemplate.setMessageType(wfMessage.getMessageType());
+                    notificationTemplate.setActionLink(wfMessage.getActionLink());
                     notificationTemplate.setHtmlFlag(wfMessage.getHtmlFlag());
                     notificationService.createNotificationTemplate(notificationTemplate);
                 } else {
@@ -1150,6 +1152,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     oldNotificationTemplate.setSubject(wfMessage.getSubject());
                     oldNotificationTemplate.setTemplate(wfMessage.getTemplate());
                     oldNotificationTemplate.setAttachmentGenerator(wfMessage.getAttachmentGenerator());
+                    oldNotificationTemplate.setMessageType(wfMessage.getMessageType());
+                    oldNotificationTemplate.setActionLink(wfMessage.getActionLink());
                     oldNotificationTemplate.setHtmlFlag(wfMessage.getHtmlFlag());
                     notificationService.updateNotificationTemplate(oldNotificationTemplate);
                 }
@@ -1342,6 +1346,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfMessage.setDescription(resolveApplicationMessage(wfMessageConfig.getDescription()));
                 wfMessage.setSubject(wfMessageConfig.getSubject());
                 wfMessage.setTemplate(wfMessageConfig.getBody());
+                wfMessage.setMessageType(wfMessageConfig.getMessageType());
+                wfMessage.setActionLink(wfMessageConfig.getActionLink());
                 wfMessage.setHtmlFlag(wfMessageConfig.getHtml());
                 wfMessage.setAttachmentGenerator(wfMessageConfig.getAttachmentGenerator());
                 messageList.add(wfMessage);

@@ -105,6 +105,14 @@
 .ui-wfhisteventlisting .wwcontent {display:table-cell; text-align:left; word-wrap:break-word; font-size:12px; font-style: italic; padding:4px 0px 4px 2px;}
 .ui-wfhisteventlisting .wwlabel {display:table-cell; text-align:right; word-wrap:break-word; color:#808080; font-size:8px; font-weight:bold;padding-right:2px;}
 
+.ui-notificationitempanel {}
+.ui-notificationitempanel .nipimage {width:32px;height:32px;margin:4px;}
+.ui-notificationitempanel .nipsubject {font-size:11pt;font-weight:bold;color:#222;}
+.ui-notificationitempanel .nipmessage {font-style: italic;}
+.ui-notificationitempanel .nipdate {text-align:right;width:100%;font-size:8px;}
+.ui-notificationitempanel .niplink {font-size:11px;text-decoration:underline;cursor: pointer;}
+                            
+
 .ui-selectrolepanel {width: 320px;}
 
 .ui-reportrunnerpanel {}

@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -36,6 +37,9 @@ public class WfMessage extends BaseEntity {
     @ForeignKey(WfTemplate.class)
     private Long wfTemplateId;
 
+    @ForeignKey
+    private MessageType messageType;
+    
     @Column(name = "MESSAGE_NM", length = 64)
     private String name;
 
@@ -47,6 +51,9 @@ public class WfMessage extends BaseEntity {
 
     @Column(length = 2048)
     private String template;
+
+    @Column(length = 64, nullable = true)
+    private String actionLink;
 
     @Column(name = "HTML_FG")
     private Boolean htmlFlag;
@@ -68,6 +75,9 @@ public class WfMessage extends BaseEntity {
 
     @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
     private String wfCategoryName;
+
+    @ListOnly(key = "messageType", property = "description")
+    private String messageTypeDesc;
 
     @Override
     public String getDescription() {
@@ -164,5 +174,29 @@ public class WfMessage extends BaseEntity {
 
     public void setWfCategoryVersion(String wfCategoryVersion) {
         this.wfCategoryVersion = wfCategoryVersion;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    public String getMessageTypeDesc() {
+        return messageTypeDesc;
+    }
+
+    public void setMessageTypeDesc(String messageTypeDesc) {
+        this.messageTypeDesc = messageTypeDesc;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
     }
 }

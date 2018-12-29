@@ -16,7 +16,10 @@
 package com.tcdng.jacklyn.shared.xml.config.module;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.tcdng.jacklyn.shared.notification.MessageType;
+import com.tcdng.jacklyn.shared.xml.adapter.MessageTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -31,8 +34,16 @@ public class NotificationTemplateConfig extends BaseConfig {
 
     private String template;
 
+    private MessageType messageType;
+
+    private String actionLink;
+    
     private boolean html;
 
+    public NotificationTemplateConfig() {
+        messageType = MessageType.INFORMATION;
+    }
+    
     public String getSubject() {
         return subject;
     }
@@ -58,5 +69,24 @@ public class NotificationTemplateConfig extends BaseConfig {
     @XmlAttribute(required = true)
     public void setHtml(boolean html) {
         this.html = html;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
+    @XmlAttribute(name="message-type")
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    @XmlAttribute(name="action-link")
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
     }
 }
