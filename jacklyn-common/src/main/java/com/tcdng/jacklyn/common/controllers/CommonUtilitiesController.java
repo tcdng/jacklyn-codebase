@@ -39,12 +39,14 @@ import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
 @UplBinding("web/common/upl/commonutilities.upl")
 @ResultMappings({
         @ResultMapping(name = "showapplicationmessage", response = { "!showpopupresponse popup:$s{messageBoxPopup}" }),
-        @ResultMapping(name = "showapplicationtaskmonitor",
+        @ResultMapping(
+                name = "showapplicationtaskmonitor",
                 response = { "!showpopupresponse popup:$s{taskMonitorInfoPopup}" }),
-        @ResultMapping(name = "showapplicationreportoptions",
-                response = { "!showpopupresponse popup:$s{reportRunnerPopup}" }),
+        @ResultMapping(
+                name = "showapplicationreportoptions", response = { "!showpopupresponse popup:$s{reportRunnerPopup}" }),
         @ResultMapping(name = "showapplicationsearch", response = { "!showpopupresponse popup:$s{searchBoxPopup}" }),
-        @ResultMapping(name = "searchdone",
+        @ResultMapping(
+                name = "searchdone",
                 response = { "!hidepopupresponse", "!postresponse pathBinding:$s{searchSelectPath}" }),
         @ResultMapping(name = "viewreport", response = { "!commonreportresponse" }) })
 public class CommonUtilitiesController extends BasePageController {
@@ -59,8 +61,8 @@ public class CommonUtilitiesController extends BasePageController {
 
     @Action
     public String generateReport() throws UnifyException {
-        ReportOptions reportOptions = (ReportOptions) this
-                .getSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
+        ReportOptions reportOptions =
+                (ReportOptions) getSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
         setRequestAttribute(JacklynRequestAttributeConstants.REPORTOPTIONS, reportOptions);
         logUserEvent(CommonModuleAuditConstants.GENERATE_REPORT, reportOptions.getTitle());
         return "viewreport";
@@ -75,7 +77,7 @@ public class CommonUtilitiesController extends BasePageController {
     @Action
     public String searchBoxSelect() throws UnifyException {
         searchBoxState.setResultBeanProperties();
-        SearchBox searchBoxInfo = (SearchBox) this.removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
+        SearchBox searchBoxInfo = (SearchBox) removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
         searchSelectPath = searchBoxInfo.getResultPath();
         return "searchdone";
     }

@@ -17,6 +17,7 @@
     
 !ui-panel:topAlert styleClass:$e{jk-topalert} components:$c{alertBell}
 !ui-bell:alertBell styleClass:$e{jk-topbell} binding:alertCount hint:$m{application.notifications}
+    eventHandler:$d{!ui-event event:onclick action:$c{userNotificationsAct}}
 
 !ui-panel:clockInfoBand styleClass:$e{jk-userinfoband} components:$c{clock}
 !ui-textclock:clock
@@ -42,7 +43,11 @@
 !ui-contentpanel:content styleClass:$e{jk-content} path:$s{/security/landing/openPage} tabbed:true sidebar:$c{shortcutDeck}
 !ui-tilegroup:shortcutDeck columns:1 styleClass:$e{jk-shortcut-deck}
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.SHORTCUTDECK}
-    
+
+// User notifications popup
+!ui-usernotificationspanel:userNotificationsPopup dialogCaption:$m{security.user.notifications}
+    notificationBinding:userNotifications
+        
 // Show user details popup
 !ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}
     imageGenBinding:userPhotoGenerator
@@ -55,4 +60,5 @@
 //Actions 
 !ui-post:logoutAct path:$n{/logOut} confirm:$m{application.logout.confirm}
 !ui-post:switchRoleAct path:$n{/prepareUserRoleOptions}
+!ui-post:userNotificationsAct path:$n{/showUserNotifications}
 !ui-post:userDetailsAct path:$n{/showUserDetails}

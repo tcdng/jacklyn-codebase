@@ -23,6 +23,7 @@ import java.util.Set;
 import com.tcdng.jacklyn.common.business.SystemNotificationProvider;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.data.SystemNotification;
 import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
 import com.tcdng.jacklyn.security.data.UserRoleOptions;
 import com.tcdng.jacklyn.security.entities.UserRole;
@@ -57,6 +58,7 @@ import com.tcdng.unify.web.ui.control.Table;
         @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
         @ResultMapping(
                 name = "showuserroleoptions", response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
+        @ResultMapping(name = "showusernotifications", response = { "!showpopupresponse popup:$s{userNotificationsPopup}" }),
         @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
 public class ApplicationController extends AbstractApplicationForwarderController {
 
@@ -69,14 +71,21 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Configurable("userphoto-generator")
     private ImageGenerator userPhotoGenerator;
 
+    private List<? extends SystemNotification> userNotifications;
+
     private Table selectRoleTableState;
 
     public ApplicationController() {
         super(true, false);
     }
 
+    public List<? extends SystemNotification> getUserNotifications() {
+        return userNotifications;
+    }
+
     public int getAlertCount() throws UnifyException {
-        return systemNotificationProvider.countSystemNotifications(getUserToken().getUserLoginId());
+        UserToken userToken = getUserToken();
+        return systemNotificationProvider.countSystemNotifications(userToken.getUserLoginId());
     }
 
     public ImageGenerator getUserPhotoGenerator() {
@@ -88,6 +97,17 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
         logUserEvent(SecurityModuleAuditConstants.LOGOUT);
         getSecurityService().logout(true);
         return "forwardtohome";
+    }
+
+    @Action
+    public String showUserNotifications() throws UnifyException {
+        UserToken userToken = getUserToken();
+        userNotifications = systemNotificationProvider.findSystemNotifications(userToken.getUserLoginId());
+        if (!userNotifications.isEmpty()) {
+            return "showusernotifications";
+        }
+
+        return noResult();
     }
 
     @Action
