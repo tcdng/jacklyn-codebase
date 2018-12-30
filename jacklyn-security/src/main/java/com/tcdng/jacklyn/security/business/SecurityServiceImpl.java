@@ -34,6 +34,7 @@ import com.tcdng.jacklyn.common.utils.JacklynUtils;
 import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.jacklyn.notification.data.Message;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils;
+import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.jacklyn.security.constants.SecurityModuleErrorConstants;
 import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
@@ -114,6 +115,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Configurable
     private NotificationService notificationService;
+
+    @Configurable
+    private OrganizationService organizationService;
 
     @Configurable
     private WorkflowService workflowService;
@@ -849,8 +853,13 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                             SecurityModuleSysParamConstants.SYSTEMWIDE_MULTILOGIN);
         }
 
+        boolean globalAccess = user.isReserved();
+        if(!globalAccess) {
+            globalAccess = organizationService.getBranchHeadOfficeFlag(user.getBranchId());
+        }
+
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getId(), user.getBranchId(), user.isReserved(), allowMultipleLogin, false);
+                user.getId(), user.getBranchName(), globalAccess, user.isReserved(), allowMultipleLogin, false);
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {

@@ -15,7 +15,7 @@
     binding:userPhotoGenerator
     eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
     
-!ui-panel:topAlert styleClass:$e{jk-topalert} components:$c{alertBell} refreshEvery:30000
+!ui-panel:topAlert styleClass:$e{jk-topalert} components:$c{alertBell} refreshEvery:20000
 !ui-bell:alertBell styleClass:$e{jk-topbell} binding:alertCount hint:$m{application.notifications}
     eventHandler:$d{!ui-event event:onclick action:$c{userNotificationsAct}}
 

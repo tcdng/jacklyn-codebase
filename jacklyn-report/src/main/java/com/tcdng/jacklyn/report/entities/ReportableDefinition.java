@@ -58,16 +58,16 @@ public class ReportableDefinition extends BaseInstallEntity {
     private String processor;
 
     @Column
-    boolean landscape;
+    private boolean landscape;
 
     @Column
-    boolean underlineRows;
+    private boolean underlineRows;
 
     @Column
-    boolean shadeOddRows;
+    private boolean shadeOddRows;
 
     @Column
-    boolean dynamic;
+    private boolean dynamic;
 
     @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
     private String moduleName;

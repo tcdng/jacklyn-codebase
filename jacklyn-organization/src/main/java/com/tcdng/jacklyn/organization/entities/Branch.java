@@ -40,6 +40,9 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
     @Column(name = "BRANCH_DESC", length = 64)
     private String description;
 
+    @Column(name="HEAD_OFFICE_FG")
+    private Boolean headOffice;
+    
     @Override
     public Object getBatchId() {
         return null;
@@ -65,5 +68,13 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getHeadOffice() {
+        return headOffice;
+    }
+
+    public void setHeadOffice(Boolean headOffice) {
+        this.headOffice = headOffice;
     }
 }

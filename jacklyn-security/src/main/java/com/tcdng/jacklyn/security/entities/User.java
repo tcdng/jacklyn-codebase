@@ -83,6 +83,9 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @Column(name = "SUPERVISOR_FG")
     private Boolean supervisor;
 
+    @ListOnly(key = "branchId", property = "name")
+    private String branchName;
+
     @ListOnly(key = "branchId", property = "description")
     private String branchDesc;
 
@@ -201,6 +204,14 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setLastLoginDt(Date lastLoginDt) {
         this.lastLoginDt = lastLoginDt;
+    }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
     public String getBranchDesc() {

@@ -21,6 +21,15 @@
 		</license>
 	</licenses>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 	<developers>
 		<developer>
 			<id>lateefojulari</id>

@@ -279,8 +279,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public List<SystemControlState> findSystemControlStates(SystemParameterQuery query) throws UnifyException {
         List<SystemControlState> systemControlStateList = new ArrayList<SystemControlState>();
         Criteria criteria = query.getCriteria();
-        Query<SystemParameter> innerQuery = query.copyNoCriteria().add(criteria).equals("control", Boolean.TRUE)
-                .order("name");
+        Query<SystemParameter> innerQuery =
+                query.copyNoCriteria().add(criteria).equals("control", Boolean.TRUE).order("name");
         int index = 0;
         List<SystemParameter> list = db().findAll(innerQuery);
         for (SystemParameter sysParameter : list) {
@@ -332,8 +332,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public ScheduledTaskLargeData findScheduledTaskDocument(Long id) throws UnifyException {
         ScheduledTask scheduledTask = db().find(ScheduledTask.class, id);
-        Inputs parameterValues = getParameterService().fetchNormalizedInputs(scheduledTask.getTaskName(),
-                SCHEDULED_TASK, id);
+        Inputs parameterValues =
+                getParameterService().fetchNormalizedInputs(scheduledTask.getTaskName(), SCHEDULED_TASK, id);
         return new ScheduledTaskLargeData(scheduledTask, parameterValues);
     }
 
@@ -348,8 +348,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
         scheduledTask.setUpdated(Boolean.TRUE);
         int updateCount = db().updateByIdVersion(scheduledTask);
-        getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK,
-                scheduledTask.getId(), scheduledTaskFormData.getScheduledTaskParams());
+        getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTask.getId(),
+                scheduledTaskFormData.getScheduledTaskParams());
         return updateCount;
     }
 
@@ -364,8 +364,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public ScheduledTaskLargeData loadScheduledTaskDocumentValues(ScheduledTaskLargeData scheduledTaskFormData)
             throws UnifyException {
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
-        Inputs parameterValues = getParameterService().fetchNormalizedInputs(scheduledTask.getTaskName(),
-                SCHEDULED_TASK, scheduledTask.getId());
+        Inputs parameterValues =
+                getParameterService().fetchNormalizedInputs(scheduledTask.getTaskName(), SCHEDULED_TASK,
+                        scheduledTask.getId());
         return new ScheduledTaskLargeData(scheduledTask, parameterValues);
     }
 
@@ -481,8 +482,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public ClientAppLargeData findClientApp(Long id) throws UnifyException {
         ClientApp clientApp = db().list(ClientApp.class, id);
-        List<Long> clientAppAssetIdList = db().valueList(Long.class, "systemAssetId",
-                new ClientAppAssetQuery().clientAppId(id));
+        List<Long> clientAppAssetIdList =
+                db().valueList(Long.class, "systemAssetId", new ClientAppAssetQuery().clientAppId(id));
         return new ClientAppLargeData(clientApp, clientAppAssetIdList);
     }
 
@@ -520,8 +521,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 throw new UnifyException(SystemModuleErrorConstants.APPLICATION_UNKNOWN, clientAppName);
             }
 
-            ClientAppAsset clientAppAsset = db().list(new ClientAppAssetQuery().clientAppName(clientAppName)
-                    .assetType(systemAssetType).assetName(assetName));
+            ClientAppAsset clientAppAsset =
+                    db().list(new ClientAppAssetQuery().clientAppName(clientAppName).assetType(systemAssetType)
+                            .assetName(assetName));
             if (clientAppAsset == null) {
                 throw new UnifyException(SystemModuleErrorConstants.APPLICATION_NO_SUCH_ASSET, clientAppName,
                         assetName);
@@ -550,8 +552,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         // Create application here
         boolean isAlreadyInstalled = true;
         Long clientAppId = null;
-        ClientApp oldClientApp = db()
-                .list(new ClientAppQuery().name(oSInstallationReqParams.getClientAppCode()).type(ClientAppType.OS));
+        ClientApp oldClientApp =
+                db().list(new ClientAppQuery().name(oSInstallationReqParams.getClientAppCode()).type(ClientAppType.OS));
         if (oldClientApp == null) {
             logDebug("Creating application of type OS...");
             ClientApp clientApp = new ClientApp();
@@ -568,7 +570,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         // Grant OS access to all remote calls.
-        List<Long> systemAssetIdList = findSystemAssetIds(new SystemAssetQuery().type(SystemAssetType.REMOTECALLMETHOD));
+        List<Long> systemAssetIdList =
+                findSystemAssetIds(new SystemAssetQuery().type(SystemAssetType.REMOTECALLMETHOD));
         updateClientAppAssets(clientAppId, systemAssetIdList);
 
         // Return result
@@ -576,8 +579,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         OSInstallationReqResult airResult = new OSInstallationReqResult();
         airResult.setAppName(getApplicationName());
         airResult.setAppName(getApplicationName());
-        String bannerFilename = WebUtils.expandThemeTag(getSysParameterValue(String.class,
-                SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
+        String bannerFilename =
+                WebUtils.expandThemeTag(
+                        getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
         byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
         airResult.setAppIcon(icon);
         airResult.setAlreadyInstalled(isAlreadyInstalled);
@@ -601,7 +605,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             db().create(clientAppAsset);
         }
     }
-
 
     @Override
     public List<ToolingRecordTypeItem> findToolingRecordTypes() throws UnifyException {
@@ -680,20 +683,21 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             workingDt = currentDt;
         }
 
-        long scheduledTaskExpirationAllowance = getSysParameterValue(long.class,
-                SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION);
+        long scheduledTaskExpirationAllowance =
+                getSysParameterValue(long.class,
+                        SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION);
         // Convert to milliseconds
         scheduledTaskExpirationAllowance = scheduledTaskExpirationAllowance * 60 * 1000;
 
-        int maxScheduledTaskTrigger = getSysParameterValue(int.class,
-                SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER);
+        int maxScheduledTaskTrigger =
+                getSysParameterValue(int.class, SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER);
 
         // Fetch new scheduled tasks with start time less or equal current
         // time
         logDebug("Fetching new scheduled tasks...");
         now = CalendarUtils.getTimeOfDay(now);
-        List<ScheduledTask> scheduledTaskList = listNewScheduledTasks(now,
-                new ArrayList<Long>(triggeredTaskInfoMap.keySet()));
+        List<ScheduledTask> scheduledTaskList =
+                listNewScheduledTasks(now, new ArrayList<Long>(triggeredTaskInfoMap.keySet()));
 
         // Schedule tasks that are active only today
         logDebug("[{0}] new scheduled task(s) fetched...", scheduledTaskList.size());
@@ -721,8 +725,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                         TaskMonitor schdTaskMonitor = null;
                         if (scheduledTask.getFrequency() != null && scheduledTask.getFrequencyUnit() != null) {
-                            long periodInMillSec = CalendarUtils.getMilliSecondsByFrequency(
-                                    scheduledTask.getFrequencyUnit(), scheduledTask.getFrequency());
+                            long periodInMillSec =
+                                    CalendarUtils.getMilliSecondsByFrequency(scheduledTask.getFrequencyUnit(),
+                                            scheduledTask.getFrequency());
 
                             int numberOfTimes = 0;
                             if (scheduledTask.getNumberOfTimes() != null) {
@@ -732,10 +737,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                             // Check for expiry
                             boolean isExpired = false;
                             if (scheduledTask.getExpires()) {
-                                long windowToRunMillSec = numberOfTimes * periodInMillSec
-                                        + scheduledTaskExpirationAllowance;
-                                long actualWindowToRunMillSec = windowToRunMillSec
-                                        - (now.getTime() - scheduledTaskTime.getTime());
+                                long windowToRunMillSec =
+                                        numberOfTimes * periodInMillSec + scheduledTaskExpirationAllowance;
+                                long actualWindowToRunMillSec =
+                                        windowToRunMillSec - (now.getTime() - scheduledTaskTime.getTime());
                                 if (actualWindowToRunMillSec > 0) {
                                     // Recalculate number of times to repeat
                                     if (periodInMillSec > 0) {
@@ -753,24 +758,27 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                             if (!isExpired) {
                                 logDebug("Scheduling task [{0}] to run every [{1}ms] with a [{2}ms] delay...",
                                         scheduledTask.getDescription(), periodInMillSec, 0);
-                                schdTaskMonitor = taskManager.scheduleTaskToRunPeriodically(scheduledTask.getTaskName(),
-                                        schdParameters, false, 0, periodInMillSec, numberOfTimes,
-                                        taskStatusLogger.getName());
+                                schdTaskMonitor =
+                                        taskManager.scheduleTaskToRunPeriodically(scheduledTask.getTaskName(),
+                                                schdParameters, false, 0, periodInMillSec, numberOfTimes,
+                                                taskStatusLogger.getName());
                             }
                         } else {
                             // Check for expiry
                             boolean isExpired = false;
                             if (scheduledTask.getExpires()) {
-                                long actualWindowToRunMillSec = scheduledTaskExpirationAllowance
-                                        - (now.getTime() - scheduledTask.getStartTime().getTime());
+                                long actualWindowToRunMillSec =
+                                        scheduledTaskExpirationAllowance
+                                                - (now.getTime() - scheduledTask.getStartTime().getTime());
                                 isExpired = actualWindowToRunMillSec <= 0;
                             }
 
                             if (!isExpired) {
                                 // Schedule one-shot
                                 logDebug("Scheduling task [{0}] to run one time...", scheduledTask.getDescription());
-                                schdTaskMonitor = taskManager.startTask(scheduledTask.getTaskName(), schdParameters,
-                                        false, taskStatusLogger.getName());
+                                schdTaskMonitor =
+                                        taskManager.startTask(scheduledTask.getTaskName(), schdParameters, false,
+                                                taskStatusLogger.getName());
                             }
                         }
 
@@ -832,15 +840,17 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public void loadApplicationMenu(String... params) throws UnifyException {
         logInfo("Loading application menu...");
         List<MenuItemSet> menuItemSetList = new ArrayList<MenuItemSet>();
-        List<ApplicationMenu> applicationMenuList = findMenus((ApplicationMenuQuery) new ApplicationMenuQuery()
-                .orderByDisplayOrder().orderByModuleDesc().status(RecordStatus.ACTIVE));
+        List<ApplicationMenu> applicationMenuList =
+                findMenus((ApplicationMenuQuery) new ApplicationMenuQuery().orderByDisplayOrder().orderByModuleDesc()
+                        .status(RecordStatus.ACTIVE));
         for (ApplicationMenu applicationMenu : applicationMenuList) {
-            List<ApplicationMenuItem> applicationMenuItemList = findMenuItems(
-                    new ApplicationMenuItemQuery().menuId(applicationMenu.getId()).orderByDisplayOrder());
+            List<ApplicationMenuItem> applicationMenuItemList =
+                    findMenuItems(new ApplicationMenuItemQuery().menuId(applicationMenu.getId()).orderByDisplayOrder());
             List<MenuItem> menuItemList = new ArrayList<MenuItem>();
             for (ApplicationMenuItem applicationMenuItem : applicationMenuItemList) {
-                MenuItem menuItem = new MenuItem(applicationMenuItem.getCaption(), applicationMenuItem.getName(),
-                        applicationMenuItem.getPath(), null);
+                MenuItem menuItem =
+                        new MenuItem(applicationMenuItem.getCaption(), applicationMenuItem.getName(),
+                                applicationMenuItem.getPath(), null);
                 menuItemList.add(menuItem);
             }
 
@@ -902,13 +912,13 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         List<Tile> tileList = new ArrayList<Tile>();
         for (ShortcutTile shortcutTile : shortcutTileList) {
             if (shortcutTile.getGenerator() != null) {
-                ShortcutTileGenerator shortcutTileGenerator = (ShortcutTileGenerator) getComponent(
-                        shortcutTile.getGenerator());
+                ShortcutTileGenerator shortcutTileGenerator =
+                        (ShortcutTileGenerator) getComponent(shortcutTile.getGenerator());
                 tileList.add(shortcutTileGenerator.generate(shortcutTile));
             } else {
                 String caption = resolveSessionMessage(shortcutTile.getCaption());
-                tileList.add(new Tile(shortcutTile.getImageSrc(), caption, shortcutTile.getPath(),
-                        null, shortcutTile.isLandscape()));
+                tileList.add(new Tile(shortcutTile.getImageSrc(), caption, shortcutTile.getPath(), null,
+                        shortcutTile.isLandscape()));
             }
         }
         return tileList;
@@ -940,7 +950,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     private UserToken createUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), id, null, true, true, false);
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), id, null, true, true, true,
+                false);
     }
 
     @Override
@@ -999,8 +1010,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         // Register module system parameters and menus
-        Map<String, Module> moduleMap = db().findAllMap(String.class, "name",
-                new ModuleQuery().ignoreEmptyCriteria(true));
+        Map<String, Module> moduleMap =
+                db().findAllMap(String.class, "name", new ModuleQuery().ignoreEmptyCriteria(true));
         DataUtils.sort(moduleConfigList, ModuleConfig.class, "description", true);
         for (ModuleConfig moduleConfig : moduleConfigList) {
             String moduleName = moduleConfig.getName();
@@ -1110,8 +1121,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
                 shortcutTile.setModuleId(moduleId);
-                for (ShortcutTileConfig shortcutTileConfig : moduleConfig.getShortcutTiles()
-                        .getShortcutTileList()) {
+                for (ShortcutTileConfig shortcutTileConfig : moduleConfig.getShortcutTiles().getShortcutTileList()) {
                     dtQuery.clear();
                     ShortcutTile oldShortcutTile = db().find(dtQuery.name(shortcutTileConfig.getName()));
 
@@ -1126,10 +1136,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         shortcutTile.setLandscape(shortcutTileConfig.isLandscape());
                         db().create(shortcutTile);
                     } else {
-                        oldShortcutTile
-                                .setDescription(resolveApplicationMessage(shortcutTileConfig.getDescription()));
-                        oldShortcutTile
-                                .setImageSrc(AnnotationUtils.getAnnotationString(shortcutTileConfig.getImage()));
+                        oldShortcutTile.setDescription(resolveApplicationMessage(shortcutTileConfig.getDescription()));
+                        oldShortcutTile.setImageSrc(AnnotationUtils.getAnnotationString(shortcutTileConfig.getImage()));
                         oldShortcutTile
                                 .setCaption(AnnotationUtils.getAnnotationString(shortcutTileConfig.getCaption()));
                         oldShortcutTile
@@ -1212,8 +1220,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 GatewayAction goa = method.getAnnotation(GatewayAction.class);
                 if (goa != null) {
                     sysAssetQuery.clear();
-                    SystemAsset oldSystemAsset = db()
-                            .find(sysAssetQuery.type(SystemAssetType.REMOTECALLMETHOD).name(goa.name()));
+                    SystemAsset oldSystemAsset =
+                            db().find(sysAssetQuery.type(SystemAssetType.REMOTECALLMETHOD).name(goa.name()));
                     String description = resolveApplicationMessage(goa.description());
                     if (oldSystemAsset == null) {
                         systemAsset.setModuleId(moduleId);

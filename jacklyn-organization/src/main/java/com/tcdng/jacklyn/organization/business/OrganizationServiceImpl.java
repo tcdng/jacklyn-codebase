@@ -62,6 +62,15 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public boolean getBranchHeadOfficeFlag(Long id) throws UnifyException {
+        if (id != null) {
+            return db().value(boolean.class, "headOffice", new BranchQuery().id(id));
+        }
+        
+        return false;
+    }
+
+    @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
 
     }
