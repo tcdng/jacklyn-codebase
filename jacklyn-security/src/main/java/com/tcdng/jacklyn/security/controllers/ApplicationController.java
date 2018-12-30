@@ -59,13 +59,16 @@ import com.tcdng.unify.web.ui.control.Table;
         @ResultMapping(
                 name = "showuserroleoptions", response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
         @ResultMapping(
-                name = "showusernotifications", response = { "!showpopupresponse popup:$s{userNotificationsPopup}" }),
+                name = "showusernotifications",
+                response = { "!refreshpanelresponse panels:$l{topAlert}",
+                        "!showpopupresponse popup:$s{userNotificationsPopup}" }),
         @ResultMapping(
                 name = "resolveusernotification",
-                response = { "!hidepopupresponse", "!postresponse pathBinding:$s{notificationResolutionPath}" }),
+                response = { "!hidepopupresponse",
+                        "!postresponse pathBinding:$s{notificationResolutionPath}" }),
         @ResultMapping(
                 name = "refreshusernotifications",
-                response = { "!refreshpanelresponse panels:$l{userNotificationsPopup}" }),
+                response = { "!refreshpanelresponse panels:$l{topAlert userNotificationsPopup}" }),
         @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
 public class ApplicationController extends AbstractApplicationForwarderController {
 
@@ -83,7 +86,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     private Table selectRoleTableState;
 
     private String notificationResolutionPath;
-    
+
     public ApplicationController() {
         super(true, false);
     }
