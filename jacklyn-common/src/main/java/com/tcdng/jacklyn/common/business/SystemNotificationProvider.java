@@ -52,4 +52,26 @@ public interface SystemNotificationProvider extends UnifyComponent {
      *             if an error occurs
      */
     int countUserSystemNotifications(String userId) throws UnifyException;
+
+    /**
+     * Dismisses all user notifications.
+     * 
+     * @param userId
+     *            the user ID
+     * @return the number of items dismissed
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int dismissUserSystemNotifications(String userId) throws UnifyException;
+
+    /**
+     * Dismisses a user system notification.
+     * 
+     * @param systemNotification
+     *            the notification to dismiss
+     * @return the number of items dismissed
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int dismissUserSystemNotification(SystemNotification systemNotification) throws UnifyException;
 }

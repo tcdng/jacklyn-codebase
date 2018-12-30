@@ -45,9 +45,10 @@
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.SHORTCUTDECK}
 
 // User notifications popup
-!ui-usernotificationspanel:userNotificationsPopup dialogCaption:$m{security.user.notifications}
-    notificationBinding:userNotifications
-        
+!ui-usernotificationspanel:userNotificationsPopup dialogCaption:$m{security.user.notifications} notificationBinding:userNotifications
+    resolvePath:$n{/resolveUserNotification} dismissPath:$n{/dismissUserNotification}
+    dismissAllPath:$n{/dismissUserNotifications} cancelPath:$n{/cancelUserNotifications}
+     
 // Show user details popup
 !ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}
     imageGenBinding:userPhotoGenerator

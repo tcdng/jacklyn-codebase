@@ -42,11 +42,15 @@
 !ui-contentpanel:content styleClass:$e{jk-content} path:$s{/security/landing/openPage} tabbed:true sidebar:$c{shortcutDeck}
 !ui-tilegroup:shortcutDeck columns:1 styleClass:$e{jk-shortcut-deck}
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.SHORTCUTDECK}
+
+// User notifications popup
+!ui-usernotificationspanel:userNotificationsPopup dialogCaption:$m{security.user.notifications} notificationBinding:userNotifications
+    resolvePath:$n{/resolveUserNotification} dismissPath:$n{/dismissUserNotification}
+    dismissAllPath:$n{/dismissUserNotifications} cancelPath:$n{/cancelUserNotifications}
     
 // Show user details popup
 !ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}
     imageGenBinding:userPhotoGenerator
-
 
 //Select user role popup
 !ui-selectrolepanel:userRoleOptionsPopup dialogCaption:$m{security.switch.role}

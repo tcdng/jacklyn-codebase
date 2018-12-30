@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.notification.widgets;
 
 import com.tcdng.jacklyn.common.data.SystemNotification;
 import com.tcdng.unify.core.UnifyException;
@@ -30,14 +30,14 @@ import com.tcdng.unify.web.ui.AbstractPanel;
  * @since 1.0
  */
 @Component("ui-notificationitempanel")
-@UplBinding("web/security/upl/notificationitempanel.upl")
+@UplBinding("web/notification/upl/notificationitempanel.upl")
 public class NotificationItemPanel extends AbstractPanel {
 
     @Override
     public void switchState() throws UnifyException {
         SystemNotification systemNotification = (SystemNotification) getValueStore().getValueObject();
         if (systemNotification != null) {
-            setVisible("nActionLink", !StringUtils.isBlank(systemNotification.getActionLink()));
+            setVisible("nResolveLink", !StringUtils.isBlank(systemNotification.getActionLink()));
         }
     }
 

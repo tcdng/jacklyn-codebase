@@ -60,6 +60,7 @@ import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.constant.OrderType;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.FileAttachment;
 import com.tcdng.unify.core.operation.Update;
@@ -311,13 +312,26 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
     @Override
     public List<? extends SystemNotification> findUserSystemNotifications(String userId) throws UnifyException {
-        return db().listAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ)
-                .order("createDt"));
+        List<NotificationInbox> notificationList =
+                db().listAll(new NotificationInboxQuery().userId(userId).order(OrderType.DESCENDING, "createDt"));
+        db().updateAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ),
+                new Update().add("status", NotificationInboxReadStatus.READ));
+        return notificationList;
     }
 
     @Override
     public int countUserSystemNotifications(String userId) throws UnifyException {
         return db().countAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ));
+    }
+
+    @Override
+    public int dismissUserSystemNotifications(String userId) throws UnifyException {
+        return db().deleteAll(new NotificationInboxQuery().userId(userId));
+    }
+
+    @Override
+    public int dismissUserSystemNotification(SystemNotification systemNotification) throws UnifyException {
+        return db().delete(NotificationInbox.class, systemNotification.getId());
     }
 
     @Override
@@ -329,7 +343,6 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         notificationInbox.setMessageType(messageType);
         notificationInbox.setActionLink(actionLink);
         notificationInbox.setActionTarget(reference);
-        notificationInbox.setStatus(NotificationInboxReadStatus.NOT_READ);
         for (String userId : userIdList) {
             notificationInbox.setUserId(userId);
             db().create(notificationInbox);
