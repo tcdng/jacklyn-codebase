@@ -84,4 +84,15 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteBranch(Long id) throws UnifyException;
+
+    /**
+     * Returns branch head office flag.
+     * 
+     * @param id
+     *            the branch ID
+     * @return the head office flag
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean getBranchHeadOfficeFlag(Long id) throws UnifyException;
 }

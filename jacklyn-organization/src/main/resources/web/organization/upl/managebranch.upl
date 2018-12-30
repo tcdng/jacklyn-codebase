@@ -6,7 +6,7 @@
     searchByList:$c{searchName searchDescription searchStatus}
     searchClearList:$c{searchName searchDescription searchStatus}
     tableColumnList:$c{name description statusDesc}
-    formSection:$d{!ui-section caption:$m{organization.branch.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
+    formSection:$d{!ui-section caption:$m{organization.branch.section.basicdetails} components:$c{frmName frmDescription frmHeadOffice frmStatus}}
     addPrivilege:$s{org-branchadd} editPrivilege:$s{org-branchedit}
     viewPrivilege:$s{org-branchview} deletePrivilege:$s{org-branchdelete}
     addValidations:$c{frmNameVal frmDescVal}
@@ -26,6 +26,7 @@
 //Form components   
 !ui-name:frmName caption:$m{organization.branch.name} binding:name minLen:3 maxLen:32 case:upper required:true focus:true
 !ui-text:frmDescription caption:$m{organization.branch.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-checkbox:frmHeadOffice caption:$m{organization.branch.headoffice} binding:headOffice
 !ui-select:frmStatus caption:$m{organization.branch.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
 //Validations
