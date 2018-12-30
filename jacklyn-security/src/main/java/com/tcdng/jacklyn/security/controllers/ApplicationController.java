@@ -58,7 +58,14 @@ import com.tcdng.unify.web.ui.control.Table;
         @ResultMapping(name = "forwardtohome", response = { "!forwardresponse path:$x{application.web.home}" }),
         @ResultMapping(
                 name = "showuserroleoptions", response = { "!showpopupresponse popup:$s{userRoleOptionsPopup}" }),
-        @ResultMapping(name = "showusernotifications", response = { "!showpopupresponse popup:$s{userNotificationsPopup}" }),
+        @ResultMapping(
+                name = "showusernotifications", response = { "!showpopupresponse popup:$s{userNotificationsPopup}" }),
+        @ResultMapping(
+                name = "resolveusernotification",
+                response = { "!hidepopupresponse", "!postresponse pathBinding:$s{notificationResolutionPath}" }),
+        @ResultMapping(
+                name = "refreshusernotifications",
+                response = { "!refreshpanelresponse panels:$l{userNotificationsPopup}" }),
         @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
 public class ApplicationController extends AbstractApplicationForwarderController {
 
@@ -75,6 +82,8 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
     private Table selectRoleTableState;
 
+    private String notificationResolutionPath;
+    
     public ApplicationController() {
         super(true, false);
     }
@@ -84,12 +93,44 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     }
 
     public int getAlertCount() throws UnifyException {
-        UserToken userToken = getUserToken();
-        return systemNotificationProvider.countSystemNotifications(userToken.getUserLoginId());
+        return systemNotificationProvider.countUserSystemNotifications(getUserToken().getUserLoginId());
     }
 
     public ImageGenerator getUserPhotoGenerator() {
         return userPhotoGenerator;
+    }
+
+    public String getNotificationResolutionPath() {
+        return notificationResolutionPath;
+    }
+
+    @Action
+    public String resolveUserNotification() throws UnifyException {
+        SystemNotification systemNotification = getTargetSystemNotification();
+        systemNotificationProvider.dismissUserSystemNotification(systemNotification);
+        notificationResolutionPath = systemNotification.getActionLink();
+        return "resolveusernotification";
+    }
+
+    @Action
+    public String dismissUserNotification() throws UnifyException {
+        systemNotificationProvider.dismissUserSystemNotification(getTargetSystemNotification());
+        if (fetchUserNotifications()) {
+            return "refreshusernotifications";
+        }
+        return hidePopup();
+    }
+
+    @Action
+    public String dismissUserNotifications() throws UnifyException {
+        systemNotificationProvider.dismissUserSystemNotifications(getUserToken().getUserLoginId());
+        return cancelUserNotifications();
+    }
+
+    @Action
+    public String cancelUserNotifications() throws UnifyException {
+        userNotifications = null;
+        return hidePopup();
     }
 
     @Action
@@ -101,9 +142,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
     @Action
     public String showUserNotifications() throws UnifyException {
-        UserToken userToken = getUserToken();
-        userNotifications = systemNotificationProvider.findSystemNotifications(userToken.getUserLoginId());
-        if (!userNotifications.isEmpty()) {
+        if (fetchUserNotifications()) {
             return "showusernotifications";
         }
 
@@ -166,5 +205,14 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Override
     protected void onSetPage() throws UnifyException {
         selectRoleTableState = getPageWidgetByShortName(Table.class, "userRoleOptionsPopup.roleTablePanel.contentTbl");
+    }
+
+    private boolean fetchUserNotifications() throws UnifyException {
+        userNotifications = systemNotificationProvider.findUserSystemNotifications(getUserToken().getUserLoginId());
+        return !userNotifications.isEmpty();
+    }
+
+    private SystemNotification getTargetSystemNotification() throws UnifyException {
+        return userNotifications.get(getRequestTarget(int.class));
     }
 }

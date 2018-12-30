@@ -60,6 +60,7 @@ import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.constant.OrderType;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.FileAttachment;
 import com.tcdng.unify.core.operation.Update;
@@ -243,12 +244,13 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             String messageBody =
                     StringUtils.buildParameterizedString(notificationTemplateDef.getTokenList(), dictionary);
             List<String> userIdList = new ArrayList<String>();
-            for(Message.Recipient recipient: message.getRecipients()) {
+            for (Message.Recipient recipient : message.getRecipients()) {
                 userIdList.add(recipient.getName());
             }
-            
-            createSystemNotifications(notificationTemplateDef.getMessageType(), notificationTemplateDef.getSubject(),
-                    messageBody, notificationTemplateDef.getActionLink(), message.getReference(), userIdList);
+
+            createUserSystemNotifications(notificationTemplateDef.getMessageType(),
+                    notificationTemplateDef.getSubject(), messageBody, notificationTemplateDef.getActionLink(),
+                    message.getReference(), userIdList);
         } else {
             // Put notification in external communication system
             Notification notification = new Notification();
@@ -309,25 +311,38 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
-    public List<? extends SystemNotification> findSystemNotifications(String userId) throws UnifyException {
-        return db().listAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ));
+    public List<? extends SystemNotification> findUserSystemNotifications(String userId) throws UnifyException {
+        List<NotificationInbox> notificationList =
+                db().listAll(new NotificationInboxQuery().userId(userId).order(OrderType.DESCENDING, "createDt"));
+        db().updateAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ),
+                new Update().add("status", NotificationInboxReadStatus.READ));
+        return notificationList;
     }
 
     @Override
-    public int countSystemNotifications(String userId) throws UnifyException {
+    public int countUserSystemNotifications(String userId) throws UnifyException {
         return db().countAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ));
     }
 
     @Override
-    public void createSystemNotifications(MessageType messageType, String subject, String message, String actionLink,
-            String reference, List<String> userIdList) throws UnifyException {
+    public int dismissUserSystemNotifications(String userId) throws UnifyException {
+        return db().deleteAll(new NotificationInboxQuery().userId(userId));
+    }
+
+    @Override
+    public int dismissUserSystemNotification(SystemNotification systemNotification) throws UnifyException {
+        return db().delete(NotificationInbox.class, systemNotification.getId());
+    }
+
+    @Override
+    public void createUserSystemNotifications(MessageType messageType, String subject, String message,
+            String actionLink, String reference, List<String> userIdList) throws UnifyException {
         NotificationInbox notificationInbox = new NotificationInbox();
         notificationInbox.setSubject(subject);
         notificationInbox.setMessage(message);
         notificationInbox.setMessageType(messageType);
         notificationInbox.setActionLink(actionLink);
         notificationInbox.setActionTarget(reference);
-        notificationInbox.setStatus(NotificationInboxReadStatus.NOT_READ);
         for (String userId : userIdList) {
             notificationInbox.setUserId(userId);
             db().create(notificationInbox);

@@ -15,7 +15,7 @@
     binding:userPhotoGenerator
     eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
     
-!ui-panel:topAlert styleClass:$e{jk-topalert} components:$c{alertBell}
+!ui-panel:topAlert styleClass:$e{jk-topalert} components:$c{alertBell} refreshEvery:30000
 !ui-bell:alertBell styleClass:$e{jk-topbell} binding:alertCount hint:$m{application.notifications}
     eventHandler:$d{!ui-event event:onclick action:$c{userNotificationsAct}}
 
@@ -45,9 +45,10 @@
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.SHORTCUTDECK}
 
 // User notifications popup
-!ui-usernotificationspanel:userNotificationsPopup dialogCaption:$m{security.user.notifications}
-    notificationBinding:userNotifications
-        
+!ui-usernotificationspanel:userNotificationsPopup dialogCaption:$m{security.user.notifications} notificationBinding:userNotifications
+    resolvePath:$n{/resolveUserNotification} dismissPath:$n{/dismissUserNotification}
+    dismissAllPath:$n{/dismissUserNotifications} cancelPath:$n{/cancelUserNotifications}
+     
 // Show user details popup
 !ui-userdetailspanel:userDetailsPopup dialogCaption:$m{security.user.details}
     imageGenBinding:userPhotoGenerator

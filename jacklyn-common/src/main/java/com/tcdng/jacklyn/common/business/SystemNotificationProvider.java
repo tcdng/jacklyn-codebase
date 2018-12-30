@@ -39,7 +39,7 @@ public interface SystemNotificationProvider extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    List<? extends SystemNotification> findSystemNotifications(String userId) throws UnifyException;
+    List<? extends SystemNotification> findUserSystemNotifications(String userId) throws UnifyException;
 
     /**
      * Counts unread system notifications for a particular user.
@@ -48,7 +48,30 @@ public interface SystemNotificationProvider extends UnifyComponent {
      *            the user ID
      * @param userId
      * @return the number of unread items
-     * @throws UnifyException if an error occurs
+     * @throws UnifyException
+     *             if an error occurs
      */
-    int countSystemNotifications(String userId) throws UnifyException;
+    int countUserSystemNotifications(String userId) throws UnifyException;
+
+    /**
+     * Dismisses all user notifications.
+     * 
+     * @param userId
+     *            the user ID
+     * @return the number of items dismissed
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int dismissUserSystemNotifications(String userId) throws UnifyException;
+
+    /**
+     * Dismisses a user system notification.
+     * 
+     * @param systemNotification
+     *            the notification to dismiss
+     * @return the number of items dismissed
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int dismissUserSystemNotification(SystemNotification systemNotification) throws UnifyException;
 }

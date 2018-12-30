@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.notification.widgets;
 
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -26,7 +26,7 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
  * @since 1.0
  */
 @Component("ui-usernotificationspanel")
-@UplBinding("web/security/upl/usernotificationspanel.upl")
+@UplBinding("web/notification/upl/usernotificationspanel.upl")
 public class UserNotificationsPanel extends AbstractDialogPanel {
 
 }

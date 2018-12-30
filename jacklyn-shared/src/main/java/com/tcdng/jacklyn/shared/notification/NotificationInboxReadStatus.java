@@ -21,13 +21,13 @@ import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
 /**
- * Notification inbox read status constants.
+ * Notification inbox status constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @StaticList("notificationinboxreadlist")
-public enum NotificationInboxReadStatus implements EnumConst {
+public enum NotificationInboxReadStatus implements EnumConst  {
 
     NOT_READ("N"), READ("R");
 
@@ -42,11 +42,11 @@ public enum NotificationInboxReadStatus implements EnumConst {
         return this.code;
     }
 
-    public static NotificationInboxReadStatus fromCode(String code) {
-        return EnumUtils.fromCode(NotificationInboxReadStatus.class, code);
+    public static NotificationStatus fromCode(String code) {
+        return EnumUtils.fromCode(NotificationStatus.class, code);
     }
 
-    public static NotificationInboxReadStatus fromName(String name) {
-        return EnumUtils.fromName(NotificationInboxReadStatus.class, name);
+    public static NotificationStatus fromName(String name) {
+        return EnumUtils.fromName(NotificationStatus.class, name);
     }
 }
