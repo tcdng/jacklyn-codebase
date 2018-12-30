@@ -34,7 +34,7 @@
 		<module>jacklyn-system</module>
 		<module>jacklyn-organization</module>
 		<module>jacklyn-file</module>
-		
+
 		<module>jacklyn-notification</module>
 		<module>jacklyn-archiving</module>
 		<module>jacklyn-workflow</module>
@@ -98,6 +98,55 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.github.wvengen</groupId>
+					<artifactId>proguard-maven-plugin</artifactId>
+					<version>2.0.8</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>proguard</goal>
+							</goals>
+							<configuration>
+								<injar>${project.build.finalName}.jar</injar>
+								<!--outjar>${project.build.finalName}-RELEASE.jar</outjar-->
+								<proguardVersion>5.2</proguardVersion>
+								<options>
+									<option>-dontoptimize</option>
+									<option>-dontshrink</option>
+									<option>-dontnote</option>
+									<option>-dontwarn</option>
+									<option>-keep
+										class com.tcdng.** {
+										public protected private <![CDATA[<fields>]]>;
+										public protected <![CDATA[<methods>]]>;
+										}
+									</option>
+									<option>-keep enum com.tcdng.**</option>
+									<option>-keep interface com.tcdng.**</option>
+									<option>-keepattributes
+										Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod</option>
+								</options>
+								<libs>
+									<lib>${java.home}/lib/rt.jar</lib>
+								</libs>
+								<dependencies>
+									<dependency>
+										<groupId>net.sf.proguard</groupId>
+										<artifactId>proguard-base</artifactId>
+										<version>5.2</version>
+										<scope>runtime</scope>
+									</dependency>
+								</dependencies>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencies>
