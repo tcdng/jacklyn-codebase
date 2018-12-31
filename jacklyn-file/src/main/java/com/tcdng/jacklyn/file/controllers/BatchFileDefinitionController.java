@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.file.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
@@ -23,6 +24,7 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinitionQuery;
+import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -98,7 +100,9 @@ public class BatchFileDefinitionController extends AbstractFileRecordController<
 
     @Override
     protected BatchFileDefinition prepareCreate() throws UnifyException {
-        return new BatchFileDefinition();
+        BatchFileDefinition batchFileDefinition = new BatchFileDefinition();
+        batchFileDefinition.setFieldDefList(new ArrayList<BatchFileFieldDefinition>());
+        return batchFileDefinition;
     }
 
     @Override

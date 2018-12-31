@@ -45,9 +45,9 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
 
     private RecordStatus searchStatus;
 
-    private BatchFileReadConfigLargeData formBean;
+    private BatchFileReadConfigLargeData largeData;
 
-    private BatchFileReadConfigLargeData clipboardFormBean;
+    private BatchFileReadConfigLargeData clipboardLargeData;
 
     public BatchFileReadConfigController() {
         super(BatchFileReadConfig.class, "file.batchfilereadconfig.hint",
@@ -58,7 +58,7 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
     @Action
     @Override
     public String copyRecord() throws UnifyException {
-        clipboardFormBean = ReflectUtils.shallowBeanCopy(formBean);
+        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
         return super.copyRecord();
     }
 
@@ -92,12 +92,12 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
         this.searchStatus = searchStatus;
     }
 
-    public BatchFileReadConfigLargeData getFormBean() {
-        return formBean;
+    public BatchFileReadConfigLargeData getLargeData() {
+        return largeData;
     }
 
-    public void setFormBean(BatchFileReadConfigLargeData formBean) {
-        this.formBean = formBean;
+    public void setLargeData(BatchFileReadConfigLargeData largeData) {
+        this.largeData = largeData;
     }
 
     @Override
@@ -118,24 +118,24 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
 
     @Override
     protected BatchFileReadConfig find(Long id) throws UnifyException {
-        formBean = getFileService().findBatchFileReadConfigDocument(id);
-        return formBean.getData();
+        largeData = getFileService().findBatchFileReadConfigDocument(id);
+        return largeData.getData();
     }
 
     @Override
     protected BatchFileReadConfig prepareCreate() throws UnifyException {
-        formBean = new BatchFileReadConfigLargeData();
-        return formBean.getData();
+        largeData = new BatchFileReadConfigLargeData();
+        return largeData.getData();
     }
 
     @Override
     protected Object create(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileService().createBatchFileReadConfig(formBean);
+        return getFileService().createBatchFileReadConfig(largeData);
     }
 
     @Override
     protected int update(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileService().updateBatchFileReadConfig(formBean);
+        return getFileService().updateBatchFileReadConfig(largeData);
     }
 
     @Override
@@ -146,16 +146,15 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
     @Override
     protected void onPrepareView(BatchFileReadConfig batchUploadConfig, boolean onPaste) throws UnifyException {
         if (onPaste) {
-            formBean.setFileReaderParams(clipboardFormBean.getFileReaderParams());
-            ;
+            largeData.setFileReaderParams(clipboardLargeData.getFileReaderParams());
         } else {
-            formBean = getFileService().loadBatchFileReadConfigDocumentValues(formBean);
+            largeData = getFileService().loadBatchFileReadConfigDocumentValues(largeData);
         }
     }
 
     @Override
     protected void onLoseView(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        formBean = new BatchFileReadConfigLargeData();
-        clipboardFormBean = null;
+        largeData = new BatchFileReadConfigLargeData();
+        clipboardLargeData = null;
     }
 }

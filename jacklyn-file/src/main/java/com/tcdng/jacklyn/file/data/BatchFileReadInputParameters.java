@@ -45,7 +45,7 @@ public class BatchFileReadInputParameters {
     }
 
     public <T> void setParameter(String name, Object value) throws UnifyException {
-        if (this.inputParameterList != null) {
+        if (inputParameterList != null) {
             for (Input parameter : inputParameterList) {
                 if (name.equals(parameter.getName())) {
                     parameter.setTypeValue(value);
