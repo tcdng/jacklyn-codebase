@@ -13,28 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.lists;
 
+package com.tcdng.jacklyn.organization.controllers;
+
+import com.tcdng.jacklyn.common.controllers.BasePageController;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
+import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
- * Abstract base class for organization module list commands.
+ * Abstract base page controller for organization module.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationListCommand<T> extends AbstractListCommand<T> {
+public abstract class AbstractOrganizationController extends BasePageController {
 
     @Configurable
     private OrganizationService organizationService;
 
-    public AbstractOrganizationListCommand(Class<T> paramType) {
-        super(paramType);
+    public AbstractOrganizationController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
     }
 
-    protected OrganizationService getOrganizationService() {
+    protected OrganizationService getOrganizationService() throws UnifyException {
         return organizationService;
     }
 

@@ -34,7 +34,7 @@ import com.tcdng.jacklyn.common.constants.JacklynModuleStaticSettings;
 import com.tcdng.jacklyn.common.constants.JacklynPropertyConstants;
 import com.tcdng.jacklyn.common.utils.JacklynUtils;
 import com.tcdng.jacklyn.shared.archiving.ArchivingFieldType;
-import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
+import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ArchiveConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ArchivesConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.AuditConfig;

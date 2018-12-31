@@ -13,29 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.lists;
+package com.tcdng.jacklyn.organization.entities;
 
-import com.tcdng.jacklyn.organization.business.OrganizationService;
-import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.AbstractListCommand;
+import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
 
 /**
- * Abstract base class for organization module list commands.
+ * Privilege category query.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationListCommand<T> extends AbstractListCommand<T> {
+public class PrivilegeCategoryQuery extends BaseInstallEntityQuery<PrivilegeCategory> {
 
-    @Configurable
-    private OrganizationService organizationService;
-
-    public AbstractOrganizationListCommand(Class<T> paramType) {
-        super(paramType);
+    public PrivilegeCategoryQuery() {
+        super(PrivilegeCategory.class);
     }
 
-    protected OrganizationService getOrganizationService() {
-        return organizationService;
+    public PrivilegeCategoryQuery name(String name) {
+        return (PrivilegeCategoryQuery) equals("name", name);
     }
-
 }

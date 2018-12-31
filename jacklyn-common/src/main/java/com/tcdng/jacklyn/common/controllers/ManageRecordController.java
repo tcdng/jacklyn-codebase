@@ -26,7 +26,7 @@ import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.common.utils.PageControllerSessionUtils;
-import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
+import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.unify.core.UnifyContainer;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.core.UnifyException;

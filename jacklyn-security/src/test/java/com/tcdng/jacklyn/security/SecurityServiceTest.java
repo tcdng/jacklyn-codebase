@@ -22,28 +22,24 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.tcdng.jacklyn.common.AbstractJacklynTest;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.organization.business.OrganizationService;
+import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
+import com.tcdng.jacklyn.organization.entities.Role;
+import com.tcdng.jacklyn.organization.entities.RolePrivilege;
+import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidget;
 import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.constants.SecurityModuleErrorConstants;
 import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
-import com.tcdng.jacklyn.security.data.RoleLargeData;
 import com.tcdng.jacklyn.security.data.UserLargeData;
 import com.tcdng.jacklyn.security.entities.Biometric;
 import com.tcdng.jacklyn.security.entities.PasswordHistory;
-import com.tcdng.jacklyn.security.entities.Privilege;
-import com.tcdng.jacklyn.security.entities.PrivilegeQuery;
-import com.tcdng.jacklyn.security.entities.Role;
-import com.tcdng.jacklyn.security.entities.RolePrivilege;
-import com.tcdng.jacklyn.security.entities.RolePrivilegeQuery;
-import com.tcdng.jacklyn.security.entities.RolePrivilegeWidget;
-import com.tcdng.jacklyn.security.entities.RoleQuery;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserBiometric;
 import com.tcdng.jacklyn.security.entities.UserQuery;
@@ -64,149 +60,6 @@ import com.tcdng.unify.core.operation.Update;
 public class SecurityServiceTest extends AbstractJacklynTest {
 
     @Test
-    public void testCreateRole() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        Role role = getRole("sec-001", "Supervisor");
-        Long roleId = securityService.createRole(role);
-        assertNotNull(roleId);
-    }
-
-    @Test
-    public void testFindRole() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        Role role = getRole("sec-001", "Supervisor");
-        Long roleId = securityService.createRole(role);
-
-        Role fetchedRole = securityService.findRole(roleId);
-        assertNotNull(fetchedRole);
-        assertEquals(role.getName(), fetchedRole.getName());
-        assertEquals(role.getDescription(), fetchedRole.getDescription());
-    }
-
-    @Test
-    public void testFindRoles() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        Role role = getRole("sec-001", "Supervisor");
-        securityService.createRole(role);
-
-        RoleQuery query = new RoleQuery();
-        query.ignoreEmptyCriteria(true);
-        query.orderById();
-        List<Role> roleList = securityService.findRoles(query);
-        assertNotNull(roleList);
-        assertEquals(1, roleList.size());
-        assertEquals(role.getName(), roleList.get(0).getName());
-        assertEquals(role.getDescription(), roleList.get(0).getDescription());
-
-        role = getRole("sec-002", "Adminstrator");
-        securityService.createRole(role);
-        roleList = securityService.findRoles(query);
-        assertNotNull(roleList);
-        assertEquals(2, roleList.size());
-        assertEquals(role.getName(), roleList.get(1).getName());
-        assertEquals(role.getDescription(), roleList.get(1).getDescription());
-    }
-
-    @Test
-    public void testUpdateRole() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        Role role = getRole("sec-001", "Supervisor");
-        Long roleId = securityService.createRole(role);
-
-        Role fetchedRole = securityService.findRole(roleId);
-        fetchedRole.setDescription("Supervisor (Advanced)");
-        int count = securityService.updateRole(fetchedRole);
-        assertEquals(1, count);
-
-        Role updatedRole = securityService.findRole(roleId);
-        assertEquals(fetchedRole, updatedRole);
-        assertFalse(role.equals(updatedRole));
-    }
-
-    @Test
-    public void testDeleteRole() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        Role role = getRole("sec-001", "Supervisor");
-        Long roleId = securityService.createRole(role);
-
-        int count = securityService.deleteRole(roleId);
-        assertEquals(1, count);
-    }
-
-    @Test
-    public void testUpdateRolePrivileges() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        SystemService systemService = (SystemService) this.getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
-        Long moduleId = systemService.findModule("customer").getId();
-        List<Long> privilegeIdList = securityService
-                .findPrivilegeIds((PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
-        RoleLargeData roleDoc = new RoleLargeData(getRole("sec-001", "Supervisor"));
-        roleDoc.setPrivilegeIdList(privilegeIdList);
-        Long roleId = securityService.createRole(roleDoc);
-        securityService.updateRolePrivileges(roleId, privilegeIdList);
-    }
-
-    @Test
-    public void testFindRolePrivileges() throws Exception {
-        SecurityService securityService = (SecurityService) this
-                .getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        SystemService systemService = (SystemService) this.getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
-        Long moduleId = systemService.findModule(SystemModuleNameConstants.SYSTEM_MODULE).getId();
-        List<Long> privilegeIdList = securityService
-                .findPrivilegeIds((PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
-        RoleLargeData roleDoc = new RoleLargeData(getRole("sec-001", "Supervisor"));
-        roleDoc.setPrivilegeIdList(privilegeIdList);
-        securityService.createRole(roleDoc);
-
-        List<Long> fetchedModuleActivityIdList = securityService
-                .findPrivilegeIds(new RolePrivilegeQuery().moduleId(moduleId).roleName("sec-001"));
-
-        Collections.sort(privilegeIdList);
-        Collections.sort(fetchedModuleActivityIdList);
-        assertTrue(privilegeIdList.equals(fetchedModuleActivityIdList));
-    }
-
-    @Test
-    public void testFindModulePrivileges() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        PrivilegeQuery query = new PrivilegeQuery();
-        query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
-        query.orderById();
-        List<Privilege> privilegeList = securityService.findPrivileges(query);
-        assertNotNull(privilegeList);
-        assertFalse(privilegeList.isEmpty());
-    }
-
-    @Test
-    public void testFindModulePrivilegeIds() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        PrivilegeQuery query = new PrivilegeQuery();
-        query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
-        query.orderById();
-        List<Privilege> privilegeList = securityService.findPrivileges(query);
-        List<Long> privilegeIdList = securityService.findPrivilegeIds(query);
-        assertNotNull(privilegeIdList);
-        assertFalse(privilegeIdList.isEmpty());
-        assertEquals(privilegeList.size(), privilegeIdList.size());
-        assertEquals(privilegeList.get(0).getId(), privilegeIdList.get(0));
-        assertEquals(privilegeList.get(1).getId(), privilegeIdList.get(1));
-    }
-
-    @Test
-    public void testSetPrivilegeStatus() throws Exception {
-        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
-        PrivilegeQuery query = new PrivilegeQuery();
-        query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
-        query.orderById();
-        List<Long> privilegeIdList = securityService.findPrivilegeIds(query);
-        List<Long> sampleIds = new ArrayList<Long>();
-        sampleIds.add(privilegeIdList.get(1));
-        sampleIds.add(privilegeIdList.get(2));
-        int count = securityService.setPrivilegeStatuses(sampleIds, RecordStatus.INACTIVE);
-        assertEquals(2, count);
-    }
-
-    @Test
     public void testCreateUser() throws Exception {
         User user = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 
@@ -225,12 +78,14 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testCreateUserWithPhotoAndRoles() throws Exception {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
 
         User user = new User(0L, "Joe Moe", "JOEMOE", "joe.moe@thecodedepartment.com.ng", false);
         byte[] photograph = { (byte) 0x89, (byte) 0x4E, (byte) 0xBD };
         List<Long> roleIdList = new ArrayList<Long>();
-        roleIdList.add(securityService.createRole(getRole("sec-001", "Supervisor")));
-        roleIdList.add(securityService.createRole(getRole("sec-002", "Adminstrator")));
+        roleIdList.add(organizationService.createRole(getRole("sec-001", "Supervisor")));
+        roleIdList.add(organizationService.createRole(getRole("sec-002", "Adminstrator")));
 
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setPhotograph(photograph);
@@ -264,11 +119,13 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testFindUserRoleIds() throws Exception {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
 
         User user = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         List<Long> roleIdList = new ArrayList<Long>();
-        roleIdList.add(securityService.createRole(getRole("sec-001", "Supervisor")));
-        roleIdList.add(securityService.createRole(getRole("sec-002", "Adminstrator")));
+        roleIdList.add(organizationService.createRole(getRole("sec-001", "Supervisor")));
+        roleIdList.add(organizationService.createRole(getRole("sec-002", "Adminstrator")));
 
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setRoleIdList(roleIdList);
@@ -281,11 +138,13 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testFindUserRoles() throws Exception {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
 
         User user = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         List<Long> roleIdList = new ArrayList<Long>();
-        roleIdList.add(securityService.createRole(getRole("sec-001", "Supervisor")));
-        roleIdList.add(securityService.createRole(getRole("sec-002", "Adminstrator")));
+        roleIdList.add(organizationService.createRole(getRole("sec-001", "Supervisor")));
+        roleIdList.add(organizationService.createRole(getRole("sec-002", "Adminstrator")));
 
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setRoleIdList(roleIdList);
@@ -388,12 +247,14 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testUpdateUserRoles() throws Exception {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
 
         User user = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         List<Long> roleIdList1 = new ArrayList<Long>();
         List<Long> roleIdList2 = new ArrayList<Long>();
-        roleIdList1.add(securityService.createRole(getRole("sec-001", "Supervisor")));
-        roleIdList1.add(securityService.createRole(getRole("sec-002", "Adminstrator")));
+        roleIdList1.add(organizationService.createRole(getRole("sec-001", "Supervisor")));
+        roleIdList1.add(organizationService.createRole(getRole("sec-002", "Adminstrator")));
 
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setRoleIdList(roleIdList1);
@@ -502,8 +363,8 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testUserLogout() throws Exception {
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
-        SecurityService securityService = (SecurityService) this
-                .getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        SecurityService securityService =
+                (SecurityService) this.getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
 
         securityService.login("joemoe", "joemoe");
@@ -530,8 +391,8 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testChangeUserPasswordInvalidOldPassword() throws Exception {
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
-        SecurityService securityService = (SecurityService) this
-                .getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        SecurityService securityService =
+                (SecurityService) this.getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
         securityService.login("joemoe", "joemoe");
 
@@ -719,8 +580,10 @@ public class SecurityServiceTest extends AbstractJacklynTest {
     @Test
     public void testSetCurrentUserRole() throws Exception {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         List<Long> roleIdList = new ArrayList<Long>();
-        roleIdList.add(securityService.createRole(getRole("sec-001", "Supervisor")));
+        roleIdList.add(organizationService.createRole(getRole("sec-001", "Supervisor")));
         User user = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 
         UserLargeData userDoc = new UserLargeData(user);
