@@ -13,29 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.lists;
+package com.tcdng.jacklyn.security.business;
 
-import com.tcdng.jacklyn.organization.business.OrganizationService;
-import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.AbstractListCommand;
+import com.tcdng.jacklyn.security.entities.User;
+import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.list.AbstractDBSearchProvider;
 
 /**
- * Abstract base class for organization module list commands.
+ * Users by name search provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationListCommand<T> extends AbstractListCommand<T> {
+@Component("userbyname-searchprovider")
+public class UserByNameSearchProvider extends AbstractDBSearchProvider {
 
-    @Configurable
-    private OrganizationService organizationService;
-
-    public AbstractOrganizationListCommand(Class<T> paramType) {
-        super(paramType);
-    }
-
-    protected OrganizationService getOrganizationService() {
-        return organizationService;
+    public UserByNameSearchProvider() {
+        super(User.class, "loginId", "fullName");
     }
 
 }

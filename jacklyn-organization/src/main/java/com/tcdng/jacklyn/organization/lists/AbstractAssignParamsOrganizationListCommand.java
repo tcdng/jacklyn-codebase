@@ -13,29 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.organization.lists;
 
-import com.tcdng.jacklyn.organization.business.OrganizationService;
-import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.AbstractListCommand;
+import com.tcdng.unify.web.data.AssignParams;
 
 /**
- * Abstract base class for organization module list commands.
+ * Abstract base class for organization module assignment list commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationListCommand<T> extends AbstractListCommand<T> {
+public abstract class AbstractAssignParamsOrganizationListCommand
+        extends AbstractOrganizationListCommand<AssignParams> {
 
-    @Configurable
-    private OrganizationService organizationService;
-
-    public AbstractOrganizationListCommand(Class<T> paramType) {
-        super(paramType);
-    }
-
-    protected OrganizationService getOrganizationService() {
-        return organizationService;
+    public AbstractAssignParamsOrganizationListCommand() {
+        super(AssignParams.class);
     }
 
 }

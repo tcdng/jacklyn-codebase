@@ -21,7 +21,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
+import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 
 /**
  * Privilege group configuration.

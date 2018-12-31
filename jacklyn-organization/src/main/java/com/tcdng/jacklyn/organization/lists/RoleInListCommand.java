@@ -15,28 +15,36 @@
  */
 package com.tcdng.jacklyn.organization.lists;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import com.tcdng.jacklyn.organization.entities.BranchQuery;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.organization.entities.RoleQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.data.Listable;
-import com.tcdng.unify.core.list.ZeroParams;
+import com.tcdng.unify.web.data.AssignParams;
 
 /**
- * Branch list command.
+ * List command for roles that have IDs in a specified ID list. Expects a
+ * parameter - the list of role IDs.
  * 
- * @author Lateef
+ * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Branch List")
-@Component("branchlist")
-public class BranchListCommand extends AbstractZeroParamsOrganizationListCommand {
+@Component("roleinlist")
+public class RoleInListCommand extends AbstractAssignParamsOrganizationListCommand {
 
     @Override
-    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getOrganizationService().findBranches((BranchQuery) new BranchQuery().ignoreEmptyCriteria(true));
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        if (params.isAssignedIdList()) {
+            RoleQuery query = new RoleQuery();
+            query.idIn(params.getAssignedIdList(Long.class));
+            query.status(RecordStatus.ACTIVE).order("description");
+            return getOrganizationService().findRoles(query);
+        }
+
+        return Collections.emptyList();
     }
 }

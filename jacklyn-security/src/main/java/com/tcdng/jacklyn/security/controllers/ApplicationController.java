@@ -28,7 +28,7 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
 import com.tcdng.jacklyn.security.data.UserRoleOptions;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
-import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
+import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.unify.core.UnifyException;
