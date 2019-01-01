@@ -31,6 +31,8 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.jacklyn.organization.data.RoleLargeData;
+import com.tcdng.jacklyn.organization.entities.Branch;
+import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeQuery;
 import com.tcdng.jacklyn.organization.entities.Role;
@@ -49,9 +51,12 @@ import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
  */
 public class OrganizationServiceTest extends AbstractJacklynTest {
 
+    private Long departmentId;
+    
     @Test
     public void testCreateRole() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         Role role = getRole("org-001", "Supervisor");
         Long roleId = organizationService.createRole(role);
         assertNotNull(roleId);
@@ -59,7 +64,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testFindRole() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         Role role = getRole("org-001", "Supervisor");
         Long roleId = organizationService.createRole(role);
 
@@ -71,7 +77,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testFindRoles() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         Role role = getRole("org-001", "Supervisor");
         organizationService.createRole(role);
 
@@ -95,7 +102,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testUpdateRole() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         Role role = getRole("org-001", "Supervisor");
         Long roleId = organizationService.createRole(role);
 
@@ -111,7 +119,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testDeleteRole() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         Role role = getRole("org-001", "Supervisor");
         Long roleId = organizationService.createRole(role);
 
@@ -121,11 +130,13 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testUpdateRolePrivileges() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         SystemService systemService = (SystemService) this.getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
         Long moduleId = systemService.findModule("customer").getId();
-        List<Long> privilegeIdList = organizationService
-                .findPrivilegeIds((PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
+        List<Long> privilegeIdList =
+                organizationService
+                        .findPrivilegeIds((PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
         RoleLargeData roleDoc = new RoleLargeData(getRole("org-001", "Supervisor"));
         roleDoc.setPrivilegeIdList(privilegeIdList);
         Long roleId = organizationService.createRole(roleDoc);
@@ -134,18 +145,19 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testFindRolePrivileges() throws Exception {
-        OrganizationService organizationService = (OrganizationService) this
-                .getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) this.getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         SystemService systemService = (SystemService) this.getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
         Long moduleId = systemService.findModule(SystemModuleNameConstants.SYSTEM_MODULE).getId();
-        List<Long> privilegeIdList = organizationService
-                .findPrivilegeIds((PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
+        List<Long> privilegeIdList =
+                organizationService
+                        .findPrivilegeIds((PrivilegeQuery) new PrivilegeQuery().moduleId(moduleId).orderById());
         RoleLargeData roleDoc = new RoleLargeData(getRole("org-001", "Supervisor"));
         roleDoc.setPrivilegeIdList(privilegeIdList);
         organizationService.createRole(roleDoc);
 
-        List<Long> fetchedModuleActivityIdList = organizationService
-                .findPrivilegeIds(new RolePrivilegeQuery().moduleId(moduleId).roleName("org-001"));
+        List<Long> fetchedModuleActivityIdList =
+                organizationService.findPrivilegeIds(new RolePrivilegeQuery().moduleId(moduleId).roleName("org-001"));
 
         Collections.sort(privilegeIdList);
         Collections.sort(fetchedModuleActivityIdList);
@@ -154,7 +166,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testFindModulePrivileges() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         PrivilegeQuery query = new PrivilegeQuery();
         query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
         query.orderById();
@@ -165,7 +178,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testFindModulePrivilegeIds() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         PrivilegeQuery query = new PrivilegeQuery();
         query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
         query.orderById();
@@ -180,7 +194,8 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testSetPrivilegeStatus() throws Exception {
-        OrganizationService organizationService = (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
+        OrganizationService organizationService =
+                (OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE);
         PrivilegeQuery query = new PrivilegeQuery();
         query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
         query.orderById();
@@ -194,17 +209,26 @@ public class OrganizationServiceTest extends AbstractJacklynTest {
 
     @Override
     protected void onSetup() throws Exception {
-
+        departmentId = createTestDepartment();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onTearDown() throws Exception {
-        deleteAll(RolePrivilegeWidget.class, RolePrivilege.class, Role.class);
+        deleteAll(RolePrivilegeWidget.class, RolePrivilege.class, Role.class, Department.class, Branch.class);
     }
 
-    private Role getRole(String name, String description) {
+    private Long createTestDepartment() throws Exception {
+        Department department = new Department();
+        department.setName("testDepartment");
+        department.setDescription("Test Department");
+        return ((OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE))
+                .createDepartment(department);
+    }
+
+    private Role getRole(String name, String description) throws Exception {
         Role role = new Role();
+        role.setDepartmentId(departmentId);
         role.setName(name);
         role.setDescription(description);
         role.setStatus(RecordStatus.ACTIVE);

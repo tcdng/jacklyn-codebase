@@ -30,6 +30,8 @@ import com.tcdng.jacklyn.common.AbstractJacklynTest;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
+import com.tcdng.jacklyn.organization.entities.Branch;
+import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.Role;
 import com.tcdng.jacklyn.organization.entities.RolePrivilege;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidget;
@@ -58,6 +60,8 @@ import com.tcdng.unify.core.operation.Update;
  * @since 1.0
  */
 public class SecurityServiceTest extends AbstractJacklynTest {
+
+    private Long departmentId;
 
     @Test
     public void testCreateUser() throws Exception {
@@ -600,18 +604,27 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
     @Override
     protected void onSetup() throws Exception {
-
+        departmentId = createTestDepartment();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onTearDown() throws Exception {
         deleteAll(PasswordHistory.class, UserBiometric.class, Biometric.class, UserRole.class, User.class,
-                RolePrivilegeWidget.class, RolePrivilege.class, Role.class);
+                RolePrivilegeWidget.class, RolePrivilege.class, Role.class, Department.class, Branch.class);
+    }
+
+    private Long createTestDepartment() throws Exception {
+        Department department = new Department();
+        department.setName("testDepartment");
+        department.setDescription("Test Department");
+        return ((OrganizationService) getComponent(OrganizationModuleNameConstants.ORGANIZATIONSERVICE))
+                .createDepartment(department);
     }
 
     private Role getRole(String name, String description) {
         Role role = new Role();
+        role.setDepartmentId(departmentId);
         role.setName(name);
         role.setDescription(description);
         role.setStatus(RecordStatus.ACTIVE);

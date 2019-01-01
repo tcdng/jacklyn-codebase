@@ -24,6 +24,7 @@ import com.tcdng.jacklyn.organization.entities.RoleQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
+import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.data.AssignParams;
 
 /**
@@ -40,6 +41,10 @@ public class RoleInListCommand extends AbstractAssignParamsOrganizationListComma
     public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
         if (params.isAssignedIdList()) {
             RoleQuery query = new RoleQuery();
+            if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
+                query.departmentId(params.getFilterId1(Long.class));
+            }
+
             query.idIn(params.getAssignedIdList(Long.class));
             query.status(RecordStatus.ACTIVE).order("description");
             return getOrganizationService().findRoles(query);
