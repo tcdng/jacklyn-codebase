@@ -34,9 +34,14 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Role", reportable = true, auditable = true)
+@Managed(
+        module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Role", reportable = true,
+        auditable = true)
 @Table(name = "ROLE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Role extends BaseVersionedStatusEntity {
+
+    @ForeignKey(Department.class)
+    private Long departmentId;
 
     @ForeignKey(type = Theme.class, nullable = true)
     private Long themeId;
@@ -56,8 +61,19 @@ public class Role extends BaseVersionedStatusEntity {
     @Column(length = 64, nullable = true)
     private String application;
 
+    @ListOnly(key = "departmentId", property = "description")
+    private String departmentDesc;
+
     @ListOnly(key = "themeId", property = "description")
     private String themeDesc;
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
 
     public Long getThemeId() {
         return themeId;
@@ -113,5 +129,13 @@ public class Role extends BaseVersionedStatusEntity {
 
     public void setThemeDesc(String themeDesc) {
         this.themeDesc = themeDesc;
+    }
+
+    public String getDepartmentDesc() {
+        return departmentDesc;
+    }
+
+    public void setDepartmentDesc(String departmentDesc) {
+        this.departmentDesc = departmentDesc;
     }
 }

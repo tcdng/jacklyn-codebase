@@ -47,6 +47,8 @@
 //Form attachments
 !ui-panel:frmRoleAssignPanel layout:$d{!ui-vertical} components:$c{roleAssignBox}
 !ui-assignmentbox:roleAssignBox binding:roleIdList
+    filterCaption1:$m{security.user.maintain.assigned.department}
+    filterList1:$s{departmentlist}
     assignCaption:$m{security.user.maintain.assigned.role} unassignCaption:$m{security.user.maintain.available.role}
     assignList:roleinlist unassignList:rolenotinlist
     

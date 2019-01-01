@@ -11,6 +11,9 @@
 			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
 				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
 				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
+            <menuitem name="org-managedepartment" description="$m{organization.menuitem.department}"
+                caption="$m{organization.department.menu.title}" pageCaption="$m{organization.department.manage}"
+                path="/organization/department/openPage" remotePath="/organization/department/getRemoteDoc" />
             <menuitem name="org-managerole" caption="$m{organization.role.menu.title}"
                 pageCaption="$m{organization.role.manage}" description="$m{organization.menuitem.role}"
                 path="/organization/role/openPage" remotePath="/organization/role/getRemoteDoc" />
@@ -25,6 +28,10 @@
 			<privilege name="org-branchedit" description="$m{organization.privilege.branch.edit}" />
 			<privilege name="org-branchview" description="$m{organization.privilege.branch.view}" />
 			<privilege name="org-branchdelete" description="$m{organization.privilege.branch.delete}" />
+            <privilege name="org-departmentadd" description="$m{organization.privilege.department.add}" />
+            <privilege name="org-departmentedit" description="$m{organization.privilege.department.edit}" />
+            <privilege name="org-departmentview" description="$m{organization.privilege.department.view}" />
+            <privilege name="org-departmentdelete" description="$m{organization.privilege.department.delete}" />
             <privilege name="org-role-add" description="$m{organization.privilege.role.add}" />
             <privilege name="org-role-view" description="$m{organization.privilege.role.view}" />
             <privilege name="org-role-edit" description="$m{organization.privilege.role.edit}" />

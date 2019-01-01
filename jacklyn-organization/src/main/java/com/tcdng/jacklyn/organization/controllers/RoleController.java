@@ -43,6 +43,8 @@ public class RoleController extends AbstractOrganizationRecordController<Role> {
 
     private String searchDescription;
 
+    private Long searchDepartmentId;
+    
     private RecordStatus searchStatus;
 
     private RoleLargeData largeData;
@@ -71,6 +73,14 @@ public class RoleController extends AbstractOrganizationRecordController<Role> {
         this.searchDescription = searchDescription;
     }
 
+    public Long getSearchDepartmentId() {
+        return searchDepartmentId;
+    }
+
+    public void setSearchDepartmentId(Long searchDepartmentId) {
+        this.searchDepartmentId = searchDepartmentId;
+    }
+
     public RecordStatus getSearchStatus() {
         return searchStatus;
     }
@@ -95,6 +105,9 @@ public class RoleController extends AbstractOrganizationRecordController<Role> {
         }
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
             query.descriptionLike(searchDescription);
+        }
+        if (QueryUtils.isValidLongCriteria(searchDepartmentId)) {
+            query.departmentId(searchDepartmentId);
         }
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());

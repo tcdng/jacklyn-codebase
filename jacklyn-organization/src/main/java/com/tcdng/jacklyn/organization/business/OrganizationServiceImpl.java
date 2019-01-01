@@ -28,6 +28,8 @@ import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.jacklyn.organization.data.RoleLargeData;
 import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
+import com.tcdng.jacklyn.organization.entities.Department;
+import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategory;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategoryQuery;
@@ -110,8 +112,33 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         if (id != null) {
             return db().value(boolean.class, "headOffice", new BranchQuery().id(id));
         }
-        
+
         return false;
+    }
+
+    @Override
+    public Long createDepartment(Department department) throws UnifyException {
+        return (Long) db().create(department);
+    }
+
+    @Override
+    public Department findDepartment(Long departmentId) throws UnifyException {
+        return db().find(Department.class, departmentId);
+    }
+
+    @Override
+    public List<Department> findDepartments(DepartmentQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateDepartment(Department department) throws UnifyException {
+        return db().updateByIdVersion(department);
+    }
+
+    @Override
+    public int deleteDepartment(Long id) throws UnifyException {
+        return db().delete(Department.class, id);
     }
 
     @Override

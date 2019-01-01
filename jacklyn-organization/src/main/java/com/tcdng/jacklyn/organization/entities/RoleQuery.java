@@ -42,6 +42,10 @@ public class RoleQuery extends BaseVersionedStatusEntityQuery<Role> {
         return (RoleQuery) super.select(field);
     }
 
+    public RoleQuery departmentId(Long departmentId) {
+        return (RoleQuery) equals("departmentId", departmentId);
+    }
+
     public RoleQuery name(String name) {
         return (RoleQuery) equals("name", name);
     }

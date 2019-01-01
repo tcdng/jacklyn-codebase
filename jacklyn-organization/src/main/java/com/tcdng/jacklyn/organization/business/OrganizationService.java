@@ -22,6 +22,8 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.organization.data.RoleLargeData;
 import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
+import com.tcdng.jacklyn.organization.entities.Department;
+import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategory;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategoryQuery;
@@ -108,6 +110,61 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     boolean getBranchHeadOfficeFlag(Long id) throws UnifyException;
+
+    /**
+     * Creates a new department.
+     * 
+     * @param department
+     *            the department data
+     * @return the created department ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createDepartment(Department department) throws UnifyException;
+
+    /**
+     * Finds department by ID.
+     * 
+     * @param departmentId
+     *            the department ID
+     * @return the department data
+     * @throws UnifyException
+     *             if department with ID is not found
+     */
+    Department findDepartment(Long departmentId) throws UnifyException;
+
+    /**
+     * Finds departments by query.
+     * 
+     * @param query
+     *            the department query
+     * @return the list of departments found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Department> findDepartments(DepartmentQuery query) throws UnifyException;
+
+    /**
+     * Updates a department.
+     * 
+     * @param department
+     *            the department data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateDepartment(Department department) throws UnifyException;
+
+    /**
+     * Deletes a department.
+     * 
+     * @param id
+     *            the department ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteDepartment(Long id) throws UnifyException;
 
     /**
      * Creates a new role.
