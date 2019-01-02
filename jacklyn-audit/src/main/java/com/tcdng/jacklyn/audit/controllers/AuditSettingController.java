@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/audit/auditsettings")
 @UplBinding("web/audit/upl/manageauditsettings.upl")
-public class AuditSettingController extends AbstractAuditRecordController<AuditDefinition> {
+public class AuditSettingController extends AbstractAuditCrudController<AuditDefinition> {
 
     private Long searchModuleId;
 
@@ -46,7 +46,7 @@ public class AuditSettingController extends AbstractAuditRecordController<AuditD
     private RecordStatus searchStatus;
 
     public AuditSettingController() {
-        super(AuditDefinition.class, "audit.auditsettings.hint",
+        super(AuditDefinition.class, "$m{audit.auditsettings.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.REPORTABLE);
     }
 

@@ -39,7 +39,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/notification/notification")
 @UplBinding("web/notification/upl/managenotification.upl")
-public class NotificationController extends AbstractNotificationRecordController<Notification> {
+public class NotificationController extends AbstractNotificationCrudController<Notification> {
 
     private Date searchCreateDt;
 
@@ -52,7 +52,7 @@ public class NotificationController extends AbstractNotificationRecordController
     private NotificationStatus searchStatus;
 
     public NotificationController() {
-        super(Notification.class, "notification.notification.hint",
+        super(Notification.class, "$m{notification.notification.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

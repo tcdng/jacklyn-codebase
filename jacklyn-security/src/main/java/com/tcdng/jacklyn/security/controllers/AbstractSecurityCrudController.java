@@ -13,41 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.system.controllers;
+package com.tcdng.jacklyn.security.controllers;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.system.business.SystemService;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Abstract base system service record management page controller.
+ * Abstract base security module record management page controller.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractSystemRecordController<T extends Entity> extends ManageRecordController<T, Long> {
+public abstract class AbstractSecurityCrudController<T extends Entity> extends BaseCrudController<T, Long> {
 
     @Configurable
-    private SystemService systemService;
+    private SecurityService securityService;
 
-    private RecordStatus searchStatus;
-
-    public AbstractSystemRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public AbstractSecurityCrudController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    protected SystemService getSystemService() throws UnifyException {
-        return systemService;
+    protected SecurityService getSecurityService() throws UnifyException {
+        return securityService;
     }
 }

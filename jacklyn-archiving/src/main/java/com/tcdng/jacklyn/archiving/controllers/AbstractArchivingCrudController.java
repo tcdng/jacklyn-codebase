@@ -13,31 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.controllers;
+package com.tcdng.jacklyn.archiving.controllers;
 
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.workflow.business.WorkflowService;
+import com.tcdng.jacklyn.archiving.business.ArchivingService;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Convenient abstract workflow module record management page controller.
+ * Convenient base archiving module record management page controller.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWorkflowRecordController<T extends Entity> extends ManageRecordController<T, Long> {
+public abstract class AbstractArchivingCrudController<T extends Entity> extends BaseCrudController<T, Long> {
 
     @Configurable
-    private WorkflowService workflowService;
+    private ArchivingService archivingService;
 
-    public AbstractWorkflowRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public AbstractArchivingCrudController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected WorkflowService getWorkflowService() throws UnifyException {
-        return workflowService;
+    protected ArchivingService getArchivingService() throws UnifyException {
+        return archivingService;
     }
-
 }

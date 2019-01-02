@@ -47,7 +47,7 @@ public class WfPublishCategoryController extends AbstractWorkflowController {
                 .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryBin)
                 .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).logMessages()
                 .build();
-        return launchTaskWithMonitorBox(taskSetup, "workflow.wfcategory.publish");
+        return launchTaskWithMonitorBox(taskSetup, "$m{workflow.wfcategory.publish}");
     }
 
     public byte[] getWfCategoryBin() {

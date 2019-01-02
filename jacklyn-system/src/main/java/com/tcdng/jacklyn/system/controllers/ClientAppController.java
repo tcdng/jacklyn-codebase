@@ -38,7 +38,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/system/clientapp")
 @UplBinding("web/system/upl/manageclientapp.upl")
-public class ClientAppController extends AbstractSystemRecordController<ClientApp> {
+public class ClientAppController extends AbstractSystemCrudController<ClientApp> {
 
     private String searchName;
 
@@ -51,7 +51,7 @@ public class ClientAppController extends AbstractSystemRecordController<ClientAp
     private ClientAppLargeData clipboardLargeData;
 
     public ClientAppController() {
-        super(ClientApp.class, "system.clientapp.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ClientApp.class, "$m{system.clientapp.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
         largeData = new ClientAppLargeData();
     }

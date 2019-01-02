@@ -39,7 +39,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/filetransferconfig")
 @UplBinding("web/file/upl/managefiletransferconfig.upl")
-public class FileTransferConfigController extends AbstractFileRecordController<FileTransferConfig> {
+public class FileTransferConfigController extends AbstractFileCrudController<FileTransferConfig> {
 
     private String searchName;
 
@@ -48,7 +48,7 @@ public class FileTransferConfigController extends AbstractFileRecordController<F
     private RecordStatus searchStatus;
 
     public FileTransferConfigController() {
-        super(FileTransferConfig.class, "file.filetransferconfig.hint",
+        super(FileTransferConfig.class, "$m{file.filetransferconfig.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
@@ -59,7 +59,7 @@ public class FileTransferConfigController extends AbstractFileRecordController<F
                 .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, getRecord())
                 .logEvent(FileModuleAuditConstants.TEST_FILETRANSFERCONFIG, getRecord().getName()).logMessages()
                 .build();
-        return launchTaskWithMonitorBox(taskSetup, "file.filetransferconfig.test");
+        return launchTaskWithMonitorBox(taskSetup, "$m{file.filetransferconfig.test}");
     }
 
     public String getSearchName() {

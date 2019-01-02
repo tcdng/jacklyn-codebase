@@ -45,7 +45,7 @@ import com.tcdng.unify.core.util.QueryUtils;
         @CrudPanelList(panel = "frmWfFormPrivilegeListPanel", field = "largeData.formPrivilegeList"),
         @CrudPanelList(panel = "frmWfPolicyListPanel", field = "largeData.policyList"),
         @CrudPanelList(panel = "frmWfAlertListPanel", field = "largeData.alertList") })
-public class WfTemplateController extends AbstractWorkflowRecordController<WfTemplate> {
+public class WfTemplateController extends AbstractWorkflowCrudController<WfTemplate> {
 
     private Long searchWfCategoryId;
 
@@ -58,7 +58,7 @@ public class WfTemplateController extends AbstractWorkflowRecordController<WfTem
     private WfTemplateLargeData largeData;
 
     public WfTemplateController() {
-        super(WfTemplate.class, "workflow.wftemplate.hint",
+        super(WfTemplate.class, "$m{workflow.wftemplate.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

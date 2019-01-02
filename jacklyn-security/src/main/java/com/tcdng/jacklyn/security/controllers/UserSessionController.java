@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.security.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/security/usersession")
 @UplBinding("web/security/upl/manageusersession.upl")
-public class UserSessionController extends ManageRecordController<UserSessionTracking, String> {
+public class UserSessionController extends BaseCrudController<UserSessionTracking, String> {
 
     @Configurable
     private UserSessionManager userSessionManager;
@@ -47,7 +47,7 @@ public class UserSessionController extends ManageRecordController<UserSessionTra
     private String searchNodeId;
 
     public UserSessionController() {
-        super(UserSessionTracking.class, "security.usersession.hint",
+        super(UserSessionTracking.class, "$m{security.usersession.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

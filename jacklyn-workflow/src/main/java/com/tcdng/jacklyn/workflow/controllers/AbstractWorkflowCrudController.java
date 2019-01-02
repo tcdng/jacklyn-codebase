@@ -13,30 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.audit.controllers;
+package com.tcdng.jacklyn.workflow.controllers;
 
-import com.tcdng.jacklyn.audit.business.AuditService;
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Abstract base class for all audit module record management controllers.
+ * Convenient abstract workflow module record management page controller.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractAuditRecordController<T extends Entity> extends ManageRecordController<T, Long> {
+public abstract class AbstractWorkflowCrudController<T extends Entity> extends BaseCrudController<T, Long> {
 
     @Configurable
-    private AuditService auditService;
+    private WorkflowService workflowService;
 
-    public AbstractAuditRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public AbstractWorkflowCrudController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected AuditService getAuditService() throws UnifyException {
-        return auditService;
+    protected WorkflowService getWorkflowService() throws UnifyException {
+        return workflowService;
     }
+
 }

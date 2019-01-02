@@ -44,7 +44,7 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
     private FileInboxStatus searchStatus;
 
     public FileInboxController() {
-        super(FileInbox.class, "file.fileinbox.hint",
+        super(FileInbox.class, "$m{file.fileinbox.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

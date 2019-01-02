@@ -34,14 +34,14 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/archiving/archivabledefinition")
 @UplBinding("web/archiving/upl/managearchivabledefinitions.upl")
-public class ArchivableDefinitionController extends AbstractArchivingRecordController<ArchivableDefinition> {
+public class ArchivableDefinitionController extends AbstractArchivingCrudController<ArchivableDefinition> {
 
     private Long searchModuleId;
 
     private RecordStatus searchStatus;
 
     public ArchivableDefinitionController() {
-        super(ArchivableDefinition.class, "archiving.archivabledefinition.hint",
+        super(ArchivableDefinition.class, "$m{archiving.archivabledefinition.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

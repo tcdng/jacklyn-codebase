@@ -13,30 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.file.controllers;
+package com.tcdng.jacklyn.audit.controllers;
 
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.file.business.FileService;
+import com.tcdng.jacklyn.audit.business.AuditService;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Convenient abstract file module record management page controller.
+ * Abstract base class for all audit module record management controllers.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractFileRecordController<T extends Entity> extends ManageRecordController<T, Long> {
+public abstract class AbstractAuditCrudController<T extends Entity> extends BaseCrudController<T, Long> {
 
     @Configurable
-    private FileService fileService;
+    private AuditService auditService;
 
-    public AbstractFileRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public AbstractAuditCrudController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected FileService getFileService() throws UnifyException {
-        return fileService;
+    protected AuditService getAuditService() throws UnifyException {
+        return auditService;
     }
 }

@@ -34,7 +34,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wfcategory")
 @UplBinding("web/workflow/upl/managewfcategory.upl")
-public class WfCategoryController extends AbstractWorkflowRecordController<WfCategory> {
+public class WfCategoryController extends AbstractWorkflowCrudController<WfCategory> {
 
     private String searchName;
 
@@ -43,7 +43,7 @@ public class WfCategoryController extends AbstractWorkflowRecordController<WfCat
     private RecordStatus searchStatus;
 
     public WfCategoryController() {
-        super(WfCategory.class, "workflow.wfcategory.hint",
+        super(WfCategory.class, "$m{workflow.wfcategory.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

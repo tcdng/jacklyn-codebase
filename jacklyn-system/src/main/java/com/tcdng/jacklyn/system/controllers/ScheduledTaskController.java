@@ -36,7 +36,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/system/scheduledtask")
 @UplBinding("web/system/upl/managescheduledtask.upl")
-public class ScheduledTaskController extends AbstractSystemRecordController<ScheduledTask> {
+public class ScheduledTaskController extends AbstractSystemCrudController<ScheduledTask> {
 
     private String searchTaskName;
 
@@ -47,7 +47,7 @@ public class ScheduledTaskController extends AbstractSystemRecordController<Sche
     private ScheduledTaskLargeData clipboardLargeData;
 
     public ScheduledTaskController() {
-        super(ScheduledTask.class, "system.scheduledtask.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ScheduledTask.class, "$m{system.scheduledtask.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 

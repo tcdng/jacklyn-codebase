@@ -28,7 +28,7 @@ import com.tcdng.unify.core.util.CalendarUtils;
  * @since 1.0
  */
 public abstract class AbstractFileTransferBoxController<T extends AbstractFileTransferBox>
-        extends AbstractFileRecordController<T> {
+        extends AbstractFileCrudController<T> {
 
     private Date searchCreateDt;
 

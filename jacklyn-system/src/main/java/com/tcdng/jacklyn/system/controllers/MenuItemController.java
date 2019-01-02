@@ -39,14 +39,14 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/system/upl/managemenuitem.upl")
 @ResultMappings({
         @ResultMapping(name = "showorderpopup", response = { "!showpopupresponse popup:$s{orderMenuItemPopup}" }) })
-public class MenuItemController extends AbstractSystemRecordController<ApplicationMenuItem> {
+public class MenuItemController extends AbstractSystemCrudController<ApplicationMenuItem> {
 
     private Long searchMenuId;
 
     private List<ApplicationMenuItem> menuItemOrderList;
 
     public MenuItemController() {
-        super(ApplicationMenuItem.class, "system.menuitem.hint", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
+        super(ApplicationMenuItem.class, "$m{system.menuitem.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
                 | ManageRecordModifier.REPORTABLE | ManageRecordModifier.SEARCH_ON_OPEN);
     }
 

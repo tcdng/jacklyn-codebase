@@ -33,14 +33,14 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/theme")
 @UplBinding("web/system/upl/managetheme.upl")
-public class ThemeController extends AbstractSystemRecordController<Theme> {
+public class ThemeController extends AbstractSystemCrudController<Theme> {
 
     private String searchName;
 
     private String searchDescription;
 
     public ThemeController() {
-        super(Theme.class, "system.theme.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(Theme.class, "$m{system.theme.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 

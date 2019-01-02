@@ -34,7 +34,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/sysparameter")
 @UplBinding("web/system/upl/managesysparameter.upl")
-public class SystemParameterController extends AbstractSystemRecordController<SystemParameter> {
+public class SystemParameterController extends AbstractSystemCrudController<SystemParameter> {
 
     private Long searchModuleId;
 
@@ -45,7 +45,7 @@ public class SystemParameterController extends AbstractSystemRecordController<Sy
     private String searchDescription;
 
     public SystemParameterController() {
-        super(SystemParameter.class, "system.sysparameter.hint", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
+        super(SystemParameter.class, "$m{system.sysparameter.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
                 | ManageRecordModifier.MODIFY | ManageRecordModifier.REPORTABLE);
     }
 

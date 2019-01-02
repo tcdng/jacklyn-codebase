@@ -34,7 +34,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/notification/notificationtemplate")
 @UplBinding("web/notification/upl/managenotificationtemplate.upl")
-public class NotificationTemplateController extends AbstractNotificationRecordController<NotificationTemplate> {
+public class NotificationTemplateController extends AbstractNotificationCrudController<NotificationTemplate> {
 
     private Long searchModuleId;
 
@@ -45,7 +45,7 @@ public class NotificationTemplateController extends AbstractNotificationRecordCo
     private RecordStatus searchStatus;
 
     public NotificationTemplateController() {
-        super(NotificationTemplate.class, "notification.notificationtemplate.hint",
+        super(NotificationTemplate.class, "$m{notification.notificationtemplate.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.COPY_TO_ADD
                         | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.REPORTABLE);
     }

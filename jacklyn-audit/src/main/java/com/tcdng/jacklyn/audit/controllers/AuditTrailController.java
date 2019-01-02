@@ -41,7 +41,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/audit/upl/manageaudittrail.upl")
 @ResultMappings({
         @ResultMapping(name = "showusersearch", response = { "!showpopupresponse popup:$s{userSearchBoxPopup}" }) })
-public class AuditTrailController extends AbstractAuditRecordController<AuditTrail> {
+public class AuditTrailController extends AbstractAuditCrudController<AuditTrail> {
 
     private Date searchCreateDt;
 
@@ -54,7 +54,7 @@ public class AuditTrailController extends AbstractAuditRecordController<AuditTra
     private List<AuditDetail> auditDetailList;
 
     public AuditTrailController() {
-        super(AuditTrail.class, "audit.audittrail.hint",
+        super(AuditTrail.class, "$m{audit.audittrail.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

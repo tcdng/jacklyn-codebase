@@ -38,7 +38,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/security/user")
 @UplBinding("web/security/upl/manageuser.upl")
-public class UserController extends AbstractSecurityRecordController<User> {
+public class UserController extends AbstractSecurityCrudController<User> {
 
     private String searchLoginId;
 
@@ -51,7 +51,7 @@ public class UserController extends AbstractSecurityRecordController<User> {
     private UserLargeData clipboardLargeData;
 
     public UserController() {
-        super(User.class, "security.user.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(User.class, "$m{security.user.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
         largeData = new UserLargeData();
     }

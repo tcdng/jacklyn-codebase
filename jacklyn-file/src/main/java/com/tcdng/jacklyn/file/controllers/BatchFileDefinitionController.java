@@ -39,7 +39,7 @@ import com.tcdng.unify.core.util.QueryUtils;
 @Component("/file/batchfiledefinition")
 @UplBinding("web/file/upl/managebatchfiledefinition.upl")
 @SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", field = "record.fieldDefList") })
-public class BatchFileDefinitionController extends AbstractFileRecordController<BatchFileDefinition> {
+public class BatchFileDefinitionController extends AbstractFileCrudController<BatchFileDefinition> {
 
     private String searchName;
 
@@ -48,7 +48,7 @@ public class BatchFileDefinitionController extends AbstractFileRecordController<
     private RecordStatus searchStatus;
 
     public BatchFileDefinitionController() {
-        super(BatchFileDefinition.class, "file.batchfiledefinition.hint",
+        super(BatchFileDefinition.class, "$m{file.batchfiledefinition.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }

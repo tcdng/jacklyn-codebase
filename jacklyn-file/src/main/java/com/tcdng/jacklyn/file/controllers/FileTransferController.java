@@ -57,7 +57,7 @@ public class FileTransferController extends AbstractFileController {
                 .logEvent(FileModuleAuditConstants.START_FILETRANSFERTASK, fileTransferConfigData.getName(),
                         String.valueOf(workingDt))
                 .logMessages().build();
-        return launchTaskWithMonitorBox(taskSetup, "file.filetransfer.execution");
+        return launchTaskWithMonitorBox(taskSetup, "$m{file.filetransfer.execution}");
     }
 
     public String getModeStyle() {
