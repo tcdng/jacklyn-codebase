@@ -62,7 +62,7 @@ public class BatchFileUploadController extends AbstractFileController {
         TaskSetup taskSetup = TaskSetup.newBuilder().addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
                 .setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS, batchUploadParameters).logMessages()
                 .build();
-        return launchTaskWithMonitorBox(taskSetup, "file.batchupload.execution");
+        return launchTaskWithMonitorBox(taskSetup, "$m{file.batchupload.execution}");
     }
 
     public String getModeStyle() {

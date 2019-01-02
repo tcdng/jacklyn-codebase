@@ -39,7 +39,7 @@ public class FileOutboxController extends AbstractFileTransferBoxController<File
     private FileOutboxStatus searchStatus;
 
     public FileOutboxController() {
-        super(FileOutbox.class, "file.fileoutbox.hint",
+        super(FileOutbox.class, "$m{file.fileoutbox.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

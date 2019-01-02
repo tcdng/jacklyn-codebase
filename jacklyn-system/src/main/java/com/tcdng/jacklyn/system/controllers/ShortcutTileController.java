@@ -40,14 +40,14 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/system/upl/manageshortcuttiles.upl")
 @ResultMappings({ @ResultMapping(name = "showorderpopup",
         response = { "!showpopupresponse popup:$s{orderShortcutTilePopup}" }) })
-public class ShortcutTileController extends AbstractSystemRecordController<ShortcutTile> {
+public class ShortcutTileController extends AbstractSystemCrudController<ShortcutTile> {
 
     private Long searchModuleId;
 
     private List<ShortcutTile> shortcutTileOrderList;
 
     public ShortcutTileController() {
-        super(ShortcutTile.class, "system.shortcuttile.hint",
+        super(ShortcutTile.class, "$m{system.shortcuttile.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
+import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
@@ -47,6 +48,11 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
     @Override
     public void clearCache() throws UnifyException {
 
+    }
+
+    @Override
+    public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
+        
     }
 
     protected ParameterService getParameterService() {

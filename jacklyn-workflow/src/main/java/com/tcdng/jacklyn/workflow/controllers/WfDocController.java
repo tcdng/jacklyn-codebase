@@ -41,7 +41,7 @@ import com.tcdng.unify.core.util.QueryUtils;
         @CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
         @CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList"),
         @CrudPanelList(panel = "frmWfDocBeanMappingListPanel", field = "record.beanMappingList")})
-public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
+public class WfDocController extends AbstractWorkflowCrudController<WfDoc> {
 
     private Long searchWfCategoryId;
 
@@ -52,7 +52,7 @@ public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
     private RecordStatus searchStatus;
 
     public WfDocController() {
-        super(WfDoc.class, "workflow.wfdoc.hint",
+        super(WfDoc.class, "$m{workflow.wfdoc.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

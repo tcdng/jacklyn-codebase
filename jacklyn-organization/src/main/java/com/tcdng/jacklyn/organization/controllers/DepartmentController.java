@@ -33,14 +33,14 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/organization/department")
 @UplBinding("web/organization/upl/managedepartment.upl")
-public class DepartmentController extends AbstractOrganizationRecordController<Department> {
+public class DepartmentController extends AbstractOrganizationCrudController<Department> {
 
     private String searchName;
 
     private String searchDescription;
 
     public DepartmentController() {
-        super(Department.class, "organization.department.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(Department.class, "$m{organization.department.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 

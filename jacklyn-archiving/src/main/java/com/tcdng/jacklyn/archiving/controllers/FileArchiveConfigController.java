@@ -34,14 +34,14 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/archiving/filearchiveconfig")
 @UplBinding("web/archiving/upl/managefilearchiveconfig.upl")
-public class FileArchiveConfigController extends AbstractArchivingRecordController<FileArchiveConfig> {
+public class FileArchiveConfigController extends AbstractArchivingCrudController<FileArchiveConfig> {
 
     private String searchDescription;
 
     private RecordStatus searchStatus;
 
     public FileArchiveConfigController() {
-        super(FileArchiveConfig.class, "archiving.filearchiveconfig.hint",
+        super(FileArchiveConfig.class, "$m{archiving.filearchiveconfig.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }

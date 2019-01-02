@@ -13,30 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.security.controllers;
 
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
-import com.tcdng.jacklyn.security.business.SecurityService;
-import com.tcdng.unify.core.UnifyException;
+package com.tcdng.jacklyn.report.controllers;
+
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
+import com.tcdng.jacklyn.report.business.ReportService;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Abstract base security module record management page controller.
+ * Abstract base report module record management page controller.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractSecurityRecordController<T extends Entity> extends ManageRecordController<T, Long> {
+public abstract class AbstractReportCrudController<T extends Entity> extends BaseCrudController<T, Long> {
 
     @Configurable
-    private SecurityService securityService;
+    private ReportService reportService;
 
-    public AbstractSecurityRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public AbstractReportCrudController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 
-    protected SecurityService getSecurityService() throws UnifyException {
-        return securityService;
+    protected ReportService getReportService() {
+        return reportService;
     }
+
 }

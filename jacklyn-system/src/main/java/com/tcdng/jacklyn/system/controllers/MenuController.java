@@ -41,14 +41,14 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @ResultMappings({
         @ResultMapping(name = "managemenuitems", response = { "!postresponse path:$s{/system/menuitem/openPage}" }),
         @ResultMapping(name = "showorderpopup", response = { "!showpopupresponse popup:$s{orderMenuPopup}" }) })
-public class MenuController extends AbstractSystemRecordController<ApplicationMenu> {
+public class MenuController extends AbstractSystemCrudController<ApplicationMenu> {
 
     private Long searchModuleId;
 
     private List<ApplicationMenu> menuOrderList;
 
     public MenuController() {
-        super(ApplicationMenu.class, "system.menu.hint",
+        super(ApplicationMenu.class, "$m{system.menu.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

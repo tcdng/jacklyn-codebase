@@ -33,7 +33,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/inputctrldef")
 @UplBinding("web/system/upl/manageinputctrldef.upl")
-public class InputCtrlDefController extends AbstractSystemRecordController<InputCtrlDef> {
+public class InputCtrlDefController extends AbstractSystemCrudController<InputCtrlDef> {
 
     private Long searchModuleId;
 
@@ -42,7 +42,7 @@ public class InputCtrlDefController extends AbstractSystemRecordController<Input
     private String searchDescription;
 
     public InputCtrlDefController() {
-        super(InputCtrlDef.class, "system.inputctrldef.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(InputCtrlDef.class, "$m{system.inputctrldef.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 

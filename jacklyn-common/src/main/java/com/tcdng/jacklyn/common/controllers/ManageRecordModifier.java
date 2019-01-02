@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.common.controllers;
 
 /**
- * Manage record controller modifier.
+ * Base CRUD controller manage record modifier.
  * 
  * @author Lateef Ojulari
  * @since 1.0

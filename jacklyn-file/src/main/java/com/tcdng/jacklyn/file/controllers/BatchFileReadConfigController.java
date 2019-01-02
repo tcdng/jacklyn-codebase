@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/batchfilereadconfig")
 @UplBinding("web/file/upl/managebatchfilereadconfig.upl")
-public class BatchFileReadConfigController extends AbstractFileRecordController<BatchFileReadConfig> {
+public class BatchFileReadConfigController extends AbstractFileCrudController<BatchFileReadConfig> {
 
     private String searchName;
 
@@ -50,7 +50,7 @@ public class BatchFileReadConfigController extends AbstractFileRecordController<
     private BatchFileReadConfigLargeData clipboardLargeData;
 
     public BatchFileReadConfigController() {
-        super(BatchFileReadConfig.class, "file.batchfilereadconfig.hint",
+        super(BatchFileReadConfig.class, "$m{file.batchfilereadconfig.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }

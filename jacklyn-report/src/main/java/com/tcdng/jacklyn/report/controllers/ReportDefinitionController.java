@@ -34,14 +34,14 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/report/reportdefinition")
 @UplBinding("web/report/upl/managereportdefinitions.upl")
-public class ReportDefinitionController extends AbstractReportRecordController<ReportableDefinition> {
+public class ReportDefinitionController extends AbstractReportCrudController<ReportableDefinition> {
 
     private Long searchModuleId;
 
     private RecordStatus searchStatus;
 
     public ReportDefinitionController() {
-        super(ReportableDefinition.class, "report.reportabledefinition.hint",
+        super(ReportableDefinition.class, "$m{report.reportabledefinition.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

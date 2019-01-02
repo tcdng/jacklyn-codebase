@@ -36,7 +36,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/authentication")
 @UplBinding("web/system/upl/manageauthentication.upl")
-public class AuthenticationController extends AbstractSystemRecordController<Authentication> {
+public class AuthenticationController extends AbstractSystemCrudController<Authentication> {
 
     private String searchName;
 
@@ -47,7 +47,7 @@ public class AuthenticationController extends AbstractSystemRecordController<Aut
     private AuthenticationLargeData largeData;
 
     public AuthenticationController() {
-        super(Authentication.class, "system.authentication.hint",
+        super(Authentication.class, "$m{system.authentication.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
         largeData = new AuthenticationLargeData();

@@ -34,12 +34,12 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/module")
 @UplBinding("web/system/upl/managemodule.upl")
-public class ModuleController extends AbstractSystemRecordController<Module> {
+public class ModuleController extends AbstractSystemCrudController<Module> {
 
     private String searchDescription;
 
     public ModuleController() {
-        super(Module.class, "system.module.hint",
+        super(Module.class, "$m{system.module.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.MODIFY
                         | ManageRecordModifier.ACTIVATABLE | ManageRecordModifier.REPORTABLE
                         | ManageRecordModifier.ALTERNATE_SAVE);

@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.organization.controllers;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -28,14 +28,14 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationRecordController<T extends Entity> extends ManageRecordController<T, Long> {
+public abstract class AbstractOrganizationCrudController<T extends Entity> extends BaseCrudController<T, Long> {
 
     @Configurable
     private OrganizationService organizationService;
 
     private RecordStatus searchStatus;
 
-    public AbstractOrganizationRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public AbstractOrganizationCrudController(Class<T> entityClass, String hintKey, int modifier) {
         super(entityClass, hintKey, modifier);
     }
 

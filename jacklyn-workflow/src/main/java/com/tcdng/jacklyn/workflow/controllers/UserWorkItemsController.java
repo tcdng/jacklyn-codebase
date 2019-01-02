@@ -122,7 +122,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
                 .setParam(WorkflowApplyActionTaskConstants.WFACTION_NAME, actionName)
                 .setParam(WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, wfItemIds).logMessages().build();
         String donePath = getName() + "/refreshWorkflowItemSummary";
-        return launchTaskWithMonitorBox(taskSetup, "workflow.applyactiontomultiple.execution", donePath, donePath);
+        return launchTaskWithMonitorBox(taskSetup, "$m{workflow.applyactiontomultiple.execution}", donePath, donePath);
     }
 
     @Action

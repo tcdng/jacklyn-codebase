@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.system.controllers;
 import java.util.Date;
 import java.util.List;
 
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
@@ -39,7 +39,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/scheduledtaskhist")
 @UplBinding("web/system/upl/managescheduledtaskhist.upl")
-public class ScheduledTaskHistController extends ManageRecordController<ScheduledTaskHist, Long> {
+public class ScheduledTaskHistController extends BaseCrudController<ScheduledTaskHist, Long> {
 
     @Configurable
     private SystemService systemService;
@@ -51,7 +51,7 @@ public class ScheduledTaskHistController extends ManageRecordController<Schedule
     private TaskStatus searchStatus;
 
     public ScheduledTaskHistController() {
-        super(ScheduledTaskHist.class, "system.scheduledtaskhist.hint",
+        super(ScheduledTaskHist.class, "$m{system.scheduledtaskhist.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 

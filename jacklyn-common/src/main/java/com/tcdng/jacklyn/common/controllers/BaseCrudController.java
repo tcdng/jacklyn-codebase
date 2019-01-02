@@ -47,7 +47,7 @@ import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
 
 /**
- * Convenient abstract base class for page controllers that manage actions on
+ * Convenient abstract base class for page controllers that manage CRUD actions on
  * records.
  * 
  * @author Lateef Ojulari
@@ -56,7 +56,7 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
 @UplBinding("web/common/upl/managerecord.upl")
 @ResultMappings({
         @ResultMapping(
-                name = ManageRecordController.HIDEPOPUP_REFERESHMAIN,
+                name = BaseCrudController.HIDEPOPUP_REFERESHMAIN,
                 response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{manageRecordPanel}" }),
         @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{manageRecordPanel}" }),
         @ResultMapping(
@@ -80,7 +80,7 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
                 response = { "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
-public abstract class ManageRecordController<T extends Entity, U> extends BasePageController
+public abstract class BaseCrudController<T extends Entity, U> extends BasePageController
         implements DocViewController {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
@@ -116,11 +116,11 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
 
     private boolean describable;
 
-    public ManageRecordController(Class<T> entityClass, String hintKey, int modifier) {
+    public BaseCrudController(Class<T> entityClass, String hint, int modifier) {
         super(ManageRecordModifier.isSecure(modifier), false);
         this.entityClass = entityClass;
         this.modifier = modifier;
-        recordHintName = hintKey;
+        recordHintName = hint;
         describable = Describable.class.isAssignableFrom(entityClass);
     }
 
@@ -399,7 +399,7 @@ public abstract class ManageRecordController<T extends Entity, U> extends BasePa
     protected void onInitialize() throws UnifyException {
         mode = ManageRecordModifier.SEARCH;
         noRecordMessage = resolveSessionMessage(noRecordMessage);
-        recordHintName = getSessionMessage(recordHintName);
+        recordHintName = resolveSessionMessage(recordHintName);
     }
 
     @Override

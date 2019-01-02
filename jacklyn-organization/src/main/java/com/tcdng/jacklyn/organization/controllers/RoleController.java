@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/organization/role")
 @UplBinding("web/organization/upl/managerole.upl")
-public class RoleController extends AbstractOrganizationRecordController<Role> {
+public class RoleController extends AbstractOrganizationCrudController<Role> {
 
     private String searchName;
 
@@ -52,7 +52,7 @@ public class RoleController extends AbstractOrganizationRecordController<Role> {
     private RoleLargeData clipboardLargeData;
 
     public RoleController() {
-        super(Role.class, "organization.role.hint", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(Role.class, "$m{organization.role.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
         largeData = new RoleLargeData();
     }

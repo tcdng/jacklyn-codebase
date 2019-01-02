@@ -177,14 +177,14 @@ public abstract class BasePageController extends AbstractPageController {
      * 
      * @param taskSetup
      *            the task setup
-     * @param captionKey
-     *            the task monitor box caption key
+     * @param caption
+     *            the task monitor box caption
      * @return the show application monitor box result mapping name
      * @throws UnifyException
      *             if an error occurs
      */
-    protected String launchTaskWithMonitorBox(TaskSetup taskSetup, String captionKey) throws UnifyException {
-        return launchTaskWithMonitorBox(taskSetup, captionKey, null, null);
+    protected String launchTaskWithMonitorBox(TaskSetup taskSetup, String caption) throws UnifyException {
+        return launchTaskWithMonitorBox(taskSetup, caption, null, null);
     }
 
     /**
@@ -192,8 +192,8 @@ public abstract class BasePageController extends AbstractPageController {
      * 
      * @param taskSetup
      *            the task setup
-     * @param captionKey
-     *            the task monitor box caption key
+     * @param caption
+     *            the task monitor box caption
      * @param onSuccessPath
      *            optional on task success forward to path
      * @param onFailurePath
@@ -202,14 +202,14 @@ public abstract class BasePageController extends AbstractPageController {
      * @throws UnifyException
      *             if an error occurs
      */
-    protected String launchTaskWithMonitorBox(TaskSetup taskSetup, String captionKey, String onSuccessPath,
+    protected String launchTaskWithMonitorBox(TaskSetup taskSetup, String caption, String onSuccessPath,
             String onFailurePath) throws UnifyException {
         TaskMonitor taskMonitor = launchTask(taskSetup);
         if (taskSetup.getEventCode() != null) {
             logUserEvent(taskSetup.getEventCode(), taskSetup.getEventDetails());
         }
 
-        TaskMonitorInfo taskMonitorInfo = new TaskMonitorInfo(taskMonitor, getSessionMessage(captionKey), onSuccessPath,
+        TaskMonitorInfo taskMonitorInfo = new TaskMonitorInfo(taskMonitor, resolveSessionMessage(caption), onSuccessPath,
                 onFailurePath);
         setSessionAttribute(JacklynSessionAttributeConstants.TASKMONITORINFO, taskMonitorInfo);
         return "showapplicationtaskmonitor";

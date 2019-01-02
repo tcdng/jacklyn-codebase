@@ -35,7 +35,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/notification/notificationchannel")
 @UplBinding("web/notification/upl/managenotificationchannel.upl")
-public class NotificationChannelController extends AbstractNotificationRecordController<NotificationChannel> {
+public class NotificationChannelController extends AbstractNotificationCrudController<NotificationChannel> {
 
     private String searchName;
 
@@ -46,7 +46,7 @@ public class NotificationChannelController extends AbstractNotificationRecordCon
     private NotificationType searchNotificationType;
 
     public NotificationChannelController() {
-        super(NotificationChannel.class, "notification.notificationchannel.hint",
+        super(NotificationChannel.class, "$m{notification.notificationchannel.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.COPY_TO_ADD
                         | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.REPORTABLE);
     }
