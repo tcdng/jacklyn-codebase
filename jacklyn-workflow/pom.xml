@@ -31,15 +31,6 @@
 		</developer>
 	</developers>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.wvengen</groupId>
-                <artifactId>proguard-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 	<dependencies>
 		<!-- Main dependencies -->
 		<dependency>
