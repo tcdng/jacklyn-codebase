@@ -48,7 +48,7 @@ public class SystemParameter extends BaseEntity {
     @Column(name = "SYSPARAMETER_DESC", length = 64)
     private String description;
 
-    @Column(name = "PARAM_VALUE", length = 192)
+    @Column(name = "PARAM_VALUE", length = 192, nullable=true)
     private String value;
 
     @Column(length = 128)

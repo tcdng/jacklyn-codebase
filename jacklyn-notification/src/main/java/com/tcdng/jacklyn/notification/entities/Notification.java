@@ -64,7 +64,7 @@ public class Notification extends BaseTimestampedEntity {
     @Column(name = "REC_ST")
     private NotificationStatus status;
 
-    @Column(nullable = true)
+    @Column(name="MSG_DICTIONARY", nullable = true)
     private byte[] dictionary;
 
     @ListOnly(key = "notificationTemplateId", property = "moduleId")

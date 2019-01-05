@@ -38,7 +38,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Policy("userpolicy")
 @Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true, auditable = true)
-@Table(name = "USER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
+@Table(name = "APPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
 public class User extends BaseVersionedTimestampedStatusEntity {
 
     @ForeignKey(type = Theme.class, nullable = true)
