@@ -42,10 +42,10 @@ public class ReportableDefinition extends BaseInstallEntity {
     @Column(name = "REPORTABLEDEF_NM", length = 64)
     private String name;
 
-    @Column(length = 64)
+    @Column(length = 96)
     private String title;
 
-    @Column(name = "REPORTABLEDEF_DESC", length = 64)
+    @Column(name = "REPORTABLEDEF_DESC", length = 96)
     private String description;
 
     @Column(name = "RECORD_NM", length = 256, nullable = true)
