@@ -74,7 +74,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ReportableDefinition> findReportables(ReportableDefinitionQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -92,16 +92,18 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     public ReportColumn[] findReportableColumns(String reportableName) throws UnifyException {
         ReportableDefinition reportableDefinition = db().find(new ReportableDefinitionQuery().name(reportableName));
 
-        List<ReportableField> reportFieldList = db()
-                .findAll(new ReportableFieldQuery().reportableId(reportableDefinition.getId()).orderById());
+        List<ReportableField> reportFieldList =
+                db().findAll(new ReportableFieldQuery().reportableId(reportableDefinition.getId())
+                        .installed(Boolean.TRUE).orderById());
 
         ReportColumn[] reportColumns = new ReportColumn[reportFieldList.size()];
         for (int i = 0; i < reportColumns.length; i++) {
             ReportableField reportableField = reportFieldList.get(i);
-            reportColumns[i] = ReportColumn.newBuilder().title(reportableField.getDescription())
-                    .name(reportableField.getName()).className(reportableField.getType())
-                    .widthRatio(reportableField.getWidth()).formatter(reportableField.getFormatter())
-                    .horizontalAlignment(HAlignType.fromName(reportableField.getHorizontalAlign())).build();
+            reportColumns[i] =
+                    ReportColumn.newBuilder().title(reportableField.getDescription()).name(reportableField.getName())
+                            .className(reportableField.getType()).widthRatio(reportableField.getWidth())
+                            .formatter(reportableField.getFormatter())
+                            .horizontalAlignment(HAlignType.fromName(reportableField.getHorizontalAlign())).build();
         }
         return reportColumns;
     }
@@ -109,15 +111,16 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public ReportOptions getDynamicReportOptions(String recordName, List<String> priorityPropertyList)
             throws UnifyException {
-        ReportableDefinition reportableDefinition = db()
-                .find(new ReportableDefinitionQuery().recordName(recordName).dynamic(true));
+        ReportableDefinition reportableDefinition =
+                db().find(new ReportableDefinitionQuery().recordName(recordName).dynamic(true));
         ReportOptions reportOptions = new ReportOptions();
         reportOptions.setReportName(reportableDefinition.getName());
         reportOptions.setTitle(reportableDefinition.getTitle());
         reportOptions.setRecordName(recordName);
 
-        Map<String, ReportableField> fieldMap = db().listAllMap(String.class, "name",
-                new ReportableFieldQuery().reportableId(reportableDefinition.getId()).parameterOnly(false));
+        Map<String, ReportableField> fieldMap =
+                db().listAllMap(String.class, "name", new ReportableFieldQuery()
+                        .reportableId(reportableDefinition.getId()).parameterOnly(false).installed(Boolean.TRUE));
         boolean isSelectAll = priorityPropertyList == null;
         if (!isSelectAll) {
             for (String property : priorityPropertyList) {
@@ -154,8 +157,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             rb.layout(ReportLayout.COLUMNAR);
         }
 
-        List<ReportColumnOptions> reportColumnOptionsList = new ArrayList<ReportColumnOptions>(
-                reportOptions.getColumnOptionsList());
+        List<ReportColumnOptions> reportColumnOptionsList =
+                new ArrayList<ReportColumnOptions>(reportOptions.getColumnOptionsList());
         DataUtils.sort(reportColumnOptionsList, ReportColumnOptions.class, "group", false);
 
         List<ReportColumnOptions> sortReportColumnOptionsList = new ArrayList<ReportColumnOptions>();
@@ -213,7 +216,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         // Uninstall old records
-        db().updateAll(new ReportableDefinitionQuery(), new Update().add("installed", Boolean.FALSE));
+        db().updateAll(new ReportableDefinitionQuery().installed(Boolean.TRUE),
+                new Update().add("installed", Boolean.FALSE));
 
         // Install new and update old
         ReportableDefinition reportableDefinition = new ReportableDefinition();
@@ -263,8 +267,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
                     // Re-create/Create report fields
                     if (reportConfig.isManaged()) {
-                        ManagedConfig managedConfig = JacklynUtils.getManagedConfig(moduleConfig,
-                                reportConfig.getReportable());
+                        ManagedConfig managedConfig =
+                                JacklynUtils.getManagedConfig(moduleConfig, reportConfig.getReportable());
                         ReportableField reportableField = new ReportableField();
                         reportableField.setReportableId(reportableId);
                         for (FieldConfig rfd : managedConfig.getFieldList()) {
@@ -317,13 +321,14 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
         report.setParameter(ReportParameterConstants.REPORT_TITLE, report.getTitle());
 
-        String imagePath = WebUtils.expandThemeTag(
-                systemService.getSysParameterValue(String.class, ReportModuleSysParamConstants.REPORT_CLIENT_LOGO));
+        String imagePath =
+                WebUtils.expandThemeTag(systemService.getSysParameterValue(String.class,
+                        ReportModuleSysParamConstants.REPORT_CLIENT_LOGO));
         byte[] clientLogo = IOUtils.readFileResourceInputStream(imagePath, getUnifyComponentContext().getWorkingPath());
         report.setParameter(ReportParameterConstants.CLIENT_LOGO, clientLogo);
 
-        String templatePath = systemService.getSysParameterValue(String.class,
-                ReportModuleSysParamConstants.REPORT_TEMPLATE_PATH);
+        String templatePath =
+                systemService.getSysParameterValue(String.class, ReportModuleSysParamConstants.REPORT_TEMPLATE_PATH);
         String template = report.getTemplate();
         if (template == null) {
             String templateParameter = ReportModuleSysParamConstants.DYNAMIC_REPORT_PORTRAIT_TEMPLATE;

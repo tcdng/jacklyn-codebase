@@ -274,7 +274,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public PrivilegeCategory findPrivilegeCategory(String name) throws UnifyException {
-        return db().list(new PrivilegeCategoryQuery().name(name));
+        return db().list(new PrivilegeCategoryQuery().name(name).installed(Boolean.TRUE));
     }
 
     @Override
@@ -294,7 +294,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public List<Privilege> findPrivileges(PrivilegeQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -468,7 +468,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         registerPrivilegeCategory(PrivilegeCategoryConstants.REPORTABLE, "reserved.privilegecategory.reportable");
 
         // Uninstall old
-        db().updateAll(new PrivilegeQuery(), new Update().add("installed", Boolean.FALSE));
+        db().updateAll(new PrivilegeQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));
 
         // Install new and update old
         Map<String, PrivilegeCategory> categoryMap =

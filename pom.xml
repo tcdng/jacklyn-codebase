@@ -44,7 +44,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.version>0.0.1-SNAPSHOT</project.version>
+        <project.version>0.0.1-SNAPSHOT</project.version>
+        <unify.version>1.0.0</unify.version>
 	</properties>
 
 
@@ -133,36 +134,43 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+    <!-- Temporary staging -->
+    <repositories>
+        <repository>
+            <id>sonatype-staging-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/comtcdng-1002</url>
+        </repository>
+    </repositories>
+	
 	<dependencies>
 		<!-- Main dependencies -->
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-core</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-web</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-jetty</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-core</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-web</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>

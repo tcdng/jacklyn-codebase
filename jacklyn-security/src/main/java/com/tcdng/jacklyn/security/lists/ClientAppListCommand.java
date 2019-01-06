@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.system.lists;
+package com.tcdng.jacklyn.security.lists;
 
 import java.util.List;
 import java.util.Locale;
 
-import com.tcdng.jacklyn.system.entities.ClientAppQuery;
+import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
@@ -31,11 +31,11 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @since 1.0
  */
 @Component("clientapplist")
-public class ClientAppListCommand extends AbstractZeroParamsSystemListCommand {
+public class ClientAppListCommand extends AbstractZeroParamsSecurityListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getSystemService()
+        return getSecurityService()
                 .findClientApps((ClientAppQuery) new ClientAppQuery().ignoreEmptyCriteria(true).order("description"));
     }
 

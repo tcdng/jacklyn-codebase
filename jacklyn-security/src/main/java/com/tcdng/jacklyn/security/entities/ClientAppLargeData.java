@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.system.entities;
+package com.tcdng.jacklyn.security.entities;
 
 import java.util.List;
 

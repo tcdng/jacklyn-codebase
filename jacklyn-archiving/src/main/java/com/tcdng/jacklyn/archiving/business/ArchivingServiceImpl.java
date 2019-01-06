@@ -82,7 +82,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
     @Override
     public List<ArchivableDefinition> findArchivableDefinitions(ArchivableDefinitionQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
     @Override
     public List<ArchivingField> findArchivingFields(ArchivingFieldQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -285,8 +285,8 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         // Uninstall old records
         Update update = new Update().add("installed", Boolean.FALSE);
-        db().updateAll(new ArchivableDefinitionQuery(), update);
-        db().updateAll(new ArchivingFieldQuery(), update);
+        db().updateAll(new ArchivableDefinitionQuery().installed(Boolean.TRUE), update);
+        db().updateAll(new ArchivingFieldQuery().installed(Boolean.TRUE), update);
 
         // Install new and update old
         ArchivableDefinition archiveDefinition = new ArchivableDefinition();

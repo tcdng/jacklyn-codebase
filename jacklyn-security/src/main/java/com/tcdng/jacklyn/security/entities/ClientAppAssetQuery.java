@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.system.entities;
+package com.tcdng.jacklyn.security.entities;
 
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;

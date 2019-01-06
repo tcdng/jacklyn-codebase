@@ -13,16 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.system.controllers;
+package com.tcdng.jacklyn.security.controllers;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
+import com.tcdng.jacklyn.security.entities.ClientApp;
+import com.tcdng.jacklyn.security.entities.ClientAppLargeData;
+import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.jacklyn.shared.system.ClientAppType;
-import com.tcdng.jacklyn.system.entities.ClientApp;
-import com.tcdng.jacklyn.system.entities.ClientAppLargeData;
-import com.tcdng.jacklyn.system.entities.ClientAppQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -31,14 +31,14 @@ import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.web.annotation.Action;
 
 /**
- * Controller for managing service client application records.
+ * Controller for managing client application records.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/system/clientapp")
-@UplBinding("web/system/upl/manageclientapp.upl")
-public class ClientAppController extends AbstractSystemCrudController<ClientApp> {
+@Component("/security/clientapp")
+@UplBinding("web/security/upl/manageclientapp.upl")
+public class ClientAppController extends AbstractSecurityCrudController<ClientApp> {
 
     private String searchName;
 
@@ -51,7 +51,7 @@ public class ClientAppController extends AbstractSystemCrudController<ClientApp>
     private ClientAppLargeData clipboardLargeData;
 
     public ClientAppController() {
-        super(ClientApp.class, "$m{system.clientapp.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ClientApp.class, "$m{security.clientapp.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
         largeData = new ClientAppLargeData();
     }
@@ -101,12 +101,12 @@ public class ClientAppController extends AbstractSystemCrudController<ClientApp>
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemService().findClientApps(query);
+        return getSecurityService().findClientApps(query);
     }
 
     @Override
     protected ClientApp find(Long id) throws UnifyException {
-        largeData = getSystemService().findClientApp(id);
+        largeData = getSecurityService().findClientApp(id);
         return largeData.getData();
     }
 
@@ -139,16 +139,16 @@ public class ClientAppController extends AbstractSystemCrudController<ClientApp>
 
     @Override
     protected Object create(ClientApp clientAppData) throws UnifyException {
-        return (Long) getSystemService().createClientApp(largeData);
+        return (Long) getSecurityService().createClientApp(largeData);
     }
 
     @Override
     protected int update(ClientApp clientAppData) throws UnifyException {
-        return getSystemService().updateClientApp(largeData);
+        return getSecurityService().updateClientApp(largeData);
     }
 
     @Override
     protected int delete(ClientApp applicationData) throws UnifyException {
-        return getSystemService().deleteClientApp(applicationData.getId());
+        return getSecurityService().deleteClientApp(applicationData.getId());
     }
 }

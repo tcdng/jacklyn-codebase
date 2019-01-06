@@ -40,6 +40,11 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.data.UserLargeData;
 import com.tcdng.jacklyn.security.entities.Biometric;
 import com.tcdng.jacklyn.security.entities.BiometricQuery;
+import com.tcdng.jacklyn.security.entities.ClientApp;
+import com.tcdng.jacklyn.security.entities.ClientAppAsset;
+import com.tcdng.jacklyn.security.entities.ClientAppAssetQuery;
+import com.tcdng.jacklyn.security.entities.ClientAppLargeData;
+import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.jacklyn.security.entities.PasswordHistory;
 import com.tcdng.jacklyn.security.entities.PasswordHistoryQuery;
 import com.tcdng.jacklyn.security.entities.User;
@@ -50,11 +55,19 @@ import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
 import com.tcdng.jacklyn.shared.security.BiometricCategory;
 import com.tcdng.jacklyn.shared.security.BiometricType;
+import com.tcdng.jacklyn.shared.security.data.OSInstallationReqParams;
+import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
+import com.tcdng.jacklyn.shared.system.ClientAppType;
+import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
+import com.tcdng.jacklyn.system.constants.SystemModuleErrorConstants;
+import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
+import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
+import com.tcdng.unify.core.annotation.Broadcast;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
@@ -64,8 +77,10 @@ import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.OneWayStringCryptograph;
 import com.tcdng.unify.core.security.PasswordGenerator;
 import com.tcdng.unify.core.system.UserSessionManager;
+import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.web.util.WebUtils;
 
 /**
  * Default implementation of security business service.
@@ -91,6 +106,147 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Configurable("oneway-stringcryptograph")
     private OneWayStringCryptograph passwordCryptograph;
+
+    private Map<String, Set<String>> clientAppAccessFlags;
+
+    public SecurityServiceImpl() {
+        clientAppAccessFlags = new HashMap<String, Set<String>>();
+    }
+
+    @Override
+    public Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
+        Long clientAppId = (Long) db().create(clientAppLargeData.getData());
+        updateClientAppAssets(clientAppId, clientAppLargeData.getSystemAssetIdList());
+        return clientAppId;
+    }
+
+    @Override
+    public ClientAppLargeData findClientApp(Long id) throws UnifyException {
+        ClientApp clientApp = db().list(ClientApp.class, id);
+        List<Long> clientAppAssetIdList =
+                db().valueList(Long.class, "systemAssetId", new ClientAppAssetQuery().clientAppId(id));
+        return new ClientAppLargeData(clientApp, clientAppAssetIdList);
+    }
+
+    @Override
+    public List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
+        int result = db().updateByIdVersion(clientAppLargeData.getData());
+        updateClientAppAssets(clientAppLargeData.getId(), clientAppLargeData.getSystemAssetIdList());
+        clearClientAppAssetAccess(clientAppLargeData.getData().getName());
+        return result;
+    }
+
+    @Override
+    public int deleteClientApp(Long id) throws UnifyException {
+        db().deleteAll(new ClientAppAssetQuery().clientAppId(id));
+        return db().delete(ClientApp.class, id);
+    }
+
+    @Override
+    public boolean accessSystemAsset(String clientAppName, SystemAssetType systemAssetType, String assetName)
+            throws UnifyException {
+        Set<String> accessFlags = clientAppAccessFlags.get(clientAppName);
+        if (accessFlags == null) {
+            accessFlags = new HashSet<String>();
+            clientAppAccessFlags.put(clientAppName, accessFlags);
+        }
+
+        String assetCheckKey = StringUtils.dotify(systemAssetType, assetName);
+        if (!accessFlags.contains(assetCheckKey)) {
+            if (db().countAll(new ClientAppQuery().name(clientAppName)) == 0) {
+                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_UNKNOWN, clientAppName);
+            }
+
+            ClientAppAsset clientAppAsset =
+                    db().list(new ClientAppAssetQuery().clientAppName(clientAppName).assetType(systemAssetType)
+                            .assetName(assetName));
+            if (clientAppAsset == null) {
+                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_NO_SUCH_ASSET, clientAppName,
+                        assetName);
+            }
+
+            if (RecordStatus.INACTIVE.equals(clientAppAsset.getClientAppStatus())) {
+                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_INACTIVE, clientAppName);
+            }
+
+            if (RecordStatus.INACTIVE.equals(clientAppAsset.getAssetStatus())) {
+                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
+                        assetName);
+            }
+
+            accessFlags.add(assetCheckKey);
+        }
+
+        return true;
+    }
+
+    @Override
+    public OSInstallationReqResult processOSInstallationRequest(OSInstallationReqParams oSInstallationReqParams)
+            throws UnifyException {
+        logDebug("Processing OS installation request for [{0}]...", oSInstallationReqParams.getOsName());
+
+        // Create application here
+        boolean isAlreadyInstalled = true;
+        Long clientAppId = null;
+        ClientApp oldClientApp =
+                db().list(new ClientAppQuery().name(oSInstallationReqParams.getClientAppCode()).type(ClientAppType.OS));
+        if (oldClientApp == null) {
+            logDebug("Creating application of type OS...");
+            ClientApp clientApp = new ClientApp();
+            clientApp.setName(oSInstallationReqParams.getClientAppCode());
+            clientApp.setDescription(oSInstallationReqParams.getOsName());
+            clientApp.setType(ClientAppType.OS);
+            clientAppId = (Long) db().create(clientApp);
+            isAlreadyInstalled = false;
+        } else {
+            logDebug("...application [{0}] of type OS is already installed.", oSInstallationReqParams.getOsName());
+            oldClientApp.setDescription(oSInstallationReqParams.getOsName());
+            db().updateByIdVersion(oldClientApp);
+            clientAppId = oldClientApp.getId();
+        }
+
+        // Grant OS access to all remote calls.
+        List<Long> systemAssetIdList =
+                systemService.findSystemAssetIds((SystemAssetQuery) new SystemAssetQuery()
+                        .type(SystemAssetType.REMOTECALLMETHOD).installed(Boolean.TRUE));
+        updateClientAppAssets(clientAppId, systemAssetIdList);
+
+        // Return result
+        logDebug("Preparing installation result...");
+        OSInstallationReqResult airResult = new OSInstallationReqResult();
+        airResult.setAppName(getApplicationName());
+        airResult.setAppName(getApplicationName());
+        String bannerFilename =
+                WebUtils.expandThemeTag(systemService.getSysParameterValue(String.class,
+                        SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
+        byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
+        airResult.setAppIcon(icon);
+        airResult.setAlreadyInstalled(isAlreadyInstalled);
+        logDebug("OS installation for [{0}] completed.", oSInstallationReqParams.getOsName());
+        return airResult;
+    }
+
+    @Broadcast
+    public void clearClientAppAssetAccess(String... params) throws UnifyException {
+        for (String clientAppCode : params) {
+            clientAppAccessFlags.remove(clientAppCode);
+        }
+    }
+
+    private void updateClientAppAssets(Long clientAppId, List<Long> systemAssetIdList) throws UnifyException {
+        db().deleteAll(new ClientAppAssetQuery().clientAppId(clientAppId));
+        ClientAppAsset clientAppAsset = new ClientAppAsset();
+        clientAppAsset.setClientAppId(clientAppId);
+        for (Long systemAssetId : systemAssetIdList) {
+            clientAppAsset.setSystemAssetId(systemAssetId);
+            db().create(clientAppAsset);
+        }
+    }
 
     @Override
     public Long createBiometric(BiometricCategory category, BiometricType type, byte[] image) throws UnifyException {
@@ -443,7 +599,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         boolean globalAccess = user.isReserved();
-        if(!globalAccess) {
+        if (!globalAccess) {
             globalAccess = organizationService.getBranchHeadOfficeFlag(user.getBranchId());
         }
 
@@ -477,11 +633,10 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             Message message =
                     Message.newBuilder(NotificationUtils.getGlobalTemplateName(
                             SecurityModuleNameConstants.SECURITY_MODULE, notificationTemplateName))
-                                    .fromSender(administratorName, administratorEmail)
-                                    .toRecipient(user.getFullName(), user.getEmail())
-                                    .usingDictionaryEntry("loginId", user.getLoginId())
-                                    .usingDictionaryEntry("password", password).sendVia(notificationChannelName)
-                                    .build();
+                            .fromSender(administratorName, administratorEmail)
+                            .toRecipient(user.getFullName(), user.getEmail())
+                            .usingDictionaryEntry("loginId", user.getLoginId())
+                            .usingDictionaryEntry("password", password).sendVia(notificationChannelName).build();
             notificationService.sendNotification(message);
         }
 

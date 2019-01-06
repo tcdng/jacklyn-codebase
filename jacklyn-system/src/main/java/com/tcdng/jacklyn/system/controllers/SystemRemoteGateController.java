@@ -34,8 +34,6 @@ import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeResult;
-import com.tcdng.jacklyn.shared.system.data.OSInstallationReqParams;
-import com.tcdng.jacklyn.shared.system.data.OSInstallationReqResult;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
@@ -65,7 +63,8 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
     @Configurable
     private SystemService systemService;
 
-    @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,
             description = "$m{system.gate.remotecall.getapplicationinfo}")
     public GetAppInfoResult getApplicationInfo(GetAppInfoParams params) throws UnifyException {
         return new GetAppInfoResult(getApplicationName(),
@@ -74,7 +73,8 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
                 systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
     }
 
-    @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MENU,
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_APPLICATION_MENU,
             description = "$m{system.gate.remotecall.getapplicationmenu}")
     public GetAppMenuResult getApplicationMenu(GetAppMenuParams params) throws UnifyException {
         List<AppMenuItemGroup> appMenuItemGroupList = new ArrayList<AppMenuItemGroup>();
@@ -86,14 +86,15 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         if (QueryUtils.isValidStringCriteria(params.getMenuName())) {
             menuQuery.name(params.getMenuName());
         }
-        menuQuery.ignoreEmptyCriteria(true);
+        menuQuery.installed(Boolean.TRUE);
         menuQuery.orderByDisplayOrder();
 
         List<ApplicationMenu> menuList = systemService.findMenus(menuQuery);
         for (ApplicationMenu menuData : menuList) {
             List<AppMenuItem> appMenuItemList = new ArrayList<AppMenuItem>();
-            List<ApplicationMenuItem> menuItemList = systemService
-                    .findMenuItems(new ApplicationMenuItemQuery().menuId(menuData.getId()).orderByDisplayOrder());
+            List<ApplicationMenuItem> menuItemList =
+                    systemService.findMenuItems((ApplicationMenuItemQuery) new ApplicationMenuItemQuery()
+                            .menuId(menuData.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
             for (ApplicationMenuItem menuItemData : menuItemList) {
                 String remotePath = menuItemData.getRemotePath();
                 if (!StringUtils.isBlank(remotePath)) {
@@ -116,11 +117,12 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         return new GetAppMenuResult(appMenuItemGroupList);
     }
 
-    @GatewayAction(name = SystemRemoteCallNameConstants.GET_APPLICATION_MODULES,
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_APPLICATION_MODULES,
             description = "$m{system.gate.remotecall.getapplicationmodule}")
     public GetAppModulesResult getApplicationModules(GetAppModulesParams params) throws UnifyException {
         List<AppModule> appModuleList = new ArrayList<AppModule>();
-        List<Module> moduleList = systemService.findModules((ModuleQuery) new ModuleQuery().ignoreEmptyCriteria(true));
+        List<Module> moduleList = systemService.findModules((ModuleQuery) new ModuleQuery().installed(Boolean.TRUE));
         for (Module moduleData : moduleList) {
             appModuleList.add(
                     new AppModule(moduleData.getName(), moduleData.getDescription(), moduleData.getStatus().code()));
@@ -129,23 +131,18 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         return new GetAppModulesResult(appModuleList);
     }
 
-    @GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
             description = "$m{system.gate.remotecall.getrecordtypes}")
     public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
         return new GetToolingRecordTypeResult(systemService.findToolingRecordTypes());
     }
 
-    @GatewayAction(name = SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES,
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES,
             description = "$m{system.gate.remotecall.getlisttypes}")
     public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params) throws UnifyException {
         return new GetToolingListTypeResult(systemService.findToolingListTypes());
-    }
-
-    @GatewayAction(name = SystemRemoteCallNameConstants.OS_REQUEST_INSTALL,
-            description = "$m{system.gate.remotecall.osrequestinstall}", restricted = false)
-    public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
-            throws UnifyException {
-        return systemService.processOSInstallationRequest(oSInstallationReqParams);
     }
 
 }

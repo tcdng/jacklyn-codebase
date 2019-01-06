@@ -81,7 +81,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         implements NotificationService, SystemNotificationProvider {
 
     @Configurable
-    private SystemService systemMService;
+    private SystemService systemService;
 
     @Configurable(NotificationModuleNameConstants.EMAILMESSAGINGCHANNEL)
     private MessagingChannel emailNotificationChannel;
@@ -160,7 +160,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                 String password = null;
                 if (notificationChannel.getAuthenticationId() != null) {
                     Authentication authentication =
-                            systemMService.findAuthentication(notificationChannel.getAuthenticationId()).getData();
+                            systemService.findAuthentication(notificationChannel.getAuthenticationId()).getData();
                     userName = authentication.getUserName();
                     password = authentication.getPassword();
                 }
@@ -357,16 +357,16 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     @Periodic(PeriodicType.SLOWER)
     public void sendNotifications(TaskMonitor taskMonitor) throws UnifyException {
         if (grabClusterMasterLock()) {
-            if (systemMService.getSysParameterValue(boolean.class,
+            if (systemService.getSysParameterValue(boolean.class,
                     NotificationModuleSysParamConstants.NOTIFICATION_ENABLED)) {
                 int maxBatchSize =
-                        systemMService.getSysParameterValue(int.class,
+                        systemService.getSysParameterValue(int.class,
                                 NotificationModuleSysParamConstants.NOTIFICATION_MAX_BATCH_SIZE);
                 int maxAttempts =
-                        systemMService.getSysParameterValue(int.class,
+                        systemService.getSysParameterValue(int.class,
                                 NotificationModuleSysParamConstants.NOTIFICATION_MAXIMUM_TRIES);
                 int retryMinutes =
-                        systemMService.getSysParameterValue(int.class,
+                        systemService.getSysParameterValue(int.class,
                                 NotificationModuleSysParamConstants.NOTIFICATION_RETRY_MINUTES);
 
                 List<Notification> notificationList =
@@ -409,7 +409,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         // Install new and update old
         NotificationTemplate notificationTemplate = new NotificationTemplate();
         for (ModuleConfig moduleConfig : moduleConfigList) {
-            Long moduleId = systemMService.getModuleId(moduleConfig.getName());
+            Long moduleId = systemService.getModuleId(moduleConfig.getName());
             if (moduleConfig.getNotificationTemplates() != null) {
                 logDebug("Installing message type definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));

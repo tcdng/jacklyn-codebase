@@ -31,10 +31,7 @@ import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.shared.system.ClientAppType;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
-import com.tcdng.jacklyn.shared.system.data.OSInstallationReqParams;
-import com.tcdng.jacklyn.shared.system.data.OSInstallationReqResult;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
@@ -56,11 +53,6 @@ import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
-import com.tcdng.jacklyn.system.entities.ClientApp;
-import com.tcdng.jacklyn.system.entities.ClientAppAsset;
-import com.tcdng.jacklyn.system.entities.ClientAppAssetQuery;
-import com.tcdng.jacklyn.system.entities.ClientAppLargeData;
-import com.tcdng.jacklyn.system.entities.ClientAppQuery;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
@@ -123,13 +115,10 @@ import com.tcdng.unify.core.ui.Tile;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
-import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
-import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.RemoteCallController;
 import com.tcdng.unify.web.annotation.GatewayAction;
 import com.tcdng.unify.web.constant.SessionAttributeConstants;
-import com.tcdng.unify.web.util.WebUtils;
 
 /**
  * Default implementation of system business service.
@@ -150,8 +139,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Configurable("scheduledtaskstatuslogger")
     private TaskStatusLogger taskStatusLogger;
 
-    private Map<String, Set<String>> clientAppAccessFlags;
-
     private static final String SCHEDULED_TASK = "scheduledTask";
 
     private Map<Long, TaskInfo> triggeredTaskInfoMap;
@@ -160,7 +147,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     public SystemServiceImpl() {
         triggeredTaskInfoMap = new ConcurrentHashMap<Long, TaskInfo>();
-        clientAppAccessFlags = new HashMap<String, Set<String>>();
     }
 
     @Override
@@ -207,7 +193,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public Module findModule(String name) throws UnifyException {
-        return db().list(new ModuleQuery().name(name));
+        return db().list(new ModuleQuery().name(name).installed(Boolean.TRUE));
     }
 
     @Override
@@ -222,7 +208,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public Long getModuleId(String moduleName) throws UnifyException {
-        return db().value(Long.class, "id", new ModuleQuery().name(moduleName));
+        return db().value(Long.class, "id", new ModuleQuery().name(moduleName).installed(Boolean.TRUE));
     }
 
     @Override
@@ -242,7 +228,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ApplicationMenuItem> findMenuItems(ApplicationMenuItemQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -252,7 +238,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ApplicationMenu> findMenus(ApplicationMenuQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -464,146 +450,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<SystemAsset> findSystemAssets(SystemAssetQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
     public List<Long> findSystemAssetIds(SystemAssetQuery query) throws UnifyException {
         return db().valueList(Long.class, "id", query);
-    }
-
-    @Override
-    public Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
-        Long clientAppId = (Long) db().create(clientAppLargeData.getData());
-        updateClientAppAssets(clientAppId, clientAppLargeData.getSystemAssetIdList());
-        return clientAppId;
-    }
-
-    @Override
-    public ClientAppLargeData findClientApp(Long id) throws UnifyException {
-        ClientApp clientApp = db().list(ClientApp.class, id);
-        List<Long> clientAppAssetIdList =
-                db().valueList(Long.class, "systemAssetId", new ClientAppAssetQuery().clientAppId(id));
-        return new ClientAppLargeData(clientApp, clientAppAssetIdList);
-    }
-
-    @Override
-    public List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException {
-        return db().listAll(query);
-    }
-
-    @Override
-    public int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException {
-        int result = db().updateByIdVersion(clientAppLargeData.getData());
-        updateClientAppAssets(clientAppLargeData.getId(), clientAppLargeData.getSystemAssetIdList());
-        clearClientAppAssetAccess(clientAppLargeData.getData().getName());
-        return result;
-    }
-
-    @Override
-    public int deleteClientApp(Long id) throws UnifyException {
-        db().deleteAll(new ClientAppAssetQuery().clientAppId(id));
-        return db().delete(ClientApp.class, id);
-    }
-
-    @Override
-    public boolean accessSystemAsset(String clientAppName, SystemAssetType systemAssetType, String assetName)
-            throws UnifyException {
-        Set<String> accessFlags = clientAppAccessFlags.get(clientAppName);
-        if (accessFlags == null) {
-            accessFlags = new HashSet<String>();
-            clientAppAccessFlags.put(clientAppName, accessFlags);
-        }
-
-        String assetCheckKey = StringUtils.dotify(systemAssetType, assetName);
-        if (!accessFlags.contains(assetCheckKey)) {
-            if (db().countAll(new ClientAppQuery().name(clientAppName)) == 0) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_UNKNOWN, clientAppName);
-            }
-
-            ClientAppAsset clientAppAsset =
-                    db().list(new ClientAppAssetQuery().clientAppName(clientAppName).assetType(systemAssetType)
-                            .assetName(assetName));
-            if (clientAppAsset == null) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_NO_SUCH_ASSET, clientAppName,
-                        assetName);
-            }
-
-            if (RecordStatus.INACTIVE.equals(clientAppAsset.getClientAppStatus())) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_INACTIVE, clientAppName);
-            }
-
-            if (RecordStatus.INACTIVE.equals(clientAppAsset.getAssetStatus())) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
-                        assetName);
-            }
-
-            accessFlags.add(assetCheckKey);
-        }
-
-        return true;
-    }
-
-    @Override
-    public OSInstallationReqResult processOSInstallationRequest(OSInstallationReqParams oSInstallationReqParams)
-            throws UnifyException {
-        logDebug("Processing OS installation request for [{0}]...", oSInstallationReqParams.getOsName());
-
-        // Create application here
-        boolean isAlreadyInstalled = true;
-        Long clientAppId = null;
-        ClientApp oldClientApp =
-                db().list(new ClientAppQuery().name(oSInstallationReqParams.getClientAppCode()).type(ClientAppType.OS));
-        if (oldClientApp == null) {
-            logDebug("Creating application of type OS...");
-            ClientApp clientApp = new ClientApp();
-            clientApp.setName(oSInstallationReqParams.getClientAppCode());
-            clientApp.setDescription(oSInstallationReqParams.getOsName());
-            clientApp.setType(ClientAppType.OS);
-            clientAppId = (Long) db().create(clientApp);
-            isAlreadyInstalled = false;
-        } else {
-            logDebug("...application [{0}] of type OS is already installed.", oSInstallationReqParams.getOsName());
-            oldClientApp.setDescription(oSInstallationReqParams.getOsName());
-            db().updateByIdVersion(oldClientApp);
-            clientAppId = oldClientApp.getId();
-        }
-
-        // Grant OS access to all remote calls.
-        List<Long> systemAssetIdList =
-                findSystemAssetIds(new SystemAssetQuery().type(SystemAssetType.REMOTECALLMETHOD));
-        updateClientAppAssets(clientAppId, systemAssetIdList);
-
-        // Return result
-        logDebug("Preparing installation result...");
-        OSInstallationReqResult airResult = new OSInstallationReqResult();
-        airResult.setAppName(getApplicationName());
-        airResult.setAppName(getApplicationName());
-        String bannerFilename =
-                WebUtils.expandThemeTag(
-                        getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
-        byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
-        airResult.setAppIcon(icon);
-        airResult.setAlreadyInstalled(isAlreadyInstalled);
-        logDebug("OS installation for [{0}] completed.", oSInstallationReqParams.getOsName());
-        return airResult;
-    }
-
-    @Broadcast
-    public void clearClientAppAssetAccess(String... params) throws UnifyException {
-        for (String clientAppCode : params) {
-            clientAppAccessFlags.remove(clientAppCode);
-        }
-    }
-
-    private void updateClientAppAssets(Long clientAppId, List<Long> systemAssetIdList) throws UnifyException {
-        db().deleteAll(new ClientAppAssetQuery().clientAppId(clientAppId));
-        ClientAppAsset clientAppAsset = new ClientAppAsset();
-        clientAppAsset.setClientAppId(clientAppId);
-        for (Long systemAssetId : systemAssetIdList) {
-            clientAppAsset.setSystemAssetId(systemAssetId);
-            db().create(clientAppAsset);
-        }
     }
 
     @Override
@@ -842,10 +694,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         List<MenuItemSet> menuItemSetList = new ArrayList<MenuItemSet>();
         List<ApplicationMenu> applicationMenuList =
                 findMenus((ApplicationMenuQuery) new ApplicationMenuQuery().orderByDisplayOrder().orderByModuleDesc()
-                        .status(RecordStatus.ACTIVE));
+                        .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
         for (ApplicationMenu applicationMenu : applicationMenuList) {
             List<ApplicationMenuItem> applicationMenuItemList =
-                    findMenuItems(new ApplicationMenuItemQuery().menuId(applicationMenu.getId()).orderByDisplayOrder());
+                    findMenuItems((ApplicationMenuItemQuery) new ApplicationMenuItemQuery()
+                            .menuId(applicationMenu.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
             List<MenuItem> menuItemList = new ArrayList<MenuItem>();
             for (ApplicationMenuItem applicationMenuItem : applicationMenuItemList) {
                 MenuItem menuItem =
@@ -889,7 +742,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ShortcutTile> findShortcutTiles(ShortcutTileQuery query) throws UnifyException {
-        return db().listAll(query);
+        return db().listAll(query.installed(Boolean.TRUE));
     }
 
     @Override
@@ -904,7 +757,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<Tile> generateTiles(ShortcutTileQuery query) throws UnifyException {
-        return generateTiles(db().findAll(query));
+        return generateTiles(db().findAll(query.installed(Boolean.TRUE)));
     }
 
     @Override
@@ -964,10 +817,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         logInfo("Managing system module definitions...");
         // Uninstall old records
         Update update = new Update().add("installed", Boolean.FALSE);
-        db().updateAll(new ModuleQuery(), update);
-        db().updateAll(new ApplicationMenuQuery(), update);
-        db().updateAll(new ApplicationMenuItemQuery(), update);
-        db().updateAll(new SystemAssetQuery(), update);
+        db().updateAll(new ModuleQuery().installed(Boolean.TRUE), update);
+        db().updateAll(new ApplicationMenuQuery().installed(Boolean.TRUE), update);
+        db().updateAll(new ApplicationMenuItemQuery().installed(Boolean.TRUE), update);
+        db().updateAll(new SystemAssetQuery().installed(Boolean.TRUE), update);
 
         ShortcutTileQuery dtQuery = (ShortcutTileQuery) new ShortcutTileQuery().clear().ignoreEmptyCriteria(true);
         db().updateAll(dtQuery, update);

@@ -25,7 +25,6 @@ public abstract class BaseInstallEntityQuery<T extends BaseInstallEntity> extend
 
     public BaseInstallEntityQuery(Class<T> entityClass) {
         super(entityClass);
-        this.installed(Boolean.TRUE);
     }
 
     public BaseInstallEntityQuery<T> installed(Boolean installed) {
