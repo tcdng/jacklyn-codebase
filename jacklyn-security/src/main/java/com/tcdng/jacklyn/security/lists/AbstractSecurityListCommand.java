@@ -28,13 +28,13 @@ import com.tcdng.unify.core.list.AbstractListCommand;
 public abstract class AbstractSecurityListCommand<T> extends AbstractListCommand<T> {
 
     @Configurable
-    private SecurityService securityModule;
+    private SecurityService securityService;
 
     public AbstractSecurityListCommand(Class<T> paramType) {
         super(paramType);
     }
 
-    protected SecurityService getSecurityBusinessModule() {
-        return securityModule;
+    protected SecurityService getSecurityService() {
+        return securityService;
     }
 }

@@ -18,13 +18,19 @@ package com.tcdng.jacklyn.security.business;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
+import com.tcdng.jacklyn.common.business.RemoteCallSystemAssetProvider;
 import com.tcdng.jacklyn.security.data.UserLargeData;
+import com.tcdng.jacklyn.security.entities.ClientApp;
+import com.tcdng.jacklyn.security.entities.ClientAppLargeData;
+import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserQuery;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
 import com.tcdng.jacklyn.shared.security.BiometricCategory;
 import com.tcdng.jacklyn.shared.security.BiometricType;
+import com.tcdng.jacklyn.shared.security.data.OSInstallationReqParams;
+import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.application.StartupShutdownHook;
@@ -36,7 +42,74 @@ import com.tcdng.unify.core.operation.Update;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface SecurityService extends JacklynBusinessService, StartupShutdownHook {
+public interface SecurityService extends JacklynBusinessService, StartupShutdownHook, RemoteCallSystemAssetProvider {
+
+    /**
+     * Creates a new client application.
+     * 
+     * @param clientAppLargeData
+     *            the client application data
+     * @return the created client application ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
+
+    /**
+     * Finds an client application by ID.
+     * 
+     * @param id
+     *            the client application ID
+     * @return the client application data
+     * @throws UnifyException
+     *             if client application with ID is not found
+     */
+    ClientAppLargeData findClientApp(Long id) throws UnifyException;
+
+    /**
+     * Finds client applications by query.
+     * 
+     * @param query
+     *            the client application query
+     * @return the list of applications found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException;
+
+    /**
+     * Updates an client application.
+     * 
+     * @param clientAppLargeData
+     *            the client application data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
+
+    /**
+     * Deletes an client application.
+     * 
+     * @param id
+     *            the client application ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteClientApp(Long id) throws UnifyException;
+
+    /**
+     * Processes an OS installation request.
+     * 
+     * @param oSInstallationReqParams
+     *            the OS request parameters
+     * @return the request result
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    OSInstallationReqResult processOSInstallationRequest(OSInstallationReqParams oSInstallationReqParams)
+            throws UnifyException;
 
     /**
      * Creates a biometric record.

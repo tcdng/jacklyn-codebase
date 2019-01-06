@@ -13,23 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.system;
+package com.tcdng.jacklyn.shared.security;
 
 /**
- * System module remote gate name constants.
+ * Security module remote gate name constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface SystemRemoteCallNameConstants {
+public interface SecurityRemoteCallNameConstants {
 
-    String GET_APPLICATION_INFO = "sysGetAppInfo";
-
-    String GET_APPLICATION_MENU = "sysGetAppMenu";
-
-    String GET_APPLICATION_MODULES = "sysGetAppModules";
-
-    String GET_TOOLING_RECORD_TYPES = "sysGetToolingRecordTypes";
-
-    String GET_TOOLING_LIST_TYPES = "sysGetToolingListTypes";
+    String OS_REQUEST_INSTALL = "secOSInstall";
 }

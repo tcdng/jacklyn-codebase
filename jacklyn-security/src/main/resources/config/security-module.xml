@@ -27,6 +27,10 @@
 			<menuitem name="sec-changepassword" caption="$m{security.changepassword.menu.title}"
 				pageCaption="$m{security.changepassword.menu.title}" description="$m{security.menuitem.changepassword}"
 				path="/security/changepassword/openPage" />
+            <menuitem name="sec-manageclientapp" caption="$m{security.clientapp.menu.title}"
+                pageCaption="$m{security.clientapp.manage}"
+                description="$m{security.menuitem.clientapp}" path="/security/clientapp/openPage"
+                remotePath="/security/clientapp/getRemoteDoc" />
 		</menu>
 	</menus>
 	<notification-templates>
@@ -49,6 +53,10 @@
 			<privilege name="sec-resetuserpassword" description="$m{security.privilege.resetpassword}" />
 			<privilege name="sec-forcelogout" description="$m{security.privilege.forcelogout}" />
 			<privilege name="sec-forcelogoutall" description="$m{security.privilege.forcelogoutall}" />
+            <privilege name="sec-clientappadd" description="$m{security.privilege.clientapp.add}" />
+            <privilege name="sec-clientappview" description="$m{security.privilege.clientapp.view}" />
+            <privilege name="sec-clientappedit" description="$m{security.privilege.clientapp.edit}" />
+            <privilege name="sec-clientappdelete" description="$m{security.privilege.clientapp.delete}" />
 		</privilege-group>
 	</privileges>
 	<sys-parameters>

@@ -55,7 +55,7 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
 
     @Override
     public boolean logUserEvent(String eventName, String... details) throws UnifyException {
-        AuditDefinition auditDefinition = db().find(new AuditDefinitionQuery().name(eventName));
+        AuditDefinition auditDefinition = db().find(new AuditDefinitionQuery().name(eventName).installed(Boolean.TRUE));
         if (auditDefinition == null) {
             throw new UnifyException(AuditModuleErrorConstants.AUDITTYPE_IS_UNKNOWN, eventName);
         }
@@ -70,8 +70,9 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
 
     @Override
     public boolean logUserEvent(EventType eventType, Class<? extends Entity> entityClass) throws UnifyException {
-        AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery().recordName(entityClass.getName())
-                .eventType(eventType).status(RecordStatus.ACTIVE));
+        AuditDefinition auditDefinitionData =
+                db().find(new AuditDefinitionQuery().recordName(entityClass.getName()).eventType(eventType)
+                        .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
         if (auditDefinitionData != null) {
             createAuditTrail(auditDefinitionData.getId(), null, null);
             return true;
@@ -81,19 +82,22 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
 
     @Override
     public boolean logUserEvent(EventType eventType, Entity record, boolean isNewRecord) throws UnifyException {
-        AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery()
-                .recordName(record.getClass().getName()).eventType(eventType).status(RecordStatus.ACTIVE));
+        AuditDefinition auditDefinitionData =
+                db().find(new AuditDefinitionQuery().recordName(record.getClass().getName()).eventType(eventType)
+                        .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
         if (auditDefinitionData != null) {
             Long auditTypeId = auditDefinitionData.getAuditTypeId();
             String[] narration = null;
             if (isNewRecord) {
-                List<AuditField> auditFieldList = db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId));
+                List<AuditField> auditFieldList =
+                        db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId).installed(Boolean.TRUE));
                 narration = new String[auditFieldList.size()];
                 for (int i = 0; i < narration.length; i++) {
                     AuditField auditFieldData = auditFieldList.get(i);
                     String name = auditFieldData.getFieldName();
-                    String auditValue = convert(String.class, ReflectUtils.getBeanProperty(record, name),
-                            auditFieldData.getFormatter());
+                    String auditValue =
+                            convert(String.class, ReflectUtils.getBeanProperty(record, name),
+                                    auditFieldData.getFormatter());
                     narration[i] = getApplicationMessage("eventloggerservice.narration.message.new", name, auditValue);
                 }
             }
@@ -111,12 +115,14 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
                     oldRecord.getClass(), newRecord.getClass());
         }
 
-        AuditDefinition auditDefinitionData = db().find(new AuditDefinitionQuery()
-                .recordName(oldRecord.getClass().getName()).eventType(eventType).status(RecordStatus.ACTIVE));
+        AuditDefinition auditDefinitionData =
+                db().find(new AuditDefinitionQuery().recordName(oldRecord.getClass().getName()).eventType(eventType)
+                        .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
         if (auditDefinitionData != null) {
             Long auditTypeId = auditDefinitionData.getAuditTypeId();
             List<String> narrationList = new ArrayList<String>();
-            List<AuditField> list = db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId));
+            List<AuditField> list =
+                    db().findAll(new AuditFieldQuery().auditTypeId(auditTypeId).installed(Boolean.TRUE));
             for (AuditField auditFieldData : list) {
                 String name = auditFieldData.getFieldName();
                 Object oldValue = ReflectUtils.getBeanProperty(oldRecord, auditFieldData.getFieldName());

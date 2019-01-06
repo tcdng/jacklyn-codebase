@@ -19,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
-import com.tcdng.jacklyn.common.business.RemoteCallSystemAssetProvider;
-import com.tcdng.jacklyn.shared.system.data.OSInstallationReqParams;
-import com.tcdng.jacklyn.shared.system.data.OSInstallationReqResult;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
 import com.tcdng.jacklyn.system.data.SystemControlState;
@@ -32,9 +29,6 @@ import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
-import com.tcdng.jacklyn.system.entities.ClientApp;
-import com.tcdng.jacklyn.system.entities.ClientAppLargeData;
-import com.tcdng.jacklyn.system.entities.ClientAppQuery;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
@@ -63,7 +57,7 @@ import com.tcdng.unify.core.ui.Tile;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface SystemService extends JacklynBusinessService, StartupShutdownHook, RemoteCallSystemAssetProvider {
+public interface SystemService extends JacklynBusinessService, StartupShutdownHook {
     /**
      * Creates a new authentication.
      * 
@@ -754,73 +748,6 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     List<Long> findSystemAssetIds(SystemAssetQuery query) throws UnifyException;
-
-    /**
-     * Creates a new client application.
-     * 
-     * @param clientAppLargeData
-     *            the client application data
-     * @return the created client application ID
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    Long createClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
-
-    /**
-     * Finds an client application by ID.
-     * 
-     * @param id
-     *            the client application ID
-     * @return the client application data
-     * @throws UnifyException
-     *             if client application with ID is not found
-     */
-    ClientAppLargeData findClientApp(Long id) throws UnifyException;
-
-    /**
-     * Finds client applications by query.
-     * 
-     * @param query
-     *            the client application query
-     * @return the list of applications found
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException;
-
-    /**
-     * Updates an client application.
-     * 
-     * @param clientAppLargeData
-     *            the client application data
-     * @return the update count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int updateClientApp(ClientAppLargeData clientAppLargeData) throws UnifyException;
-
-    /**
-     * Deletes an client application.
-     * 
-     * @param id
-     *            the client application ID
-     * @return the delete count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int deleteClientApp(Long id) throws UnifyException;
-
-    /**
-     * Processes an OS installation request.
-     * 
-     * @param oSInstallationReqParams
-     *            the OS request parameters
-     * @return the request result
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    OSInstallationReqResult processOSInstallationRequest(OSInstallationReqParams oSInstallationReqParams)
-            throws UnifyException;
 
     /**
      * Finds all tooling record types.
