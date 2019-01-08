@@ -31,6 +31,7 @@ import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.shared.SharedUtils;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
@@ -46,7 +47,10 @@ import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
 import com.tcdng.jacklyn.system.constants.SystemSchedTaskConstants;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
+import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
+import com.tcdng.jacklyn.system.data.DashboardLayerDef;
+import com.tcdng.jacklyn.system.data.DashboardPortletDef;
 import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.data.SystemControlState;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
@@ -56,6 +60,8 @@ import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
 import com.tcdng.jacklyn.system.entities.Dashboard;
+import com.tcdng.jacklyn.system.entities.DashboardLayer;
+import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
@@ -92,6 +98,8 @@ import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
+import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
 import com.tcdng.unify.core.database.Entity;
@@ -115,6 +123,7 @@ import com.tcdng.unify.core.ui.MenuItemSet;
 import com.tcdng.unify.core.ui.MenuLoader;
 import com.tcdng.unify.core.ui.MenuSet;
 import com.tcdng.unify.core.ui.Tile;
+import com.tcdng.unify.core.upl.UplUtils;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
@@ -148,8 +157,66 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     private Date workingDt;
 
+    private FactoryMap<String, DashboardDef> dashboards;
+
     public SystemServiceImpl() {
         triggeredTaskInfoMap = new ConcurrentHashMap<Long, TaskInfo>();
+
+        dashboards = new FactoryMap<String, DashboardDef>(true) {
+
+            @Override
+            protected boolean stale(String name, DashboardDef dashboardDef) throws Exception {
+                boolean stale = false;
+                try {
+                    Date updateDt = db().value(Date.class, "updateDt", new DashboardQuery().name(name));
+                    stale = !updateDt.equals(dashboardDef.getTimestamp());
+                } catch (Exception e) {
+                    logError(e);
+                }
+
+                return stale;
+            }
+
+            @Override
+            protected DashboardDef create(String name, Object... params) throws Exception {
+                Dashboard dashboard = db().find(new DashboardQuery().name(name));
+                if (dashboard == null) {
+                    throw new UnifyException(SystemModuleErrorConstants.DASHBOARD_NAME_UNKNOWN, name);
+                }
+
+                Map<String, List<DashboardPortletDef>> portletDefs = new HashMap<String, List<DashboardPortletDef>>();
+                for (DashboardPortlet dashboardPortlet : dashboard.getPortletList()) {
+                    List<DashboardPortletDef> portletList = portletDefs.get(dashboardPortlet.getLayerName());
+                    if (portletList == null) {
+                        portletList = new ArrayList<DashboardPortletDef>();
+                        portletDefs.put(dashboardPortlet.getLayerName(), portletList);
+                    }
+
+                    String dimension =
+                            SharedUtils.getDimensionString(dashboardPortlet.getDimension(),
+                                    dashboardPortlet.getDimensionType());
+                    long refreshMillSec =
+                            dashboardPortlet.getRefreshPeriod() != null ? CalendarUtils.getMilliSecondsByFrequency(
+                                    FrequencyUnit.SECOND, dashboardPortlet.getRefreshPeriod()) : 0L;
+                    portletList.add(new DashboardPortletDef(dashboardPortlet.getName(), dashboardPortlet.getPanelName(),
+                            dimension, refreshMillSec));
+                }
+
+                List<DashboardLayerDef> layerList = new ArrayList<DashboardLayerDef>();
+                for (DashboardLayer dashboardLayer : dashboard.getLayerList()) {
+                    String dimension =
+                            SharedUtils.getDimensionString(dashboardLayer.getDimension(),
+                                    dashboardLayer.getDimensionType());
+                    layerList.add(new DashboardLayerDef(dashboardLayer.getName(), dimension,
+                            DataUtils.unmodifiableList(portletDefs.get(dashboardLayer.getName()))));
+                }
+
+                String dashboardViewer =
+                        UplUtils.generateUplGeneratorTargetName("dashboard-generator", dashboard.getName());
+                return new DashboardDef(dashboard.getName(), dashboard.getOrientationType(), dashboard.getUpdateDt(),
+                        DataUtils.unmodifiableList(layerList), dashboardViewer);
+            }
+        };
     }
 
     @Override
@@ -181,6 +248,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public Long createAuthentication(AuthenticationLargeData authenticationFormData) throws UnifyException {
         Authentication authentication = getEncryptedAuthentication(authenticationFormData);
         return (Long) db().create(authentication);
+    }
+
+    @Override
+    public DashboardDef getRuntimeDashboardDef(String name) throws UnifyException {
+        return dashboards.get(name);
     }
 
     @Override

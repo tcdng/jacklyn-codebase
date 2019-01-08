@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.system.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntityQuery;
 
 /**
  * Query class for dashboards.
@@ -23,7 +23,7 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class DashboardQuery extends BaseVersionedStatusEntityQuery<Dashboard> {
+public class DashboardQuery extends BaseVersionedTimestampedStatusEntityQuery<Dashboard> {
 
     public DashboardQuery() {
         super(Dashboard.class);
@@ -37,6 +37,10 @@ public class DashboardQuery extends BaseVersionedStatusEntityQuery<Dashboard> {
     @Override
     public DashboardQuery select(String field) {
         return (DashboardQuery) super.select(field);
+    }
+
+    public DashboardQuery name(String name) {
+        return (DashboardQuery) equals("name", name);
     }
 
     public DashboardQuery nameLike(String name) {

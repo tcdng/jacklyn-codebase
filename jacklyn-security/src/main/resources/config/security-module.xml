@@ -125,5 +125,11 @@
 		<sys-parameter name="SEC-0015"
 			defaultValue="Administrator" description="$m{security.sysparam.administratorname}"
 			editor="!ui-text size:24"/>
+        <sys-parameter name="SEC-0016"
+            defaultValue="ui-defaultdashboardviewer" description="$m{security.sysparam.defaultdashboardviewer}"
+            editor="!ui-text size:48"/>
+        <sys-parameter name="SEC-0017"
+            defaultValue="ui-defaultsystemdashboardviewer" description="$m{security.sysparam.defaultsystemdashboardviewer}"
+            editor="!ui-text size:48"/>
 	</sys-parameters>
 </module>

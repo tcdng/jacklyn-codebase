@@ -7,7 +7,6 @@
 !ui-formpanel:formPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
     formSection:$f{formSection}
     formColumns:$f{formColumns}
-
     
 // Validations
 !ui-validation:formValidation components:$c{formPanel}

@@ -195,6 +195,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return db().delete(Role.class, id);
     }
 
+    @Override
+    public String getRoleDashboard(String roleName) throws UnifyException {
+        return db().value(String.class, "dashboardName", new RoleQuery().name(roleName));
+    }
+
     @Synchronized("register-privilege-category")
     @Override
     public Long registerPrivilegeCategory(String categoryName, String descriptionKey) throws UnifyException {

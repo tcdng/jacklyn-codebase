@@ -55,4 +55,7 @@ public interface SystemModuleErrorConstants {
 
     /** Application asset is inactive. Application name = {0}, Asset name = {1} */
     String APPLICATION_ASSET_INACTIVE = "SYSTEM_0009";
+
+    /** Dashboard with name {0} is unknown*/
+    String DASHBOARD_NAME_UNKNOWN = "SYSTEM_000A";
 }

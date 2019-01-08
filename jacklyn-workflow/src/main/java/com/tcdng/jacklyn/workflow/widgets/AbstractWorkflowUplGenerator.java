@@ -48,8 +48,8 @@ public abstract class AbstractWorkflowUplGenerator extends AbstractUplGenerator 
     @Override
     protected void generateBody(StringBuilder sb, String target) throws UnifyException {
         WfFormDef wfFormDef = workflowService.getRuntimeWfFormDef(target);
-        wfFormDef.read(); // Indicate generation has been done for this document instance
         doGenerateBody(sb, wfFormDef);
+        wfFormDef.read(); // Indicate generation has been done for this document instance
     }
 
     protected WorkflowService getWorkflowModule() {

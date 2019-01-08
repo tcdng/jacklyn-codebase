@@ -6,7 +6,7 @@
     searchByList:$c{searchName searchDescription searchDepartmentId searchStatus}
     searchClearList:$c{searchName searchDescription searchDepartmentId searchStatus}
     tableColumnList:$c{departmentDesc name description activeAfter activeBefore statusDesc}
-    formSection:$d{!ui-section caption:$m{organization.role.section.basicdetails} components:$c{frmName frmDescription frmDepartment frmApplication frmTheme frmStatus}}
+    formSection:$d{!ui-section caption:$m{organization.role.section.basicdetails} components:$c{frmName frmDescription frmDepartment frmApplication frmDashboard frmTheme frmStatus}}
     formSection:$d{!ui-section caption:$m{organization.role.section.schedule} components:$c{frmActiveAfter frmActiveBefore}}
     formSection:$d{!ui-section caption:$m{organization.role.section.privileges} components:$c{frmPrivilegeAttachment}}
     formSection:$d{!ui-section caption:$m{organization.role.section.steps} components:$c{frmStepAttachment}}
@@ -41,6 +41,7 @@
 !ui-time:frmActiveAfter caption:$m{organization.role.activeafter} binding:data.activeAfter clearable:true
 !ui-time:frmActiveBefore caption:$m{organization.role.activebefore} binding:data.activeBefore clearable:true
 !ui-select:frmApplication caption:$m{organization.role.application} binding:data.application list:webapplicationlist blankOption:$s{}
+!ui-select:frmDashboard caption:$m{organization.role.dashboard} binding:data.dashboardId list:dashboardlist blankOption:$s{}
 !ui-select:frmTheme caption:$m{organization.role.theme} binding:data.themeId list:themelist blankOption:$s{}
 !ui-select:frmStatus caption:$m{organization.role.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
 

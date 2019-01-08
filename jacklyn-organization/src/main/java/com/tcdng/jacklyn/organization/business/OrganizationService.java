@@ -255,6 +255,17 @@ public interface OrganizationService extends JacklynBusinessService {
     int deleteRole(Long id) throws UnifyException;
 
     /**
+     * Gets the supplied role dashboard.
+     * 
+     * @param roleName
+     *            the role name
+     * @return the dashboard entity name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String getRoleDashboard(String roleName) throws UnifyException;
+
+    /**
      * Registers a privilege category. Performs an update if existing otherwise
      * creates a new record.
      * 

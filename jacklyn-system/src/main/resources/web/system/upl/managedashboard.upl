@@ -35,8 +35,8 @@
 !ui-select:frmStatus caption:$m{system.dashboard.status} binding:status required:true
     list:recordstatuslist blankOption:$s{}
 
-!ui-dashboardlayercrudpanel:frmLayerListPanel crudTableStyle:$s{width:80%;}
-!ui-dashboardportletcrudpanel:frmPortletListPanel crudTableStyle:$s{width:80%;}
+!ui-dashboardlayercrudpanel:frmLayerListPanel crudTableStyle:$s{width:80%;} createNext:true
+!ui-dashboardportletcrudpanel:frmPortletListPanel crudTableStyle:$s{width:80%;} createNext:true
     portletLayerList:largeData.layerList
 
 //Validations
