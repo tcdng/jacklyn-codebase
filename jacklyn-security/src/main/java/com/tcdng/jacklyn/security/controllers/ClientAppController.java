@@ -19,8 +19,8 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
+import com.tcdng.jacklyn.security.data.ClientAppLargeData;
 import com.tcdng.jacklyn.security.entities.ClientApp;
-import com.tcdng.jacklyn.security.entities.ClientAppLargeData;
 import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.jacklyn.shared.system.ClientAppType;
 import com.tcdng.unify.core.UnifyException;

@@ -1,0 +1,20 @@
+// UPL template for dashboard layer CRUD panel
+// Copyright 2018 The Code Department
+!ui-dashboardlayercrudpanel
+    formSection:$d{!ui-section components:$c{frmName frmDescription frmDimension frmDimensionType}}
+    tableColumnList:$c{name description dimension dimensionTypeDesc}
+
+//Table columns
+!ui-label:name caption:$m{system.dashboard.dashboardlayer.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{system.dashboard.dashboardlayer.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:dimension caption:$m{system.dashboard.dashboardlayer.dimension} binding:dimension columnStyle:$s{width:120px;} sortable:true
+!ui-label:dimensionTypeDesc caption:$m{system.dashboard.dashboardlayer.dimensiontype} binding:dimensionTypeDesc columnStyle:$s{width:120px;} sortable:true
+
+//Form components
+!ui-name:frmName caption:$m{system.dashboard.dashboardlayer.name} binding:name size:32 required:true focus:true
+!ui-text:frmDescription caption:$m{system.dashboard.dashboardlayer.description} binding:description size:40 required:true
+!ui-integer:frmDimension caption:$m{system.dashboard.dashboardlayer.dimension} binding:dimension size:16
+    precision:4
+!ui-select:frmDimensionType caption:$m{system.dashboard.dashboardlayer.dimensiontype} binding:dimensionType
+    list:dimensiontypelist blankOption:$s{}
+    

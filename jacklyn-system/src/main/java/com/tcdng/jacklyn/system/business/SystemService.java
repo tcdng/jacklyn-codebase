@@ -21,16 +21,18 @@ import java.util.Map;
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
+import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
+import com.tcdng.jacklyn.system.data.DashboardLargeData;
+import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.data.SystemControlState;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItem;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItemQuery;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
-import com.tcdng.jacklyn.system.entities.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
-import com.tcdng.jacklyn.system.entities.ShortcutTile;
-import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.entities.Dashboard;
+import com.tcdng.jacklyn.system.entities.DashboardQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -38,8 +40,9 @@ import com.tcdng.jacklyn.system.entities.ModuleQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTask;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
-import com.tcdng.jacklyn.system.entities.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.jacklyn.system.entities.SystemParameter;
@@ -58,6 +61,62 @@ import com.tcdng.unify.core.ui.Tile;
  * @since 1.0
  */
 public interface SystemService extends JacklynBusinessService, StartupShutdownHook {
+
+    /**
+     * Creates a new dashboard.
+     * 
+     * @param dashboardLargeData
+     *            the dashboard data
+     * @return the created dashboard ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createDashboard(DashboardLargeData dashboardLargeData) throws UnifyException;
+
+    /**
+     * Finds a dashboard by ID.
+     * 
+     * @param id
+     *            the dashboard ID
+     * @return the dashboard data
+     * @throws UnifyException
+     *             if dashboard with ID is not found
+     */
+    DashboardLargeData findDashboard(Long id) throws UnifyException;
+
+    /**
+     * Finds dashboards by query.
+     * 
+     * @param query
+     *            the dashboard query
+     * @return the list of applications found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Dashboard> findDashboards(DashboardQuery query) throws UnifyException;
+
+    /**
+     * Updates an dashboard.
+     * 
+     * @param dashboardLargeData
+     *            the dashboard data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateDashboard(DashboardLargeData dashboardLargeData) throws UnifyException;
+
+    /**
+     * Deletes an dashboard.
+     * 
+     * @param id
+     *            the dashboard ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteDashboard(Long id) throws UnifyException;
+    
     /**
      * Creates a new authentication.
      * 

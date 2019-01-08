@@ -19,9 +19,9 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.business.RemoteCallSystemAssetProvider;
+import com.tcdng.jacklyn.security.data.ClientAppLargeData;
 import com.tcdng.jacklyn.security.data.UserLargeData;
 import com.tcdng.jacklyn.security.entities.ClientApp;
-import com.tcdng.jacklyn.security.entities.ClientAppLargeData;
 import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserQuery;
@@ -78,7 +78,7 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     List<ClientApp> findClientApps(ClientAppQuery query) throws UnifyException;
 
     /**
-     * Updates an client application.
+     * Updates a client application.
      * 
      * @param clientAppLargeData
      *            the client application data

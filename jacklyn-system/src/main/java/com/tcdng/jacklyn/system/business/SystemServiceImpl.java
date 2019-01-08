@@ -45,14 +45,18 @@ import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
 import com.tcdng.jacklyn.system.constants.SystemSchedTaskConstants;
+import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
+import com.tcdng.jacklyn.system.data.DashboardLargeData;
+import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.data.SystemControlState;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItem;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItemQuery;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
 import com.tcdng.jacklyn.system.entities.Authentication;
-import com.tcdng.jacklyn.system.entities.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
+import com.tcdng.jacklyn.system.entities.Dashboard;
+import com.tcdng.jacklyn.system.entities.DashboardQuery;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
@@ -62,7 +66,6 @@ import com.tcdng.jacklyn.system.entities.ModuleQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTask;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
-import com.tcdng.jacklyn.system.entities.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
 import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
@@ -147,6 +150,31 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     public SystemServiceImpl() {
         triggeredTaskInfoMap = new ConcurrentHashMap<Long, TaskInfo>();
+    }
+
+    @Override
+    public Long createDashboard(DashboardLargeData dashboardLargeData) throws UnifyException {
+        return (Long) db().create(dashboardLargeData.getData());
+    }
+
+    @Override
+    public DashboardLargeData findDashboard(Long id) throws UnifyException {
+        return new DashboardLargeData(db().list(Dashboard.class, id));
+    }
+
+    @Override
+    public List<Dashboard> findDashboards(DashboardQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateDashboard(DashboardLargeData dashboardLargeData) throws UnifyException {
+        return db().updateByIdVersion(dashboardLargeData.getData());
+    }
+
+    @Override
+    public int deleteDashboard(Long id) throws UnifyException {
+        return db().delete(Dashboard.class, id);
     }
 
     @Override

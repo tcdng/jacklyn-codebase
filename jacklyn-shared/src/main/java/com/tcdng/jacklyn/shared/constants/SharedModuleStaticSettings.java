@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared;
+package com.tcdng.jacklyn.shared.constants;
 
 import com.tcdng.unify.core.AbstractUnifyStaticSettings;
 import com.tcdng.unify.core.annotation.AutoDetect;

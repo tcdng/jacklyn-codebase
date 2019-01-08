@@ -14,9 +14,10 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.system.entities;
+package com.tcdng.jacklyn.system.data;
 
 import com.tcdng.jacklyn.common.entities.BaseLargeData;
+import com.tcdng.jacklyn.system.entities.Authentication;
 
 /**
  * Authentication large data.

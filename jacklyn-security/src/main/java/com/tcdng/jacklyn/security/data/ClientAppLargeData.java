@@ -14,11 +14,12 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.entities;
+package com.tcdng.jacklyn.security.data;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.entities.BaseLargeData;
+import com.tcdng.jacklyn.security.entities.ClientApp;
 
 /**
  * Client application large data.
