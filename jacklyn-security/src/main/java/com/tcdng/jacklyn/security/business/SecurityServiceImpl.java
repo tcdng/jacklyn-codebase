@@ -551,6 +551,24 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public String getCurrentUserRoleDashboardViewer() throws UnifyException {
+        UserToken userToken = getUserToken();
+        if (!userToken.isReservedUser()) {
+            String dashboardName = organizationService.getRoleDashboard(getUserToken().getRoleCode());
+            if (!StringUtils.isBlank(dashboardName)) {
+                return systemService.getRuntimeDashboardDef(dashboardName).getViewer();
+            }
+
+            return systemService.getSysParameterValue(String.class,
+                    SecurityModuleSysParamConstants.DEFAULT_DASHBOARD_VIEWER);
+        }
+
+        // Get system default viewer from system parameter
+        return systemService.getSysParameterValue(String.class,
+                SecurityModuleSysParamConstants.DEFAULT_SYSTEM_DASHBOARD_VIEWER);
+    }
+
+    @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         logInfo("Managing security...");
         if (db().countAll(new UserQuery().id(SystemReservedUserConstants.SYSTEM_ID)) == 0) {

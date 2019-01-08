@@ -20,6 +20,7 @@ import java.util.Date;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
+import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.Theme;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
@@ -43,6 +44,9 @@ public class Role extends BaseVersionedStatusEntity {
     @ForeignKey(Department.class)
     private Long departmentId;
 
+    @ForeignKey(type = Dashboard.class, nullable = true)
+    private Long dashboardId;
+
     @ForeignKey(type = Theme.class, nullable = true)
     private Long themeId;
 
@@ -63,6 +67,9 @@ public class Role extends BaseVersionedStatusEntity {
 
     @ListOnly(key = "departmentId", property = "description")
     private String departmentDesc;
+    
+    @ListOnly(key = "dashboardId", property = "name")
+    private String dashboardName;
 
     @ListOnly(key = "themeId", property = "description")
     private String themeDesc;
@@ -81,6 +88,14 @@ public class Role extends BaseVersionedStatusEntity {
 
     public void setThemeId(Long themeId) {
         this.themeId = themeId;
+    }
+
+    public Long getDashboardId() {
+        return dashboardId;
+    }
+
+    public void setDashboardId(Long dashboardId) {
+        this.dashboardId = dashboardId;
     }
 
     public String getName() {
@@ -129,6 +144,14 @@ public class Role extends BaseVersionedStatusEntity {
 
     public void setThemeDesc(String themeDesc) {
         this.themeDesc = themeDesc;
+    }
+
+    public String getDashboardName() {
+        return dashboardName;
+    }
+
+    public void setDashboardName(String dashboardName) {
+        this.dashboardName = dashboardName;
     }
 
     public String getDepartmentDesc() {

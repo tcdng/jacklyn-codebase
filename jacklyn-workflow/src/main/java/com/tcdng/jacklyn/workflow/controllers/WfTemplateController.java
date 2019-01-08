@@ -37,14 +37,14 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wftemplate")
 @UplBinding("web/workflow/upl/managewftemplate.upl")
-@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmWfStepListPanel", field = "largeData.stepList"),
-        @CrudPanelList(panel = "frmWfEnrichmentListPanel", field = "largeData.enrichmentList"),
-        @CrudPanelList(panel = "frmWfRoutingListPanel", field = "largeData.routingList"),
-        @CrudPanelList(panel = "frmWfUserActionListPanel", field = "largeData.userActionList"),
-        @CrudPanelList(panel = "frmWfRecordActionListPanel", field = "largeData.recordActionList"),
-        @CrudPanelList(panel = "frmWfFormPrivilegeListPanel", field = "largeData.formPrivilegeList"),
-        @CrudPanelList(panel = "frmWfPolicyListPanel", field = "largeData.policyList"),
-        @CrudPanelList(panel = "frmWfAlertListPanel", field = "largeData.alertList") })
+@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmWfStepListPanel", property = "largeData.stepList"),
+        @CrudPanelList(panel = "frmWfEnrichmentListPanel", property = "largeData.enrichmentList"),
+        @CrudPanelList(panel = "frmWfRoutingListPanel", property = "largeData.routingList"),
+        @CrudPanelList(panel = "frmWfUserActionListPanel", property = "largeData.userActionList"),
+        @CrudPanelList(panel = "frmWfRecordActionListPanel", property = "largeData.recordActionList"),
+        @CrudPanelList(panel = "frmWfFormPrivilegeListPanel", property = "largeData.formPrivilegeList"),
+        @CrudPanelList(panel = "frmWfPolicyListPanel", property = "largeData.policyList"),
+        @CrudPanelList(panel = "frmWfAlertListPanel", property = "largeData.alertList") })
 public class WfTemplateController extends AbstractWorkflowCrudController<WfTemplate> {
 
     private Long searchWfCategoryId;

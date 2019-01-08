@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.system.controllers;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
+import com.tcdng.jacklyn.common.annotation.SessionAttr;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
@@ -37,8 +38,12 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/dashboard")
 @UplBinding("web/system/upl/managedashboard.upl")
-@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmLayerListPanel", field = "largeData.layerList"),
-        @CrudPanelList(panel = "frmPortletListPanel", field = "largeData.portletList") })
+@SessionLoading(
+        sessionAttributes = {
+                @SessionAttr(name = "largeData.layerList", property = "largeData.layerList") },
+        crudPanelLists = {
+                @CrudPanelList(panel = "frmLayerListPanel", property = "largeData.layerList"),
+                @CrudPanelList(panel = "frmPortletListPanel", property = "largeData.portletList") })
 public class DashboardController extends AbstractSystemCrudController<Dashboard> {
 
     private String searchName;

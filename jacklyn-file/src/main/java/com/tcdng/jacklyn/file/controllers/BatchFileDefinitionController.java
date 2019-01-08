@@ -38,7 +38,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/file/batchfiledefinition")
 @UplBinding("web/file/upl/managebatchfiledefinition.upl")
-@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", field = "record.fieldDefList") })
+@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", property = "record.fieldDefList") })
 public class BatchFileDefinitionController extends AbstractFileCrudController<BatchFileDefinition> {
 
     private String searchName;

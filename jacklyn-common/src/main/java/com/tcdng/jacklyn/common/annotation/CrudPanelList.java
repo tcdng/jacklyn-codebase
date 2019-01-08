@@ -30,6 +30,6 @@ public @interface CrudPanelList {
     /** The CRUD panel short name */
     String panel();
 
-    /** The bean list field name */
-    String field();
+    /** The list property name */
+    String property();
 }

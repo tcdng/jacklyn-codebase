@@ -367,4 +367,12 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      *             if an error occurs
      */
     void setCurrentUserRole(Long userRoleId) throws UnifyException;
+
+    /**
+     * Returns the current user role dashboard viewer component.
+     * 
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String getCurrentUserRoleDashboardViewer() throws UnifyException;
 }

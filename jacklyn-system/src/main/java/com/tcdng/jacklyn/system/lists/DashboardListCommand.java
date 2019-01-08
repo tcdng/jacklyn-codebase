@@ -13,39 +13,34 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.security.controllers;
 
+package com.tcdng.jacklyn.system.lists;
+
+import java.util.List;
+import java.util.Locale;
+
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.system.entities.DashboardQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.data.Listable;
+import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * Dashboard controller.
+ * Dashboard list command.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/security/landing")
-@UplBinding("web/security/upl/dashboardlanding.upl")
-public class DashboardController extends AbstractSecurityController {
-
-    private String dashboardViewer;
-
-    public DashboardController() {
-        super(true, false);// Secure and read-only
-    }
-
-    public String getDashboardViewer() {
-        return dashboardViewer;
-    }
+@Component("dashboardlist")
+public class DashboardListCommand extends AbstractZeroParamsSystemListCommand {
 
     @Override
-    protected void onIndexPage() throws UnifyException {
-        super.onIndexPage();
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        DashboardQuery query = new DashboardQuery();
+        query.status(RecordStatus.ACTIVE);
+        query.order("description");
+        return getSystemService().findDashboards(query);
     }
 
-    @Override
-    protected void onOpenPage() throws UnifyException {
-        super.onOpenPage();
-    }
 }

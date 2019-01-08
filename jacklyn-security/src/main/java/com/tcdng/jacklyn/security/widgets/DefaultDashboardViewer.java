@@ -13,23 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.common.annotation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+package com.tcdng.jacklyn.security.widgets;
+
+import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
 
 /**
- * Annotation used for specifying assisted session attribute loading.
+ * Default dashboard viewer.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface SessionAttr {
+@Component("ui-defaultdashboardviewer")
+@UplBinding("web/security/defaultdashboardviewer.upl")
+public class DefaultDashboardViewer extends AbstractStandalonePanel {
 
-    /** The attribute name */
-    String name();
-
-    /** The property name */
-    String property();
 }

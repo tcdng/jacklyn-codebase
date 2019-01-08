@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.system.entities;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
+import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntity;
 import com.tcdng.jacklyn.shared.constants.OrientationType;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.ChildList;
@@ -37,7 +37,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Dashboard", reportable = true, auditable = true)
 @Table(name = "DASHBOARD", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
-public class Dashboard extends BaseVersionedStatusEntity {
+public class Dashboard extends BaseVersionedTimestampedStatusEntity {
 
     @ForeignKey
     private OrientationType orientationType;

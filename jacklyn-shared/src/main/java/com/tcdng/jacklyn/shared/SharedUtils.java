@@ -13,23 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.common.annotation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+package com.tcdng.jacklyn.shared;
+
+import com.tcdng.jacklyn.shared.constants.DimensionType;
 
 /**
- * Annotation used for specifying assisted session attribute loading.
+ * Sharesd module utilities.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface SessionAttr {
+public final class SharedUtils {
 
-    /** The attribute name */
-    String name();
-
-    /** The property name */
-    String property();
+    private SharedUtils() {
+        
+    }
+    
+    public static String getDimensionString(Integer quantity, DimensionType dimensionType) {
+        if (quantity != null && dimensionType != null) {
+            return String.valueOf(quantity) + dimensionType.symbol();
+        }
+        
+        return "";
+    }
 }

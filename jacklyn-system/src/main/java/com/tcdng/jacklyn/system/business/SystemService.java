@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
+import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
 import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.data.SystemControlState;
@@ -116,6 +117,17 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     int deleteDashboard(Long id) throws UnifyException;
+
+    /**
+     * Gets runtime dashboard definition.
+     * 
+     * @param name
+     *            the dashboard name
+     * @return the runtime object
+     * @throws UnifyException
+     *             if dashboard with name is unknown.
+     */
+    DashboardDef getRuntimeDashboardDef(String name) throws UnifyException;
     
     /**
      * Creates a new authentication.

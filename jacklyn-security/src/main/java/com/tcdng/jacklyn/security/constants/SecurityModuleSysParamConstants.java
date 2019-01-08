@@ -64,4 +64,8 @@ public interface SecurityModuleSysParamConstants {
     String ADMINISTRATOR_EMAIL = "SEC-0014";
 
     String ADMINISTRATOR_NAME = "SEC-0015";
+
+    String DEFAULT_DASHBOARD_VIEWER = "SEC-0016";
+
+    String DEFAULT_SYSTEM_DASHBOARD_VIEWER = "SEC-0017";
 }

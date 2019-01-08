@@ -57,12 +57,12 @@ public class PageControllerSessionUtilsImpl extends AbstractUnifyComponent imple
                 if (slsa != null) {
                     Map<String, String> setAttributeConfigs = new HashMap<String, String>();
                     for (SessionAttr saa : slsa.sessionAttributes()) {
-                        setAttributeConfigs.put(saa.name(), saa.field());
+                        setAttributeConfigs.put(saa.name(), saa.property());
                     }
 
                     Map<String, String> crudPanelConfigs = new HashMap<String, String>();
                     for (CrudPanelList cpl : slsa.crudPanelLists()) {
-                        crudPanelConfigs.put(cpl.panel(), cpl.field());
+                        crudPanelConfigs.put(cpl.panel(), cpl.property());
                     }
 
                     sessionLoadingConfig = new SessionLoadingConfig(setAttributeConfigs, crudPanelConfigs);
