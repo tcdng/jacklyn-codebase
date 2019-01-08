@@ -37,6 +37,10 @@
 				caption="$m{system.theme.menu.title}" path="/system/theme/openPage"
 				pageCaption="$m{system.theme.manage}"
 				remotePath="/system/theme/getRemoteDoc" />
+            <menuitem name="sys-managedashboard" description="$m{system.menuitem.dashboard}"
+                caption="$m{system.dashboard.menu.title}" path="/system/dashboard/openPage"
+                pageCaption="$m{system.dashboard.manage}"
+                remotePath="/system/dashboard/getRemoteDoc" />
 			<menuitem name="sys-manageinputctrldef" description="$m{system.menuitem.inputctrldef}"
 				caption="$m{system.inputctrldef.menu.title}" path="/system/inputctrldef/openPage"
 				pageCaption="$m{system.inputctrldef.manage}"
@@ -89,6 +93,10 @@
 			<privilege name="sys-themeedit" description="$m{system.privilege.theme.edit}" />
 			<privilege name="sys-themeview" description="$m{system.privilege.theme.view}" />
 			<privilege name="sys-themedelete" description="$m{system.privilege.theme.delete}" />
+            <privilege name="sys-dashboardadd" description="$m{system.privilege.dashboard.add}" />
+            <privilege name="sys-dashboardedit" description="$m{system.privilege.dashboard.edit}" />
+            <privilege name="sys-dashboardview" description="$m{system.privilege.dashboard.view}" />
+            <privilege name="sys-dashboarddelete" description="$m{system.privilege.dashboard.delete}" />
 			<privilege name="sys-menuview" description="$m{system.privilege.menu.view}" />
 			<privilege name="sys-menuedit" description="$m{system.privilege.menu.edit}" />
 			<privilege name="sys-menuitemview" description="$m{system.privilege.menuitem.view}" />

@@ -14,11 +14,20 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.entities;
+package com.tcdng.jacklyn.workflow.data;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.entities.BaseLargeData;
+import com.tcdng.jacklyn.workflow.entities.WfAlert;
+import com.tcdng.jacklyn.workflow.entities.WfEnrichment;
+import com.tcdng.jacklyn.workflow.entities.WfFormPrivilege;
+import com.tcdng.jacklyn.workflow.entities.WfPolicy;
+import com.tcdng.jacklyn.workflow.entities.WfRecordAction;
+import com.tcdng.jacklyn.workflow.entities.WfRouting;
+import com.tcdng.jacklyn.workflow.entities.WfStep;
+import com.tcdng.jacklyn.workflow.entities.WfTemplate;
+import com.tcdng.jacklyn.workflow.entities.WfUserAction;
 
 /**
  * Workflow template large data.

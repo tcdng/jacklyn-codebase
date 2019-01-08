@@ -13,9 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.system.entities;
+package com.tcdng.jacklyn.system.data;
 
 import com.tcdng.jacklyn.common.entities.BaseLargeData;
+import com.tcdng.jacklyn.system.entities.ScheduledTask;
 import com.tcdng.unify.core.data.Inputs;
 
 /**

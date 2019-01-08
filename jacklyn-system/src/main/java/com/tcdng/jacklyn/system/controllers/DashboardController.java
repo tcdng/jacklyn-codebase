@@ -13,30 +13,33 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package com.tcdng.jacklyn.system.controllers;
 
 import java.util.List;
 
+import com.tcdng.jacklyn.common.annotation.CrudPanelList;
+import com.tcdng.jacklyn.common.annotation.SessionLoading;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
-import com.tcdng.jacklyn.system.entities.Authentication;
-import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
+import com.tcdng.jacklyn.system.data.DashboardLargeData;
+import com.tcdng.jacklyn.system.entities.Dashboard;
+import com.tcdng.jacklyn.system.entities.DashboardQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
- * Controller for managing system authentications.
+ * Controller for managing dashboard records.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/system/authentication")
-@UplBinding("web/system/upl/manageauthentication.upl")
-public class AuthenticationController extends AbstractSystemCrudController<Authentication> {
+@Component("/system/dashboard")
+@UplBinding("web/system/upl/managedashboard.upl")
+@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmLayerListPanel", field = "largeData.layerList"),
+        @CrudPanelList(panel = "frmPortletListPanel", field = "largeData.portletList") })
+public class DashboardController extends AbstractSystemCrudController<Dashboard> {
 
     private String searchName;
 
@@ -44,13 +47,12 @@ public class AuthenticationController extends AbstractSystemCrudController<Authe
 
     private RecordStatus searchStatus;
 
-    private AuthenticationLargeData largeData;
+    private DashboardLargeData largeData;
 
-    public AuthenticationController() {
-        super(Authentication.class, "$m{system.authentication.hint}",
-                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
-                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-        largeData = new AuthenticationLargeData();
+    public DashboardController() {
+        super(Dashboard.class, "$m{system.dashboard.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+                | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+        largeData = new DashboardLargeData();
     }
 
     public String getSearchName() {
@@ -77,17 +79,17 @@ public class AuthenticationController extends AbstractSystemCrudController<Authe
         this.searchStatus = searchStatus;
     }
 
-    public AuthenticationLargeData getLargeData() {
+    public DashboardLargeData getLargeData() {
         return largeData;
     }
 
-    public void setLargeData(AuthenticationLargeData largeData) {
+    public void setLargeData(DashboardLargeData largeData) {
         this.largeData = largeData;
     }
 
     @Override
-    protected List<Authentication> find() throws UnifyException {
-        AuthenticationQuery query = new AuthenticationQuery();
+    protected List<Dashboard> find() throws UnifyException {
+        DashboardQuery query = new DashboardQuery();
         if (QueryUtils.isValidStringCriteria(searchName)) {
             query.nameLike(searchName);
         }
@@ -98,43 +100,38 @@ public class AuthenticationController extends AbstractSystemCrudController<Authe
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemService().findAuthentications(query);
+        return getSystemService().findDashboards(query);
     }
 
     @Override
-    protected Authentication find(Long id) throws UnifyException {
-        largeData = getSystemService().findAuthentication(id);
+    protected Dashboard find(Long id) throws UnifyException {
+        largeData = getSystemService().findDashboard(id);
         return largeData.getData();
     }
 
     @Override
-    protected Authentication prepareCreate() throws UnifyException {
-        largeData = new AuthenticationLargeData();
+    protected Dashboard prepareCreate() throws UnifyException {
+        largeData = new DashboardLargeData();
         return largeData.getData();
     }
 
     @Override
-    protected void onPrepareView(Authentication authenticationData, boolean onPaste) throws UnifyException {
-
+    protected void onLoseView(Dashboard dashboardData) throws UnifyException {
+        largeData = new DashboardLargeData();
     }
 
     @Override
-    protected void onLoseView(Authentication authenticationData) throws UnifyException {
-        this.largeData = new AuthenticationLargeData();
+    protected Object create(Dashboard dashboardData) throws UnifyException {
+        return (Long) getSystemService().createDashboard(largeData);
     }
 
     @Override
-    protected Object create(Authentication authenticationData) throws UnifyException {
-        return getSystemService().createAuthentication(largeData);
+    protected int update(Dashboard dashboardData) throws UnifyException {
+        return getSystemService().updateDashboard(largeData);
     }
 
     @Override
-    protected int update(Authentication authenticationData) throws UnifyException {
-        return getSystemService().updateAuthentication(largeData);
-    }
-
-    @Override
-    protected int delete(Authentication authenticationData) throws UnifyException {
-        return getSystemService().deleteAuthentication(authenticationData.getId());
+    protected int delete(Dashboard applicationData) throws UnifyException {
+        return getSystemService().deleteDashboard(applicationData.getId());
     }
 }
