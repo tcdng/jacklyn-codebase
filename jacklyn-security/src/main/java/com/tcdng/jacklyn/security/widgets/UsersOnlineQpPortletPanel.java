@@ -16,18 +16,21 @@
 
 package com.tcdng.jacklyn.security.widgets;
 
+import com.tcdng.jacklyn.system.widgets.AbstractQpDashboardPortletPanel;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.UplAttribute;
+import com.tcdng.unify.core.annotation.UplAttributes;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
 
 /**
- * Default system dashboard viewer.
+ * Users online quick percentage portlet panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-defaultsystemdashboardviewer")
-@UplBinding("web/security/upl/defaultsystemdashboardviewer.upl")
-public class DefaultSystemDashboardViewer extends AbstractStandalonePanel {
+@Component(name = "ui-usersonlineqpportlet", description = "$m{security.usersonline.qpportlet}")
+@UplBinding("web/security/upl/usersonlineqpportletpanel.upl")
+@UplAttributes({ @UplAttribute(name = "provider", type = String.class, defaultValue = "usersonline-qpprovider") })
+public class UsersOnlineQpPortletPanel extends AbstractQpDashboardPortletPanel {
 
 }

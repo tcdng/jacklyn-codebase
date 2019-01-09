@@ -1,0 +1,6 @@
+// UPL template for users online quick percentage portlet panel
+// Copyright 2018 The Code Department
+!ui-usersonlineqpportletpanel
+    qpStyleClass:$e{qpblue}
+    qpTitle:$m{security.usersonline.qpportlet.usersonline}
+    qpTotalTitle:$m{security.usersonline.qpportlet.totalusers}

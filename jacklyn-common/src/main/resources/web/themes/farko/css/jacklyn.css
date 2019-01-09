@@ -130,3 +130,14 @@
 .jk-inspecttext {}
 .jk-inspecttext .lttitle {color: #888;}
 .jk-inspecttext .ltcontent {color: #000;}
+
+.jk-quickpercentage {color: #FFF;min-width:240px;margin:4px;}
+.jk-quickpercentage .qpblue{background-color: #3378C0;padding:8px 12px;}
+.jk-quickpercentage .qptitle{text-align:center; font-size:14px;border-bottom: solid 1px #FFF;
+       margin: 0px 4px;padding-bottom: 12px;}
+.jk-quickpercentage .qpvalue{text-align:center; font-size:4vw; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+.jk-quickpercentage .qpfooter{font-size:10px;}
+.jk-quickpercentage .qpfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+
+
+

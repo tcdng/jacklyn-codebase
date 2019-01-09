@@ -14,20 +14,18 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.system.widgets;
 
-import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
 
 /**
- * Default system dashboard viewer.
+ * Abstract base class for quick percentage dashboard portlet panels.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-defaultsystemdashboardviewer")
-@UplBinding("web/security/upl/defaultsystemdashboardviewer.upl")
-public class DefaultSystemDashboardViewer extends AbstractStandalonePanel {
+
+@UplBinding("web/system/upl/qpdashboardportletpanel.upl")
+public class AbstractQpDashboardPortletPanel extends AbstractStatisticsDashbordPortletPanel {
 
 }

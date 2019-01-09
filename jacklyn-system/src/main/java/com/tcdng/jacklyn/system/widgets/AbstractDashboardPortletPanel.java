@@ -25,7 +25,7 @@ import com.tcdng.unify.web.ui.AbstractPanel;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@UplBinding("web/system/basedashboardportletpanel.upl")
+@UplBinding("web/system/upl/dashboardportletpanel.upl")
 public abstract class AbstractDashboardPortletPanel extends AbstractPanel implements DashboardPortletPanel {
 
 }

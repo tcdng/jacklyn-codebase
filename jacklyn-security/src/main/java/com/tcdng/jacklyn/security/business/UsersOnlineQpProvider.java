@@ -14,20 +14,26 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.security.business;
 
+import com.tcdng.jacklyn.statistics.business.AbstractIntegerQuickPercentageProvider;
+import com.tcdng.jacklyn.statistics.data.IntegerQuickPercentage;
+import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
 
 /**
- * Default system dashboard viewer.
+ * Users online quick percentage provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-defaultsystemdashboardviewer")
-@UplBinding("web/security/upl/defaultsystemdashboardviewer.upl")
-public class DefaultSystemDashboardViewer extends AbstractStandalonePanel {
+@Component("usersonline-qpprovider")
+public class UsersOnlineQpProvider extends AbstractIntegerQuickPercentageProvider {
+
+    @Override
+    public IntegerQuickPercentage provide() throws UnifyException {
+        // TODO Pull real data
+        return new IntegerQuickPercentage(5, 1000);
+    }
 
 }

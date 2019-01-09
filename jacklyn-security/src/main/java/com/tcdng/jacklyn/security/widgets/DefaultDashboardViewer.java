@@ -27,7 +27,7 @@ import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
  * @since 1.0
  */
 @Component("ui-defaultdashboardviewer")
-@UplBinding("web/security/defaultdashboardviewer.upl")
+@UplBinding("web/security/upl/defaultdashboardviewer.upl")
 public class DefaultDashboardViewer extends AbstractStandalonePanel {
 
 }

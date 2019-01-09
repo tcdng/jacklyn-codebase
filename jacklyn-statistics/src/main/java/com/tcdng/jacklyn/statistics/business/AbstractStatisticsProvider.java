@@ -14,20 +14,27 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.statistics.business;
 
-import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
+import com.tcdng.unify.core.AbstractUnifyComponent;
+import com.tcdng.unify.core.UnifyException;
 
 /**
- * Default system dashboard viewer.
+ * Abstract base class for statistics provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-defaultsystemdashboardviewer")
-@UplBinding("web/security/upl/defaultsystemdashboardviewer.upl")
-public class DefaultSystemDashboardViewer extends AbstractStandalonePanel {
+public abstract class AbstractStatisticsProvider<T> extends AbstractUnifyComponent implements StatisticsProvider<T> {
+
+    @Override
+    protected void onInitialize() throws UnifyException {
+
+    }
+
+    @Override
+    protected void onTerminate() throws UnifyException {
+
+    }
 
 }

@@ -17,8 +17,6 @@
 package com.tcdng.jacklyn.statistics.business;
 
 import com.tcdng.jacklyn.statistics.data.QuickPercentage;
-import com.tcdng.unify.core.UnifyComponent;
-import com.tcdng.unify.core.UnifyException;
 
 /**
  * Quick percentage provider component.
@@ -26,7 +24,6 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface QuickPercentageProvider<T extends QuickPercentage<?>> extends UnifyComponent {
+public interface QuickPercentageProvider<T extends QuickPercentage<?>> extends StatisticsProvider<T> {
 
-    T provide() throws UnifyException;
 }

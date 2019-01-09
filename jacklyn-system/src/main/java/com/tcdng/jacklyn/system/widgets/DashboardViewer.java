@@ -27,7 +27,7 @@ import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
  * @since 1.0
  */
 @Component("ui-dashboardviewer")
-@UplBinding("web/workflow/upl/dashboardviewer.upl")
+@UplBinding("web/system/upl/dashboardviewer.upl")
 public class DashboardViewer extends AbstractStandalonePanel {
 
 }

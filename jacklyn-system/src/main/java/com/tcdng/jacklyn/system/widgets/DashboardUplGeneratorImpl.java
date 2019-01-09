@@ -39,9 +39,9 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
         boolean isHorizontalLayers = OrientationType.HORIZONTAL.equals(dashboardDef.getOrientationType());
         if (isHorizontalLayers) {
             // This is not an error. Horizontal layers are rendered by vertical layout.
-            sb.append("!ui-vertical heights:$l{");
+            sb.append("!ui-vertical style:$s{width:100%;} heights:$l{");
         } else {
-            sb.append("!ui-horizontal widths:$l{");
+            sb.append("!ui-horizontal style:$s{height:100%;} widths:$l{");
         }
 
         boolean appendSym = false;
@@ -70,9 +70,9 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
             sb.append("ui-panel:").append(dashboardLayerDef.getName()).append(" layout:$d{");
             if (isHorizontalLayers) {
                 // Horizontal layer portlets are rendered by horizontal layout.
-                sb.append("!ui-horizontal widths:$l{");
+                sb.append("!ui-horizontal style:$s{width:100%;} widths:$l{");
             } else {
-                sb.append("!ui-vertical heights:$l{");
+                sb.append("!ui-vertical style:$s{height:100%;} heights:$l{");
             }
 
             appendSym = false;
