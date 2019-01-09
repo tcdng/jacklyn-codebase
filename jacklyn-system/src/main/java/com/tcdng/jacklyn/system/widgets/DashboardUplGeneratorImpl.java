@@ -39,9 +39,9 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
         boolean isHorizontalLayers = OrientationType.HORIZONTAL.equals(dashboardDef.getOrientationType());
         if (isHorizontalLayers) {
             // This is not an error. Horizontal layers are rendered by vertical layout.
-            sb.append("!ui-vertical style:$s{width:100%;} heights:$l{");
+            sb.append("!ui-vertical style:$s{width:100%;} ");
         } else {
-            sb.append("!ui-horizontal style:$s{height:100%;} widths:$l{");
+            sb.append("!ui-horizontal style:$s{height:100%;} ");
         }
 
         boolean appendSym = false;
@@ -49,25 +49,19 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
         for (DashboardLayerDef dashboardLayerDef : dashboardDef.getLayerList()) {
             if (appendSym) {
                 layerNameSb.append(' ');
-                sb.append(' ');
             } else {
                 appendSym = true;
             }
 
             layerNameSb.append(dashboardLayerDef.getName());
-            if (dashboardLayerDef.isDimension()) {
-                sb.append(dashboardLayerDef.getDimension());
-            } else {
-                sb.append("none");
-            }
         }
-        sb.append("}} components:$c{").append(layerNameSb).append("}");
+        sb.append("} components:$c{").append(layerNameSb).append("}");
         appendNewline(sb);
         appendNewline(sb);
 
         // Layers
         for (DashboardLayerDef dashboardLayerDef : dashboardDef.getLayerList()) {
-            sb.append("ui-panel:").append(dashboardLayerDef.getName()).append(" layout:$d{");
+            sb.append("!ui-panel:").append(dashboardLayerDef.getName()).append(" layout:$d{");
             if (isHorizontalLayers) {
                 // Horizontal layer portlets are rendered by horizontal layout.
                 sb.append("!ui-horizontal style:$s{width:100%;} widths:$l{");
@@ -75,34 +69,65 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
                 sb.append("!ui-vertical style:$s{height:100%;} heights:$l{");
             }
 
+            int availableSections = dashboardLayerDef.getNumberOfSections();
+            int sectionPercentage = 100 / dashboardLayerDef.getNumberOfSections();
+            int usedPercentage = 0;
+
             appendSym = false;
             StringBuilder portletNameSb = new StringBuilder();
+            StringBuilder portletDimSb = new StringBuilder();
             StringBuilder portletsStructSb = new StringBuilder();
             for (DashboardPortletDef dashboardPortletDef : dashboardLayerDef.getPortletList()) {
                 if (appendSym) {
                     portletNameSb.append(' ');
-                    sb.append(' ');
+                    portletDimSb.append(' ');
                 } else {
                     appendSym = true;
                 }
 
-                // Layer info
-                portletNameSb.append(dashboardPortletDef.getName());
-                if (dashboardPortletDef.isDimension()) {
-                    sb.append(dashboardPortletDef.getDimension());
-                } else {
-                    sb.append("none");
-                }
+                if (dashboardPortletDef.getNumberOfSections() <= availableSections) {
+                    availableSections -= dashboardPortletDef.getNumberOfSections();
+                    // Append dimension
+                    int percentage = dashboardPortletDef.getNumberOfSections() * sectionPercentage;
+                    portletDimSb.append(percentage).append('%');
+                    usedPercentage += percentage;
+                    
+                    // Append name
+                    portletNameSb.append(dashboardPortletDef.getName());
 
-                // Portlet structure
-                portletsStructSb.append('!').append(dashboardPortletDef.getPanelName()).append(':')
-                        .append(dashboardPortletDef.getName());
-                if (dashboardPortletDef.isRefreshPeriod()) {
-                    portletsStructSb.append(" refreshEvery:").append(dashboardPortletDef.getRefreshPeriod());
+                    // Append portlet structure
+                    portletsStructSb.append('!').append(dashboardPortletDef.getPanelName()).append(':')
+                            .append(dashboardPortletDef.getName());
+                    if (dashboardPortletDef.isRefreshPeriod()) {
+                        portletsStructSb.append(" refreshEvery:").append(dashboardPortletDef.getRefreshPeriod());
+                    }
+                    appendNewline(portletsStructSb);
+                } else {
+                    break;
                 }
-                appendNewline(portletsStructSb);
             }
-            sb.append("}} components:$c{").append(portletNameSb).append("}");
+            
+            if (usedPercentage < 100) {
+                if (appendSym) {
+                    portletNameSb.append(' ');
+                    portletDimSb.append(' ');
+                }
+                
+                // Append dimension
+               portletDimSb.append(100 - usedPercentage).append('%');
+               
+               // Append name
+               String emptyLabelName = dashboardLayerDef.getName() + "Empty";
+               portletNameSb.append(emptyLabelName);
+                
+               // Append empty structure
+               portletsStructSb.append("!ui-label:").append(emptyLabelName).append(" caption:$s{}");
+               appendNewline(portletsStructSb);
+            }
+            
+            sb.append(portletDimSb).append("}} components:$c{").append(portletNameSb).append("}");
+            appendNewline(sb);
+
             // Portlets
             sb.append(portletsStructSb);
             appendNewline(sb);

@@ -39,16 +39,9 @@ public class DashboardController extends AbstractSecurityController {
         return dashboardViewer;
     }
 
-//    @Override
-//    protected void onIndexPage() throws UnifyException {
-//        super.onIndexPage();
-//        getSecurityService().getCurrentUserRoleDashboardViewer();
-//    }
-
     @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
         dashboardViewer = getSecurityService().getCurrentUserRoleDashboardViewer();
-        System.out.println("@Kavanto: dashboardViewer = " + dashboardViewer);
    }
 }

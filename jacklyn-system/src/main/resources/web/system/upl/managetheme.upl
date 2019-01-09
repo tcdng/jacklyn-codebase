@@ -25,7 +25,7 @@
 !ui-label:statusDesc caption:$m{system.theme.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
-!ui-name:frmName caption:$m{system.theme.name} binding:name minLen:3 maxLen:32 case:upper required:true
+!ui-name:frmName caption:$m{system.theme.name} binding:name minLen:3 maxLen:32 required:true
 !ui-text:frmDescription caption:$m{system.theme.description} binding:description minLen:1 maxLen:48 required:true
 !ui-text:frmResourcePath caption:$m{system.theme.resourcepath} binding:resourcePath maxLen:64 required:true
 !ui-select:frmStatus caption:$m{system.theme.status} binding:status list:recordstatuslist blankOption:$s{} required:true

@@ -28,8 +28,8 @@
 !ui-label:statusDesc caption:$m{system.dashboard.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components
-!ui-text:frmName caption:$m{system.dashboard.name} binding:name case:upper size:32 required:true
-!ui-text:frmDescription caption:$m{system.dashboard.description} binding:description size:40 required:true
+!ui-name:frmName caption:$m{system.dashboard.name} binding:name maxLen:32 required:true
+!ui-text:frmDescription caption:$m{system.dashboard.description} binding:description maxLen:40 size:32 required:true
 !ui-select:frmOrientationType caption:$m{system.dashboard.orientation} binding:orientationType required:true
     list:orientationtypelist blankOption:$s{}
 !ui-select:frmStatus caption:$m{system.dashboard.status} binding:status required:true

@@ -17,10 +17,8 @@
 package com.tcdng.jacklyn.system.entities;
 
 import com.tcdng.jacklyn.common.entities.BaseEntity;
-import com.tcdng.jacklyn.shared.constants.DimensionType;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
-import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
@@ -36,9 +34,6 @@ public class DashboardLayer extends BaseEntity {
 
     @ForeignKey(Dashboard.class)
     private Long dashboardId;
-    
-    @ForeignKey(name="LAYER_DIMENSION_TY", nullable=true)
-    private DimensionType dimensionType;
 
     @Column(name = "DASHBOARDLAYER_NM", length = 32)
     private String name;
@@ -46,11 +41,8 @@ public class DashboardLayer extends BaseEntity {
     @Column(name = "DASHBOARDLAYER_DESC", length = 64)
     private String description;
     
-    @Column(name="LAYER_DIMENSION", nullable=true)
-    private Integer dimension;
-    
-    @ListOnly(key="dimensionType", property="description")
-    private String dimensionTypeDesc;
+    @Column
+    private Integer numberOfSections;
 
     @Override
     public String getDescription() {
@@ -65,14 +57,6 @@ public class DashboardLayer extends BaseEntity {
         this.dashboardId = dashboardId;
     }
 
-    public DimensionType getDimensionType() {
-        return dimensionType;
-    }
-
-    public void setDimensionType(DimensionType dimensionType) {
-        this.dimensionType = dimensionType;
-    }
-
     public String getName() {
         return name;
     }
@@ -81,24 +65,16 @@ public class DashboardLayer extends BaseEntity {
         this.name = name;
     }
 
-    public Integer getDimension() {
-        return dimension;
-    }
-
-    public void setDimension(Integer dimension) {
-        this.dimension = dimension;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getDimensionTypeDesc() {
-        return dimensionTypeDesc;
+    public Integer getNumberOfSections() {
+        return numberOfSections;
     }
 
-    public void setDimensionTypeDesc(String dimensionTypeDesc) {
-        this.dimensionTypeDesc = dimensionTypeDesc;
+    public void setNumberOfSections(Integer numberOfSections) {
+        this.numberOfSections = numberOfSections;
     }
 
 }

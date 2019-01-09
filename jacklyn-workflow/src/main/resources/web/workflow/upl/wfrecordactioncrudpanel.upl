@@ -13,7 +13,7 @@
 
 //Form components
 !ui-text:frmWfStepName caption:$m{workflow.wftemplate.wfstep.wfrecordaction.step} binding:wfStepName size:32 required:true
-!ui-text:frmName caption:$m{workflow.wftemplate.wfstep.wfrecordaction.name} case:upper binding:name size:32 required:true
+!ui-name:frmName caption:$m{workflow.wftemplate.wfstep.wfrecordaction.name} binding:name size:32 required:true
 !ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfrecordaction.description} binding:description size:40 maxLen:56 required:true
 !ui-text:frmDocMappingName caption:$m{workflow.wftemplate.wfstep.wfrecordaction.mapping} size:32 binding:docMappingName required:true
 !ui-select:frmActionType caption:$m{workflow.wftemplate.wfstep.wfrecordaction.type} binding:actionType

@@ -24,7 +24,7 @@
 !ui-label:statusDesc caption:$m{organization.branch.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
-!ui-name:frmName caption:$m{organization.branch.name} binding:name minLen:3 maxLen:32 case:upper required:true focus:true
+!ui-name:frmName caption:$m{organization.branch.name} binding:name minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{organization.branch.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-checkbox:frmHeadOffice caption:$m{organization.branch.headoffice} binding:headOffice
 !ui-select:frmStatus caption:$m{organization.branch.status} binding:status list:recordstatuslist blankOption:$s{} required:true

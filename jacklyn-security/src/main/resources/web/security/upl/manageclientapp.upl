@@ -15,7 +15,7 @@
     saveValidations:$c{frmNameVal frmDescVal}
 
 //Search
-!ui-text:searchName caption:$m{security.clientapp.name} case:upper binding:searchName
+!ui-text:searchName caption:$m{security.clientapp.name} binding:searchName
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{security.clientapp.description} binding:searchDescription
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}

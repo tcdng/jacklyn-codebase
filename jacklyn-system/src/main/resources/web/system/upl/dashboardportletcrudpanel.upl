@@ -1,27 +1,28 @@
 // UPL template for dashboard portlet CRUD panel
 // Copyright 2018 The Code Department
 !ui-dashboardportletcrudpanel
-    formSection:$d{!ui-section components:$c{frmLayerName frmName frmDescription frmPanelName frmDimension frmDimensionType frmRefreshPeriod}}
-    tableColumnList:$c{layerName name description dimension dimensionTypeDesc}
+    formSection:$d{!ui-section components:$c{frmLayerName frmName frmDescription frmPanelName frmNumberOfSections frmRefreshPeriod}}
+    tableColumnList:$c{layerName name description numberOfSections}
 
 //Table columns
-!ui-label:layerName caption:$m{system.dashboard.dashboardportlet.dimension} binding:layerName columnStyle:$s{width:120px;} sortable:true
-!ui-label:name caption:$m{system.dashboard.dashboardportlet.name} binding:name columnStyle:$s{width:120px;} sortable:true
-!ui-label:description caption:$m{system.dashboard.dashboardportlet.description} binding:description columnStyle:$s{width:200px;} sortable:true
-!ui-label:dimension caption:$m{system.dashboard.dashboardportlet.dimension} binding:dimension columnStyle:$s{width:120px;} sortable:true
-!ui-label:dimensionTypeDesc caption:$m{system.dashboard.dashboardportlet.dimensiontype} binding:dimensionTypeDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:layerName caption:$m{system.dashboard.dashboardportlet.layername} binding:layerName
+    columnStyle:$s{width:120px;} sortable:true
+!ui-label:name caption:$m{system.dashboard.dashboardportlet.name} binding:name
+    columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{system.dashboard.dashboardportlet.description} binding:description
+    columnStyle:$s{width:200px;} sortable:true
+!ui-label:numberOfSections caption:$m{system.dashboard.dashboardportlet.numberofsections} binding:numberOfSections
+    columnStyle:$s{width:120px;text-align:right;} sortable:true
 
 //Form components
 !ui-select:frmLayerName caption:$m{system.dashboard.dashboardportlet.layername} binding:layerName
-    list:listableparamlist listParams:$g{portletLayerList} blankOption:$s{} focus:true required:true
+    list:listableparamlist listKey:$s{name} listParams:$g{portletLayerList} blankOption:$s{} focus:true required:true
 !ui-name:frmName caption:$m{system.dashboard.dashboardportlet.name} binding:name size:32 required:true
 !ui-text:frmDescription caption:$m{system.dashboard.dashboardportlet.description} binding:description size:40 required:true
 !ui-select:frmPanelName caption:$m{system.dashboard.dashboardportlet.panel} binding:panelName
-    list:dashboardportletpanellist listKey:name blankOption:$s{} required:true
-!ui-integer:frmDimension caption:$m{system.dashboard.dashboardportlet.dimension} binding:dimension size:16
-    precision:4
-!ui-select:frmDimensionType caption:$m{system.dashboard.dashboardportlet.dimensiontype} binding:dimensionType
-    list:dimensiontypelist blankOption:$s{}
+    list:dashboardportletpanellist blankOption:$s{} required:true
+!ui-select:frmNumberOfSections caption:$m{system.dashboard.dashboardportlet.numberofsections} binding:numberOfSections
+    list:dashboardsectionslist blankOption:$s{} required:true
 !ui-integer:frmRefreshPeriod caption:$m{system.dashboard.dashboardportlet.refreshperiod} binding:refreshPeriod size:16
     precision:4
     

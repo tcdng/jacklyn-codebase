@@ -16,8 +16,6 @@
 
 package com.tcdng.jacklyn.system.data;
 
-import com.tcdng.unify.core.util.StringUtils;
-
 /**
  * Dashboard portlet definition.
  * 
@@ -29,15 +27,15 @@ public class DashboardPortletDef {
     private String name;
 
     private String panelName;
-
-    private String dimension;
+    
+    private int numberOfSections;
 
     private long refreshPeriodMillSec;
 
-    public DashboardPortletDef(String name, String panelName, String dimension, long refreshPeriodMillSec) {
+    public DashboardPortletDef(String name, String panelName, int numberOfSections, long refreshPeriodMillSec) {
         this.name = name;
         this.panelName = panelName;
-        this.dimension = dimension;
+        this.numberOfSections = numberOfSections;
         this.refreshPeriodMillSec = refreshPeriodMillSec;
     }
 
@@ -49,16 +47,12 @@ public class DashboardPortletDef {
         return panelName;
     }
 
-    public String getDimension() {
-        return dimension;
+    public int getNumberOfSections() {
+        return numberOfSections;
     }
 
     public long getRefreshPeriod() {
         return refreshPeriodMillSec;
-    }
-
-    public boolean isDimension() {
-        return !StringUtils.isBlank(dimension);
     }
 
     public boolean isRefreshPeriod() {

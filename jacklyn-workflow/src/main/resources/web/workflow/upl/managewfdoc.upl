@@ -34,7 +34,7 @@
 // Form components   
 !ui-select:frmWfCategoryId caption:$m{workflow.wfdoc.category} list:wfcategorylist blankOption:$s{}
     binding:wfCategoryId required:true focus:true
-!ui-name:frmName caption:$m{workflow.wfdoc.name} binding:name case:upper minLen:3 maxLen:32 required:true
+!ui-name:frmName caption:$m{workflow.wfdoc.name} binding:name minLen:3 maxLen:32 required:true
 !ui-text:frmDescription caption:$m{workflow.wfdoc.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-text:frmVersion caption:$m{workflow.wfdoc.version} binding:wfCategoryVersion minLen:1 maxLen:48 size:32 required:true
 !ui-text:frmWfCategoryStatusDesc caption:$m{workflow.wfdoc.status} binding:wfCategoryStatusDesc minLen:1 maxLen:48 size:32 required:true

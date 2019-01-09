@@ -15,7 +15,7 @@
     saveValidations:$c{frmNameVal frmDescVal confPwdVal}
 
 //Search
-!ui-text:searchName caption:$m{system.authentication.name} case:upper binding:searchName
+!ui-text:searchName caption:$m{system.authentication.name} binding:searchName
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{system.authentication.description} binding:searchDescription
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}

@@ -31,7 +31,6 @@ import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.shared.SharedUtils;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
@@ -192,22 +191,16 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         portletDefs.put(dashboardPortlet.getLayerName(), portletList);
                     }
 
-                    String dimension =
-                            SharedUtils.getDimensionString(dashboardPortlet.getDimension(),
-                                    dashboardPortlet.getDimensionType());
                     long refreshMillSec =
                             dashboardPortlet.getRefreshPeriod() != null ? CalendarUtils.getMilliSecondsByFrequency(
                                     FrequencyUnit.SECOND, dashboardPortlet.getRefreshPeriod()) : 0L;
                     portletList.add(new DashboardPortletDef(dashboardPortlet.getName(), dashboardPortlet.getPanelName(),
-                            dimension, refreshMillSec));
+                            dashboardPortlet.getNumberOfSections(), refreshMillSec));
                 }
 
                 List<DashboardLayerDef> layerList = new ArrayList<DashboardLayerDef>();
                 for (DashboardLayer dashboardLayer : dashboard.getLayerList()) {
-                    String dimension =
-                            SharedUtils.getDimensionString(dashboardLayer.getDimension(),
-                                    dashboardLayer.getDimensionType());
-                    layerList.add(new DashboardLayerDef(dashboardLayer.getName(), dimension,
+                    layerList.add(new DashboardLayerDef(dashboardLayer.getName(), dashboardLayer.getNumberOfSections(),
                             DataUtils.unmodifiableList(portletDefs.get(dashboardLayer.getName()))));
                 }
 

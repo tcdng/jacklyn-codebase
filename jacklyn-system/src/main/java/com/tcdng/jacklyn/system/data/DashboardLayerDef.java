@@ -18,8 +18,6 @@ package com.tcdng.jacklyn.system.data;
 
 import java.util.List;
 
-import com.tcdng.unify.core.util.StringUtils;
-
 /**
  * Dashboard layer definition.
  * 
@@ -30,13 +28,13 @@ public class DashboardLayerDef {
 
     private String name;
     
-    private String dimension;
+    private int numberOfSections;
     
     private List<DashboardPortletDef> portletList;
 
-    public DashboardLayerDef(String name, String dimension, List<DashboardPortletDef> portletList) {
+    public DashboardLayerDef(String name, int numberOfSections, List<DashboardPortletDef> portletList) {
         this.name = name;
-        this.dimension = dimension;
+        this.numberOfSections = numberOfSections;
         this.portletList = portletList;
     }
 
@@ -44,15 +42,11 @@ public class DashboardLayerDef {
         return name;
     }
 
-    public String getDimension() {
-        return dimension;
+    public int getNumberOfSections() {
+        return numberOfSections;
     }
 
     public List<DashboardPortletDef> getPortletList() {
         return portletList;
-    }
-
-    public boolean isDimension() {
-        return !StringUtils.isBlank(dimension);
     }
 }
