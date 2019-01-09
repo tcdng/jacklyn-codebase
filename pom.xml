@@ -40,12 +40,13 @@
 		<module>jacklyn-report</module>
 		<module>jacklyn-security</module>
 		<module>jacklyn-audit</module>
+		<module>jacklyn-statistics</module>
 	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.version>0.0.1-SNAPSHOT</project.version>
-        <unify.version>1.0.0</unify.version>
+		<project.version>0.0.1-SNAPSHOT</project.version>
+		<unify.version>1.0.0</unify.version>
 	</properties>
 
 
@@ -134,14 +135,14 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-    <!-- Temporary staging -->
-    <repositories>
-        <repository>
-            <id>sonatype-staging-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/comtcdng-1002</url>
-        </repository>
-    </repositories>
-	
+	<!-- Temporary staging -->
+	<repositories>
+		<repository>
+			<id>sonatype-staging-repo</id>
+			<url>https://oss.sonatype.org/content/repositories/comtcdng-1002</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- Main dependencies -->
 		<dependency>

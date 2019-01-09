@@ -54,11 +54,16 @@
 
 	<dependencies>
 		<!-- Main dependencies -->
-		<dependency>
-			<groupId>com.tcdng.jacklyn</groupId>
-			<artifactId>jacklyn-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.tcdng.jacklyn</groupId>
+            <artifactId>jacklyn-statistics</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tcdng.jacklyn</groupId>
+            <artifactId>jacklyn-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.tcdng.jacklyn</groupId>
