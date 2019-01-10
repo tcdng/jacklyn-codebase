@@ -19,13 +19,13 @@ package com.tcdng.jacklyn.system.widgets;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Abstract base class for quick percentage dashboard portlet panels.
+ * Abstract base class for quick percentage portlet panels.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 
-@UplBinding("web/system/upl/qpdashboardportletpanel.upl")
-public class AbstractQpDashboardPortletPanel extends AbstractStatisticsDashbordPortletPanel {
+@UplBinding("web/system/upl/quickpercentageportletpanel.upl")
+public class AbstractQuickPercentagePortletPanel extends AbstractStatisticsDashbordPortletPanel {
 
 }
