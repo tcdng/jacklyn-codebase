@@ -46,7 +46,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.version>0.0.1-SNAPSHOT</project.version>
-		<unify.version>1.0.0</unify.version>
+		<unify.version>1.0.1-SNAPSHOT</unify.version>
 	</properties>
 
 
@@ -136,12 +136,12 @@
 		</pluginManagement>
 	</build>
 	<!-- Temporary staging -->
-	<repositories>
+	<!--repositories>
 		<repository>
 			<id>sonatype-staging-repo</id>
 			<url>https://oss.sonatype.org/content/repositories/comtcdng-1002</url>
 		</repository>
-	</repositories>
+	</repositories-->
 
 	<dependencies>
 		<!-- Main dependencies -->
