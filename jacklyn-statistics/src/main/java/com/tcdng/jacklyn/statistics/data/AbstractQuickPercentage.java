@@ -30,10 +30,15 @@ public class AbstractQuickPercentage<T extends Number> implements QuickPercentag
 
     private Double percentage;
 
+    private Double fraction;
+
     public AbstractQuickPercentage(T value, T totalValue) {
         this.value = value;
         this.totalValue = totalValue;
-        this.percentage = (value.doubleValue() * 100) / totalValue.doubleValue();
+        if (!isTotalValueZero()) {
+            this.percentage = (value.doubleValue() * 100) / totalValue.doubleValue();
+            this.fraction =  value.doubleValue() / totalValue.doubleValue();
+        }
     }
 
     @Override
@@ -51,4 +56,12 @@ public class AbstractQuickPercentage<T extends Number> implements QuickPercentag
         return percentage;
     }
 
+    @Override
+    public Double getFraction() {
+        return fraction;
+    }
+
+    public boolean isTotalValueZero() {
+        return totalValue == null || totalValue.doubleValue() == 0.0;
+    }
 }

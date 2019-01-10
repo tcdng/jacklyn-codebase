@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.statistics.business.StatisticsProvider;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplAttribute;
 import com.tcdng.unify.core.annotation.UplAttributes;
+import com.tcdng.unify.web.annotation.Action;
 
 /**
  * Abstract base class for statistics dashboard portlet panels.
@@ -30,6 +31,7 @@ import com.tcdng.unify.core.annotation.UplAttributes;
 @UplAttributes({ @UplAttribute(name = "provider", type = String.class, mandatory = true) })
 public abstract class AbstractStatisticsDashbordPortletPanel extends AbstractDashboardPortletPanel {
 
+    @Action
     @Override
     public void switchState() throws UnifyException {
         super.switchState();

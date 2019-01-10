@@ -10,7 +10,7 @@
 !ui-panel:topBannerControl layout:$d{!ui-vertical style:$s{width:100%;}} styleClass:$e{jk-topbannercontrol}
     components:$c{userInfoBand clockInfoBand}
 
-!ui-image:userImg  src:$t{/images/user_small.png} styleClass:$e{jk-topuserimg}
+!ui-image:userImg  src:$t{/images/user_large.png} styleClass:$e{jk-topuserimg}
     binding:userPhotoGenerator
     eventHandler:$d{!ui-event event:onclick action:$c{userDetailsAct}}
     

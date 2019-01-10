@@ -374,6 +374,11 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public int countUsers(UserQuery query) throws UnifyException {
+        return db().countAll(query);
+    }
+
+    @Override
     public UserLargeData findUserDocument(Long userId) throws UnifyException {
         User user = db().list(User.class, userId);
         byte[] photograph =

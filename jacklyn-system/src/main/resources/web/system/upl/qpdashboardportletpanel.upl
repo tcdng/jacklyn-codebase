@@ -19,5 +19,6 @@
 
 !ui-panel:percentPanel layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{percentTitle qpPercentage}
 !ui-label:percentTitle caption:$f{qpPercentTitle} style:$s{text-align:right;}
-!ui-label:qpPercentage formatter:$f{qpPercentFormatter} styleClass:$e{qpfootervalue} style:$s{text-align:right;} binding:percentage
+!ui-label:qpPercentage formatter:$f{qpPercentFormatter} styleClass:$e{qpfootervalue} style:$s{text-align:right;}
+    binding:fraction
 

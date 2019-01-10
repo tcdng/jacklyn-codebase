@@ -30,4 +30,5 @@ public interface QuickPercentage<T extends Number> {
 
     Double getPercentage();
 
+    Double getFraction();
 }

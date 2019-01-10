@@ -8,7 +8,7 @@
 !ui-panel:userDetailsPanel layout:$d{!ui-horizontal}
     components:$c{userImg detailsPanel}
 
-!ui-image:userImg src:$t{/images/user_small.png} styleClass:$e{jk-userdtlimg}
+!ui-image:userImg src:$t{/images/user_large.png} styleClass:$e{jk-userdtlimg}
     binding:$g{imageGenBinding}
 
 !ui-panel:detailsPanel style:$s{margin-left:4px;} layout:$d{!ui-vertical}

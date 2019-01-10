@@ -16,10 +16,14 @@
 
 package com.tcdng.jacklyn.security.business;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.security.entities.UserQuery;
 import com.tcdng.jacklyn.statistics.business.AbstractIntegerQuickPercentageProvider;
 import com.tcdng.jacklyn.statistics.data.IntegerQuickPercentage;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Configurable;
 
 /**
  * Users online quick percentage provider.
@@ -30,10 +34,16 @@ import com.tcdng.unify.core.annotation.Component;
 @Component("usersonline-qpprovider")
 public class UsersOnlineQpProvider extends AbstractIntegerQuickPercentageProvider {
 
+    @Configurable
+    private SystemService systemService;
+
+    @Configurable
+    private SecurityService securityService;
+
     @Override
     public IntegerQuickPercentage provide() throws UnifyException {
-        // TODO Pull real data
-        return new IntegerQuickPercentage(5, 1000);
+        return new IntegerQuickPercentage(systemService.getUniqueActiveUserSessions(),
+                securityService.countUsers((UserQuery) new UserQuery().status(RecordStatus.ACTIVE)));
     }
 
 }

@@ -98,6 +98,7 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.data.AggregateType;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
@@ -109,6 +110,7 @@ import com.tcdng.unify.core.operation.Criteria;
 import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.TwoWayStringCryptograph;
 import com.tcdng.unify.core.system.entities.ParameterDef;
+import com.tcdng.unify.core.system.entities.UserSessionTrackingQuery;
 import com.tcdng.unify.core.task.Task;
 import com.tcdng.unify.core.task.TaskManager;
 import com.tcdng.unify.core.task.TaskMonitor;
@@ -549,6 +551,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public List<Long> findSystemAssetIds(SystemAssetQuery query) throws UnifyException {
         return db().valueList(Long.class, "id", query);
+    }
+
+    @Override
+    public int getUniqueActiveUserSessions() throws UnifyException {
+        return Integer.valueOf((String) db()
+                .aggregate(AggregateType.COUNT,
+                        new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
+                .get(0).getValue());
     }
 
     @Override
