@@ -9,6 +9,6 @@
     layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{topLayer}
 
 !ui-panel:topLayer layout:$d{!ui-horizontal style:$s{width:100%;} widths:$l{25% 75%}}
-    components:$c{userSessionPortlet emptyLabel}
-!ui-usersonlineqpportlet:userSessionPortlet refreshEvery:20000
+    components:$c{usersOnlinePortlet emptyLabel}
+!ui-usersonlineportlet:usersOnlinePortlet refreshEvery:20000
 !ui-label:emptyLabel caption:$s{}

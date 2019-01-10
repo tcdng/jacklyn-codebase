@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.statistics.business;
 
 import com.tcdng.jacklyn.statistics.data.QuickPercentage;
+import com.tcdng.unify.core.UnifyException;
 
 /**
  * Abstract base class for quick percentage providers.
@@ -24,7 +25,14 @@ import com.tcdng.jacklyn.statistics.data.QuickPercentage;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractQuickPercentageProvider<T extends QuickPercentage<?>>
-        extends AbstractStatisticsProvider<T> implements QuickPercentageProvider<T> {
+public abstract class AbstractQuickPercentageProvider
+        extends AbstractStatisticsProvider<QuickPercentage> {
+
+    @Override
+    public QuickPercentage provide() throws UnifyException {
+        return doProvide();
+    }
+
+    protected abstract QuickPercentage doProvide() throws UnifyException;
 
 }

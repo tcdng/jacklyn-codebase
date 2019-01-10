@@ -17,47 +17,51 @@
 package com.tcdng.jacklyn.statistics.data;
 
 /**
- * Object with pre-calculated percentage.
+ * Object with pre-calculated utilization.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class QuickPercentage {
+public class QuickUtilization {
 
-    private double value;
+    private QuickPercentage quickPercentage;
 
-    private double totalValue;
+    private double freeValue;
 
-    private double percentage;
+    private byte[] presentation;
 
-    private double fraction;
-
-    public QuickPercentage(double value, double totalValue) {
-        this.value = value;
-        this.totalValue = totalValue;
-        if (!isTotalValueZero()) {
-            this.percentage = (value * 100) / totalValue;
-            this.fraction = value / totalValue;
-        }
+    public QuickUtilization(QuickPercentage quickPercentage, byte[] presentation) {
+        this.quickPercentage = quickPercentage;
+        this.presentation = presentation;
+        freeValue = quickPercentage.getTotalValue() - quickPercentage.getValue();
     }
 
     public double getValue() {
-        return value;
+        return quickPercentage.getValue();
     }
 
     public double getTotalValue() {
-        return totalValue;
+        return quickPercentage.getTotalValue();
     }
 
     public double getPercentage() {
-        return percentage;
+        return quickPercentage.getPercentage();
     }
 
     public double getFraction() {
-        return fraction;
+        return quickPercentage.getFraction();
     }
 
     public boolean isTotalValueZero() {
-        return totalValue == 0.0;
+        return quickPercentage.isTotalValueZero();
     }
+
+    public double getFreeValue() {
+        return freeValue;
+    }
+
+    public byte[] getPresentation() {
+        return presentation;
+    }
+    
 }

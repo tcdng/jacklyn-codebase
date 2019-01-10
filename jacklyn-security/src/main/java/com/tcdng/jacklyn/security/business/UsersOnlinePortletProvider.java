@@ -18,21 +18,21 @@ package com.tcdng.jacklyn.security.business;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.security.entities.UserQuery;
-import com.tcdng.jacklyn.statistics.business.AbstractIntegerQuickPercentageProvider;
-import com.tcdng.jacklyn.statistics.data.IntegerQuickPercentage;
+import com.tcdng.jacklyn.statistics.business.AbstractQuickPercentageProvider;
+import com.tcdng.jacklyn.statistics.data.QuickPercentage;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Users online quick percentage provider.
+ * Users online portlet provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("usersonline-qpprovider")
-public class UsersOnlineQpProvider extends AbstractIntegerQuickPercentageProvider {
+@Component("usersonline-portletprovider")
+public class UsersOnlinePortletProvider extends AbstractQuickPercentageProvider {
 
     @Configurable
     private SystemService systemService;
@@ -41,8 +41,8 @@ public class UsersOnlineQpProvider extends AbstractIntegerQuickPercentageProvide
     private SecurityService securityService;
 
     @Override
-    public IntegerQuickPercentage provide() throws UnifyException {
-        return new IntegerQuickPercentage(systemService.getUniqueActiveUserSessions(),
+    protected QuickPercentage doProvide() throws UnifyException {
+        return new QuickPercentage(systemService.getUniqueActiveUserSessions(),
                 securityService.countUsers((UserQuery) new UserQuery().status(RecordStatus.ACTIVE)));
     }
 
