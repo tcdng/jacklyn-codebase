@@ -4,3 +4,5 @@
     qpStyleClass:$e{qpblue}
     qpTitle:$m{security.usersonline.qpportlet.usersonline}
     qpTotalTitle:$m{security.usersonline.qpportlet.totalusers}
+    qpValueFormatter:$d{!integerformat useGrouping:true}
+    qpPercentFormatter:$d{!percentformat scale:2}

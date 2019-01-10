@@ -128,7 +128,7 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if dashboard with name is unknown.
      */
     DashboardDef getRuntimeDashboardDef(String name) throws UnifyException;
-    
+
     /**
      * Creates a new authentication.
      * 
@@ -819,6 +819,15 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     List<Long> findSystemAssetIds(SystemAssetQuery query) throws UnifyException;
+
+    /**
+     * Gets the number of unique active user sessions.
+     * 
+     * @return the number of unique sessions
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int getUniqueActiveUserSessions() throws UnifyException;
 
     /**
      * Finds all tooling record types.

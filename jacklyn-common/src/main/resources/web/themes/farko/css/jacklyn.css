@@ -112,7 +112,6 @@
 .ui-notificationitempanel .nipdate {text-align:right;width:100%;font-size:8px;}
 .ui-notificationitempanel .niplink {font-size:11px;text-decoration:underline;cursor: pointer;}
                             
-
 .ui-selectrolepanel {width: 320px;}
 
 .ui-reportrunnerpanel {}
@@ -132,7 +131,11 @@
 .jk-inspecttext .ltcontent {color: #000;}
 
 .jk-quickpercentage {color: #FFF;min-width:240px;margin:4px;}
+.jk-quickpercentage .qpred{background-color: #C03333;padding:8px 12px;}
 .jk-quickpercentage .qpblue{background-color: #3378C0;padding:8px 12px;}
+.jk-quickpercentage .qpgreen{background-color: #33C078;padding:8px 12px;}
+.jk-quickpercentage .qporange{background-color: #C07833;padding:8px 12px;}
+.jk-quickpercentage .qpgray{background-color: #787878;padding:8px 12px;}
 .jk-quickpercentage .qptitle{text-align:center; font-size:14px;border-bottom: solid 1px #FFF;
        margin: 0px 4px;padding-bottom: 12px;}
 .jk-quickpercentage .qpvalue{text-align:center; font-size:4vw; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}

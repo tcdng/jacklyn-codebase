@@ -10,5 +10,5 @@
 
 !ui-panel:topLayer layout:$d{!ui-horizontal style:$s{width:100%;} widths:$l{25% 75%}}
     components:$c{userSessionPortlet emptyLabel}
-!ui-usersonlineqpportlet:userSessionPortlet
+!ui-usersonlineqpportlet:userSessionPortlet refreshEvery:20000
 !ui-label:emptyLabel caption:$s{}

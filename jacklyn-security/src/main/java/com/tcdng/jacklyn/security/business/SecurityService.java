@@ -307,6 +307,17 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     int deleteUsers(UserQuery query) throws UnifyException;
 
     /**
+     * Counts users by query.
+     * 
+     * @param query
+     *            the query
+     * @return the user count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int countUsers(UserQuery query) throws UnifyException;
+
+    /**
      * Gets document for specified user.
      * 
      * @param userId
