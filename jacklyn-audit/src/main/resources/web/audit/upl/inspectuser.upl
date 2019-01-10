@@ -30,7 +30,7 @@
 
 // User details
 !ui-panel:userDetailsPanel  layout:$d{!ui-vertical} components:$c{userImg fullNameLabel emailLabel activityLabel}
-!ui-image:userImg src:$t{/images/user_small.png} styleClass:$e{jk-inpectuserimg}
+!ui-image:userImg src:$t{/images/user_large.png} styleClass:$e{jk-inpectuserimg}
     binding:inspectUserInfo.photo
 !ui-labeledtext:fullNameLabel styleClass:$e{jk-inspecttext} caption:$m{audit.inspectuser.fullname}
     binding:inspectUserInfo.fullName
