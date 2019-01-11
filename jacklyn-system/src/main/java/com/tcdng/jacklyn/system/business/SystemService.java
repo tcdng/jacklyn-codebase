@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -267,7 +267,7 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *            the key name
      * @param query
      *            the query with key field name set.
-     * @return Map<T, Module> the result map
+     * @return Map&lt;T, Module&gt; the result map
      * @throws UnifyException
      *             if an error occurs
      */

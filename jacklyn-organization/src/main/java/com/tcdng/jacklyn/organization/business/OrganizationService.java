@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -330,10 +330,10 @@ public interface OrganizationService extends JacklynBusinessService {
     void unregisterPrivilege(String categoryName, String moduleName, String... privilegeName) throws UnifyException;
 
     /**
-     * Finds privilege category by code.
+     * Finds privilege category by name.
      * 
-     * @param code
-     *            the code to search with
+     * @param name
+     *            the name to search with
      * @return privilege category if found otherwise null
      * @throws UnifyException
      */

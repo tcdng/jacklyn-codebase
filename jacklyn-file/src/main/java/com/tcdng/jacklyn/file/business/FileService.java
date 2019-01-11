@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -304,7 +304,7 @@ public interface FileService extends JacklynBusinessService {
     /**
      * Creates a batch file read configuration.
      * 
-     * @param record
+     * @param document
      *            the batch file read configuration document
      * @return the Id of the created record
      * @throws UnifyException
@@ -327,7 +327,7 @@ public interface FileService extends JacklynBusinessService {
     /**
      * Updates a batch file read configuration record by Id and version.
      * 
-     * @param record
+     * @param document
      *            the batch file read configuration document
      * @return the update count
      * @throws UnifyException
@@ -351,7 +351,7 @@ public interface FileService extends JacklynBusinessService {
     /**
      * Reloads parameter values for a batch file read configuration
      * 
-     * @param scheduledTaskDocument
+     * @param document
      *            the scheduled task document
      * @return the task document
      * @throws UnifyException

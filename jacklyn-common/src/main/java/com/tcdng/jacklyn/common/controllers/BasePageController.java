@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -75,7 +75,7 @@ public abstract class BasePageController extends AbstractPageController {
     /**
      * Sets up a response that shows a message box with default info icon and OK
      * button. {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants.MESSAGEBOX}.
+     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
      * 
      * @param message
      *            the message to display
@@ -91,7 +91,7 @@ public abstract class BasePageController extends AbstractPageController {
     /**
      * Sets up a response that shows a message box with default info icon and OK
      * button. {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants.MESSAGEBOX}.
+     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
      * 
      * @param message
      *            the message to display
@@ -109,7 +109,7 @@ public abstract class BasePageController extends AbstractPageController {
     /**
      * Sets up a response that shows a message box with default info icon and OK
      * button. {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants.MESSAGEBOX}.
+     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
      * 
      * @param caption
      *            the message caption
@@ -128,7 +128,7 @@ public abstract class BasePageController extends AbstractPageController {
     /**
      * Sets up a response that shows a message box. The message box is backed by the
      * {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants.MESSAGEBOX}.
+     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
      * 
      * @param messageIcon
      *            the message icon of enumeration type {@link MessageIcon}
@@ -218,7 +218,7 @@ public abstract class BasePageController extends AbstractPageController {
     /**
      * Sets up a response that shows a report options box. The report options box is
      * backed by supplied {@link ReportOptions} value of the session attribute
-     * {@link JacklynSessionAttributeConstants.REPORTOPTIONS}.
+     * {@link JacklynSessionAttributeConstants#REPORTOPTIONS}.
      * 
      * @param reportOptions
      *            report options data object
