@@ -1,9 +1,0 @@
-// UPL template for default dashboard viewer.
-// Copyright 2018 The Code Department
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-!ui-defaultdashboardviewer style:$s{width:100%;height:100%;}
-    components:$c{dashboardPanel}
-
-!ui-panel:dashboardPanel style:$s{width:100%;height:100%;}
-    layout:$d{!ui-vertical style:$s{width:100%;}} hideOnNoComponents:false

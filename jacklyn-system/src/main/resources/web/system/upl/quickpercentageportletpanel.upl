@@ -2,8 +2,8 @@
 // Copyright 2018 The Code Department
 !ui-quickpercentageportletpanel styleClass:$s{jk-quickpercentage}
     components:$c{bodyPanel}
-    qpTotalTitle:$m{system.dashboardportlet.quickpercentage.total}
-    qpPercentTitle:$m{system.dashboardportlet.quickpercentage.percentage}
+    qpTotalTitle:$m{system.quickpercentage.portlet.total}
+    qpPercentTitle:$m{system.quickpercentage.portlet.percentage}
     
 !ui-panel:bodyPanel styleClass:$f{qpStyleClass}
     layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{title qpValue footerPanel}

@@ -215,13 +215,18 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
-    public Long createDashboard(DashboardLargeData dashboardLargeData) throws UnifyException {
-        return (Long) db().create(dashboardLargeData.getData());
+    public Long createDashboard(Dashboard dashboard) throws UnifyException {
+        return (Long) db().create(dashboard);
     }
 
     @Override
     public DashboardLargeData findDashboard(Long id) throws UnifyException {
         return new DashboardLargeData(db().list(Dashboard.class, id));
+    }
+
+    @Override
+    public Dashboard findDashboard(String name) throws UnifyException {
+        return db().find(new DashboardQuery().name(name));
     }
 
     @Override

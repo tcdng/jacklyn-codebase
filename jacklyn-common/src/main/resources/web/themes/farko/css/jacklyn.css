@@ -138,9 +138,18 @@
 .jk-quickpercentage .qpgray{background-color: #787878;padding:8px 12px;}
 .jk-quickpercentage .qptitle{text-align:center; font-size:14px;border-bottom: solid 1px #FFF;
        margin: 0px 4px;padding-bottom: 12px;}
-.jk-quickpercentage .qpvalue{text-align:center; font-size:4vw; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+.jk-quickpercentage .qpvalue{text-align:center; font-size:64px; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
 .jk-quickpercentage .qpfooter{font-size:10px;}
 .jk-quickpercentage .qpfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+
+.jk-simpledial {color: #444;min-width:240px;margin:4px;}
+.jk-simpledial .sdback{padding:8px 12px;}
+.jk-simpledial .sdtitle{text-align:center; font-size:14px;border-bottom: solid 1px #444;
+       margin: 0px 4px;padding-bottom: 12px;}
+.jk-simpledial .sdvalue{text-align:center; font-size:28px; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+.jk-simpledial .sdfooter{font-size:10px;}
+.jk-simpledial .sdfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+.jk-simpledial .sdimage {width:100%}
 
 
 

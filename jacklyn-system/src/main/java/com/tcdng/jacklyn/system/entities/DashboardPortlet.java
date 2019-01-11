@@ -52,7 +52,21 @@ public class DashboardPortlet extends BaseEntity {
     
     @Column(nullable = true) //Refresh period in seconds
     private Integer refreshPeriod;
-  
+    
+    public DashboardPortlet(String name, String description, String layerName, String panelName,
+            Integer numberOfSections, Integer refreshPeriod) {
+        this.name = name;
+        this.description = description;
+        this.layerName = layerName;
+        this.panelName = panelName;
+        this.numberOfSections = numberOfSections;
+        this.refreshPeriod = refreshPeriod;
+    }
+    
+    public DashboardPortlet() {
+
+    }
+
     @Override
     public String getDescription() {
         return description;

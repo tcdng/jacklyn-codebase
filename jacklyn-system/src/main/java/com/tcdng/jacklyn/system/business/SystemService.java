@@ -66,13 +66,13 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     /**
      * Creates a new dashboard.
      * 
-     * @param dashboardLargeData
+     * @param dashboard
      *            the dashboard data
      * @return the created dashboard ID
      * @throws UnifyException
      *             if an error occurs
      */
-    Long createDashboard(DashboardLargeData dashboardLargeData) throws UnifyException;
+    Long createDashboard(Dashboard dashboard) throws UnifyException;
 
     /**
      * Finds a dashboard by ID.
@@ -85,6 +85,14 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      */
     DashboardLargeData findDashboard(Long id) throws UnifyException;
 
+    /**
+     * Finds a dashboard definition by name.
+     * @param name the name to find with
+     * @return dashboard with corresponding name otherwise null
+     * @throws UnifyException if an error occurs
+     */
+    Dashboard findDashboard(String name) throws UnifyException;
+    
     /**
      * Finds dashboards by query.
      * 

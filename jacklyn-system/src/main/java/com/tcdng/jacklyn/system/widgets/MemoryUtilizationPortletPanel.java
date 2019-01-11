@@ -14,20 +14,23 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.widgets;
+package com.tcdng.jacklyn.system.widgets;
 
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.UplAttribute;
+import com.tcdng.unify.core.annotation.UplAttributes;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
 
 /**
- * Default dashboard viewer.
+ * Memory utilization portlet panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-defaultdashboardviewer")
-@UplBinding("web/security/upl/defaultdashboardviewer.upl")
-public class DefaultDashboardViewer extends AbstractStandalonePanel {
+@Component(name = "ui-memoryutilizationportlet", description = "$m{system.memoryutilization.portlet}")
+@UplBinding("web/system/upl/memoryutilizationportletpanel.upl")
+@UplAttributes({
+        @UplAttribute(name = "provider", type = String.class, defaultValue = "memoryutilization-portletprovider") })
+public class MemoryUtilizationPortletPanel extends AbstractSimpleDialPortletPanel {
 
 }

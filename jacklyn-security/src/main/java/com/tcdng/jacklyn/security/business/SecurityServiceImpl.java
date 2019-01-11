@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.security.business;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ import com.tcdng.jacklyn.security.entities.UserBiometricQuery;
 import com.tcdng.jacklyn.security.entities.UserQuery;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.shared.constants.OrientationType;
 import com.tcdng.jacklyn.shared.security.BiometricCategory;
 import com.tcdng.jacklyn.shared.security.BiometricType;
 import com.tcdng.jacklyn.shared.security.data.OSInstallationReqParams;
@@ -64,6 +66,9 @@ import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleErrorConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
+import com.tcdng.jacklyn.system.entities.Dashboard;
+import com.tcdng.jacklyn.system.entities.DashboardLayer;
+import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
@@ -558,24 +563,26 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public String getCurrentUserRoleDashboardViewer() throws UnifyException {
         UserToken userToken = getUserToken();
+        String dashboardName = null;
         if (!userToken.isReservedUser()) {
-            String dashboardName = organizationService.getRoleDashboard(getUserToken().getRoleCode());
-            if (!StringUtils.isBlank(dashboardName)) {
-                return systemService.getRuntimeDashboardDef(dashboardName).getViewer();
+            dashboardName = organizationService.getRoleDashboard(getUserToken().getRoleCode());
+            if (StringUtils.isBlank(dashboardName)) {
+                dashboardName =
+                        systemService.getSysParameterValue(String.class,
+                                SecurityModuleSysParamConstants.DEFAULT_DASHBOARD);
             }
-
-            return systemService.getSysParameterValue(String.class,
-                    SecurityModuleSysParamConstants.DEFAULT_DASHBOARD_VIEWER);
+        } else {
+            dashboardName =
+                    systemService.getSysParameterValue(String.class,
+                            SecurityModuleSysParamConstants.DEFAULT_SYSTEM_DASHBOARD);
         }
 
-        // Get system default viewer from system parameter
-        return systemService.getSysParameterValue(String.class,
-                SecurityModuleSysParamConstants.DEFAULT_SYSTEM_DASHBOARD_VIEWER);
+        return systemService.getRuntimeDashboardDef(dashboardName).getViewer();
     }
 
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
-        logInfo("Managing security...");
+        logInfo("Managing security module...");
         if (db().countAll(new UserQuery().id(SystemReservedUserConstants.SYSTEM_ID)) == 0) {
             createUser(new User(SystemReservedUserConstants.SYSTEM_ID, "System",
                     SystemReservedUserConstants.SYSTEM_LOGINID, "info@tcdng.com", Boolean.FALSE));
@@ -585,6 +592,39 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             createUser(new User(SystemReservedUserConstants.ANONYMOUS_ID, "Anonymous",
                     SystemReservedUserConstants.ANONYMOUS_LOGINID, "info@tcdng.com", Boolean.FALSE));
         }
+
+        // Check for default dashboard and create if necessary
+        String dashboardName =
+                systemService.getSysParameterValue(String.class, SecurityModuleSysParamConstants.DEFAULT_DASHBOARD);
+        Dashboard dashboard = systemService.findDashboard(dashboardName);
+        if (dashboard == null) {
+            dashboard = new Dashboard(OrientationType.VERTICAL, dashboardName, "Default Dashboard");
+            systemService.createDashboard(dashboard);
+        }
+
+        // Check for default system dashboard and create if necessary
+        dashboardName =
+                systemService.getSysParameterValue(String.class,
+                        SecurityModuleSysParamConstants.DEFAULT_SYSTEM_DASHBOARD);
+        dashboard = systemService.findDashboard(dashboardName);
+        if (dashboard == null) {
+            dashboard = new Dashboard(OrientationType.VERTICAL, dashboardName, "Default System Dashboard");
+            List<DashboardLayer> layerList = new ArrayList<DashboardLayer>();
+            layerList.add(new DashboardLayer("layer1", "Layer One", 1));
+            layerList.add(new DashboardLayer("layer2", "Layer Two", 1));
+            layerList.add(new DashboardLayer("layer3", "Layer Three", 1));
+            layerList.add(new DashboardLayer("layer4", "Layer Four", 1));
+            dashboard.setLayerList(layerList);
+
+            List<DashboardPortlet> portletList = new ArrayList<DashboardPortlet>();
+            portletList
+                    .add(new DashboardPortlet("usersOnline", "Users Online", "layer1", "ui-usersonlineportlet", 1, 30));
+            portletList.add(new DashboardPortlet("memUtilization", "Memory Utilization", "layer2",
+                    "ui-memoryutilizationportlet", 1, 40));
+            dashboard.setPortletList(portletList);
+            systemService.createDashboard(dashboard);
+        }
+
     }
 
     @Override

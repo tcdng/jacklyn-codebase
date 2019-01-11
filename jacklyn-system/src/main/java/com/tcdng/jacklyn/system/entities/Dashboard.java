@@ -62,6 +62,16 @@ public class Dashboard extends BaseVersionedTimestampedStatusEntity {
         return description;
     }
 
+    public Dashboard(OrientationType orientationType, String name, String description) {
+        this.orientationType = orientationType;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Dashboard() {
+
+    }
+
     public OrientationType getOrientationType() {
         return orientationType;
     }

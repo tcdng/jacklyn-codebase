@@ -127,7 +127,7 @@ public class DashboardController extends AbstractSystemCrudController<Dashboard>
 
     @Override
     protected Object create(Dashboard dashboardData) throws UnifyException {
-        return (Long) getSystemService().createDashboard(largeData);
+        return (Long) getSystemService().createDashboard(largeData.getData());
     }
 
     @Override

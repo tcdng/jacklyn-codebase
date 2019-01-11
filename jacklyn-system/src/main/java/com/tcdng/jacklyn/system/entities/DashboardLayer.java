@@ -44,6 +44,16 @@ public class DashboardLayer extends BaseEntity {
     @Column
     private Integer numberOfSections;
 
+    public DashboardLayer(String name, String description, Integer numberOfSections) {
+        this.name = name;
+        this.description = description;
+        this.numberOfSections = numberOfSections;
+    }
+
+    public DashboardLayer() {
+
+    }
+
     @Override
     public String getDescription() {
         return description;
