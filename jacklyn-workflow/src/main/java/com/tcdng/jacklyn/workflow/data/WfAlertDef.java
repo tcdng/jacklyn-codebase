@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,24 +26,23 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
  */
 public class WfAlertDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 9168747124616981593L;
+    private static final long serialVersionUID = 9168747124616981593L;
 
-	private NotificationType type;
+    private NotificationType type;
 
-	private String notificationTemplateCode;
+    private String notificationTemplateCode;
 
-	public WfAlertDef(String name, String description, NotificationType type,
-			String notificationTemplateCode) {
-		super(name, description);
-		this.type = type;
-		this.notificationTemplateCode = notificationTemplateCode;
-	}
+    public WfAlertDef(String name, String description, NotificationType type, String notificationTemplateCode) {
+        super(name, description);
+        this.type = type;
+        this.notificationTemplateCode = notificationTemplateCode;
+    }
 
-	public NotificationType getType() {
-		return type;
-	}
+    public NotificationType getType() {
+        return type;
+    }
 
-	public String getNotificationTemplateCode() {
-		return notificationTemplateCode;
-	}
+    public String getNotificationTemplateCode() {
+        return notificationTemplateCode;
+    }
 }

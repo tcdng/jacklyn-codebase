@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,85 +31,85 @@ import com.tcdng.unify.core.operation.FilterConditionType;
 @Table("WFDOCCLASSIFIERFILTER")
 public class WfDocClassifierFilter extends BaseEntity {
 
-	@ForeignKey(WfDocClassifier.class)
-	private Long wfDocClassifierId;
+    @ForeignKey(WfDocClassifier.class)
+    private Long wfDocClassifierId;
 
-	@ForeignKey
-	private FilterConditionType op;
+    @ForeignKey
+    private FilterConditionType op;
 
-	@Column(length = 32)
-	private String fieldName;
+    @Column(length = 32)
+    private String fieldName;
 
-	@Column(name = "FILTER_VAL1", length = 64, nullable = true)
-	private String value1;
+    @Column(name = "FILTER_VAL1", length = 64, nullable = true)
+    private String value1;
 
-	@Column(name = "FILTER_VAL2", length = 64, nullable = true)
-	private String value2;
+    @Column(name = "FILTER_VAL2", length = 64, nullable = true)
+    private String value2;
 
-	@Column(name = "FIELDONLY_FG")
-	private Boolean fieldOnly;
+    @Column(name = "FIELDONLY_FG")
+    private Boolean fieldOnly;
 
-	@ListOnly(key = "op", property = "description")
-	private String opDesc;
+    @ListOnly(key = "op", property = "description")
+    private String opDesc;
 
-	@Override
-	public String getDescription() {
-		return fieldName;
-	}
+    @Override
+    public String getDescription() {
+        return fieldName;
+    }
 
-	public Long getWfDocClassifierId() {
-		return wfDocClassifierId;
-	}
+    public Long getWfDocClassifierId() {
+        return wfDocClassifierId;
+    }
 
-	public void setWfDocClassifierId(Long wfDocClassifierId) {
-		this.wfDocClassifierId = wfDocClassifierId;
-	}
+    public void setWfDocClassifierId(Long wfDocClassifierId) {
+        this.wfDocClassifierId = wfDocClassifierId;
+    }
 
-	public FilterConditionType getOp() {
-		return op;
-	}
+    public FilterConditionType getOp() {
+        return op;
+    }
 
-	public void setOp(FilterConditionType op) {
-		this.op = op;
-	}
+    public void setOp(FilterConditionType op) {
+        this.op = op;
+    }
 
-	public String getFieldName() {
-		return fieldName;
-	}
+    public String getFieldName() {
+        return fieldName;
+    }
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
-	public String getValue1() {
-		return value1;
-	}
+    public String getValue1() {
+        return value1;
+    }
 
-	public void setValue1(String value1) {
-		this.value1 = value1;
-	}
+    public void setValue1(String value1) {
+        this.value1 = value1;
+    }
 
-	public String getValue2() {
-		return value2;
-	}
+    public String getValue2() {
+        return value2;
+    }
 
-	public void setValue2(String value2) {
-		this.value2 = value2;
-	}
+    public void setValue2(String value2) {
+        this.value2 = value2;
+    }
 
-	public Boolean getFieldOnly() {
-		return fieldOnly;
-	}
+    public Boolean getFieldOnly() {
+        return fieldOnly;
+    }
 
-	public void setFieldOnly(Boolean fieldOnly) {
-		this.fieldOnly = fieldOnly;
-	}
+    public void setFieldOnly(Boolean fieldOnly) {
+        this.fieldOnly = fieldOnly;
+    }
 
-	public String getOpDesc() {
-		return opDesc;
-	}
+    public String getOpDesc() {
+        return opDesc;
+    }
 
-	public void setOpDesc(String opDesc) {
-		this.opDesc = opDesc;
-	}
+    public void setOpDesc(String opDesc) {
+        this.opDesc = opDesc;
+    }
 }

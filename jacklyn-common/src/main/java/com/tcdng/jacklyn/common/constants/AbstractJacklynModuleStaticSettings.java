@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,36 +25,35 @@ import com.tcdng.unify.core.AbstractUnifyStaticSettings;
  * @since 1.0
  */
 public abstract class AbstractJacklynModuleStaticSettings extends AbstractUnifyStaticSettings
-		implements JacklynModuleStaticSettings {
+        implements JacklynModuleStaticSettings {
 
-	public static final int INSTALLATION_INDEX = 128;
+    public static final int INSTALLATION_INDEX = 128;
 
-	private String moduleComponent;
+    private String moduleComponent;
 
-	private String moduleConfig;
+    private String moduleConfig;
 
-	public AbstractJacklynModuleStaticSettings(String moduleComponent, String moduleConfig,
-			String messageBase, int level) {
-		super(messageBase, level);
-		this.moduleComponent = moduleComponent;
-		this.moduleConfig = moduleConfig;
-	}
+    public AbstractJacklynModuleStaticSettings(String moduleComponent, String moduleConfig, String messageBase,
+            int level) {
+        super(messageBase, level);
+        this.moduleComponent = moduleComponent;
+        this.moduleConfig = moduleConfig;
+    }
 
-	public AbstractJacklynModuleStaticSettings(String moduleComponent, String moduleConfig,
-			String messageBase) {
-		super(messageBase, INSTALLATION_INDEX);
-		this.moduleComponent = moduleComponent;
-		this.moduleConfig = moduleConfig;
-	}
+    public AbstractJacklynModuleStaticSettings(String moduleComponent, String moduleConfig, String messageBase) {
+        super(messageBase, INSTALLATION_INDEX);
+        this.moduleComponent = moduleComponent;
+        this.moduleConfig = moduleConfig;
+    }
 
-	@Override
-	public String getModuleComponent() {
-		return moduleComponent;
-	}
+    @Override
+    public String getModuleComponent() {
+        return moduleComponent;
+    }
 
-	@Override
-	public String getModuleConfig() {
-		return moduleConfig;
-	}
+    @Override
+    public String getModuleConfig() {
+        return moduleConfig;
+    }
 
 }

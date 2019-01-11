@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,46 +28,46 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Message Recipient",
-		reportable = true)
+@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Recipient",
+        reportable = true)
 @Table("NOTIFICATIONRECIPIENT")
 public class NotificationRecipient extends BaseEntity {
 
-	@ForeignKey(Notification.class)
-	private Long notificationId;
+    @ForeignKey(Notification.class)
+    private Long notificationId;
 
-	@Column(length = 64)
-	private String recipientName;
+    @Column(length = 64)
+    private String recipientName;
 
-	@Column(length = 64)
-	private String recipientContact;
+    @Column(length = 64)
+    private String recipientContact;
 
-	@Override
-	public String getDescription() {
-		return recipientName;
-	}
+    @Override
+    public String getDescription() {
+        return recipientName;
+    }
 
-	public Long getNotificationId() {
-		return notificationId;
-	}
+    public Long getNotificationId() {
+        return notificationId;
+    }
 
-	public void setNotificationId(Long notificationId) {
-		this.notificationId = notificationId;
-	}
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
+    }
 
-	public String getRecipientName() {
-		return recipientName;
-	}
+    public String getRecipientName() {
+        return recipientName;
+    }
 
-	public void setRecipientName(String recipientName) {
-		this.recipientName = recipientName;
-	}
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
 
-	public String getRecipientContact() {
-		return recipientContact;
-	}
+    public String getRecipientContact() {
+        return recipientContact;
+    }
 
-	public void setRecipientContact(String recipientContact) {
-		this.recipientContact = recipientContact;
-	}
+    public void setRecipientContact(String recipientContact) {
+        this.recipientContact = recipientContact;
+    }
 }

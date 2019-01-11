@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,28 +27,28 @@ import java.util.List;
  */
 public class WfDocClassifierDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 4973270364809680350L;
+    private static final long serialVersionUID = 4973270364809680350L;
 
-	private String logic;
+    private String logic;
 
-	private List<WfDocClassifierFilterDef> filterList;
+    private List<WfDocClassifierFilterDef> filterList;
 
-	public WfDocClassifierDef(String name, String description, String logic,
-			List<WfDocClassifierFilterDef> filterList) {
-		super(name, description);
-		this.logic = logic;
-		if (filterList != null) {
-			this.filterList = Collections.unmodifiableList(filterList);
-		} else {
-			this.filterList = Collections.emptyList();
-		}
-	}
+    public WfDocClassifierDef(String name, String description, String logic,
+            List<WfDocClassifierFilterDef> filterList) {
+        super(name, description);
+        this.logic = logic;
+        if (filterList != null) {
+            this.filterList = Collections.unmodifiableList(filterList);
+        } else {
+            this.filterList = Collections.emptyList();
+        }
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 
-	public List<WfDocClassifierFilterDef> getFilterList() {
-		return filterList;
-	}
+    public List<WfDocClassifierFilterDef> getFilterList() {
+        return filterList;
+    }
 }

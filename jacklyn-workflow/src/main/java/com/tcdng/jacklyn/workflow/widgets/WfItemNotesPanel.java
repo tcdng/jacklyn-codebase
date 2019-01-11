@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,28 +31,28 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 @UplBinding("web/workflow/upl/wfitemnotespanel.upl")
 public class WfItemNotesPanel extends AbstractDialogPanel {
 
-	private boolean addNotes;
+    private boolean addNotes;
 
-	@Action
-	@Override
-	public void switchState() throws UnifyException {
-		super.switchState();
+    @Action
+    @Override
+    public void switchState() throws UnifyException {
+        super.switchState();
 
-		NotesInfo notesInfo = getValue(NotesInfo.class);
-		setVisible("frmNotes", !notesInfo.isRequired());
-		setVisible("frmNotesReq", notesInfo.isRequired());
+        NotesInfo notesInfo = getValue(NotesInfo.class);
+        setVisible("frmNotes", !notesInfo.isRequired());
+        setVisible("frmNotesReq", notesInfo.isRequired());
 
-		setVisible("addNotesPanel", addNotes);
-		setVisible("saveBtn", addNotes);
-		setVisible("cancelBtn", addNotes);
-		setVisible("closeBtn", !addNotes);
-	}
+        setVisible("addNotesPanel", addNotes);
+        setVisible("saveBtn", addNotes);
+        setVisible("cancelBtn", addNotes);
+        setVisible("closeBtn", !addNotes);
+    }
 
-	public boolean isAddNotes() {
-		return addNotes;
-	}
+    public boolean isAddNotes() {
+        return addNotes;
+    }
 
-	public void setAddNotes(boolean addNotes) {
-		this.addNotes = addNotes;
-	}
+    public void setAddNotes(boolean addNotes) {
+        this.addNotes = addNotes;
+    }
 }

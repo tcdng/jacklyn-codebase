@@ -10,14 +10,11 @@
 		<audit name="sec-resetpassword" description="$m{security.auditsettings.resetpassword}"
 			action="update" />
 	</audits>
-	<dashboard-tiles>
-		<dashboard-tile name="sec-users"
-			caption="$m{security.dashboard.caption.users}" description="$m{security.dashboard.tile.users}"
+	<shortcut-tiles>
+		<shortcut-tile name="sec-users"
+			caption="$m{security.shortcut.caption.users}" description="$m{security.shortcut.tile.users}"
 			image="$t{images/manageusers.png}" path="/security/user/openPage" />
-		<dashboard-tile name="sec-roles"
-			caption="$m{security.dashboard.caption.roles}" description="$m{security.dashboard.tile.roles}"
-			image="$t{images/manageroles.png}" path="/security/role/openPage" />
-	</dashboard-tiles>
+	</shortcut-tiles>
 	<menus>
 		<menu name="sec-mainsecurity" caption="$m{security.menu.title}"
 			description="$m{security.menu.main}">
@@ -27,15 +24,13 @@
 			<menuitem name="sec-manageusersession" caption="$m{security.usersession.menu.title}"
 				pageCaption="$m{security.usersession.manage}" description="$m{security.menuitem.usersession}"
 				path="/security/usersession/openPage" remotePath="/security/usersession/getRemoteDoc" />
-			<menuitem name="sec-managerole" caption="$m{security.role.menu.title}"
-				pageCaption="$m{security.role.manage}" description="$m{security.menuitem.role}"
-				path="/security/role/openPage" remotePath="/security/role/getRemoteDoc" />
-			<menuitem name="sec-manageroledocumentcontrol" caption="$m{security.roledocumentcontrol.menu.title}"
-				pageCaption="$m{security.roleprivilege.manage}" description="$m{security.menuitem.roledocumentcontrol}"
-				path="/security/roledocumentcontrol/openPage" remotePath="/security/roledocumentcontrol/getRemoteDoc" />
 			<menuitem name="sec-changepassword" caption="$m{security.changepassword.menu.title}"
 				pageCaption="$m{security.changepassword.menu.title}" description="$m{security.menuitem.changepassword}"
 				path="/security/changepassword/openPage" />
+            <menuitem name="sec-manageclientapp" caption="$m{security.clientapp.menu.title}"
+                pageCaption="$m{security.clientapp.manage}"
+                description="$m{security.menuitem.clientapp}" path="/security/clientapp/openPage"
+                remotePath="/security/clientapp/getRemoteDoc" />
 		</menu>
 	</menus>
 	<notification-templates>
@@ -54,16 +49,14 @@
 			<privilege name="sec-user-edit" description="$m{security.privilege.user.edit}" />
 			<privilege name="sec-user-delete" description="$m{security.privilege.user.delete}" />
 			<privilege name="sec-user-viewsession" description="$m{security.privilege.user.viewsession}" />
-			<privilege name="sec-role-add" description="$m{security.privilege.role.add}" />
-			<privilege name="sec-role-view" description="$m{security.privilege.role.view}" />
-			<privilege name="sec-role-edit" description="$m{security.privilege.role.edit}" />
-			<privilege name="sec-role-delete" description="$m{security.privilege.role.delete}" />
 			<privilege name="sec-changepassword" description="$m{security.privilege.changepassword}" />
 			<privilege name="sec-resetuserpassword" description="$m{security.privilege.resetpassword}" />
-			<privilege name="sec-role-editprivilege"
-				description="$m{security.privilege.role.editprivileges}" />
 			<privilege name="sec-forcelogout" description="$m{security.privilege.forcelogout}" />
 			<privilege name="sec-forcelogoutall" description="$m{security.privilege.forcelogoutall}" />
+            <privilege name="sec-clientappadd" description="$m{security.privilege.clientapp.add}" />
+            <privilege name="sec-clientappview" description="$m{security.privilege.clientapp.view}" />
+            <privilege name="sec-clientappedit" description="$m{security.privilege.clientapp.edit}" />
+            <privilege name="sec-clientappdelete" description="$m{security.privilege.clientapp.delete}" />
 		</privilege-group>
 	</privileges>
 	<sys-parameters>
@@ -132,5 +125,11 @@
 		<sys-parameter name="SEC-0015"
 			defaultValue="Administrator" description="$m{security.sysparam.administratorname}"
 			editor="!ui-text size:24"/>
+        <sys-parameter name="SEC-0016"
+            defaultValue="defaultDashboard" description="$m{security.sysparam.defaultdashboard}"
+            editor="!ui-text size:48"/>
+        <sys-parameter name="SEC-0017"
+            defaultValue="defaultSystemDashboard" description="$m{security.sysparam.defaultsystemdashboard}"
+            editor="!ui-text size:48"/>
 	</sys-parameters>
 </module>

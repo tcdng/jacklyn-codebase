@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,24 +28,31 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("notificationtypelist")
 public enum NotificationType implements EnumConst {
 
-	SYSTEM("X"), EMAIL("E"), SMS("S");
+    SYSTEM("X", true), EMAIL("E", false), SMS("S", false);
 
-	private final String code;
+    private final String code;
 
-	private NotificationType(String code) {
-		this.code = code;
-	}
+    private final boolean internal;
+    
+    private NotificationType(String code, boolean internal) {
+        this.code = code;
+        this.internal = internal;
+    }
 
-	@Override
-	public String code() {
-		return code;
-	}
+    @Override
+    public String code() {
+        return code;
+    }
 
-	public static NotificationType fromCode(String code) {
-		return EnumUtils.fromCode(NotificationType.class, code);
-	}
+    public boolean internal() {
+        return internal;
+    }
 
-	public static NotificationType fromName(String name) {
-		return EnumUtils.fromName(NotificationType.class, name);
-	}
+    public static NotificationType fromCode(String code) {
+        return EnumUtils.fromCode(NotificationType.class, code);
+    }
+
+    public static NotificationType fromName(String name) {
+        return EnumUtils.fromName(NotificationType.class, name);
+    }
 }

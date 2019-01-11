@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,29 +29,29 @@ import com.tcdng.unify.core.data.PackableDoc;
  */
 public class WfItemReader {
 
-	private PackableDoc pd;
+    private PackableDoc pd;
 
-	public WfItemReader(PackableDoc pd) {
-		this.pd = pd;
-	}
+    public WfItemReader(PackableDoc pd) {
+        this.pd = pd;
+    }
 
-	public Set<String> getFieldNames() {
-		return pd.getFieldNames();
-	}
+    public Set<String> getFieldNames() {
+        return pd.getFieldNames();
+    }
 
-	public Class<?> getFieldType(String name) throws UnifyException {
-		return pd.getFieldType(name);
-	}
+    public Class<?> getFieldType(String name) throws UnifyException {
+        return pd.getFieldType(name);
+    }
 
-	public Object readFieldValue(String name) throws UnifyException {
-		return pd.readFieldValue(name);
-	}
+    public Object readFieldValue(String name) throws UnifyException {
+        return pd.readFieldValue(name);
+    }
 
-	public <T> T readFieldValue(Class<T> type, String name) throws UnifyException {
-		return pd.readFieldValue(type, name);
-	}
+    public <T> T readFieldValue(Class<T> type, String name) throws UnifyException {
+        return pd.readFieldValue(type, name);
+    }
 
-	protected PackableDoc getPd() {
-		return pd;
-	}
+    protected PackableDoc getPd() {
+        return pd;
+    }
 }

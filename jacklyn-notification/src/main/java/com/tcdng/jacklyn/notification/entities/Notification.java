@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,193 +28,204 @@ import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 
 /**
- * Message entity.
+ * Notification entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Message", reportable = true)
+@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification", reportable = true)
 @Table("NOTIFICATION")
 public class Notification extends BaseTimestampedEntity {
 
-	@ForeignKey(NotificationTemplate.class)
-	private Long notificationTemplateId;
+    @ForeignKey(NotificationTemplate.class)
+    private Long notificationTemplateId;
 
-	@ForeignKey(NotificationChannel.class)
-	private Long notificationChannelId;
+    @ForeignKey(NotificationChannel.class)
+    private Long notificationChannelId;
 
-	@Column(length = 64)
-	private String senderName;
+    @Column(length = 64)
+    private String senderName;
 
-	@Column(length = 64)
-	private String senderContact;
+    @Column(length = 64)
+    private String senderContact;
 
-	@Column
-	private Integer attempts;
+    @Column(name = "TARGET_REF", length = 32, nullable=true)
+    private String reference;
 
-	@Column(type = ColumnType.TIMESTAMP)
-	private Date dueDt;
+    @Column
+    private Integer attempts;
 
-	@Column(type = ColumnType.TIMESTAMP, nullable = true)
-	private Date sentDt;
+    @Column(type = ColumnType.TIMESTAMP)
+    private Date dueDt;
 
-	@Column(name = "REC_ST")
-	private NotificationStatus status;
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date sentDt;
 
-	@Column
-	private byte[] dictionary;
+    @Column(name = "REC_ST")
+    private NotificationStatus status;
 
-	@ListOnly(key = "notificationTemplateId", property = "moduleId")
-	private Long moduleId;
+    @Column(name="MSG_DICTIONARY", nullable = true)
+    private byte[] dictionary;
 
-	@ListOnly(key = "notificationTemplateId", property = "moduleName")
-	private String moduleName;
+    @ListOnly(key = "notificationTemplateId", property = "moduleId")
+    private Long moduleId;
 
-	@ListOnly(key = "notificationTemplateId", property = "name")
-	private String notificationTemplateName;
+    @ListOnly(key = "notificationTemplateId", property = "moduleName")
+    private String moduleName;
 
-	@ListOnly(key = "notificationTemplateId", property = "description")
-	private String notificationTemplateDesc;
+    @ListOnly(key = "notificationTemplateId", property = "name")
+    private String notificationTemplateName;
 
-	@ListOnly(key = "notificationTemplateId", property = "subject")
-	private String subject;
+    @ListOnly(key = "notificationTemplateId", property = "description")
+    private String notificationTemplateDesc;
 
-	@ListOnly(key = "notificationTemplateId", property = "attachmentGenerator")
-	private String attachmentGenerator;
+    @ListOnly(key = "notificationTemplateId", property = "subject")
+    private String subject;
 
-	@ListOnly(key = "notificationChannelId", property = "name")
-	private String notificationChannelName;
+    @ListOnly(key = "notificationTemplateId", property = "attachmentGenerator")
+    private String attachmentGenerator;
 
-	@Override
-	public String getDescription() {
-		return notificationTemplateDesc;
-	}
+    @ListOnly(key = "notificationChannelId", property = "name")
+    private String notificationChannelName;
 
-	public Long getNotificationTemplateId() {
-		return notificationTemplateId;
-	}
+    @Override
+    public String getDescription() {
+        return notificationTemplateDesc;
+    }
 
-	public void setNotificationTemplateId(Long notificationTemplateId) {
-		this.notificationTemplateId = notificationTemplateId;
-	}
+    public Long getNotificationTemplateId() {
+        return notificationTemplateId;
+    }
 
-	public Long getNotificationChannelId() {
-		return notificationChannelId;
-	}
+    public void setNotificationTemplateId(Long notificationTemplateId) {
+        this.notificationTemplateId = notificationTemplateId;
+    }
 
-	public void setNotificationChannelId(Long notificationChannelId) {
-		this.notificationChannelId = notificationChannelId;
-	}
+    public Long getNotificationChannelId() {
+        return notificationChannelId;
+    }
 
-	public String getSenderName() {
-		return senderName;
-	}
+    public void setNotificationChannelId(Long notificationChannelId) {
+        this.notificationChannelId = notificationChannelId;
+    }
 
-	public void setSenderName(String senderName) {
-		this.senderName = senderName;
-	}
+    public String getSenderName() {
+        return senderName;
+    }
 
-	public String getSenderContact() {
-		return senderContact;
-	}
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
 
-	public void setSenderContact(String senderContact) {
-		this.senderContact = senderContact;
-	}
+    public String getSenderContact() {
+        return senderContact;
+    }
 
-	public Integer getAttempts() {
-		return attempts;
-	}
+    public void setSenderContact(String senderContact) {
+        this.senderContact = senderContact;
+    }
 
-	public void setAttempts(Integer attempts) {
-		this.attempts = attempts;
-	}
+    public String getReference() {
+        return reference;
+    }
 
-	public Date getDueDt() {
-		return dueDt;
-	}
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
 
-	public void setDueDt(Date dueDt) {
-		this.dueDt = dueDt;
-	}
+    public Integer getAttempts() {
+        return attempts;
+    }
 
-	public Date getSentDt() {
-		return sentDt;
-	}
+    public void setAttempts(Integer attempts) {
+        this.attempts = attempts;
+    }
 
-	public void setSentDt(Date sentDt) {
-		this.sentDt = sentDt;
-	}
+    public Date getDueDt() {
+        return dueDt;
+    }
 
-	public NotificationStatus getStatus() {
-		return status;
-	}
+    public void setDueDt(Date dueDt) {
+        this.dueDt = dueDt;
+    }
 
-	public void setStatus(NotificationStatus status) {
-		this.status = status;
-	}
+    public Date getSentDt() {
+        return sentDt;
+    }
 
-	public byte[] getDictionary() {
-		return dictionary;
-	}
+    public void setSentDt(Date sentDt) {
+        this.sentDt = sentDt;
+    }
 
-	public void setDictionary(byte[] dictionary) {
-		this.dictionary = dictionary;
-	}
+    public NotificationStatus getStatus() {
+        return status;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public void setStatus(NotificationStatus status) {
+        this.status = status;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public byte[] getDictionary() {
+        return dictionary;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public void setDictionary(byte[] dictionary) {
+        this.dictionary = dictionary;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public String getNotificationTemplateName() {
-		return notificationTemplateName;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public void setNotificationTemplateName(String notificationTemplateName) {
-		this.notificationTemplateName = notificationTemplateName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public String getNotificationTemplateDesc() {
-		return notificationTemplateDesc;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public void setNotificationTemplateDesc(String notificationTemplateDesc) {
-		this.notificationTemplateDesc = notificationTemplateDesc;
-	}
+    public String getNotificationTemplateName() {
+        return notificationTemplateName;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public void setNotificationTemplateName(String notificationTemplateName) {
+        this.notificationTemplateName = notificationTemplateName;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public String getNotificationTemplateDesc() {
+        return notificationTemplateDesc;
+    }
 
-	public String getAttachmentGenerator() {
-		return attachmentGenerator;
-	}
+    public void setNotificationTemplateDesc(String notificationTemplateDesc) {
+        this.notificationTemplateDesc = notificationTemplateDesc;
+    }
 
-	public void setAttachmentGenerator(String attachmentGenerator) {
-		this.attachmentGenerator = attachmentGenerator;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public String getNotificationChannelName() {
-		return notificationChannelName;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public void setNotificationChannelName(String notificationChannelName) {
-		this.notificationChannelName = notificationChannelName;
-	}
+    public String getAttachmentGenerator() {
+        return attachmentGenerator;
+    }
+
+    public void setAttachmentGenerator(String attachmentGenerator) {
+        this.attachmentGenerator = attachmentGenerator;
+    }
+
+    public String getNotificationChannelName() {
+        return notificationChannelName;
+    }
+
+    public void setNotificationChannelName(String notificationChannelName) {
+        this.notificationChannelName = notificationChannelName;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynPropertyConstants {
 
-	String COMMON_REPORT_PROVIDER = "jacklyn-commonreportprovider";
+    String COMMON_REPORT_PROVIDER = "jacklyn-commonreportprovider";
 
-	String COMMON_REPORT_SERVER = "jacklyn-commonreportserver";
+    String COMMON_REPORT_SERVER = "jacklyn-commonreportserver";
 
-	String MODULE_CONFIGURATION = "jacklyn-modules";
+    String MODULE_CONFIGURATION = "jacklyn-modules";
 
-	String RC_SYSTEMASSET_PROVIDER = "jacklyn-rcsystemassetprovider";
+    String RC_SYSTEMASSET_PROVIDER = "jacklyn-rcsystemassetprovider";
 }

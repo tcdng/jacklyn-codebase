@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,26 +31,37 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfFormSectionConfig extends BaseConfig {
 
-	private String label;
+    private String label;
 
-	private List<WfFormFieldConfig> wfFormFieldConfigList;
+    private String binding;
 
-	public String getLabel() {
-		return label;
-	}
+    private List<WfFormFieldConfig> wfFormFieldConfigList;
 
-	@XmlAttribute(name = "label")
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public List<WfFormFieldConfig> getWfFormFieldConfigList() {
-		return wfFormFieldConfigList;
-	}
+    @XmlAttribute(name = "label")
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	@XmlElement(name="field", required=true)
-	public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
-		this.wfFormFieldConfigList = wfFormFieldConfigList;
-	}
+    public String getBinding() {
+        return binding;
+    }
+
+    @XmlAttribute(name = "binding")
+    public void setBinding(String binding) {
+        this.binding = binding;
+    }
+
+    public List<WfFormFieldConfig> getWfFormFieldConfigList() {
+        return wfFormFieldConfigList;
+    }
+
+    @XmlElement(name = "field", required = true)
+    public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
+        this.wfFormFieldConfigList = wfFormFieldConfigList;
+    }
 
 }

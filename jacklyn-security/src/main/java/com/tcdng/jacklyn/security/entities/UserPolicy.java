@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,8 +20,7 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntityPolicy;
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
-import com.tcdng.jacklyn.system.business.SystemModule;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -36,52 +35,51 @@ import com.tcdng.unify.core.database.Entity;
 @Component("userpolicy")
 public class UserPolicy extends BaseVersionedTimestampedStatusEntityPolicy {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable
+    private SystemService systemService;
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		User user = (User) record;
-		if (user.getChangePassword() == null) {
-			user.setChangePassword(Boolean.TRUE);
-		}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        User user = (User) record;
+        if (user.getChangePassword() == null) {
+            user.setChangePassword(Boolean.TRUE);
+        }
 
-		if (user.getPasswordExpires() == null) {
-			user.setPasswordExpires(Boolean.TRUE);
-		}
+        if (user.getPasswordExpires() == null) {
+            user.setPasswordExpires(Boolean.TRUE);
+        }
 
-		if (user.getLoginLocked() == null) {
-			user.setLoginLocked(Boolean.FALSE);
-		}
+        if (user.getLoginLocked() == null) {
+            user.setLoginLocked(Boolean.FALSE);
+        }
 
-		if (user.getAllowMultipleLogin() == null) {
-			user.setAllowMultipleLogin(Boolean.FALSE);
-		}
+        if (user.getAllowMultipleLogin() == null) {
+            user.setAllowMultipleLogin(Boolean.FALSE);
+        }
 
-		calcPasswordExpiryDate(user);
+        calcPasswordExpiryDate(user);
 
-		user.setLoginAttempts(Integer.valueOf(0));
-		user.setLastLoginDt(null);
-		return super.preCreate(record, now);
-	}
+        user.setLoginAttempts(Integer.valueOf(0));
+        user.setLastLoginDt(null);
+        return super.preCreate(record, now);
+    }
 
-	@Override
-	public void preUpdate(Entity record, Date now) throws UnifyException {
-		calcPasswordExpiryDate((User) record);
-		super.preUpdate(record, now);
-	}
+    @Override
+    public void preUpdate(Entity record, Date now) throws UnifyException {
+        calcPasswordExpiryDate((User) record);
+        super.preUpdate(record, now);
+    }
 
-	private void calcPasswordExpiryDate(User user) throws UnifyException {
-		if (user.getPasswordExpires() && user.getPasswordExpiryDt() == null
-				&& systemModule.getSysParameterValue(boolean.class,
-						SecurityModuleSysParamConstants.ENABLE_PASSWORD_EXPIRY)) {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date());
-			cal.add(Calendar.DAY_OF_YEAR, systemModule.getSysParameterValue(int.class,
-					SecurityModuleSysParamConstants.PASSWORD_EXPIRY_DAYS));
-			user.setPasswordExpiryDt(cal.getTime());
-		} else {
-			user.setPasswordExpiryDt(null);
-		}
-	}
+    private void calcPasswordExpiryDate(User user) throws UnifyException {
+        if (user.getPasswordExpires() && user.getPasswordExpiryDt() == null && systemService
+                .getSysParameterValue(boolean.class, SecurityModuleSysParamConstants.ENABLE_PASSWORD_EXPIRY)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cal.add(Calendar.DAY_OF_YEAR,
+                    systemService.getSysParameterValue(int.class, SecurityModuleSysParamConstants.PASSWORD_EXPIRY_DAYS));
+            user.setPasswordExpiryDt(cal.getTime());
+        } else {
+            user.setPasswordExpiryDt(null);
+        }
+    }
 }

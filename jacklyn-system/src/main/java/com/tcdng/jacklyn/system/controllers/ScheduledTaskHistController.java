@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,10 +18,9 @@ package com.tcdng.jacklyn.system.controllers;
 import java.util.Date;
 import java.util.List;
 
-import com.tcdng.jacklyn.common.controllers.ManageRecordController;
+import com.tcdng.jacklyn.common.controllers.BaseCrudController;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.system.business.SystemModule;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
 import com.tcdng.unify.core.UnifyException;
@@ -40,89 +39,89 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/scheduledtaskhist")
 @UplBinding("web/system/upl/managescheduledtaskhist.upl")
-public class ScheduledTaskHistController extends ManageRecordController<ScheduledTaskHist, Long> {
+public class ScheduledTaskHistController extends BaseCrudController<ScheduledTaskHist, Long> {
 
-	@Configurable(SystemModuleNameConstants.SYSTEMBUSINESSMODULE)
-	private SystemModule systemModule;
+    @Configurable
+    private SystemService systemService;
 
-	private Date searchExecutionDt;
+    private Date searchExecutionDt;
 
-	private Long searchScheduledTaskId;
+    private Long searchScheduledTaskId;
 
-	private TaskStatus searchStatus;
+    private TaskStatus searchStatus;
 
-	public ScheduledTaskHistController() {
-		super(ScheduledTaskHist.class, "system.scheduledtaskhist.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public ScheduledTaskHistController() {
+        super(ScheduledTaskHist.class, "$m{system.scheduledtaskhist.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Date getSearchExecutionDt() {
-		return searchExecutionDt;
-	}
+    public Date getSearchExecutionDt() {
+        return searchExecutionDt;
+    }
 
-	public void setSearchExecutionDt(Date searchExecutionDt) {
-		this.searchExecutionDt = searchExecutionDt;
-	}
+    public void setSearchExecutionDt(Date searchExecutionDt) {
+        this.searchExecutionDt = searchExecutionDt;
+    }
 
-	public Long getSearchScheduledTaskId() {
-		return searchScheduledTaskId;
-	}
+    public Long getSearchScheduledTaskId() {
+        return searchScheduledTaskId;
+    }
 
-	public void setSearchScheduledTaskId(Long searchScheduledTaskId) {
-		this.searchScheduledTaskId = searchScheduledTaskId;
-	}
+    public void setSearchScheduledTaskId(Long searchScheduledTaskId) {
+        this.searchScheduledTaskId = searchScheduledTaskId;
+    }
 
-	public TaskStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public TaskStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(TaskStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(TaskStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		super.onOpenPage();
-		if (searchExecutionDt == null) {
-			searchExecutionDt = CalendarUtils.getCurrentMidnightDate();
-		}
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        super.onOpenPage();
+        if (searchExecutionDt == null) {
+            searchExecutionDt = CalendarUtils.getCurrentMidnightDate();
+        }
+    }
 
-	@Override
-	protected List<ScheduledTaskHist> find() throws UnifyException {
-		ScheduledTaskHistQuery query = new ScheduledTaskHistQuery();
-		if (QueryUtils.isValidLongCriteria(searchScheduledTaskId)) {
-			query.scheduledTaskId(searchScheduledTaskId);
-		}
-		if (getSearchStatus() != null) {
-			query.taskStatus(getSearchStatus());
-		}
-		query.createdOn(searchExecutionDt);
-		return systemModule.findScheduledTaskHistory(query);
-	}
+    @Override
+    protected List<ScheduledTaskHist> find() throws UnifyException {
+        ScheduledTaskHistQuery query = new ScheduledTaskHistQuery();
+        if (QueryUtils.isValidLongCriteria(searchScheduledTaskId)) {
+            query.scheduledTaskId(searchScheduledTaskId);
+        }
+        if (getSearchStatus() != null) {
+            query.taskStatus(getSearchStatus());
+        }
+        query.createdOn(searchExecutionDt);
+        return systemService.findScheduledTaskHistory(query);
+    }
 
-	@Override
-	protected ScheduledTaskHist find(Long id) throws UnifyException {
-		return systemModule.findScheduledTaskHist(id);
-	}
+    @Override
+    protected ScheduledTaskHist find(Long id) throws UnifyException {
+        return systemService.findScheduledTaskHist(id);
+    }
 
-	@Override
-	protected ScheduledTaskHist prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected ScheduledTaskHist prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
+        return 0;
+    }
 }

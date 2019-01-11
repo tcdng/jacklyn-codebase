@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.notification.data;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,27 +28,31 @@ import java.util.Set;
  */
 public class MessageDictionary implements Serializable {
 
-	private static final long serialVersionUID = 1680429097663631478L;
+    private static final long serialVersionUID = 1680429097663631478L;
 
-	private Map<String, Object> dictionary;
+    private Map<String, Object> dictionary;
 
-	public MessageDictionary(Map<String, Object> dictionary) {
-		this.dictionary = dictionary;
-	}
+    public MessageDictionary(Map<String, Object> dictionary) {
+        this.dictionary = dictionary;
+    }
 
-	public void addEntry(String entryName, Object value) {
-		this.dictionary.put(entryName, value);
-	}
+    public MessageDictionary() {
+        dictionary = new HashMap<String, Object>();
+    }
 
-	public Set<String> getEntryNames() {
-		return this.dictionary.keySet();
-	}
+    public void addEntry(String entryName, Object value) {
+        dictionary.put(entryName, value);
+    }
 
-	public Object getEntry(String entryName) {
-		return this.dictionary.get(entryName);
-	}
+    public Set<String> getEntryNames() {
+        return dictionary.keySet();
+    }
 
-	public Map<String, Object> getDictionary() {
-		return dictionary;
-	}
+    public Object getEntry(String entryName) {
+        return dictionary.get(entryName);
+    }
+
+    public Map<String, Object> getDictionary() {
+        return dictionary;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,20 +36,21 @@ import com.tcdng.unify.web.AbstractOpenWindowPageControllerResponse;
 @Component("commonreportresponse")
 public class CommonReportResponse extends AbstractOpenWindowPageControllerResponse {
 
-	@Override
-	protected WindowResourceInfo prepareWindowResource() throws UnifyException {
-		ReportOptions reportOptions = (ReportOptions) getRequestAttribute(JacklynRequestAttributeConstants.REPORTOPTIONS);
-		String reportFormat = reportOptions.getReportFormat();
-		String resourceName = getTimestampedResourceName(reportOptions.getTitle())
-				+ ReportFormat.fromName(reportOptions.getReportFormat()).fileExt();
-		boolean download = reportOptions.isDownload();
+    @Override
+    protected WindowResourceInfo prepareWindowResource() throws UnifyException {
+        ReportOptions reportOptions = (ReportOptions) getRequestAttribute(
+                JacklynRequestAttributeConstants.REPORTOPTIONS);
+        String reportFormat = reportOptions.getReportFormat();
+        String resourceName = getTimestampedResourceName(reportOptions.getTitle())
+                + ReportFormat.fromName(reportOptions.getReportFormat()).fileExt();
+        boolean download = reportOptions.isDownload();
 
-		String contentType = ContentTypeConstants.APPLICATION_OCTETSTREAM;
-		if (!download) {
-			contentType = ReportFormat.fromName(reportFormat).contentType();
-		}
+        String contentType = ContentTypeConstants.APPLICATION_OCTETSTREAM;
+        if (!download) {
+            contentType = ReportFormat.fromName(reportFormat).contentType();
+        }
 
-		return new WindowResourceInfo(reportOptions, reportOptions.getReportResourcePath(),
-				resourceName, contentType, download);
-	}
+        return new WindowResourceInfo(reportOptions, reportOptions.getReportResourcePath(), resourceName, contentType,
+                download);
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,107 +31,107 @@ import com.tcdng.unify.core.batch.ConstraintAction;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "Batch File Read Configuration",
-		reportable = true, auditable = true)
+@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "Batch File Read Configuration", reportable = true,
+        auditable = true)
 @Table(name = "BATCHFILEREADCONFIG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class BatchFileReadConfig extends BaseVersionedStatusEntity {
 
-	@ForeignKey(BatchFileDefinition.class)
-	private Long batchFileDefinitionId;
+    @ForeignKey(BatchFileDefinition.class)
+    private Long batchFileDefinitionId;
 
-	@ForeignKey
-	private ConstraintAction constraintAction;
+    @ForeignKey
+    private ConstraintAction constraintAction;
 
-	@Column
-	private String name;
+    @Column
+    private String name;
 
-	@Column(length = 64)
-	private String description;
+    @Column(length = 64)
+    private String description;
 
-	@Column(length = 48)
-	private String fileReader;
+    @Column(length = 48)
+    private String fileReader;
 
-	@Column(length = 48)
-	private String readProcessor;
+    @Column(length = 48)
+    private String readProcessor;
 
-	@ListOnly(key = "batchFileDefinitionId", property = "name")
-	private String batchFileDefinitionName;
+    @ListOnly(key = "batchFileDefinitionId", property = "name")
+    private String batchFileDefinitionName;
 
-	@ListOnly(key = "batchFileDefinitionId", property = "description")
-	private String batchFileDefinitionDesc;
+    @ListOnly(key = "batchFileDefinitionId", property = "description")
+    private String batchFileDefinitionDesc;
 
-	@ListOnly(key = "constraintAction", property = "description")
-	private String constraintActionDesc;
+    @ListOnly(key = "constraintAction", property = "description")
+    private String constraintActionDesc;
 
-	public Long getBatchFileDefinitionId() {
-		return batchFileDefinitionId;
-	}
+    public Long getBatchFileDefinitionId() {
+        return batchFileDefinitionId;
+    }
 
-	public void setBatchFileDefinitionId(Long batchFileDefinitionId) {
-		this.batchFileDefinitionId = batchFileDefinitionId;
-	}
+    public void setBatchFileDefinitionId(Long batchFileDefinitionId) {
+        this.batchFileDefinitionId = batchFileDefinitionId;
+    }
 
-	public ConstraintAction getConstraintAction() {
-		return constraintAction;
-	}
+    public ConstraintAction getConstraintAction() {
+        return constraintAction;
+    }
 
-	public void setConstraintAction(ConstraintAction constraintAction) {
-		this.constraintAction = constraintAction;
-	}
+    public void setConstraintAction(ConstraintAction constraintAction) {
+        this.constraintAction = constraintAction;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getFileReader() {
-		return fileReader;
-	}
+    public String getFileReader() {
+        return fileReader;
+    }
 
-	public void setFileReader(String fileReader) {
-		this.fileReader = fileReader;
-	}
+    public void setFileReader(String fileReader) {
+        this.fileReader = fileReader;
+    }
 
-	public String getReadProcessor() {
-		return readProcessor;
-	}
+    public String getReadProcessor() {
+        return readProcessor;
+    }
 
-	public void setReadProcessor(String readProcessor) {
-		this.readProcessor = readProcessor;
-	}
+    public void setReadProcessor(String readProcessor) {
+        this.readProcessor = readProcessor;
+    }
 
-	public String getBatchFileDefinitionName() {
-		return batchFileDefinitionName;
-	}
+    public String getBatchFileDefinitionName() {
+        return batchFileDefinitionName;
+    }
 
-	public void setBatchFileDefinitionName(String batchFileDefinitionName) {
-		this.batchFileDefinitionName = batchFileDefinitionName;
-	}
+    public void setBatchFileDefinitionName(String batchFileDefinitionName) {
+        this.batchFileDefinitionName = batchFileDefinitionName;
+    }
 
-	public String getBatchFileDefinitionDesc() {
-		return batchFileDefinitionDesc;
-	}
+    public String getBatchFileDefinitionDesc() {
+        return batchFileDefinitionDesc;
+    }
 
-	public void setBatchFileDefinitionDesc(String batchFileDefinitionDesc) {
-		this.batchFileDefinitionDesc = batchFileDefinitionDesc;
-	}
+    public void setBatchFileDefinitionDesc(String batchFileDefinitionDesc) {
+        this.batchFileDefinitionDesc = batchFileDefinitionDesc;
+    }
 
-	public String getConstraintActionDesc() {
-		return constraintActionDesc;
-	}
+    public String getConstraintActionDesc() {
+        return constraintActionDesc;
+    }
 
-	public void setConstraintActionDesc(String constraintActionDesc) {
-		this.constraintActionDesc = constraintActionDesc;
-	}
+    public void setConstraintActionDesc(String constraintActionDesc) {
+        this.constraintActionDesc = constraintActionDesc;
+    }
 }

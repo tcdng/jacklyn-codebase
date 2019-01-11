@@ -1,11 +1,25 @@
 <?xml version="1.0"?>
 <module name="organization" description="$m{organization.module}">
+    <shortcut-tiles>
+        <shortcut-tile name="org-roles"
+            caption="$m{organization.shortcut.caption.roles}" description="$m{organization.shortcut.tile.roles}"
+            image="$t{images/manageroles.png}" path="/organization/role/openPage" />
+    </shortcut-tiles>
 	<menus>
 		<menu name="org-mainorg" description="$m{organization.menu.main}"
 			caption="$m{organization.menu.title}">
 			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
 				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
 				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
+            <menuitem name="org-managedepartment" description="$m{organization.menuitem.department}"
+                caption="$m{organization.department.menu.title}" pageCaption="$m{organization.department.manage}"
+                path="/organization/department/openPage" remotePath="/organization/department/getRemoteDoc" />
+            <menuitem name="org-managerole" caption="$m{organization.role.menu.title}"
+                pageCaption="$m{organization.role.manage}" description="$m{organization.menuitem.role}"
+                path="/organization/role/openPage" remotePath="/organization/role/getRemoteDoc" />
+            <menuitem name="org-manageroledocumentcontrol" caption="$m{organization.roledocumentcontrol.menu.title}"
+                pageCaption="$m{organization.roleprivilege.manage}" description="$m{organization.menuitem.roledocumentcontrol}"
+                path="/organization/roledocumentcontrol/openPage" remotePath="/organization/roledocumentcontrol/getRemoteDoc" />
 		</menu>
 	</menus>
 	<privileges>
@@ -14,6 +28,16 @@
 			<privilege name="org-branchedit" description="$m{organization.privilege.branch.edit}" />
 			<privilege name="org-branchview" description="$m{organization.privilege.branch.view}" />
 			<privilege name="org-branchdelete" description="$m{organization.privilege.branch.delete}" />
+            <privilege name="org-departmentadd" description="$m{organization.privilege.department.add}" />
+            <privilege name="org-departmentedit" description="$m{organization.privilege.department.edit}" />
+            <privilege name="org-departmentview" description="$m{organization.privilege.department.view}" />
+            <privilege name="org-departmentdelete" description="$m{organization.privilege.department.delete}" />
+            <privilege name="org-role-add" description="$m{organization.privilege.role.add}" />
+            <privilege name="org-role-view" description="$m{organization.privilege.role.view}" />
+            <privilege name="org-role-edit" description="$m{organization.privilege.role.edit}" />
+            <privilege name="org-role-delete" description="$m{organization.privilege.role.delete}" />
+            <privilege name="org-role-editprivilege"
+                description="$m{organization.privilege.role.editprivileges}" />
 		</privilege-group>
 	</privileges>
 </module>

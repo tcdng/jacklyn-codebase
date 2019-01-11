@@ -1,15 +1,17 @@
 // UPL template for managing notification templates
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{notification.notificationtemplate.manage}
-	searchByList:$c{searchModuleId searchName searchDescription searchStatus}
+    searchByList:$c{searchModuleId searchName searchDescription searchStatus}
     searchClearList:$c{searchModuleId searchName searchDescription searchStatus}
-	tableColumnList:$c{moduleDesc name description subject statusDesc}
-    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.basicdetails} components:$c{frmModule frmName frmDescription frmStatus}}
-    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.template} components:$c{frmSubject frmTemplate frmHtmlFlag}}
- 	addPrivilege:$s{not-notificationtemplate-add} editPrivilege:$s{not-notificationtemplate-edit}
-	viewPrivilege:$s{not-notificationtemplate-view} deletePrivilege:$s{not-notificationtemplate-delete}
+    tableColumnList:$c{moduleDesc name description subject statusDesc}
+    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.basicdetails}
+        components:$c{frmModule frmName frmDescription frmMessageType frmActionLink frmStatus}}
+    formSection:$d{!ui-section caption:$m{notification.notificationtemplate.section.template}
+        components:$c{frmSubject frmTemplate frmHtmlFlag}}
+     addPrivilege:$s{not-notificationtemplate-add} editPrivilege:$s{not-notificationtemplate-edit}
+    viewPrivilege:$s{not-notificationtemplate-view} deletePrivilege:$s{not-notificationtemplate-delete}
 
 //Search
 !ui-select:searchModuleId caption:$m{notification.notificationtemplate.module} binding:searchModuleId list:modulelist blankOption:$s{}
@@ -17,7 +19,7 @@
 !ui-text:searchName caption:$m{notification.notificationtemplate.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{notification.notificationtemplate.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{notification.notificationtemplate.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{notification.notificationtemplate.module} binding:moduleDescription columnStyle:$s{width:120px;} sortable:true
@@ -28,10 +30,12 @@
 
 //Form components   
 !ui-select:frmModule caption:$m{notification.notificationtemplate.module} binding:moduleId list:modulelist blankOption:$s{}
-	 required:true focus:true
+     required:true focus:true
 !ui-name:frmName caption:$m{notification.notificationtemplate.name} required:true binding:name
 !ui-text:frmDescription caption:$m{notification.notificationtemplate.description} required:true binding:description size:40
 !ui-text:frmSubject caption:$m{notification.notificationtemplate.subject} required:true binding:subject size:40
 !ui-textarea:frmTemplate caption:$m{notification.notificationtemplate.template} required:true binding:template columns:40 rows:8
+!ui-select:frmMessageType caption:$m{notification.notificationtemplate.messagetype} binding:messageType list:messagetypelist blankOption:$s{} required:true
+!ui-text:frmActionLink caption:$m{notification.notificationtemplate.actionlink} binding:actionLink size:40
 !ui-checkbox:frmHtmlFlag caption:$m{notification.notificationtemplate.html} binding:html
 !ui-select:frmStatus caption:$m{notification.notificationtemplate.status} binding:status list:recordstatuslist blankOption:$s{}

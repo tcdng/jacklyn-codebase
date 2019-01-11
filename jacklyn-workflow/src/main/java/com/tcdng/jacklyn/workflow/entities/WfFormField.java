@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,7 +19,6 @@ package com.tcdng.jacklyn.workflow.entities;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
-import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
@@ -32,97 +31,75 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Table(name = "WFFORMFIELD", uniqueConstraints = { @UniqueConstraint({ "wfFormId", "binding" }) })
 public class WfFormField extends BaseEntity {
 
-	@ForeignKey(WfForm.class)
-	private Long wfFormId;
+    @ForeignKey(WfForm.class)
+    private Long wfFormId;
 
-	@Column(name = "SECTION_NM", length = 32)
-	private String sectionName;
+    @Column(name = "SECTION_NM", length = 32)
+    private String sectionName;
 
-	@Column
-	private String binding;
+    @Column
+    private String binding;
 
-	@Column(name = "FIELD_LABEL", length = 64)
-	private String label;
+    @Column(name = "FIELD_LABEL", length = 64, nullable = true)
+    private String label;
 
-	@Column(length = 128, nullable = true)
-	private String editorUpl;
+    @Column(length = 128, nullable = true)
+    private String editorUpl;
 
-	@Column(name = "REQUIRED_FG")
-	private Boolean required;
+    @Column(name = "REQUIRED_FG")
+    private Boolean required;
 
-	@ListOnly(key = "wfFormId", property = "name")
-	private String wfFormName;
+    @Override
+    public String getDescription() {
+        return this.binding;
+    }
 
-	@ListOnly(key = "wfFormId", property = "description")
-	private String wfFormDesc;
+    public Long getWfFormId() {
+        return wfFormId;
+    }
 
-	@Override
-	public String getDescription() {
-		return this.binding;
-	}
+    public String getSectionName() {
+        return sectionName;
+    }
 
-	public Long getWfFormId() {
-		return wfFormId;
-	}
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
 
-	public String getSectionName() {
-		return sectionName;
-	}
+    public void setWfFormId(Long wfFormId) {
+        this.wfFormId = wfFormId;
+    }
 
-	public void setSectionName(String sectionName) {
-		this.sectionName = sectionName;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setWfFormId(Long wfFormId) {
-		this.wfFormId = wfFormId;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getEditorUpl() {
+        return editorUpl;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setEditorUpl(String editorUpl) {
+        this.editorUpl = editorUpl;
+    }
 
-	public String getEditorUpl() {
-		return editorUpl;
-	}
+    public String getBinding() {
+        return binding;
+    }
 
-	public void setEditorUpl(String editorUpl) {
-		this.editorUpl = editorUpl;
-	}
+    public void setBinding(String binding) {
+        this.binding = binding;
+    }
 
-	public String getBinding() {
-		return binding;
-	}
+    public Boolean getRequired() {
+        return required;
+    }
 
-	public void setBinding(String binding) {
-		this.binding = binding;
-	}
-
-	public Boolean getRequired() {
-		return required;
-	}
-
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
-
-	public String getWfFormName() {
-		return wfFormName;
-	}
-
-	public void setWfFormName(String wfFormName) {
-		this.wfFormName = wfFormName;
-	}
-
-	public String getWfFormDesc() {
-		return wfFormDesc;
-	}
-
-	public void setWfFormDesc(String wfFormDesc) {
-		this.wfFormDesc = wfFormDesc;
-	}
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
 
 }

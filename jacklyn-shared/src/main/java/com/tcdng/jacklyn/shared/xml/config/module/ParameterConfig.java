@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,62 +25,62 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class ParameterConfig {
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private String editor;
+    private String editor;
 
-	private String type;
+    private String type;
 
-	private boolean mandatory;
+    private boolean mandatory;
 
-	public ParameterConfig() {
-		this.type = String.class.getName();
-	}
+    public ParameterConfig() {
+        this.type = String.class.getName();
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@XmlAttribute(required = true)
-	public void setName(String name) {
-		this.name = name;
-	}
+    @XmlAttribute(required = true)
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	@XmlAttribute(required = true)
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @XmlAttribute(required = true)
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getEditor() {
-		return editor;
-	}
+    public String getEditor() {
+        return editor;
+    }
 
-	@XmlAttribute(required = true)
-	public void setEditor(String editor) {
-		this.editor = editor;
-	}
+    @XmlAttribute(required = true)
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	@XmlAttribute(required = true)
-	public void setType(String type) {
-		this.type = type;
-	}
+    @XmlAttribute(required = true)
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public boolean isMandatory() {
-		return mandatory;
-	}
+    public boolean isMandatory() {
+        return mandatory;
+    }
 
-	@XmlAttribute
-	public void setMandatory(boolean mandatory) {
-		this.mandatory = mandatory;
-	}
+    @XmlAttribute
+    public void setMandatory(boolean mandatory) {
+        this.mandatory = mandatory;
+    }
 }

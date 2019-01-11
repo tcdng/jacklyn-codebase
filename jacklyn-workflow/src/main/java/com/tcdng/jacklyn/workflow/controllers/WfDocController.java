@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,108 +37,107 @@ import com.tcdng.unify.core.util.QueryUtils;
 @Component("/workflow/wfdoc")
 @UplBinding("web/workflow/upl/managewfdoc.upl")
 @SessionLoading(crudPanelLists = {
-		@CrudPanelList(panel = "frmWfDocTabListPanel", field = "record.tabList"),
-		@CrudPanelList(panel = "frmWfDocSectionListPanel", field = "record.sectionList"),
-		@CrudPanelList(panel = "frmWfDocFieldListPanel", field = "record.fieldList"),
-		@CrudPanelList(panel = "frmWfDocClassifierListPanel", field = "record.classifierList"),
-		@CrudPanelList(panel = "frmWfDocAttachmentListPanel", field = "record.attachmentList") })
-public class WfDocController extends AbstractWorkflowRecordController<WfDoc> {
+        @CrudPanelList(panel = "frmWfDocFieldListPanel", property = "record.fieldList"),
+        @CrudPanelList(panel = "frmWfDocClassifierListPanel", property = "record.classifierList"),
+        @CrudPanelList(panel = "frmWfDocAttachmentListPanel", property = "record.attachmentList"),
+        @CrudPanelList(panel = "frmWfDocBeanMappingListPanel", property = "record.beanMappingList")})
+public class WfDocController extends AbstractWorkflowCrudController<WfDoc> {
 
-	private Long searchWfCategoryId;
+    private Long searchWfCategoryId;
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public WfDocController() {
-		super(WfDoc.class, "workflow.wfdoc.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public WfDocController() {
+        super(WfDoc.class, "$m{workflow.wfdoc.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchWfCategoryId() {
-		return searchWfCategoryId;
-	}
+    public Long getSearchWfCategoryId() {
+        return searchWfCategoryId;
+    }
 
-	public void setSearchWfCategoryId(Long searchWfCategoryId) {
-		this.searchWfCategoryId = searchWfCategoryId;
-	}
+    public void setSearchWfCategoryId(Long searchWfCategoryId) {
+        this.searchWfCategoryId = searchWfCategoryId;
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<WfDoc> find() throws UnifyException {
-		WfDocQuery query = new WfDocQuery();
-		if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
-			query.wfCategoryId(searchWfCategoryId);
-		}
+    @Override
+    protected List<WfDoc> find() throws UnifyException {
+        WfDocQuery query = new WfDocQuery();
+        if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
+            query.wfCategoryId(searchWfCategoryId);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		if (searchStatus != null) {
-			query.status(searchStatus);
-		}
+        if (searchStatus != null) {
+            query.wfCategoryStatus(searchStatus);
+        }
 
-		query.order("description").ignoreEmptyCriteria(true);
-		return getWorkflowModule().findWfDocs(query);
-	}
+        query.order("description").ignoreEmptyCriteria(true);
+        return getWorkflowService().findWfDocs(query);
+    }
 
-	@Override
-	protected WfDoc find(Long wfDocId) throws UnifyException {
-		return getWorkflowModule().findWfDoc(wfDocId);
-	}
+    @Override
+    protected WfDoc find(Long wfDocId) throws UnifyException {
+        return getWorkflowService().findWfDoc(wfDocId);
+    }
 
-	@Override
-	protected WfDoc prepareCreate() throws UnifyException {
-		return new WfDoc();
-	}
+    @Override
+    protected WfDoc prepareCreate() throws UnifyException {
+        return new WfDoc();
+    }
 
-	@Override
-	protected void onPrepareView(WfDoc wfDocData, boolean onPaste) throws UnifyException {
+    @Override
+    protected void onPrepareView(WfDoc wfDocData, boolean onPaste) throws UnifyException {
 
-	}
+    }
 
-	@Override
-	protected Object create(WfDoc wfDocData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(WfDoc wfDocData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(WfDoc wfDocData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(WfDoc wfDocData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(WfDoc record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(WfDoc record) throws UnifyException {
+        return 0;
+    }
 }

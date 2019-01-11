@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,10 +15,9 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
 
-import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * Workflow form configuration.
@@ -26,27 +25,16 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfFormConfig extends BaseConfig {
-	
-	private String document;
-	
-	private WfFormTabsConfig wfFormTabsConfig;
+public class WfFormConfig {
 
-	public String getDocument() {
-		return document;
-	}
+    private List<WfFormTabConfig> wfFormTabConfigList;
 
-	@XmlAttribute
-	public void setDocument(String document) {
-		this.document = document;
-	}
+    public List<WfFormTabConfig> getWfFormTabConfigList() {
+        return wfFormTabConfigList;
+    }
 
-	public WfFormTabsConfig getWfFormTabsConfig() {
-		return wfFormTabsConfig;
-	}
-
-	@XmlElement(name="tabs", required=true)
-	public void setWfFormTabsConfig(WfFormTabsConfig wfFormTabsConfig) {
-		this.wfFormTabsConfig = wfFormTabsConfig;
-	}
+    @XmlElement(name = "tab", required = true)
+    public void setWfFormTabConfigList(List<WfFormTabConfig> wfFormTabConfigList) {
+        this.wfFormTabConfigList = wfFormTabConfigList;
+    }
 }

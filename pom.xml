@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tcdng.jacklyn</groupId>
 	<artifactId>jacklyn</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>jacklyn</name>
 	<description>Jacklyn Codebase</description>
-	<url>http://www.tcdng.com/jacklyn</url>
+	<url>http://www.tcdng.com/jacklyncodebase.html</url>
 
 	<licenses>
 		<license>
@@ -34,70 +34,173 @@
 		<module>jacklyn-system</module>
 		<module>jacklyn-organization</module>
 		<module>jacklyn-file</module>
-		<module>jacklyn-service</module>
 		<module>jacklyn-notification</module>
 		<module>jacklyn-archiving</module>
 		<module>jacklyn-workflow</module>
 		<module>jacklyn-report</module>
 		<module>jacklyn-security</module>
 		<module>jacklyn-audit</module>
+		<module>jacklyn-statistics</module>
 	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.version>0.0.1-SNAPSHOT</project.version>
+		<unify.version>1.0.1</unify.version>
 	</properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/tcdng/jacklyn-codebase.git</connection>
+        <developerConnection>scm:git:ssh://github.com:tcdng/jacklyn-codebase.git</developerConnection>
+        <url>http://github.com/tcdng/jacklyn-codebase/tree/master</url>
+    </scm>
+
+	<profiles>
+		<profile>
+			<id>deploy-artifacts</id>
+			<activation>
+				<property>
+					<name>repoDeployMode</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>sonatype-nexus-staging</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+				</plugins>
+			</build>
+		</profile>
+        <profile>
+            <id>javadoc-artifacts</id>
+            <activation>
+                <property>
+                    <name>javaDocMode</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
+
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugin</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugin</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<debug>true</debug>
+						<debugLevel>lines,vars,source</debugLevel>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>test-jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencies>
@@ -105,30 +208,30 @@
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-core</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-web</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-jetty</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-core</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
 			<artifactId>unify-web</artifactId>
-			<version>${project.version}</version>
+			<version>${unify.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>

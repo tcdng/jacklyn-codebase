@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,24 +28,28 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfparticipanttypelist")
 public enum WorkflowParticipantType implements EnumConst {
 
-	NONE("NON"), ALL("ALL"), PERSONNEL("PER"), SUPERVISOR("SUP");
+    NONE("NON"), ALL("ALL"), PERSONNEL("PER"), SUPERVISOR("SUP");
 
-	private final String code;
+    private final String code;
 
-	private WorkflowParticipantType(String code) {
-		this.code = code;
-	}
+    private WorkflowParticipantType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static WorkflowParticipantType fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowParticipantType.class, code);
-	}
+    public boolean isParticipant() {
+        return !NONE.equals(this);
+    }
+    
+    public static WorkflowParticipantType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowParticipantType.class, code);
+    }
 
-	public static WorkflowParticipantType fromName(String name) {
-		return EnumUtils.fromName(WorkflowParticipantType.class, name);
-	}
+    public static WorkflowParticipantType fromName(String name) {
+        return EnumUtils.fromName(WorkflowParticipantType.class, name);
+    }
 }

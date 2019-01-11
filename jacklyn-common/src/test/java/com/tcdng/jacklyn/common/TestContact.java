@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,32 +23,32 @@ package com.tcdng.jacklyn.common;
  */
 public class TestContact {
 
-	private String addressLine1;
+    private String addressLine1;
 
-	private String addressLine2;
+    private String addressLine2;
 
-	public TestContact(String addressLine1, String addressLine2) {
-		this.addressLine1 = addressLine1;
-		this.addressLine2 = addressLine2;
-	}
+    public TestContact(String addressLine1, String addressLine2) {
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+    }
 
-	public TestContact() {
+    public TestContact() {
 
-	}
+    }
 
-	public String getAddressLine1() {
-		return addressLine1;
-	}
+    public String getAddressLine1() {
+        return addressLine1;
+    }
 
-	public void setAddressLine1(String addressLine1) {
-		this.addressLine1 = addressLine1;
-	}
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
 
-	public String getAddressLine2() {
-		return addressLine2;
-	}
+    public String getAddressLine2() {
+        return addressLine2;
+    }
 
-	public void setAddressLine2(String addressLine2) {
-		this.addressLine2 = addressLine2;
-	}
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
 }

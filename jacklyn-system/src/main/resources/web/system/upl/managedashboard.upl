@@ -1,0 +1,44 @@
+// Copyright 2018-2019 The Code Department.
+!ui-page caption:$m{system.dashboard.manage}
+    searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+    tableColumnList:$c{name description orientationTypeDesc statusDesc}
+    formSection:$d{!ui-section caption:$m{system.dashboard.section.basicdetails}
+        components:$c{frmName frmDescription frmOrientationType frmStatus}}
+    formSection:$d{!ui-section caption:$m{system.dashboard.section.layers} components:$c{frmLayerListPanel}}
+    formSection:$d{!ui-section caption:$m{system.dashboard.section.portlets} components:$c{frmPortletListPanel}}
+    addPrivilege:$s{sys-dashboardadd} editPrivilege:$s{sys-dashboardedit}
+    viewPrivilege:$s{sys-dashboardview} deletePrivilege:$s{sys-dashboarddelete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchName caption:$m{system.dashboard.name} binding:searchName maxLen:40
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{system.dashboard.description} binding:searchDescription maxLen:48
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.dashboard.status} binding:searchStatus
+    list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{system.dashboard.name} binding:name columnStyle:$s{width:100px;} sortable:true
+!ui-label:description caption:$m{system.dashboard.description} binding:description columnStyle:$s{width:180px;} sortable:true
+!ui-label:orientationTypeDesc caption:$m{system.dashboard.orientation} binding:orientationTypeDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{system.dashboard.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components
+!ui-name:frmName caption:$m{system.dashboard.name} binding:name maxLen:32 required:true
+!ui-text:frmDescription caption:$m{system.dashboard.description} binding:description maxLen:40 size:32 required:true
+!ui-select:frmOrientationType caption:$m{system.dashboard.orientation} binding:orientationType required:true
+    list:orientationtypelist blankOption:$s{}
+!ui-select:frmStatus caption:$m{system.dashboard.status} binding:status required:true
+    list:recordstatuslist blankOption:$s{}
+
+!ui-dashboardlayercrudpanel:frmLayerListPanel crudTableStyle:$s{width:80%;} createNext:true
+!ui-dashboardportletcrudpanel:frmPortletListPanel crudTableStyle:$s{width:80%;} createNext:true
+    portletLayerList:largeData.layerList
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

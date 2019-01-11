@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,159 +34,126 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("WFITEM")
 public class WfItem extends BaseTimestampedEntity {
 
-	@ForeignKey(type = WfItemEvent.class, nullable = true)
-	private Long wfHistEventId;
+    @ForeignKey(type = WfItemEvent.class, nullable = true)
+    private Long wfHistEventId;
 
-	@ForeignKey(WfTemplate.class)
-	private Long wfTemplateId;
+    @Column(name = "GLOBAL_TEMPLATE_NM", length = 64)
+    private String globalTemplateName;
 
-	@Column(nullable = true)
-	private Long ownerId;
+    @Column(nullable = true)
+    private Long ownerId;
 
-	@Column(length = 32, nullable = true)
-	private String wfStepName;
+    @Column(length = 32, nullable = true)
+    private String wfStepName;
 
-	@Column(name = "WFITEM_DESC", length = 128)
-	private String description;
+    @Column(name = "WFITEM_DESC", length = 128)
+    private String description;
 
-	@Column(nullable = true)
-	private WorkflowParticipantType participantType;
+    @Column(nullable = true)
+    private WorkflowParticipantType participantType;
 
-	@Column(type = ColumnType.TIMESTAMP, nullable = true)
-	private Date stepDt;
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date stepDt;
 
-	@Column(nullable = true)
-	private String heldBy;
+    @Column(nullable = true)
+    private String heldBy;
 
-	@Column(nullable = true)
-	private String forwardedBy;
+    @Column(nullable = true)
+    private String forwardedBy;
 
-	@ListOnly(key = "wfHistEventId", property = "wfItemHistId")
-	private Long wfItemHistId;
+    @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
+    private Long wfItemHistId;
 
-	@ListOnly(key = "wfHistEventId", property = "documentId")
-	private Long documentId;
+    @ListOnly(key = "wfHistEventId", property = "documentId")
+    private Long documentId;
 
-	@ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-	private String wfCategoryName;
+    public Long getWfItemHistId() {
+        return wfItemHistId;
+    }
 
-	@ListOnly(key = "wfTemplateId", property = "name")
-	private String wfTemplateName;
+    public void setWfItemHistId(Long wfItemHistId) {
+        this.wfItemHistId = wfItemHistId;
+    }
 
-	@ListOnly(key = "wfTemplateId", property = "description")
-	private String wfTemplateDesc;
+    public String getGlobalTemplateName() {
+        return globalTemplateName;
+    }
 
-	public Long getWfItemHistId() {
-		return wfItemHistId;
-	}
+    public void setGlobalTemplateName(String globalTemplateName) {
+        this.globalTemplateName = globalTemplateName;
+    }
 
-	public void setWfItemHistId(Long wfItemHistId) {
-		this.wfItemHistId = wfItemHistId;
-	}
+    public Long getDocumentId() {
+        return documentId;
+    }
 
-	public Long getDocumentId() {
-		return documentId;
-	}
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
 
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
+    public Long getWfHistEventId() {
+        return wfHistEventId;
+    }
 
-	public Long getWfHistEventId() {
-		return wfHistEventId;
-	}
+    public void setWfHistEventId(Long wfHistEventId) {
+        this.wfHistEventId = wfHistEventId;
+    }
 
-	public void setWfHistEventId(Long wfHistEventId) {
-		this.wfHistEventId = wfHistEventId;
-	}
+    @Override
+    public Long getOwnerId() {
+        return ownerId;
+    }
 
-	@Override
-	public Long getOwnerId() {
-		return ownerId;
-	}
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
 
-	public void setOwnerId(Long ownerId) {
-		this.ownerId = ownerId;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public Long getWfTemplateId() {
-		return wfTemplateId;
-	}
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
 
-	public void setWfTemplateId(Long wfTemplateId) {
-		this.wfTemplateId = wfTemplateId;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setWfStepName(String wfStepName) {
-		this.wfStepName = wfStepName;
-	}
+    public Date getStepDt() {
+        return stepDt;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setStepDt(Date stepDt) {
+        this.stepDt = stepDt;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getHeldBy() {
+        return heldBy;
+    }
 
-	public Date getStepDt() {
-		return stepDt;
-	}
+    public void setHeldBy(String heldBy) {
+        this.heldBy = heldBy;
+    }
 
-	public void setStepDt(Date stepDt) {
-		this.stepDt = stepDt;
-	}
+    public String getForwardedBy() {
+        return forwardedBy;
+    }
 
-	public String getHeldBy() {
-		return heldBy;
-	}
+    public void setForwardedBy(String forwardedBy) {
+        this.forwardedBy = forwardedBy;
+    }
 
-	public void setHeldBy(String heldBy) {
-		this.heldBy = heldBy;
-	}
+    public WorkflowParticipantType getParticipantType() {
+        return participantType;
+    }
 
-	public String getForwardedBy() {
-		return forwardedBy;
-	}
-
-	public void setForwardedBy(String forwardedBy) {
-		this.forwardedBy = forwardedBy;
-	}
-
-	public WorkflowParticipantType getParticipantType() {
-		return participantType;
-	}
-
-	public void setParticipantType(WorkflowParticipantType participantType) {
-		this.participantType = participantType;
-	}
-
-	public String getWfCategoryName() {
-		return wfCategoryName;
-	}
-
-	public void setWfCategoryName(String wfCategoryName) {
-		this.wfCategoryName = wfCategoryName;
-	}
-
-	public String getWfTemplateName() {
-		return wfTemplateName;
-	}
-
-	public void setWfTemplateName(String wfTemplateName) {
-		this.wfTemplateName = wfTemplateName;
-	}
-
-	public String getWfTemplateDesc() {
-		return wfTemplateDesc;
-	}
-
-	public void setWfTemplateDesc(String wfTemplateDesc) {
-		this.wfTemplateDesc = wfTemplateDesc;
-	}
+    public void setParticipantType(WorkflowParticipantType participantType) {
+        this.participantType = participantType;
+    }
 
 }

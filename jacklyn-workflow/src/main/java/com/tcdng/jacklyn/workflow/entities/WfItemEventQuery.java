@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class WfItemEventQuery extends BaseEntityQuery<WfItemEvent> {
 
-	public WfItemEventQuery() {
-		super(WfItemEvent.class);
-	}
+    public WfItemEventQuery() {
+        super(WfItemEvent.class);
+    }
 
-	public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
-		return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
-	}
+    public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
+        return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
+    }
 
-	public WfItemEventQuery notesOnly() {
-		return (WfItemEventQuery) isNotNull("notes");
-	}
+    public WfItemEventQuery notesOnly() {
+        return (WfItemEventQuery) isNotNull("notes");
+    }
 }

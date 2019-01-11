@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,96 +31,107 @@ import com.tcdng.unify.core.constant.DataType;
  * @since 1.0
  */
 @Table(name = "WFDOCFIELD", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
-		@UniqueConstraint({ "wfDocId", "description" }) })
+        @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocField extends BaseEntity {
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
+    @ForeignKey(WfDoc.class)
+    private Long wfDocId;
 
-	@ForeignKey
-	private DataType dataType;
+    @ForeignKey
+    private DataType dataType;
 
-	@Column(name = "FIELD_NM", length = 32)
-	private String name;
+    @Column(name = "PARENT_FIELD_NM", length = 32, nullable = true)
+    private String parentName;
 
-	@Column(name = "FIELD_DESC", length = 64)
-	private String description;
+    @Column(name = "FIELD_NM", length = 32)
+    private String name;
 
-	@Column(name = "MULTIPLE_FG")
-	private Boolean arrayFlag;
+    @Column(name = "FIELD_DESC", length = 64)
+    private String description;
 
-	@ListOnly(key = "wfDocId", property = "name")
-	private String wfDocName;
+    @Column(name = "REPEAT_COUNT")
+    private Integer repeat;
 
-	@ListOnly(key = "wfDocId", property = "description")
-	private String wfDocDesc;
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
 
-	@ListOnly(key = "dataType", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @ListOnly(key = "dataType", property = "description")
+    private String typeDesc;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setWfDocId(Long wfDocId) {
+        this.wfDocId = wfDocId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getParentName() {
+        return parentName;
+    }
 
-	public DataType getDataType() {
-		return dataType;
-	}
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 
-	public void setDataType(DataType dataType) {
-		this.dataType = dataType;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Boolean getArrayFlag() {
-		return arrayFlag;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setArrayFlag(Boolean arrayFlag) {
-		this.arrayFlag = arrayFlag;
-	}
+    public DataType getDataType() {
+        return dataType;
+    }
 
-	public String getWfDocName() {
-		return wfDocName;
-	}
+    public void setDataType(DataType dataType) {
+        this.dataType = dataType;
+    }
 
-	public void setWfDocName(String wfDocName) {
-		this.wfDocName = wfDocName;
-	}
+    public Integer getRepeat() {
+        return repeat;
+    }
 
-	public String getWfDocDesc() {
-		return wfDocDesc;
-	}
+    public void setRepeat(Integer repeat) {
+        this.repeat = repeat;
+    }
 
-	public void setWfDocDesc(String wfDocDesc) {
-		this.wfDocDesc = wfDocDesc;
-	}
+    public String getWfDocName() {
+        return wfDocName;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
+
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
+    }
+
+    public String getTypeDesc() {
+        return typeDesc;
+    }
+
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
 }

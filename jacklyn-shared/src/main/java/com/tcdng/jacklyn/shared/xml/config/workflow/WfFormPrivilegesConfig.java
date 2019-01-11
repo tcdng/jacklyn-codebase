@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,15 +28,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfFormPrivilegesConfig {
 
-	private List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList;
+    private List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList;
 
-	public List<WfFormPrivilegeConfig> getWfFormPrivilegesConfigList() {
-		return wfFormPrivilegesConfigList;
-	}
+    public List<WfFormPrivilegeConfig> getWfFormPrivilegesConfigList() {
+        return wfFormPrivilegesConfigList;
+    }
 
-	@XmlElement(name="form-privilege")
-	public void setWfFormPrivilegesConfigList(
-			List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList) {
-		this.wfFormPrivilegesConfigList = wfFormPrivilegesConfigList;
-	}
+    @XmlElement(name = "form-privilege")
+    public void setWfFormPrivilegesConfigList(List<WfFormPrivilegeConfig> wfFormPrivilegesConfigList) {
+        this.wfFormPrivilegesConfigList = wfFormPrivilegesConfigList;
+    }
 }

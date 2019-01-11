@@ -1,16 +1,16 @@
 // UPL template for managing file inbox
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 
 !ui-page caption:$m{file.fileinbox.manage}
-	searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
+    searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
     searchClearList:$c{searchFileTransferConfigId searchReadStatus searchStatus}
     moreSearchActionComponentList:$c{markReadBtn markUnreadBtn}
     tableColumnList:$c{filename fileLength downloadAttempts readStatusDesc statusDesc}
     tableMultiSelect:true tableMultiSelDependentList:$c{markReadBtn markUnreadBtn}
-	formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}
-	viewPrivilege:$s{fil-fileinboxview}
+    formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}
+    viewPrivilege:$s{fil-fileinboxview}
 
 //Search
 !ui-date:searchCreateDt caption:$m{file.fileinbox.createdt} binding:searchCreateDt
@@ -18,9 +18,9 @@
 !ui-select:searchFileTransferConfigId caption:$m{file.fileinbox.transferconfig} binding:searchFileTransferConfigId
     list:filetransferconfiglist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
-!ui-select:searchReadStatus caption:$m{file.fileinbox.readstatus} binding:searchReadStatus list:inboxfilereadlist blankOption:$s{}
+!ui-select:searchReadStatus caption:$m{file.fileinbox.readstatus} binding:searchReadStatus list:fileinboxreadlist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
-!ui-select:searchStatus caption:$m{file.fileinbox.filestatus} binding:searchStatus list:inboxfilestatuslist blankOption:$s{}
+!ui-select:searchStatus caption:$m{file.fileinbox.filestatus} binding:searchStatus list:fileinboxstatuslist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
@@ -36,8 +36,8 @@
 !ui-text:frmFileLength  caption:$m{file.fileinbox.filelength} binding:fileLength size:20 formatter:$d{!filesizeformat}
 !ui-integer:frmDownloadAttempts precision:5 caption:$m{file.fileinbox.downloadattempts} binding:downloadAttempts size:10
 !ui-date:frmDownloadedOn caption:$m{file.fileinbox.downloadedon} binding:downloadedOn
-!ui-select:frmReadStatus caption:$m{file.fileinbox.readstatus} binding:readStatus list:inboxfilereadlist blankOption:$s{}
-!ui-select:frmFileStatus caption:$m{file.fileinbox.filestatus} binding:status list:inboxfilestatuslist blankOption:$s{}
+!ui-select:frmReadStatus caption:$m{file.fileinbox.readstatus} binding:readStatus list:fileinboxreadlist blankOption:$s{}
+!ui-select:frmFileStatus caption:$m{file.fileinbox.filestatus} binding:status list:fileinboxstatuslist blankOption:$s{}
 
 
 //More modify action buttons

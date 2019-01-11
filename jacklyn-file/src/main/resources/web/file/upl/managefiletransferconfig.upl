@@ -1,17 +1,17 @@
 // UPL template for managing file transfer configuration
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{file.filetransferconfig.manage}
-	searchByList:$c{searchName searchDirection searchStatus}
+    searchByList:$c{searchName searchDirection searchStatus}
     searchClearList:$c{searchName searchDirection searchStatus}
-	tableColumnList:$c{name description directionDesc statusDesc}
-	formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.basicdetails} components:$c{frmName frmDescription frmFilePolicy frmType  frmDirection frmMaxTransferAttempts  frmDeleteSrc frmStatus}}
-	formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.remoteserver} components:$c{frmHost frmPort frmAuthenticationId frmPassword frmServerPath frmServerDateFormat}}
-	formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.localserver} components:$c{frmLocalPath frmLocalDateFormat}}
+    tableColumnList:$c{name description directionDesc statusDesc}
+    formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.basicdetails} components:$c{frmName frmDescription frmFilePolicy frmType  frmDirection frmMaxTransferAttempts  frmDeleteSrc frmStatus}}
+    formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.remoteserver} components:$c{frmHost frmPort frmAuthenticationId frmPassword frmServerPath frmServerDateFormat}}
+    formSection:$d{!ui-section caption:$m{file.filetransferconfig.section.localserver} components:$c{frmLocalPath frmLocalDateFormat}}
     moreCrudFooterComponentList:$c{spacer testBtn}
-	addPrivilege:$s{fil-filetransferconfigadd} editPrivilege:$s{fil-filetransferconfigedit}
-	viewPrivilege:$s{fil-filetransferconfigview} deletePrivilege:$s{fil-filetransferconfigdelete}
+    addPrivilege:$s{fil-filetransferconfigadd} editPrivilege:$s{fil-filetransferconfigedit}
+    viewPrivilege:$s{fil-filetransferconfigview} deletePrivilege:$s{fil-filetransferconfigdelete}
 
 //Search
 !ui-text:searchName caption:$m{file.filetransferconfig.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
@@ -47,7 +47,7 @@
 //Test button
 !ui-span:spacer
 !ui-button:testBtn styleClass:$e{jk-button} caption:$m{button.test}
-	eventHandler:$d{!ui-event event:onclick action:$c{testAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{testAct}}
 
 //Validations
 !ui-validation:frmTestGrpVal components:$c{frmName frmDescription frmFilePolicy frmType frmHost frmServerPath frmLocalPath}

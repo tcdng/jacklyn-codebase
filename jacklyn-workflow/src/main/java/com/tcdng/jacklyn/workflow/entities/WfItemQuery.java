@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,53 +32,53 @@ import com.tcdng.unify.core.operation.Or;
  */
 public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
 
-	public WfItemQuery() {
-		super(WfItem.class);
-	}
+    public WfItemQuery() {
+        super(WfItem.class);
+    }
 
-	public WfItemQuery ownerId(Long ownerId) {
-		return (WfItemQuery) equals("ownerId", ownerId);
-	}
+    public WfItemQuery ownerId(Long ownerId) {
+        return (WfItemQuery) equals("ownerId", ownerId);
+    }
 
-	public WfItemQuery wfTemplateId(Long wfTemplateId) {
-		return (WfItemQuery) equals("wfTemplateId", wfTemplateId);
-	}
+    public WfItemQuery globalTemplateName(String globalTemplateName) {
+        return (WfItemQuery) equals("globalTemplateName", globalTemplateName);
+    }
 
-	public WfItemQuery wfStepName(String wfStepName) {
-		return (WfItemQuery) equals("wfStepName", wfStepName);
-	}
+    public WfItemQuery wfStepName(String wfStepName) {
+        return (WfItemQuery) equals("wfStepName", wfStepName);
+    }
 
-	public WfItemQuery descriptionLike(String description) {
-		return (WfItemQuery) like("description", description);
-	}
+    public WfItemQuery descriptionLike(String description) {
+        return (WfItemQuery) like("description", description);
+    }
 
-	public WfItemQuery heldBy(String heldBy) {
-		return (WfItemQuery) equals("heldBy", heldBy);
-	}
+    public WfItemQuery heldBy(String heldBy) {
+        return (WfItemQuery) equals("heldBy", heldBy);
+    }
 
-	public WfItemQuery isHeld() {
-		return (WfItemQuery) isNotNull("heldBy");
-	}
+    public WfItemQuery isHeld() {
+        return (WfItemQuery) isNotNull("heldBy");
+    }
 
-	public WfItemQuery isUnheld() {
-		return (WfItemQuery) isNull("heldBy");
-	}
+    public WfItemQuery isUnheld() {
+        return (WfItemQuery) isNull("heldBy");
+    }
 
-	public WfItemQuery stepDt(Date stepDt) {
-		return (WfItemQuery) equals("stepDt", stepDt);
-	}
+    public WfItemQuery stepDt(Date stepDt) {
+        return (WfItemQuery) equals("stepDt", stepDt);
+    }
 
-	public WfItemQuery isUnheldOrHeldBy(String heldBy) {
-		return (WfItemQuery) add(new Or(new IsNull("heldBy"), new Equal("heldBy", heldBy)));
-	}
+    public WfItemQuery isUnheldOrHeldBy(String heldBy) {
+        return (WfItemQuery) add(new Or(new IsNull("heldBy"), new Equal("heldBy", heldBy)));
+    }
 
-	public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
-		return (WfItemQuery) add(new Or(new Equal("participantType", WorkflowParticipantType.ALL),
-				new Equal("participantType", participantType)));
-	}
+    public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
+        return (WfItemQuery) add(new Or(new Equal("participantType", WorkflowParticipantType.ALL),
+                new Equal("participantType", participantType)));
+    }
 
-	public WfItemQuery notForwardedBy(String userId) {
-		Or or = new Or(new NotEqual("forwardedBy", userId), new IsNull("forwardedBy"));
-		return (WfItemQuery) add(or);
-	}
+    public WfItemQuery notForwardedBy(String userId) {
+        Or or = new Or(new NotEqual("forwardedBy", userId), new IsNull("forwardedBy"));
+        return (WfItemQuery) add(or);
+    }
 }

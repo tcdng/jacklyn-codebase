@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,8 +31,8 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 @UplBinding("web/workflow/upl/wfenrichmentcrudpanel.upl")
 public class WfEnrichmentCrudPanel extends AbstractInMemoryTableCrudPanel<WfEnrichment> {
 
-	public WfEnrichmentCrudPanel() {
-		super(WfEnrichment.class, "workflow.wftemplate.wfstep.wfenrichment", false);
-	}
+    public WfEnrichmentCrudPanel() {
+        super(WfEnrichment.class, "workflow.wftemplate.wfstep.wfenrichment", false);
+    }
 
 }

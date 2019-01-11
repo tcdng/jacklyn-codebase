@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,26 +30,26 @@ import com.tcdng.unify.core.annotation.Policy;
 @Policy("statusentity-policy")
 public abstract class BaseStatusEntity extends BaseEntity {
 
-	@ForeignKey(name = "REC_ST", position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-	private RecordStatus status;
+    @ForeignKey(name = "REC_ST", position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private RecordStatus status;
 
-	@Format(description = "$m{common.status}")
-	@ListOnly(key = "status", property = "description")
-	private String statusDesc;
+    @Format(description = "$m{common.status}")
+    @ListOnly(key = "status", property = "description")
+    private String statusDesc;
 
-	public RecordStatus getStatus() {
-		return status;
-	}
+    public RecordStatus getStatus() {
+        return status;
+    }
 
-	public void setStatus(RecordStatus status) {
-		this.status = status;
-	}
+    public void setStatus(RecordStatus status) {
+        this.status = status;
+    }
 
-	public String getStatusDesc() {
-		return statusDesc;
-	}
+    public String getStatusDesc() {
+        return statusDesc;
+    }
 
-	public void setStatusDesc(String statusDesc) {
-		this.statusDesc = statusDesc;
-	}
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
+    }
 }

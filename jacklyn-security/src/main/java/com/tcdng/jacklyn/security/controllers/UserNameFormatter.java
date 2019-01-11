@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,8 +15,7 @@
  */
 package com.tcdng.jacklyn.security.controllers;
 
-import com.tcdng.jacklyn.security.business.SecurityModule;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -32,30 +31,30 @@ import com.tcdng.unify.core.format.AbstractFormatter;
 @Component(name = "usernameformat", description = "$m{security.format.username}")
 public class UserNameFormatter extends AbstractFormatter<String> {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable
+    private SecurityService securityModule;
 
-	public UserNameFormatter() {
-		super(String.class);
-	}
+    public UserNameFormatter() {
+        super(String.class);
+    }
 
-	@Override
-	public String format(String value) throws UnifyException {
-		User userData = getSecurityModule().findUser(value);
-		return userData.getFullName();
-	}
+    @Override
+    public String format(String value) throws UnifyException {
+        User user = getSecurityModule().findUser(value);
+        return user.getFullName();
+    }
 
-	@Override
-	public String parse(String string) throws UnifyException {
-		return null;
-	}
+    @Override
+    public String parse(String string) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	public String getPattern() throws UnifyException {
-		return null;
-	}
+    @Override
+    public String getPattern() throws UnifyException {
+        return null;
+    }
 
-	protected SecurityModule getSecurityModule() throws UnifyException {
-		return securityModule;
-	}
+    protected SecurityService getSecurityModule() throws UnifyException {
+        return securityModule;
+    }
 }

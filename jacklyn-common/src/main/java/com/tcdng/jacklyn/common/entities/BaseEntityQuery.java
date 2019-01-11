@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,12 +25,12 @@ import com.tcdng.unify.core.system.entities.SequencedEntityQuery;
  */
 public abstract class BaseEntityQuery<T extends BaseEntity> extends SequencedEntityQuery<T> {
 
-	public BaseEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseEntityQuery<T> workflowFlag(Boolean workflowFlag) {
-		return (BaseEntityQuery<T>) equals("workflowFlag", workflowFlag);
-	}
+    public BaseEntityQuery<T> workflowFlag(Boolean workflowFlag) {
+        return (BaseEntityQuery<T>) equals("workflowFlag", workflowFlag);
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,17 +27,16 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface WfItemClassifierLogic extends UnifyComponent {
 
-	/**
-	 * Tests if workflow item matches classification.
-	 * 
-	 * @param wfItemReader
-	 *            the workflow item reader
-	 * @param wfDocClassifierDef
-	 *            classifier definition
-	 * @return a true value if matched otherwise false
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef)
-			throws UnifyException;
+    /**
+     * Tests if workflow item matches classification.
+     * 
+     * @param wfItemReader
+     *            the workflow item reader
+     * @param wfDocClassifierDef
+     *            classifier definition
+     * @return a true value if matched otherwise false
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException;
 }

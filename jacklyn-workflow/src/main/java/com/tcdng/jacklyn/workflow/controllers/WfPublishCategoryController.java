@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,27 +33,36 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/workflow/upl/wfpublishcategory.upl")
 public class WfPublishCategoryController extends AbstractWorkflowController {
 
-	private byte[] wfCategoryBin;
+    private byte[] wfCategoryBin;
 
-	public WfPublishCategoryController() {
-		super(true, false);
-	}
+    private boolean activate;
 
-	@Action
-	public String startWfPublishCategoryTask() throws UnifyException {
-		TaskSetup taskSetup = TaskSetup.newBuilder()
-				.addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
-				.setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN,
-						wfCategoryBin)
-				.logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "workflow.wfcategory.publish");
-	}
+    public WfPublishCategoryController() {
+        super(true, false);
+    }
 
-	public byte[] getWfCategoryBin() {
-		return wfCategoryBin;
-	}
+    @Action
+    public String startWfPublishCategoryTask() throws UnifyException {
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryBin)
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).logMessages()
+                .build();
+        return launchTaskWithMonitorBox(taskSetup, "$m{workflow.wfcategory.publish}");
+    }
 
-	public void setWfCategoryBin(byte[] wfCategoryBin) {
-		this.wfCategoryBin = wfCategoryBin;
-	}
+    public byte[] getWfCategoryBin() {
+        return wfCategoryBin;
+    }
+
+    public void setWfCategoryBin(byte[] wfCategoryBin) {
+        this.wfCategoryBin = wfCategoryBin;
+    }
+
+    public boolean isActivate() {
+        return activate;
+    }
+
+    public void setActivate(boolean activate) {
+        this.activate = activate;
+    }
 }

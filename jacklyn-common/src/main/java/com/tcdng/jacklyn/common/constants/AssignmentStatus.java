@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("assignmentstatuslist")
 public enum AssignmentStatus implements EnumConst {
 
-	ASSIGNED("A"), UNASSIGNED("U");
+    ASSIGNED("A"), UNASSIGNED("U");
 
-	private final String code;
+    private final String code;
 
-	private AssignmentStatus(String code) {
-		this.code = code;
-	}
+    private AssignmentStatus(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static AssignmentStatus fromCode(String code) {
-		return EnumUtils.fromCode(AssignmentStatus.class, code);
-	}
+    public static AssignmentStatus fromCode(String code) {
+        return EnumUtils.fromCode(AssignmentStatus.class, code);
+    }
 
-	public static AssignmentStatus fromName(String name) {
-		return EnumUtils.fromName(AssignmentStatus.class, name);
-	}
+    public static AssignmentStatus fromName(String name) {
+        return EnumUtils.fromName(AssignmentStatus.class, name);
+    }
 }

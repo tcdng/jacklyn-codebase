@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
@@ -20,21 +21,22 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Workflow template configurations.
+ * Workflow templates configuration.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
 public class WfTemplatesConfig {
 
-	private List<WfTemplateConfig> wfTemplateConfigList;
+    private List<WfTemplateConfig> wfTemplateConfigList;
 
-	public List<WfTemplateConfig> getWfTemplateConfigList() {
-		return wfTemplateConfigList;
-	}
+    public List<WfTemplateConfig> getWfTemplateConfigList() {
+        return wfTemplateConfigList;
+    }
 
-	@XmlElement(name = "template", required = true)
-	public void setWfTemplateConfigList(List<WfTemplateConfig> wfTemplateConfigList) {
-		this.wfTemplateConfigList = wfTemplateConfigList;
-	}
+    @XmlElement(name = "template", required = true)
+    public void setWfTemplateConfigList(List<WfTemplateConfig> wfTemplateConfigList) {
+        this.wfTemplateConfigList = wfTemplateConfigList;
+    }
+
 }

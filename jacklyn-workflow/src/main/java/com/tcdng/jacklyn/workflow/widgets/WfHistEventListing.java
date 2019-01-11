@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,15 +33,15 @@ import com.tcdng.unify.web.ui.AbstractWidget;
  */
 @Component("ui-wfhisteventlisting")
 @UplAttributes({ @UplAttribute(name = "timeFormatter", type = Formatter.class,
-		defaultValue = "$d{!datetimeformat style:long}") })
+        defaultValue = "$d{!datetimeformat style:long}") })
 public class WfHistEventListing extends AbstractWidget {
 
-	@SuppressWarnings("unchecked")
-	public List<WfItemHistEvent> getWorkflowItemHistEventList() throws UnifyException {
-		return (List<WfItemHistEvent>) this.getValue();
-	}
+    @SuppressWarnings("unchecked")
+    public List<WfItemHistEvent> getWorkflowItemHistEventList() throws UnifyException {
+        return (List<WfItemHistEvent>) this.getValue();
+    }
 
-	public Formatter<?> getFormatter() throws UnifyException {
-		return (Formatter<?>) this.getUplAttribute(Formatter.class, "timeFormatter");
-	}
+    public Formatter<?> getFormatter() throws UnifyException {
+        return (Formatter<?>) this.getUplAttribute(Formatter.class, "timeFormatter");
+    }
 }

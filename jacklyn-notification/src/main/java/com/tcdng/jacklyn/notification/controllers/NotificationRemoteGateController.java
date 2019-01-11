@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.controllers.BaseRemoteCallController;
-import com.tcdng.jacklyn.notification.business.NotificationModule;
+import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
 import com.tcdng.jacklyn.shared.notification.data.GetToolingAttachmentGenParams;
 import com.tcdng.jacklyn.shared.notification.data.GetToolingAttachmentGenResult;
@@ -40,16 +40,16 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/notification/gate")
 public class NotificationRemoteGateController extends BaseRemoteCallController {
 
-	@Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
-	private NotificationModule notificationModule;
+    @Configurable
+    private NotificationService notificationService;
 
-	@GatewayAction(
-			name = com.tcdng.jacklyn.shared.notification.NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST,
-			description = "$m{notification.gate.remotecall.gettoolingattachmentgen}")
-	public GetToolingAttachmentGenResult getToolingAttachmentGenList(
-			GetToolingAttachmentGenParams params) throws UnifyException {
-		List<ToolingAttachmentGenItem> list = notificationModule.findToolingAttachmentGenTypes();
-		return new GetToolingAttachmentGenResult(list);
-	}
+    @GatewayAction(
+            name = com.tcdng.jacklyn.shared.notification.NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST,
+            description = "$m{notification.gate.remotecall.gettoolingattachmentgen}")
+    public GetToolingAttachmentGenResult getToolingAttachmentGenList(GetToolingAttachmentGenParams params)
+            throws UnifyException {
+        List<ToolingAttachmentGenItem> list = notificationService.findToolingAttachmentGenTypes();
+        return new GetToolingAttachmentGenResult(list);
+    }
 
 }

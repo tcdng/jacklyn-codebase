@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,54 +37,51 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @Component("/file/batchupload")
 @UplBinding("web/file/upl/batchupload.upl")
 @ResultMappings({ @ResultMapping(name = "refreshinputparameters",
-		response = { "!refreshpanelresponse panels:$l{batchParamPanel}" }) })
+        response = { "!refreshpanelresponse panels:$l{batchParamPanel}" }) })
 public class BatchFileUploadController extends AbstractFileController {
 
-	private Long batchUploadConfigId;
+    private Long batchUploadConfigId;
 
-	private BatchFileReadInputParameters batchUploadParameters;
+    private BatchFileReadInputParameters batchUploadParameters;
 
-	public BatchFileUploadController() {
-		super(true, false);
-	}
+    public BatchFileUploadController() {
+        super(true, false);
+    }
 
-	@Action
-	public String prepareBatchUpload() throws UnifyException {
-		batchUploadParameters = null;
-		if (QueryUtils.isValidLongCriteria(batchUploadConfigId)) {
-			batchUploadParameters
-					= getFileModule().getBatchFileReadInputParameters(batchUploadConfigId);
-		}
-		return "refreshinputparameters";
-	}
+    @Action
+    public String prepareBatchUpload() throws UnifyException {
+        batchUploadParameters = null;
+        if (QueryUtils.isValidLongCriteria(batchUploadConfigId)) {
+            batchUploadParameters = getFileService().getBatchFileReadInputParameters(batchUploadConfigId);
+        }
+        return "refreshinputparameters";
+    }
 
-	@Action
-	public String startBatchUploadTask() throws UnifyException {
-		TaskSetup taskSetup
-				= TaskSetup.newBuilder().addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
-						.setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS,
-								batchUploadParameters)
-						.logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "file.batchupload.execution");
-	}
+    @Action
+    public String startBatchUploadTask() throws UnifyException {
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
+                .setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS, batchUploadParameters).logMessages()
+                .build();
+        return launchTaskWithMonitorBox(taskSetup, "$m{file.batchupload.execution}");
+    }
 
-	public String getModeStyle() {
-		return EventType.CREATE.colorMode();
-	}
+    public String getModeStyle() {
+        return EventType.CREATE.colorMode();
+    }
 
-	public Long getBatchUploadConfigId() {
-		return batchUploadConfigId;
-	}
+    public Long getBatchUploadConfigId() {
+        return batchUploadConfigId;
+    }
 
-	public void setBatchUploadConfigId(Long batchUploadConfigId) {
-		this.batchUploadConfigId = batchUploadConfigId;
-	}
+    public void setBatchUploadConfigId(Long batchUploadConfigId) {
+        this.batchUploadConfigId = batchUploadConfigId;
+    }
 
-	public BatchFileReadInputParameters getBatchUploadParameters() {
-		return batchUploadParameters;
-	}
+    public BatchFileReadInputParameters getBatchUploadParameters() {
+        return batchUploadParameters;
+    }
 
-	public void setBatchUploadParameters(BatchFileReadInputParameters batchUploadParameters) {
-		this.batchUploadParameters = batchUploadParameters;
-	}
+    public void setBatchUploadParameters(BatchFileReadInputParameters batchUploadParameters) {
+        this.batchUploadParameters = batchUploadParameters;
+    }
 }

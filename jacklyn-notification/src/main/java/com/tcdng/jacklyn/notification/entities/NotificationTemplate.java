@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.notification.entities;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
+import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.system.entities.Module;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -31,110 +32,153 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Message Template",
-		reportable = true, auditable = true)
-@Table(name = "NOTIFICATIONTEMPLATE",
-		uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
-				@UniqueConstraint({ "moduleId", "description" }) })
+@Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
+        reportable = true, auditable = true)
+@Table(name = "NOTIFICATIONTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
+        @UniqueConstraint({ "moduleId", "description" }) })
 public class NotificationTemplate extends BaseVersionedStatusEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "NOTIFICATIONTEMPLATE_NM", length = 64)
-	private String name;
+    @ForeignKey
+    private MessageType messageType;
+    
+    @Column(name = "TEMPLATE_NM", length = 96)
+    private String name;
 
-	@Column(name = "NOTIFICATIONTEMPLATE_DESC", length = 64)
-	private String description;
+    @Column(name = "TEMPLATE_DESC", length = 64)
+    private String description;
 
-	@Column(length = 64)
-	private String subject;
+    @Column(length = 64)
+    private String subject;
 
-	@Column(length = 2048)
-	private String template;
+    @Column(length = 2048)
+    private String template;
 
-	@Column(name = "HTML_FG")
-	private Boolean htmlFlag;
+    @Column(length = 64, nullable = true)
+    private String actionLink;
 
-	@Column(length = 32, nullable = true)
-	private String attachmentGenerator;
+    @Column(name = "HTML_FG")
+    private Boolean htmlFlag;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @Column(length = 32, nullable = true)
+    private String attachmentGenerator;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDescription;
+    @Column(name="TARGET_LINK", length = 64, nullable = true)
+    private String link;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDescription;
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    @ListOnly(key = "messageType", property = "description")
+    private String messageTypeDesc;
+    
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public MessageType getMessageType() {
+        return messageType;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public String getModuleDescription() {
-		return moduleDescription;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	public void setModuleDescription(String moduleDescription) {
-		this.moduleDescription = moduleDescription;
-	}
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public Boolean getHtmlFlag() {
-		return htmlFlag;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public void setHtmlFlag(Boolean htmlFlag) {
-		this.htmlFlag = htmlFlag;
-	}
+    public String getModuleDescription() {
+        return moduleDescription;
+    }
 
-	public String getAttachmentGenerator() {
-		return attachmentGenerator;
-	}
+    public void setModuleDescription(String moduleDescription) {
+        this.moduleDescription = moduleDescription;
+    }
 
-	public void setAttachmentGenerator(String attachmentGenerator) {
-		this.attachmentGenerator = attachmentGenerator;
-	}
+    public String getMessageTypeDesc() {
+        return messageTypeDesc;
+    }
+
+    public void setMessageTypeDesc(String messageTypeDesc) {
+        this.messageTypeDesc = messageTypeDesc;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getHtmlFlag() {
+        return htmlFlag;
+    }
+
+    public void setHtmlFlag(Boolean htmlFlag) {
+        this.htmlFlag = htmlFlag;
+    }
+
+    public String getAttachmentGenerator() {
+        return attachmentGenerator;
+    }
+
+    public void setAttachmentGenerator(String attachmentGenerator) {
+        this.attachmentGenerator = attachmentGenerator;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
+    }
 }

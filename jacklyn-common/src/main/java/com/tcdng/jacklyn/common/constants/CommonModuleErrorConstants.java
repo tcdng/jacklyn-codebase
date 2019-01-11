@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,17 +23,17 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface CommonModuleErrorConstants {
 
-	/** Unknown module {0} referenced by managed record {1} */
-	String UNKNOWN_MODULE_REFERENCED_BY_RECORD = "COMMON_0001";
+    /** Unknown module {0} referenced by managed record {1} */
+    String UNKNOWN_MODULE_REFERENCED_BY_RECORD = "COMMON_0001";
 
-	/** Data item already in workflow. Description = {0} */
-	String DATA_ITEM_IN_WORKFLOW = "COMMON_0002";
+    /** Data item already in workflow. Description = {0} */
+    String DATA_ITEM_IN_WORKFLOW = "COMMON_0002";
 
-	/** Unknown managed type {0} in module {1}. */
-	String UNKNOWN_MANAGED_TYPE = "COMMON_0003";
+    /** Unknown managed type {0} in module {1}. */
+    String UNKNOWN_MANAGED_TYPE = "COMMON_0003";
 
-	/**
-	 * Application service access denied. Application name = {0}, Asset name = {1}
-	 */
-	String APPLICATION_SERVICE_ACCESSDENIED = "COMMON_0004";
+    /**
+     * Application service access denied. Application name = {0}, Asset name = {1}
+     */
+    String APPLICATION_SERVICE_ACCESSDENIED = "COMMON_0004";
 }

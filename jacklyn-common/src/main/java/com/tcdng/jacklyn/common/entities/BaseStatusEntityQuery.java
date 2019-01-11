@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
  */
 public class BaseStatusEntityQuery<T extends BaseStatusEntity> extends BaseEntityQuery<T> {
 
-	public BaseStatusEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseStatusEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseStatusEntityQuery<T> status(RecordStatus status) {
-		return (BaseStatusEntityQuery<T>) equals("status", status);
-	}
+    public BaseStatusEntityQuery<T> status(RecordStatus status) {
+        return (BaseStatusEntityQuery<T>) equals("status", status);
+    }
 
-	public BaseStatusEntityQuery<T> statusNot(RecordStatus status) {
-		return (BaseStatusEntityQuery<T>) notEqual("status", status);
-	}
+    public BaseStatusEntityQuery<T> statusNot(RecordStatus status) {
+        return (BaseStatusEntityQuery<T>) notEqual("status", status);
+    }
 }

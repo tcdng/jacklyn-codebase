@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,21 +28,21 @@ import com.tcdng.unify.core.UnifyException;
  */
 public interface RemoteCallSystemAssetProvider extends UnifyComponent {
 
-	/**
-	 * Symbolic system asset access check. Should be called before granting a client
-	 * application access to a system asset.
-	 * 
-	 * @param clientAppName
-	 *            the client application code
-	 * @param systemAssetType
-	 *            the system asset type code
-	 * @param assetName
-	 *            the asset code
-	 * @throws UnifyException
-	 *             if asset is unknown. If client application is deactivated. If
-	 *             asset is deactivated. If an error occurs
-	 */
-	boolean accessSystemAsset(String clientAppName, SystemAssetType systemAssetType,
-			String assetName) throws UnifyException;
+    /**
+     * Symbolic system asset access check. Should be called before granting a client
+     * application access to a system asset.
+     * 
+     * @param clientAppName
+     *            the client application code
+     * @param systemAssetType
+     *            the system asset type code
+     * @param assetName
+     *            the asset code
+     * @throws UnifyException
+     *             if asset is unknown. If client application is deactivated. If
+     *             asset is deactivated. If an error occurs
+     */
+    boolean accessSystemAsset(String clientAppName, SystemAssetType systemAssetType, String assetName)
+            throws UnifyException;
 
 }

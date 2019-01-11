@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,52 +33,52 @@ import com.tcdng.unify.core.util.StringUtils;
 @Table("BIOMETRIC")
 public class Biometric extends BaseVersionedTimestampedEntity {
 
-	@ForeignKey
-	private BiometricType type;
+    @ForeignKey
+    private BiometricType type;
 
-	@Column
-	private BiometricCategory category;
+    @Column
+    private BiometricCategory category;
 
-	@Column(nullable = true)
-	private byte[] biometric;
+    @Column(nullable = true)
+    private byte[] biometric;
 
-	@ListOnly(key = "type", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "type", property = "description")
+    private String typeDesc;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate("Biometric category=", category, ", type = ", type);
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate("Biometric category=", category, ", type = ", type);
+    }
 
-	public BiometricCategory getCategory() {
-		return category;
-	}
+    public BiometricCategory getCategory() {
+        return category;
+    }
 
-	public void setCategory(BiometricCategory category) {
-		this.category = category;
-	}
+    public void setCategory(BiometricCategory category) {
+        this.category = category;
+    }
 
-	public BiometricType getType() {
-		return type;
-	}
+    public BiometricType getType() {
+        return type;
+    }
 
-	public void setType(BiometricType type) {
-		this.type = type;
-	}
+    public void setType(BiometricType type) {
+        this.type = type;
+    }
 
-	public byte[] getBiometric() {
-		return biometric;
-	}
+    public byte[] getBiometric() {
+        return biometric;
+    }
 
-	public void setBiometric(byte[] biometric) {
-		this.biometric = biometric;
-	}
+    public void setBiometric(byte[] biometric) {
+        this.biometric = biometric;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 }

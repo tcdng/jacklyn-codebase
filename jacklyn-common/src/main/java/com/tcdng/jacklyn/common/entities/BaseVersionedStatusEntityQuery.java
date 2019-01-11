@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,13 +22,13 @@ package com.tcdng.jacklyn.common.entities;
  * @since 1.0
  */
 public abstract class BaseVersionedStatusEntityQuery<T extends BaseVersionedStatusEntity>
-		extends BaseStatusEntityQuery<T> {
+        extends BaseStatusEntityQuery<T> {
 
-	public BaseVersionedStatusEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseVersionedStatusEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseVersionedStatusEntityQuery<T> versionNo(long versionNo) {
-		return (BaseVersionedStatusEntityQuery<T>) equals("versionNo", versionNo);
-	}
+    public BaseVersionedStatusEntityQuery<T> versionNo(long versionNo) {
+        return (BaseVersionedStatusEntityQuery<T>) equals("versionNo", versionNo);
+    }
 }

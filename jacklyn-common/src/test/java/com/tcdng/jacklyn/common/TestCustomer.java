@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,63 +32,63 @@ import com.tcdng.unify.core.annotation.Tooling;
 @Table(name = "TESTCUSTOMER")
 public class TestCustomer extends BaseEntity {
 
-	@Column
-	private String firstName;
+    @Column
+    private String firstName;
 
-	@Column
-	private String lastName;
+    @Column
+    private String lastName;
 
-	@Column
-	private int age;
+    @Column
+    private int age;
 
-	@Column
-	private double height;
+    @Column
+    private double height;
 
-	public TestCustomer(String firstName, String lastName, int age, double height) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.height = height;
-	}
+    public TestCustomer(String firstName, String lastName, int age, double height) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.height = height;
+    }
 
-	public TestCustomer() {
+    public TestCustomer() {
 
-	}
+    }
 
-	public String getDescription() {
-		return this.firstName;
-	}
+    public String getDescription() {
+        return this.firstName;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public int getAge() {
-		return age;
-	}
+    public int getAge() {
+        return age;
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-	public double getHeight() {
-		return height;
-	}
+    public double getHeight() {
+        return height;
+    }
 
-	public void setHeight(double height) {
-		this.height = height;
-	}
+    public void setHeight(double height) {
+        this.height = height;
+    }
 
 }

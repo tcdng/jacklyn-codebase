@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,38 +30,37 @@ import com.tcdng.unify.core.annotation.Component;
 @Component("testopenaccount-policylogic")
 public class TestOpenAccountPolicyLogic extends AbstractWfItemPolicyLogic {
 
-	private OpenAccountDetails openAccountDetails;
+    private OpenAccountDetails openAccountDetails;
 
-	@Override
-	public void executePolicy(WfItemReader wfItemReader) throws UnifyException {
-		openAccountDetails
-				= new OpenAccountDetails(wfItemReader.readFieldValue(String.class, "fullName"),
-						wfItemReader.readFieldValue(String.class, "accountNo"));
-	}
+    @Override
+    public void executePolicy(WfItemReader wfItemReader) throws UnifyException {
+        openAccountDetails = new OpenAccountDetails(wfItemReader.readFieldValue(String.class, "fullName"),
+                wfItemReader.readFieldValue(String.class, "accountNo"));
+    }
 
-	public OpenAccountDetails getOpenAccountDetails() {
-		return openAccountDetails;
-	}
+    public OpenAccountDetails getOpenAccountDetails() {
+        return openAccountDetails;
+    }
 
-	public void clear() {
-		openAccountDetails = null;
-	}
+    public void clear() {
+        openAccountDetails = null;
+    }
 
-	public static class OpenAccountDetails {
-		private String fullName;
-		private String accountNo;
+    public static class OpenAccountDetails {
+        private String fullName;
+        private String accountNo;
 
-		public OpenAccountDetails(String fullName, String accountNo) {
-			this.fullName = fullName;
-			this.accountNo = accountNo;
-		}
+        public OpenAccountDetails(String fullName, String accountNo) {
+            this.fullName = fullName;
+            this.accountNo = accountNo;
+        }
 
-		public String getFullName() {
-			return fullName;
-		}
+        public String getFullName() {
+            return fullName;
+        }
 
-		public String getAccountNo() {
-			return accountNo;
-		}
-	}
+        public String getAccountNo() {
+            return accountNo;
+        }
+    }
 }

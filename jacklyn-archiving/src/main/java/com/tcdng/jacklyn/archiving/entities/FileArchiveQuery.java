@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,19 +27,19 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
  */
 public class FileArchiveQuery extends BaseTimestampedEntityQuery<FileArchive> {
 
-	public FileArchiveQuery() {
-		super(FileArchive.class);
-	}
+    public FileArchiveQuery() {
+        super(FileArchive.class);
+    }
 
-	public FileArchiveQuery archivableFieldId(Long archivableFieldId) {
-		return (FileArchiveQuery) this.equals("archivableFieldId", archivableFieldId);
-	}
+    public FileArchiveQuery archivableFieldId(Long archivableFieldId) {
+        return (FileArchiveQuery) this.equals("archivableFieldId", archivableFieldId);
+    }
 
-	public FileArchiveQuery backedUp(Boolean backedUp) {
-		return (FileArchiveQuery) this.equals("backedUp", backedUp);
-	}
+    public FileArchiveQuery backedUp(Boolean backedUp) {
+        return (FileArchiveQuery) this.equals("backedUp", backedUp);
+    }
 
-	public FileArchiveQuery archiveDt(Date archiveDt) {
-		return (FileArchiveQuery) this.equals("archiveDt", archiveDt);
-	}
+    public FileArchiveQuery archiveDt(Date archiveDt) {
+        return (FileArchiveQuery) this.equals("archiveDt", archiveDt);
+    }
 }

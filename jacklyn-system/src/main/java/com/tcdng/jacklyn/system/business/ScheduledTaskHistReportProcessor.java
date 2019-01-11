@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,24 +36,22 @@ import com.tcdng.unify.core.util.QueryUtils;
 @Component("scheduledtaskhist-reportprocessor")
 public class ScheduledTaskHistReportProcessor extends BaseRecordReportProcessor {
 
-	public ScheduledTaskHistReportProcessor() {
-		super(ScheduledTaskHistQuery.class);
-	}
+    public ScheduledTaskHistReportProcessor() {
+        super(ScheduledTaskHistQuery.class);
+    }
 
-	@Override
-	protected void populate(Query<? extends Entity> query, ReportParameters reportParameters)
-			throws UnifyException {
-		Long scheduledTaskId = (Long) reportParameters.getParameter("scheduledTaskId");
-		if (QueryUtils.isValidLongCriteria(scheduledTaskId)) {
-			((ScheduledTaskHistQuery) query).scheduledTaskId(scheduledTaskId);
-		}
+    @Override
+    protected void populate(Query<? extends Entity> query, ReportParameters reportParameters) throws UnifyException {
+        Long scheduledTaskId = (Long) reportParameters.getParameter("scheduledTaskId");
+        if (QueryUtils.isValidLongCriteria(scheduledTaskId)) {
+            ((ScheduledTaskHistQuery) query).scheduledTaskId(scheduledTaskId);
+        }
 
-		TaskStatus status = (TaskStatus) reportParameters.getParameter("taskStatus");
-		if (status != null) {
-			((ScheduledTaskHistQuery) query).taskStatus(status);
-		}
+        TaskStatus status = (TaskStatus) reportParameters.getParameter("taskStatus");
+        if (status != null) {
+            ((ScheduledTaskHistQuery) query).taskStatus(status);
+        }
 
-		((ScheduledTaskHistQuery) query)
-				.createdOn((Date) reportParameters.getParameter("executionDt"));
-	}
+        ((ScheduledTaskHistQuery) query).createdOn((Date) reportParameters.getParameter("executionDt"));
+    }
 }

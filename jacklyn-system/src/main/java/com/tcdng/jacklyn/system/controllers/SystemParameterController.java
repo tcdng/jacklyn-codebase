@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,113 +34,111 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/sysparameter")
 @UplBinding("web/system/upl/managesysparameter.upl")
-public class SystemParameterController extends AbstractSystemRecordController<SystemParameter> {
+public class SystemParameterController extends AbstractSystemCrudController<SystemParameter> {
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private SystemParamType searchType;
+    private SystemParamType searchType;
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	public SystemParameterController() {
-		super(SystemParameter.class, "system.sysparameter.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-						| ManageRecordModifier.MODIFY | ManageRecordModifier.REPORTABLE);
-	}
+    public SystemParameterController() {
+        super(SystemParameter.class, "$m{system.sysparameter.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
+                | ManageRecordModifier.MODIFY | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public SystemParamType getSearchType() {
-		return searchType;
-	}
+    public SystemParamType getSearchType() {
+        return searchType;
+    }
 
-	public void setSearchType(SystemParamType searchType) {
-		this.searchType = searchType;
-	}
+    public void setSearchType(SystemParamType searchType) {
+        this.searchType = searchType;
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	@Override
-	protected void onSetPage() throws UnifyException {
-		super.onSetPage();
-		setEditable("tablePanel", false);
-		setEditable("frmName", false);
-		setEditable("frmDescription", false);
-		setEditable("frmType", false);
-	}
+    @Override
+    protected void onSetPage() throws UnifyException {
+        super.onSetPage();
+        setEditable("tablePanel", false);
+        setEditable("frmName", false);
+        setEditable("frmDescription", false);
+        setEditable("frmType", false);
+    }
 
-	@Override
-	protected List<SystemParameter> find() throws UnifyException {
-		SystemParameterQuery query = new SystemParameterQuery();
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
+    @Override
+    protected List<SystemParameter> find() throws UnifyException {
+        SystemParameterQuery query = new SystemParameterQuery();
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
 
-		if (searchType != null) {
-			query.type(searchType);
-		}
+        if (searchType != null) {
+            query.type(searchType);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
-		query.order("description").ignoreEmptyCriteria(true);
-		return getSystemModule().findSysParameters(query);
-	}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
+        query.order("description").ignoreEmptyCriteria(true);
+        return getSystemService().findSysParameters(query);
+    }
 
-	@Override
-	protected SystemParameter find(Long id) throws UnifyException {
-		return getSystemModule().findSysParameter(id);
-	}
+    @Override
+    protected SystemParameter find(Long id) throws UnifyException {
+        return getSystemService().findSysParameter(id);
+    }
 
-	@Override
-	protected SystemParameter prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected SystemParameter prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(SystemParameter sysParameterData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(SystemParameter sysParameterData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(SystemParameter sysParameterData) throws UnifyException {
-		return getSystemModule().setSysParameterValue(sysParameterData.getName(),
-				sysParameterData.getValue());
-	}
+    @Override
+    protected int update(SystemParameter sysParameterData) throws UnifyException {
+        return getSystemService().setSysParameterValue(sysParameterData.getName(), sysParameterData.getValue());
+    }
 
-	@Override
-	protected int delete(SystemParameter sysParameterData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(SystemParameter sysParameterData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected boolean isEditable(SystemParameter sysParameterData) throws UnifyException {
-		return sysParameterData.getEditable();
-	}
+    @Override
+    protected boolean isEditable(SystemParameter sysParameterData) throws UnifyException {
+        return sysParameterData.getEditable();
+    }
 }

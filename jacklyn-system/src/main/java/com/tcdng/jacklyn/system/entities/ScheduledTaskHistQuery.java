@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,24 +29,24 @@ import com.tcdng.unify.core.util.CalendarUtils;
  */
 public class ScheduledTaskHistQuery extends BaseTimestampedEntityQuery<ScheduledTaskHist> {
 
-	public ScheduledTaskHistQuery() {
-		super(ScheduledTaskHist.class);
-	}
+    public ScheduledTaskHistQuery() {
+        super(ScheduledTaskHist.class);
+    }
 
-	public ScheduledTaskHistQuery taskStatus(TaskStatus taskStatus) {
-		return (ScheduledTaskHistQuery) equals("taskStatus", taskStatus);
-	}
+    public ScheduledTaskHistQuery taskStatus(TaskStatus taskStatus) {
+        return (ScheduledTaskHistQuery) equals("taskStatus", taskStatus);
+    }
 
-	public ScheduledTaskHistQuery taskName(String taskName) {
-		return (ScheduledTaskHistQuery) equals("taskName", taskName);
-	}
+    public ScheduledTaskHistQuery taskName(String taskName) {
+        return (ScheduledTaskHistQuery) equals("taskName", taskName);
+    }
 
-	public ScheduledTaskHistQuery scheduledTaskId(Long scheduledTaskId) {
-		return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
-	}
+    public ScheduledTaskHistQuery scheduledTaskId(Long scheduledTaskId) {
+        return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
+    }
 
-	public ScheduledTaskHistQuery createdOn(Date date) {
-		return (ScheduledTaskHistQuery) between("createDt", CalendarUtils.getMidnightDate(date),
-				CalendarUtils.getLastSecondDate(date));
-	}
+    public ScheduledTaskHistQuery createdOn(Date date) {
+        return (ScheduledTaskHistQuery) between("createDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,87 +33,86 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/security/changepassword")
 @UplBinding("web/security/upl/changeuserpassword.upl")
-@ResultMappings({ @ResultMapping(name = "refreshmain",
-		response = { "!refreshpanelresponse panels:$l{changePasswordPanel}" }) })
+@ResultMappings({
+        @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{changePasswordPanel}" }) })
 public class ChangeUserPasswordController extends AbstractSecurityController {
 
-	private String oldPassword;
+    private String oldPassword;
 
-	private String newPassword;
+    private String newPassword;
 
-	private String confirmPassword;
+    private String confirmPassword;
 
-	private String changePasswordMessage;
+    private String changePasswordMessage;
 
-	public ChangeUserPasswordController() {
-		super(true, false);
-	}
+    public ChangeUserPasswordController() {
+        super(true, false);
+    }
 
-	@Action
-	public String changeUserPassword() throws UnifyException {
-		try {
-			setDisplayMessage(null);
-			getSecurityModule().changeUserPassword(oldPassword, newPassword);
-			logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
-			hintUser("security.changepassword.hint.passwordchanged");
-		} catch (UnifyException e) {
-			UnifyError err = e.getUnifyError();
-			setDisplayMessage(
-					getSessionMessage(err.getErrorCode(), err.getErrorParams()));
-		} finally {
-			oldPassword = null;
-			newPassword = null;
-			confirmPassword = null;
-		}
-		return "refreshmain";
-	}
+    @Action
+    public String changeUserPassword() throws UnifyException {
+        try {
+            setDisplayMessage(null);
+            getSecurityService().changeUserPassword(oldPassword, newPassword);
+            logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
+            hintUser("security.changepassword.hint.passwordchanged");
+        } catch (UnifyException e) {
+            UnifyError err = e.getUnifyError();
+            setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
+        } finally {
+            oldPassword = null;
+            newPassword = null;
+            confirmPassword = null;
+        }
+        return "refreshmain";
+    }
 
-	public String getModeStyle() {
-		return EventType.UPDATE.colorMode();
-	}
+    public String getModeStyle() {
+        return EventType.UPDATE.colorMode();
+    }
 
-	public String getOldPassword() {
-		return oldPassword;
-	}
+    public String getOldPassword() {
+        return oldPassword;
+    }
 
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
-	}
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 
-	public String getNewPassword() {
-		return newPassword;
-	}
+    public String getNewPassword() {
+        return newPassword;
+    }
 
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
-	public String getChangePasswordMessage() {
-		return changePasswordMessage;
-	}
+    public String getChangePasswordMessage() {
+        return changePasswordMessage;
+    }
 
-	public void setChangePasswordMessage(String changePasswordMessage) {
-		this.changePasswordMessage = changePasswordMessage;
-	}
+    public void setChangePasswordMessage(String changePasswordMessage) {
+        this.changePasswordMessage = changePasswordMessage;
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		oldPassword = null;
-		newPassword = null;
-		confirmPassword = null;
-		setDisplayMessage(changePasswordMessage);
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        oldPassword = null;
+        newPassword = null;
+        confirmPassword = null;
+        setDisplayMessage(changePasswordMessage);
+    }
 
-	private void setDisplayMessage(String message) throws UnifyException {
-		changePasswordMessage = message;
-	}
+    private void setDisplayMessage(String message) throws UnifyException {
+        changePasswordMessage = message;
+    }
 
 }

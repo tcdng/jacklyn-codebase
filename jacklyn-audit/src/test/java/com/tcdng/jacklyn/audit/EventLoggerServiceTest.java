@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.audit;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -34,42 +35,42 @@ import com.tcdng.unify.core.logging.EventType;
  */
 public class EventLoggerServiceTest extends AbstractJacklynTest {
 
-	@Test
-	public void testLogEventWithDetails() throws Exception {
-		EventLoggerService eventLoggerService = (EventLoggerService) this
-				.getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
-		assertTrue(eventLoggerService.logUserEvent("customer-search", "On a Sunday", "By age"));
-	}
+    @Test
+    public void testLogEventWithDetails() throws Exception {
+        EventLoggerService eventLoggerService = (EventLoggerService) this
+                .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
+        assertTrue(eventLoggerService.logUserEvent("customer-search", "On a Sunday", "By age"));
+    }
 
-	@Test
-	public void testLogEventWithRecordType() throws Exception {
-		EventLoggerService eventLoggerService = (EventLoggerService) this
-				.getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
-		assertTrue(eventLoggerService.logUserEvent(EventType.SEARCH, TestCustomer.class));
-	}
+    @Test
+    public void testLogEventWithRecordType() throws Exception {
+        EventLoggerService eventLoggerService = (EventLoggerService) this
+                .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
+        assertFalse(eventLoggerService.logUserEvent(EventType.SEARCH, TestCustomer.class));
+    }
 
-	@Test
-	public void testLogEventWithRecord() throws Exception {
-		EventLoggerService eventLoggerService = (EventLoggerService) this
-				.getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
-		assertTrue(eventLoggerService.logUserEvent(EventType.CREATE, new TestCustomer(), true));
-		assertTrue(eventLoggerService.logUserEvent(EventType.VIEW, new TestCustomer(), false));
-	}
+    @Test
+    public void testLogEventWithRecord() throws Exception {
+        EventLoggerService eventLoggerService = (EventLoggerService) this
+                .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
+        assertTrue(eventLoggerService.logUserEvent(EventType.CREATE, new TestCustomer(), true));
+        assertFalse(eventLoggerService.logUserEvent(EventType.VIEW, new TestCustomer(), false));
+    }
 
-	@Test(expected = UnifyException.class)
-	public void testLogUnknownEvent() throws Exception {
-		EventLoggerService eventLoggerService = (EventLoggerService) this
-				.getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
-		eventLoggerService.logUserEvent("create-user");
-	}
+    @Test(expected = UnifyException.class)
+    public void testLogUnknownEvent() throws Exception {
+        EventLoggerService eventLoggerService = (EventLoggerService) this
+                .getComponent(ApplicationComponents.APPLICATION_EVENTSLOGGER);
+        eventLoggerService.logUserEvent("create-user");
+    }
 
-	@Override
-	protected void onSetup() throws Exception {
+    @Override
+    protected void onSetup() throws Exception {
 
-	}
+    }
 
-	@Override
-	protected void onTearDown() throws Exception {
+    @Override
+    protected void onTearDown() throws Exception {
 
-	}
+    }
 }

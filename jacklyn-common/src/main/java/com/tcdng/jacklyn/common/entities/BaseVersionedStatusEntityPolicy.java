@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,21 +30,21 @@ import com.tcdng.unify.core.database.Entity;
 @Component("versionedstatusentity-policy")
 public class BaseVersionedStatusEntityPolicy extends BaseStatusEntityPolicy {
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		((BaseVersionedStatusEntity) record).setVersionNo(1L);
-		return super.preCreate(record, now);
-	}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        ((BaseVersionedStatusEntity) record).setVersionNo(1L);
+        return super.preCreate(record, now);
+    }
 
-	@Override
-	public void preUpdate(Entity record, Date now) throws UnifyException {
-		BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
-		versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
-	}
+    @Override
+    public void preUpdate(Entity record, Date now) throws UnifyException {
+        BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
+        versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
+    }
 
-	@Override
-	public void onUpdateError(Entity record) {
-		BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
-		versionedRecord.setVersionNo(versionedRecord.getVersionNo() - 1L);
-	}
+    @Override
+    public void onUpdateError(Entity record) {
+        BaseVersionedStatusEntity versionedRecord = (BaseVersionedStatusEntity) record;
+        versionedRecord.setVersionNo(versionedRecord.getVersionNo() - 1L);
+    }
 }

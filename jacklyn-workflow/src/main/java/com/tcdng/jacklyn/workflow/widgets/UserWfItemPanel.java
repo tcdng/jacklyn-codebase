@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,16 +29,16 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/workflow/upl/userwfitempanel.upl")
 public class UserWfItemPanel extends AbstractWfItemPanel {
 
-	@Override
-	public void switchState() throws UnifyException {
-		super.switchState();
+    @Override
+    public void switchState() throws UnifyException {
+        super.switchState();
 
-		// Flip buttons
-		int viewIndex = getValue(int.class, "viewIndex");
-		int itemCount = getValue(int.class, "itemCount");
-		setDisabled("firstFrmBtn", viewIndex == 0);
-		setDisabled("prevFrmBtn", viewIndex == 0);
-		setDisabled("nextFrmBtn", viewIndex >= (itemCount - 1));
-		setDisabled("lastFrmBtn", viewIndex >= (itemCount - 1));
-	}
+        // Flip buttons
+        int viewIndex = getValue(int.class, "viewIndex");
+        int itemCount = getValue(int.class, "itemCount");
+        setDisabled("firstFrmBtn", viewIndex == 0);
+        setDisabled("prevFrmBtn", viewIndex == 0);
+        setDisabled("nextFrmBtn", viewIndex >= (itemCount - 1));
+        setDisabled("lastFrmBtn", viewIndex >= (itemCount - 1));
+    }
 }

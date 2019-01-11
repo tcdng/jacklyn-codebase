@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,16 +24,16 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfPolicyDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 9168747124616981593L;
+    private static final long serialVersionUID = 9168747124616981593L;
 
-	private String logic;
+    private String logic;
 
-	public WfPolicyDef(String name, String description, String logic) {
-		super(name, description);
-		this.logic = logic;
-	}
+    public WfPolicyDef(String name, String description, String logic) {
+        super(name, description);
+        this.logic = logic;
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 }

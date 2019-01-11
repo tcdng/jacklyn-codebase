@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,45 +30,45 @@ import com.tcdng.unify.core.util.CalendarUtils;
  */
 public class NotificationQuery extends BaseTimestampedEntityQuery<Notification> {
 
-	public NotificationQuery() {
-		super(Notification.class);
-	}
+    public NotificationQuery() {
+        super(Notification.class);
+    }
 
-	public NotificationQuery notificationTemplateId(Long notificationTemplateId) {
-		return (NotificationQuery) equals("notificationTemplateId", notificationTemplateId);
-	}
+    public NotificationQuery notificationTemplateId(Long notificationTemplateId) {
+        return (NotificationQuery) equals("notificationTemplateId", notificationTemplateId);
+    }
 
-	public NotificationQuery moduleId(Long moduleId) {
-		return (NotificationQuery) equals("moduleId", moduleId);
-	}
+    public NotificationQuery moduleId(Long moduleId) {
+        return (NotificationQuery) equals("moduleId", moduleId);
+    }
 
-	public NotificationQuery moduleName(String moduleName) {
-		return (NotificationQuery) equals("moduleName", moduleName);
-	}
+    public NotificationQuery moduleName(String moduleName) {
+        return (NotificationQuery) equals("moduleName", moduleName);
+    }
 
-	public NotificationQuery notificationTemplateName(String notificationTemplateName) {
-		return (NotificationQuery) equals("notificationTemplateName", notificationTemplateName);
-	}
+    public NotificationQuery notificationTemplateName(String notificationTemplateName) {
+        return (NotificationQuery) equals("notificationTemplateName", notificationTemplateName);
+    }
 
-	public NotificationQuery notificationType(NotificationType notificationType) {
-		return (NotificationQuery) equals("notificationType", notificationType);
-	}
+    public NotificationQuery notificationType(NotificationType notificationType) {
+        return (NotificationQuery) equals("notificationType", notificationType);
+    }
 
-	public NotificationQuery sentOn(Date date) {
-		return (NotificationQuery) between("sentDt", CalendarUtils.getMidnightDate(date),
-				CalendarUtils.getLastSecondDate(date));
-	}
+    public NotificationQuery sentOn(Date date) {
+        return (NotificationQuery) between("sentDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
 
-	public NotificationQuery due() {
-		return (NotificationQuery) lessEqual("dueDt", new Date());
-	}
+    public NotificationQuery due() {
+        return (NotificationQuery) lessEqual("dueDt", new Date());
+    }
 
-	public NotificationQuery createdOn(Date date) {
-		return (NotificationQuery) between("createDt", CalendarUtils.getMidnightDate(date),
-				CalendarUtils.getLastSecondDate(date));
-	}
+    public NotificationQuery createdOn(Date date) {
+        return (NotificationQuery) between("createDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
 
-	public NotificationQuery status(NotificationStatus status) {
-		return (NotificationQuery) equals("status", status);
-	}
+    public NotificationQuery status(NotificationStatus status) {
+        return (NotificationQuery) equals("status", status);
+    }
 }

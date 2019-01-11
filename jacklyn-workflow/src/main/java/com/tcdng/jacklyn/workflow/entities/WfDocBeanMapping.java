@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,85 +34,107 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFDOCBEANMAPPING", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
-		@UniqueConstraint({ "wfDocId", "description" }) })
+        @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocBeanMapping extends BaseEntity {
 
-	@ForeignKey(WfDoc.class)
-	private Long wfDocId;
+    @ForeignKey(WfDoc.class)
+    private Long wfDocId;
 
-	@ForeignKey(name = "MAPPING_TY")
-	private WorkflowBeanMappingType type;
+    @ForeignKey(name = "MAPPING_TY")
+    private WorkflowBeanMappingType type;
 
-	@Column(name = "BEANMAPPING_NM", length = 32)
-	private String name;
+    @Column(name = "BEANMAPPING_NM", length = 32)
+    private String name;
 
-	@Column(name = "BEANMAPPING_DESC", length = 64)
-	private String description;
+    @Column(name = "BEANMAPPING_DESC", length = 64)
+    private String description;
 
-	@Column(name = "BEAN_TY", length = 128)
-	private String beanType;
+    @Column(name = "BEAN_TY", length = 128)
+    private String beanType;
 
-	@ChildList
-	private List<WfDocFieldMapping> fieldMappingList;
+    @ListOnly(key = "wfDocId", property = "name")
+    private String wfDocName;
 
-	@ListOnly(key = "type", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "wfDocId", property = "description")
+    private String wfDocDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @ListOnly(key = "type", property = "description")
+    private String typeDesc;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @ChildList
+    private List<WfDocFieldMapping> fieldMappingList;
 
-	public Long getWfDocId() {
-		return wfDocId;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public void setWfDocId(Long wfDocId) {
-		this.wfDocId = wfDocId;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public WorkflowBeanMappingType getType() {
-		return type;
-	}
+    public Long getWfDocId() {
+        return wfDocId;
+    }
 
-	public void setType(WorkflowBeanMappingType type) {
-		this.type = type;
-	}
+    public void setWfDocId(Long wfDocId) {
+        this.wfDocId = wfDocId;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public WorkflowBeanMappingType getType() {
+        return type;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setType(WorkflowBeanMappingType type) {
+        this.type = type;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
-	public String getBeanType() {
-		return beanType;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setBeanType(String beanType) {
-		this.beanType = beanType;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<WfDocFieldMapping> getFieldMappingList() {
-		return fieldMappingList;
-	}
+    public String getBeanType() {
+        return beanType;
+    }
 
-	public void setFieldMappingList(List<WfDocFieldMapping> fieldMappingList) {
-		this.fieldMappingList = fieldMappingList;
-	}
+    public void setBeanType(String beanType) {
+        this.beanType = beanType;
+    }
+
+    public String getWfDocName() {
+        return wfDocName;
+    }
+
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
+
+    public String getWfDocDesc() {
+        return wfDocDesc;
+    }
+
+    public void setWfDocDesc(String wfDocDesc) {
+        this.wfDocDesc = wfDocDesc;
+    }
+
+    public List<WfDocFieldMapping> getFieldMappingList() {
+        return fieldMappingList;
+    }
+
+    public void setFieldMappingList(List<WfDocFieldMapping> fieldMappingList) {
+        this.fieldMappingList = fieldMappingList;
+    }
 
 }

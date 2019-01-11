@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,8 +18,7 @@ package com.tcdng.jacklyn.notification.business;
 import java.util.List;
 
 import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
-import com.tcdng.jacklyn.notification.data.MessagingChannelDef;
-import com.tcdng.unify.core.ApplicationComponents;
+import com.tcdng.jacklyn.notification.data.NotificationChannelDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -38,26 +37,25 @@ import com.tcdng.unify.core.notification.EmailServerConfig;
 @Component(NotificationModuleNameConstants.EMAILMESSAGINGCHANNEL)
 public class EmailMessagingChannel extends AbstractMessagingChannel {
 
-	@Configurable(ApplicationComponents.APPLICATION_DEFAULTEMAILSERVER)
-	private EmailServer emailServer;
+    @Configurable
+    private EmailServer emailServer;
 
-	@Override
-	public boolean sendMessage(MessagingChannelDef notificationChannelDef, String subject,
-			String senderContact, List<String> recipientContactList, String messageBody,
-			boolean isHtml, List<FileAttachment> fileAttachmentList) throws UnifyException {
-		String configurationCode = notificationChannelDef.getNotificationChannelName();
-		if (!emailServer.isConfigured(configurationCode)) {
-			emailServer.configure(configurationCode, new EmailServerConfig(
-					notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
-					notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
-					notificationChannelDef.getPassword()));
-		}
+    @Override
+    public boolean sendMessage(NotificationChannelDef notificationChannelDef, String subject, String senderContact,
+            List<String> recipientContactList, String messageBody, boolean isHtml,
+            List<FileAttachment> fileAttachmentList) throws UnifyException {
+        String configurationCode = notificationChannelDef.getNotificationChannelName();
+        if (!emailServer.isConfigured(configurationCode)) {
+            emailServer.configure(configurationCode,
+                    new EmailServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
+                            notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
+                            notificationChannelDef.getPassword()));
+        }
 
-		Email email = Email.newBuilder().fromSender(senderContact)
-				.toRecipients(TYPE.TO, recipientContactList).withSubject(subject)
-				.withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
-				.build();
-		emailServer.sendEmail(configurationCode, email);
-		return email.isSent();
-	}
+        Email email = Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
+                .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
+                .build();
+        emailServer.sendEmail(configurationCode, email);
+        return email.isSent();
+    }
 }

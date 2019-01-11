@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -42,48 +42,46 @@ import com.tcdng.unify.core.util.IOUtils;
  */
 public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
 
-	private static final String TEST_REMOTE_APP_URL
-			= "http://localhost:" + TEST_HTTPPORT + "/jacklyn";
+    private static final String TEST_REMOTE_APP_URL = "http://localhost:" + TEST_HTTPPORT + "/jacklyn";
 
-	@Test(expected = UnifyException.class)
-	public void testPublishWfCategoryNoXml() throws Exception {
-		PublishWfCategoryParams params = new PublishWfCategoryParams();
-		PublishWfCategoryResult result = getRemoteCallClient()
-				.remoteCall(PublishWfCategoryResult.class, TEST_REMOTE_APP_URL, params);
-		assertNotNull(result);
-	}
+    @Test(expected = UnifyException.class)
+    public void testPublishWfCategoryNoXml() throws Exception {
+        PublishWfCategoryParams params = new PublishWfCategoryParams();
+        PublishWfCategoryResult result = getRemoteCallClient().remoteCall(PublishWfCategoryResult.class,
+                TEST_REMOTE_APP_URL, params);
+        assertNotNull(result);
+    }
 
-	@Test
-	public void testPublishWfCategory() throws Exception {
-		InputStream inputStream = null;
-		try {
-			inputStream = IOUtils
-					.openClassLoaderResourceInputStream("xml/wfcategory-customer-publish.xml");
-			byte[] xml = IOUtils.readAll(inputStream);
+    @Test
+    public void testPublishWfCategory() throws Exception {
+        InputStream inputStream = null;
+        try {
+            inputStream = IOUtils.openClassLoaderResourceInputStream("xml/wfcustomer.xml");
+            byte[] xml = IOUtils.readAll(inputStream);
 
-			PublishWfCategoryParams params = new PublishWfCategoryParams(xml);
-			PublishWfCategoryResult result = getRemoteCallClient()
-					.remoteCall(PublishWfCategoryResult.class, TEST_REMOTE_APP_URL, params);
-			assertNotNull(result);
-			assertFalse(result.isError());
-		} finally {
-			IOUtils.close(inputStream);
-		}
-	}
+            PublishWfCategoryParams params = new PublishWfCategoryParams(xml);
+            PublishWfCategoryResult result = getRemoteCallClient().remoteCall(PublishWfCategoryResult.class,
+                    TEST_REMOTE_APP_URL, params);
+            assertNotNull(result);
+            assertFalse(result.isError());
+        } finally {
+            IOUtils.close(inputStream);
+        }
+    }
 
-	@Override
-	protected void onSetup() throws Exception {
-		if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
-				WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY)) {
-			getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
-					WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
-		}
-	}
+    @Override
+    protected void onSetup() throws Exception {
+        if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
+                WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY)) {
+            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+                    WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void onTearDown() throws Exception {
-		deleteAll(WfTemplate.class, WfForm.class, WfDoc.class, WfCategory.class);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void onTearDown() throws Exception {
+        deleteAll(WfTemplate.class, WfForm.class, WfDoc.class, WfCategory.class);
+    }
 
 }

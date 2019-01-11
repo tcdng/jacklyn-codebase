@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,65 +33,64 @@ import com.tcdng.unify.core.util.xml.adapter.RequirementTypeXmlAdapter;
  */
 public class WfUserActionConfig extends BaseConfig {
 
-	private String label;
+    private String label;
 
-	private String targetStepName;
+    private String targetStepName;
 
-	private RequirementType noteRequirement;
+    private RequirementType noteRequirement;
 
-	private Boolean validatePage;
+    private Boolean validatePage;
 
-	private List<WfAttachmentCheckConfig> attachmentCheckConfigList;
+    private List<WfAttachmentCheckConfig> attachmentCheckConfigList;
 
-	public WfUserActionConfig() {
-		this.noteRequirement = RequirementType.NONE;
-		this.validatePage = Boolean.FALSE;
-	}
+    public WfUserActionConfig() {
+        this.noteRequirement = RequirementType.NONE;
+        this.validatePage = Boolean.FALSE;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	@XmlAttribute
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    @XmlAttribute
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getTargetStepName() {
-		return targetStepName;
-	}
+    public String getTargetStepName() {
+        return targetStepName;
+    }
 
-	@XmlAttribute(name = "target", required = true)
-	public void setTargetStepName(String targetStepName) {
-		this.targetStepName = targetStepName;
-	}
+    @XmlAttribute(name = "target", required = true)
+    public void setTargetStepName(String targetStepName) {
+        this.targetStepName = targetStepName;
+    }
 
-	public RequirementType getNoteRequirement() {
-		return noteRequirement;
-	}
+    public RequirementType getNoteRequirement() {
+        return noteRequirement;
+    }
 
-	@XmlJavaTypeAdapter(RequirementTypeXmlAdapter.class)
-	@XmlAttribute(name = "notes-requirement", required = true)
-	public void setNoteRequirement(RequirementType noteRequirement) {
-		this.noteRequirement = noteRequirement;
-	}
+    @XmlJavaTypeAdapter(RequirementTypeXmlAdapter.class)
+    @XmlAttribute(name = "notes-requirement", required = true)
+    public void setNoteRequirement(RequirementType noteRequirement) {
+        this.noteRequirement = noteRequirement;
+    }
 
-	public Boolean getValidatePage() {
-		return validatePage;
-	}
+    public Boolean getValidatePage() {
+        return validatePage;
+    }
 
-	@XmlAttribute(name="validate-page")
-	public void setValidatePage(Boolean validatePage) {
-		this.validatePage = validatePage;
-	}
+    @XmlAttribute(name = "validate-page")
+    public void setValidatePage(Boolean validatePage) {
+        this.validatePage = validatePage;
+    }
 
-	public List<WfAttachmentCheckConfig> getAttachmentCheckConfigList() {
-		return attachmentCheckConfigList;
-	}
+    public List<WfAttachmentCheckConfig> getAttachmentCheckConfigList() {
+        return attachmentCheckConfigList;
+    }
 
-	@XmlElement(name = "attachment-check")
-	public void setAttachmentCheckConfigList(
-			List<WfAttachmentCheckConfig> attachmentCheckConfigList) {
-		this.attachmentCheckConfigList = attachmentCheckConfigList;
-	}
+    @XmlElement(name = "attachment-check")
+    public void setAttachmentCheckConfigList(List<WfAttachmentCheckConfig> attachmentCheckConfigList) {
+        this.attachmentCheckConfigList = attachmentCheckConfigList;
+    }
 }

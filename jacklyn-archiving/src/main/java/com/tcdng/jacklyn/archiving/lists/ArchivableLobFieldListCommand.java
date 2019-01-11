@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,24 +35,22 @@ import com.tcdng.unify.core.util.QueryUtils;
 @Component("archivablelobfieldlist")
 public class ArchivableLobFieldListCommand extends AbstractArchivingListCommand<ArchivingParams> {
 
-	private static final ArchivingFieldType[] LOBS
-			= { ArchivingFieldType.BLOB, ArchivingFieldType.CLOB };
+    private static final ArchivingFieldType[] LOBS = { ArchivingFieldType.BLOB, ArchivingFieldType.CLOB };
 
-	public ArchivableLobFieldListCommand() {
-		super(ArchivingParams.class);
-	}
+    public ArchivableLobFieldListCommand() {
+        super(ArchivingParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ArchivingParams params)
-			throws UnifyException {
-		if (QueryUtils.isValidLongCriteria(params.getArchivableDefId())) {
-			ArchivingFieldQuery query = new ArchivingFieldQuery();
-			query.archivableDefId(params.getArchivableDefId());
-			query.fieldTypeIn(LOBS);
-			query.orderByDescription();
-			return getArchivingBusinessModule().findArchivingFields(query);
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ArchivingParams params) throws UnifyException {
+        if (QueryUtils.isValidLongCriteria(params.getArchivableDefId())) {
+            ArchivingFieldQuery query = new ArchivingFieldQuery();
+            query.archivableDefId(params.getArchivableDefId());
+            query.fieldTypeIn(LOBS);
+            query.orderByDescription();
+            return getArchivingService().findArchivingFields(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 }

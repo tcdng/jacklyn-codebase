@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.security.controllers;
 
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.UserRole;
-import com.tcdng.jacklyn.system.business.SystemModule;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.StringUtils;
@@ -31,50 +31,50 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  * @since 1.0
  */
 @ResultMappings({ @ResultMapping(name = "forwardtoapplication",
-		response = { "!forwardresponse pathProperty:$s{applicationPath}" }) })
+        response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
 public abstract class AbstractApplicationForwarderController extends AbstractSecurityController {
 
-	private String applicationPath;
+    private String applicationPath;
 
-	public AbstractApplicationForwarderController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractApplicationForwarderController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	public String getApplicationPath() {
-		return applicationPath;
-	}
+    public String getApplicationPath() {
+        return applicationPath;
+    }
 
-	public void setApplicationPath(String applicationPath) {
-		this.applicationPath = applicationPath;
-	}
+    public void setApplicationPath(String applicationPath) {
+        this.applicationPath = applicationPath;
+    }
 
-	/**
-	 * Forwards to application base on supplied user role.
-	 * 
-	 * @param userRoleData
-	 *            the user role information
-	 * @return the forward-to-application result mapping name
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	protected String forwardToApplication(UserRole userRoleData) throws UnifyException {
-		Long userRoleId = null;
-		if (userRoleData != null) {
-			userRoleId = userRoleData.getId();
-			applicationPath = userRoleData.getRoleApplication();
-		}
+    /**
+     * Forwards to application base on supplied user role.
+     * 
+     * @param userRoleData
+     *            the user role information
+     * @return the forward-to-application result mapping name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected String forwardToApplication(UserRole userRoleData) throws UnifyException {
+        Long userRoleId = null;
+        if (userRoleData != null) {
+            userRoleId = userRoleData.getId();
+            applicationPath = userRoleData.getRoleApplication();
+        }
 
-		if (StringUtils.isBlank(applicationPath)) {
-			applicationPath = getSystemBusinessModule().getSysParameterValue(String.class,
-					SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
-		}
+        if (StringUtils.isBlank(applicationPath)) {
+            applicationPath = getSystemService().getSysParameterValue(String.class,
+                    SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
+        }
 
-		getSecurityModule().setCurrentUserRole(userRoleId);
-		return "forwardtoapplication";
-	}
+        getSecurityService().setCurrentUserRole(userRoleId);
+        return "forwardtoapplication";
+    }
 
-	protected SystemModule getSystemBusinessModule() throws UnifyException {
-		return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
-	}
+    protected SystemService getSystemService() throws UnifyException {
+        return (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
+    }
 
 }

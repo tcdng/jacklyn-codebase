@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,38 +28,38 @@ import com.tcdng.unify.core.data.PackableDocRWConfig;
  */
 public class WfDocBeanMappingDef extends BaseWfDef {
 
-	private static final long serialVersionUID = -1053158706216881339L;
+    private static final long serialVersionUID = -1053158706216881339L;
 
-	private PackableDocRWConfig rwConfig;
+    private PackableDocRWConfig rwConfig;
 
-	private WorkflowBeanMappingType type;
+    private WorkflowBeanMappingType type;
 
-	public WfDocBeanMappingDef(String name, String description, PackableDocRWConfig rwConfig,
-			WorkflowBeanMappingType type) {
-		super(name, description);
-		this.rwConfig = rwConfig;
-		this.type = type;
-	}
+    public WfDocBeanMappingDef(String name, String description, PackableDocRWConfig rwConfig,
+            WorkflowBeanMappingType type) {
+        super(name, description);
+        this.rwConfig = rwConfig;
+        this.type = type;
+    }
 
-	public PackableDocRWConfig getRwConfig() {
-		return rwConfig;
-	}
+    public PackableDocRWConfig getRwConfig() {
+        return rwConfig;
+    }
 
-	public WorkflowBeanMappingType getType() {
-		return type;
-	}
+    public WorkflowBeanMappingType getType() {
+        return type;
+    }
 
-	@SuppressWarnings("unchecked")
-	public Class<? extends Document> getBeanType() {
-		return (Class<? extends Document>) rwConfig.getBeanType();
-	}
+    @SuppressWarnings("unchecked")
+    public Class<? extends Document> getBeanType() {
+        return (Class<? extends Document>) rwConfig.getBeanType();
+    }
 
-	public boolean isEntryMapping() {
-		return type.isEntry();
-	}
+    public boolean isEntryMapping() {
+        return type.isEntry();
+    }
 
-	public boolean isPrimaryMapping() {
-		return type.isPrimary();
-	}
+    public boolean isPrimaryMapping() {
+        return type.isPrimary();
+    }
 
 }

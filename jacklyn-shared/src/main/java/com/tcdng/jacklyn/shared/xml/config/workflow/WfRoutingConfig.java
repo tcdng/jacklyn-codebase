@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,26 +27,26 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfRoutingConfig extends BaseConfig {
 
-	private String targetStepName;
+    private String targetStepName;
 
-	private String classifierName;
+    private String classifierName;
 
-	public String getTargetStepName() {
-		return targetStepName;
-	}
+    public String getTargetStepName() {
+        return targetStepName;
+    }
 
-	@XmlAttribute(name = "target", required = true)
-	public void setTargetStepName(String targetStepName) {
-		this.targetStepName = targetStepName;
-	}
+    @XmlAttribute(name = "target", required = true)
+    public void setTargetStepName(String targetStepName) {
+        this.targetStepName = targetStepName;
+    }
 
-	public String getClassifierName() {
-		return classifierName;
-	}
+    public String getClassifierName() {
+        return classifierName;
+    }
 
-	@XmlAttribute(name = "classifier", required = true)
-	public void setClassifierName(String classifierName) {
-		this.classifierName = classifierName;
-	}
+    @XmlAttribute(name = "classifier", required = true)
+    public void setClassifierName(String classifierName) {
+        this.classifierName = classifierName;
+    }
 
 }

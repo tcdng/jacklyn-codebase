@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,46 +29,36 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfformwidgettypelist")
 public enum WorkflowFormWidgetType implements EnumConst {
 
-	TEXT("TXT", "ui-text"),
-	NAME("NME", "ui-name"),
-	WORD("WRD", "ui-word"),
-	DATE("DTE", "ui-date"),
-	TIME("TME", "ui-time"),
-	DECIMAL("DEC", "ui-decimal"),
-	INTEGER("INT", "ui-integer"),
-	CHECKBOX("CHK", "ui-checkbox"),
-	RADIOBUTTONS("RAD", "ui-radiobuttons"),
-	SEARCH("SER", "ui-search"),
-	SELECT("SEL", "ui-select"),
-	IMAGE("IMG", "ui-image"),
-	PICTURE("PIC", "ui-picture"),
-	MONEY("MON", "ui-money"),
-	PASSWORD("PWD", "ui-password");
+    TEXT("TXT", "ui-text"), NAME("NME", "ui-name"), WORD("WRD", "ui-word"), DATE("DTE", "ui-date"), TIME("TME",
+            "ui-time"), DECIMAL("DEC", "ui-decimal"), INTEGER("INT", "ui-integer"), CHECKBOX("CHK",
+                    "ui-checkbox"), RADIOBUTTONS("RAD", "ui-radiobuttons"), SEARCH("SER", "ui-search"), SELECT("SEL",
+                            "ui-select"), IMAGE("IMG", "ui-image"), PICTURE("PIC",
+                                    "ui-picture"), MONEY("MON", "ui-money"), PASSWORD("PWD", "ui-password");
 
-	private final String code;
+    private final String code;
 
-	private final String uplType;
+    private final String uplType;
 
-	private WorkflowFormWidgetType(String code, String uplType) {
-		this.code = code;
-		this.uplType = uplType;
-	}
+    private WorkflowFormWidgetType(String code, String uplType) {
+        this.code = code;
+        this.uplType = uplType;
+    }
 
-	@Override
-	public String code() {
-		return code;
-	}
+    @Override
+    public String code() {
+        return code;
+    }
 
-	public String uplType() {
-		return uplType;
-	}
+    public String uplType() {
+        return uplType;
+    }
 
-	public static WorkflowFormWidgetType fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowFormWidgetType.class, code);
-	}
+    public static WorkflowFormWidgetType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowFormWidgetType.class, code);
+    }
 
-	public static WorkflowFormWidgetType fromName(String name) {
-		return EnumUtils.fromName(WorkflowFormWidgetType.class, name);
-	}
+    public static WorkflowFormWidgetType fromName(String name) {
+        return EnumUtils.fromName(WorkflowFormWidgetType.class, name);
+    }
 
 }

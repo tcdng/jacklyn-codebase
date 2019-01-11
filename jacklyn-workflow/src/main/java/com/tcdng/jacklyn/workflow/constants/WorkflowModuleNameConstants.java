@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,13 +23,13 @@ package com.tcdng.jacklyn.workflow.constants;
  */
 public interface WorkflowModuleNameConstants {
 
-	String WORKFLOW_MODULE = "workflow";
+    String WORKFLOW_MODULE = "workflow";
 
-	String WORKFLOWBUSINESSMODULE = "jacklyn-workflowbusinessmodule";
+    String WORKFLOWSERVICE = "jacklyn-workflowservice";
 
-	String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
+    String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
 
-	String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-workflowitemclassifierlogic";
+    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-workflowitemclassifierlogic";
 
-	String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
+    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
 }

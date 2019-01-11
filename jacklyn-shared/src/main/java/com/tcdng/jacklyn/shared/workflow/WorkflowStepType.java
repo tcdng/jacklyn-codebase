@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,40 +28,44 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfsteptypelist")
 public enum WorkflowStepType implements EnumConst {
 
-	START("S"), MANUAL("M"), RECEPTACLE("R"), AUTOMATIC("A"), INTERACTIVE("I"), END("E");
+    START("S"), MANUAL("M"), RECEPTACLE("R"), AUTOMATIC("A"), INTERACTIVE("I"), END("E");
 
-	private final String code;
+    private final String code;
 
-	private WorkflowStepType(String code) {
-		this.code = code;
-	}
+    private WorkflowStepType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public boolean isStart() {
-		return START.equals(this);
-	}
+    public boolean isStart() {
+        return START.equals(this);
+    }
 
-	public boolean isManual() {
-		return MANUAL.equals(this);
-	}
+    public boolean isManual() {
+        return MANUAL.equals(this);
+    }
 
-	public boolean isReceptacle() {
-		return RECEPTACLE.equals(this);
-	}
+    public boolean isReceptacle() {
+        return RECEPTACLE.equals(this);
+    }
 
-	public boolean isEnd() {
-		return END.equals(this);
-	}
-	
-	public static WorkflowStepType fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowStepType.class, code);
-	}
+    public boolean isEnd() {
+        return END.equals(this);
+    }
 
-	public static WorkflowStepType fromName(String name) {
-		return EnumUtils.fromName(WorkflowStepType.class, name);
-	}
+    public boolean isUserInteractive() {
+        return MANUAL.equals(this) || INTERACTIVE.equals(this);
+    }
+
+    public static WorkflowStepType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowStepType.class, code);
+    }
+
+    public static WorkflowStepType fromName(String name) {
+        return EnumUtils.fromName(WorkflowStepType.class, name);
+    }
 }

@@ -1,5 +1,5 @@
 // UPL template for login sequence
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{application.login} components:$c{loginMainBody}  styleClass:$e{jk-loginband}
@@ -30,13 +30,13 @@
 !ui-panel:changePasswordBodyPanel style:$s{width:100%;} layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{changePwdCaptionPanel changePasswordPanel}
 !ui-titlebar:changePwdCaptionPanel caption:$m{security.changepassword.manage}
-!ui-changepasswordpanel:changePasswordPanel oldPasswordProperty:oldPassword newPasswordProperty:newPassword
-    confirmPasswordProperty:confirmPassword messageProperty:loginMessage
+!ui-changepasswordpanel:changePasswordPanel oldPasswordBinding:oldPassword newPasswordBinding:newPassword
+    confirmPasswordBinding:confirmPassword messageBinding:loginMessage
     changePasswordPath:$n{/changeUserPassword} cancelChangePasswordPath:$n{/cancelChangeUserPassword}
     formCaptionSuffix:$s{}
 
 // Select user role popup
 !ui-selectrolepanel:selectRolePanel dialogCaption:$m{security.select.role}
-    roleListProperty:userRoleList selectRolePath:$n{/selectUserRole} closeDialogPath:$n{/cancelSelectUserRole}
+    roleListBinding:userRoleList selectRolePath:$n{/selectUserRole} closeDialogPath:$n{/cancelSelectUserRole}
 
        

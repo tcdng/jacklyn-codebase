@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,8 +16,7 @@
 
 package com.tcdng.jacklyn.audit.controllers;
 
-import com.tcdng.jacklyn.audit.business.AuditModule;
-import com.tcdng.jacklyn.audit.constants.AuditModuleNameConstants;
+import com.tcdng.jacklyn.audit.business.AuditService;
 import com.tcdng.jacklyn.common.controllers.BasePageController;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,15 +28,15 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractAuditController extends BasePageController {
 
-	@Configurable(AuditModuleNameConstants.AUDITBUSINESSMODULE)
-	private AuditModule auditModule;
+    @Configurable
+    private AuditService auditService;
 
-	public AbstractAuditController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractAuditController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected AuditModule getAuditModule() {
-		return auditModule;
-	}
+    protected AuditService getAuditService() {
+        return auditService;
+    }
 
 }

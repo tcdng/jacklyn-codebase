@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfRecordActionsConfig {
 
-	private List<WfRecordActionConfig> wfRecordActionConfigList;
+    private List<WfRecordActionConfig> wfRecordActionConfigList;
 
-	public List<WfRecordActionConfig> getWfRecordActionConfigList() {
-		return wfRecordActionConfigList;
-	}
+    public List<WfRecordActionConfig> getWfRecordActionConfigList() {
+        return wfRecordActionConfigList;
+    }
 
-	@XmlElement(name = "record-action", required = true)
-	public void setWfRecordActionConfigList(List<WfRecordActionConfig> wfRecordActionConfigList) {
-		this.wfRecordActionConfigList = wfRecordActionConfigList;
-	}
+    @XmlElement(name = "record-action", required = true)
+    public void setWfRecordActionConfigList(List<WfRecordActionConfig> wfRecordActionConfigList) {
+        this.wfRecordActionConfigList = wfRecordActionConfigList;
+    }
 }

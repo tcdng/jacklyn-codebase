@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,28 +29,27 @@ import com.tcdng.unify.core.util.xml.adapter.RequirementTypeXmlAdapter;
  */
 public class WfAttachmentCheckConfig {
 
-	private String attachmentName;
+    private String attachmentName;
 
-	private RequirementType requirementType;
+    private RequirementType requirementType;
 
+    public String getAttachmentName() {
+        return attachmentName;
+    }
 
-	public String getAttachmentName() {
-		return attachmentName;
-	}
+    @XmlAttribute(name = "attachment", required = true)
+    public void setAttachmentName(String attachmentName) {
+        this.attachmentName = attachmentName;
+    }
 
-	@XmlAttribute(name="attachment", required=true)
-	public void setAttachmentName(String attachmentName) {
-		this.attachmentName = attachmentName;
-	}
-
-	public RequirementType getRequirementType() {
-		return requirementType;
-	}
+    public RequirementType getRequirementType() {
+        return requirementType;
+    }
 
     @XmlJavaTypeAdapter(RequirementTypeXmlAdapter.class)
-	@XmlAttribute(name="requirement-type", required=true)
-	public void setRequirementType(RequirementType requirementType) {
-		this.requirementType = requirementType;
-	}
+    @XmlAttribute(name = "requirement-type", required = true)
+    public void setRequirementType(RequirementType requirementType) {
+        this.requirementType = requirementType;
+    }
 
 }

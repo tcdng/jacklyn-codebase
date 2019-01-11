@@ -1,18 +1,18 @@
 // UPL template for select role panel
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-userdetailspanel dialogBodyComponents:$c{userDetailsPanel}
-	dialogActionComponents:$c{}
+    dialogActionComponents:$c{}
      
 !ui-panel:userDetailsPanel layout:$d{!ui-horizontal}
-	components:$c{userImg detailsPanel}
+    components:$c{userImg detailsPanel}
 
-!ui-image:userImg src:$t{/images/user_small.png} styleClass:$e{jk-userdtlimg}
-	binding:$g{imageGenBinding}
+!ui-image:userImg src:$t{/images/user_large.png} styleClass:$e{jk-userdtlimg}
+    binding:$g{imageGenBinding}
 
 !ui-panel:detailsPanel style:$s{margin-left:4px;} layout:$d{!ui-vertical}
-	components:$c{userLabel roleLabel branchLabel}
+    components:$c{userLabel roleLabel branchLabel}
 !ui-labeledtext:userLabel styleClass:$e{jk-userdtltext} caption:$m{application.login.user}
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.USERNAME}
 !ui-labeledtext:roleLabel styleClass:$e{jk-userdtltext} caption:$m{application.login.role}
@@ -21,4 +21,4 @@
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.BRANCHDESC}
    
 !ui-button:cancelBtn caption:$m{button.cancel}
-	eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}

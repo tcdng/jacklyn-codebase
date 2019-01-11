@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,46 +29,46 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetAppInfoResult extends RemoteCallResult {
 
-	private String appName;
+    private String appName;
 
-	private String appVersion;
-	
-	private String clientTitle;
+    private String appVersion;
 
-	public GetAppInfoResult(String appName, String appVersion, String clientTitle) {
-		this.appName = appName;
-		this.appVersion = appVersion;
-		this.clientTitle = clientTitle;
-	}
+    private String clientTitle;
 
-	public GetAppInfoResult() {
+    public GetAppInfoResult(String appName, String appVersion, String clientTitle) {
+        this.appName = appName;
+        this.appVersion = appVersion;
+        this.clientTitle = clientTitle;
+    }
 
-	}
+    public GetAppInfoResult() {
 
-	public String getAppName() {
-		return appName;
-	}
+    }
 
-	@XmlElement
-	public void setAppName(String appName) {
-		this.appName = appName;
-	}
+    public String getAppName() {
+        return appName;
+    }
 
-	public String getAppVersion() {
-		return appVersion;
-	}
+    @XmlElement
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
-	@XmlElement
-	public void setAppVersion(String appVersion) {
-		this.appVersion = appVersion;
-	}
+    public String getAppVersion() {
+        return appVersion;
+    }
 
-	public String getClientTitle() {
-		return clientTitle;
-	}
+    @XmlElement
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
+    }
 
-	@XmlElement
-	public void setClientTitle(String clientTitle) {
-		this.clientTitle = clientTitle;
-	}
+    public String getClientTitle() {
+        return clientTitle;
+    }
+
+    @XmlElement
+    public void setClientTitle(String clientTitle) {
+        this.clientTitle = clientTitle;
+    }
 }

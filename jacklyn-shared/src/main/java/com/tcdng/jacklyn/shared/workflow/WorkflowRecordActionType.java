@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,28 +29,28 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfrecordactiontypelist")
 public enum WorkflowRecordActionType implements EnumConst {
 
-	CREATE("C"), READ("R"), UPDATE("U"), DELETE("D");
+    CREATE("C"), READ("R"), UPDATE("U"), DELETE("D");
 
-	private final String code;
+    private final String code;
 
-	private WorkflowRecordActionType(String code) {
-		this.code = code;
-	}
+    private WorkflowRecordActionType(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public boolean isUpdate() {
-		return CREATE.equals(this) || UPDATE.equals(this);
-	}
+    public boolean isUpdate() {
+        return CREATE.equals(this) || UPDATE.equals(this);
+    }
 
-	public static WorkflowRecordActionType fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowRecordActionType.class, code);
-	}
+    public static WorkflowRecordActionType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowRecordActionType.class, code);
+    }
 
-	public static WorkflowRecordActionType fromName(String name) {
-		return EnumUtils.fromName(WorkflowRecordActionType.class, name);
-	}
+    public static WorkflowRecordActionType fromName(String name) {
+        return EnumUtils.fromName(WorkflowRecordActionType.class, name);
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfstepprioritylist")
 public enum WorkflowStepPriority implements EnumConst {
 
-	CRITICAL("C"), HIGH("H"), NORMAL("N"), LOW("L");
+    CRITICAL("C"), HIGH("H"), NORMAL("N"), LOW("L");
 
-	private final String code;
+    private final String code;
 
-	private WorkflowStepPriority(String code) {
-		this.code = code;
-	}
+    private WorkflowStepPriority(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static WorkflowStepPriority fromCode(String code) {
-		return EnumUtils.fromCode(WorkflowStepPriority.class, code);
-	}
+    public static WorkflowStepPriority fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowStepPriority.class, code);
+    }
 
-	public static WorkflowStepPriority fromName(String name) {
-		return EnumUtils.fromName(WorkflowStepPriority.class, name);
-	}
+    public static WorkflowStepPriority fromName(String name) {
+        return EnumUtils.fromName(WorkflowStepPriority.class, name);
+    }
 }

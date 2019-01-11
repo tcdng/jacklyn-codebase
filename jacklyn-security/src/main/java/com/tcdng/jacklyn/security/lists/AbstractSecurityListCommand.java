@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,8 +15,7 @@
  */
 package com.tcdng.jacklyn.security.lists;
 
-import com.tcdng.jacklyn.security.business.SecurityModule;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,14 +27,14 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractSecurityListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable
+    private SecurityService securityService;
 
-	public AbstractSecurityListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractSecurityListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected SecurityModule getSecurityBusinessModule() {
-		return securityModule;
-	}
+    protected SecurityService getSecurityService() {
+        return securityService;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryParams;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -46,31 +46,30 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component("/workflow/gate")
 public class WorkflowRemoteGateController extends BaseRemoteCallController {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable
+    private WorkflowService workflowService;
 
-	@GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
-			description = "$m{workflow.gate.remotecall.publishwfcategory}")
-	public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params)
-			throws UnifyException {
-		workflowModule.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml());
-		return new PublishWfCategoryResult();
-	}
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
+            description = "$m{workflow.gate.remotecall.publishwfcategory}")
+    public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
+        workflowService.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
+        return new PublishWfCategoryResult();
+    }
 
-	@GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
-			description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
-	public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(
-			GetToolingEnrichmentLogicParams params) throws UnifyException {
-		List<ToolingEnrichmentLogicItem> list = workflowModule.findToolingEnrichmentLogicTypes();
-		return new GetToolingEnrichmentLogicResult(list);
-	}
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
+            description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
+    public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(GetToolingEnrichmentLogicParams params)
+            throws UnifyException {
+        List<ToolingEnrichmentLogicItem> list = workflowService.findToolingEnrichmentLogicTypes();
+        return new GetToolingEnrichmentLogicResult(list);
+    }
 
-	@GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
-			description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
-	public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
-			throws UnifyException {
-		List<ToolingPolicyLogicItem> list = workflowModule.findToolingPolicyLogicTypes();
-		return new GetToolingPolicyLogicResult(list);
-	}
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
+            description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
+    public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
+            throws UnifyException {
+        List<ToolingPolicyLogicItem> list = workflowService.findToolingPolicyLogicTypes();
+        return new GetToolingPolicyLogicResult(list);
+    }
 
 }

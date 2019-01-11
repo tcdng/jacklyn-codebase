@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,30 +30,45 @@ import com.tcdng.unify.core.util.xml.adapter.EventTypeXmlAdapter;
  */
 public class AuditConfig extends BaseConfig {
 
-	private EventType action;
+    private EventType action;
 
-	private String auditable;
+    private String auditable;
 
-	public EventType getAction() {
-		return action;
-	}
+    private boolean active;
+    
+    public AuditConfig() {
+        active = true;
+    }
+    
+    public EventType getAction() {
+        return action;
+    }
 
     @XmlJavaTypeAdapter(EventTypeXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setAction(EventType action) {
-		this.action = action;
-	}
+    @XmlAttribute(required = true)
+    public void setAction(EventType action) {
+        this.action = action;
+    }
 
-	public String getAuditable() {
-		return auditable;
-	}
+    public String getAuditable() {
+        return auditable;
+    }
 
-	@XmlAttribute
-	public void setAuditable(String auditable) {
-		this.auditable = auditable;
-	}
-	
-	public boolean isType() {
-		return this.auditable != null;
-	}
+    @XmlAttribute
+    public void setAuditable(String auditable) {
+        this.auditable = auditable;
+    }
+
+    public boolean isType() {
+        return this.auditable != null;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    @XmlAttribute
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,54 +34,53 @@ import com.tcdng.unify.core.constant.HAlignType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "File Inbox", reportable = true,
-		auditable = true)
+@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "File Inbox", reportable = true, auditable = true)
 @Table("FILEINBOX")
 public class FileInbox extends AbstractFileTransferBox {
 
-	@Format(halign = HAlignType.RIGHT)
-	@Column
-	private int downloadAttempts;
+    @Format(halign = HAlignType.RIGHT)
+    @Column
+    private int downloadAttempts;
 
-	@Column(type = ColumnType.TIMESTAMP, nullable = true)
-	private Date downloadedOn;
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date downloadedOn;
 
-	@Format(description = "$m{file.fileinbox.readstatus}", halign = HAlignType.CENTER)
-	@Column
-	private FileInboxReadStatus readStatus;
+    @Format(description = "$m{file.fileinbox.readstatus}", halign = HAlignType.CENTER)
+    @Column
+    private FileInboxReadStatus readStatus;
 
-	@Column(name = "REC_ST", position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-	private FileInboxStatus status;
+    @Column(name = "REC_ST", position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private FileInboxStatus status;
 
-	public int getDownloadAttempts() {
-		return downloadAttempts;
-	}
+    public int getDownloadAttempts() {
+        return downloadAttempts;
+    }
 
-	public void setDownloadAttempts(int downloadAttempts) {
-		this.downloadAttempts = downloadAttempts;
-	}
+    public void setDownloadAttempts(int downloadAttempts) {
+        this.downloadAttempts = downloadAttempts;
+    }
 
-	public Date getDownloadedOn() {
-		return downloadedOn;
-	}
+    public Date getDownloadedOn() {
+        return downloadedOn;
+    }
 
-	public void setDownloadedOn(Date downloadedOn) {
-		this.downloadedOn = downloadedOn;
-	}
+    public void setDownloadedOn(Date downloadedOn) {
+        this.downloadedOn = downloadedOn;
+    }
 
-	public FileInboxStatus getStatus() {
-		return status;
-	}
+    public FileInboxStatus getStatus() {
+        return status;
+    }
 
-	public void setStatus(FileInboxStatus status) {
-		this.status = status;
-	}
+    public void setStatus(FileInboxStatus status) {
+        this.status = status;
+    }
 
-	public void setReadStatus(FileInboxReadStatus readStatus) {
-		this.readStatus = readStatus;
-	}
+    public void setReadStatus(FileInboxReadStatus readStatus) {
+        this.readStatus = readStatus;
+    }
 
-	public FileInboxReadStatus getReadStatus() {
-		return readStatus;
-	}
+    public FileInboxReadStatus getReadStatus() {
+        return readStatus;
+    }
 }

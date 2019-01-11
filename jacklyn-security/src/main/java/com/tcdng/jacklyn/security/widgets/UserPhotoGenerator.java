@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * http://www.tcdng.com/licenses/Jacklyn-Tools-1.0.txt
  * 
@@ -16,8 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
-import com.tcdng.jacklyn.security.business.SecurityModule;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -33,37 +32,37 @@ import com.tcdng.unify.core.resource.ImageFormat;
 @Component("userphoto-generator")
 public class UserPhotoGenerator extends AbstractImageGenerator {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable
+    private SecurityService securityModule;
 
-	private byte[] photo;
+    private byte[] photo;
 
-	@Override
-	public ImageFormat generate(OutputStream outputStream) throws UnifyException {
-		try {
-			outputStream.write(photo);
-			outputStream.flush();
-		} catch (IOException e) {
-			throwOperationErrorException(e);
-		} finally {
-			photo = null;
-		}
+    @Override
+    public ImageFormat generate(OutputStream outputStream) throws UnifyException {
+        try {
+            outputStream.write(photo);
+            outputStream.flush();
+        } catch (IOException e) {
+            throwOperationErrorException(e);
+        } finally {
+            photo = null;
+        }
 
-		return ImageFormat.WILDCARD;
-	}
+        return ImageFormat.WILDCARD;
+    }
 
-	@Override
-	public boolean isReady() throws UnifyException {
-		Long userId = getUserId();
-		if (userId != null && userId > 0) {
-			photo = securityModule.findUserPhotograph(userId);
-			return photo != null;
-		}
+    @Override
+    public boolean isReady() throws UnifyException {
+        Long userId = getUserId();
+        if (userId != null && userId > 0) {
+            photo = securityModule.findUserPhotograph(userId);
+            return photo != null;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private Long getUserId() throws UnifyException {
-		return (Long) getSessionAttribute(JacklynSessionAttributeConstants.USERID);
-	}
+    private Long getUserId() throws UnifyException {
+        return (Long) getSessionAttribute(JacklynSessionAttributeConstants.USERID);
+    }
 }

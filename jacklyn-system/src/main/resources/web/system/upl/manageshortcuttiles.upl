@@ -1,0 +1,51 @@
+// UPL template for managing shortcut tiles
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.shortcuttile.manage}
+    searchByList:$c{searchModuleId searchStatus}
+    searchClearList:$c{searchModuleId searchStatus}
+    tableColumnList:$c{moduleDesc name description statusDesc}
+    formSection:$d{!ui-section caption:$m{system.shortcuttile.section.basicdetails} components:$c{frmModule frmDescription
+        frmImage frmGist frmPath frmGenerator frmLandscape frmStatus}}
+    moreSearchActionComponentList:$c{setOrderBtn}
+    moreTableSelDependentList:$c{setOrderBtn}
+    viewPrivilege:$s{sys-shortcuttileview}
+
+//Search
+!ui-select:searchModuleId caption:$m{system.shortcuttile.module} binding:searchModuleId list:modulelist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.shortcuttile.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:moduleDesc caption:$m{system.shortcuttile.module} binding:moduleDesc  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{system.shortcuttile.description} binding:description columnStyle:$s{width:200px;} sortable:true
+!ui-label:name caption:$m{system.shortcuttile.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:statusDesc caption:$m{system.shortcuttile.status} style:$s{text-align:center;} binding:statusDesc columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmModule caption:$m{system.shortcuttile.module} binding:moduleId list:modulelist blankOption:$s{}
+!ui-text:frmDescription caption:$m{system.shortcuttile.description} binding:description
+!ui-text:frmImage caption:$m{system.shortcuttile.image} binding:imageSrc size:40
+!ui-text:frmGist caption:$m{system.shortcuttile.caption} binding:gist size:40
+!ui-text:frmPath caption:$m{system.shortcuttile.path} binding:path size:4
+!ui-text:frmGenerator caption:$m{system.shortcuttile.generator} binding:generatorName size:32
+!ui-text:frmLandscape caption:$m{system.shortcuttile.landscape} binding:landscape
+!ui-select:frmStatus caption:$m{system.shortcuttile.status} binding:status list:recordstatuslist blankOption:$s{}
+
+//Order popup panel
+!ui-recordorderpanel:orderShortcutTilePopup dialogCaption:$m{system.order.shortcuttile}
+    recordList:shortcutTileOrderList recordColumnList:$c{orderDesc}
+    saveOrderPath:$n{/saveShortcutTileOrder} closeDialogPath:$n{/cancelShortcutTileOrder}
+
+//!ui-label:orderModule caption:$m{system.shortcuttile.module} binding:moduleDesc  columnStyle:$s{width:120px;} sortable:true
+!ui-label:orderDesc caption:$m{system.shortcuttile.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+
+//More order action buttons
+!ui-button:setOrderBtn styleClass:$e{jk-button} caption:$m{button.set.display.order} eventHandler:$d{!ui-event event:onclick action:$c{setOrderAct}}
+    privilege:$s{sys-shortcuttileedit}
+
+//Actions
+!ui-post:setOrderAct path:$n{/prepareSetShortcutTileOrder}
+

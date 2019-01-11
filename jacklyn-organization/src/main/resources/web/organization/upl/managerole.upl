@@ -1,0 +1,71 @@
+// UPL template for managing roles
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{organization.role.manage}
+    searchByList:$c{searchName searchDescription searchDepartmentId searchStatus}
+    searchClearList:$c{searchName searchDescription searchDepartmentId searchStatus}
+    tableColumnList:$c{departmentDesc name description activeAfter activeBefore statusDesc}
+    formSection:$d{!ui-section caption:$m{organization.role.section.basicdetails} components:$c{frmName frmDescription frmDepartment frmApplication frmDashboard frmTheme frmStatus}}
+    formSection:$d{!ui-section caption:$m{organization.role.section.schedule} components:$c{frmActiveAfter frmActiveBefore}}
+    formSection:$d{!ui-section caption:$m{organization.role.section.privileges} components:$c{frmPrivilegeAttachment}}
+    formSection:$d{!ui-section caption:$m{organization.role.section.steps} components:$c{frmStepAttachment}}
+    formBinding:largeData
+    addPrivilege:$s{org-role-add} editPrivilege:$s{org-role-edit}
+    viewPrivilege:$s{org-role-view} deletePrivilege:$s{org-role-delete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchName caption:$m{organization.role.name} binding:searchName
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{organization.role.description} binding:searchDescription
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{organization.role.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchDepartmentId caption:$m{organization.role.department} binding:searchDepartmentId list:departmentlist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{organization.role.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{organization.role.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:activeAfter caption:$m{organization.role.activeafter} binding:activeAfter style:$s{text-align:center;} formatter:$d{!timeformat style:short}  columnStyle:$s{width:120px;}  sortable:true
+!ui-label:activeBefore caption:$m{organization.role.activebefore} binding:activeBefore style:$s{text-align:center;} formatter:$d{!timeformat style:short} columnStyle:$s{width:120px;}  sortable:true
+!ui-label:departmentDesc caption:$m{organization.role.department} binding:departmentDesc columnStyle:$s{width:150px;} sortable:true
+!ui-label:statusDesc caption:$m{organization.role.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmDepartment caption:$m{organization.role.department} binding:data.departmentId list:departmentlist blankOption:$s{} required:true
+!ui-name:frmName caption:$m{organization.role.name} binding:data.name focus:true dollar:true underscore:true minLen:3 maxLen:32 required:true
+!ui-text:frmDescription caption:$m{organization.role.description} binding:data.description maxLen:48 required:true
+!ui-time:frmActiveAfter caption:$m{organization.role.activeafter} binding:data.activeAfter clearable:true
+!ui-time:frmActiveBefore caption:$m{organization.role.activebefore} binding:data.activeBefore clearable:true
+!ui-select:frmApplication caption:$m{organization.role.application} binding:data.application list:webapplicationlist blankOption:$s{}
+!ui-select:frmDashboard caption:$m{organization.role.dashboard} binding:data.dashboardId list:dashboardlist blankOption:$s{}
+!ui-select:frmTheme caption:$m{organization.role.theme} binding:data.themeId list:themelist blankOption:$s{}
+!ui-select:frmStatus caption:$m{organization.role.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
+
+//Form attachments
+!ui-panel:frmPrivilegeAttachment layout:$d{!ui-vertical} components:$c{privAssignmentBox}
+!ui-assignmentbox:privAssignmentBox binding:privilegeIdList
+    filterCaption1:$m{organization.role.maintain.assigned.privilegecategory}
+    filterCaption2:$m{organization.role.maintain.assigned.module}
+    assignCaption:$m{organization.role.maintain.assigned.privilege} unassignCaption:$m{organization.role.maintain.available.privilege}
+    filterList1:$s{privilegecategorylist}
+    filterList2:$s{modulelist}
+    assignList:$s{privilegeinlist} unassignList:$s{privilegenotinlist}
+    
+!ui-panel:frmStepAttachment layout:$d{!ui-vertical} components:$c{queAssignmentBox}
+!ui-assignmentbox:queAssignmentBox binding:wfStepIdList
+    filterCaption1:$m{organization.role.maintain.assigned.category}
+    filterCaption2:$m{organization.role.maintain.assigned.template}
+    assignCaption:$m{organization.role.maintain.assigned.step}
+    unassignCaption:$m{organization.role.maintain.available.step}
+    filterList1:$s{wfcategorylist} filterList2:$s{wftemplatelist}
+    assignList:$s{wfstepinlist} unassignList:$s{wfstepnotinlist}
+    
+//More action components
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

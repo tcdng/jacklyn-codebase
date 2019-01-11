@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,43 +28,42 @@ import com.tcdng.unify.core.constant.RequirementType;
  */
 public class WfUserActionDef extends BaseLabelWfDef {
 
-	private static final long serialVersionUID = -7944354332014625017L;
+    private static final long serialVersionUID = -7944354332014625017L;
 
-	private RequirementType noteReqType;
+    private RequirementType noteReqType;
 
-	private String targetGlobalName;
+    private String targetGlobalName;
 
-	private boolean validatePage;
+    private boolean validatePage;
 
-	private List<WfAttachmentCheckDef> attachmentCheckList;
+    private List<WfAttachmentCheckDef> attachmentCheckList;
 
-	public WfUserActionDef(String name, String description, String label,
-			RequirementType noteReqType, String targetGlobalName, boolean validatePage,
-			List<WfAttachmentCheckDef> attachmentCheckList) {
-		super(name, description, label);
-		this.noteReqType = noteReqType;
-		this.targetGlobalName = targetGlobalName;
-		this.validatePage = validatePage;
-		if (attachmentCheckList != null) {
-			this.attachmentCheckList = Collections.unmodifiableList(attachmentCheckList);
-		} else {
-			this.attachmentCheckList = Collections.emptyList();
-		}
-	}
+    public WfUserActionDef(String name, String description, String label, RequirementType noteReqType,
+            String targetGlobalName, boolean validatePage, List<WfAttachmentCheckDef> attachmentCheckList) {
+        super(name, description, label);
+        this.noteReqType = noteReqType;
+        this.targetGlobalName = targetGlobalName;
+        this.validatePage = validatePage;
+        if (attachmentCheckList != null) {
+            this.attachmentCheckList = Collections.unmodifiableList(attachmentCheckList);
+        } else {
+            this.attachmentCheckList = Collections.emptyList();
+        }
+    }
 
-	public RequirementType getNoteReqType() {
-		return noteReqType;
-	}
+    public RequirementType getNoteReqType() {
+        return noteReqType;
+    }
 
-	public String getTargetGlobalName() {
-		return targetGlobalName;
-	}
+    public String getTargetGlobalName() {
+        return targetGlobalName;
+    }
 
-	public boolean isValidatePage() {
-		return validatePage;
-	}
+    public boolean isValidatePage() {
+        return validatePage;
+    }
 
-	public List<WfAttachmentCheckDef> getAttachmentCheckList() {
-		return attachmentCheckList;
-	}
+    public List<WfAttachmentCheckDef> getAttachmentCheckList() {
+        return attachmentCheckList;
+    }
 }

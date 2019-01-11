@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,24 +31,34 @@ import com.tcdng.unify.web.RemoteCallParams;
 @XmlRootElement
 public class PublishWfCategoryParams extends RemoteCallParams {
 
-	private byte[] wfCategoryXml;
+    private byte[] wfCategoryXml;
 
-	public PublishWfCategoryParams() {
-		this(null);
-	}
+    private boolean activate;
 
-	public PublishWfCategoryParams(byte[] wfCategoryXml) {
-		super(WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
-		this.wfCategoryXml = wfCategoryXml;
-	}
+    public PublishWfCategoryParams() {
+        this(null);
+    }
 
-	public byte[] getWfCategoryXml() {
-		return wfCategoryXml;
-	}
+    public PublishWfCategoryParams(byte[] wfCategoryXml) {
+        super(WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
+        this.wfCategoryXml = wfCategoryXml;
+    }
 
-	@XmlElement
-	public void setWfCategoryXml(byte[] wfCategoryXml) {
-		this.wfCategoryXml = wfCategoryXml;
-	}
+    public byte[] getWfCategoryXml() {
+        return wfCategoryXml;
+    }
+
+    @XmlElement
+    public void setWfCategoryXml(byte[] wfCategoryXml) {
+        this.wfCategoryXml = wfCategoryXml;
+    }
+
+    public boolean isActivate() {
+        return activate;
+    }
+
+    public void setActivate(boolean activate) {
+        this.activate = activate;
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,90 +33,88 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/inputctrldef")
 @UplBinding("web/system/upl/manageinputctrldef.upl")
-public class InputCtrlDefController extends AbstractSystemRecordController<InputCtrlDef> {
+public class InputCtrlDefController extends AbstractSystemCrudController<InputCtrlDef> {
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	public InputCtrlDefController() {
-		super(InputCtrlDef.class, "system.inputctrldef.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public InputCtrlDefController() {
+        super(InputCtrlDef.class, "$m{system.inputctrldef.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+                | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	@Override
-	protected List<InputCtrlDef> find() throws UnifyException {
-		InputCtrlDefQuery query = new InputCtrlDefQuery();
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
+    @Override
+    protected List<InputCtrlDef> find() throws UnifyException {
+        InputCtrlDefQuery query = new InputCtrlDefQuery();
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.name(searchName);
-		}
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.name(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.order("description").ignoreEmptyCriteria(true);
-		return getSystemModule().findInputCtrlDefs(query);
-	}
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.order("description").ignoreEmptyCriteria(true);
+        return getSystemService().findInputCtrlDefs(query);
+    }
 
-	@Override
-	protected InputCtrlDef find(Long id) throws UnifyException {
-		return getSystemModule().findInputCtrlDef(id);
-	}
+    @Override
+    protected InputCtrlDef find(Long id) throws UnifyException {
+        return getSystemService().findInputCtrlDef(id);
+    }
 
-	@Override
-	protected InputCtrlDef prepareCreate() throws UnifyException {
-		return new InputCtrlDef();
-	}
+    @Override
+    protected InputCtrlDef prepareCreate() throws UnifyException {
+        return new InputCtrlDef();
+    }
 
-	@Override
-	protected Object create(InputCtrlDef inputCtrlDefData) throws UnifyException {
-		return getSystemModule().createInputCtrlDef(inputCtrlDefData);
-	}
+    @Override
+    protected Object create(InputCtrlDef inputCtrlDefData) throws UnifyException {
+        return getSystemService().createInputCtrlDef(inputCtrlDefData);
+    }
 
-	@Override
-	protected int update(InputCtrlDef inputCtrlDefData) throws UnifyException {
-		return getSystemModule().updateInputCtrlDef(inputCtrlDefData);
-	}
+    @Override
+    protected int update(InputCtrlDef inputCtrlDefData) throws UnifyException {
+        return getSystemService().updateInputCtrlDef(inputCtrlDefData);
+    }
 
-	@Override
-	protected int delete(InputCtrlDef inputCtrlDefData) throws UnifyException {
-		return getSystemModule().deleteInputCtrlDef(inputCtrlDefData.getId());
-	}
+    @Override
+    protected int delete(InputCtrlDef inputCtrlDefData) throws UnifyException {
+        return getSystemService().deleteInputCtrlDef(inputCtrlDefData.getId());
+    }
 
 }

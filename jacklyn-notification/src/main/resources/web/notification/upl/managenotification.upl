@@ -1,16 +1,16 @@
 // UPL template for managing notifications
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{notification.notification.manage}
-	searchByList:$c{searchCreateDt searchModuleId searchNotificationTemplateId searchNotificationType searchStatus}
+    searchByList:$c{searchCreateDt searchModuleId searchNotificationTemplateId searchNotificationType searchStatus}
     searchClearList:$c{searchModuleId searchNotificationTemplateId searchNotificationType searchStatus}
- 	tableColumnList:$c{messageTypeDesc notificationTypeDesc senderName senderContact statusDesc}
+     tableColumnList:$c{messageTypeDesc notificationTypeDesc senderName senderContact statusDesc}
     tableMultiSelect:true tableMultiSelDependentList:$c{markUnsentBtn markSentBtn markAbortBtn}
     formSection:$d{!ui-section caption:$m{notification.notification.section-basicdetails} components:$c{frmNotificationTemplate frmNotificationType frmAttempts frmCreateDt frmDueDt frmSentDt frmStatus}}
     formSection:$d{!ui-section caption:$m{notification.notification.section-sender} components:$c{frmSenderName frmSenderContact}}
     moreSearchActionComponentList:$c{markUnsentBtn markSentBtn markAbortBtn}
- 	viewPrivilege:$s{not-notification-view}
+     viewPrivilege:$s{not-notification-view}
 
 //Search
 !ui-date:searchCreateDt caption:$m{notification.notification.createdt} binding:searchCreateDt
@@ -23,7 +23,7 @@
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchNotificationType caption:$m{notification.notification.notificationtype} binding:searchNotificationType
     list:notificationtypelist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{notification.notification.status} binding:searchStatus
     list:notificationstatuslist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
@@ -52,13 +52,13 @@
 
 //More action buttons
 !ui-button:markUnsentBtn styleClass:$e{jk-button} caption:$m{button.mark.unsent}
-	eventHandler:$d{!ui-event event:onclick action:$c{markUnsentAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{markUnsentAct}}
     hint:$m{notification.notification.mark.unsent} privilege:$s{not-notification-edit}
 !ui-button:markSentBtn styleClass:$e{jk-button} caption:$m{button.mark.sent}
-	eventHandler:$d{!ui-event event:onclick action:$c{markSentAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{markSentAct}}
     hint:$m{notification.notification.mark.sent} privilege:$s{not-notification-edit}
 !ui-button:markAbortBtn styleClass:$e{jk-button} caption:$m{button.mark.abort}
-	eventHandler:$d{!ui-event event:onclick action:$c{markAbortAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{markAbortAct}}
     hint:$m{notification.notification.mark.abort} privilege:$s{not-notification-edit}
 
 //Actions

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,27 +26,27 @@ import java.util.List;
  */
 public class ManagedConfig {
 
-	private String type;
+    private String type;
 
-	private List<FieldConfig> fieldList;
+    private List<FieldConfig> fieldList;
 
-	public ManagedConfig() {
-		this.fieldList = new ArrayList<FieldConfig>();
-	}
+    public ManagedConfig() {
+        this.fieldList = new ArrayList<FieldConfig>();
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public List<FieldConfig> getFieldList() {
-		return fieldList;
-	}
+    public List<FieldConfig> getFieldList() {
+        return fieldList;
+    }
 
-	public void addFieldConfig(FieldConfig fieldConfig) {
-		this.fieldList.add(fieldConfig);
-	}
+    public void addFieldConfig(FieldConfig fieldConfig) {
+        this.fieldList.add(fieldConfig);
+    }
 }

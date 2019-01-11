@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,26 +37,25 @@ import com.tcdng.unify.web.data.AssignParams;
 @Component("systemassetinlist")
 public class SystemAssetInListCommand extends AbstractAssignParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, AssignParams params)
-			throws UnifyException {
-		if (params.isAssignedIdList()) {
-			SystemAssetQuery query = new SystemAssetQuery();
-			query.idIn(params.getAssignedIdList(Long.class));
+    @Override
+    public List<? extends Listable> execute(Locale locale, AssignParams params) throws UnifyException {
+        if (params.isAssignedIdList()) {
+            SystemAssetQuery query = new SystemAssetQuery();
+            query.idIn(params.getAssignedIdList(Long.class));
 
-			if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
-				query.type(params.getFilterId1(SystemAssetType.class));
-			}
+            if (QueryUtils.isValidStringCriteria(params.getFilterId1())) {
+                query.type(params.getFilterId1(SystemAssetType.class));
+            }
 
-			if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
-				query.moduleId(params.getFilterId2(Long.class));
-			}
+            if (QueryUtils.isValidStringCriteria(params.getFilterId2())) {
+                query.moduleId(params.getFilterId2(Long.class));
+            }
 
-			query.order("description");
-			return getSystemModule().findSystemAssets(query);
-		}
+            query.order("description");
+            return getSystemService().findSystemAssets(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
 }

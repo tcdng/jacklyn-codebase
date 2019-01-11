@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,61 +29,61 @@ import com.tcdng.unify.core.logging.EventType;
  */
 public class InspectUserAuditItem {
 
-	private String description;
+    private String description;
 
-	private String moduleName;
+    private String moduleName;
 
-	private String ipAddress;
+    private String ipAddress;
 
-	private Date timestamp;
+    private Date timestamp;
 
-	private EventType eventType;
+    private EventType eventType;
 
-	private String actionDesc;
+    private String actionDesc;
 
-	private List<String> details;
+    private List<String> details;
 
-	public InspectUserAuditItem(String description, String moduleName, String ipAddress,
-			Date timestamp, EventType eventType, String actionDesc, List<String> details) {
-		this.description = description;
-		this.moduleName = moduleName;
-		this.ipAddress = ipAddress;
-		this.timestamp = timestamp;
-		this.eventType = eventType;
-		this.actionDesc = actionDesc;
-		this.details = details;
-	}
+    public InspectUserAuditItem(String description, String moduleName, String ipAddress, Date timestamp,
+            EventType eventType, String actionDesc, List<String> details) {
+        this.description = description;
+        this.moduleName = moduleName;
+        this.ipAddress = ipAddress;
+        this.timestamp = timestamp;
+        this.eventType = eventType;
+        this.actionDesc = actionDesc;
+        this.details = details;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public String getIpAddress() {
-		return ipAddress;
-	}
+    public String getIpAddress() {
+        return ipAddress;
+    }
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	public EventType getEventType() {
-		return eventType;
-	}
+    public EventType getEventType() {
+        return eventType;
+    }
 
-	public String getEventStyle() {
-		return eventType.colorMode();
-	}
+    public String getEventStyle() {
+        return eventType.colorMode();
+    }
 
-	public String getActionDesc() {
-		return actionDesc;
-	}
+    public String getActionDesc() {
+        return actionDesc;
+    }
 
-	public List<String> getDetails() {
-		return details;
-	}
+    public List<String> getDetails() {
+        return details;
+    }
 
 }

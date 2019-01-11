@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,146 +31,145 @@ import com.tcdng.unify.core.logging.EventType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Trail", reportable = true,
-		auditable = true)
+@Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Trail", reportable = true, auditable = true)
 @Table("AUDITTRAIL")
 public class AuditTrail extends BaseTimestampedEntity {
 
-	@ForeignKey(AuditDefinition.class)
-	private Long auditDefinitionId;
+    @ForeignKey(AuditDefinition.class)
+    private Long auditDefinitionId;
 
-	@Column(length = 32)
-	private String userLoginId;
+    @Column(length = 32)
+    private String userLoginId;
 
-	@Column(length = 64)
-	private String ipAddress;
+    @Column(length = 64)
+    private String ipAddress;
 
-	@Column(nullable = true)
-	private Long recordId;
+    @Column(nullable = true)
+    private Long recordId;
 
-	@Column(name = "REMOTE_FG", nullable = true)
-	private Boolean remoteEvent;
+    @Column(name = "REMOTE_FG", nullable = true)
+    private Boolean remoteEvent;
 
-	@ListOnly(key = "auditDefinitionId", property = "name")
-	private String auditDefinitionName;
+    @ListOnly(key = "auditDefinitionId", property = "name")
+    private String auditDefinitionName;
 
-	@ListOnly(key = "auditDefinitionId", property = "moduleId")
-	private Long moduleId;
+    @ListOnly(key = "auditDefinitionId", property = "moduleId")
+    private Long moduleId;
 
-	@ListOnly(name = "MODULE_NM", key = "auditDefinitionId", property = "moduleName")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "auditDefinitionId", property = "moduleName")
+    private String moduleName;
 
-	@Format(description = "$m{audit.audittrail.module}")
-	@ListOnly(name = "MODULE_DESC", key = "auditDefinitionId", property = "moduleDesc")
-	private String moduleDesc;
+    @Format(description = "$m{audit.audittrail.module}")
+    @ListOnly(name = "MODULE_DESC", key = "auditDefinitionId", property = "moduleDesc")
+    private String moduleDesc;
 
-	@ListOnly(key = "auditDefinitionId", property = "eventType")
-	private EventType eventType;
+    @ListOnly(key = "auditDefinitionId", property = "eventType")
+    private EventType eventType;
 
-	@ListOnly(key = "auditDefinitionId", property = "description")
-	private String auditDesc;
+    @ListOnly(key = "auditDefinitionId", property = "description")
+    private String auditDesc;
 
-	@ListOnly(key = "auditDefinitionId", property = "actionDesc")
-	private String actionDesc;
+    @ListOnly(key = "auditDefinitionId", property = "actionDesc")
+    private String actionDesc;
 
-	@Override
-	public String getDescription() {
-		return this.userLoginId + " - " + this.actionDesc;
-	}
+    @Override
+    public String getDescription() {
+        return this.userLoginId + " - " + this.actionDesc;
+    }
 
-	public String getUserLoginId() {
-		return userLoginId;
-	}
+    public String getUserLoginId() {
+        return userLoginId;
+    }
 
-	public void setUserLoginId(String userLoginId) {
-		this.userLoginId = userLoginId;
-	}
+    public void setUserLoginId(String userLoginId) {
+        this.userLoginId = userLoginId;
+    }
 
-	public String getIpAddress() {
-		return ipAddress;
-	}
+    public String getIpAddress() {
+        return ipAddress;
+    }
 
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
 
-	public Long getRecordId() {
-		return recordId;
-	}
+    public Long getRecordId() {
+        return recordId;
+    }
 
-	public void setRecordId(Long recordId) {
-		this.recordId = recordId;
-	}
+    public void setRecordId(Long recordId) {
+        this.recordId = recordId;
+    }
 
-	public Boolean isRemoteEvent() {
-		return remoteEvent;
-	}
+    public Boolean isRemoteEvent() {
+        return remoteEvent;
+    }
 
-	public void setRemoteEvent(Boolean remoteEvent) {
-		this.remoteEvent = remoteEvent;
-	}
+    public void setRemoteEvent(Boolean remoteEvent) {
+        this.remoteEvent = remoteEvent;
+    }
 
-	public String getAuditDefinitionName() {
-		return auditDefinitionName;
-	}
+    public String getAuditDefinitionName() {
+        return auditDefinitionName;
+    }
 
-	public void setAuditDefinitionName(String auditDefinitionName) {
-		this.auditDefinitionName = auditDefinitionName;
-	}
+    public void setAuditDefinitionName(String auditDefinitionName) {
+        this.auditDefinitionName = auditDefinitionName;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 
-	public Long getAuditDefinitionId() {
-		return auditDefinitionId;
-	}
+    public Long getAuditDefinitionId() {
+        return auditDefinitionId;
+    }
 
-	public void setAuditDefinitionId(Long auditDefinitionId) {
-		this.auditDefinitionId = auditDefinitionId;
-	}
+    public void setAuditDefinitionId(Long auditDefinitionId) {
+        this.auditDefinitionId = auditDefinitionId;
+    }
 
-	public EventType getEventType() {
-		return eventType;
-	}
+    public EventType getEventType() {
+        return eventType;
+    }
 
-	public void setEventType(EventType eventType) {
-		this.eventType = eventType;
-	}
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
 
-	public String getAuditDesc() {
-		return auditDesc;
-	}
+    public String getAuditDesc() {
+        return auditDesc;
+    }
 
-	public void setAuditDesc(String auditDesc) {
-		this.auditDesc = auditDesc;
-	}
+    public void setAuditDesc(String auditDesc) {
+        this.auditDesc = auditDesc;
+    }
 
-	public String getActionDesc() {
-		return actionDesc;
-	}
+    public String getActionDesc() {
+        return actionDesc;
+    }
 
-	public void setActionDesc(String actionDesc) {
-		this.actionDesc = actionDesc;
-	}
+    public void setActionDesc(String actionDesc) {
+        this.actionDesc = actionDesc;
+    }
 }

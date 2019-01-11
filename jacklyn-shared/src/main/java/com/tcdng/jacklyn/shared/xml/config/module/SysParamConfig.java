@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,64 +30,64 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class SysParamConfig extends BaseConfig {
 
-	private SystemParamType type;
+    private SystemParamType type;
 
-	private String editor;
+    private String editor;
 
-	private String defaultValue;
+    private String defaultValue;
 
-	private boolean control;
+    private boolean control;
 
-	private boolean editable;
+    private boolean editable;
 
-	public SysParamConfig() {
-		type = SystemParamType.STRING;
-		editable = true;
-	}
+    public SysParamConfig() {
+        type = SystemParamType.STRING;
+        editable = true;
+    }
 
-	public SystemParamType getType() {
-		return type;
-	}
+    public SystemParamType getType() {
+        return type;
+    }
 
-	@XmlJavaTypeAdapter(SystemParamTypeXmlAdapter.class)
-	@XmlAttribute(required = true)
-	public void setType(SystemParamType type) {
-		this.type = type;
-	}
+    @XmlJavaTypeAdapter(SystemParamTypeXmlAdapter.class)
+    @XmlAttribute(required = true)
+    public void setType(SystemParamType type) {
+        this.type = type;
+    }
 
-	public String getEditor() {
-		return editor;
-	}
+    public String getEditor() {
+        return editor;
+    }
 
-	@XmlAttribute(required = true)
-	public void setEditor(String editor) {
-		this.editor = editor;
-	}
+    @XmlAttribute(required = true)
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 
-	public String getDefaultValue() {
-		return defaultValue;
-	}
+    public String getDefaultValue() {
+        return defaultValue;
+    }
 
-	@XmlAttribute(required = true)
-	public void setDefaultValue(String defaultValue) {
-		this.defaultValue = defaultValue;
-	}
+    @XmlAttribute(required = true)
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
 
-	public boolean isControl() {
-		return control;
-	}
+    public boolean isControl() {
+        return control;
+    }
 
-	@XmlAttribute
-	public void setControl(boolean control) {
-		this.control = control;
-	}
+    @XmlAttribute
+    public void setControl(boolean control) {
+        this.control = control;
+    }
 
-	public boolean isEditable() {
-		return editable;
-	}
+    public boolean isEditable() {
+        return editable;
+    }
 
-	@XmlAttribute
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-	}
+    @XmlAttribute
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 }

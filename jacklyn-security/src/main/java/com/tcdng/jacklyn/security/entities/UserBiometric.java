@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,68 +28,67 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "USERBIOMETRIC",
-		uniqueConstraints = { @UniqueConstraint({ "userId", "biometricId" }) })
+@Table(name = "APPUSERBIOMETRIC", uniqueConstraints = { @UniqueConstraint({ "userId", "biometricId" }) })
 public class UserBiometric extends BaseEntity {
 
-	@ForeignKey(User.class)
-	private Long userId;
+    @ForeignKey(User.class)
+    private Long userId;
 
-	@ForeignKey(Biometric.class)
-	private Long biometricId;
+    @ForeignKey(Biometric.class)
+    private Long biometricId;
 
-	@ListOnly(key = "biometricId", property = "type")
-	private BiometricType typeName;
+    @ListOnly(key = "biometricId", property = "type")
+    private BiometricType typeName;
 
-	@ListOnly(key = "biometricId", property = "typeDesc")
-	private String typeDesc;
+    @ListOnly(key = "biometricId", property = "typeDesc")
+    private String typeDesc;
 
-	@ListOnly(key = "biometricId", property = "biometric")
-	private byte[] biometric;
+    @ListOnly(key = "biometricId", property = "biometric")
+    private byte[] biometric;
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public Long getBiometricId() {
-		return biometricId;
-	}
+    public Long getBiometricId() {
+        return biometricId;
+    }
 
-	public void setBiometricId(Long biometricId) {
-		this.biometricId = biometricId;
-	}
+    public void setBiometricId(Long biometricId) {
+        this.biometricId = biometricId;
+    }
 
-	public BiometricType getTypeName() {
-		return typeName;
-	}
+    public BiometricType getTypeName() {
+        return typeName;
+    }
 
-	public void setTypeName(BiometricType typeName) {
-		this.typeName = typeName;
-	}
+    public void setTypeName(BiometricType typeName) {
+        this.typeName = typeName;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
-	public byte[] getBiometric() {
-		return biometric;
-	}
+    public byte[] getBiometric() {
+        return biometric;
+    }
 
-	public void setBiometric(byte[] biometric) {
-		this.biometric = biometric;
-	}
+    public void setBiometric(byte[] biometric) {
+        this.biometric = biometric;
+    }
 
 }

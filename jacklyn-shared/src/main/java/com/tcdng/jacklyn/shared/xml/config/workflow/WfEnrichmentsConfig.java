@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfEnrichmentsConfig {
 
-	private List<WfEnrichmentConfig> wfEnrichmentConfigList;
+    private List<WfEnrichmentConfig> wfEnrichmentConfigList;
 
-	public List<WfEnrichmentConfig> getWfEnrichmentConfigList() {
-		return wfEnrichmentConfigList;
-	}
+    public List<WfEnrichmentConfig> getWfEnrichmentConfigList() {
+        return wfEnrichmentConfigList;
+    }
 
-	@XmlElement(name="enrichment", required=true)
-	public void setWfEnrichmentConfigList(List<WfEnrichmentConfig> wfEnrichmentConfigList) {
-		this.wfEnrichmentConfigList = wfEnrichmentConfigList;
-	}
+    @XmlElement(name = "enrichment", required = true)
+    public void setWfEnrichmentConfigList(List<WfEnrichmentConfig> wfEnrichmentConfigList) {
+        this.wfEnrichmentConfigList = wfEnrichmentConfigList;
+    }
 
 }

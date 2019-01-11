@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,28 +15,27 @@
  */
 package com.tcdng.jacklyn.archiving.lists;
 
-import com.tcdng.jacklyn.archiving.business.ArchivingModule;
-import com.tcdng.jacklyn.archiving.constants.ArchivingModuleNameConstants;
+import com.tcdng.jacklyn.archiving.business.ArchivingService;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
- * Abstract base class for archiving module list commands.
+ * Abstract base class for archiving service list commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public abstract class AbstractArchivingListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(ArchivingModuleNameConstants.ARCHIVINGBUSINESSMODULE)
-	private ArchivingModule archivingModule;
+    @Configurable
+    private ArchivingService archivingService;
 
-	public AbstractArchivingListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractArchivingListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected ArchivingModule getArchivingBusinessModule() {
-		return archivingModule;
-	}
+    protected ArchivingService getArchivingService() {
+        return archivingService;
+    }
 
 }

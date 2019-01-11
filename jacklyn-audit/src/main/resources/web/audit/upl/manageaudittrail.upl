@@ -1,25 +1,25 @@
 // UPL template for managing audit trail
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{audit.audittrail.manage}
-	searchByList:$c{searchCreateDt  searchModuleId searchEventType searchUserLoginId}
-	searchClearList:$c{searchModuleId searchEventType searchUserLoginId}
-	tableColumnList:$c{moduleDesc ipAddress userName createDt auditDesc}
-	formSection:$d{!ui-section caption:$m{audit.audittrail.section.basicdetails} components:$c{frmDescription frmActionDesc frmIpAddress frmUserName frmCreateDt}}
-	formSection:$d{!ui-section caption:$m{audit.audittrail.section.fielsdetails} components:$c{frmAttachment}}
-	viewPrivilege:$s{aud-audittrailview}
+    searchByList:$c{searchCreateDt  searchModuleId searchEventType searchUserLoginId}
+    searchClearList:$c{searchModuleId searchEventType searchUserLoginId}
+    tableColumnList:$c{moduleDesc ipAddress userName createDt auditDesc}
+    formSection:$d{!ui-section caption:$m{audit.audittrail.section.basicdetails} components:$c{frmDescription frmActionDesc frmIpAddress frmUserName frmCreateDt}}
+    formSection:$d{!ui-section caption:$m{audit.audittrail.section.fielsdetails} components:$c{frmAttachment}}
+    viewPrivilege:$s{aud-audittrailview}
 
 //Search
 !ui-date:searchCreateDt caption:$m{audit.audittrail.createdt} binding:searchCreateDt
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchModuleId caption:$m{audit.audittrail.module} binding:searchModuleId list:modulelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchEventType caption:$m{audit.auditsettings.action} binding:searchEventType list:auditactionlist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-search:searchUserLoginId caption:$m{audit.audittrail.user} binding:searchUserLoginId
-	list:$s{userbyname-searchprovider}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    list:$s{userbyname-searchprovider}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{audit.audittrail.module} binding:moduleDesc columnStyle:$s{width:100px;} sortable:true
@@ -38,5 +38,5 @@
 //Form attachment
 !ui-panel:frmAttachment layout:$d{!ui-vertical} components:$c{auditDetails}
 !ui-table:auditDetails caption:$m{audit.audittrail.details} style:$s{width:320px;} bodyStyle:$s{height:120px;}
-	binding:auditDetailList components:$c{dtlDetail} serialNumbers:true windowed:true
+    binding:auditDetailList components:$c{dtlDetail} serialNumbers:true windowed:true
 !ui-label:dtlDetail caption:$m{audit.audittrail.details} binding:detail

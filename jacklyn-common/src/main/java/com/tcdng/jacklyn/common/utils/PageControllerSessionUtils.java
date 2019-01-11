@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,23 +28,23 @@ import com.tcdng.unify.web.PageController;
  */
 public interface PageControllerSessionUtils extends UnifyComponent {
 
-	/**
-	 * Loads session for supplied controller using data object
-	 * 
-	 * @param pageController
-	 *            the page controller
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	<T extends Entity> void loadSession(PageController pageController) throws UnifyException;
+    /**
+     * Loads session for supplied controller using data object
+     * 
+     * @param pageController
+     *            the page controller
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    <T extends Entity> void loadSession(PageController pageController) throws UnifyException;
 
-	/**
-	 * Clears session for supplied controller.
-	 * 
-	 * @param pageController
-	 *            the page controller
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void unloadSession(PageController pageController) throws UnifyException;
+    /**
+     * Clears session for supplied controller.
+     * 
+     * @param pageController
+     *            the page controller
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void unloadSession(PageController pageController) throws UnifyException;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,57 +28,57 @@ import com.tcdng.unify.core.util.CalendarUtils;
  * @since 1.0
  */
 public abstract class AbstractFileTransferBoxController<T extends AbstractFileTransferBox>
-		extends AbstractFileRecordController<T> {
+        extends AbstractFileCrudController<T> {
 
-	private Date searchCreateDt;
+    private Date searchCreateDt;
 
-	private Long searchFileTransferConfigId;
+    private Long searchFileTransferConfigId;
 
-	public AbstractFileTransferBoxController(Class<T> entityClass, String hintKey, int modifier) {
-		super(entityClass, hintKey, modifier);
-	}
+    public AbstractFileTransferBoxController(Class<T> entityClass, String hintKey, int modifier) {
+        super(entityClass, hintKey, modifier);
+    }
 
-	public Date getSearchCreateDt() {
-		return searchCreateDt;
-	}
+    public Date getSearchCreateDt() {
+        return searchCreateDt;
+    }
 
-	public void setSearchCreateDt(Date searchCreateDt) {
-		this.searchCreateDt = searchCreateDt;
-	}
+    public void setSearchCreateDt(Date searchCreateDt) {
+        this.searchCreateDt = searchCreateDt;
+    }
 
-	public Long getSearchFileTransferConfigId() {
-		return searchFileTransferConfigId;
-	}
+    public Long getSearchFileTransferConfigId() {
+        return searchFileTransferConfigId;
+    }
 
-	public void setSearchFileTransferConfigId(Long searchFileTransferConfigId) {
-		this.searchFileTransferConfigId = searchFileTransferConfigId;
-	}
+    public void setSearchFileTransferConfigId(Long searchFileTransferConfigId) {
+        this.searchFileTransferConfigId = searchFileTransferConfigId;
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		super.onOpenPage();
-		if (this.searchCreateDt == null) {
-			this.searchCreateDt = CalendarUtils.getCurrentMidnightDate();
-		}
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        super.onOpenPage();
+        if (this.searchCreateDt == null) {
+            this.searchCreateDt = CalendarUtils.getCurrentMidnightDate();
+        }
+    }
 
-	@Override
-	protected T prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected T prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(T record) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(T record) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(T record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(T record) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(T record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(T record) throws UnifyException {
+        return 0;
+    }
 }

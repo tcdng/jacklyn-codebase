@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class InputControlsConfig {
 
-	private List<InputControlConfig> inputControlList;
+    private List<InputControlConfig> inputControlList;
 
-	public List<InputControlConfig> getInputControlList() {
-		return inputControlList;
-	}
+    public List<InputControlConfig> getInputControlList() {
+        return inputControlList;
+    }
 
-	@XmlElement(name = "input-control", required = true)
-	public void setInputControlList(List<InputControlConfig> inputControlList) {
-		this.inputControlList = inputControlList;
-	}
+    @XmlElement(name = "input-control", required = true)
+    public void setInputControlList(List<InputControlConfig> inputControlList) {
+        this.inputControlList = inputControlList;
+    }
 }

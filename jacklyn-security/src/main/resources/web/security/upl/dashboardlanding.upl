@@ -1,9 +1,10 @@
 // UPL template for application dashboard
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-page caption:$m{application.dashboard} components:$c{dashboardPanel}
-!ui-panel:dashboardPanel components:$c{dashboardDeck}
-!ui-tilegroup:dashboardDeck columns:4 styleClass:$e{jk-dashboard-deck}
-    binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.DASHBOARDDECK}
+!ui-page caption:$m{application.dashboard} components:$c{mainDashboardPanel}
+
+!ui-panel:mainDashboardPanel style:$s{width:100%;height:100%;}
+    components:$c{dynamicPanel}
+!ui-dynamicpanel:dynamicPanel panelNameBinding:dashboardViewer
 

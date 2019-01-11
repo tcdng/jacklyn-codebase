@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,11 +28,11 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class SystemModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public static final int INSTALLATION_INDEX = 0;
+    public static final int INSTALLATION_INDEX = 0;
 
-	public SystemModuleStaticSettings() {
-		super(SystemModuleNameConstants.SYSTEMBUSINESSMODULE, "config/system-module.xml",
-				"com.tcdng.jacklyn.resources.system-messages", INSTALLATION_INDEX);
-	}
+    public SystemModuleStaticSettings() {
+        super(SystemModuleNameConstants.SYSTEMSERVICE, "config/system-module.xml",
+                "com.tcdng.jacklyn.resources.system-messages", INSTALLATION_INDEX);
+    }
 
 }

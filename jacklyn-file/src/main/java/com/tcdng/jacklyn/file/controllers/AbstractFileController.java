@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,8 +16,7 @@
 package com.tcdng.jacklyn.file.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
-import com.tcdng.jacklyn.file.business.FileModule;
-import com.tcdng.jacklyn.file.constants.FileModuleNameConstants;
+import com.tcdng.jacklyn.file.business.FileService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,14 +28,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractFileController extends BasePageController {
 
-	@Configurable(FileModuleNameConstants.FILEBUSINESSMODULE)
-	private FileModule fileModule;
+    @Configurable
+    private FileService fileService;
 
-	public AbstractFileController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractFileController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected FileModule getFileModule() throws UnifyException {
-		return fileModule;
-	}
+    protected FileService getFileService() throws UnifyException {
+        return fileService;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,21 +35,20 @@ import com.tcdng.unify.core.util.StringUtils;
 @Component("archivabledeflist")
 public class ArchivableListCommand extends AbstractArchivingListCommand<StatusParams> {
 
-	public ArchivableListCommand() {
-		super(StatusParams.class);
-	}
+    public ArchivableListCommand() {
+        super(StatusParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, StatusParams params)
-			throws UnifyException {
-		if (!StringUtils.isBlank(params.getStatus())) {
-			return getArchivingBusinessModule().findArchivableDefinitions(
-					(ArchivableDefinitionQuery) new ArchivableDefinitionQuery().orderByDescription()
-							.status(RecordStatus.fromName(params.getStatus())));
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, StatusParams params) throws UnifyException {
+        if (!StringUtils.isBlank(params.getStatus())) {
+            return getArchivingService()
+                    .findArchivableDefinitions((ArchivableDefinitionQuery) new ArchivableDefinitionQuery()
+                            .orderByDescription().status(RecordStatus.fromName(params.getStatus())));
+        }
 
-		return getArchivingBusinessModule().findArchivableDefinitions(
-				(ArchivableDefinitionQuery) new ArchivableDefinitionQuery().orderByDescription()
-						.ignoreEmptyCriteria(true));
-	}
+        return getArchivingService()
+                .findArchivableDefinitions((ArchivableDefinitionQuery) new ArchivableDefinitionQuery()
+                        .orderByDescription().ignoreEmptyCriteria(true));
+    }
 }

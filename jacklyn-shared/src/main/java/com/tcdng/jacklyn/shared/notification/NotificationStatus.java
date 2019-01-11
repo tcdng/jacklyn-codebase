@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,24 +28,24 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("notificationstatuslist")
 public enum NotificationStatus implements EnumConst {
 
-	NOT_SENT("N"), SENT("S"), ABORTED("A");
+    NOT_SENT("N"), SENT("S"), ABORTED("A");
 
-	private final String code;
+    private final String code;
 
-	private NotificationStatus(String code) {
-		this.code = code;
-	}
+    private NotificationStatus(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static NotificationStatus fromCode(String code) {
-		return EnumUtils.fromCode(NotificationStatus.class, code);
-	}
+    public static NotificationStatus fromCode(String code) {
+        return EnumUtils.fromCode(NotificationStatus.class, code);
+    }
 
-	public static NotificationStatus fromName(String name) {
-		return EnumUtils.fromName(NotificationStatus.class, name);
-	}
+    public static NotificationStatus fromName(String name) {
+        return EnumUtils.fromName(NotificationStatus.class, name);
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,23 +28,23 @@ import com.tcdng.unify.core.constant.RequirementType;
  */
 public class WfAttachmentCheckDef implements Serializable {
 
-	private static final long serialVersionUID = 6307175089367863678L;
+    private static final long serialVersionUID = 6307175089367863678L;
 
-	private RequirementType requirementType;
+    private RequirementType requirementType;
 
-	private WfDocAttachmentDef attachment;
+    private WfDocAttachmentDef attachment;
 
-	public WfAttachmentCheckDef(RequirementType requirementType, WfDocAttachmentDef attachment) {
-		this.requirementType = requirementType;
-		this.attachment = attachment;
-	}
+    public WfAttachmentCheckDef(RequirementType requirementType, WfDocAttachmentDef attachment) {
+        this.requirementType = requirementType;
+        this.attachment = attachment;
+    }
 
-	public RequirementType getRequirementType() {
-		return requirementType;
-	}
+    public RequirementType getRequirementType() {
+        return requirementType;
+    }
 
-	public WfDocAttachmentDef getAttachment() {
-		return attachment;
-	}
+    public WfDocAttachmentDef getAttachment() {
+        return attachment;
+    }
 
 }

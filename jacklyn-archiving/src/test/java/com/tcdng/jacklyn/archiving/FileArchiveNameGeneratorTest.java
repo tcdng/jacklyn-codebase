@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,25 +34,25 @@ import com.tcdng.jacklyn.shared.archiving.FileArchiveType;
  */
 public class FileArchiveNameGeneratorTest extends AbstractJacklynTest {
 
-	@Test
-	public void testGenerateFileArchiveName() throws Exception {
-		FileArchiveNameGenerator fileArchiveNameGenerator
-				= (FileArchiveNameGenerator) getComponent("default-filearchivenamegenerator");
-		Date workingDt = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String expectedFilename = "lobchequeimagecfg" + sdf.format(workingDt) + "0001.arch";
-		String generatedFilename = fileArchiveNameGenerator.generateFileArchiveName(
-				FileArchiveType.LOB_FILE_ARCHIVE, "ChequeImageCfg", workingDt);
-		assertEquals(expectedFilename, generatedFilename);
-	}
+    @Test
+    public void testGenerateFileArchiveName() throws Exception {
+        FileArchiveNameGenerator fileArchiveNameGenerator = (FileArchiveNameGenerator) getComponent(
+                "default-filearchivenamegenerator");
+        Date workingDt = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String expectedFilename = "lobchequeimagecfg" + sdf.format(workingDt) + "0001.arch";
+        String generatedFilename = fileArchiveNameGenerator.generateFileArchiveName(FileArchiveType.LOB_FILE_ARCHIVE,
+                "ChequeImageCfg", workingDt);
+        assertEquals(expectedFilename, generatedFilename);
+    }
 
-	@Override
-	protected void onSetup() throws Exception {
+    @Override
+    protected void onSetup() throws Exception {
 
-	}
+    }
 
-	@Override
-	protected void onTearDown() throws Exception {
+    @Override
+    protected void onTearDown() throws Exception {
 
-	}
+    }
 }

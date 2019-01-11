@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,56 +36,51 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/system/systemcontrol")
 @UplBinding("web/system/upl/systemcontrol.upl")
-@ResultMappings({ @ResultMapping(name = "refreshcontrolpanel",
-		response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
+@ResultMappings({
+    @ResultMapping(name = "refreshcontrolpanel", response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
 public class SystemControlController extends AbstractSystemController {
 
-	private List<SystemControlState> systemControlStateList;
+    private List<SystemControlState> systemControlStateList;
 
-	public SystemControlController() {
-		super(true, true); // Secured and read-only
-	}
+    public SystemControlController() {
+        super(true, true); // Secured and read-only
+    }
 
-	@Action
-	public String performToggleAction() throws UnifyException {
-		SystemControlState systemControlState
-				= systemControlStateList.get(getRequestTarget(int.class));
-		boolean newState = !systemControlState.isEnabled();
-		getSystemModule().setSysParameterValue(systemControlState.getName(), newState);
-		updateControlStatus();
-		if (newState) {
-			logUserEvent(SystemModuleAuditConstants.AUDIT_ENABLE_CONTROL,
-					systemControlState.getDescription());
-			hintUser("system.systemcontrol.state.enabled.hint",
-					systemControlState.getDescription());
-		} else {
-			logUserEvent(SystemModuleAuditConstants.AUDIT_DISABLE_CONTROL,
-					systemControlState.getDescription());
-			hintUser("system.systemcontrol.state.disabled.hint",
-					systemControlState.getDescription());
-		}
-		return "refreshcontrolpanel";
-	}
+    @Action
+    public String performToggleAction() throws UnifyException {
+        SystemControlState systemControlState = systemControlStateList.get(getRequestTarget(int.class));
+        boolean newState = !systemControlState.isEnabled();
+        getSystemService().setSysParameterValue(systemControlState.getName(), newState);
+        updateControlStatus();
+        if (newState) {
+            logUserEvent(SystemModuleAuditConstants.ENABLE_SYS_CONTROL, systemControlState.getDescription());
+            hintUser("system.systemcontrol.state.enabled.hint", systemControlState.getDescription());
+        } else {
+            logUserEvent(SystemModuleAuditConstants.DISABLE_SYS_CONTROL, systemControlState.getDescription());
+            hintUser("system.systemcontrol.state.disabled.hint", systemControlState.getDescription());
+        }
+        return "refreshcontrolpanel";
+    }
 
-	public String getModeStyle() {
-		return EventType.UPDATE.colorMode();
-	}
+    public String getModeStyle() {
+        return EventType.UPDATE.colorMode();
+    }
 
-	public List<SystemControlState> getSystemControlStateList() {
-		return systemControlStateList;
-	}
+    public List<SystemControlState> getSystemControlStateList() {
+        return systemControlStateList;
+    }
 
-	public void setSystemControlStateList(List<SystemControlState> systemControlStateList) {
-		this.systemControlStateList = systemControlStateList;
-	}
+    public void setSystemControlStateList(List<SystemControlState> systemControlStateList) {
+        this.systemControlStateList = systemControlStateList;
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		updateControlStatus();
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        updateControlStatus();
+    }
 
-	private void updateControlStatus() throws UnifyException {
-		systemControlStateList = getSystemModule().findSystemControlStates(
-				(SystemParameterQuery) new SystemParameterQuery().ignoreEmptyCriteria(true));
-	}
+    private void updateControlStatus() throws UnifyException {
+        systemControlStateList = getSystemService()
+                .findSystemControlStates((SystemParameterQuery) new SystemParameterQuery().ignoreEmptyCriteria(true));
+    }
 }

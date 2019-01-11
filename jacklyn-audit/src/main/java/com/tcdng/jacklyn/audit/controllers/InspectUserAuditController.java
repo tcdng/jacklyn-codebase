@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,84 +36,83 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/audit/inspectuser")
 @UplBinding("web/audit/upl/inspectuser.upl")
-@ResultMappings({ @ResultMapping(name = "refreshmain",
-		response = { "!refreshpanelresponse panels:$l{mainPanel}" }) })
+@ResultMappings({ @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{mainPanel}" }) })
 public class InspectUserAuditController extends AbstractAuditController {
 
-	private String searchUserLoginId;
+    private String searchUserLoginId;
 
-	private Date searchCreateDt;
+    private Date searchCreateDt;
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private EventType searchEventType;
+    private EventType searchEventType;
 
-	private InspectUserInfo inspectUserInfo;
+    private InspectUserInfo inspectUserInfo;
 
-	public InspectUserAuditController() {
-		super(true, false);
-	}
+    public InspectUserAuditController() {
+        super(true, false);
+    }
 
-	public String getModeStyle() {
-		return EventType.VIEW.colorMode();
-	}
+    public String getModeStyle() {
+        return EventType.VIEW.colorMode();
+    }
 
-	public String getSearchUserLoginId() {
-		return searchUserLoginId;
-	}
+    public String getSearchUserLoginId() {
+        return searchUserLoginId;
+    }
 
-	public void setSearchUserLoginId(String searchUserLoginId) {
-		this.searchUserLoginId = searchUserLoginId;
-	}
+    public void setSearchUserLoginId(String searchUserLoginId) {
+        this.searchUserLoginId = searchUserLoginId;
+    }
 
-	public Date getSearchCreateDt() {
-		return searchCreateDt;
-	}
+    public Date getSearchCreateDt() {
+        return searchCreateDt;
+    }
 
-	public void setSearchCreateDt(Date searchCreateDt) {
-		this.searchCreateDt = searchCreateDt;
-	}
+    public void setSearchCreateDt(Date searchCreateDt) {
+        this.searchCreateDt = searchCreateDt;
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public EventType getSearchEventType() {
-		return searchEventType;
-	}
+    public EventType getSearchEventType() {
+        return searchEventType;
+    }
 
-	public void setSearchEventType(EventType searchEventType) {
-		this.searchEventType = searchEventType;
-	}
+    public void setSearchEventType(EventType searchEventType) {
+        this.searchEventType = searchEventType;
+    }
 
-	public InspectUserInfo getInspectUserInfo() {
-		return inspectUserInfo;
-	}
+    public InspectUserInfo getInspectUserInfo() {
+        return inspectUserInfo;
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		super.onOpenPage();
-		if (searchCreateDt == null) {
-			searchCreateDt = new Date();
-		}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        super.onOpenPage();
+        if (searchCreateDt == null) {
+            searchCreateDt = new Date();
+        }
 
-		performFetchInspectUserInfo();
-	}
+        performFetchInspectUserInfo();
+    }
 
-	@Action
-	public String fetchInspectUserInfo() throws UnifyException {
-		logUserEvent(AuditModuleAuditConstants.INSPECTUSER_SEARCH);
-		performFetchInspectUserInfo();
-		return "refreshmain";
-	}
+    @Action
+    public String fetchInspectUserInfo() throws UnifyException {
+        logUserEvent(AuditModuleAuditConstants.INSPECTUSER_SEARCH);
+        performFetchInspectUserInfo();
+        return "refreshmain";
+    }
 
-	private void performFetchInspectUserInfo() throws UnifyException {
-		inspectUserInfo = getAuditModule().fetchInspectUserInfo(searchUserLoginId, searchCreateDt,
-				searchModuleId, searchEventType);
-		setVisible("userDetailsPanel", inspectUserInfo.isUser());
-	}
+    private void performFetchInspectUserInfo() throws UnifyException {
+        inspectUserInfo = getAuditService().fetchInspectUserInfo(searchUserLoginId, searchCreateDt, searchModuleId,
+                searchEventType);
+        setVisible("userDetailsPanel", inspectUserInfo.isUser());
+    }
 }

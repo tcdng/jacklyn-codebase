@@ -1,0 +1,8 @@
+// UPL template for users online portlet panel
+// Copyright 2018-2019 The Code Department.
+!ui-usersonlineportletpanel
+    qpStyleClass:$e{qpblue}
+    qpTitle:$m{security.usersonline.portlet.caption}
+    qpTotalTitle:$m{security.usersonline.portlet.totalusers}
+    qpValueFormatter:$d{!integerformat useGrouping:true}
+    qpPercentFormatter:$d{!percentformat scale:2}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,96 +31,96 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFALERT", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
-		@UniqueConstraint({ "wfStepId", "description" }) })
+        @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfAlert extends BaseEntity {
 
-	@ForeignKey(WfStep.class)
-	private Long wfStepId;
+    @ForeignKey(WfStep.class)
+    private Long wfStepId;
 
-	@ForeignKey(name = "NOTIFICATION_TY")
-	private NotificationType type;
+    @ForeignKey(name = "NOTIFICATION_TY")
+    private NotificationType type;
 
-	@Column(name = "ALERT_NM", length = 32)
-	private String name;
+    @Column(name = "ALERT_NM", length = 32)
+    private String name;
 
-	@Column(name = "ALERT_DESC", length = 64)
-	private String description;
+    @Column(name = "ALERT_DESC", length = 64)
+    private String description;
 
-	@Column(name = "NOTIFICATION_TMPL_CD")
-	private String notificationTemplateCode;
+    @Column(name = "NOTIFICATION_TMPL_CD")
+    private String notificationTemplateCode;
 
-	@ListOnly(key = "wfStepId", property = "name")
-	private String wfStepName;
+    @ListOnly(key = "wfStepId", property = "name")
+    private String wfStepName;
 
-	@ListOnly(key = "wfStepId", property = "description")
-	private String wfStepDesc;
+    @ListOnly(key = "wfStepId", property = "description")
+    private String wfStepDesc;
 
-	@ListOnly(key = "type", property = "description")
-	private String wfTypeDesc;
+    @ListOnly(key = "type", property = "description")
+    private String wfTypeDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public Long getWfStepId() {
-		return wfStepId;
-	}
+    public Long getWfStepId() {
+        return wfStepId;
+    }
 
-	public void setWfStepId(Long wfStepId) {
-		this.wfStepId = wfStepId;
-	}
+    public void setWfStepId(Long wfStepId) {
+        this.wfStepId = wfStepId;
+    }
 
-	public NotificationType getType() {
-		return type;
-	}
+    public NotificationType getType() {
+        return type;
+    }
 
-	public void setType(NotificationType type) {
-		this.type = type;
-	}
+    public void setType(NotificationType type) {
+        this.type = type;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getNotificationTemplateCode() {
-		return notificationTemplateCode;
-	}
+    public String getNotificationTemplateCode() {
+        return notificationTemplateCode;
+    }
 
-	public void setNotificationTemplateCode(String notificationTemplateCode) {
-		this.notificationTemplateCode = notificationTemplateCode;
-	}
+    public void setNotificationTemplateCode(String notificationTemplateCode) {
+        this.notificationTemplateCode = notificationTemplateCode;
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public void setWfStepName(String wfStepName) {
-		this.wfStepName = wfStepName;
-	}
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
 
-	public String getWfStepDesc() {
-		return wfStepDesc;
-	}
+    public String getWfStepDesc() {
+        return wfStepDesc;
+    }
 
-	public void setWfStepDesc(String wfStepDesc) {
-		this.wfStepDesc = wfStepDesc;
-	}
+    public void setWfStepDesc(String wfStepDesc) {
+        this.wfStepDesc = wfStepDesc;
+    }
 
-	public String getWfTypeDesc() {
-		return wfTypeDesc;
-	}
+    public String getWfTypeDesc() {
+        return wfTypeDesc;
+    }
 
-	public void setWfTypeDesc(String wfTypeDesc) {
-		this.wfTypeDesc = wfTypeDesc;
-	}
+    public void setWfTypeDesc(String wfTypeDesc) {
+        this.wfTypeDesc = wfTypeDesc;
+    }
 
 }

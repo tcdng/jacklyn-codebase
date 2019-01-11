@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,56 +34,56 @@ import com.tcdng.unify.web.ui.Control;
  */
 @Component("ui-wfactionbuttons")
 @UplAttributes({ @UplAttribute(name = "buttonClass", type = String.class),
-		@UplAttribute(name = "verticalLayout", type = boolean.class) })
+        @UplAttribute(name = "verticalLayout", type = boolean.class) })
 public class WfActionButtons extends AbstractValueListMultiControl<ValueStore, Object> {
 
-	private Control actionCtrl;
+    private Control actionCtrl;
 
-	@Override
-	public void onPageInitialize() throws UnifyException {
-		super.onPageInitialize();
-		String buttonClass = getUplAttribute(String.class, "buttonClass");
-		if (StringUtils.isBlank(buttonClass)) {
-			actionCtrl = addInternalChildControl("!ui-button captionBinding:label binding:name");
-		} else {
-			actionCtrl = addInternalChildControl("!ui-button styleClass:$e{" + buttonClass
-					+ "} captionBinding:label binding:name");
-		}
+    @Override
+    public void onPageInitialize() throws UnifyException {
+        super.onPageInitialize();
+        String buttonClass = getUplAttribute(String.class, "buttonClass");
+        if (StringUtils.isBlank(buttonClass)) {
+            actionCtrl = addInternalChildControl("!ui-button captionBinding:label binding:name");
+        } else {
+            actionCtrl = addInternalChildControl(
+                    "!ui-button styleClass:$e{" + buttonClass + "} captionBinding:label binding:name");
+        }
 
-		actionCtrl.setGroupId(getId());
-	}
+        actionCtrl.setGroupId(getId());
+    }
 
-	@Override
-	public void addPageAliases() throws UnifyException {
-		addPageAlias(actionCtrl);
-	}
+    @Override
+    public void addPageAliases() throws UnifyException {
+        addPageAlias(actionCtrl);
+    }
 
-	@Override
-	public boolean isLayoutCaption() {
-		return false;
-	}
+    @Override
+    public boolean isLayoutCaption() {
+        return false;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected List<Object> getItemList() throws UnifyException {
-		return (List<Object>) getValue();
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    protected List<Object> getItemList() throws UnifyException {
+        return (List<Object>) getValue();
+    }
 
-	@Override
-	protected ValueStore newValue(Object item, int index) throws UnifyException {
-		return createValueStore(item, index);
-	}
+    @Override
+    protected ValueStore newValue(Object item, int index) throws UnifyException {
+        return createValueStore(item, index);
+    }
 
-	@Override
-	protected void onCreateValueList(List<ValueStore> valueList) throws UnifyException {
+    @Override
+    protected void onCreateValueList(List<ValueStore> valueList) throws UnifyException {
 
-	}
+    }
 
-	public boolean isVerticalLayout() throws UnifyException {
-		return getUplAttribute(boolean.class, "verticalLayout");
-	}
+    public boolean isVerticalLayout() throws UnifyException {
+        return getUplAttribute(boolean.class, "verticalLayout");
+    }
 
-	public Control getActionCtrl() {
-		return actionCtrl;
-	}
+    public Control getActionCtrl() {
+        return actionCtrl;
+    }
 }

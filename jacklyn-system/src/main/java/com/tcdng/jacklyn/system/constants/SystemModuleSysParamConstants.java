@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,15 +23,15 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemModuleSysParamConstants {
 
-	String SYSPARAM_APPLICATION_VERSION = "SYS-0001";
+    String SYSPARAM_APPLICATION_VERSION = "SYS-0001";
 
-	String SYSPARAM_CLIENT_TITLE = "SYS-0002";
+    String SYSPARAM_CLIENT_TITLE = "SYS-0002";
 
-	String SYSPARAM_SYSTEM_SCHEDULER_ENABLED = "SYS-0003";
+    String SYSPARAM_SYSTEM_SCHEDULER_ENABLED = "SYS-0003";
 
-	String SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER = "SYS-0004";
+    String SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER = "SYS-0004";
 
-	String SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION = "SYS-0005";
+    String SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION = "SYS-0005";
 
-	String SYSPARAM_APPLICATION_BANNER = "SYS-0006";
+    String SYSPARAM_APPLICATION_BANNER = "SYS-0006";
 }

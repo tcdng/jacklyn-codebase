@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,24 +26,24 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
  */
 public class WfRecordActionDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 6228193786297652259L;
+    private static final long serialVersionUID = 6228193786297652259L;
 
-	private WorkflowRecordActionType actionType;
+    private WorkflowRecordActionType actionType;
 
-	private WfDocBeanMappingDef beanMapping;
+    private WfDocBeanMappingDef beanMapping;
 
-	public WfRecordActionDef(String name, String description, WorkflowRecordActionType actionType,
-			WfDocBeanMappingDef beanMapping) {
-		super(name, description);
-		this.actionType = actionType;
-		this.beanMapping = beanMapping;
-	}
+    public WfRecordActionDef(String name, String description, WorkflowRecordActionType actionType,
+            WfDocBeanMappingDef beanMapping) {
+        super(name, description);
+        this.actionType = actionType;
+        this.beanMapping = beanMapping;
+    }
 
-	public WorkflowRecordActionType getActionType() {
-		return actionType;
-	}
+    public WorkflowRecordActionType getActionType() {
+        return actionType;
+    }
 
-	public WfDocBeanMappingDef getBeanMapping() {
-		return beanMapping;
-	}
+    public WfDocBeanMappingDef getBeanMapping() {
+        return beanMapping;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,41 +29,39 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("archivingfieldtypelist")
 public enum ArchivingFieldType implements EnumConst {
 
-	BLOB(ColumnType.BLOB.code(), true, false),
-	CLOB(ColumnType.CLOB.code(), true, false),
-	DATE(ColumnType.DATE.code(), false, true),
-	TIMESTAMP(ColumnType.TIMESTAMP.code(), false, true);
+    BLOB(ColumnType.BLOB.code(), true, false), CLOB(ColumnType.CLOB.code(), true, false), DATE(ColumnType.DATE.code(),
+            false, true), TIMESTAMP(ColumnType.TIMESTAMP.code(), false, true);
 
-	private final String code;
+    private final String code;
 
-	private final boolean lob;
+    private final boolean lob;
 
-	private final boolean timestamp;
+    private final boolean timestamp;
 
-	private ArchivingFieldType(String code, boolean lob, boolean timestamp) {
-		this.code = code;
-		this.lob = lob;
-		this.timestamp = timestamp;
-	}
+    private ArchivingFieldType(String code, boolean lob, boolean timestamp) {
+        this.code = code;
+        this.lob = lob;
+        this.timestamp = timestamp;
+    }
 
-	public boolean isLob() {
-		return lob;
-	}
+    public boolean isLob() {
+        return lob;
+    }
 
-	public boolean isTimestamp() {
-		return timestamp;
-	}
+    public boolean isTimestamp() {
+        return timestamp;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static ArchivingFieldType fromCode(String code) {
-		return EnumUtils.fromCode(ArchivingFieldType.class, code);
-	}
+    public static ArchivingFieldType fromCode(String code) {
+        return EnumUtils.fromCode(ArchivingFieldType.class, code);
+    }
 
-	public static ArchivingFieldType fromName(String name) {
-		return EnumUtils.fromName(ArchivingFieldType.class, name);
-	}
+    public static ArchivingFieldType fromName(String name) {
+        return EnumUtils.fromName(ArchivingFieldType.class, name);
+    }
 }

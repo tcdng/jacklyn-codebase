@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,77 +35,77 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 public abstract class AbstractFileTransferBox extends BaseTimestampedEntity {
 
-	@ForeignKey(FileTransferConfig.class)
-	private Long fileTransferConfigId;
+    @ForeignKey(FileTransferConfig.class)
+    private Long fileTransferConfigId;
 
-	@Column(length = 96)
-	private String filename;
+    @Column(length = 96)
+    private String filename;
 
-	@Format(formatter = "!filesizeformat", halign = HAlignType.RIGHT)
-	@Column
-	private long fileLength;
+    @Format(formatter = "!filesizeformat", halign = HAlignType.RIGHT)
+    @Column
+    private long fileLength;
 
-	@Format(formatter = "!datetimeformat")
-	@Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-	private Date createDt;
+    @Format(formatter = "!datetimeformat")
+    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private Date createDt;
 
-	@ListOnly(key = "fileTransferConfigId", property = "name")
-	private String fileTransferConfigName;
+    @ListOnly(key = "fileTransferConfigId", property = "name")
+    private String fileTransferConfigName;
 
-	@Format(halign = HAlignType.RIGHT)
-	@ListOnly(key = "fileTransferConfigId", property = "maxTransferAttempts")
-	private Integer maxTransferAttempts;
+    @Format(halign = HAlignType.RIGHT)
+    @ListOnly(key = "fileTransferConfigId", property = "maxTransferAttempts")
+    private Integer maxTransferAttempts;
 
-	@Override
-	public String getDescription() {
-		return StringUtils.concatenate(filename, "(", fileLength, " bytes)");
-	}
+    @Override
+    public String getDescription() {
+        return StringUtils.concatenate(filename, "(", fileLength, " bytes)");
+    }
 
-	public Long getFileTransferConfigId() {
-		return fileTransferConfigId;
-	}
+    public Long getFileTransferConfigId() {
+        return fileTransferConfigId;
+    }
 
-	public void setFileTransferConfigId(Long fileTransferConfigId) {
-		this.fileTransferConfigId = fileTransferConfigId;
-	}
+    public void setFileTransferConfigId(Long fileTransferConfigId) {
+        this.fileTransferConfigId = fileTransferConfigId;
+    }
 
-	public String getFilename() {
-		return filename;
-	}
+    public String getFilename() {
+        return filename;
+    }
 
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
-	public long getFileLength() {
-		return fileLength;
-	}
+    public long getFileLength() {
+        return fileLength;
+    }
 
-	public void setFileLength(long fileLength) {
-		this.fileLength = fileLength;
-	}
+    public void setFileLength(long fileLength) {
+        this.fileLength = fileLength;
+    }
 
-	public Date getCreateDt() {
-		return createDt;
-	}
+    public Date getCreateDt() {
+        return createDt;
+    }
 
-	public void setCreateDt(Date createDt) {
-		this.createDt = createDt;
-	}
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
+    }
 
-	public String getFileTransferConfigName() {
-		return fileTransferConfigName;
-	}
+    public String getFileTransferConfigName() {
+        return fileTransferConfigName;
+    }
 
-	public void setFileTransferConfigName(String fileTransferConfigName) {
-		this.fileTransferConfigName = fileTransferConfigName;
-	}
+    public void setFileTransferConfigName(String fileTransferConfigName) {
+        this.fileTransferConfigName = fileTransferConfigName;
+    }
 
-	public Integer getMaxTransferAttempts() {
-		return maxTransferAttempts;
-	}
+    public Integer getMaxTransferAttempts() {
+        return maxTransferAttempts;
+    }
 
-	public void setMaxTransferAttempts(Integer maxTransferAttempts) {
-		this.maxTransferAttempts = maxTransferAttempts;
-	}
+    public void setMaxTransferAttempts(Integer maxTransferAttempts) {
+        this.maxTransferAttempts = maxTransferAttempts;
+    }
 }

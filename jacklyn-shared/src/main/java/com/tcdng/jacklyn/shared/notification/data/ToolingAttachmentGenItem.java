@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,35 +26,35 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ToolingAttachmentGenItem {
 
-	private String name;
-	
-	private String description;
+    private String name;
 
-	public ToolingAttachmentGenItem(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
+    private String description;
 
-	public ToolingAttachmentGenItem() {
+    public ToolingAttachmentGenItem(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-	}
+    public ToolingAttachmentGenItem() {
 
-	public String getName() {
-		return name;
-	}
+    }
 
-	@XmlElement
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@XmlElement
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
+
+    @XmlElement
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

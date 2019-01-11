@@ -1,5 +1,5 @@
 // UPL template for manual work item initiation.
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{workflow.wfcategory.manualinit.manage} components:$c{manualWorkItemFrame}
@@ -9,7 +9,7 @@
     components:$c{manualWorkItemPanel}
 
 !ui-switchpanel:manualWorkItemPanel style:$s{height:100%;}
-	components:$c{listingMainPanel createItemMainPanel}
+    components:$c{listingMainPanel createItemMainPanel}
 
 // Listing panel
 !ui-panel:listingMainPanel style:$s{height:100%;}
@@ -17,26 +17,26 @@
     components:$c{listingPanel listingActionsGrpPanel}
 
 !ui-panel:listingPanel layout:$d{!ui-vertical style:$s{width:100%;}}
-	components:$c{roleWfTemplateGrid}
+    components:$c{roleWfTemplateGrid}
 !ui-linkgrid:roleWfTemplateGrid columns:4 binding:wfTemplateGridInfo
 
 !ui-panel:listingActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
-	components:$c{listingActionPanel}
+    components:$c{listingActionPanel}
 !ui-panel:listingActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
-	components:$c{listingDoneBtn}
+    components:$c{listingDoneBtn}
 
 !ui-button:listingDoneBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
-	eventHandler:$d{!ui-event event:onclick action:$c{listingDoneAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{listingDoneAct}}
 
 !ui-post:listingDoneAct path:$n{/closePage}
 
 // Create work item panel
 !ui-panel:createItemMainPanel style:$s{height:100%;}
-	layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}} components:$c{wfItemPanel}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}} components:$c{wfItemPanel}
 !ui-manualwfitempanel:wfItemPanel binding:manualInitItem
-	pendItemPath:$n{/pendCreateItem}
-	pendItemNextPath:$n{/pendCreateItemNext}
-	submitItemPath:$n{/submitCreateItem}
-	submitItemNextPath:$n{/submitCreateItemNext}
-	cancelItemPath:$n{/cancelCreateItem}
-	
+    pendItemPath:$n{/pendCreateItem}
+    pendItemNextPath:$n{/pendCreateItemNext}
+    submitItemPath:$n{/submitCreateItem}
+    submitItemNextPath:$n{/submitCreateItemNext}
+    cancelItemPath:$n{/cancelCreateItem}
+    

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,10 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
+import java.util.Collection;
+
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 
 /**
  * Query class for workflow templates.
@@ -23,33 +26,49 @@ import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfTemplateQuery extends BaseStatusEntityQuery<WfTemplate> {
+public class WfTemplateQuery extends BaseEntityQuery<WfTemplate> {
 
-	public WfTemplateQuery() {
-		super(WfTemplate.class);
-	}
+    public WfTemplateQuery() {
+        super(WfTemplate.class);
+    }
 
-	public WfTemplateQuery wfCategoryId(Long wfCategoryId) {
-		return (WfTemplateQuery) equals("wfCategoryId", wfCategoryId);
-	}
+    public WfTemplateQuery wfCategoryId(Long wfCategoryId) {
+        return (WfTemplateQuery) equals("wfCategoryId", wfCategoryId);
+    }
 
-	public WfTemplateQuery wfCategoryName(String wfCategoryName) {
-		return (WfTemplateQuery) equals("wfCategoryName", wfCategoryName);
-	}
+    public WfTemplateQuery wfCategoryName(String wfCategoryName) {
+        return (WfTemplateQuery) equals("wfCategoryName", wfCategoryName);
+    }
 
-	public WfTemplateQuery name(String name) {
-		return (WfTemplateQuery) equals("name", name);
-	}
+    public WfTemplateQuery wfCategoryNameIn(Collection<String> wfCategoryName) {
+        return (WfTemplateQuery) amongst("wfCategoryName", wfCategoryName);
+    }
 
-	public WfTemplateQuery nameLike(String name) {
-		return (WfTemplateQuery) like("name", name);
-	}
+    public WfTemplateQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+        return (WfTemplateQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
 
-	public WfTemplateQuery descriptionLike(String description) {
-		return (WfTemplateQuery) like("description", description);
-	}
+    public WfTemplateQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfTemplateQuery) equals("wfCategoryVersion", wfCategoryVersion);
+    }
 
-	public WfTemplateQuery manualOption(Boolean manualOption) {
-		return (WfTemplateQuery) equals("manualOption", manualOption);
-	}
+    public WfTemplateQuery name(String name) {
+        return (WfTemplateQuery) equals("name", name);
+    }
+
+    public WfTemplateQuery nameIn(Collection<String> name) {
+        return (WfTemplateQuery) amongst("name", name);
+    }
+
+    public WfTemplateQuery nameLike(String name) {
+        return (WfTemplateQuery) like("name", name);
+    }
+
+    public WfTemplateQuery descriptionLike(String description) {
+        return (WfTemplateQuery) like("description", description);
+    }
+
+    public WfTemplateQuery manualOption(Boolean manualOption) {
+        return (WfTemplateQuery) equals("manualOption", manualOption);
+    }
 }

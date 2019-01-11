@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,13 +28,13 @@ import com.tcdng.unify.core.annotation.Component;
  * @since 1.0
  */
 @Component(name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC,
-		description = "Default Workflow Item Alert Logic")
+        description = "Default Workflow Item Alert Logic")
 public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
 
-	@Override
-	public void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
-		// TODO Auto-generated method stub
+    @Override
+    public void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }

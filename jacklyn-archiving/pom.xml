@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.tcdng.jacklyn</groupId>
 		<artifactId>jacklyn</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>jacklyn-archiving</artifactId>
@@ -30,6 +30,27 @@
 			<organizationUrl>http://www.tcdng.com</organizationUrl>
 		</developer>
 	</developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugin</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 	<dependencies>
 		<!-- Main dependencies -->

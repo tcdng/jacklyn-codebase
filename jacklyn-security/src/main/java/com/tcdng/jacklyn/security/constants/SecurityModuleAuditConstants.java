@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.security.constants;
  */
 public interface SecurityModuleAuditConstants {
 
-	String LOGIN = "sec-login";
+    String LOGIN = "sec-login";
 
-	String LOGOUT = "sec-logout";
+    String LOGOUT = "sec-logout";
 
-	String CHANGE_PASSWORD = "sec-chgpassword";
+    String CHANGE_PASSWORD = "sec-chgpassword";
 
-	String RESET_PASSWORD = "sec-resetpassword";
+    String RESET_PASSWORD = "sec-resetpassword";
 }

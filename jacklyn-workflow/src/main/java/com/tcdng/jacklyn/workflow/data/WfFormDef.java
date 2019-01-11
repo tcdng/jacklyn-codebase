@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,8 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import java.io.Serializable;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,60 +26,44 @@ import java.util.List;
  * @author Lateef
  * @since 1.0
  */
-public class WfFormDef extends BaseWfDef {
+public class WfFormDef implements Serializable {
 
-	private static final long serialVersionUID = 5731603377730336455L;
+    private static final long serialVersionUID = 5731603377730336455L;
 
-	private Long wfFormId;
+    private Long wfFormId;
 
-	private String globalName;
+    private List<WfFormTabDef> tabs;
 
-	private Date timestamp;
+    private boolean read;
 
-	private List<WfFormTabDef> tabs;
+    public WfFormDef(Long wfFormId, List<WfFormTabDef> tabList) {
+        this.wfFormId = wfFormId;
+        if (tabList != null) {
+            tabs = Collections.unmodifiableList(tabList);
+        } else {
+            tabs = Collections.emptyList();
+        }
 
-	private boolean read;
+        read = false;
+    }
 
-	public WfFormDef(Long wfFormId, String globalName, String name, String description,
-			Date timestamp, List<WfFormTabDef> tabList) {
-		super(name, description);
-		this.wfFormId = wfFormId;
-		this.globalName = globalName;
-		this.timestamp = timestamp;
-		if (tabList != null) {
-			tabs = Collections.unmodifiableList(tabList);
-		} else {
-			tabs = Collections.emptyList();
-		}
+    public Long getWfFormId() {
+        return wfFormId;
+    }
 
-		read = false;
-	}
+    public List<WfFormTabDef> getTabs() {
+        return tabs;
+    }
 
-	public Long getWfFormId() {
-		return wfFormId;
-	}
+    public List<WfFormTabDef> getTabList() {
+        return tabs;
+    }
 
-	public List<WfFormTabDef> getTabs() {
-		return tabs;
-	}
+    public boolean isRead() {
+        return read;
+    }
 
-	public String getGlobalName() {
-		return globalName;
-	}
-
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public List<WfFormTabDef> getTabList() {
-		return tabs;
-	}
-
-	public boolean isRead() {
-		return read;
-	}
-
-	public void read() {
-		read = true;
-	}
+    public void read() {
+        read = true;
+    }
 }

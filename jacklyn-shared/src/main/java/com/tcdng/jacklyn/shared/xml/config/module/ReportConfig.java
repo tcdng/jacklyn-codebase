@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,79 +28,79 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class ReportConfig extends BaseConfig {
 
-	private String title;
+    private String title;
 
-	private String processor;
+    private String processor;
 
-	private String reportable;
+    private String reportable;
 
-	private String template;
+    private String template;
 
-	private boolean dynamic;
+    private boolean dynamic;
 
-	private boolean managed;
+    private boolean managed;
 
-	private ParametersConfig parameters;
+    private ParametersConfig parameters;
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	@XmlAttribute(required = true)
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @XmlAttribute(required = true)
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getProcessor() {
-		return processor;
-	}
+    public String getProcessor() {
+        return processor;
+    }
 
-	@XmlAttribute
-	public void setProcessor(String processor) {
-		this.processor = processor;
-	}
+    @XmlAttribute
+    public void setProcessor(String processor) {
+        this.processor = processor;
+    }
 
-	public String getReportable() {
-		return reportable;
-	}
+    public String getReportable() {
+        return reportable;
+    }
 
-	@XmlAttribute
-	public void setReportable(String reportable) {
-		this.reportable = reportable;
-	}
+    @XmlAttribute
+    public void setReportable(String reportable) {
+        this.reportable = reportable;
+    }
 
-	public ParametersConfig getParameters() {
-		return parameters;
-	}
+    public ParametersConfig getParameters() {
+        return parameters;
+    }
 
-	@XmlElement
-	public void setParameters(ParametersConfig parameters) {
-		this.parameters = parameters;
-	}
+    @XmlElement
+    public void setParameters(ParametersConfig parameters) {
+        this.parameters = parameters;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	@XmlAttribute
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    @XmlAttribute
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	public boolean isDynamic() {
-		return dynamic;
-	}
+    public boolean isDynamic() {
+        return dynamic;
+    }
 
-	@XmlAttribute
-	public void setDynamic(boolean dynamic) {
-		this.dynamic = dynamic;
-	}
+    @XmlAttribute
+    public void setDynamic(boolean dynamic) {
+        this.dynamic = dynamic;
+    }
 
-	public boolean isManaged() {
-		return managed;
-	}
+    public boolean isManaged() {
+        return managed;
+    }
 
-	public void setManaged(boolean managed) {
-		this.managed = managed;
-	}
+    public void setManaged(boolean managed) {
+        this.managed = managed;
+    }
 }

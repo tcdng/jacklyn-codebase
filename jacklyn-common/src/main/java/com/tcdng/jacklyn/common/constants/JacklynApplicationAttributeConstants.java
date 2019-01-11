@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,15 +23,15 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynApplicationAttributeConstants {
 
-	String COMMON_REPORT_PROVIDER = "JKLN.COMMON_REPORT_PROVIDER";
+    String COMMON_REPORT_PROVIDER = "JKLN.COMMON_REPORT_PROVIDER";
 
-	String COMMON_REPORT_SERVER = "JKLN.COMMON_REPORT_SERVER";
+    String COMMON_REPORT_SERVER = "JKLN.COMMON_REPORT_SERVER";
 
-	String DEFAULT_ANONYMOUS_USERTOKEN = "JKLN.DEFAULT_ANONYMOUS_USERTOKEN";
+    String DEFAULT_ANONYMOUS_USERTOKEN = "JKLN.DEFAULT_ANONYMOUS_USERTOKEN";
 
-	String DEFAULT_SYSTEM_USERTOKEN = "JKLN.DEFAULT_SYSTEM_USERTOKEN";
+    String DEFAULT_SYSTEM_USERTOKEN = "JKLN.DEFAULT_SYSTEM_USERTOKEN";
 
-	String MANAGED_PRIVILEGES = "JKLN.MANAGED_PRIVILEGES";
+    String MANAGED_PRIVILEGES = "JKLN.MANAGED_PRIVILEGES";
 
-	String RC_SYSTEMASSET_PROVIDER = "JKLN.RC_SYSTEMASSET_PROVIDER";
+    String RC_SYSTEMASSET_PROVIDER = "JKLN.RC_SYSTEMASSET_PROVIDER";
 }

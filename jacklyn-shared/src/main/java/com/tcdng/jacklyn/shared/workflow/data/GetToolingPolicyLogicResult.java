@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,22 +32,22 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetToolingPolicyLogicResult extends RemoteCallResult {
 
-	private List<ToolingPolicyLogicItem> policyLogicList;
+    private List<ToolingPolicyLogicItem> policyLogicList;
 
-	public GetToolingPolicyLogicResult(List<ToolingPolicyLogicItem> policyLogicList) {
-		this.policyLogicList = policyLogicList;
-	}
+    public GetToolingPolicyLogicResult(List<ToolingPolicyLogicItem> policyLogicList) {
+        this.policyLogicList = policyLogicList;
+    }
 
-	public GetToolingPolicyLogicResult() {
+    public GetToolingPolicyLogicResult() {
 
-	}
+    }
 
-	public List<ToolingPolicyLogicItem> getPolicyLogicList() {
-		return policyLogicList;
-	}
+    public List<ToolingPolicyLogicItem> getPolicyLogicList() {
+        return policyLogicList;
+    }
 
-	@XmlElement(name = "policyLogic")
-	public void setPolicyLogicList(List<ToolingPolicyLogicItem> policyLogicList) {
-		this.policyLogicList = policyLogicList;
-	}
+    @XmlElement(name = "policyLogic")
+    public void setPolicyLogicList(List<ToolingPolicyLogicItem> policyLogicList) {
+        this.policyLogicList = policyLogicList;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,9 +28,9 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class FileModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-	public FileModuleStaticSettings() {
-		super(FileModuleNameConstants.FILEBUSINESSMODULE, "config/file-module.xml",
-				"com.tcdng.jacklyn.resources.file-messages");
-	}
+    public FileModuleStaticSettings() {
+        super(FileModuleNameConstants.FILESERVICE, "config/file-module.xml",
+                "com.tcdng.jacklyn.resources.file-messages");
+    }
 
 }

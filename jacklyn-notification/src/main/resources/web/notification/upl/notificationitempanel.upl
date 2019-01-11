@@ -1,0 +1,26 @@
+// UPL template for notification item panel
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-notificationitempanel layout:$d{!ui-horizontal widths:$l{none 100%}}
+    components:$c{nIcon nBase}
+
+// Components
+!ui-image:nIcon styleClass:$e{nipimage} srcBinding:icon
+!ui-panel:nBase layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{nSubject nMessage nLinkPanel nCreateDt}
+
+!ui-label:nSubject styleClass:$e{nipsubject} binding:subject    
+!ui-label:nMessage styleClass:$e{nipmessage} binding:message
+!ui-label:nCreateDt styleClass:$e{nipdate} binding:createDt
+
+!ui-panel:nLinkPanel layout:$d{!ui-horizontal} components:$c{nResolveLink nDismissLink}
+!ui-link:nResolveLink caption:$m{application.notification.resolve} styleClass:$e{niplink}
+    eventHandler:$d{!ui-event event:onclick action:$c{resolveAct}} behaviorAlways:true
+!ui-link:nDismissLink caption:$m{application.notification.dismiss} styleClass:$e{niplink}
+    eventHandler:$d{!ui-event event:onclick action:$c{dismissAct}}
+    
+// Actions
+!ui-post:resolveAct path:$g{resolvePath}
+!ui-post:dismissAct path:$g{dismissPath}
+

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,21 +33,21 @@ import com.tcdng.unify.core.constant.HAlignType;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Format {
 
-	/** The field description */
-	String description() default AnnotationConstants.NONE;
+    /** The field description */
+    String description() default AnnotationConstants.NONE;
 
-	/** The field formatter UPL descriptor */
-	String formatter() default AnnotationConstants.NONE;
+    /** The field formatter UPL descriptor */
+    String formatter() default AnnotationConstants.NONE;
 
-	/** The component name of associated list command */
-	String list() default AnnotationConstants.NONE;
+    /** The component name of associated list command */
+    String list() default AnnotationConstants.NONE;
 
-	/** Field horizontal alignment */
-	HAlignType halign() default HAlignType.LEFT;
+    /** Field horizontal alignment */
+    HAlignType halign() default HAlignType.LEFT;
 
-	/** The multi-part width ratio for field */
-	int widthRatio() default -1;
+    /** The multi-part width ratio for field */
+    int widthRatio() default -1;
 
-	/** Indicates if field is masked */
-	boolean mask() default false;
+    /** Indicates if field is masked */
+    boolean mask() default false;
 }

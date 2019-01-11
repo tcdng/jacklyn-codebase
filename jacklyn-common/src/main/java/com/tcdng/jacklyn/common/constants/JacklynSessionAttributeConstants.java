@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,42 +23,42 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynSessionAttributeConstants {
 
-	/** Dashboard cards */
-	String DASHBOARDDECK = "JKLN.DASHBOARDDECK";
+    /** Shortcut deck */
+    String SHORTCUTDECK = "JKLN.SHORTCUTDECK";
 
-	/** Message Box */
-	String MESSAGEBOX = "JKLN.MESSAGEBOX";
+    /** Message Box */
+    String MESSAGEBOX = "JKLN.MESSAGEBOX";
 
-	/** Task monitor info */
-	String TASKMONITORINFO = "JKLN.TASKMONITORINFO";
+    /** Task monitor info */
+    String TASKMONITORINFO = "JKLN.TASKMONITORINFO";
 
-	/** Report options */
-	String REPORTOPTIONS = "JKLN.REPORTOPTIONS";
+    /** Report options */
+    String REPORTOPTIONS = "JKLN.REPORTOPTIONS";
 
-	/** User role options */
-	String USERROLEOPTIONS = "JKLN.USERROLEOPTIONS";
+    /** User role options */
+    String USERROLEOPTIONS = "JKLN.USERROLEOPTIONS";
 
-	/** Search box */
-	String SEARCHBOX = "JKLN.SEARCHBOX";
+    /** Search box */
+    String SEARCHBOX = "JKLN.SEARCHBOX";
 
-	/** Role description */
-	String ROLEDESCRIPTION = "JKLN.ROLEDESCRIPTION";
+    /** Role description */
+    String ROLEDESCRIPTION = "JKLN.ROLEDESCRIPTION";
 
-	/** User name */
-	String USERNAME = "JKLN.USERNAME";
+    /** User name */
+    String USERNAME = "JKLN.USERNAME";
 
-	/** User ID */
-	String USERID = "JKLN.USERID";
+    /** User ID */
+    String USERID = "JKLN.USERID";
 
-	/** Branch ID */
-	String BRANCHID = "JKLN.BRANCHID";
+    /** Branch ID */
+    String BRANCHID = "JKLN.BRANCHID";
 
-	/** Branch Description */
-	String BRANCHDESC = "JKLN.BRANCHDESC";
+    /** Branch Description */
+    String BRANCHDESC = "JKLN.BRANCHDESC";
 
-	/** Reserved flag */
-	String RESERVEDFLAG = "JKLN.RESERVEDFLAG";
+    /** Reserved flag */
+    String RESERVEDFLAG = "JKLN.RESERVEDFLAG";
 
-	/** Supervisor flag */
-	String SUPERVISORFLAG = "JKLN.SUPERVISORFLAG";
+    /** Supervisor flag */
+    String SUPERVISORFLAG = "JKLN.SUPERVISORFLAG";
 }

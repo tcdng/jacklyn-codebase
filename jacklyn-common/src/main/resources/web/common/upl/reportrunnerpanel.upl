@@ -1,11 +1,11 @@
 // UPL template for report runner panel
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-reportrunnerpanel dialogCaption:$m{common.report.reportrunner}
-	dialogBodyComponents:$c{rptParamsPanel rptColumnOptionsPanel}
-	dialogActionLayout:$d{!ui-vertical style:$s{width:100%;}}
-	dialogActionComponents:$c{reportOptionsPanel reportActionPanel}
+    dialogBodyComponents:$c{rptParamsPanel rptColumnOptionsPanel}
+    dialogActionLayout:$d{!ui-vertical style:$s{width:100%;}}
+    dialogActionComponents:$c{reportOptionsPanel reportActionPanel}
 
 // Report parameters
 !ui-panel:rptParamsPanel layout:$d{!ui-vertical} components:$c{inputParameters}
@@ -14,16 +14,16 @@
 // Report options
 !ui-panel:rptColumnOptionsPanel layout:$d{!ui-vertical} components:$c{reportColumnRack}
 !ui-rack:reportColumnRack style:$s{width:720px;} bodyStyle:$s{height:220px;}  binding:columnOptionsList
-	components:$c{columnDescription columnOrder columnGroup columnSum}
-	multiSelect:true selectBinding:included multiSelDependentList:$c{genReportBtn}
-	windowed:true
+    components:$c{columnDescription columnOrder columnGroup columnSum}
+    multiSelect:true selectBinding:included multiSelDependentList:$c{genReportBtn}
+    windowed:true
 !ui-label:columnDescription caption:$m{common.report.column.description} binding:description columnStyle:$s{width:160px;}
 !ui-select:columnOrder caption:$m{common.report.column.order} binding:order style:$s{width:128px;} columnStyle:$s{width:100px;} list:orderlist blankOption:$s{}
 !ui-checkbox:columnGroup caption:$m{common.report.column.group} binding:group columnStyle:$s{width:60px;}
 !ui-checkbox:columnSum caption:$m{common.report.column.sum} binding:sum columnStyle:$s{width:60px;}
 
 !ui-panel:reportOptionsPanel layout:$d{!ui-grid columns:3 style:$s{width:100%;}}
-	components:$c{reportPrtColNm reportLandscape reportDownload reportShadeOddRows reportUnderlineRows reportFormatOpt}
+    components:$c{reportPrtColNm reportLandscape reportDownload reportShadeOddRows reportUnderlineRows reportFormatOpt}
 !ui-checkbox:reportLandscape caption:$m{common.report.reportoptions.landscape} binding:landscape
 !ui-checkbox:reportPrtColNm caption:$m{common.report.reportoptions.printcolumnnames} binding:printColumnNames
 !ui-checkbox:reportDownload caption:$m{common.report.reportoptions.download} binding:download
@@ -34,11 +34,11 @@
 !ui-panel:reportActionPanel layout:$d{!ui-horizontal} components:$c{genReportBtn cancelReportBtn}
 !ui-button:genReportBtn caption:$m{button.run.report} eventHandler:$d{!ui-event event:onclick action:$c{generateRpt}}
 !ui-button:cancelReportBtn styleClass:$e{ui-button-alert} caption:$m{button.close}
-	eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
-	 
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+     
 //Actions
 !ui-post:generateRpt path:$g{generateReportPath}
-	components:$c{rptParamsPanel reportColumnRack reportOptionsPanel}  validations:$c{paramsValidation}
+    components:$c{rptParamsPanel reportColumnRack reportOptionsPanel}  validations:$c{paramsValidation}
 
 // Validations
 !ui-validation:paramsValidation components:$c{rptParamsPanel}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,34 +25,34 @@ import com.tcdng.unify.core.constant.RequirementType;
  */
 public class WfAction {
 
-	private String name;
+    private String name;
 
-	private String label;
+    private String label;
 
-	private RequirementType noteReqType;
+    private RequirementType noteReqType;
 
-	private boolean validatePage;
+    private boolean validatePage;
 
-	public WfAction(String name, String label, RequirementType noteReqType, boolean validatePage) {
-		this.name = name;
-		this.label = label;
-		this.noteReqType = noteReqType;
-		this.validatePage = validatePage;
-	}
+    public WfAction(String name, String label, RequirementType noteReqType, boolean validatePage) {
+        this.name = name;
+        this.label = label;
+        this.noteReqType = noteReqType;
+        this.validatePage = validatePage;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public RequirementType getNoteReqType() {
-		return noteReqType;
-	}
+    public RequirementType getNoteReqType() {
+        return noteReqType;
+    }
 
-	public boolean isValidatePage() {
-		return validatePage;
-	}
+    public boolean isValidatePage() {
+        return validatePage;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,27 +27,27 @@ import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
  */
 public class ReportableFieldQuery extends BaseInstallEntityQuery<ReportableField> {
 
-	public ReportableFieldQuery() {
-		super(ReportableField.class);
-	}
+    public ReportableFieldQuery() {
+        super(ReportableField.class);
+    }
 
-	public ReportableFieldQuery reportableId(Long reportableId) {
-		return (ReportableFieldQuery) equals("reportableId", reportableId);
-	}
+    public ReportableFieldQuery reportableId(Long reportableId) {
+        return (ReportableFieldQuery) equals("reportableId", reportableId);
+    }
 
-	public ReportableFieldQuery parameterOnly(boolean parameterOnly) {
-		return (ReportableFieldQuery) equals("parameterOnly", parameterOnly);
-	}
+    public ReportableFieldQuery parameterOnly(boolean parameterOnly) {
+        return (ReportableFieldQuery) equals("parameterOnly", parameterOnly);
+    }
 
-	public ReportableFieldQuery name(String name) {
-		return (ReportableFieldQuery) equals("name", name);
-	}
+    public ReportableFieldQuery name(String name) {
+        return (ReportableFieldQuery) equals("name", name);
+    }
 
-	public ReportableFieldQuery nameIn(Collection<String> names) {
-		return (ReportableFieldQuery) amongst("name", names);
-	}
+    public ReportableFieldQuery nameIn(Collection<String> names) {
+        return (ReportableFieldQuery) amongst("name", names);
+    }
 
-	public ReportableFieldQuery nameNotIn(Collection<String> names) {
-		return (ReportableFieldQuery) notAmongst("name", names);
-	}
+    public ReportableFieldQuery nameNotIn(Collection<String> names) {
+        return (ReportableFieldQuery) notAmongst("name", names);
+    }
 }

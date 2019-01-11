@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,20 +31,20 @@ import com.tcdng.unify.core.database.Entity;
 @Component("statusentity-policy")
 public class BaseStatusEntityPolicy extends BaseEntityPolicy {
 
-	public BaseStatusEntityPolicy() {
+    public BaseStatusEntityPolicy() {
 
-	}
+    }
 
-	public BaseStatusEntityPolicy(boolean setNow) {
-		super(setNow);
-	}
+    public BaseStatusEntityPolicy(boolean setNow) {
+        super(setNow);
+    }
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		if (((BaseStatusEntity) record).getStatus() == null) {
-			((BaseStatusEntity) record).setStatus(RecordStatus.ACTIVE);
-		}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        if (((BaseStatusEntity) record).getStatus() == null) {
+            ((BaseStatusEntity) record).setStatus(RecordStatus.ACTIVE);
+        }
 
-		return super.preCreate(record, now);
-	}
+        return super.preCreate(record, now);
+    }
 }

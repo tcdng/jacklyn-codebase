@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,17 +30,17 @@ import com.tcdng.unify.core.database.Entity;
 @Component("versionedtimestampedentity-policy")
 public class BaseVersionedTimestampedEntityPolicy extends BaseTimestampedEntityPolicy {
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		((BaseVersionedTimestampedEntity) record).setVersionNo(1L);
-		return super.preCreate(record, now);
-	}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        ((BaseVersionedTimestampedEntity) record).setVersionNo(1L);
+        return super.preCreate(record, now);
+    }
 
-	@Override
-	public void preUpdate(Entity record, Date now) throws UnifyException {
-		BaseVersionedTimestampedEntity versionedRecord = (BaseVersionedTimestampedEntity) record;
-		versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
-		super.preUpdate(versionedRecord, now);
-	}
+    @Override
+    public void preUpdate(Entity record, Date now) throws UnifyException {
+        BaseVersionedTimestampedEntity versionedRecord = (BaseVersionedTimestampedEntity) record;
+        versionedRecord.setVersionNo(versionedRecord.getVersionNo() + 1L);
+        super.preUpdate(versionedRecord, now);
+    }
 
 }

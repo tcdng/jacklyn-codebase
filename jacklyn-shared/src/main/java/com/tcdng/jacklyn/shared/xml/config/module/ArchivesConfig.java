@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class ArchivesConfig {
 
-	private List<ArchiveConfig> archiveList;
+    private List<ArchiveConfig> archiveList;
 
-	public List<ArchiveConfig> getArchiveList() {
-		return archiveList;
-	}
+    public List<ArchiveConfig> getArchiveList() {
+        return archiveList;
+    }
 
-	@XmlElement(name = "archive", required = true)
-	public void setArchiveList(List<ArchiveConfig> archiveList) {
-		this.archiveList = archiveList;
-	}
+    @XmlElement(name = "archive", required = true)
+    public void setArchiveList(List<ArchiveConfig> archiveList) {
+        this.archiveList = archiveList;
+    }
 }

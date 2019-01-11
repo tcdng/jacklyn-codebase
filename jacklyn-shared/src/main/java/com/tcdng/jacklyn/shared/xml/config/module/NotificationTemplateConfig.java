@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,7 +16,10 @@
 package com.tcdng.jacklyn.shared.xml.config.module;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.tcdng.jacklyn.shared.notification.MessageType;
+import com.tcdng.jacklyn.shared.xml.adapter.MessageTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -27,36 +30,63 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class NotificationTemplateConfig extends BaseConfig {
 
-	private String subject;
+    private String subject;
 
-	private String template;
+    private String template;
 
-	private boolean html;
-	
-	public String getSubject() {
-		return subject;
-	}
+    private MessageType messageType;
 
-	@XmlAttribute(required = true)
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    private String actionLink;
+    
+    private boolean html;
 
-	public String getTemplate() {
-		return template;
-	}
+    public NotificationTemplateConfig() {
+        messageType = MessageType.INFORMATION;
+    }
+    
+    public String getSubject() {
+        return subject;
+    }
 
-	@XmlAttribute(required = true)
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    @XmlAttribute(required = true)
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	public boolean isHtml() {
-		return html;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	@XmlAttribute(required = true)
-	public void setHtml(boolean html) {
-		this.html = html;
-	}
+    @XmlAttribute(required = true)
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
+    public boolean isHtml() {
+        return html;
+    }
+
+    @XmlAttribute(required = true)
+    public void setHtml(boolean html) {
+        this.html = html;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
+    @XmlAttribute(name="message-type")
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    @XmlAttribute(name="action-link")
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
+    }
 }

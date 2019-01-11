@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,17 +33,17 @@ import com.tcdng.unify.web.AbstractRemoteCallGate;
 @Component(CommonModuleNameConstants.JACKLYNAPPLICATIONSERVICEGATE)
 public class CommonRemoteCallGateImpl extends AbstractRemoteCallGate {
 
-	@Override
-	protected void doGrantPass(String clientAppCode, String methodCode) throws UnifyException {
-		if (!getRemoteCallSystemAssetProvider().accessSystemAsset(clientAppCode,
-				SystemAssetType.REMOTECALLMETHOD, methodCode)) {
-			throw new UnifyException(CommonModuleErrorConstants.APPLICATION_SERVICE_ACCESSDENIED,
-					clientAppCode, methodCode);
-		}
-	}
+    @Override
+    protected void doGrantPass(String clientAppCode, String methodCode) throws UnifyException {
+        if (!getRemoteCallSystemAssetProvider().accessSystemAsset(clientAppCode, SystemAssetType.REMOTECALLMETHOD,
+                methodCode)) {
+            throw new UnifyException(CommonModuleErrorConstants.APPLICATION_SERVICE_ACCESSDENIED, clientAppCode,
+                    methodCode);
+        }
+    }
 
-	private RemoteCallSystemAssetProvider getRemoteCallSystemAssetProvider() throws UnifyException {
-		return (RemoteCallSystemAssetProvider) getApplicationAttribute(
-				JacklynApplicationAttributeConstants.RC_SYSTEMASSET_PROVIDER);
-	}
+    private RemoteCallSystemAssetProvider getRemoteCallSystemAssetProvider() throws UnifyException {
+        return (RemoteCallSystemAssetProvider) getApplicationAttribute(
+                JacklynApplicationAttributeConstants.RC_SYSTEMASSET_PROVIDER);
+    }
 }

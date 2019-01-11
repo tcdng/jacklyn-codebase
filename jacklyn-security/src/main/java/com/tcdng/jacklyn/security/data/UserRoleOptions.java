@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,13 +27,13 @@ import com.tcdng.jacklyn.security.entities.UserRole;
  */
 public class UserRoleOptions {
 
-	private List<UserRole> userRoleList;
+    private List<UserRole> userRoleList;
 
-	public List<UserRole> getUserRoleList() {
-		return userRoleList;
-	}
+    public List<UserRole> getUserRoleList() {
+        return userRoleList;
+    }
 
-	public void setUserRoleList(List<UserRole> userRoleList) {
-		this.userRoleList = userRoleList;
-	}
+    public void setUserRoleList(List<UserRole> userRoleList) {
+        this.userRoleList = userRoleList;
+    }
 }

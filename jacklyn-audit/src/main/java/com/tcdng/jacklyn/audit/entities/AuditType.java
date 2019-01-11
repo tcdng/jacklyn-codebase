@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,20 +32,20 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Table(name = "AUDITTYPE", uniqueConstraints = { @UniqueConstraint({ "recordName" }) })
 public class AuditType extends BaseInstallEntity {
 
-	@Column(name = "RECORD_NM", length = 128)
-	private String recordName;
+    @Column(name = "RECORD_NM", length = 128)
+    private String recordName;
 
-	@Override
-	public String getDescription() {
-		return this.recordName;
-	}
+    @Override
+    public String getDescription() {
+        return this.recordName;
+    }
 
-	public String getRecordName() {
-		return recordName;
-	}
+    public String getRecordName() {
+        return recordName;
+    }
 
-	public void setRecordName(String recordName) {
-		this.recordName = recordName;
-	}
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
 
 }

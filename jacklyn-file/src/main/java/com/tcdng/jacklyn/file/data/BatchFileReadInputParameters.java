@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,68 +30,68 @@ import com.tcdng.unify.core.data.Input;
  */
 public class BatchFileReadInputParameters {
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	private List<Input> inputParameterList;
+    private List<Input> inputParameterList;
 
-	private byte[] fileBlob;
+    private byte[] fileBlob;
 
-	private File file;
+    private File file;
 
-	public BatchFileReadInputParameters() {
-		this.inputParameterList = new ArrayList<Input>();
-	}
+    public BatchFileReadInputParameters() {
+        this.inputParameterList = new ArrayList<Input>();
+    }
 
-	public <T> void setParameter(String name, Object value) throws UnifyException {
-		if (this.inputParameterList != null) {
-			for (Input parameter : inputParameterList) {
-				if (name.equals(parameter.getName())) {
-					parameter.setTypeValue(value);
-					break;
-				}
-			}
-		}
-	}
+    public <T> void setParameter(String name, Object value) throws UnifyException {
+        if (inputParameterList != null) {
+            for (Input parameter : inputParameterList) {
+                if (name.equals(parameter.getName())) {
+                    parameter.setTypeValue(value);
+                    break;
+                }
+            }
+        }
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public List<Input> getInputParameterList() {
-		return inputParameterList;
-	}
+    public List<Input> getInputParameterList() {
+        return inputParameterList;
+    }
 
-	public void addInputParameterList(List<Input> inputParameterList) {
-		this.inputParameterList.addAll(inputParameterList);
-	}
+    public void addInputParameterList(List<Input> inputParameterList) {
+        this.inputParameterList.addAll(inputParameterList);
+    }
 
-	public byte[] getFileBlob() {
-		return fileBlob;
-	}
+    public byte[] getFileBlob() {
+        return fileBlob;
+    }
 
-	public void setFileBlob(byte[] fileBlob) {
-		this.fileBlob = fileBlob;
-	}
+    public void setFileBlob(byte[] fileBlob) {
+        this.fileBlob = fileBlob;
+    }
 
-	public File getFile() {
-		return file;
-	}
+    public File getFile() {
+        return file;
+    }
 
-	public void setFile(File file) {
-		this.file = file;
-	}
+    public void setFile(File file) {
+        this.file = file;
+    }
 }

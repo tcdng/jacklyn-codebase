@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,8 +15,7 @@
  */
 package com.tcdng.jacklyn.notification.lists;
 
-import com.tcdng.jacklyn.notification.business.NotificationModule;
-import com.tcdng.jacklyn.notification.constants.NotificationModuleNameConstants;
+import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,15 +27,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractNotificationListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(NotificationModuleNameConstants.NOTIFICATIONBUSINESSMODULE)
-	private NotificationModule notificationModule;
+    @Configurable
+    private NotificationService notificationService;
 
-	public AbstractNotificationListCommand(Class<T> type) {
-		super(type);
-	}
+    public AbstractNotificationListCommand(Class<T> type) {
+        super(type);
+    }
 
-	protected NotificationModule getNotificationModule() {
-		return notificationModule;
-	}
+    protected NotificationService getNotificationModule() {
+        return notificationService;
+    }
 
 }

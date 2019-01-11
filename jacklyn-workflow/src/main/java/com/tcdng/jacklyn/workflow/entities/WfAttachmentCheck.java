@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,56 +30,56 @@ import com.tcdng.unify.core.constant.RequirementType;
  * @since 1.0
  */
 @Table(name = "WFATTACHMENTCHECK",
-		uniqueConstraints = { @UniqueConstraint({ "wfActionId", "wfDocAttachmentName" }) })
+        uniqueConstraints = { @UniqueConstraint({ "wfUserActionId", "wfDocAttachmentName" }) })
 public class WfAttachmentCheck extends BaseEntity {
 
-	@ForeignKey(WfUserAction.class)
-	private Long wfActionId;
+    @ForeignKey(WfUserAction.class)
+    private Long wfUserActionId;
 
-	@ForeignKey
-	private RequirementType requirementType;
+    @ForeignKey
+    private RequirementType requirementType;
 
-	@Column(name = "ATTACHMENT_NM")
-	private String wfDocAttachmentName;
+    @Column(name = "ATTACHMENT_NM")
+    private String wfDocAttachmentName;
 
-	@ListOnly(key = "requirementType", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "requirementType", property = "description")
+    private String typeDesc;
 
-	@Override
-	public String getDescription() {
-		return this.wfDocAttachmentName;
-	}
+    @Override
+    public String getDescription() {
+        return this.wfDocAttachmentName;
+    }
 
-	public Long getWfActionId() {
-		return wfActionId;
-	}
+    public Long getWfUserActionId() {
+        return wfUserActionId;
+    }
 
-	public void setWfActionId(Long wfActionId) {
-		this.wfActionId = wfActionId;
-	}
+    public void setWfUserActionId(Long wfUserActionId) {
+        this.wfUserActionId = wfUserActionId;
+    }
 
-	public RequirementType getRequirementType() {
-		return requirementType;
-	}
+    public RequirementType getRequirementType() {
+        return requirementType;
+    }
 
-	public void setRequirementType(RequirementType requirementType) {
-		this.requirementType = requirementType;
-	}
+    public void setRequirementType(RequirementType requirementType) {
+        this.requirementType = requirementType;
+    }
 
-	public String getWfDocAttachmentName() {
-		return wfDocAttachmentName;
-	}
+    public String getWfDocAttachmentName() {
+        return wfDocAttachmentName;
+    }
 
-	public void setWfDocAttachmentName(String wfDocAttachmentName) {
-		this.wfDocAttachmentName = wfDocAttachmentName;
-	}
+    public void setWfDocAttachmentName(String wfDocAttachmentName) {
+        this.wfDocAttachmentName = wfDocAttachmentName;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
 }

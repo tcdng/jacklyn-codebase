@@ -1,19 +1,19 @@
 // UPL template for managing users
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{security.user.manage}
-	searchByList:$c{searchLoginId searchFullName searchStatus}
+    searchByList:$c{searchLoginId searchFullName searchStatus}
     searchClearList:$c{searchLoginId searchFullName searchStatus}
-	tableColumnList:$c{loginId fullName email lastLoginDt statusDesc}
-	formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmLoginId frmFullName frmEmail frmTheme frmPasswordExpires frmStatus}}
-	formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
-	formSection:$d{!ui-section caption:$m{security.user.section.assignedroles} components:$c{frmRoleAssignPanel}}
-	formSection:$d{!ui-section caption:$m{security.user.section.organization} components:$c{frmBranchId frmSupervisor}}
-	formBinding:largeData
+    tableColumnList:$c{loginId fullName email lastLoginDt statusDesc}
+    formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmLoginId frmFullName frmEmail frmTheme frmPasswordExpires frmStatus}}
+    formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
+    formSection:$d{!ui-section caption:$m{security.user.section.assignedroles} components:$c{frmRoleAssignPanel}}
+    formSection:$d{!ui-section caption:$m{security.user.section.organization} components:$c{frmBranchId frmSupervisor}}
+    formBinding:largeData
     moreCrudFooterComponentList:$c{spacer resetBtn}
-	addPrivilege:$s{sec-user-add} editPrivilege:$s{sec-user-edit}
-	viewPrivilege:$s{sec-user-view} deletePrivilege:$s{sec-user-delete}
+    addPrivilege:$s{sec-user-add} editPrivilege:$s{sec-user-edit}
+    viewPrivilege:$s{sec-user-view} deletePrivilege:$s{sec-user-delete}
     addValidations:$c{frmLoginIdVal frmEmailVal}
     saveValidations:$c{frmLoginIdVal frmEmailVal}
 
@@ -21,7 +21,7 @@
 !ui-text:searchLoginId caption:$m{security.user.loginid} binding:searchLoginId case:upper eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchFullName caption:$m{security.user.fullname} binding:searchFullName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{security.user.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:loginId caption:$m{security.user.loginid} binding:loginId columnStyle:$s{width:150px;} sortable:true
@@ -30,7 +30,7 @@
 !ui-label:lastLoginDt caption:$m{security.user.lastlogindt} binding:lastLoginDt style:$s{text-align:center;}
     formatter:$d{!datetimeformat style:medium}  columnStyle:$s{width:150px;} sortable:true
 !ui-label:statusDesc caption:$m{security.user.status} binding:statusDesc style:$s{text-align:center;}
-	columnStyle:$s{width:120px;} sortable:true
+    columnStyle:$s{width:120px;} sortable:true
 
 //Form components   
 !ui-name:frmLoginId caption:$m{security.user.loginid} case:upper focus:true binding:data.loginId maxLen:32 required:true
@@ -47,6 +47,8 @@
 //Form attachments
 !ui-panel:frmRoleAssignPanel layout:$d{!ui-vertical} components:$c{roleAssignBox}
 !ui-assignmentbox:roleAssignBox binding:roleIdList
+    filterCaption1:$m{security.user.maintain.assigned.department}
+    filterList1:$s{departmentlist}
     assignCaption:$m{security.user.maintain.assigned.role} unassignCaption:$m{security.user.maintain.available.role}
     assignList:roleinlist unassignList:rolenotinlist
     

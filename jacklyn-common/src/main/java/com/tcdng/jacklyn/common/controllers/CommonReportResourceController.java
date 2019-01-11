@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,23 +33,22 @@ import com.tcdng.unify.web.AbstractResourceController;
 @Component("/common/resource/report")
 public class CommonReportResourceController extends AbstractResourceController {
 
-	public CommonReportResourceController() {
-		super(true);
-	}
+    public CommonReportResourceController() {
+        super(true);
+    }
 
-	@Override
-	public void prepareExecution() throws UnifyException {
-		setContentDisposition(getResourceName());
-	}
+    @Override
+    public void prepareExecution() throws UnifyException {
+        setContentDisposition(getResourceName());
+    }
 
-	@Override
-	public void execute(OutputStream outputStream) throws UnifyException {
-		ReportOptions reportOptions = (ReportOptions) removeSessionAttribute(getResourceName());
-		getCommonReportProvider().generateDynamicReport(reportOptions, outputStream);
-	}
+    @Override
+    public void execute(OutputStream outputStream) throws UnifyException {
+        ReportOptions reportOptions = (ReportOptions) removeSessionAttribute(getResourceName());
+        getCommonReportProvider().generateDynamicReport(reportOptions, outputStream);
+    }
 
-	private ReportProvider getCommonReportProvider() throws UnifyException {
-		return (ReportProvider) getApplicationAttribute(
-				JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER);
-	}
+    private ReportProvider getCommonReportProvider() throws UnifyException {
+        return (ReportProvider) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER);
+    }
 }

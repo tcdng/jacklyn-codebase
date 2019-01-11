@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,7 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 
 /**
  * Query class for workflow document definitions.
@@ -24,29 +25,37 @@ import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfDocQuery extends BaseStatusEntityQuery<WfDoc> {
+public class WfDocQuery extends BaseEntityQuery<WfDoc> {
 
-	public WfDocQuery() {
-		super(WfDoc.class);
-	}
+    public WfDocQuery() {
+        super(WfDoc.class);
+    }
 
-	public WfDocQuery wfCategoryId(Long wfCategoryId) {
-		return (WfDocQuery) equals("wfCategoryId", wfCategoryId);
-	}
+    public WfDocQuery wfCategoryId(Long wfCategoryId) {
+        return (WfDocQuery) equals("wfCategoryId", wfCategoryId);
+    }
 
-	public WfDocQuery wfCategoryName(String wfCategoryName) {
-		return (WfDocQuery) equals("wfCategoryName", wfCategoryName);
-	}
+    public WfDocQuery wfCategoryName(String wfCategoryName) {
+        return (WfDocQuery) equals("wfCategoryName", wfCategoryName);
+    }
 
-	public WfDocQuery name(String name) {
-		return (WfDocQuery) equals("name", name);
-	}
+    public WfDocQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+        return (WfDocQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
 
-	public WfDocQuery nameLike(String name) {
-		return (WfDocQuery) like("name", name);
-	}
+    public WfDocQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfDocQuery) equals("wfCategoryVersion", wfCategoryVersion);
+    }
 
-	public WfDocQuery descriptionLike(String description) {
-		return (WfDocQuery) like("description", description);
-	}
+    public WfDocQuery name(String name) {
+        return (WfDocQuery) equals("name", name);
+    }
+
+    public WfDocQuery nameLike(String name) {
+        return (WfDocQuery) like("name", name);
+    }
+
+    public WfDocQuery descriptionLike(String description) {
+        return (WfDocQuery) like("description", description);
+    }
 }

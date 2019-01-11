@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.audit.business;
 
-import com.tcdng.unify.core.business.BusinessModule;
+import com.tcdng.unify.core.business.BusinessService;
 import com.tcdng.unify.core.logging.EventLogger;
 
 /**
@@ -24,6 +24,6 @@ import com.tcdng.unify.core.logging.EventLogger;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface EventLoggerService extends BusinessModule, EventLogger {
+public interface EventLoggerService extends BusinessService, EventLogger {
 
 }

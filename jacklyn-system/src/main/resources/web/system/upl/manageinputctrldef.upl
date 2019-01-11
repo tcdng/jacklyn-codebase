@@ -1,14 +1,14 @@
 // UPL template for managing user input definitions
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.inputctrldef.manage}
-	searchByList:$c{searchModuleId searchName searchDescription searchStatus}
+    searchByList:$c{searchModuleId searchName searchDescription searchStatus}
     searchClearList:$c{searchModuleId searchName searchDescription searchStatus}
-	tableColumnList:$c{moduleDesc name description control statusDesc}
-	formSection:$d{!ui-section caption:$m{system.inputctrldef.section.basicdetails} components:$c{moduleId frmName frmDescription frmControl frmStatus}}
-	addPrivilege:$s{sys-inputctrldefadd} editPrivilege:$s{sys-inputctrldefedit}
-	viewPrivilege:$s{sys-inputctrldefview} deletePrivilege:$s{sys-inputctrldefdelete}
+    tableColumnList:$c{moduleDesc name description control statusDesc}
+    formSection:$d{!ui-section caption:$m{system.inputctrldef.section.basicdetails} components:$c{moduleId frmName frmDescription frmControl frmStatus}}
+    addPrivilege:$s{sys-inputctrldefadd} editPrivilege:$s{sys-inputctrldefedit}
+    viewPrivilege:$s{sys-inputctrldefview} deletePrivilege:$s{sys-inputctrldefdelete}
     addValidations:$c{frmNameVal frmDescVal frmUplDescVal}
     saveValidations:$c{frmNameVal frmDescVal frmUplDescVal}
 
@@ -16,9 +16,9 @@
 !ui-text:searchName caption:$m{system.inputctrldef.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{system.inputctrldef.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.inputctrldef.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchModuleId caption:$m{system.sysparameter.module} binding:searchModuleId list:modulelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{system.inputctrldef.module} binding:moduleDesc columnStyle:$s{width:100px;} sortable:true

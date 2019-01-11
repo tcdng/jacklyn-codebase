@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,31 +27,31 @@ import com.tcdng.jacklyn.shared.system.SystemAssetType;
  */
 public class SystemAssetQuery extends BaseInstallEntityQuery<SystemAsset> {
 
-	public SystemAssetQuery() {
-		super(SystemAsset.class);
-	}
+    public SystemAssetQuery() {
+        super(SystemAsset.class);
+    }
 
-	public SystemAssetQuery moduleId(Long moduleId) {
-		return (SystemAssetQuery) equals("moduleId", moduleId);
-	}
+    public SystemAssetQuery moduleId(Long moduleId) {
+        return (SystemAssetQuery) equals("moduleId", moduleId);
+    }
 
-	public SystemAssetQuery moduleName(String moduleName) {
-		return (SystemAssetQuery) equals("moduleName", moduleName);
-	}
+    public SystemAssetQuery moduleName(String moduleName) {
+        return (SystemAssetQuery) equals("moduleName", moduleName);
+    }
 
-	public SystemAssetQuery name(String name) {
-		return (SystemAssetQuery) equals("name", name);
-	}
+    public SystemAssetQuery name(String name) {
+        return (SystemAssetQuery) equals("name", name);
+    }
 
-	public SystemAssetQuery nameLike(String name) {
-		return (SystemAssetQuery) like("name", name);
-	}
+    public SystemAssetQuery nameLike(String name) {
+        return (SystemAssetQuery) like("name", name);
+    }
 
-	public SystemAssetQuery descriptionLike(String description) {
-		return (SystemAssetQuery) like("description", description);
-	}
+    public SystemAssetQuery descriptionLike(String description) {
+        return (SystemAssetQuery) like("description", description);
+    }
 
-	public SystemAssetQuery type(SystemAssetType type) {
-		return (SystemAssetQuery) equals("type", type);
-	}
+    public SystemAssetQuery type(SystemAssetType type) {
+        return (SystemAssetQuery) equals("type", type);
+    }
 }

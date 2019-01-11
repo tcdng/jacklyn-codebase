@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedEntityQuery;
  */
 public class BiometricQuery extends BaseVersionedTimestampedEntityQuery<Biometric> {
 
-	public BiometricQuery() {
-		super(Biometric.class);
-	}
+    public BiometricQuery() {
+        super(Biometric.class);
+    }
 
-	public BiometricQuery categoryName(String categoryName) {
-		return (BiometricQuery) equals("categoryName", categoryName);
-	}
+    public BiometricQuery categoryName(String categoryName) {
+        return (BiometricQuery) equals("categoryName", categoryName);
+    }
 
-	public BiometricQuery typeName(String typeName) {
-		return (BiometricQuery) equals("typeName", typeName);
-	}
+    public BiometricQuery typeName(String typeName) {
+        return (BiometricQuery) equals("typeName", typeName);
+    }
 }

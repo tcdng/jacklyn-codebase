@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,87 +32,86 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.o
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "System Asset", reportable = true,
-		auditable = true)
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "System Asset", reportable = true, auditable = true)
 @Table(name = "SYSASSET", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class SystemAsset extends BaseInstallEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@ForeignKey(name = "SYSASSET_TYPE")
-	private SystemAssetType type;
+    @ForeignKey(name = "SYSASSET_TYPE")
+    private SystemAssetType type;
 
-	@Column(name = "SYSASSET_NM", length = 32)
-	private String name;
+    @Column(name = "SYSASSET_NM", length = 32)
+    private String name;
 
-	@Column(name = "SYSASSET_DESC", length = 48)
-	private String description;
+    @Column(name = "SYSASSET_DESC", length = 48)
+    private String description;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	@ListOnly(key = "type", property = "description")
-	private String typeDesc;
+    @ListOnly(key = "type", property = "description")
+    private String typeDesc;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public SystemAssetType getType() {
-		return type;
-	}
+    public SystemAssetType getType() {
+        return type;
+    }
 
-	public void setType(SystemAssetType type) {
-		this.type = type;
-	}
+    public void setType(SystemAssetType type) {
+        this.type = type;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getTypeDesc() {
-		return typeDesc;
-	}
+    public String getTypeDesc() {
+        return typeDesc;
+    }
 
-	public void setTypeDesc(String typeDesc) {
-		this.typeDesc = typeDesc;
-	}
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
 
 }

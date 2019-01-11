@@ -1,24 +1,24 @@
 // UPL template for select role panel
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-selectrolepanel
-	dialogBodyComponents:$c{roleTablePanel}
-	dialogActionComponents:$c{selRoleBtn cancelSelRoleBtn}
+    dialogBodyComponents:$c{roleTablePanel}
+    dialogActionComponents:$c{selRoleBtn cancelSelRoleBtn}
      
 !ui-tablepanel:roleTablePanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
     tableBodyStyle:$s{height:220px;}
-    tableSerialNumbers:false tableBinding:$g{roleListProperty} tableColumnList:$c{roleDescription}
+    tableSerialNumbers:false tableBinding:$g{roleListBinding} tableColumnList:$c{roleDescription}
     tableRowSelectable:true  tableSelDependentList:$c{selRoleBtn}
     tableWindowed:true tablePagination:false tableMultiSelect:false tableSortable:false
 
 !ui-label:roleDescription caption:$m{security.select.role.description} binding:roleDesc
-	columnStyle:$s{width:180px;}
+    columnStyle:$s{width:180px;}
    
 !ui-button:selRoleBtn caption:$m{button.select}
-	eventHandler:$d{!ui-event event:onclick action:$c{selRoleAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{selRoleAct}}
 !ui-button:cancelSelRoleBtn caption:$m{button.cancel}
-	eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
     
 //Actions
 !ui-post:selRoleAct path:$g{selectRolePath}  components:$c{roleTablePanel}

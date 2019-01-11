@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,15 +32,14 @@ import com.tcdng.unify.core.data.FileAttachment;
  */
 public interface MessageAttachmentGenerator extends UnifyComponent {
 
-	/**
-	 * Generates file attachments using supplied message dictionary.
-	 * 
-	 * @param messageDictionary
-	 *            the dictionary to use
-	 * @return list of file attachments
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	List<FileAttachment> generateAttachments(MessageDictionary messageDictionary)
-			throws UnifyException;
+    /**
+     * Generates file attachments using supplied message dictionary.
+     * 
+     * @param messageDictionary
+     *            the dictionary to use
+     * @return list of file attachments
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<FileAttachment> generateAttachments(MessageDictionary messageDictionary) throws UnifyException;
 }

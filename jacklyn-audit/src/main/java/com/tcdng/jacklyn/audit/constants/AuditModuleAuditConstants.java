@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.audit.constants;
  */
 public interface AuditModuleAuditConstants {
 
-	String ACTIVATE_AUDITTYPE = "aud-activateaudittype";
+    String ACTIVATE_AUDITTYPE = "aud-activateaudittype";
 
-	String DEACTIVATE_AUDITTYPE = "aud-deactivateaudittype";
+    String DEACTIVATE_AUDITTYPE = "aud-deactivateaudittype";
 
-	String INSPECTUSER_SEARCH = "aud-inspectusersearch";
+    String INSPECTUSER_SEARCH = "aud-inspectusersearch";
 }

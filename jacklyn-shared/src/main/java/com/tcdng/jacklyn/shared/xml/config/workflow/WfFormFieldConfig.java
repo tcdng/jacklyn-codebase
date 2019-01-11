@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-
 /**
  * Form field configuration.
  * 
@@ -26,52 +25,52 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class WfFormFieldConfig {
 
-	private String binding;
+    private String binding;
 
-	private String label;
+    private String label;
 
-	private String editorUpl;
+    private String editorUpl;
 
-	private Boolean required;
+    private Boolean required;
 
-	public WfFormFieldConfig() {
-		this.required = Boolean.TRUE;
-	}
+    public WfFormFieldConfig() {
+        this.required = Boolean.TRUE;
+    }
 
-	public String getBinding() {
-		return binding;
-	}
+    public String getBinding() {
+        return binding;
+    }
 
-	@XmlAttribute(required = true)
-	public void setBinding(String binding) {
-		this.binding = binding;
-	}
+    @XmlAttribute(required = true)
+    public void setBinding(String binding) {
+        this.binding = binding;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	@XmlAttribute(name = "label")
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    @XmlAttribute(name = "label")
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getEditorUpl() {
-		return editorUpl;
-	}
+    public String getEditorUpl() {
+        return editorUpl;
+    }
 
-	@XmlAttribute(name = "editor")
-	public void setEditorUpl(String editorUpl) {
-		this.editorUpl = editorUpl;
-	}
+    @XmlAttribute(name = "editor")
+    public void setEditorUpl(String editorUpl) {
+        this.editorUpl = editorUpl;
+    }
 
-	public Boolean getRequired() {
-		return required;
-	}
+    public Boolean getRequired() {
+        return required;
+    }
 
-	@XmlAttribute
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
+    @XmlAttribute
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
 
 }

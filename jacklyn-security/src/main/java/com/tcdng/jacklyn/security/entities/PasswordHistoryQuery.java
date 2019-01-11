@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class PasswordHistoryQuery extends BaseEntityQuery<PasswordHistory> {
 
-	public PasswordHistoryQuery() {
-		super(PasswordHistory.class);
-	}
+    public PasswordHistoryQuery() {
+        super(PasswordHistory.class);
+    }
 
-	public PasswordHistoryQuery userId(Long userId) {
-		return (PasswordHistoryQuery) equals("userId", userId);
-	}
+    public PasswordHistoryQuery userId(Long userId) {
+        return (PasswordHistoryQuery) equals("userId", userId);
+    }
 
-	public PasswordHistoryQuery password(String password) {
-		return (PasswordHistoryQuery) equals("password", password);
-	}
+    public PasswordHistoryQuery password(String password) {
+        return (PasswordHistoryQuery) equals("password", password);
+    }
 }

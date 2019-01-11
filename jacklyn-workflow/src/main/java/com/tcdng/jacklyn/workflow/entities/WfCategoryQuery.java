@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseTimestampedStatusEntityQuery;
+import com.tcdng.jacklyn.common.entities.BaseStatusEntityQuery;
 
 /**
  * Workflow category query.
@@ -23,21 +23,25 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedStatusEntityQuery;
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class WfCategoryQuery extends BaseTimestampedStatusEntityQuery<WfCategory> {
+public class WfCategoryQuery extends BaseStatusEntityQuery<WfCategory> {
 
-	public WfCategoryQuery() {
-		super(WfCategory.class);
-	}
+    public WfCategoryQuery() {
+        super(WfCategory.class);
+    }
 
-	public WfCategoryQuery name(String name) {
-		return (WfCategoryQuery) equals("name", name);
-	}
+    public WfCategoryQuery version(String version) {
+        return (WfCategoryQuery) equals("version", version);
+    }
 
-	public WfCategoryQuery nameLike(String name) {
-		return (WfCategoryQuery) like("name", name);
-	}
+    public WfCategoryQuery name(String name) {
+        return (WfCategoryQuery) equals("name", name);
+    }
 
-	public WfCategoryQuery descriptionLike(String description) {
-		return (WfCategoryQuery) like("description", description);
-	}
+    public WfCategoryQuery nameLike(String name) {
+        return (WfCategoryQuery) like("name", name);
+    }
+
+    public WfCategoryQuery descriptionLike(String description) {
+        return (WfCategoryQuery) like("description", description);
+    }
 }

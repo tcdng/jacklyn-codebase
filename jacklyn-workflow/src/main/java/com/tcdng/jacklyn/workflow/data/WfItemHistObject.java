@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,59 +26,59 @@ import java.util.List;
  */
 public class WfItemHistObject implements Serializable {
 
-	private static final long serialVersionUID = -4226588442406967392L;
+    private static final long serialVersionUID = -4226588442406967392L;
 
-	private Long id;
+    private Long id;
 
-	private Long documentId;
+    private Long documentId;
 
-	private String globalDocName;
+    private String globalDocName;
 
-	private String globalTemplateName;
+    private String globalTemplateName;
 
-	private String description;
+    private String description;
 
-	private List<WfItemHistEvent> eventList;
+    private List<WfItemHistEvent> eventList;
 
-	public WfItemHistObject(Long id, Long documentId, String globalDocName,
-			String globalTemplateName, String description, List<WfItemHistEvent> eventList) {
-		this.id = id;
-		this.documentId = documentId;
-		this.globalDocName = globalDocName;
-		this.globalTemplateName = globalTemplateName;
-		this.description = description;
-		this.eventList = eventList;
-	}
+    public WfItemHistObject(Long id, Long documentId, String globalDocName, String globalTemplateName,
+            String description, List<WfItemHistEvent> eventList) {
+        this.id = id;
+        this.documentId = documentId;
+        this.globalDocName = globalDocName;
+        this.globalTemplateName = globalTemplateName;
+        this.description = description;
+        this.eventList = eventList;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Long getDocumentId() {
-		return documentId;
-	}
+    public Long getDocumentId() {
+        return documentId;
+    }
 
-	public String getGlobalDocName() {
-		return globalDocName;
-	}
+    public String getGlobalDocName() {
+        return globalDocName;
+    }
 
-	public void setGlobalDocName(String globalDocName) {
-		this.globalDocName = globalDocName;
-	}
+    public void setGlobalDocName(String globalDocName) {
+        this.globalDocName = globalDocName;
+    }
 
-	public String getGlobalTemplateName() {
-		return globalTemplateName;
-	}
+    public String getGlobalTemplateName() {
+        return globalTemplateName;
+    }
 
-	public void setGlobalTemplateName(String globalTemplateName) {
-		this.globalTemplateName = globalTemplateName;
-	}
+    public void setGlobalTemplateName(String globalTemplateName) {
+        this.globalTemplateName = globalTemplateName;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public List<WfItemHistEvent> getEventList() {
-		return eventList;
-	}
+    public List<WfItemHistEvent> getEventList() {
+        return eventList;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,151 +31,151 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = ReportModuleNameConstants.REPORT_MODULE, title = "Reportable Definition",
-		reportable = true, auditable = true)
+@Managed(module = ReportModuleNameConstants.REPORT_MODULE, title = "Reportable Definition", reportable = true,
+        auditable = true)
 @Table(name = "REPORTABLEDEF", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class ReportableDefinition extends BaseInstallEntity {
 
-	@ForeignKey(Module.class)
-	private Long moduleId;
+    @ForeignKey(Module.class)
+    private Long moduleId;
 
-	@Column(name = "REPORTABLEDEF_NM", length = 64)
-	private String name;
+    @Column(name = "REPORTABLEDEF_NM", length = 64)
+    private String name;
 
-	@Column(length = 64)
-	private String title;
+    @Column(length = 96)
+    private String title;
 
-	@Column(name = "REPORTABLEDEF_DESC", length = 64)
-	private String description;
+    @Column(name = "REPORTABLEDEF_DESC", length = 96)
+    private String description;
 
-	@Column(name = "RECORD_NM", length = 256, nullable = true)
-	private String recordName;
+    @Column(name = "RECORD_NM", length = 256, nullable = true)
+    private String recordName;
 
-	@Column(length = 64, nullable = true)
-	private String template;
+    @Column(length = 64, nullable = true)
+    private String template;
 
-	@Column(length = 64, nullable = true)
-	private String processor;
+    @Column(length = 64, nullable = true)
+    private String processor;
 
-	@Column
-	boolean landscape;
+    @Column
+    private boolean landscape;
 
-	@Column
-	boolean underlineRows;
+    @Column
+    private boolean underlineRows;
 
-	@Column
-	boolean shadeOddRows;
+    @Column
+    private boolean shadeOddRows;
 
-	@Column
-	boolean dynamic;
+    @Column
+    private boolean dynamic;
 
-	@ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
-	private String moduleName;
+    @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
+    private String moduleName;
 
-	@ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
-	private String moduleDesc;
+    @ListOnly(name = "MODULE_DESC", key = "moduleId", property = "description")
+    private String moduleDesc;
 
-	public Long getModuleId() {
-		return moduleId;
-	}
+    public Long getModuleId() {
+        return moduleId;
+    }
 
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
-	}
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getRecordName() {
-		return recordName;
-	}
+    public String getRecordName() {
+        return recordName;
+    }
 
-	public void setRecordName(String recordName) {
-		this.recordName = recordName;
-	}
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
 
-	public String getTemplate() {
-		return template;
-	}
+    public String getTemplate() {
+        return template;
+    }
 
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	public String getProcessor() {
-		return processor;
-	}
+    public String getProcessor() {
+        return processor;
+    }
 
-	public void setProcessor(String processor) {
-		this.processor = processor;
-	}
+    public void setProcessor(String processor) {
+        this.processor = processor;
+    }
 
-	public boolean isLandscape() {
-		return landscape;
-	}
+    public boolean isLandscape() {
+        return landscape;
+    }
 
-	public void setLandscape(boolean landscape) {
-		this.landscape = landscape;
-	}
+    public void setLandscape(boolean landscape) {
+        this.landscape = landscape;
+    }
 
-	public boolean isUnderlineRows() {
-		return underlineRows;
-	}
+    public boolean isUnderlineRows() {
+        return underlineRows;
+    }
 
-	public void setUnderlineRows(boolean underlineRows) {
-		this.underlineRows = underlineRows;
-	}
+    public void setUnderlineRows(boolean underlineRows) {
+        this.underlineRows = underlineRows;
+    }
 
-	public boolean isShadeOddRows() {
-		return shadeOddRows;
-	}
+    public boolean isShadeOddRows() {
+        return shadeOddRows;
+    }
 
-	public void setShadeOddRows(boolean shadeOddRows) {
-		this.shadeOddRows = shadeOddRows;
-	}
+    public void setShadeOddRows(boolean shadeOddRows) {
+        this.shadeOddRows = shadeOddRows;
+    }
 
-	public boolean isDynamic() {
-		return dynamic;
-	}
+    public boolean isDynamic() {
+        return dynamic;
+    }
 
-	public void setDynamic(boolean dynamic) {
-		this.dynamic = dynamic;
-	}
+    public void setDynamic(boolean dynamic) {
+        this.dynamic = dynamic;
+    }
 
-	public String getModuleName() {
-		return moduleName;
-	}
+    public String getModuleName() {
+        return moduleName;
+    }
 
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
-	public String getModuleDesc() {
-		return moduleDesc;
-	}
+    public String getModuleDesc() {
+        return moduleDesc;
+    }
 
-	public void setModuleDesc(String moduleDesc) {
-		this.moduleDesc = moduleDesc;
-	}
+    public void setModuleDesc(String moduleDesc) {
+        this.moduleDesc = moduleDesc;
+    }
 }

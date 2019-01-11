@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,31 +20,31 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 
 /**
- * Message channel query class;
+ * Notification channel query class;
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public class NotificationChannelQuery extends BaseVersionedStatusEntityQuery<NotificationChannel> {
 
-	public NotificationChannelQuery() {
-		super(NotificationChannel.class);
-	}
+    public NotificationChannelQuery() {
+        super(NotificationChannel.class);
+    }
 
-	public NotificationChannelQuery notificationType(NotificationType notificationType) {
-		return (NotificationChannelQuery) equals("notificationType", notificationType);
-	}
+    public NotificationChannelQuery notificationType(NotificationType notificationType) {
+        return (NotificationChannelQuery) equals("notificationType", notificationType);
+    }
 
-	public NotificationChannelQuery name(String name) {
-		return (NotificationChannelQuery) equals("name", name);
-	}
+    public NotificationChannelQuery name(String name) {
+        return (NotificationChannelQuery) equals("name", name);
+    }
 
-	public NotificationChannelQuery nameLike(String name) {
-		return (NotificationChannelQuery) like("name", name);
-	}
+    public NotificationChannelQuery nameLike(String name) {
+        return (NotificationChannelQuery) like("name", name);
+    }
 
-	public NotificationChannelQuery descriptionLike(String description) {
-		return (NotificationChannelQuery) like("description", description);
-	}
+    public NotificationChannelQuery descriptionLike(String description) {
+        return (NotificationChannelQuery) like("description", description);
+    }
 
 }

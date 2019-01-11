@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,15 +28,15 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class WfRoutingsConfig {
 
-	private List<WfRoutingConfig> wfRoutingConfigList;
+    private List<WfRoutingConfig> wfRoutingConfigList;
 
-	public List<WfRoutingConfig> getWfRoutingConfigList() {
-		return wfRoutingConfigList;
-	}
+    public List<WfRoutingConfig> getWfRoutingConfigList() {
+        return wfRoutingConfigList;
+    }
 
-	@XmlElement(name="routing", required=true)
-	public void setWfRoutingConfigList(List<WfRoutingConfig> wfRoutingConfigList) {
-		this.wfRoutingConfigList = wfRoutingConfigList;
-	}
+    @XmlElement(name = "routing", required = true)
+    public void setWfRoutingConfigList(List<WfRoutingConfig> wfRoutingConfigList) {
+        this.wfRoutingConfigList = wfRoutingConfigList;
+    }
 
 }

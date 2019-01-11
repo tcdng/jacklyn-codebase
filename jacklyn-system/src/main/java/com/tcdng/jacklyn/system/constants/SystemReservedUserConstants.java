@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,11 +23,11 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemReservedUserConstants {
 
-	String SYSTEM_LOGINID = "SYSTEM";
+    String SYSTEM_LOGINID = "SYSTEM";
 
-	String ANONYMOUS_LOGINID = "ANONYMOUS";
+    String ANONYMOUS_LOGINID = "ANONYMOUS";
 
-	Long SYSTEM_ID = Long.valueOf(-99);
+    Long SYSTEM_ID = Long.valueOf(-99);
 
-	Long ANONYMOUS_ID = Long.valueOf(-98);
+    Long ANONYMOUS_ID = Long.valueOf(-98);
 }

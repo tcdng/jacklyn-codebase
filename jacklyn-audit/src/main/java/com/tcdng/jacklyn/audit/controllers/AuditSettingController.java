@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,109 +37,105 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/audit/auditsettings")
 @UplBinding("web/audit/upl/manageauditsettings.upl")
-public class AuditSettingController extends AbstractAuditRecordController<AuditDefinition> {
+public class AuditSettingController extends AbstractAuditCrudController<AuditDefinition> {
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private EventType searchEventType;
+    private EventType searchEventType;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public AuditSettingController() {
-		super(AuditDefinition.class, "audit.auditsettings.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.REPORTABLE);
-	}
+    public AuditSettingController() {
+        super(AuditDefinition.class, "$m{audit.auditsettings.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public EventType getSearchEventType() {
-		return searchEventType;
-	}
+    public EventType getSearchEventType() {
+        return searchEventType;
+    }
 
-	public void setSearchEventType(EventType searchEventType) {
-		this.searchEventType = searchEventType;
-	}
+    public void setSearchEventType(EventType searchEventType) {
+        this.searchEventType = searchEventType;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Action
-	public String activateAuditTypes() throws UnifyException {
-		List<Long> auditTypeIds = getSelectedIds();
-		if (!auditTypeIds.isEmpty()) {
-			getAuditModule().setAuditTypeStatus(
-					(AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
-					RecordStatus.ACTIVE);
-			logUserEvent(AuditModuleAuditConstants.ACTIVATE_AUDITTYPE,
-					getSelectedDescription());
-			hintUser("hint.records.activated");
-		}
-		return findRecords();
-	}
+    @Action
+    public String activateAuditTypes() throws UnifyException {
+        List<Long> auditTypeIds = getSelectedIds();
+        if (!auditTypeIds.isEmpty()) {
+            getAuditService().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
+                    RecordStatus.ACTIVE);
+            logUserEvent(AuditModuleAuditConstants.ACTIVATE_AUDITTYPE, getSelectedDescription());
+            hintUser("hint.records.activated");
+        }
+        return findRecords();
+    }
 
-	@Action
-	public String deactivateAuditTypes() throws UnifyException {
-		List<Long> auditTypeIds = getSelectedIds();
-		if (!auditTypeIds.isEmpty()) {
-			getAuditModule().setAuditTypeStatus(
-					(AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
-					RecordStatus.INACTIVE);
-			logUserEvent(AuditModuleAuditConstants.DEACTIVATE_AUDITTYPE,
-					getSelectedDescription());
-			hintUser("hint.records.deactivated");
-		}
-		return findRecords();
-	}
+    @Action
+    public String deactivateAuditTypes() throws UnifyException {
+        List<Long> auditTypeIds = getSelectedIds();
+        if (!auditTypeIds.isEmpty()) {
+            getAuditService().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
+                    RecordStatus.INACTIVE);
+            logUserEvent(AuditModuleAuditConstants.DEACTIVATE_AUDITTYPE, getSelectedDescription());
+            hintUser("hint.records.deactivated");
+        }
+        return findRecords();
+    }
 
-	@Override
-	protected List<AuditDefinition> find() throws UnifyException {
-		AuditDefinitionQuery query = new AuditDefinitionQuery();
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
-		if (getSearchEventType() != null) {
-			query.eventType(getSearchEventType());
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getAuditModule().findAuditTypes(query);
-	}
+    @Override
+    protected List<AuditDefinition> find() throws UnifyException {
+        AuditDefinitionQuery query = new AuditDefinitionQuery();
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
+        if (getSearchEventType() != null) {
+            query.eventType(getSearchEventType());
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getAuditService().findAuditTypes(query);
+    }
 
-	@Override
-	protected AuditDefinition find(Long id) throws UnifyException {
-		return getAuditModule().findAuditType(id);
-	}
+    @Override
+    protected AuditDefinition find(Long id) throws UnifyException {
+        return getAuditService().findAuditType(id);
+    }
 
-	@Override
-	protected AuditDefinition prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected AuditDefinition prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(AuditDefinition auditDefinitionData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(AuditDefinition auditDefinitionData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(AuditDefinition auditDefinitionData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(AuditDefinition auditDefinitionData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(AuditDefinition auditDefinitionData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(AuditDefinition auditDefinitionData) throws UnifyException {
+        return 0;
+    }
 }

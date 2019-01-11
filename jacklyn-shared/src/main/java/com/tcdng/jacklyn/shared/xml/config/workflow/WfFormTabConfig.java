@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,8 @@
 
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -29,41 +31,41 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfFormTabConfig extends BaseConfig {
 
-	private String label;
+    private String label;
 
-	private Boolean pseudo;
-	
-	private WfFormSectionsConfig wfFormSectionsConfig;
-	
-	public WfFormTabConfig() {
-		this.pseudo = Boolean.TRUE;
-	}
+    private Boolean pseudo;
 
-	public String getLabel() {
-		return label;
-	}
+    private List<WfFormSectionConfig> wfFormSectionConfigList;
 
-	@XmlAttribute(name = "label")
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public WfFormTabConfig() {
+        this.pseudo = Boolean.TRUE;
+    }
 
-	public Boolean getPseudo() {
-		return pseudo;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	@XmlAttribute(name = "label")
-	public void setPseudo(Boolean pseudo) {
-		this.pseudo = pseudo;
-	}
+    @XmlAttribute(name = "label")
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public WfFormSectionsConfig getWfFormSectionsConfig() {
-		return wfFormSectionsConfig;
-	}
+    public Boolean getPseudo() {
+        return pseudo;
+    }
 
-	@XmlElement(name="sections", required=true)
-	public void setWfFormSectionsConfig(WfFormSectionsConfig wfFormSectionsConfig) {
-		this.wfFormSectionsConfig = wfFormSectionsConfig;
-	}
+    @XmlAttribute(name = "label")
+    public void setPseudo(Boolean pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public List<WfFormSectionConfig> getWfFormSectionConfigList() {
+        return wfFormSectionConfigList;
+    }
+
+    @XmlElement(name = "section", required = true)
+    public void setWfFormSectionConfigList(List<WfFormSectionConfig> wfFormSectionConfigList) {
+        this.wfFormSectionConfigList = wfFormSectionConfigList;
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -38,69 +38,67 @@ import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
 @Component(ReservedPageControllerConstants.COMMONUTILITIES)
 @UplBinding("web/common/upl/commonutilities.upl")
 @ResultMappings({
-		@ResultMapping(name = "showapplicationmessage",
-				response = { "!showpopupresponse popup:$s{messageBoxPopup}" }),
-		@ResultMapping(name = "showapplicationtaskmonitor",
-				response = { "!showpopupresponse popup:$s{taskMonitorInfoPopup}" }),
-		@ResultMapping(name = "showapplicationreportoptions",
-				response = { "!showpopupresponse popup:$s{reportRunnerPopup}" }),
-		@ResultMapping(name = "showapplicationsearch",
-				response = { "!showpopupresponse popup:$s{searchBoxPopup}" }),
-		@ResultMapping(name = "searchdone",
-				response = { "!hidepopupresponse",
-						"!postresponse pathProperty:$s{searchSelectPath}" }),
-		@ResultMapping(name = "viewreport", response = { "!commonreportresponse" }) })
+        @ResultMapping(name = "showapplicationmessage", response = { "!showpopupresponse popup:$s{messageBoxPopup}" }),
+        @ResultMapping(
+                name = "showapplicationtaskmonitor",
+                response = { "!showpopupresponse popup:$s{taskMonitorInfoPopup}" }),
+        @ResultMapping(
+                name = "showapplicationreportoptions", response = { "!showpopupresponse popup:$s{reportRunnerPopup}" }),
+        @ResultMapping(name = "showapplicationsearch", response = { "!showpopupresponse popup:$s{searchBoxPopup}" }),
+        @ResultMapping(
+                name = "searchdone",
+                response = { "!hidepopupresponse", "!postresponse pathBinding:$s{searchSelectPath}" }),
+        @ResultMapping(name = "viewreport", response = { "!commonreportresponse" }) })
 public class CommonUtilitiesController extends BasePageController {
 
-	private SearchBoxPanel searchBoxState;
+    private SearchBoxPanel searchBoxState;
 
-	private String searchSelectPath;
+    private String searchSelectPath;
 
-	public CommonUtilitiesController() {
-		super(true, false);
-	}
+    public CommonUtilitiesController() {
+        super(true, false);
+    }
 
-	@Action
-	public String generateReport() throws UnifyException {
-		ReportOptions reportOptions = (ReportOptions) this
-				.getSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
-		setRequestAttribute(JacklynRequestAttributeConstants.REPORTOPTIONS, reportOptions);
-		logUserEvent(CommonModuleAuditConstants.GENERATE_REPORT, reportOptions.getTitle());
-		return "viewreport";
-	}
+    @Action
+    public String generateReport() throws UnifyException {
+        ReportOptions reportOptions =
+                (ReportOptions) getSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
+        setRequestAttribute(JacklynRequestAttributeConstants.REPORTOPTIONS, reportOptions);
+        logUserEvent(CommonModuleAuditConstants.GENERATE_REPORT, reportOptions.getTitle());
+        return "viewreport";
+    }
 
-	@Action
-	public String closeReport() throws UnifyException {
-		removeSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
-		return hidePopup();
-	}
+    @Action
+    public String closeReport() throws UnifyException {
+        removeSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
+        return hidePopup();
+    }
 
-	@Action
-	public String searchBoxSelect() throws UnifyException {
-		searchBoxState.setResultBeanProperties();
-		SearchBox searchBoxInfo = (SearchBox) this
-				.removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
-		searchSelectPath = searchBoxInfo.getResultPath();
-		return "searchdone";
-	}
+    @Action
+    public String searchBoxSelect() throws UnifyException {
+        searchBoxState.setResultBeanProperties();
+        SearchBox searchBoxInfo = (SearchBox) removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
+        searchSelectPath = searchBoxInfo.getResultPath();
+        return "searchdone";
+    }
 
-	@Action
-	public String searchBoxCancel() throws UnifyException {
-		removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
-		return hidePopup();
-	}
+    @Action
+    public String searchBoxCancel() throws UnifyException {
+        removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
+        return hidePopup();
+    }
 
-	public String getSearchSelectPath() {
-		return searchSelectPath;
-	}
+    public String getSearchSelectPath() {
+        return searchSelectPath;
+    }
 
-	public void setSearchSelectPath(String searchSelectPath) {
-		this.searchSelectPath = searchSelectPath;
-	}
+    public void setSearchSelectPath(String searchSelectPath) {
+        this.searchSelectPath = searchSelectPath;
+    }
 
-	@Override
-	protected void onSetPage() throws UnifyException {
-		super.onSetPage();
-		searchBoxState = getPageWidgetByShortName(SearchBoxPanel.class, "searchBoxPopup");
-	}
+    @Override
+    protected void onSetPage() throws UnifyException {
+        super.onSetPage();
+        searchBoxState = getPageWidgetByShortName(SearchBoxPanel.class, "searchBoxPopup");
+    }
 }

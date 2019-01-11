@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,28 +33,25 @@ import com.tcdng.unify.core.util.QueryUtils;
  * @since 1.0
  */
 @Component("archivingtimestampfieldlist")
-public class ArchivingTimestampFieldListCommand
-		extends AbstractArchivingListCommand<ArchivingParams> {
+public class ArchivingTimestampFieldListCommand extends AbstractArchivingListCommand<ArchivingParams> {
 
-	public ArchivingTimestampFieldListCommand() {
-		super(ArchivingParams.class);
-	}
+    public ArchivingTimestampFieldListCommand() {
+        super(ArchivingParams.class);
+    }
 
-	private static final ArchivingFieldType[] TIME
-			= { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP };
+    private static final ArchivingFieldType[] TIME = { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP };
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ArchivingParams params)
-			throws UnifyException {
-		if (QueryUtils.isValidLongCriteria(params.getArchivableDefId())) {
-			ArchivingFieldQuery query = new ArchivingFieldQuery();
-			query.archivableDefId(params.getArchivableDefId());
-			query.fieldTypeIn(TIME);
-			query.orderByDescription();
-			return getArchivingBusinessModule().findArchivingFields(query);
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ArchivingParams params) throws UnifyException {
+        if (QueryUtils.isValidLongCriteria(params.getArchivableDefId())) {
+            ArchivingFieldQuery query = new ArchivingFieldQuery();
+            query.archivableDefId(params.getArchivableDefId());
+            query.fieldTypeIn(TIME);
+            query.orderByDescription();
+            return getArchivingService().findArchivingFields(query);
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
 }

@@ -1,11 +1,11 @@
 // UPL template for workflow user document viewer panel
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-wfuserdocumentviewer 
-	formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmId frmLoginId frmFullName frmEmail frmTheme frmPasswordExpires frmStatus}}
-	formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
-	
+    formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmId frmLoginId frmFullName frmEmail frmTheme frmPasswordExpires frmStatus}}
+    formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
+    
 !ui-text:frmLoginId caption:$m{security.user.loginid} case:upper focus:true binding:data.loginId maxLen:32 required:true
 !ui-text:frmFullName caption:$m{security.user.fullname} binding:data.fullName maxLen:64 required:true size:32
 !ui-text:frmEmail caption:$m{security.user.email} binding:data.email maxLen:64 required:true size:40
@@ -20,7 +20,7 @@
 //Validations
 !ui-validation:frmCommonVal components:$c{frmLoginId frmFullName frmEmail}
 !ui-uniquevalidation:frmLoginIdVal components:$c{frmLoginId}
-	type:$s{com.tcdng.jacklyn.security.entities.User}
-	idProperty:$s{data.id}
+    type:$s{com.tcdng.jacklyn.security.entities.User}
+    idProperty:$s{data.id}
 !ui-emailvalidation:frmEmailVal components:$c{frmEmail}
 

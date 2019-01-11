@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,25 +23,24 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfRoutingDef extends BaseWfDef {
 
-	private static final long serialVersionUID = -5773321795933701806L;
+    private static final long serialVersionUID = -5773321795933701806L;
 
-	private String targetGlobalName;
+    private String targetGlobalName;
 
-	private WfDocClassifierDef classifier;
+    private WfDocClassifierDef classifier;
 
-	public WfRoutingDef(String name, String description, String targetGlobalName,
-			WfDocClassifierDef classifier) {
-		super(name, description);
-		this.targetGlobalName = targetGlobalName;
-		this.classifier = classifier;
-	}
+    public WfRoutingDef(String name, String description, String targetGlobalName, WfDocClassifierDef classifier) {
+        super(name, description);
+        this.targetGlobalName = targetGlobalName;
+        this.classifier = classifier;
+    }
 
-	public String getTargetGlobalName() {
-		return targetGlobalName;
-	}
+    public String getTargetGlobalName() {
+        return targetGlobalName;
+    }
 
-	public WfDocClassifierDef getClassifier() {
-		return classifier;
-	}
+    public WfDocClassifierDef getClassifier() {
+        return classifier;
+    }
 
 }

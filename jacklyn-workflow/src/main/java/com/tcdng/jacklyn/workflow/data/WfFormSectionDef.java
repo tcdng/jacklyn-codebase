@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,22 +27,33 @@ import java.util.List;
  */
 public class WfFormSectionDef extends BaseLabelWfDef {
 
-	private static final long serialVersionUID = 800388073154871802L;
+    private static final long serialVersionUID = 800388073154871802L;
 
-	private List<WfFormFieldDef> fieldList;
+    private String binding;
 
-	public WfFormSectionDef(String name, String description, String label,
-			List<WfFormFieldDef> fieldList) {
-		super(name, description, label);
-		if (fieldList != null && !fieldList.isEmpty()) {
-			this.fieldList = Collections.unmodifiableList(fieldList);
-		} else {
-			this.fieldList = Collections.emptyList();
-		}
-	}
+    private List<WfFormFieldDef> fieldList;
 
-	public List<WfFormFieldDef> getFieldList() {
-		return fieldList;
-	}
+    public WfFormSectionDef(String name, String description, String label, String binding,
+            List<WfFormFieldDef> fieldList) {
+        super(name, description, label);
+        this.binding = binding;
+        if (fieldList != null && !fieldList.isEmpty()) {
+            this.fieldList = Collections.unmodifiableList(fieldList);
+        } else {
+            this.fieldList = Collections.emptyList();
+        }
+    }
+
+    public String getBinding() {
+        return binding;
+    }
+
+    public boolean isBinding() {
+        return binding != null;
+    }
+    
+    public List<WfFormFieldDef> getFieldList() {
+        return fieldList;
+    }
 
 }

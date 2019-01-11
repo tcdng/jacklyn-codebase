@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,27 +25,27 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("inboxfilereadlist")
+@StaticList("fileinboxreadlist")
 public enum FileInboxReadStatus implements EnumConst {
 
-	NOT_READ("N"), READ("R"), READ_FAILED("F");
+    NOT_READ("N"), READ("R"), READ_FAILED("F");
 
-	private final String code;
+    private final String code;
 
-	private FileInboxReadStatus(String code) {
-		this.code = code;
-	}
+    private FileInboxReadStatus(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static FileInboxReadStatus fromCode(String code) {
-		return EnumUtils.fromCode(FileInboxReadStatus.class, code);
-	}
+    public static FileInboxReadStatus fromCode(String code) {
+        return EnumUtils.fromCode(FileInboxReadStatus.class, code);
+    }
 
-	public static FileInboxReadStatus fromName(String name) {
-		return EnumUtils.fromName(FileInboxReadStatus.class, name);
-	}
+    public static FileInboxReadStatus fromName(String name) {
+        return EnumUtils.fromName(FileInboxReadStatus.class, name);
+    }
 }

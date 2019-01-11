@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,27 +25,27 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("outboxfilestatuslist")
+@StaticList("fileoutboxstatuslist")
 public enum FileOutboxStatus implements EnumConst {
 
-	NOT_SENT("N"), SENT("S"), ABORTED("A");
+    NOT_SENT("N"), SENT("S"), ABORTED("A");
 
-	private final String code;
+    private final String code;
 
-	private FileOutboxStatus(String code) {
-		this.code = code;
-	}
+    private FileOutboxStatus(String code) {
+        this.code = code;
+    }
 
-	@Override
-	public String code() {
-		return this.code;
-	}
+    @Override
+    public String code() {
+        return this.code;
+    }
 
-	public static FileOutboxStatus fromCode(String code) {
-		return EnumUtils.fromCode(FileOutboxStatus.class, code);
-	}
+    public static FileOutboxStatus fromCode(String code) {
+        return EnumUtils.fromCode(FileOutboxStatus.class, code);
+    }
 
-	public static FileOutboxStatus fromName(String name) {
-		return EnumUtils.fromName(FileOutboxStatus.class, name);
-	}
+    public static FileOutboxStatus fromName(String name) {
+        return EnumUtils.fromName(FileOutboxStatus.class, name);
+    }
 }

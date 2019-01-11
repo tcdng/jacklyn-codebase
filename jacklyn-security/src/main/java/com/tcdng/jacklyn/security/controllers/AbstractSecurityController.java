@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,8 +16,7 @@
 package com.tcdng.jacklyn.security.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
-import com.tcdng.jacklyn.security.business.SecurityModule;
-import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -29,14 +28,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  */
 public abstract class AbstractSecurityController extends BasePageController {
 
-	@Configurable(SecurityModuleNameConstants.SECURITYBUSINESSMODULE)
-	private SecurityModule securityModule;
+    @Configurable
+    private SecurityService securityService;
 
-	public AbstractSecurityController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractSecurityController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected SecurityModule getSecurityModule() throws UnifyException {
-		return securityModule;
-	}
+    protected SecurityService getSecurityService() throws UnifyException {
+        return securityService;
+    }
 }

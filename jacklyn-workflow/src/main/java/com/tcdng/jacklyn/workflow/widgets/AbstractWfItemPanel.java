@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,14 +31,14 @@ import com.tcdng.unify.web.ui.panel.DynamicPanel;
 @UplBinding("web/workflow/upl/wfitempanel.upl")
 public abstract class AbstractWfItemPanel extends AbstractPanel {
 
-	@Override
-	public void switchState() throws UnifyException {
-		super.switchState();
+    @Override
+    public void switchState() throws UnifyException {
+        super.switchState();
 
-		DynamicPanel dynamicPanel = (DynamicPanel) getWidgetByShortName("dynamicPanel");
-		WfDocViewer wfDocumentViewer = (WfDocViewer) dynamicPanel.getStandalonePanel();
-		ViewableWfItem wfStepItem = getValue(ViewableWfItem.class);
-		wfDocumentViewer.setDocumentMode(wfStepItem.getWfStepDef());
-	}
+        DynamicPanel dynamicPanel = (DynamicPanel) getWidgetByShortName("dynamicPanel");
+        WfDocViewer wfDocumentViewer = (WfDocViewer) dynamicPanel.getStandalonePanel();
+        ViewableWfItem wfStepItem = getValue(ViewableWfItem.class);
+        wfDocumentViewer.setDocumentMode(wfStepItem.getWfStepDef());
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,21 +23,21 @@ package com.tcdng.jacklyn.common;
  */
 public class TestCustomerSignature {
 
-	private byte[] image;
+    private byte[] image;
 
-	public TestCustomerSignature(byte[] image) {
-		this.image = image;
-	}
+    public TestCustomerSignature(byte[] image) {
+        this.image = image;
+    }
 
-	public TestCustomerSignature() {
+    public TestCustomerSignature() {
 
-	}
+    }
 
-	public byte[] getImage() {
-		return image;
-	}
+    public byte[] getImage() {
+        return image;
+    }
 
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

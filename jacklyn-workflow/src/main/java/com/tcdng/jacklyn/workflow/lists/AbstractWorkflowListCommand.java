@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,8 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.lists;
 
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
@@ -28,15 +27,15 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  */
 public abstract class AbstractWorkflowListCommand<T> extends AbstractListCommand<T> {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable
+    private WorkflowService workflowService;
 
-	public AbstractWorkflowListCommand(Class<T> paramType) {
-		super(paramType);
-	}
+    public AbstractWorkflowListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
-	protected WorkflowModule getWorkflowModule() {
-		return workflowModule;
-	}
+    protected WorkflowService getWorkflowModule() {
+        return workflowService;
+    }
 
 }

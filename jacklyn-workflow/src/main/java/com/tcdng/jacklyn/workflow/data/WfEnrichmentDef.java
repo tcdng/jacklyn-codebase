@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,16 +24,16 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfEnrichmentDef extends BaseWfDef {
 
-	private static final long serialVersionUID = 295716302360623629L;
+    private static final long serialVersionUID = 295716302360623629L;
 
-	private String logic;
+    private String logic;
 
-	public WfEnrichmentDef(String name, String description, String logic) {
-		super(name, description);
-		this.logic = logic;
-	}
+    public WfEnrichmentDef(String name, String description, String logic) {
+        super(name, description);
+        this.logic = logic;
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 }

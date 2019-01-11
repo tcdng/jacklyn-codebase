@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,9 +23,9 @@ package com.tcdng.jacklyn.archiving.constants;
  */
 public interface ArchivingModuleErrorConstants {
 
-	/** File archive configuration with name {0} is unknown */
-	String FILEARCHIVECONFIG_NAME_UNKNOWN = "ARCHIVING_0001";
+    /** File archive configuration with name {0} is unknown */
+    String FILEARCHIVECONFIG_NAME_UNKNOWN = "ARCHIVING_0001";
 
-	/** File archive configuration with name {0} is inactive */
-	String FILEARCHIVECONFIG_INACTIVE = "ARCHIVING_0002";
+    /** File archive configuration with name {0} is inactive */
+    String FILEARCHIVECONFIG_INACTIVE = "ARCHIVING_0002";
 }

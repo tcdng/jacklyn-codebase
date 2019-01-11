@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,7 +24,9 @@ package com.tcdng.jacklyn.shared.workflow;
  */
 public interface WorkflowCategoryBinaryPublicationTaskConstants {
 
-	String TASK_NAME = "wfcategorybinarypublicationtask";
+    String TASK_NAME = "wfcategorybinarypublicationtask";
 
-	String WFCATEGORY_BIN = "wfCategoryBin";
+    String WFCATEGORY_BIN = "wfCategoryBin";
+
+    String WFCATEGORY_ACTIVATE = "wfActivate";
 }

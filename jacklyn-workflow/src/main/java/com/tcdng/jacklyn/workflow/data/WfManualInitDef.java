@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,20 +24,20 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfManualInitDef {
 
-	private WfDocDef wfDocDef;
+    private WfDocDef wfDocDef;
 
-	private WfStepDef wfStepDef;
+    private WfStepDef wfStepDef;
 
-	public WfManualInitDef(WfDocDef wfDocDef, WfStepDef wfStepDef) {
-		this.wfDocDef = wfDocDef;
-		this.wfStepDef = wfStepDef;
-	}
+    public WfManualInitDef(WfDocDef wfDocDef, WfStepDef wfStepDef) {
+        this.wfDocDef = wfDocDef;
+        this.wfStepDef = wfStepDef;
+    }
 
-	public WfDocDef getWfDocDef() {
-		return wfDocDef;
-	}
+    public WfDocDef getWfDocDef() {
+        return wfDocDef;
+    }
 
-	public WfStepDef getWfStepDef() {
-		return wfStepDef;
-	}
+    public WfStepDef getWfStepDef() {
+        return wfStepDef;
+    }
 }

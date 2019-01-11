@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,26 +31,26 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfAlertConfig extends BaseConfig {
 
-	private NotificationType type;
-	
-	private String message;
+    private NotificationType type;
 
-	public NotificationType getType() {
-		return type;
-	}
+    private String message;
 
-	@XmlJavaTypeAdapter(NotificationTypeXmlAdapter.class)
-	@XmlAttribute(name="type", required=true)
-	public void setType(NotificationType type) {
-		this.type = type;
-	}
+    public NotificationType getType() {
+        return type;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    @XmlJavaTypeAdapter(NotificationTypeXmlAdapter.class)
+    @XmlAttribute(name = "type", required = true)
+    public void setType(NotificationType type) {
+        this.type = type;
+    }
 
-	@XmlAttribute(required = true)
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
+
+    @XmlAttribute(required = true)
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

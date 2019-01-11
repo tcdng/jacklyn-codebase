@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,206 +37,216 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Policy("userpolicy")
-@Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true,
-		auditable = true)
-@Table(name = "USER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
+@Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true, auditable = true)
+@Table(name = "APPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
 public class User extends BaseVersionedTimestampedStatusEntity {
 
-	@ForeignKey(type = Theme.class, nullable = true)
-	private Long themeId;
+    @ForeignKey(type = Theme.class, nullable = true)
+    private Long themeId;
 
-	@ForeignKey(type = Branch.class, nullable = true)
-	private Long branchId;
+    @ForeignKey(type = Branch.class, nullable = true)
+    private Long branchId;
 
-	@Column(length = 64)
-	private String fullName;
+    @Column(length = 64)
+    private String fullName;
 
-	@Column(transformer = "uppercase-transformer")
-	private String loginId;
+    @Column(transformer = "uppercase-transformer")
+    private String loginId;
 
-	@Column(length = 256)
-	private String password;
+    @Column(length = 256)
+    private String password;
 
-	@Column(length = 64)
-	private String email;
+    @Column(length = 64)
+    private String email;
 
-	@Column
-	private Integer loginAttempts;
+    @Column
+    private Integer loginAttempts;
 
-	@Column(name = "LOGIN_LOCKED_FG")
-	private Boolean loginLocked;
+    @Column(name = "LOGIN_LOCKED_FG")
+    private Boolean loginLocked;
 
-	@Column(name = "CHANGE_PASSWORD_FG")
-	private Boolean changePassword;
+    @Column(name = "CHANGE_PASSWORD_FG")
+    private Boolean changePassword;
 
-	@Column(name = "PASSWORD_EXPIRES_FG")
-	private Boolean passwordExpires;
+    @Column(name = "PASSWORD_EXPIRES_FG")
+    private Boolean passwordExpires;
 
-	@Column(name = "ALLOW_MULTI_LOGIN_FG")
-	private Boolean allowMultipleLogin;
+    @Column(name = "ALLOW_MULTI_LOGIN_FG")
+    private Boolean allowMultipleLogin;
 
-	@Column(nullable = true)
-	private Date passwordExpiryDt;
+    @Column(nullable = true)
+    private Date passwordExpiryDt;
 
-	@Column(type = ColumnType.TIMESTAMP, nullable = true)
-	private Date lastLoginDt;
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date lastLoginDt;
 
-	@Column(name = "SUPERVISOR_FG")
-	private Boolean supervisor;
+    @Column(name = "SUPERVISOR_FG")
+    private Boolean supervisor;
 
-	@ListOnly(key = "branchId", property = "description")
-	private String branchDesc;
+    @ListOnly(key = "branchId", property = "name")
+    private String branchName;
 
-	@ListOnly(key = "themeId", property = "description")
-	private String themeDesc;
+    @ListOnly(key = "branchId", property = "description")
+    private String branchDesc;
 
-	public User(Long id, String fullName, String loginId, String email, Boolean passwordExpires) {
-		this.setId(id);
-		this.fullName = fullName;
-		this.loginId = loginId;
-		this.email = email;
-		this.passwordExpires = passwordExpires;
-		this.supervisor = Boolean.FALSE;
-	}
+    @ListOnly(key = "themeId", property = "description")
+    private String themeDesc;
 
-	public User() {
+    public User(Long id, String fullName, String loginId, String email, Boolean passwordExpires) {
+        this.setId(id);
+        this.fullName = fullName;
+        this.loginId = loginId;
+        this.email = email;
+        this.passwordExpires = passwordExpires;
+        this.supervisor = Boolean.FALSE;
+    }
 
-	}
+    public User() {
 
-	public Long getThemeId() {
-		return themeId;
-	}
+    }
 
-	public void setThemeId(Long themeId) {
-		this.themeId = themeId;
-	}
+    public Long getThemeId() {
+        return themeId;
+    }
 
-	public Long getBranchId() {
-		return branchId;
-	}
+    public void setThemeId(Long themeId) {
+        this.themeId = themeId;
+    }
 
-	public void setBranchId(Long branchId) {
-		this.branchId = branchId;
-	}
+    public Long getBranchId() {
+        return branchId;
+    }
 
-	@Override
-	public String getDescription() {
-		return fullName;
-	}
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
 
-	public String getFullName() {
-		return fullName;
-	}
+    @Override
+    public String getDescription() {
+        return fullName;
+    }
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public String getLoginId() {
-		return loginId;
-	}
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
+    public String getLoginId() {
+        return loginId;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Boolean getLoginLocked() {
-		return loginLocked;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setLoginLocked(Boolean loginLocked) {
-		this.loginLocked = loginLocked;
-	}
+    public Boolean getLoginLocked() {
+        return loginLocked;
+    }
 
-	public Boolean getChangePassword() {
-		return changePassword;
-	}
+    public void setLoginLocked(Boolean loginLocked) {
+        this.loginLocked = loginLocked;
+    }
 
-	public void setChangePassword(Boolean changePassword) {
-		this.changePassword = changePassword;
-	}
+    public Boolean getChangePassword() {
+        return changePassword;
+    }
 
-	public Integer getLoginAttempts() {
-		return loginAttempts;
-	}
+    public void setChangePassword(Boolean changePassword) {
+        this.changePassword = changePassword;
+    }
 
-	public void setLoginAttempts(Integer loginAttempts) {
-		this.loginAttempts = loginAttempts;
-	}
+    public Integer getLoginAttempts() {
+        return loginAttempts;
+    }
 
-	public Boolean getPasswordExpires() {
-		return passwordExpires;
-	}
+    public void setLoginAttempts(Integer loginAttempts) {
+        this.loginAttempts = loginAttempts;
+    }
 
-	public void setPasswordExpires(Boolean passwordExpires) {
-		this.passwordExpires = passwordExpires;
-	}
+    public Boolean getPasswordExpires() {
+        return passwordExpires;
+    }
 
-	public Date getPasswordExpiryDt() {
-		return passwordExpiryDt;
-	}
+    public void setPasswordExpires(Boolean passwordExpires) {
+        this.passwordExpires = passwordExpires;
+    }
 
-	public void setPasswordExpiryDt(Date passwordExpiryDt) {
-		this.passwordExpiryDt = passwordExpiryDt;
-	}
+    public Date getPasswordExpiryDt() {
+        return passwordExpiryDt;
+    }
 
-	public Date getLastLoginDt() {
-		return lastLoginDt;
-	}
+    public void setPasswordExpiryDt(Date passwordExpiryDt) {
+        this.passwordExpiryDt = passwordExpiryDt;
+    }
 
-	public void setLastLoginDt(Date lastLoginDt) {
-		this.lastLoginDt = lastLoginDt;
-	}
+    public Date getLastLoginDt() {
+        return lastLoginDt;
+    }
 
-	public String getBranchDesc() {
-		return branchDesc;
-	}
+    public void setLastLoginDt(Date lastLoginDt) {
+        this.lastLoginDt = lastLoginDt;
+    }
 
-	public void setBranchDesc(String branchDesc) {
-		this.branchDesc = branchDesc;
-	}
+    public String getBranchName() {
+        return branchName;
+    }
 
-	public String getThemeDesc() {
-		return themeDesc;
-	}
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
 
-	public void setThemeDesc(String themeDesc) {
-		this.themeDesc = themeDesc;
-	}
+    public String getBranchDesc() {
+        return branchDesc;
+    }
 
-	public boolean isChangeUserPassword() {
-		return Boolean.TRUE.equals(this.changePassword);
-	}
+    public void setBranchDesc(String branchDesc) {
+        this.branchDesc = branchDesc;
+    }
 
-	public Boolean getAllowMultipleLogin() {
-		return allowMultipleLogin;
-	}
+    public String getThemeDesc() {
+        return themeDesc;
+    }
 
-	public void setAllowMultipleLogin(Boolean allowMultipleLogin) {
-		this.allowMultipleLogin = allowMultipleLogin;
-	}
+    public void setThemeDesc(String themeDesc) {
+        this.themeDesc = themeDesc;
+    }
 
-	public Boolean getSupervisor() {
-		return supervisor;
-	}
+    public boolean isChangeUserPassword() {
+        return Boolean.TRUE.equals(this.changePassword);
+    }
 
-	public void setSupervisor(Boolean supervisor) {
-		this.supervisor = supervisor;
-	}
+    public Boolean getAllowMultipleLogin() {
+        return allowMultipleLogin;
+    }
+
+    public void setAllowMultipleLogin(Boolean allowMultipleLogin) {
+        this.allowMultipleLogin = allowMultipleLogin;
+    }
+
+    public Boolean getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Boolean supervisor) {
+        this.supervisor = supervisor;
+    }
 }

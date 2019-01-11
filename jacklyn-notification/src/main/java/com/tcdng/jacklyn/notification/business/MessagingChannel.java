@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.notification.business;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.notification.data.MessagingChannelDef;
+import com.tcdng.jacklyn.notification.data.NotificationChannelDef;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.FileAttachment;
@@ -30,28 +30,28 @@ import com.tcdng.unify.core.data.FileAttachment;
  */
 public interface MessagingChannel extends UnifyComponent {
 
-	/**
-	 * Sends a message.
-	 * 
-	 * @param messagingChannelDef
-	 *            notification channel definition
-	 * @param subject
-	 *            the message subject
-	 * @param senderContact
-	 *            the sender contact
-	 * @param recipientContactList
-	 *            the recipients contact list
-	 * @param messageBody
-	 *            the message body
-	 * @param isHtml
-	 *            indicates if message body is HTML
-	 * @param fileAttachmentList
-	 *            attachment list
-	 * @return a true value if successfully sent
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	boolean sendMessage(MessagingChannelDef messagingChannelDef, String subject,
-			String senderContact, List<String> recipientContactList, String messageBody,
-			boolean isHtml, List<FileAttachment> fileAttachmentList) throws UnifyException;
+    /**
+     * Sends a message.
+     * 
+     * @param messagingChannelDef
+     *            notification channel definition
+     * @param subject
+     *            the message subject
+     * @param senderContact
+     *            the sender contact
+     * @param recipientContactList
+     *            the recipients contact list
+     * @param messageBody
+     *            the message body
+     * @param isHtml
+     *            indicates if message body is HTML
+     * @param fileAttachmentList
+     *            attachment list
+     * @return a true value if successfully sent
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean sendMessage(NotificationChannelDef messagingChannelDef, String subject, String senderContact,
+            List<String> recipientContactList, String messageBody, boolean isHtml,
+            List<FileAttachment> fileAttachmentList) throws UnifyException;
 }

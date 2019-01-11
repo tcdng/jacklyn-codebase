@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,70 +34,68 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/report/reportdefinition")
 @UplBinding("web/report/upl/managereportdefinitions.upl")
-public class ReportDefinitionController
-		extends AbstractReportRecordController<ReportableDefinition> {
+public class ReportDefinitionController extends AbstractReportCrudController<ReportableDefinition> {
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public ReportDefinitionController() {
-		super(ReportableDefinition.class, "report.reportabledefinition.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public ReportDefinitionController() {
+        super(ReportableDefinition.class, "$m{report.reportabledefinition.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<ReportableDefinition> find() throws UnifyException {
-		ReportableDefinitionQuery query = new ReportableDefinitionQuery();
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getReportModule().findReportables(query);
-	}
+    @Override
+    protected List<ReportableDefinition> find() throws UnifyException {
+        ReportableDefinitionQuery query = new ReportableDefinitionQuery();
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getReportService().findReportables(query);
+    }
 
-	@Override
-	protected ReportableDefinition find(Long id) throws UnifyException {
-		return getReportModule().findReportDefinition(id);
-	}
+    @Override
+    protected ReportableDefinition find(Long id) throws UnifyException {
+        return getReportService().findReportDefinition(id);
+    }
 
-	@Override
-	protected ReportableDefinition prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected ReportableDefinition prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(ReportableDefinition reportableDefinitionData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(ReportableDefinition reportableDefinitionData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(ReportableDefinition reportableDefinitionData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(ReportableDefinition reportableDefinitionData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(ReportableDefinition reportableDefinitionData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(ReportableDefinition reportableDefinitionData) throws UnifyException {
+        return 0;
+    }
 }

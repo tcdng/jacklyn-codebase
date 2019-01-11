@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,27 +16,26 @@
 package com.tcdng.jacklyn.workflow.controllers;
 
 import com.tcdng.jacklyn.common.controllers.BasePageController;
-import com.tcdng.jacklyn.workflow.business.WorkflowModule;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Abstract base page controller for workflow module.
+ * Abstract base page controller for workflow service.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 public abstract class AbstractWorkflowController extends BasePageController {
 
-	@Configurable(WorkflowModuleNameConstants.WORKFLOWBUSINESSMODULE)
-	private WorkflowModule workflowModule;
+    @Configurable
+    private WorkflowService workflowService;
 
-	public AbstractWorkflowController(boolean secured, boolean readOnly) {
-		super(secured, readOnly);
-	}
+    public AbstractWorkflowController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
+    }
 
-	protected WorkflowModule getWorkflowModule() throws UnifyException {
-		return workflowModule;
-	}
+    protected WorkflowService getWorkflowService() throws UnifyException {
+        return workflowService;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,25 +37,24 @@ import com.tcdng.unify.web.ui.container.Form;
 @UplBinding("web/workflow/upl/wfsingleformdocviewer.upl")
 public class WfSingleFormDocViewer extends AbstractWfDocViewer {
 
-	@Override
-	public void setDocumentMode(WfStepDef wfStepDef) throws UnifyException {
-		Form form = (Form) getWidgetByShortName("formPanel.form");
-		form.reset();
-		for (WfFormPrivilegeDef wfFormPrivilegeDef : wfStepDef.getFormPrivilegeList()) {
-			if (WorkflowFormElementType.SECTION.equals(wfFormPrivilegeDef.getType())) {
-				form.setSectionState(wfFormPrivilegeDef.getName(), wfFormPrivilegeDef.isVisible(),
-						wfFormPrivilegeDef.isEditable(), wfFormPrivilegeDef.isDisabled());
-			} else if (WorkflowFormElementType.FIELD.equals(wfFormPrivilegeDef.getType())) {
-				Widget widget = getWidgetByShortName(wfFormPrivilegeDef.getName());
-				widget.setVisible(wfFormPrivilegeDef.isVisible());
-				widget.setEditable(wfFormPrivilegeDef.isEditable());
-				widget.setDisabled(wfFormPrivilegeDef.isDisabled());
-				if (widget instanceof Control) {
-					((Control) widget)
-							.setRequired(TriState.getTriState(wfFormPrivilegeDef.isRequired()));
-				}
-			}
-		}
-	}
+    @Override
+    public void setDocumentMode(WfStepDef wfStepDef) throws UnifyException {
+        Form form = (Form) getWidgetByShortName("formPanel.form");
+        form.reset();
+        for (WfFormPrivilegeDef wfFormPrivilegeDef : wfStepDef.getFormPrivilegeList()) {
+            if (WorkflowFormElementType.SECTION.equals(wfFormPrivilegeDef.getType())) {
+                form.setSectionState(wfFormPrivilegeDef.getName(), wfFormPrivilegeDef.isVisible(),
+                        wfFormPrivilegeDef.isEditable(), wfFormPrivilegeDef.isDisabled());
+            } else if (WorkflowFormElementType.FIELD.equals(wfFormPrivilegeDef.getType())) {
+                Widget widget = getWidgetByShortName(wfFormPrivilegeDef.getName());
+                widget.setVisible(wfFormPrivilegeDef.isVisible());
+                widget.setEditable(wfFormPrivilegeDef.isEditable());
+                widget.setDisabled(wfFormPrivilegeDef.isDisabled());
+                if (widget instanceof Control) {
+                    ((Control) widget).setRequired(TriState.getTriState(wfFormPrivilegeDef.isRequired()));
+                }
+            }
+        }
+    }
 
 }

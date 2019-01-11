@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,74 +30,74 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Table(name = "WFENRICHMENT", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
-		@UniqueConstraint({ "wfStepId", "description" }) })
+        @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfEnrichment extends BaseEntity {
 
-	@ForeignKey(WfStep.class)
-	private Long wfStepId;
+    @ForeignKey(WfStep.class)
+    private Long wfStepId;
 
-	@Column(name = "ENRICHMENT_NM", length = 32)
-	private String name;
+    @Column(name = "ENRICHMENT_NM", length = 32)
+    private String name;
 
-	@Column(name = "ENRICHMENT_DESC", length = 64)
-	private String description;
+    @Column(name = "ENRICHMENT_DESC", length = 64)
+    private String description;
 
-	@Column
-	private String logic;
+    @Column
+    private String logic;
 
-	@ListOnly(key = "wfStepId", property = "name")
-	private String wfStepName;
+    @ListOnly(key = "wfStepId", property = "name")
+    private String wfStepName;
 
-	@ListOnly(key = "wfStepId", property = "description")
-	private String wfStepDesc;
+    @ListOnly(key = "wfStepId", property = "description")
+    private String wfStepDesc;
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLogic() {
-		return logic;
-	}
+    public String getLogic() {
+        return logic;
+    }
 
-	public void setLogic(String logic) {
-		this.logic = logic;
-	}
+    public void setLogic(String logic) {
+        this.logic = logic;
+    }
 
-	public Long getWfStepId() {
-		return wfStepId;
-	}
+    public Long getWfStepId() {
+        return wfStepId;
+    }
 
-	public void setWfStepId(Long wfStepId) {
-		this.wfStepId = wfStepId;
-	}
+    public void setWfStepId(Long wfStepId) {
+        this.wfStepId = wfStepId;
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public void setWfStepName(String wfStepName) {
-		this.wfStepName = wfStepName;
-	}
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
 
-	public String getWfStepDesc() {
-		return wfStepDesc;
-	}
+    public String getWfStepDesc() {
+        return wfStepDesc;
+    }
 
-	public void setWfStepDesc(String wfStepDesc) {
-		this.wfStepDesc = wfStepDesc;
-	}
+    public void setWfStepDesc(String wfStepDesc) {
+        this.wfStepDesc = wfStepDesc;
+    }
 
 }

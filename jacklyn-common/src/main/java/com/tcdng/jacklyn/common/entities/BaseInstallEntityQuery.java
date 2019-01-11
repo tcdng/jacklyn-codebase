@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,15 +21,13 @@ package com.tcdng.jacklyn.common.entities;
  * @author Lateef Ojulari
  * @version 1.0
  */
-public abstract class BaseInstallEntityQuery<T extends BaseInstallEntity>
-		extends BaseStatusEntityQuery<T> {
+public abstract class BaseInstallEntityQuery<T extends BaseInstallEntity> extends BaseStatusEntityQuery<T> {
 
-	public BaseInstallEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-		this.installed(Boolean.TRUE);
-	}
+    public BaseInstallEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseInstallEntityQuery<T> installed(Boolean installed) {
-		return (BaseInstallEntityQuery<T>) equals("installed", installed);
-	}
+    public BaseInstallEntityQuery<T> installed(Boolean installed) {
+        return (BaseInstallEntityQuery<T>) equals("installed", installed);
+    }
 }

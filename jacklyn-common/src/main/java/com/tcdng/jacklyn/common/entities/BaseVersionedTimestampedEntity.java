@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,14 +27,14 @@ import com.tcdng.unify.core.annotation.Version;
 @Policy("versionedtimestampedentity-policy")
 public abstract class BaseVersionedTimestampedEntity extends BaseTimestampedEntity {
 
-	@Version
-	private long versionNo;
+    @Version
+    private long versionNo;
 
-	public long getVersionNo() {
-		return versionNo;
-	}
+    public long getVersionNo() {
+        return versionNo;
+    }
 
-	public void setVersionNo(long versionNo) {
-		this.versionNo = versionNo;
-	}
+    public void setVersionNo(long versionNo) {
+        this.versionNo = versionNo;
+    }
 }

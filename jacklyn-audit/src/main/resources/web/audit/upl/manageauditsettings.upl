@@ -1,16 +1,16 @@
 // UPL template for managing audit settings
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{audit.auditsettings.manage}
-	searchByList:$c{searchModuleId searchEventType searchStatus}
-	searchClearList:$c{searchModuleId searchEventType searchStatus}
-	moreSearchActionComponentList:$c{activateItemsBtn deactivateItemsBtn}
-	tableColumnList:$c{moduleDesc name description actionDesc statusDesc}
-	tableMultiSelect:true tableMultiSelDependentList:$c{activateItemsBtn deactivateItemsBtn}
-	tableRowEventHandler:$d{!ui-event event:none}
-	viewPrivilege:$s{aud-auditsettingsview}
-	editPrivilege:$s{aud-auditsettingsedit}
+    searchByList:$c{searchModuleId searchEventType searchStatus}
+    searchClearList:$c{searchModuleId searchEventType searchStatus}
+    moreSearchActionComponentList:$c{activateItemsBtn deactivateItemsBtn}
+    tableColumnList:$c{moduleDesc name description actionDesc statusDesc}
+    tableMultiSelect:true tableMultiSelDependentList:$c{activateItemsBtn deactivateItemsBtn}
+    tableRowEventHandler:$d{!ui-event event:none}
+    viewPrivilege:$s{aud-auditsettingsview}
+    editPrivilege:$s{aud-auditsettingsedit}
 
 //Search
 !ui-select:searchModuleId caption:$m{audit.auditsettings.module} binding:searchModuleId list:modulelist blankOption:$s{}
@@ -18,7 +18,7 @@
 !ui-select:searchEventType caption:$m{audit.auditsettings.action} binding:searchEventType list:auditactionlist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{audit.auditsettings.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{audit.auditsettings.module} binding:moduleDesc columnStyle:$s{width:100px;} sortable:true
@@ -31,11 +31,11 @@
 
 //More modify action buttons
 !ui-button:activateItemsBtn styleClass:$e{jk-button} caption:$m{button.activate.items}
-	eventHandler:$d{!ui-event event:onclick action:$c{activateItemsAct}}
-	hint:$m{audit.auditsettings.activate.selected.types} privilege:$s{aud-editaudittype}
+    eventHandler:$d{!ui-event event:onclick action:$c{activateItemsAct}}
+    hint:$m{audit.auditsettings.activate.selected.types} privilege:$s{aud-auditsettingsedit}
 !ui-button:deactivateItemsBtn styleClass:$e{jk-button} caption:$m{button.deactivate.items}
-	eventHandler:$d{!ui-event event:onclick action:$c{deactivateItemsAct}}
-	hint:$m{audit.auditsettings.deactivate.selected.types} privilege:$s{aud-editaudittype}
+    eventHandler:$d{!ui-event event:onclick action:$c{deactivateItemsAct}}
+    hint:$m{audit.auditsettings.deactivate.selected.types} privilege:$s{aud-auditsettingsedit}
 
 //Actions
 !ui-post:activateItemsAct path:$n{/activateAuditTypes} components:$c{tablePanel} confirm:$m{audit.auditsettings.activate.items.confirm}

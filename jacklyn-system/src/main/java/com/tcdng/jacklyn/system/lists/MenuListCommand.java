@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,16 +35,15 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("menulist")
 public class MenuListCommand extends AbstractZeroParamsSystemListCommand {
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		ApplicationMenuQuery query = new ApplicationMenuQuery();
-		query.status(RecordStatus.ACTIVE).order("caption");
-		List<ApplicationMenu> menuList = getSystemModule().findMenus(query);
-		for (ApplicationMenu menuData : menuList) {
-			menuData.setCaption(resolveSessionMessage(menuData.getCaption()));
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        ApplicationMenuQuery query = new ApplicationMenuQuery();
+        query.status(RecordStatus.ACTIVE).order("caption");
+        List<ApplicationMenu> menuList = getSystemService().findMenus(query);
+        for (ApplicationMenu menuData : menuList) {
+            menuData.setCaption(resolveSessionMessage(menuData.getCaption()));
+        }
 
-		return menuList;
-	}
+        return menuList;
+    }
 }

@@ -14,18 +14,18 @@
 			action="update" />
 		<audit name="sys-disablecontrol" description="$m{system.auditsettings.system.disablecontrol}"
 			action="update" />
-		<audit name="sys-orderdashboardtile"
-			description="$m{system.auditsettings.dashboardtile.setdisplayorder}"
+		<audit name="sys-ordershortcuttile"
+			description="$m{system.auditsettings.shortcuttile.setdisplayorder}"
 			action="update" />
 	</audits>
-	<dashboard-tiles>
-		<dashboard-tile name="sys-sysparams"
-			caption="$m{system.dashboard.caption.sysparams}" description="$m{system.dashboard.tile.sysparams}"
+	<shortcut-tiles>
+		<shortcut-tile name="sys-sysparams"
+			caption="$m{system.shortcut.caption.sysparams}" description="$m{system.shortcut.tile.sysparams}"
 			image="$t{images/managesysparams.png}" path="/system/sysparameter/openPage" />
-		<dashboard-tile name="sys-schdtasks"
-			caption="$m{system.dashboard.caption.schdtasks}" description="$m{system.dashboard.tile.schdtasks}"
+		<shortcut-tile name="sys-schdtasks"
+			caption="$m{system.shortcut.caption.schdtasks}" description="$m{system.shortcut.tile.schdtasks}"
 			image="$t{images/manageschdtasks.png}" path="/system/scheduledtask/openPage" />
-	</dashboard-tiles>
+	</shortcut-tiles>
 	<menus>
 		<menu name="sys-mainsystem" description="$m{system.menu.main}"
 			caption="$m{system.menu.title}">
@@ -37,6 +37,10 @@
 				caption="$m{system.theme.menu.title}" path="/system/theme/openPage"
 				pageCaption="$m{system.theme.manage}"
 				remotePath="/system/theme/getRemoteDoc" />
+            <menuitem name="sys-managedashboard" description="$m{system.menuitem.dashboard}"
+                caption="$m{system.dashboard.menu.title}" path="/system/dashboard/openPage"
+                pageCaption="$m{system.dashboard.manage}"
+                remotePath="/system/dashboard/getRemoteDoc" />
 			<menuitem name="sys-manageinputctrldef" description="$m{system.menuitem.inputctrldef}"
 				caption="$m{system.inputctrldef.menu.title}" path="/system/inputctrldef/openPage"
 				pageCaption="$m{system.inputctrldef.manage}"
@@ -57,10 +61,10 @@
 				caption="$m{system.scheduledtaskhist.menu.title}" path="/system/scheduledtaskhist/openPage"
 				pageCaption="$m{system.scheduledtaskhist.manage}"
 				remotePath="/system/scheduledtaskhist/getRemoteDoc" />
-			<menuitem name="sys-managedashboardtile" description="$m{system.menuitem.dashboard}"
-				caption="$m{system.dashboardtile.menu.title}" path="/system/dashboardtile/openPage"
-				pageCaption="$m{system.dashboardtile.manage}"
-				remotePath="/system/dashboardtile/getRemoteDoc" />
+			<menuitem name="sys-manageshortcuttile" description="$m{system.menuitem.shortcut}"
+				caption="$m{system.shortcuttile.menu.title}" path="/system/shortcuttile/openPage"
+				pageCaption="$m{system.shortcuttile.manage}"
+				remotePath="/system/shortcuttile/getRemoteDoc" />
 			<menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
 				pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
 				path="/system/authentication/openPage" remotePath="/system/authentication/getRemoteDoc" />
@@ -89,14 +93,18 @@
 			<privilege name="sys-themeedit" description="$m{system.privilege.theme.edit}" />
 			<privilege name="sys-themeview" description="$m{system.privilege.theme.view}" />
 			<privilege name="sys-themedelete" description="$m{system.privilege.theme.delete}" />
+            <privilege name="sys-dashboardadd" description="$m{system.privilege.dashboard.add}" />
+            <privilege name="sys-dashboardedit" description="$m{system.privilege.dashboard.edit}" />
+            <privilege name="sys-dashboardview" description="$m{system.privilege.dashboard.view}" />
+            <privilege name="sys-dashboarddelete" description="$m{system.privilege.dashboard.delete}" />
 			<privilege name="sys-menuview" description="$m{system.privilege.menu.view}" />
 			<privilege name="sys-menuedit" description="$m{system.privilege.menu.edit}" />
 			<privilege name="sys-menuitemview" description="$m{system.privilege.menuitem.view}" />
 			<privilege name="sys-menuitemedit" description="$m{system.privilege.menuitem.edit}" />
-			<privilege name="sys-dashboardtileadd" description="$m{system.privilege.dashboardtile.add}" />
-			<privilege name="sys-dashboardtileedit" description="$m{system.privilege.dashboardtile.edit}" />
-			<privilege name="sys-dashboardtileview" description="$m{system.privilege.dashboardtile.view}" />
-			<privilege name="sys-dashboardtiledelete" description="$m{system.privilege.dashboardtile.delete}" />
+			<privilege name="sys-shortcuttileadd" description="$m{system.privilege.shortcuttile.add}" />
+			<privilege name="sys-shortcuttileedit" description="$m{system.privilege.shortcuttile.edit}" />
+			<privilege name="sys-shortcuttileview" description="$m{system.privilege.shortcuttile.view}" />
+			<privilege name="sys-shortcuttiledelete" description="$m{system.privilege.shortcuttile.delete}" />
 			<privilege name="sys-authentication-add" description="$m{system.privilege.authentication.add}" />
 			<privilege name="sys-authentication-view"
 				description="$m{system.privilege.authentication.view}" />

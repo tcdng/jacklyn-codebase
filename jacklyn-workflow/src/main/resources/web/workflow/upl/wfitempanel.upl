@@ -1,19 +1,19 @@
 // UPL template for workflow item panel
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-wfitempanel layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{wfItemLabel wfItemMainPanel}
 
 !ui-label:wfItemLabel styleClass:$e{jk-wfitemlabel} binding:title
 !ui-panel:wfItemMainPanel layout:$d{!ui-horizontal style:$s{width:100%;}  widths:$l{none 148px}} components:$c{wfItemContentPanel actionPanel}
-	
+    
 !ui-panel:wfItemContentPanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-	components:$c{dynamicPanel}
+    components:$c{dynamicPanel}
 !ui-dynamicpanel:dynamicPanel panelNameBinding:docViewer panelValueBinding:pd
 
 !ui-panel:actionPanel layout:$d{!ui-vertical style:$s{margin:0 auto; text-align:center;}} style:$s{width:100%;}
-	components:$f{actionPanels}
+    components:$f{actionPanels}
 
 // Validations
 !ui-validation:validateDynamicPanel components:$c{dynamicPanel}
-	
+    

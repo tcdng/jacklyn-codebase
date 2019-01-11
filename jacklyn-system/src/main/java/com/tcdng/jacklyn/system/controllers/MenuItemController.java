@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,98 +37,97 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/system/menuitem")
 @UplBinding("web/system/upl/managemenuitem.upl")
-@ResultMappings({ @ResultMapping(name = "showorderpopup",
-		response = { "!showpopupresponse popup:$s{orderMenuItemPopup}" }) })
-public class MenuItemController extends AbstractSystemRecordController<ApplicationMenuItem> {
+@ResultMappings({
+        @ResultMapping(name = "showorderpopup", response = { "!showpopupresponse popup:$s{orderMenuItemPopup}" }) })
+public class MenuItemController extends AbstractSystemCrudController<ApplicationMenuItem> {
 
-	private Long searchMenuId;
+    private Long searchMenuId;
 
-	private List<ApplicationMenuItem> menuItemOrderList;
+    private List<ApplicationMenuItem> menuItemOrderList;
 
-	public MenuItemController() {
-		super(ApplicationMenuItem.class, "system.menuitem.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-						| ManageRecordModifier.REPORTABLE | ManageRecordModifier.SEARCH_ON_OPEN);
-	}
+    public MenuItemController() {
+        super(ApplicationMenuItem.class, "$m{system.menuitem.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
+                | ManageRecordModifier.REPORTABLE | ManageRecordModifier.SEARCH_ON_OPEN);
+    }
 
-	@Action
-	public String prepareSetMenuItemOrder() throws UnifyException {
-		ApplicationMenuItemQuery query = new ApplicationMenuItemQuery();
-		query.menuId(searchMenuId);
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.orderByDisplayOrder();
-		query.ignoreEmptyCriteria(true);
-		menuItemOrderList = getSystemModule().findMenuItems(query);
-		return "showorderpopup";
-	}
+    @Action
+    public String prepareSetMenuItemOrder() throws UnifyException {
+        ApplicationMenuItemQuery query = new ApplicationMenuItemQuery();
+        query.menuId(searchMenuId);
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.orderByDisplayOrder();
+        query.ignoreEmptyCriteria(true);
+        menuItemOrderList = getSystemService().findMenuItems(query);
+        return "showorderpopup";
+    }
 
-	@Action
-	public String saveMenuItemOrder() throws UnifyException {
-		getSystemModule().saveMenuItemOrder(menuItemOrderList);
-		logUserEvent(SystemModuleAuditConstants.AUDIT_SET_MENUITEM_DISPLAY_ORDER,
-				DataUtils.getBeanPropertyArray(String.class, menuItemOrderList, "caption"));
-		hintUser("system.order.menuitem.saved");
-		menuItemOrderList = null;
-		return hidePopup();
-	}
+    @Action
+    public String saveMenuItemOrder() throws UnifyException {
+        getSystemService().saveMenuItemOrder(menuItemOrderList);
+        logUserEvent(SystemModuleAuditConstants.SET_MENUITEM_DISPLAY_ORDER,
+                DataUtils.getBeanPropertyArray(String.class, menuItemOrderList, "caption"));
+        hintUser("system.order.menuitem.saved");
+        menuItemOrderList = null;
+        return hidePopup();
+    }
 
-	@Action
-	public String cancelMenuItemOrder() throws UnifyException {
-		menuItemOrderList = null;
-		return hidePopup();
-	}
+    @Action
+    public String cancelMenuItemOrder() throws UnifyException {
+        menuItemOrderList = null;
+        return hidePopup();
+    }
 
-	public Long getSearchMenuId() {
-		return searchMenuId;
-	}
+    public Long getSearchMenuId() {
+        return searchMenuId;
+    }
 
-	public void setSearchMenuId(Long searchMenuId) {
-		this.searchMenuId = searchMenuId;
-	}
+    public void setSearchMenuId(Long searchMenuId) {
+        this.searchMenuId = searchMenuId;
+    }
 
-	public List<ApplicationMenuItem> getMenuItemOrderList() {
-		return menuItemOrderList;
-	}
+    public List<ApplicationMenuItem> getMenuItemOrderList() {
+        return menuItemOrderList;
+    }
 
-	public void setMenuItemOrderList(List<ApplicationMenuItem> menuItemOrderList) {
-		this.menuItemOrderList = menuItemOrderList;
-	}
+    public void setMenuItemOrderList(List<ApplicationMenuItem> menuItemOrderList) {
+        this.menuItemOrderList = menuItemOrderList;
+    }
 
-	@Override
-	protected List<ApplicationMenuItem> find() throws UnifyException {
-		ApplicationMenuItemQuery query = new ApplicationMenuItemQuery();
-		query.menuId(searchMenuId);
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.order("caption").ignoreEmptyCriteria(true);
-		return getSystemModule().findMenuItems(query);
-	}
+    @Override
+    protected List<ApplicationMenuItem> find() throws UnifyException {
+        ApplicationMenuItemQuery query = new ApplicationMenuItemQuery();
+        query.menuId(searchMenuId);
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.order("caption").ignoreEmptyCriteria(true);
+        return getSystemService().findMenuItems(query);
+    }
 
-	@Override
-	protected ApplicationMenuItem find(Long id) throws UnifyException {
-		return getSystemModule().findMenuItem(id);
-	}
+    @Override
+    protected ApplicationMenuItem find(Long id) throws UnifyException {
+        return getSystemService().findMenuItem(id);
+    }
 
-	@Override
-	protected ApplicationMenuItem prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected ApplicationMenuItem prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(ApplicationMenuItem menuItemData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(ApplicationMenuItem menuItemData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(ApplicationMenuItem menuItemData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(ApplicationMenuItem menuItemData) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(ApplicationMenuItem menuItemData) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(ApplicationMenuItem menuItemData) throws UnifyException {
+        return 0;
+    }
 }

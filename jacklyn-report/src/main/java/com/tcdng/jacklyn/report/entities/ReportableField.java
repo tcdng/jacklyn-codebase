@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,92 +29,92 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("REPORTABLEFLD")
 public class ReportableField extends BaseInstallEntity {
 
-	@ForeignKey(ReportableDefinition.class)
-	private Long reportableId;
+    @ForeignKey(ReportableDefinition.class)
+    private Long reportableId;
 
-	@Column(name = "REPORTABLEFIELD_NM")
-	private String name;
+    @Column(name = "REPORTABLEFIELD_NM")
+    private String name;
 
-	@Column(name = "REPORTABLEFIELD_DESC", length = 64, nullable = true)
-	private String description;
+    @Column(name = "REPORTABLEFIELD_DESC", length = 64, nullable = true)
+    private String description;
 
-	@Column(length = 128, nullable = true)
-	private String type;
+    @Column(length = 128, nullable = true)
+    private String type;
 
-	@Column(nullable = true)
-	private String formatter;
+    @Column(nullable = true)
+    private String formatter;
 
-	@Column(nullable = true)
-	private String horizontalAlign;
+    @Column(nullable = true)
+    private String horizontalAlign;
 
-	@Column(nullable = true)
-	private Integer width;
+    @Column(nullable = true)
+    private Integer width;
 
-	@Column
-	private boolean parameterOnly;
+    @Column
+    private boolean parameterOnly;
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	public Long getReportableId() {
-		return reportableId;
-	}
+    public Long getReportableId() {
+        return reportableId;
+    }
 
-	public void setReportableId(Long reportableId) {
-		this.reportableId = reportableId;
-	}
+    public void setReportableId(Long reportableId) {
+        this.reportableId = reportableId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public String getFormatter() {
-		return formatter;
-	}
+    public String getFormatter() {
+        return formatter;
+    }
 
-	public void setFormatter(String formatter) {
-		this.formatter = formatter;
-	}
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
+    }
 
-	public Integer getWidth() {
-		return width;
-	}
+    public Integer getWidth() {
+        return width;
+    }
 
-	public void setWidth(Integer width) {
-		this.width = width;
-	}
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
 
-	public String getHorizontalAlign() {
-		return horizontalAlign;
-	}
+    public String getHorizontalAlign() {
+        return horizontalAlign;
+    }
 
-	public void setHorizontalAlign(String horizontalAlign) {
-		this.horizontalAlign = horizontalAlign;
-	}
+    public void setHorizontalAlign(String horizontalAlign) {
+        this.horizontalAlign = horizontalAlign;
+    }
 
-	public boolean isParameterOnly() {
-		return parameterOnly;
-	}
+    public boolean isParameterOnly() {
+        return parameterOnly;
+    }
 
-	public void setParameterOnly(boolean parameterOnly) {
-		this.parameterOnly = parameterOnly;
-	}
+    public void setParameterOnly(boolean parameterOnly) {
+        this.parameterOnly = parameterOnly;
+    }
 }

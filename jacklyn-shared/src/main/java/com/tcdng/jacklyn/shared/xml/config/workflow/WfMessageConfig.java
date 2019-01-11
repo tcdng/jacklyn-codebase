@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,7 +18,10 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.tcdng.jacklyn.shared.notification.MessageType;
+import com.tcdng.jacklyn.shared.xml.adapter.MessageTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -29,51 +32,75 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfMessageConfig extends BaseConfig {
 
-	private String subject;
-	
-	private String body;
-	
-	private String attachmentGenerator;
+    private String subject;
 
-	private Boolean html;
-	
-	public WfMessageConfig() {
-		html = Boolean.FALSE;
-	}
-	
-	public String getSubject() {
-		return subject;
-	}
+    private String body;
 
-	@XmlElement(required = true)
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    private String attachmentGenerator;
 
-	public String getBody() {
-		return body;
-	}
+    private MessageType messageType;
 
-	@XmlElement(required = true)
-	public void setBody(String body) {
-		this.body = body;
-	}
+    private String actionLink;
 
-	public String getAttachmentGenerator() {
-		return attachmentGenerator;
-	}
+    private Boolean html;
 
-	@XmlAttribute(name="attachment-generator", required = true)
-	public void setAttachmentGenerator(String attachmentGenerator) {
-		this.attachmentGenerator = attachmentGenerator;
-	}
+    public WfMessageConfig() {
+        messageType = MessageType.INFORMATION;
+        html = Boolean.FALSE;
+    }
 
-	public Boolean getHtml() {
-		return html;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	@XmlAttribute(required = true)
-	public void setHtml(Boolean html) {
-		this.html = html;
-	}
+    @XmlElement(required = true)
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    @XmlElement(required = true)
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getAttachmentGenerator() {
+        return attachmentGenerator;
+    }
+
+    @XmlAttribute(name = "attachment-generator", required = true)
+    public void setAttachmentGenerator(String attachmentGenerator) {
+        this.attachmentGenerator = attachmentGenerator;
+    }
+
+    public Boolean getHtml() {
+        return html;
+    }
+
+    @XmlAttribute(required = true)
+    public void setHtml(Boolean html) {
+        this.html = html;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
+    @XmlAttribute(name="message-type")
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
+    public String getActionLink() {
+        return actionLink;
+    }
+
+    @XmlAttribute(name="action-link")
+    public void setActionLink(String actionLink) {
+        this.actionLink = actionLink;
+    }
 }

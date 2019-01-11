@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,14 +23,14 @@ package com.tcdng.jacklyn.notification.constants;
  */
 public interface NotificationModuleErrorConstants {
 
-	/**
-	 * Message template with name {0} is unknown.
-	 */
-	String MESSAGE_TEMPLATE_WITH_NAME_UNKNOWN = "NOTIF_0001";
+    /**
+     * Message template with name {0} is unknown.
+     */
+    String MESSAGE_TEMPLATE_WITH_NAME_UNKNOWN = "NOTIF_0001";
 
-	/**
-	 * Message channel with name {0} is unknown.
-	 */
-	String MESSAGE_CHANNEL_WITH_NAME_UNKNOWN = "NOTIF_0002";
+    /**
+     * Message channel with name {0} is unknown.
+     */
+    String MESSAGE_CHANNEL_WITH_NAME_UNKNOWN = "NOTIF_0002";
 
 }

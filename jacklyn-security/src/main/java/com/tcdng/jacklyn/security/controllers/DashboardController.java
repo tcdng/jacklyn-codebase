@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,19 +15,9 @@
  */
 package com.tcdng.jacklyn.security.controllers;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
-import com.tcdng.jacklyn.shared.security.PrivilegeCategoryConstants;
-import com.tcdng.jacklyn.system.business.SystemModule;
-import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
-import com.tcdng.jacklyn.system.entities.DashboardTileQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.ui.Tile;
 
 /**
  * Dashboard controller.
@@ -39,30 +29,19 @@ import com.tcdng.unify.core.ui.Tile;
 @UplBinding("web/security/upl/dashboardlanding.upl")
 public class DashboardController extends AbstractSecurityController {
 
-	public DashboardController() {
-		super(true, false);// Secure and read-only
-	}
+    private String dashboardViewer;
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		List<Tile> tileList = Collections.emptyList();
-		DashboardTileQuery query = new DashboardTileQuery().orderByDisplayOrder();
-		if (getUserToken().isReservedUser()) {
-			query.ignoreEmptyCriteria(true);
-			tileList = getSystemBusinessModule().generateTiles(query);
-		} else {
-			Set<String> dashboardNames
-					= getPrivilegeCodes(PrivilegeCategoryConstants.DASHBOARD);
-			if (!dashboardNames.isEmpty()) {
-				query.nameIn(dashboardNames);
-				tileList = getSystemBusinessModule().generateTiles(query);
-			}
-		}
+    public DashboardController() {
+        super(true, false);// Secure and read-only
+    }
 
-		setSessionAttribute(JacklynSessionAttributeConstants.DASHBOARDDECK, tileList);
-	}
+    public String getDashboardViewer() {
+        return dashboardViewer;
+    }
 
-	protected SystemModule getSystemBusinessModule() throws UnifyException {
-		return (SystemModule) getComponent(SystemModuleNameConstants.SYSTEMBUSINESSMODULE);
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        super.onOpenPage();
+        dashboardViewer = getSecurityService().getCurrentUserRoleDashboardViewer();
+   }
 }

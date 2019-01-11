@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,24 +27,23 @@ import com.tcdng.unify.core.annotation.Component;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(name = "default-filearchivenamegenerator",
-		description = "$m{archiving.default.filearchive.name.generator}")
+@Component(name = "default-filearchivenamegenerator", description = "$m{archiving.default.filearchive.name.generator}")
 public class FileArchiveNameGeneratorImpl extends AbstractFileArchiveNameGenerator {
 
-	@Override
-	public String generateFileArchiveName(FileArchiveType fileArchiveType,
-			String fileArchiveConfigName, Date workingDt) throws UnifyException {
-		StringBuilder sb = new StringBuilder();
-		switch (fileArchiveType) {
-			case LOB_FILE_ARCHIVE:
-			default:
-				sb.append("LOB");
-				break;
-		}
-		sb.append(fileArchiveConfigName);
-		sb.append(getDatePart(workingDt));
-		sb.append(getNextSequenceIdPart(fileArchiveConfigName, workingDt));
-		sb.append(getFileExtensionPart());
-		return sb.toString().toLowerCase();
-	}
+    @Override
+    public String generateFileArchiveName(FileArchiveType fileArchiveType, String fileArchiveConfigName, Date workingDt)
+            throws UnifyException {
+        StringBuilder sb = new StringBuilder();
+        switch (fileArchiveType) {
+        case LOB_FILE_ARCHIVE:
+        default:
+            sb.append("LOB");
+            break;
+        }
+        sb.append(fileArchiveConfigName);
+        sb.append(getDatePart(workingDt));
+        sb.append(getNextSequenceIdPart(fileArchiveConfigName, workingDt));
+        sb.append(getFileExtensionPart());
+        return sb.toString().toLowerCase();
+    }
 }

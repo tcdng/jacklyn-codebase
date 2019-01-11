@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,72 +34,70 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/archiving/filearchiveconfig")
 @UplBinding("web/archiving/upl/managefilearchiveconfig.upl")
-public class FileArchiveConfigController
-		extends AbstractArchivingRecordController<FileArchiveConfig> {
+public class FileArchiveConfigController extends AbstractArchivingCrudController<FileArchiveConfig> {
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public FileArchiveConfigController() {
-		super(FileArchiveConfig.class, "archiving.filearchiveconfig.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
-						| ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public FileArchiveConfigController() {
+        super(FileArchiveConfig.class, "$m{archiving.filearchiveconfig.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
+                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<FileArchiveConfig> find() throws UnifyException {
-		FileArchiveConfigQuery query = new FileArchiveConfigQuery();
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+    @Override
+    protected List<FileArchiveConfig> find() throws UnifyException {
+        FileArchiveConfigQuery query = new FileArchiveConfigQuery();
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getArchivingModule().findFileArchiveConfigs(query);
-	}
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getArchivingService().findFileArchiveConfigs(query);
+    }
 
-	@Override
-	protected FileArchiveConfig find(Long id) throws UnifyException {
-		return getArchivingModule().findFileArchiveConfig(id);
-	}
+    @Override
+    protected FileArchiveConfig find(Long id) throws UnifyException {
+        return getArchivingService().findFileArchiveConfig(id);
+    }
 
-	@Override
-	protected FileArchiveConfig prepareCreate() throws UnifyException {
-		return new FileArchiveConfig();
-	}
+    @Override
+    protected FileArchiveConfig prepareCreate() throws UnifyException {
+        return new FileArchiveConfig();
+    }
 
-	@Override
-	protected Object create(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-		return getArchivingModule().createFileArchiveConfig(fileArchiveConfigData);
-	}
+    @Override
+    protected Object create(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
+        return getArchivingService().createFileArchiveConfig(fileArchiveConfigData);
+    }
 
-	@Override
-	protected int update(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-		return getArchivingModule().updateFileArchiveConfig(fileArchiveConfigData);
-	}
+    @Override
+    protected int update(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
+        return getArchivingService().updateFileArchiveConfig(fileArchiveConfigData);
+    }
 
-	@Override
-	protected int delete(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
-		return getArchivingModule().deleteFileArchiveConfig(fileArchiveConfigData.getId());
-	}
+    @Override
+    protected int delete(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
+        return getArchivingService().deleteFileArchiveConfig(fileArchiveConfigData.getId());
+    }
 }

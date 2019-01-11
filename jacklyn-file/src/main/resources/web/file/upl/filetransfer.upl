@@ -1,5 +1,5 @@
 // UPL template for executing file transfers
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 
@@ -8,7 +8,7 @@
 !ui-panel:basePanel layout:$d{!ui-vertical} components:$c{maintainTypeLabel fileTransferPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
-	caption:$m{file.filetransfer.performfiletransfer}
+    caption:$m{file.filetransfer.performfiletransfer}
 
 !ui-formpanel:fileTransferPanel 
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}

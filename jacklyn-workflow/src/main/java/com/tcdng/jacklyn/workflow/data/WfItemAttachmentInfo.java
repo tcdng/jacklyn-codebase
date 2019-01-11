@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,47 +25,45 @@ import com.tcdng.unify.core.constant.FileAttachmentType;
  */
 public class WfItemAttachmentInfo {
 
-	private String name;
+    private String name;
 
-	private String label;
+    private String label;
 
-	private String filename;
+    private String filename;
 
-	private FileAttachmentType type;
+    private FileAttachmentType type;
 
-	private byte[] data;
+    private byte[] data;
 
-	public WfItemAttachmentInfo(String name, String label, String filename,
-			FileAttachmentType type) {
-		this(name, label, filename, type, null);
-	}
+    public WfItemAttachmentInfo(String name, String label, String filename, FileAttachmentType type) {
+        this(name, label, filename, type, null);
+    }
 
-	public WfItemAttachmentInfo(String name, String label, String filename, FileAttachmentType type,
-			byte[] data) {
-		this.name = name;
-		this.label = label;
-		this.filename = filename;
-		this.type = type;
-		this.data = data;
-	}
+    public WfItemAttachmentInfo(String name, String label, String filename, FileAttachmentType type, byte[] data) {
+        this.name = name;
+        this.label = label;
+        this.filename = filename;
+        this.type = type;
+        this.data = data;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public String getFilename() {
-		return filename;
-	}
+    public String getFilename() {
+        return filename;
+    }
 
-	public FileAttachmentType getType() {
-		return type;
-	}
+    public FileAttachmentType getType() {
+        return type;
+    }
 
-	public byte[] getData() {
-		return data;
-	}
+    public byte[] getData() {
+        return data;
+    }
 }

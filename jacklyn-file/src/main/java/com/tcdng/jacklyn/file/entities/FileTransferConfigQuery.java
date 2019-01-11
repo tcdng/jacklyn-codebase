@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,23 +26,23 @@ import com.tcdng.jacklyn.shared.file.FileTransferDirection;
  */
 public class FileTransferConfigQuery extends BaseVersionedStatusEntityQuery<FileTransferConfig> {
 
-	public FileTransferConfigQuery() {
-		super(FileTransferConfig.class);
-	}
+    public FileTransferConfigQuery() {
+        super(FileTransferConfig.class);
+    }
 
-	public FileTransferConfigQuery name(String name) {
-		return (FileTransferConfigQuery) equals("name", name);
-	}
+    public FileTransferConfigQuery name(String name) {
+        return (FileTransferConfigQuery) equals("name", name);
+    }
 
-	public FileTransferConfigQuery nameLike(String name) {
-		return (FileTransferConfigQuery) like("name", name);
-	}
+    public FileTransferConfigQuery nameLike(String name) {
+        return (FileTransferConfigQuery) like("name", name);
+    }
 
-	public FileTransferConfigQuery descriptionLike(String description) {
-		return (FileTransferConfigQuery) like("description", description);
-	}
+    public FileTransferConfigQuery descriptionLike(String description) {
+        return (FileTransferConfigQuery) like("description", description);
+    }
 
-	public FileTransferConfigQuery direction(FileTransferDirection direction) {
-		return (FileTransferConfigQuery) equals("direction", direction);
-	}
+    public FileTransferConfigQuery direction(FileTransferDirection direction) {
+        return (FileTransferConfigQuery) equals("direction", direction);
+    }
 }

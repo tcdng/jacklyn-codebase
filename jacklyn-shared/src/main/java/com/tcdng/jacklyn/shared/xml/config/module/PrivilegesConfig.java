@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,36 +30,36 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class PrivilegesConfig {
 
-	private List<PrivilegeGroupConfig> privilegeGroupList;
+    private List<PrivilegeGroupConfig> privilegeGroupList;
 
-	private Map<String, PrivilegeGroupConfig> privilegeGroups;
+    private Map<String, PrivilegeGroupConfig> privilegeGroups;
 
-	public List<PrivilegeGroupConfig> getPrivilegeGroupList() {
-		return this.privilegeGroupList;
-	}
+    public List<PrivilegeGroupConfig> getPrivilegeGroupList() {
+        return this.privilegeGroupList;
+    }
 
-	@XmlElement(name = "privilege-group", required = true)
-	public void setPrivilegeGroupList(List<PrivilegeGroupConfig> privilegeGroupList) {
-		this.privilegeGroupList = privilegeGroupList;
-	}
+    @XmlElement(name = "privilege-group", required = true)
+    public void setPrivilegeGroupList(List<PrivilegeGroupConfig> privilegeGroupList) {
+        this.privilegeGroupList = privilegeGroupList;
+    }
 
-	public void toMap() {
-		this.privilegeGroups = new HashMap<String, PrivilegeGroupConfig>();
-		if (this.privilegeGroupList != null) {
-			for (PrivilegeGroupConfig pgc : this.privilegeGroupList) {
-				this.privilegeGroups.put(pgc.getCategory(), pgc);
-			}
-		} else {
-			this.privilegeGroupList = new ArrayList<PrivilegeGroupConfig>();
-		}
-	}
+    public void toMap() {
+        this.privilegeGroups = new HashMap<String, PrivilegeGroupConfig>();
+        if (this.privilegeGroupList != null) {
+            for (PrivilegeGroupConfig pgc : this.privilegeGroupList) {
+                this.privilegeGroups.put(pgc.getCategory(), pgc);
+            }
+        } else {
+            this.privilegeGroupList = new ArrayList<PrivilegeGroupConfig>();
+        }
+    }
 
-	public void addPrivilegeGroup(PrivilegeGroupConfig privilegeGroupConfig) {
-		this.privilegeGroupList.add(privilegeGroupConfig);
-		this.privilegeGroups.put(privilegeGroupConfig.getCategory(), privilegeGroupConfig);
-	}
+    public void addPrivilegeGroup(PrivilegeGroupConfig privilegeGroupConfig) {
+        this.privilegeGroupList.add(privilegeGroupConfig);
+        this.privilegeGroups.put(privilegeGroupConfig.getCategory(), privilegeGroupConfig);
+    }
 
-	public PrivilegeGroupConfig getPrivilegeGroupConfig(String category) {
-		return this.privilegeGroups.get(category);
-	}
+    public PrivilegeGroupConfig getPrivilegeGroupConfig(String category) {
+        return this.privilegeGroups.get(category);
+    }
 }

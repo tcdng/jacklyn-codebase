@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,21 +31,21 @@ import com.tcdng.unify.core.system.entities.SequencedEntityPolicy;
 @Component("baseentity-policy")
 public class BaseEntityPolicy extends SequencedEntityPolicy {
 
-	public BaseEntityPolicy() {
+    public BaseEntityPolicy() {
 
-	}
+    }
 
-	public BaseEntityPolicy(boolean setNow) {
-		super(setNow);
-	}
+    public BaseEntityPolicy(boolean setNow) {
+        super(setNow);
+    }
 
-	@Override
-	public Object preCreate(Entity record, Date now) throws UnifyException {
-		BaseEntity baseData = ((BaseEntity) record);
-		Long id = baseData.getId();
-		if (id == null || id >= 0) {
-			return super.preCreate(record, now);
-		}
-		return id;
-	}
+    @Override
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        BaseEntity baseEntity = ((BaseEntity) record);
+        Long id = baseEntity.getId();
+        if (id == null || id >= 0) {
+            return super.preCreate(record, now);
+        }
+        return id;
+    }
 }

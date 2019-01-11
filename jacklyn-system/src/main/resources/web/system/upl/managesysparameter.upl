@@ -1,23 +1,23 @@
 // UPL template for managing system parameters
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.sysparameter.manage}
-	searchByList:$c{searchModuleId searchType searchName searchDescription}
+    searchByList:$c{searchModuleId searchType searchName searchDescription}
     searchClearList:$c{searchModuleId searchType searchName searchDescription}
-	tableColumnList:$c{moduleDesc name description value typeDesc}
-	formColumns:1
-	formSection:$d{!ui-section caption:$m{system.sysparameter.section.basicdetails} components:$c{frmName frmDescription frmValue frmType}}
-	addPrivilege:$s{add-sysparameter} editPrivilege:$s{sys-sysparameteredit}
-	viewPrivilege:$s{sys-sysparameterview} deletePrivilege:$s{delete-sysparameter}
+    tableColumnList:$c{moduleDesc name description value typeDesc}
+    formColumns:1
+    formSection:$d{!ui-section caption:$m{system.sysparameter.section.basicdetails} components:$c{frmName frmDescription frmValue frmType}}
+    addPrivilege:$s{add-sysparameter} editPrivilege:$s{sys-sysparameteredit}
+    viewPrivilege:$s{sys-sysparameterview} deletePrivilege:$s{delete-sysparameter}
 
 //Search
 !ui-text:searchName caption:$m{system.sysparameter.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{system.sysparameter.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchType caption:$m{system.sysparameter.type} binding:searchType list:systemparamtypelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchModuleId caption:$m{system.sysparameter.module} binding:searchModuleId list:modulelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{system.sysparameter.module} binding:moduleDesc columnStyle:$s{width:100px;} sortable:true

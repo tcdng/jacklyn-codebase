@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,47 +27,47 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class MenuItemConfig extends BaseConfig {
 
-	private String caption;
-	
-	private String pageCaption;
+    private String caption;
 
-	private String path;
+    private String pageCaption;
 
-	private String remotePath;
+    private String path;
 
-	public String getCaption() {
-		return caption;
-	}
+    private String remotePath;
 
-	@XmlAttribute(required = true)
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    public String getCaption() {
+        return caption;
+    }
 
-	public String getPageCaption() {
-		return pageCaption;
-	}
+    @XmlAttribute(required = true)
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
 
-	@XmlAttribute(required = true)
-	public void setPageCaption(String pageCaption) {
-		this.pageCaption = pageCaption;
-	}
+    public String getPageCaption() {
+        return pageCaption;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    @XmlAttribute(required = true)
+    public void setPageCaption(String pageCaption) {
+        this.pageCaption = pageCaption;
+    }
 
-	@XmlAttribute(required = true)
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public String getRemotePath() {
-		return remotePath;
-	}
+    @XmlAttribute(required = true)
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	@XmlAttribute
-	public void setRemotePath(String remotePath) {
-		this.remotePath = remotePath;
-	}
+    public String getRemotePath() {
+        return remotePath;
+    }
+
+    @XmlAttribute
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
+    }
 }

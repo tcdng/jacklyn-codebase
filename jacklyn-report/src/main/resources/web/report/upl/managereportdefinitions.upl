@@ -1,19 +1,19 @@
 // UPL template for managing report definitions
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{report.reportabledefinition.manage}
-	searchByList:$c{searchModuleId searchStatus}
-	searchClearList:$c{searchModuleId searchStatus}
-	tableColumnList:$c{moduleDesc name description statusDesc}
+    searchByList:$c{searchModuleId searchStatus}
+    searchClearList:$c{searchModuleId searchStatus}
+    tableColumnList:$c{moduleDesc name description statusDesc}
     formSection:$d{!ui-section caption:$m{report.reportabledefinition.section.basicdetails} components:$c{frmModule frmDescription frmTitle frmDynamic frmStatus}}
     viewPrivilege:$s{rpt-reportdefinitionview}
 
 //Search
 !ui-select:searchModuleId caption:$m{report.reportabledefinition.module} binding:searchModuleId list:modulelist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{report.reportabledefinition.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-		eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:moduleDesc caption:$m{report.reportabledefinition.module} binding:moduleDesc  columnStyle:$s{width:80px;} sortable:true

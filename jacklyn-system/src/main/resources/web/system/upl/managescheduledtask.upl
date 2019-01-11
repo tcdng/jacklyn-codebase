@@ -1,17 +1,17 @@
 // UPL template for scheduled tasks
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.scheduledtask.manage}
-	searchByList:$c{searchDescription searchTaskName searchStatus}
+    searchByList:$c{searchDescription searchTaskName searchStatus}
     searchClearList:$c{searchDescription searchTaskName searchStatus}
-	tableColumnList:$c{taskName description startTime endTime statusDesc}
-	formSection:$d{!ui-section caption:$m{system.scheduledtask.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
-	formSection:$d{!ui-section caption:$m{system.scheduledtask.section.schedule} components:$c{frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths}}
-	formSection:$d{!ui-section caption:$m{system.scheduledtask.section.parameters} components:$c{frmAttachment}}
-	formBinding:largeData
-	addPrivilege:$s{sys-schdtaskadd} editPrivilege:$s{sys-schdtaskedit}
-	viewPrivilege:$s{sys-schdtaskview} deletePrivilege:$s{sys-schdtaskdelete}
+    tableColumnList:$c{taskName description startTime endTime statusDesc}
+    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.schedule} components:$c{frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.parameters} components:$c{frmAttachment}}
+    formBinding:largeData
+    addPrivilege:$s{sys-schdtaskadd} editPrivilege:$s{sys-schdtaskedit}
+    viewPrivilege:$s{sys-schdtaskview} deletePrivilege:$s{sys-schdtaskdelete}
     addValidations:$c{frmTaskNameVal frmParamsVal}
     saveValidations:$c{frmTaskNameVal frmParamsVal}
 
@@ -19,9 +19,9 @@
 !ui-text:searchDescription caption:$m{system.scheduledtask.description} binding:searchDescription
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchTaskName caption:$m{system.scheduledtask.taskname} binding:searchTaskName list:schedulabletasklist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.scheduledtask.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
 !ui-label:taskName caption:$m{system.scheduledtask.taskname} binding:taskName columnStyle:$s{width:200px;} sortable:true
@@ -32,7 +32,7 @@
 
 //Form components   
 !ui-select:frmTaskName caption:$m{system.scheduledtask.taskname} binding:data.taskName list:schedulabletasklist blankOption:$s{}
-	eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}} required:true
+    eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}} required:true
 !ui-text:frmDescription caption:$m{system.scheduledtask.description} binding:data.description maxLen:48 size:40 required:true
 !ui-time:frmStartTime caption:$m{system.scheduledtask.starttime} binding:data.startTime required:true
 !ui-group:frmFreqCombo caption:$m{system.scheduledtask.frequency} components:$c{frmFreq frmFreqUnit} space:true

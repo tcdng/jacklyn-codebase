@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,16 +34,15 @@ import com.tcdng.unify.core.list.ZeroParams;
 @Component("filearchiveconfiglist")
 public class FileArchiveConfigListCommand extends AbstractArchivingListCommand<ZeroParams> {
 
-	public FileArchiveConfigListCommand() {
-		super(ZeroParams.class);
-	}
+    public FileArchiveConfigListCommand() {
+        super(ZeroParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, ZeroParams params)
-			throws UnifyException {
-		FileArchiveConfigQuery query = new FileArchiveConfigQuery();
-		query.status(RecordStatus.ACTIVE);
-		query.order("description");
-		return getArchivingBusinessModule().findFileArchiveConfigs(query);
-	}
+    @Override
+    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+        FileArchiveConfigQuery query = new FileArchiveConfigQuery();
+        query.status(RecordStatus.ACTIVE);
+        query.order("description");
+        return getArchivingService().findFileArchiveConfigs(query);
+    }
 }

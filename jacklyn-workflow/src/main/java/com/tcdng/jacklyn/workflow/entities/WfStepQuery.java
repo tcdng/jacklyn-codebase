@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import java.util.Collection;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
@@ -29,35 +30,39 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
  */
 public class WfStepQuery extends BaseEntityQuery<WfStep> {
 
-	public WfStepQuery() {
-		super(WfStep.class);
-	}
+    public WfStepQuery() {
+        super(WfStep.class);
+    }
 
-	public WfStepQuery wfTemplateId(Long wfTemplateId) {
-		return (WfStepQuery) equals("wfTemplateId", wfTemplateId);
-	}
+    public WfStepQuery wfTemplateId(Long wfTemplateId) {
+        return (WfStepQuery) equals("wfTemplateId", wfTemplateId);
+    }
 
-	public WfStepQuery wfCategoryId(Long wfCategoryId) {
-		return (WfStepQuery) equals("wfCategoryId", wfCategoryId);
-	}
+    public WfStepQuery wfCategoryId(Long wfCategoryId) {
+        return (WfStepQuery) equals("wfCategoryId", wfCategoryId);
+    }
 
-	public WfStepQuery name(String name) {
-		return (WfStepQuery) equals("name", name);
-	}
+    public WfStepQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
+        return (WfStepQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
 
-	public WfStepQuery namesIn(Collection<String> names) {
-		return (WfStepQuery) amongst("name", names);
-	}
+    public WfStepQuery name(String name) {
+        return (WfStepQuery) equals("name", name);
+    }
 
-	public WfStepQuery descriptionLike(String description) {
-		return (WfStepQuery) like("description", description);
-	}
+    public WfStepQuery namesIn(Collection<String> names) {
+        return (WfStepQuery) amongst("name", names);
+    }
 
-	public WfStepQuery type(WorkflowStepType type) {
-		return (WfStepQuery) equals("type", type);
-	}
+    public WfStepQuery descriptionLike(String description) {
+        return (WfStepQuery) like("description", description);
+    }
 
-	public WfStepQuery isParticipation() {
-		return (WfStepQuery) notEqual("participantType", WorkflowParticipantType.NONE);
-	}
+    public WfStepQuery type(WorkflowStepType type) {
+        return (WfStepQuery) equals("type", type);
+    }
+
+    public WfStepQuery isParticipation() {
+        return (WfStepQuery) notEqual("participantType", WorkflowParticipantType.NONE);
+    }
 }

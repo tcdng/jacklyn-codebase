@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,63 +25,42 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  * Workflow category configuration.
  * 
  * @author Lateef Ojulari
- * @since 1.0
+ * @version 1.0
  */
-@XmlRootElement(name = "wfcategory")
+@XmlRootElement(name = "category")
 public class WfCategoryConfig extends BaseConfig {
 
-	private String version;
+    private String version;
 
-	private WfDocsConfig wfDocsConfig;
+    private WfDocumentsConfig wfDocumentsConfig;
 
-	private WfFormsConfig wfFormsConfig;
+    private WfTemplatesConfig wfTemplatesConfig;
 
-	private WfMessagesConfig wfMessagesConfig;
+    public String getVersion() {
+        return version;
+    }
 
-	private WfTemplatesConfig wfTemplatesConfig;
+    @XmlAttribute(name = "version", required = true)
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public WfDocumentsConfig getWfDocumentsConfig() {
+        return wfDocumentsConfig;
+    }
 
-	@XmlAttribute(required = true)
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    @XmlElement(name = "documents")
+    public void setWfDocumentsConfig(WfDocumentsConfig wfDocumentsConfig) {
+        this.wfDocumentsConfig = wfDocumentsConfig;
+    }
 
-	public WfDocsConfig getWfDocsConfig() {
-		return wfDocsConfig;
-	}
+    public WfTemplatesConfig getWfTemplatesConfig() {
+        return wfTemplatesConfig;
+    }
 
-	@XmlElement(name = "documents", required = true)
-	public void setWfDocsConfig(WfDocsConfig wfDocsConfig) {
-		this.wfDocsConfig = wfDocsConfig;
-	}
+    @XmlElement(name = "templates", required = true)
+    public void setWfTemplatesConfig(WfTemplatesConfig wfTemplatesConfig) {
+        this.wfTemplatesConfig = wfTemplatesConfig;
+    }
 
-	public WfFormsConfig getWfFormsConfig() {
-		return wfFormsConfig;
-	}
-
-	@XmlElement(name = "forms", required = true)
-	public void setWfFormsConfig(WfFormsConfig wfFormsConfig) {
-		this.wfFormsConfig = wfFormsConfig;
-	}
-
-	public WfMessagesConfig getWfMessagesConfig() {
-		return wfMessagesConfig;
-	}
-
-	@XmlElement(name = "messages", required = true)
-	public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
-		this.wfMessagesConfig = wfMessagesConfig;
-	}
-
-	public WfTemplatesConfig getWfTemplatesConfig() {
-		return wfTemplatesConfig;
-	}
-
-	@XmlElement(name = "templates", required = true)
-	public void setWfTemplatesConfig(WfTemplatesConfig wfTemplatesConfig) {
-		this.wfTemplatesConfig = wfTemplatesConfig;
-	}
 }

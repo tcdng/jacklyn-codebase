@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,20 +29,17 @@ import com.tcdng.unify.core.business.BusinessLogicInput;
  * @since 1.0
  */
 @Component("test-bankbatchfilereadprocessor")
-@Parameters({ @Parameter(description = "Country", name = "country", editor = "!ui-text",
-		mandatory = true) })
-public class TestBankBatchFileReadProcessor
-		extends AbstractDBBatchItemFileReadProcessor<TestBankData> {
+@Parameters({ @Parameter(description = "Country", name = "country", editor = "!ui-text", mandatory = true) })
+public class TestBankBatchFileReadProcessor extends AbstractDBBatchItemFileReadProcessor<TestBank> {
 
-	public TestBankBatchFileReadProcessor() {
-		super(TestBankData.class);
-	}
+    public TestBankBatchFileReadProcessor() {
+        super(TestBank.class);
+    }
 
-	@Override
-	protected void preBatchItemCreate(BusinessLogicInput input, TestBankData batchItem)
-			throws UnifyException {
-		// Set bank country as input parameter
-		String country = input.getParameter(String.class, "country");
-		((TestBankData) batchItem).setCountry(country);
-	}
+    @Override
+    protected void preBatchItemCreate(BusinessLogicInput input, TestBank batchItem) throws UnifyException {
+        // Set bank country as input parameter
+        String country = input.getParameter(String.class, "country");
+        ((TestBank) batchItem).setCountry(country);
+    }
 }

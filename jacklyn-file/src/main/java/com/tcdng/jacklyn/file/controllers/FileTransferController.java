@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -39,54 +39,51 @@ import com.tcdng.unify.web.annotation.Action;
 @UplBinding("web/file/upl/filetransfer.upl")
 public class FileTransferController extends AbstractFileController {
 
-	private Long fileTransferConfigId;
+    private Long fileTransferConfigId;
 
-	private Date workingDt;
+    private Date workingDt;
 
-	public FileTransferController() {
-		super(true, false);
-	}
+    public FileTransferController() {
+        super(true, false);
+    }
 
-	@Action
-	public String startFileTransferTask() throws UnifyException {
-		FileTransferConfig fileTransferConfigData
-				= getFileModule().findFileTransferConfig(fileTransferConfigId);
-		TaskSetup taskSetup
-				= TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERTASK)
-						.setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME,
-								fileTransferConfigData.getName())
-						.setParam(FileTransferTaskConstants.WORKINGDT, workingDt)
-						.setParam(FileTransferTaskConstants.UPDATEFILEBOX, true)
-						.logEvent(FileModuleAuditConstants.START_FILETRANSFERTASK,
-								fileTransferConfigData.getName(), String.valueOf(workingDt))
-						.logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "file.filetransfer.execution");
-	}
+    @Action
+    public String startFileTransferTask() throws UnifyException {
+        FileTransferConfig fileTransferConfigData = getFileService().findFileTransferConfig(fileTransferConfigId);
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERTASK)
+                .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, fileTransferConfigData.getName())
+                .setParam(FileTransferTaskConstants.WORKINGDT, workingDt)
+                .setParam(FileTransferTaskConstants.UPDATEFILEBOX, true)
+                .logEvent(FileModuleAuditConstants.START_FILETRANSFERTASK, fileTransferConfigData.getName(),
+                        String.valueOf(workingDt))
+                .logMessages().build();
+        return launchTaskWithMonitorBox(taskSetup, "$m{file.filetransfer.execution}");
+    }
 
-	public String getModeStyle() {
-		return EventType.CREATE.colorMode();
-	}
+    public String getModeStyle() {
+        return EventType.CREATE.colorMode();
+    }
 
-	public Long getFileTransferConfigId() {
-		return fileTransferConfigId;
-	}
+    public Long getFileTransferConfigId() {
+        return fileTransferConfigId;
+    }
 
-	public void setFileTransferConfigId(Long fileTransferConfigId) {
-		this.fileTransferConfigId = fileTransferConfigId;
-	}
+    public void setFileTransferConfigId(Long fileTransferConfigId) {
+        this.fileTransferConfigId = fileTransferConfigId;
+    }
 
-	public Date getWorkingDt() {
-		return workingDt;
-	}
+    public Date getWorkingDt() {
+        return workingDt;
+    }
 
-	public void setWorkingDt(Date workingDt) {
-		this.workingDt = workingDt;
-	}
+    public void setWorkingDt(Date workingDt) {
+        this.workingDt = workingDt;
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		if (workingDt == null) {
-			workingDt = CalendarUtils.getCurrentMidnightDate();
-		}
-	}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        if (workingDt == null) {
+            workingDt = CalendarUtils.getCurrentMidnightDate();
+        }
+    }
 }

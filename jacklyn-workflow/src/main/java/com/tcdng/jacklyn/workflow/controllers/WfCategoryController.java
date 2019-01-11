@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,85 +34,85 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wfcategory")
 @UplBinding("web/workflow/upl/managewfcategory.upl")
-public class WfCategoryController extends AbstractWorkflowRecordController<WfCategory> {
+public class WfCategoryController extends AbstractWorkflowCrudController<WfCategory> {
 
-	private String searchName;
+    private String searchName;
 
-	private String searchDescription;
+    private String searchDescription;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public WfCategoryController() {
-		super(WfCategory.class, "workflow.wfcategory.hint", ManageRecordModifier.SECURE
-				| ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-	}
+    public WfCategoryController() {
+        super(WfCategory.class, "$m{workflow.wfcategory.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public String getSearchName() {
-		return searchName;
-	}
+    public String getSearchName() {
+        return searchName;
+    }
 
-	public void setSearchName(String searchName) {
-		this.searchName = searchName;
-	}
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
 
-	public String getSearchDescription() {
-		return searchDescription;
-	}
+    public String getSearchDescription() {
+        return searchDescription;
+    }
 
-	public void setSearchDescription(String searchDescription) {
-		this.searchDescription = searchDescription;
-	}
+    public void setSearchDescription(String searchDescription) {
+        this.searchDescription = searchDescription;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<WfCategory> find() throws UnifyException {
-		WfCategoryQuery query = new WfCategoryQuery();
-		if (QueryUtils.isValidStringCriteria(searchName)) {
-			query.nameLike(searchName);
-		}
+    @Override
+    protected List<WfCategory> find() throws UnifyException {
+        WfCategoryQuery query = new WfCategoryQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.nameLike(searchName);
+        }
 
-		if (QueryUtils.isValidStringCriteria(searchDescription)) {
-			query.descriptionLike(searchDescription);
-		}
+        if (QueryUtils.isValidStringCriteria(searchDescription)) {
+            query.descriptionLike(searchDescription);
+        }
 
-		if (searchStatus != null) {
-			query.status(searchStatus);
-		}
+        if (searchStatus != null) {
+            query.status(searchStatus);
+        }
 
-		query.order("description").ignoreEmptyCriteria(true);
-		return getWorkflowModule().findWfCategories(query);
-	}
+        query.order("description").ignoreEmptyCriteria(true);
+        return getWorkflowService().findWfCategories(query);
+    }
 
-	@Override
-	protected WfCategory find(Long wfCategoryId) throws UnifyException {
-		return getWorkflowModule().findWfCategory(wfCategoryId);
-	}
+    @Override
+    protected WfCategory find(Long wfCategoryId) throws UnifyException {
+        return getWorkflowService().findWfCategory(wfCategoryId);
+    }
 
-	@Override
-	protected WfCategory prepareCreate() throws UnifyException {
-		return new WfCategory();
-	}
+    @Override
+    protected WfCategory prepareCreate() throws UnifyException {
+        return new WfCategory();
+    }
 
-	@Override
-	protected Object create(WfCategory wfCategoryData) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(WfCategory wfCategoryData) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(WfCategory wfCategoryData) throws UnifyException {
-		return getWorkflowModule().updateWfCategory(wfCategoryData);
-	}
+    @Override
+    protected int update(WfCategory wfCategoryData) throws UnifyException {
+        return getWorkflowService().updateWfCategory(wfCategoryData);
+    }
 
-	@Override
-	protected int delete(WfCategory record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(WfCategory record) throws UnifyException {
+        return 0;
+    }
 
 }

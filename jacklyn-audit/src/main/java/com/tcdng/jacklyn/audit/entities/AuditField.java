@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,78 +30,77 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Field")
-@Table(name = "AUDITFIELD",
-		uniqueConstraints = { @UniqueConstraint({ "auditTypeId", "fieldName" }) })
+@Table(name = "AUDITFIELD", uniqueConstraints = { @UniqueConstraint({ "auditTypeId", "fieldName" }) })
 public class AuditField extends BaseInstallEntity {
 
-	@ForeignKey(AuditType.class)
-	private Long auditTypeId;
+    @ForeignKey(AuditType.class)
+    private Long auditTypeId;
 
-	@Column(name = "FIELD_NM", length = 64)
-	private String fieldName;
+    @Column(name = "FIELD_NM", length = 64)
+    private String fieldName;
 
-	@Column(name = "FIELD_DESC", length = 64)
-	private String fieldDescription;
+    @Column(name = "FIELD_DESC", length = 64)
+    private String fieldDescription;
 
-	@Column(nullable = true)
-	private String formatter;
+    @Column(nullable = true)
+    private String formatter;
 
-	@Column(nullable = true)
-	private String list;
+    @Column(nullable = true)
+    private String list;
 
-	@Column
-	private boolean mask;
+    @Column
+    private boolean mask;
 
-	@Override
-	public String getDescription() {
-		return this.fieldDescription;
-	}
+    @Override
+    public String getDescription() {
+        return this.fieldDescription;
+    }
 
-	public Long getAuditTypeId() {
-		return auditTypeId;
-	}
+    public Long getAuditTypeId() {
+        return auditTypeId;
+    }
 
-	public void setAuditTypeId(Long auditTypeId) {
-		this.auditTypeId = auditTypeId;
-	}
+    public void setAuditTypeId(Long auditTypeId) {
+        this.auditTypeId = auditTypeId;
+    }
 
-	public String getFieldName() {
-		return fieldName;
-	}
+    public String getFieldName() {
+        return fieldName;
+    }
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
-	}
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
 
-	public String getFieldDescription() {
-		return fieldDescription;
-	}
+    public String getFieldDescription() {
+        return fieldDescription;
+    }
 
-	public void setFieldDescription(String fieldDescription) {
-		this.fieldDescription = fieldDescription;
-	}
+    public void setFieldDescription(String fieldDescription) {
+        this.fieldDescription = fieldDescription;
+    }
 
-	public String getFormatter() {
-		return formatter;
-	}
+    public String getFormatter() {
+        return formatter;
+    }
 
-	public void setFormatter(String formatter) {
-		this.formatter = formatter;
-	}
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
+    }
 
-	public String getList() {
-		return list;
-	}
+    public String getList() {
+        return list;
+    }
 
-	public void setList(String list) {
-		this.list = list;
-	}
+    public void setList(String list) {
+        this.list = list;
+    }
 
-	public boolean isMask() {
-		return mask;
-	}
+    public boolean isMask() {
+        return mask;
+    }
 
-	public void setMask(boolean mask) {
-		this.mask = mask;
-	}
+    public void setMask(boolean mask) {
+        this.mask = mask;
+    }
 }

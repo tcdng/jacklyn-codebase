@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,41 +30,51 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @version 1.0
  */
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
-		auditable = true)
-@Table(name = "BRANCH",
-		uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+        auditable = true)
+@Table(name = "BRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
-	@Column(name = "BRANCH_NM", length = 32)
-	private String name;
+    @Column(name = "BRANCH_NM", length = 32)
+    private String name;
 
-	@Column(name = "BRANCH_DESC", length = 64)
-	private String description;
+    @Column(name = "BRANCH_DESC", length = 64)
+    private String description;
 
-	@Override
-	public Object getBatchId() {
-		return null;
-	}
+    @Column(name="HEAD_OFFICE_FG")
+    private Boolean headOffice;
+    
+    @Override
+    public Object getBatchId() {
+        return null;
+    }
 
-	@Override
-	public void setBatchId(Object id) {
+    @Override
+    public void setBatchId(Object id) {
 
-	}
+    }
 
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
+    @Override
+    public String getDescription() {
+        return this.description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getHeadOffice() {
+        return headOffice;
+    }
+
+    public void setHeadOffice(Boolean headOffice) {
+        this.headOffice = headOffice;
+    }
 }

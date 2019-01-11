@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,21 +31,20 @@ import com.tcdng.unify.web.ui.container.BasicPage;
 @Component("ui-userworkitemspage")
 public class UserWorkItemsPage extends BasicPage {
 
-	private Set<String> pageValidationActions;
+    private Set<String> pageValidationActions;
 
-	public void setPageValidationActions(Set<String> pageValidationActions) {
-		this.pageValidationActions = pageValidationActions;
-	}
+    public void setPageValidationActions(Set<String> pageValidationActions) {
+        this.pageValidationActions = pageValidationActions;
+    }
 
-	@Override
-	public boolean isValidationEnabled() throws UnifyException {
-		String actionName = this.getRequestTarget(String.class);
-		if (actionName != null) {
-			return this.pageValidationActions != null
-					&& this.pageValidationActions.contains(actionName);
-		}
+    @Override
+    public boolean isValidationEnabled() throws UnifyException {
+        String actionName = this.getRequestTarget(String.class);
+        if (actionName != null) {
+            return this.pageValidationActions != null && this.pageValidationActions.contains(actionName);
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 }

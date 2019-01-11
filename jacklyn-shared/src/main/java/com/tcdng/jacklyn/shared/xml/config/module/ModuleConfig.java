@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,139 +34,139 @@ import com.tcdng.unify.core.application.FeatureDefinition;
 @XmlRootElement(name = "module")
 public class ModuleConfig extends BaseConfig implements FeatureDefinition {
 
-	private Map<String, ManagedConfig> managedConfigs;
+    private Map<String, ManagedConfig> managedConfigs;
 
-	private PrivilegesConfig privileges;
+    private PrivilegesConfig privileges;
 
-	private ArchivesConfig archives;
+    private ArchivesConfig archives;
 
-	private AuditsConfig audits;
+    private AuditsConfig audits;
 
-	private DashboardTilesConfig dashboardTiles;
+    private ShortcutTilesConfig shortcutTiles;
 
-	private InputControlsConfig inputControls;
+    private InputControlsConfig inputControls;
 
-	private MenusConfig menus;
+    private MenusConfig menus;
 
-	private NotificationTemplatesConfig notificationTemplates;
+    private NotificationTemplatesConfig notificationTemplates;
 
-	private ReportsConfig reports;
+    private ReportsConfig reports;
 
-	private SysParamsConfig sysParams;
+    private SysParamsConfig sysParams;
 
-	private boolean extension;
+    private boolean extension;
 
-	private boolean deactivatable;
+    private boolean deactivatable;
 
-	public ModuleConfig() {
-		this.privileges = new PrivilegesConfig();
-		this.managedConfigs = new HashMap<String, ManagedConfig>();
-	}
+    public ModuleConfig() {
+        this.privileges = new PrivilegesConfig();
+        this.managedConfigs = new HashMap<String, ManagedConfig>();
+    }
 
-	public boolean isDeactivatable() {
-		return deactivatable;
-	}
+    public boolean isDeactivatable() {
+        return deactivatable;
+    }
 
-	@XmlAttribute
-	public void setDeactivatable(boolean deactivatable) {
-		this.deactivatable = deactivatable;
-	}
+    @XmlAttribute
+    public void setDeactivatable(boolean deactivatable) {
+        this.deactivatable = deactivatable;
+    }
 
-	public boolean isExtension() {
-		return extension;
-	}
+    public boolean isExtension() {
+        return extension;
+    }
 
-	@XmlAttribute
-	public void setExtension(boolean extension) {
-		this.extension = extension;
-	}
+    @XmlAttribute
+    public void setExtension(boolean extension) {
+        this.extension = extension;
+    }
 
-	public PrivilegesConfig getPrivileges() {
-		return privileges;
-	}
+    public PrivilegesConfig getPrivileges() {
+        return privileges;
+    }
 
-	@XmlElement(name = "privileges")
-	public void setPrivileges(PrivilegesConfig privileges) {
-		this.privileges = privileges;
-	}
+    @XmlElement(name = "privileges")
+    public void setPrivileges(PrivilegesConfig privileges) {
+        this.privileges = privileges;
+    }
 
-	public ArchivesConfig getArchives() {
-		return archives;
-	}
+    public ArchivesConfig getArchives() {
+        return archives;
+    }
 
-	@XmlElement(name = "archives")
-	public void setArchives(ArchivesConfig archives) {
-		this.archives = archives;
-	}
+    @XmlElement(name = "archives")
+    public void setArchives(ArchivesConfig archives) {
+        this.archives = archives;
+    }
 
-	public AuditsConfig getAudits() {
-		return audits;
-	}
+    public AuditsConfig getAudits() {
+        return audits;
+    }
 
-	@XmlElement(name = "audits")
-	public void setAudits(AuditsConfig audits) {
-		this.audits = audits;
-	}
+    @XmlElement(name = "audits")
+    public void setAudits(AuditsConfig audits) {
+        this.audits = audits;
+    }
 
-	public DashboardTilesConfig getDashboardTiles() {
-		return dashboardTiles;
-	}
+    public ShortcutTilesConfig getShortcutTiles() {
+        return shortcutTiles;
+    }
 
-	@XmlElement(name = "dashboard-tiles")
-	public void setDashboardTiles(DashboardTilesConfig dashboardTiles) {
-		this.dashboardTiles = dashboardTiles;
-	}
+    @XmlElement(name = "shortcut-tiles")
+    public void setShortcutTiles(ShortcutTilesConfig shortcutTiles) {
+        this.shortcutTiles = shortcutTiles;
+    }
 
-	public InputControlsConfig getInputControls() {
-		return inputControls;
-	}
+    public InputControlsConfig getInputControls() {
+        return inputControls;
+    }
 
-	@XmlElement(name = "input-controls")
-	public void setInputControls(InputControlsConfig inputControls) {
-		this.inputControls = inputControls;
-	}
+    @XmlElement(name = "input-controls")
+    public void setInputControls(InputControlsConfig inputControls) {
+        this.inputControls = inputControls;
+    }
 
-	public MenusConfig getMenus() {
-		return menus;
-	}
+    public MenusConfig getMenus() {
+        return menus;
+    }
 
-	@XmlElement(name = "menus")
-	public void setMenus(MenusConfig menus) {
-		this.menus = menus;
-	}
+    @XmlElement(name = "menus")
+    public void setMenus(MenusConfig menus) {
+        this.menus = menus;
+    }
 
-	public NotificationTemplatesConfig getNotificationTemplates() {
-		return notificationTemplates;
-	}
+    public NotificationTemplatesConfig getNotificationTemplates() {
+        return notificationTemplates;
+    }
 
-	@XmlElement(name = "notification-templates")
-	public void setNotificationTemplates(NotificationTemplatesConfig notificationTemplates) {
-		this.notificationTemplates = notificationTemplates;
-	}
+    @XmlElement(name = "notification-templates")
+    public void setNotificationTemplates(NotificationTemplatesConfig notificationTemplates) {
+        this.notificationTemplates = notificationTemplates;
+    }
 
-	public ReportsConfig getReports() {
-		return reports;
-	}
+    public ReportsConfig getReports() {
+        return reports;
+    }
 
-	@XmlElement(name = "reports")
-	public void setReports(ReportsConfig reports) {
-		this.reports = reports;
-	}
+    @XmlElement(name = "reports")
+    public void setReports(ReportsConfig reports) {
+        this.reports = reports;
+    }
 
-	public SysParamsConfig getSysParams() {
-		return sysParams;
-	}
+    public SysParamsConfig getSysParams() {
+        return sysParams;
+    }
 
-	@XmlElement(name = "sys-parameters")
-	public void setSysParams(SysParamsConfig sysParams) {
-		this.sysParams = sysParams;
-	}
+    @XmlElement(name = "sys-parameters")
+    public void setSysParams(SysParamsConfig sysParams) {
+        this.sysParams = sysParams;
+    }
 
-	public void add(ManagedConfig managedConfig) {
-		this.managedConfigs.put(managedConfig.getType(), managedConfig);
-	}
+    public void add(ManagedConfig managedConfig) {
+        this.managedConfigs.put(managedConfig.getType(), managedConfig);
+    }
 
-	public ManagedConfig getManagedConfig(String type) {
-		return this.managedConfigs.get(type);
-	}
+    public ManagedConfig getManagedConfig(String type) {
+        return this.managedConfigs.get(type);
+    }
 }

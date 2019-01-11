@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,15 +25,15 @@ import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
  */
 public class NotificationRecipientQuery extends BaseEntityQuery<NotificationRecipient> {
 
-	public NotificationRecipientQuery() {
-		super(NotificationRecipient.class);
-	}
+    public NotificationRecipientQuery() {
+        super(NotificationRecipient.class);
+    }
 
-	public NotificationRecipientQuery notificationId(Long notificationId) {
-		return (NotificationRecipientQuery) equals("notificationId", notificationId);
-	}
+    public NotificationRecipientQuery notificationId(Long notificationId) {
+        return (NotificationRecipientQuery) equals("notificationId", notificationId);
+    }
 
-	public NotificationRecipientQuery recipientNameLike(String recipientName) {
-		return (NotificationRecipientQuery) like("recipientName", recipientName);
-	}
+    public NotificationRecipientQuery recipientNameLike(String recipientName) {
+        return (NotificationRecipientQuery) like("recipientName", recipientName);
+    }
 }

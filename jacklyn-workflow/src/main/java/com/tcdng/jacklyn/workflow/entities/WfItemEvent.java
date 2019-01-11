@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,96 +36,96 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("WFITEMEVENT")
 public class WfItemEvent extends BaseEntity {
 
-	@ForeignKey(WfItemHist.class)
-	private Long wfItemHistId;
+    @ForeignKey(WfItemHist.class)
+    private Long wfItemHistId;
 
-	@Column
-	private String wfStepName;
+    @Column
+    private String wfStepName;
 
-	@Column(type = ColumnType.TIMESTAMP)
-	private Date stepDt;
+    @Column(type = ColumnType.TIMESTAMP)
+    private Date stepDt;
 
-	@Column(type = ColumnType.TIMESTAMP, nullable = true)
-	private Date actionDt;
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date actionDt;
 
-	@Column(nullable = true)
-	private String actor;
+    @Column(nullable = true)
+    private String actor;
 
-	@Column(length = 32, nullable = true)
-	private String wfAction;
+    @Column(length = 32, nullable = true)
+    private String wfAction;
 
-	@Column(length = 512, nullable = true)
-	private String notes;
+    @Column(length = 512, nullable = true)
+    private String notes;
 
-	@ListOnly(key = "wfItemHistId", property = "documentId")
-	private Long documentId;
+    @ListOnly(key = "wfItemHistId", property = "documentId")
+    private Long documentId;
 
-	@Override
-	public String getDescription() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return null;
+    }
 
-	public Long getWfItemHistId() {
-		return wfItemHistId;
-	}
+    public Long getWfItemHistId() {
+        return wfItemHistId;
+    }
 
-	public void setWfItemHistId(Long wfItemHistId) {
-		this.wfItemHistId = wfItemHistId;
-	}
+    public void setWfItemHistId(Long wfItemHistId) {
+        this.wfItemHistId = wfItemHistId;
+    }
 
-	public String getWfStepName() {
-		return wfStepName;
-	}
+    public String getWfStepName() {
+        return wfStepName;
+    }
 
-	public void setWfStepName(String wfStepName) {
-		this.wfStepName = wfStepName;
-	}
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
 
-	public Date getStepDt() {
-		return stepDt;
-	}
+    public Date getStepDt() {
+        return stepDt;
+    }
 
-	public void setStepDt(Date stepDt) {
-		this.stepDt = stepDt;
-	}
+    public void setStepDt(Date stepDt) {
+        this.stepDt = stepDt;
+    }
 
-	public Date getActionDt() {
-		return actionDt;
-	}
+    public Date getActionDt() {
+        return actionDt;
+    }
 
-	public void setActionDt(Date actionDt) {
-		this.actionDt = actionDt;
-	}
+    public void setActionDt(Date actionDt) {
+        this.actionDt = actionDt;
+    }
 
-	public String getActor() {
-		return actor;
-	}
+    public String getActor() {
+        return actor;
+    }
 
-	public void setActor(String actor) {
-		this.actor = actor;
-	}
+    public void setActor(String actor) {
+        this.actor = actor;
+    }
 
-	public String getWfAction() {
-		return wfAction;
-	}
+    public String getWfAction() {
+        return wfAction;
+    }
 
-	public void setWfAction(String wfAction) {
-		this.wfAction = wfAction;
-	}
+    public void setWfAction(String wfAction) {
+        this.wfAction = wfAction;
+    }
 
-	public String getNotes() {
-		return notes;
-	}
+    public String getNotes() {
+        return notes;
+    }
 
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
-	public Long getDocumentId() {
-		return documentId;
-	}
+    public Long getDocumentId() {
+        return documentId;
+    }
 
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
 }

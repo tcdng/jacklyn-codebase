@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,9 +28,9 @@ import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
 @Policy("baseentity-policy")
 public abstract class BaseEntity extends AbstractSequencedEntity implements Document {
 
-	@Override
-	public Long getOwnerId() {
-		return null;
-	}
+    @Override
+    public Long getOwnerId() {
+        return null;
+    }
 
 }

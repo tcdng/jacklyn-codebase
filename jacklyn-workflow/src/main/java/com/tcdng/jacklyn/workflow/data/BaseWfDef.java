@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,23 +26,23 @@ import java.io.Serializable;
  */
 public abstract class BaseWfDef implements Serializable {
 
-	private static final long serialVersionUID = -7667369355580509996L;
+    private static final long serialVersionUID = -7667369355580509996L;
 
-	private String name;
+    private String name;
 
-	private String description;
+    private String description;
 
-	public BaseWfDef(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
+    public BaseWfDef(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
 }

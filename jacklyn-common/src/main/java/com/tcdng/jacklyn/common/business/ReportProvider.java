@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,52 +32,50 @@ import com.tcdng.unify.core.report.ReportColumn;
  */
 public interface ReportProvider extends UnifyComponent {
 
-	/**
-	 * Creates a new report option for dynamic reportable associated with supplied
-	 * record type.
-	 * 
-	 * @param recordName
-	 *            the record type canonical name
-	 * @param priorityPropertyList
-	 *            the priority property list if any
-	 * @return the new report options
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	ReportOptions getDynamicReportOptions(String recordName, List<String> priorityPropertyList)
-			throws UnifyException;
+    /**
+     * Creates a new report option for dynamic reportable associated with supplied
+     * record type.
+     * 
+     * @param recordName
+     *            the record type canonical name
+     * @param priorityPropertyList
+     *            the priority property list if any
+     * @return the new report options
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    ReportOptions getDynamicReportOptions(String recordName, List<String> priorityPropertyList) throws UnifyException;
 
-	/**
-	 * Generates a dynamic report based on supplied report options.
-	 * 
-	 * @param reportOptions
-	 *            the report options
-	 * @param outputStream
-	 *            the output stream where generated report is written to
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	void generateDynamicReport(ReportOptions reportOptions, OutputStream outputStream)
-			throws UnifyException;
+    /**
+     * Generates a dynamic report based on supplied report options.
+     * 
+     * @param reportOptions
+     *            the report options
+     * @param outputStream
+     *            the output stream where generated report is written to
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void generateDynamicReport(ReportOptions reportOptions, OutputStream outputStream) throws UnifyException;
 
-	/**
-	 * Finds report columns of a reportable.
-	 * 
-	 * @param reportableName
-	 *            the reportable code
-	 * @return the report columns
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	ReportColumn[] findReportableColumns(String reportableName) throws UnifyException;
+    /**
+     * Finds report columns of a reportable.
+     * 
+     * @param reportableName
+     *            the reportable code
+     * @return the report columns
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    ReportColumn[] findReportableColumns(String reportableName) throws UnifyException;
 
-	/**
-	 * Returns true if record type is reportable by this. provider.
-	 * 
-	 * @param recordName
-	 *            the record type canonical name
-	 * @throws UnifyException
-	 *             if an error occurs
-	 */
-	boolean isReportable(String recordName) throws UnifyException;
+    /**
+     * Returns true if record type is reportable by this. provider.
+     * 
+     * @param recordName
+     *            the record type canonical name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean isReportable(String recordName) throws UnifyException;
 }

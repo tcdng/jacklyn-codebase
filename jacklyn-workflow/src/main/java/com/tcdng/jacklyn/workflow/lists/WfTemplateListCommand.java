@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,18 +35,17 @@ import com.tcdng.unify.web.data.FilterParams;
 @Component("wftemplatelist")
 public class WfTemplateListCommand extends AbstractWorkflowListCommand<FilterParams> {
 
-	public WfTemplateListCommand() {
-		super(FilterParams.class);
-	}
+    public WfTemplateListCommand() {
+        super(FilterParams.class);
+    }
 
-	@Override
-	public List<? extends Listable> execute(Locale locale, FilterParams params)
-			throws UnifyException {
-		if (QueryUtils.isValidLongCriteria(params.getFilterId())) {
-			return getWorkflowModule().findWfTemplates(params.getFilterId());
-		}
+    @Override
+    public List<? extends Listable> execute(Locale locale, FilterParams params) throws UnifyException {
+        if (QueryUtils.isValidLongCriteria(params.getFilterId())) {
+            return getWorkflowModule().findWfTemplates(params.getFilterId());
+        }
 
-		return Collections.emptyList();
-	}
+        return Collections.emptyList();
+    }
 
 }

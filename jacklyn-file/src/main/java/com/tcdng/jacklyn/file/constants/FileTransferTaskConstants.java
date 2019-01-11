@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,19 +23,19 @@ package com.tcdng.jacklyn.file.constants;
  */
 public interface FileTransferTaskConstants {
 
-	String FILETRANSFERCONFIGTESTTASK = "filetransferconfigtesttask";
+    String FILETRANSFERCONFIGTESTTASK = "filetransferconfigtesttask";
 
-	String FILETRANSFERTASK = "filetransfertask";
+    String FILETRANSFERTASK = "filetransfertask";
 
-	String FILETRANSFERLISTUPDATETASK = "filetransferlistupdatetask";
+    String FILETRANSFERLISTUPDATETASK = "filetransferlistupdatetask";
 
-	String FILETRANSFERCONFIGNAME = "fileTransferConfigName";
+    String FILETRANSFERCONFIGNAME = "fileTransferConfigName";
 
-	String WORKINGDT = "workingDt";
+    String WORKINGDT = "workingDt";
 
-	String UPDATEFILEBOX = "updateFileBox";
+    String UPDATEFILEBOX = "updateFileBox";
 
-	String FILETRANSFERCONFIGDATA = "filetransferConfigData";
+    String FILETRANSFERCONFIGDATA = "filetransferConfigData";
 
-	String FILETRANSFERCONFIGTESTRESULT = "fileTransferConfigTestResult";
+    String FILETRANSFERCONFIGTESTRESULT = "fileTransferConfigTestResult";
 }

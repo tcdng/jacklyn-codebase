@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,71 +34,69 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/archiving/archivabledefinition")
 @UplBinding("web/archiving/upl/managearchivabledefinitions.upl")
-public class ArchivableDefinitionController
-		extends AbstractArchivingRecordController<ArchivableDefinition> {
+public class ArchivableDefinitionController extends AbstractArchivingCrudController<ArchivableDefinition> {
 
-	private Long searchModuleId;
+    private Long searchModuleId;
 
-	private RecordStatus searchStatus;
+    private RecordStatus searchStatus;
 
-	public ArchivableDefinitionController() {
-		super(ArchivableDefinition.class, "archiving.archivabledefinition.hint",
-				ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-						| ManageRecordModifier.REPORTABLE);
-	}
+    public ArchivableDefinitionController() {
+        super(ArchivableDefinition.class, "$m{archiving.archivabledefinition.hint}",
+                ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
+    }
 
-	public Long getSearchModuleId() {
-		return searchModuleId;
-	}
+    public Long getSearchModuleId() {
+        return searchModuleId;
+    }
 
-	public void setSearchModuleId(Long searchModuleId) {
-		this.searchModuleId = searchModuleId;
-	}
+    public void setSearchModuleId(Long searchModuleId) {
+        this.searchModuleId = searchModuleId;
+    }
 
-	public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    public RecordStatus getSearchStatus() {
+        return searchStatus;
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
+    public void setSearchStatus(RecordStatus searchStatus) {
+        this.searchStatus = searchStatus;
+    }
 
-	@Override
-	protected List<ArchivableDefinition> find() throws UnifyException {
-		ArchivableDefinitionQuery query = new ArchivableDefinitionQuery();
-		if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-			query.moduleId(searchModuleId);
-		}
-		if (getSearchStatus() != null) {
-			query.status(getSearchStatus());
-		}
-		query.ignoreEmptyCriteria(true);
-		return getArchivingModule().findArchivableDefinitions(query);
-	}
+    @Override
+    protected List<ArchivableDefinition> find() throws UnifyException {
+        ArchivableDefinitionQuery query = new ArchivableDefinitionQuery();
+        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
+            query.moduleId(searchModuleId);
+        }
+        if (getSearchStatus() != null) {
+            query.status(getSearchStatus());
+        }
+        query.ignoreEmptyCriteria(true);
+        return getArchivingService().findArchivableDefinitions(query);
+    }
 
-	@Override
-	protected ArchivableDefinition find(Long id) throws UnifyException {
-		return getArchivingModule().findArchivableDefinition(id);
-	}
+    @Override
+    protected ArchivableDefinition find(Long id) throws UnifyException {
+        return getArchivingService().findArchivableDefinition(id);
+    }
 
-	@Override
-	protected ArchivableDefinition prepareCreate() throws UnifyException {
-		return null;
-	}
+    @Override
+    protected ArchivableDefinition prepareCreate() throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected Object create(ArchivableDefinition record) throws UnifyException {
-		return null;
-	}
+    @Override
+    protected Object create(ArchivableDefinition record) throws UnifyException {
+        return null;
+    }
 
-	@Override
-	protected int update(ArchivableDefinition record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int update(ArchivableDefinition record) throws UnifyException {
+        return 0;
+    }
 
-	@Override
-	protected int delete(ArchivableDefinition record) throws UnifyException {
-		return 0;
-	}
+    @Override
+    protected int delete(ArchivableDefinition record) throws UnifyException {
+        return 0;
+    }
 
 }

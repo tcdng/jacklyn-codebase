@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,35 +26,35 @@ import com.tcdng.unify.core.util.CalendarUtils;
  * @since 1.0
  */
 public abstract class BaseTimestampedStatusEntityQuery<T extends BaseTimestampedStatusEntity>
-		extends BaseStatusEntityQuery<T> {
+        extends BaseStatusEntityQuery<T> {
 
-	public BaseTimestampedStatusEntityQuery(Class<T> entityClass) {
-		super(entityClass);
-	}
+    public BaseTimestampedStatusEntityQuery(Class<T> entityClass) {
+        super(entityClass);
+    }
 
-	public BaseTimestampedStatusEntityQuery<T> createdOn(Date date) {
-		return (BaseTimestampedStatusEntityQuery<T>) between("createDt",
-				CalendarUtils.getMidnightDate(date), CalendarUtils.getLastSecondDate(date));
-	}
+    public BaseTimestampedStatusEntityQuery<T> createdOn(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
 
-	public BaseTimestampedStatusEntityQuery<T> createdBetween(Date fromDate, Date toDate) {
-		return (BaseTimestampedStatusEntityQuery<T>) between("createDt",
-				CalendarUtils.getMidnightDate(fromDate), CalendarUtils.getLastSecondDate(toDate));
-	}
+    public BaseTimestampedStatusEntityQuery<T> createdBetween(Date fromDate, Date toDate) {
+        return (BaseTimestampedStatusEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(fromDate),
+                CalendarUtils.getLastSecondDate(toDate));
+    }
 
-	public BaseTimestampedStatusEntityQuery<T> createdBefore(Date date) {
-		return (BaseTimestampedStatusEntityQuery<T>) less("createDt", date);
-	}
+    public BaseTimestampedStatusEntityQuery<T> createdBefore(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) less("createDt", date);
+    }
 
-	public BaseTimestampedStatusEntityQuery<T> createdOnBefore(Date date) {
-		return (BaseTimestampedStatusEntityQuery<T>) lessEqual("createDt", date);
-	}
+    public BaseTimestampedStatusEntityQuery<T> createdOnBefore(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) lessEqual("createDt", date);
+    }
 
-	public BaseTimestampedStatusEntityQuery<T> createdAfter(Date date) {
-		return (BaseTimestampedStatusEntityQuery<T>) greater("createDt", date);
-	}
+    public BaseTimestampedStatusEntityQuery<T> createdAfter(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) greater("createDt", date);
+    }
 
-	public BaseTimestampedStatusEntityQuery<T> createdOnAfter(Date date) {
-		return (BaseTimestampedStatusEntityQuery<T>) greaterEqual("createDt", date);
-	}
+    public BaseTimestampedStatusEntityQuery<T> createdOnAfter(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) greaterEqual("createDt", date);
+    }
 }

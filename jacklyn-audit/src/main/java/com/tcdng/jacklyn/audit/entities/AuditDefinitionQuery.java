@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,31 +28,31 @@ import com.tcdng.unify.core.logging.EventType;
  */
 public class AuditDefinitionQuery extends BaseInstallEntityQuery<AuditDefinition> {
 
-	public AuditDefinitionQuery() {
-		super(AuditDefinition.class);
-	}
+    public AuditDefinitionQuery() {
+        super(AuditDefinition.class);
+    }
 
-	public AuditDefinitionQuery name(String name) {
-		return (AuditDefinitionQuery) equals("name", name);
-	}
+    public AuditDefinitionQuery name(String name) {
+        return (AuditDefinitionQuery) equals("name", name);
+    }
 
-	public AuditDefinitionQuery nameIn(Collection<String> name) {
-		return (AuditDefinitionQuery) amongst("name", name);
-	}
+    public AuditDefinitionQuery nameIn(Collection<String> name) {
+        return (AuditDefinitionQuery) amongst("name", name);
+    }
 
-	public AuditDefinitionQuery recordName(String recordName) {
-		return (AuditDefinitionQuery) equals("recordName", recordName);
-	}
+    public AuditDefinitionQuery recordName(String recordName) {
+        return (AuditDefinitionQuery) equals("recordName", recordName);
+    }
 
-	public AuditDefinitionQuery moduleId(Long moduleId) {
-		return (AuditDefinitionQuery) equals("moduleId", moduleId);
-	}
+    public AuditDefinitionQuery moduleId(Long moduleId) {
+        return (AuditDefinitionQuery) equals("moduleId", moduleId);
+    }
 
-	public AuditDefinitionQuery moduleName(String moduleName) {
-		return (AuditDefinitionQuery) equals("moduleName", moduleName);
-	}
+    public AuditDefinitionQuery moduleName(String moduleName) {
+        return (AuditDefinitionQuery) equals("moduleName", moduleName);
+    }
 
-	public AuditDefinitionQuery eventType(EventType eventType) {
-		return (AuditDefinitionQuery) equals("eventType", eventType);
-	}
+    public AuditDefinitionQuery eventType(EventType eventType) {
+        return (AuditDefinitionQuery) equals("eventType", eventType);
+    }
 }
