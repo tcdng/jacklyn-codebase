@@ -1,5 +1,5 @@
 // UPL template for dashboard layer CRUD panel
-// Copyright 2018 The Code Department
+// Copyright 2018-2019 The Code Department.
 !ui-dashboardlayercrudpanel
     formSection:$d{!ui-section components:$c{frmName frmDescription frmNumberOfSections}}
     tableColumnList:$c{name description numberOfSections}
