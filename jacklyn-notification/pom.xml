@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.tcdng.jacklyn</groupId>
 		<artifactId>jacklyn</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>jacklyn-notification</artifactId>

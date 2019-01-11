@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tcdng.jacklyn</groupId>
 	<artifactId>jacklyn</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>jacklyn</name>
 	<description>Jacklyn Codebase</description>
-	<url>http://www.tcdng.com/jacklyn</url>
+	<url>http://www.tcdng.com/jacklyncodebase.html</url>
 
 	<licenses>
 		<license>
@@ -45,10 +45,27 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.version>0.0.1-SNAPSHOT</project.version>
-		<unify.version>1.0.1-SNAPSHOT</unify.version>
+		<unify.version>1.0.1</unify.version>
 	</properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/tcdng/jacklyn-codebase.git</connection>
+        <developerConnection>scm:git:ssh://github.com:tcdng/jacklyn-codebase.git</developerConnection>
+        <url>http://github.com/tcdng/jacklyn-codebase/tree/master</url>
+    </scm>
 
 	<profiles>
 		<profile>
@@ -135,13 +152,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<!-- Temporary staging -->
-	<!--repositories>
-		<repository>
-			<id>sonatype-staging-repo</id>
-			<url>https://oss.sonatype.org/content/repositories/comtcdng-1002</url>
-		</repository>
-	</repositories-->
 
 	<dependencies>
 		<!-- Main dependencies -->
