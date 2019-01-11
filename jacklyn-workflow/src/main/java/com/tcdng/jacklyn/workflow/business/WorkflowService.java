@@ -213,8 +213,6 @@ public interface WorkflowService extends JacklynBusinessService {
     /**
      * Finds manual initiation workflow templates base on user role.
      * 
-     * @param query
-     *            the the search criteria
      * @return list of workflow templates
      * @throws UnifyException
      *             if an error occurs

@@ -304,7 +304,7 @@ public interface FileService extends JacklynBusinessService {
     /**
      * Creates a batch file read configuration.
      * 
-     * @param record
+     * @param document
      *            the batch file read configuration document
      * @return the Id of the created record
      * @throws UnifyException
@@ -327,7 +327,7 @@ public interface FileService extends JacklynBusinessService {
     /**
      * Updates a batch file read configuration record by Id and version.
      * 
-     * @param record
+     * @param document
      *            the batch file read configuration document
      * @return the update count
      * @throws UnifyException
@@ -351,7 +351,7 @@ public interface FileService extends JacklynBusinessService {
     /**
      * Reloads parameter values for a batch file read configuration
      * 
-     * @param scheduledTaskDocument
+     * @param document
      *            the scheduled task document
      * @return the task document
      * @throws UnifyException

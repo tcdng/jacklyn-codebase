@@ -267,7 +267,7 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *            the key name
      * @param query
      *            the query with key field name set.
-     * @return Map<T, Module> the result map
+     * @return Map&lt;T, Module&gt; the result map
      * @throws UnifyException
      *             if an error occurs
      */

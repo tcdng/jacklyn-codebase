@@ -330,10 +330,10 @@ public interface OrganizationService extends JacklynBusinessService {
     void unregisterPrivilege(String categoryName, String moduleName, String... privilegeName) throws UnifyException;
 
     /**
-     * Finds privilege category by code.
+     * Finds privilege category by name.
      * 
-     * @param code
-     *            the code to search with
+     * @param name
+     *            the name to search with
      * @return privilege category if found otherwise null
      * @throws UnifyException
      */
