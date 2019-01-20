@@ -45,7 +45,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<unify.version>1.0.1</unify.version>
+		<unify.version>1.0.2-SNAPSHOT</unify.version>
 	</properties>
 
     <distributionManagement>
