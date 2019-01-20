@@ -23,7 +23,7 @@
 
 .jk-topbannerimg {width: 200px; height: 36px; text-align: left;}
 
-.jk-topuserimg {float: right; width: 32px; height: 32px;padding:1px;border:solid 1px #A0A0A0;margin-right:4px;cursor:pointer;}
+.jk-topuserimg {float: right; width: 32px; height: 32px;padding:1px;border:solid 1px #A0A0A0;margin-right:4px;margin-top:2px;cursor:pointer;}
 
 .jk-topalert {float:right; width: 28px; height: 32px;padding-left:4px;padding-top:8px;}
 .jk-topbell {width:24px;height:24px;cursor:pointer;}
