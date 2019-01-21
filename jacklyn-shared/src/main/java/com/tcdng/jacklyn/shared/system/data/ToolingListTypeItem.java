@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.shared.system.data;
 
-import javax.xml.bind.annotation.XmlElement;
+import com.tcdng.jacklyn.shared.BaseToolingItem;
 
 /**
  * Tooling list type item.
@@ -24,36 +24,13 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Lateef
  * @since 1.0
  */
-public class ToolingListTypeItem {
-
-    private String name;
-
-    private String description;
+public class ToolingListTypeItem extends BaseToolingItem {
 
     public ToolingListTypeItem(String name, String description) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
     }
 
     public ToolingListTypeItem() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,25 +14,17 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared.notification.data;
-
-
-import com.tcdng.jacklyn.shared.BaseToolingItem;
+package com.tcdng.jacklyn.shared;
 
 /**
- * Tooling enrichment logic item.
+ * Interface representing a tooling item.
  * 
- * @author Lateef
+ * @author Lateef Ojulari
  * @since 1.0
  */
-public class ToolingAttachmentGenItem extends BaseToolingItem {
+public interface ToolingItem {
 
-    public ToolingAttachmentGenItem(String name, String description) {
-        super(name, description);
-    }
-
-    public ToolingAttachmentGenItem() {
-
-    }
-
+    String getName();
+    
+    String getDescription();
 }
