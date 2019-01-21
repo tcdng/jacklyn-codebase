@@ -20,13 +20,15 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.ToolingItem;
+
 /**
  * Tooling record type item.
  * 
  * @author Lateef
  * @since 1.0
  */
-public class ToolingRecordTypeItem {
+public class ToolingRecordTypeItem implements ToolingItem {
 
     private String title;
 
@@ -45,6 +47,16 @@ public class ToolingRecordTypeItem {
 
     public ToolingRecordTypeItem() {
 
+    }
+
+    @Override
+    public String getName() {
+        return title;
+    }
+
+    @Override
+    public String getDescription() {
+        return title;
     }
 
     public String getTitle() {

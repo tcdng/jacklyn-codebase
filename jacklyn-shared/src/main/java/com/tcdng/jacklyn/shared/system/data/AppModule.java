@@ -18,46 +18,25 @@ package com.tcdng.jacklyn.shared.system.data;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.BaseToolingItem;
+
 /**
  * Application module.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class AppModule {
-
-    private String name;
-
-    private String description;
+public class AppModule extends BaseToolingItem {
 
     private String status;
 
     public AppModule(String name, String description, String status) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
         this.status = status;
     }
 
     public AppModule() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getStatus() {

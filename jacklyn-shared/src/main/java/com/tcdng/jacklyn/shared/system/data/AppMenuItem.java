@@ -17,17 +17,15 @@ package com.tcdng.jacklyn.shared.system.data;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.BaseToolingItem;
+
 /**
  * Application menu item.
  * 
  * @author Lateef
  * @since 1.0
  */
-public class AppMenuItem {
-
-    private String name;
-
-    private String description;
+public class AppMenuItem extends BaseToolingItem {
 
     private String pageCaption;
 
@@ -36,8 +34,7 @@ public class AppMenuItem {
     private String path;
 
     public AppMenuItem(String name, String description, String pageCaption, String caption, String path) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
         this.pageCaption = pageCaption;
         this.caption = caption;
         this.path = path;
@@ -45,24 +42,6 @@ public class AppMenuItem {
 
     public AppMenuItem() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getPageCaption() {

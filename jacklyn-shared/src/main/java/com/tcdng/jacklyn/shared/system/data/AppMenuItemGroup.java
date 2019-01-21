@@ -19,17 +19,15 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.BaseToolingItem;
+
 /**
  * Application menu item group.
  * 
  * @author Lateef
  * @since 1.0
  */
-public class AppMenuItemGroup {
-
-    private String name;
-
-    private String description;
+public class AppMenuItemGroup extends BaseToolingItem {
 
     private String pageCaption;
 
@@ -41,8 +39,7 @@ public class AppMenuItemGroup {
 
     public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String path,
             List<AppMenuItem> menuItemList) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
         this.pageCaption = pageCaption;
         this.caption = caption;
         this.path = path;
@@ -51,24 +48,6 @@ public class AppMenuItemGroup {
 
     public AppMenuItemGroup() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getPageCaption() {
