@@ -16,16 +16,18 @@
 
 package com.tcdng.jacklyn.shared.workflow;
 
+import com.tcdng.jacklyn.shared.FormWidgetType;
 import com.tcdng.unify.core.annotation.StaticList;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
 /**
- * Workflow form widget type constants.
+ * Workflow form widget type constants. This enumeration is deprecated. Use {@link FormWidgetType}.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Deprecated
 @StaticList("wfformwidgettypelist")
 public enum WorkflowFormWidgetType implements EnumConst {
 
