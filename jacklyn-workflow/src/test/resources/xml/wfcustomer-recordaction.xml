@@ -2,9 +2,10 @@
 <category name="customerRecActionCategory" description="Customer Record Action Category"
 	version="1.0">
 	<documents>
-		<document name="customerRecActionCategory.custInfo"
-			description="Customer Information" version="1.0">
-			<item-description-format>Customer:{firstName} {lastName}</item-description-format>
+		<document name="custDoc" description="Customer Information"
+			version="1.0">
+			<item-description-format>Customer:{firstName} {lastName}
+			</item-description-format>
 			<fields>
 				<field name="id" description="Customer ID" type="long"
 					multiple="false" />
@@ -37,9 +38,8 @@
 		</document>
 	</documents>
 	<templates>
-		<template name="customerRecActionCategory.manageCust"
-			description="Manage Customer" document="customerRecActionCategory.custInfo"
-			version="1.0">
+		<template name="manageCust" description="Manage Customer"
+			document="custDoc" version="1.0">
 			<steps>
 				<step name="start" description="Start Step" type="start">
 					<routings>

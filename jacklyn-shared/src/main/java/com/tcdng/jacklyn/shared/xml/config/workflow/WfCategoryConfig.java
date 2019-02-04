@@ -34,6 +34,8 @@ public class WfCategoryConfig extends BaseConfig {
 
     private WfDocumentsConfig wfDocumentsConfig;
 
+    private WfMessagesConfig wfMessagesConfig;
+
     private WfTemplatesConfig wfTemplatesConfig;
 
     public String getVersion() {
@@ -52,6 +54,15 @@ public class WfCategoryConfig extends BaseConfig {
     @XmlElement(name = "documents")
     public void setWfDocumentsConfig(WfDocumentsConfig wfDocumentsConfig) {
         this.wfDocumentsConfig = wfDocumentsConfig;
+    }
+
+    public WfMessagesConfig getWfMessagesConfig() {
+        return wfMessagesConfig;
+    }
+
+    @XmlElement(name = "messages")
+    public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
+        this.wfMessagesConfig = wfMessagesConfig;
     }
 
     public WfTemplatesConfig getWfTemplatesConfig() {

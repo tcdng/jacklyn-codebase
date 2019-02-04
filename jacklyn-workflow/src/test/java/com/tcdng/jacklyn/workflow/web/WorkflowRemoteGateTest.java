@@ -30,6 +30,7 @@ import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfForm;
+import com.tcdng.jacklyn.workflow.entities.WfMessage;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.IOUtils;
@@ -81,7 +82,7 @@ public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
     @SuppressWarnings("unchecked")
     @Override
     protected void onTearDown() throws Exception {
-        deleteAll(WfTemplate.class, WfForm.class, WfDoc.class, WfCategory.class);
+        deleteAll(WfMessage.class, WfTemplate.class, WfForm.class, WfDoc.class, WfCategory.class);
     }
 
 }

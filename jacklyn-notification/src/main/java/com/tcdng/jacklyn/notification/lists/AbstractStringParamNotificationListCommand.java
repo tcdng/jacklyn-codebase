@@ -16,20 +16,20 @@
 
 package com.tcdng.jacklyn.notification.lists;
 
-import com.tcdng.unify.core.list.SingleStringParams;
+import com.tcdng.unify.core.list.StringParam;
 
 /**
- * Abstract base class for single-string parameters notification module list
+ * Abstract base class for string parameter notification module list
  * commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractSingleStringParamsNotificationListCommand
-        extends AbstractNotificationListCommand<SingleStringParams> {
+public abstract class AbstractStringParamNotificationListCommand
+        extends AbstractNotificationListCommand<StringParam> {
 
-    public AbstractSingleStringParamsNotificationListCommand() {
-        super(SingleStringParams.class);
+    public AbstractStringParamNotificationListCommand() {
+        super(StringParam.class);
     }
 
 }

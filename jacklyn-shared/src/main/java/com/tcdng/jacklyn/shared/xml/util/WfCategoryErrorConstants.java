@@ -95,4 +95,39 @@ public interface WfCategoryErrorConstants {
      * category version = {1}, template version = {2}.
      */
     String WFCATEGORY_TEMPLATE_VERSION_NOT_COMPATIBLE = "WFCAT_000E";
+
+    /**
+     * Workflow message has no name. Index = {0}.
+     */
+    String WFCATEGORY_MESSAGE_NO_NAME = "WFCAT_000F";
+
+    /**
+     * Workflow message has no description. Index = {0}.
+     */
+    String WFCATEGORY_MESSAGE_NO_DESC = "WFCAT_0010";
+
+    /**
+     * Workflow message with name already exists. Index = {0}, name = {1}.
+     */
+    String WFCATEGORY_MESSAGE_EXIST = "WFCAT_0011";
+
+    /**
+     * Workflow message with invalid name. Index = {0}, name = {1}.
+     */
+    String WFCATEGORY_MESSAGE_INVALID_NAME = "WFCAT_0012";
+
+    /**
+     * Workflow message has no subject. Index = {0}, name = {1}.
+     */
+    String WFCATEGORY_MESSAGE_NO_SUBJECT = "WFCAT_0013";
+
+    /**
+     * Workflow message has no body. Index = {0}, name = {1}.
+     */
+    String WFCATEGORY_MESSAGE_NO_BODY = "WFCAT_0014";
+
+    /**
+     * Workflow message has no document. Index = {0}, name = {1}.
+     */
+    String WFCATEGORY_MESSAGE_NO_DOCUMENT = "WFCAT_0015";
 }

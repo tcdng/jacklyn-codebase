@@ -427,4 +427,10 @@ public interface WfTemplateErrorConstants {
      * Workflow template step has no actual participant. Index = {0}, name = {1}, type = {2}.
      */
     String WFTEMPLATE_STEP_NO_ACTUAL_PARTICIPANT = "WFTMPL_004B";
+
+    /**
+     * Workflow template alert refers to incompatible message. Index = {0}, step = {1},
+     * name = {2}, message = {3}, document = {4}.
+     */
+    String WFTEMPLATE_ALERT_MESSAGE_INCOMPATIBLE = "WFTMPL_004C";
 }

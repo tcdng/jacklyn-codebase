@@ -34,6 +34,8 @@ import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfDocQuery;
+import com.tcdng.jacklyn.workflow.entities.WfMessage;
+import com.tcdng.jacklyn.workflow.entities.WfMessageQuery;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
@@ -187,6 +189,28 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<WfDoc> findWfDocs(Long wfCategoryId) throws UnifyException;
+
+    /**
+     * Finds workflow messages by criteria.
+     * 
+     * @param query
+     *            the the search criteria
+     * @return list of workflow messages
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfMessage> findWfMessages(WfMessageQuery query) throws UnifyException;
+
+    /**
+     * Finds workflow messages by category.
+     * 
+     * @param wfCategoryId
+     *            the category ID
+     * @return list of workflow messages
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfMessage> findWfMessages(Long wfCategoryId) throws UnifyException;
 
     /**
      * Finds workflow templates by criteria.

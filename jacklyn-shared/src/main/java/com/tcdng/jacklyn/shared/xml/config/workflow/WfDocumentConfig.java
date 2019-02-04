@@ -15,7 +15,6 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,8 +28,6 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 @XmlRootElement(name = "document")
 public class WfDocumentConfig extends BaseConfig {
-
-    private String version;
 
     private String itemDescFormat;
 
@@ -51,15 +48,6 @@ public class WfDocumentConfig extends BaseConfig {
     @XmlElement(name = "item-description-format", required = true)
     public void setItemDescFormat(String itemDescFormat) {
         this.itemDescFormat = itemDescFormat;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    @XmlAttribute(name = "version", required = true)
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public WfFieldsConfig getWfFieldsConfig() {

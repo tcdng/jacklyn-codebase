@@ -117,7 +117,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         WfDoc wfDoc = wfDocList.get(0);
         assertNotNull(wfDoc);
-        assertEquals("custInfo", wfDoc.getName());
+        assertEquals("custDoc", wfDoc.getName());
         assertEquals("Customer Information", wfDoc.getDescription());
         assertNull(wfDoc.getFieldList());
         assertNull(wfDoc.getClassifierList());
@@ -126,7 +126,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         wfDoc = wfService.findWfDoc(wfDoc.getId());
         assertNotNull(wfDoc);
-        assertEquals("custInfo", wfDoc.getName());
+        assertEquals("custDoc", wfDoc.getName());
         assertEquals("Customer Information", wfDoc.getDescription());
 
         /* Document fields */
@@ -391,27 +391,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Expiry Date", wfFormField.getLabel());
         assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
-        /* Templates */
-        List<WfTemplate> wfTemplateList = wfService.findWfTemplates(wfCategoryId);
-        assertNotNull(wfTemplateList);
-        assertEquals(1, wfTemplateList.size());
-
-        // Template 1
-        WfTemplate wfTemplate = wfTemplateList.get(0);
-        assertNotNull(wfTemplate);
-        assertEquals("custOnboarding", wfTemplate.getName());
-        assertEquals("Customer Onboarding", wfTemplate.getDescription());
-        assertEquals("custInfo", wfTemplate.getWfDocName());
-        assertNull(wfTemplate.getStepList());
-
-        wfTemplate = wfService.findWfTemplate(wfTemplate.getId());
-        assertNotNull(wfTemplate);
-        assertEquals("custOnboarding", wfTemplate.getName());
-        assertEquals("Customer Onboarding", wfTemplate.getDescription());
-        assertEquals("custInfo", wfTemplate.getWfDocName());
-
         /* Messages */
-        List<WfMessage> messageList = wfTemplate.getMessageList();
+        List<WfMessage> messageList = wfService.findWfMessages(wfCategoryId);
         assertNotNull(messageList);
         assertEquals(1, messageList.size());
 
@@ -423,6 +404,25 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Awaiting approval for {firstName} {lastName}", wfMessage.getTemplate());
         assertEquals("default-attachmentgenerator", wfMessage.getAttachmentGenerator());
         assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
+        
+        /* Templates */
+        List<WfTemplate> wfTemplateList = wfService.findWfTemplates(wfCategoryId);
+        assertNotNull(wfTemplateList);
+        assertEquals(1, wfTemplateList.size());
+
+        // Template 1
+        WfTemplate wfTemplate = wfTemplateList.get(0);
+        assertNotNull(wfTemplate);
+        assertEquals("custOnboarding", wfTemplate.getName());
+        assertEquals("Customer Onboarding", wfTemplate.getDescription());
+        assertEquals("custDoc", wfTemplate.getWfDocName());
+        assertNull(wfTemplate.getStepList());
+
+        wfTemplate = wfService.findWfTemplate(wfTemplate.getId());
+        assertNotNull(wfTemplate);
+        assertEquals("custOnboarding", wfTemplate.getName());
+        assertEquals("Customer Onboarding", wfTemplate.getDescription());
+        assertEquals("custDoc", wfTemplate.getWfDocName());
 
         /* Steps */
         List<WfStep> stepList = wfTemplate.getStepList();
@@ -685,7 +685,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(workflowItemHist);
         assertNotNull(workflowItemHist.getId());
         assertNull(workflowItemHist.getDocumentId());
-        assertEquals("customerCategory.custInfo", workflowItemHist.getGlobalDocName());
+        assertEquals("customerCategory.custDoc", workflowItemHist.getGlobalDocName());
         assertEquals("customerCategory.custOnboarding", workflowItemHist.getGlobalTemplateName());
         assertEquals("Customer:Tom Jones", workflowItemHist.getDescription());
 
@@ -798,7 +798,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(workflowItemHist);
         assertNotNull(workflowItemHist.getId());
         assertNotNull(workflowItemHist.getDocumentId());
-        assertEquals("customerCategory.custInfo", workflowItemHist.getGlobalDocName());
+        assertEquals("customerCategory.custDoc", workflowItemHist.getGlobalDocName());
         assertEquals("customerCategory.custOnboarding", workflowItemHist.getGlobalTemplateName());
         assertEquals("Customer:Tom Jones", workflowItemHist.getDescription());
 
