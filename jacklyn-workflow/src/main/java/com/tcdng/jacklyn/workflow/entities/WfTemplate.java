@@ -75,9 +75,6 @@ public class WfTemplate extends BaseEntity {
     private Date wfCategoryUpdateDt;
 
     @ChildList
-    private List<WfMessage> messageList;
-
-    @ChildList
     private List<WfStep> stepList;
 
     @Override
@@ -167,14 +164,6 @@ public class WfTemplate extends BaseEntity {
 
     public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
         this.wfCategoryUpdateDt = wfCategoryUpdateDt;
-    }
-
-    public List<WfMessage> getMessageList() {
-        return messageList;
-    }
-
-    public void setMessageList(List<WfMessage> messageList) {
-        this.messageList = messageList;
     }
 
     public List<WfStep> getStepList() {

@@ -23,7 +23,7 @@ import com.tcdng.jacklyn.notification.entities.NotificationTemplateQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
-import com.tcdng.unify.core.list.SingleStringParams;
+import com.tcdng.unify.core.list.StringParam;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
@@ -33,10 +33,10 @@ import com.tcdng.unify.core.util.QueryUtils;
  * @since 1.0
  */
 @Component("notificationtemplatelist")
-public class NotificationTemplateListCommand extends AbstractSingleStringParamsNotificationListCommand {
+public class NotificationTemplateListCommand extends AbstractStringParamNotificationListCommand {
 
     @Override
-    public List<? extends Listable> execute(Locale locale, SingleStringParams params) throws UnifyException {
+    public List<? extends Listable> execute(Locale locale, StringParam params) throws UnifyException {
         NotificationTemplateQuery query = new NotificationTemplateQuery();
         if (QueryUtils.isValidStringCriteria(params.getValue())) {
             query.moduleName(params.getValue());

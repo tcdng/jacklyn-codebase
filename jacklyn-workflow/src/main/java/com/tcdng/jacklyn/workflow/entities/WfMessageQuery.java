@@ -32,10 +32,6 @@ public class WfMessageQuery extends BaseEntityQuery<WfMessage> {
         super(WfMessage.class);
     }
 
-    public WfMessageQuery wfTemplateId(Long wfTemplateId) {
-        return (WfMessageQuery) equals("wfTemplateId", wfTemplateId);
-    }
-
     public WfMessageQuery wfCategoryId(Long wfCategoryId) {
         return (WfMessageQuery) equals("wfCategoryId", wfCategoryId);
     }
@@ -44,12 +40,12 @@ public class WfMessageQuery extends BaseEntityQuery<WfMessage> {
         return (WfMessageQuery) equals("wfCategoryName", wfCategoryName);
     }
 
-    public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
-        return (WfMessageQuery) equals("wfCategoryVersion", wfCategoryVersion);
-    }
-
     public WfMessageQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
         return (WfMessageQuery) equals("wfCategoryStatus", wfCategoryStatus);
+    }
+
+    public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfMessageQuery) equals("wfCategoryVersion", wfCategoryVersion);
     }
 
     public WfMessageQuery name(String name) {

@@ -32,10 +32,6 @@ public class WfTemplateConfig extends BaseConfig {
 
     private String document;
 
-    private String version;
-
-    private WfMessagesConfig wfMessagesConfig;
-
     private WfStepsConfig wfStepsConfig;
 
     public String getDocument() {
@@ -45,24 +41,6 @@ public class WfTemplateConfig extends BaseConfig {
     @XmlAttribute(name = "document", required = true)
     public void setDocument(String document) {
         this.document = document;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    @XmlAttribute(name = "version", required = true)
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public WfMessagesConfig getWfMessagesConfig() {
-        return wfMessagesConfig;
-    }
-
-    @XmlElement(name = "messages")
-    public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
-        this.wfMessagesConfig = wfMessagesConfig;
     }
 
     public WfStepsConfig getWfStepsConfig() {

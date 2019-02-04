@@ -2,7 +2,7 @@
 <category name="customerCategory" description="Customer Workflow Category"
 	version="1.0">
 	<documents>
-		<document name="customerCategory.custInfo" description="Customer Information"
+		<document name="custDoc" description="Customer Information"
 			version="1.0">
 			<fields>
 				<field name="id" description="Customer ID" type="long" />
@@ -60,16 +60,16 @@
 			</form>
 		</document>
 	</documents>
+    <messages>
+        <message name="awaitCustApproval" description="Awaiting Customer Approval"
+            attachment-generator="default-messagegenerator" html="false" document="custDoc" >
+            <subject>Awaiting Customer Approval</subject>
+            <body>Awaiting approval for {firstName} {lastName}</body>
+        </message>
+    </messages>
 	<templates>
-		<template name="customerCategory.custOnboarding" description="Customer Onboarding"
-			document="customerCategory.custInfo" version="1.0">
-			<messages>
-				<message name="awaitCustApproval" description="Awaiting Customer Approval"
-					attachment-generator="default-messagegenerator" html="false">
-					<subject>Awaiting Customer Approval</subject>
-					<body>Awaiting approval for {firstName} {lastName}</body>
-				</message>
-			</messages>
+		<template name="custOnboarding" description="Customer Onboarding"
+			document="custDoc" version="1.0">
 			<steps>
                 <step name="manual" description="Manual Create Customer" type="manual"
                     participant="personnel" />

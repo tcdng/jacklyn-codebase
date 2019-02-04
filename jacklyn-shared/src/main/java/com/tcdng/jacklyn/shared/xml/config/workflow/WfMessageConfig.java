@@ -32,6 +32,8 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfMessageConfig extends BaseConfig {
 
+    private String document;
+
     private String subject;
 
     private String body;
@@ -47,6 +49,15 @@ public class WfMessageConfig extends BaseConfig {
     public WfMessageConfig() {
         messageType = MessageType.INFORMATION;
         html = Boolean.FALSE;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute(name = "document", required = true)
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public String getSubject() {

@@ -81,8 +81,8 @@ public final class WfNameUtils {
         return StringUtils.dotify(categoryName, templateName);
     }
 
-    public static String getGlobalMessageName(String categoryName, String templateName, String messageName) {
-        return StringUtils.dotify(categoryName, templateName, messageName);
+    public static String getGlobalMessageName(String categoryName, String messageName) {
+        return StringUtils.dotify(categoryName, messageName);
     }
 
     public static String getGlobalStepName(String categoryName, String templateName, String stepName) {
