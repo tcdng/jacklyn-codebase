@@ -24,6 +24,7 @@ import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
+import com.tcdng.unify.core.constant.BinaryLogicType;
 
 /**
  * Workflow document classifier definition entity.
@@ -47,6 +48,9 @@ public class WfDocClassifier extends BaseEntity {
     @Column(nullable = true)
     private String logic;
 
+    @Column(nullable = true)
+    private BinaryLogicType filterLogic;
+    
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
 
@@ -87,6 +91,14 @@ public class WfDocClassifier extends BaseEntity {
 
     public void setLogic(String logic) {
         this.logic = logic;
+    }
+
+    public BinaryLogicType getFilterLogic() {
+        return filterLogic;
+    }
+
+    public void setFilterLogic(BinaryLogicType filterLogic) {
+        this.filterLogic = filterLogic;
     }
 
     public List<WfDocClassifierFilter> getFilterList() {

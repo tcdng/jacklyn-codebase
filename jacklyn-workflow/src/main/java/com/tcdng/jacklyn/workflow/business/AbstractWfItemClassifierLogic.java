@@ -54,91 +54,89 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
     protected boolean applyFilter(WfItemReader wfItemReader, WfDocClassifierFilterDef filter) throws UnifyException {
         if (wfItemReader != null) {
             Object fieldValue = wfItemReader.readFieldValue(filter.getFieldName());
-            Object limVal1 = getCalcValue(wfItemReader, filter, filter.getValue1());
+            Object limVal1 = resolveValue(wfItemReader, filter, filter.getValue1());
             switch (filter.getOp()) {
-            case BETWEEN:
-                if (fieldValue != null) {
-                    double dblFieldVal = ((Number) fieldValue).doubleValue();
-                    return dblFieldVal >= ((Number) limVal1).doubleValue()
-                            && dblFieldVal <= ((Number) getCalcValue(wfItemReader, filter, filter.getValue2()))
-                                    .doubleValue();
-                }
-                break;
-            case EQUALS:
-                return limVal1.equals(fieldValue);
-            case GREATER:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() > ((Number) limVal1).doubleValue();
-                }
-                break;
-            case GREATER_OR_EQUAL:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() >= ((Number) limVal1).doubleValue();
-                }
-                break;
-            case IS_NOT_NULL:
-                return fieldValue != null;
-            case IS_NULL:
-                return fieldValue == null;
-            case LESS_OR_EQUAL:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() <= ((Number) limVal1).doubleValue();
-                }
-                break;
-            case LESS:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() < ((Number) limVal1).doubleValue();
-                }
-                break;
-            case LIKE:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).indexOf((String) limVal1) >= 0;
-                }
-                break;
-            case LIKE_BEGIN:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).startsWith((String) limVal1);
-                }
-                break;
-            case LIKE_END:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).endsWith((String) limVal1);
-                }
-                break;
-            case NOT_BETWEEN:
-                if (fieldValue != null) {
-                    double dblFieldVal = ((Number) fieldValue).doubleValue();
-                    return dblFieldVal < ((Number) limVal1).doubleValue()
-                            || dblFieldVal > ((Number) getCalcValue(wfItemReader, filter, filter.getValue2()))
-                                    .doubleValue();
-                }
-                break;
-            case NOT_EQUAL:
-                return !limVal1.equals(fieldValue);
-            case NOT_LIKE:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).indexOf((String) limVal1) < 0;
-                }
-                break;
-            case NOT_LIKE_BEGIN:
-                if (fieldValue != null) {
-                    return !((String) fieldValue).startsWith((String) limVal1);
-                }
-                break;
-            case NOT_LIKE_END:
-                if (fieldValue != null) {
-                    return !((String) fieldValue).endsWith((String) limVal1);
-                }
-                break;
-            default:
-                break;
+                case BETWEEN:
+                    if (fieldValue != null) {
+                        double dblFieldVal = getDouble(fieldValue);
+                        return dblFieldVal >= getDouble(limVal1)
+                                && dblFieldVal <= getDouble(resolveValue(wfItemReader, filter, filter.getValue2()));
+                    }
+                    break;
+                case EQUALS:
+                    return limVal1.equals(fieldValue);
+                case GREATER:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) > getDouble(limVal1);
+                    }
+                    break;
+                case GREATER_OR_EQUAL:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) >= getDouble(limVal1);
+                    }
+                    break;
+                case IS_NOT_NULL:
+                    return fieldValue != null;
+                case IS_NULL:
+                    return fieldValue == null;
+                case LESS_OR_EQUAL:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) <= getDouble(limVal1);
+                    }
+                    break;
+                case LESS:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) < getDouble(limVal1);
+                    }
+                    break;
+                case LIKE:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).indexOf((String) limVal1) >= 0;
+                    }
+                    break;
+                case LIKE_BEGIN:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).startsWith((String) limVal1);
+                    }
+                    break;
+                case LIKE_END:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).endsWith((String) limVal1);
+                    }
+                    break;
+                case NOT_BETWEEN:
+                    if (fieldValue != null) {
+                        double dblFieldVal = getDouble(fieldValue);
+                        return dblFieldVal < getDouble(limVal1)
+                                || dblFieldVal > getDouble(resolveValue(wfItemReader, filter, filter.getValue2()));
+                    }
+                    break;
+                case NOT_EQUAL:
+                    return !limVal1.equals(fieldValue);
+                case NOT_LIKE:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).indexOf((String) limVal1) < 0;
+                    }
+                    break;
+                case NOT_LIKE_BEGIN:
+                    if (fieldValue != null) {
+                        return !((String) fieldValue).startsWith((String) limVal1);
+                    }
+                    break;
+                case NOT_LIKE_END:
+                    if (fieldValue != null) {
+                        return !((String) fieldValue).endsWith((String) limVal1);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
         return false;
     }
 
-    private Object getCalcValue(WfItemReader wfItemReader, WfDocClassifierFilterDef filter, String value)
+    private Object resolveValue(WfItemReader wfItemReader, WfDocClassifierFilterDef filter, String value)
             throws UnifyException {
         Object val = null;
         if (filter.isFieldOnly()) {
@@ -153,6 +151,22 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
         }
 
         return val;
+    }
+
+    private double getDouble(Object val) {
+        if (val instanceof Number) {
+            return ((Number) val).doubleValue();
+        }
+
+        if (val instanceof Date) {
+            return ((Date) val).getTime();
+        }
+
+        if (val instanceof String) {
+            return ((String) val).length();
+        }
+
+        return 0;
     }
 
 }
