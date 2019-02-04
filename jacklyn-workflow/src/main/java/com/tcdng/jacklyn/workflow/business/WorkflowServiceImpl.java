@@ -299,7 +299,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             logic = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMCLASSIFIERLOGIC;
                         }
                         classifierList.add(new WfDocClassifierDef(wfDocClassifier.getName(),
-                                wfDocClassifier.getDescription(), logic, filterList));
+                                wfDocClassifier.getDescription(), logic, wfDocClassifier.getFilterLogic(), filterList));
                     }
                 }
 
@@ -1282,6 +1282,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 WfDocClassifier wfDocClassifier = new WfDocClassifier();
                 wfDocClassifier.setName(wfDocClassifierConfig.getName());
                 wfDocClassifier.setDescription(resolveApplicationMessage(wfDocClassifierConfig.getDescription()));
+                wfDocClassifier.setFilterLogic(wfDocClassifierConfig.getFilterLogic());
                 wfDocClassifier.setLogic(wfDocClassifierConfig.getLogic());
 
                 if (!DataUtils.isBlank(wfDocClassifierConfig.getWfClassifierFilterConfigList())) {

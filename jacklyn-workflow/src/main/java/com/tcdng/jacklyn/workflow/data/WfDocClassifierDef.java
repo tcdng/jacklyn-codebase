@@ -16,8 +16,10 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
-import java.util.Collections;
 import java.util.List;
+
+import com.tcdng.unify.core.constant.BinaryLogicType;
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
  * Workflow document classifier definition.
@@ -28,24 +30,27 @@ import java.util.List;
 public class WfDocClassifierDef extends BaseWfDef {
 
     private static final long serialVersionUID = 4973270364809680350L;
-
+    
     private String logic;
+
+    private BinaryLogicType filterLogic;
 
     private List<WfDocClassifierFilterDef> filterList;
 
     public WfDocClassifierDef(String name, String description, String logic,
-            List<WfDocClassifierFilterDef> filterList) {
+            BinaryLogicType filterLogic, List<WfDocClassifierFilterDef> filterList) {
         super(name, description);
         this.logic = logic;
-        if (filterList != null) {
-            this.filterList = Collections.unmodifiableList(filterList);
-        } else {
-            this.filterList = Collections.emptyList();
-        }
+        this.filterLogic = filterLogic;
+        this.filterList = DataUtils.unmodifiableList(filterList);
     }
 
     public String getLogic() {
         return logic;
+    }
+
+    public BinaryLogicType getFilterLogic() {
+        return filterLogic;
     }
 
     public List<WfDocClassifierFilterDef> getFilterList() {

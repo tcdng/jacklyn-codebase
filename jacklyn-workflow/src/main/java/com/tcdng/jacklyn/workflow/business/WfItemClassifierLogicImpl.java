@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.workflow.data.WfDocClassifierDef;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierFilterDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.constant.BinaryLogicType;
 
 /**
  * Default workflow item classifier logic implementation.
@@ -27,18 +28,31 @@ import com.tcdng.unify.core.annotation.Component;
  * @author Lateef
  * @since 1.0
  */
-@Component(name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMCLASSIFIERLOGIC,
+@Component(
+        name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMCLASSIFIERLOGIC,
         description = "Default Workflow Item Classifier Logic")
 public class WfItemClassifierLogicImpl extends AbstractWfItemClassifierLogic {
 
     @Override
     public boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException {
-        for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
-            if (!applyFilter(wfItemReader, filter)) {
-                return false;
+        if (BinaryLogicType.AND.equals(wfDocClassifierDef.getFilterLogic())) {
+            for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
+                if (!applyFilter(wfItemReader, filter)) {
+                    return false;
+                }
             }
+
+            return true;
+        } else if (BinaryLogicType.OR.equals(wfDocClassifierDef.getFilterLogic())) {
+            for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
+                if (applyFilter(wfItemReader, filter)) {
+                    return true;
+                }
+            }
+            return true;
         }
-        return true;
+
+        return false;
     }
 
 }
