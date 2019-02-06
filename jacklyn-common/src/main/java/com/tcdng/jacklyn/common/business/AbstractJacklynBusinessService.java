@@ -31,6 +31,7 @@ import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.system.ParameterService;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.web.UnifyWebSessionAttributeConstants;
 
 /**
  * Abstract base class for Jacklyn business service implementations.
@@ -84,5 +85,9 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
             }
         }
         return list;
+    }
+    
+    protected void broadcastRefreshMenu() throws UnifyException {
+        broadcastToOtherSessions(UnifyWebSessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);        
     }
 }

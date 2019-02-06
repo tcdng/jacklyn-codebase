@@ -15,7 +15,6 @@
  */
 package com.tcdng.jacklyn.common.controllers;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.business.ReportProvider;
@@ -25,17 +24,10 @@ import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
-import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskSetup;
-import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.AbstractPageController;
-import com.tcdng.unify.web.annotation.Action;
-import com.tcdng.unify.web.ui.data.MessageBox;
-import com.tcdng.unify.web.ui.data.MessageIcon;
-import com.tcdng.unify.web.ui.data.MessageMode;
 import com.tcdng.unify.web.ui.data.MessageResult;
 import com.tcdng.unify.web.ui.data.SearchBox;
-import com.tcdng.unify.web.ui.data.TaskMonitorInfo;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
 
 /**
@@ -48,107 +40,6 @@ public abstract class BasePageController extends AbstractPageController {
 
     public BasePageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
-    }
-
-    @Action
-    @Override
-    public String confirm() throws UnifyException {
-        String msg = getRequestContextUtil().getRequestConfirmMessage();
-        String param = getRequestContextUtil().getRequestConfirmParam();
-        if (!StringUtils.isBlank(param)) {
-            msg = MessageFormat.format(msg, param);
-        }
-
-        return showMessageBox(MessageIcon.QUESTION, MessageMode.YES_NO, getSessionMessage("messagebox.confirmation"),
-                msg, "/confirmResult");
-    }
-
-    @Action
-    public String confirmResult() throws UnifyException {
-        if (MessageResult.YES.equals(getMessageResult())) {
-            return hidePopupFireConfirm();
-        }
-
-        return hidePopup();
-    }
-
-    /**
-     * Sets up a response that shows a message box with default info icon and OK
-     * button. {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
-     * 
-     * @param message
-     *            the message to display
-     * @return response to show application message box
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    protected String showMessageBox(String message) throws UnifyException {
-        return showMessageBox(MessageIcon.INFO, MessageMode.OK, getSessionMessage("messagebox.message"), message,
-                "/hidePopup");
-    }
-
-    /**
-     * Sets up a response that shows a message box with default info icon and OK
-     * button. {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
-     * 
-     * @param message
-     *            the message to display
-     * @param actionPath
-     *            the action path
-     * @return response to show application message box
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    protected String showMessageBox(String message, String actionPath) throws UnifyException {
-        return showMessageBox(MessageIcon.INFO, MessageMode.OK, getSessionMessage("messagebox.message"), message,
-                actionPath);
-    }
-
-    /**
-     * Sets up a response that shows a message box with default info icon and OK
-     * button. {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
-     * 
-     * @param caption
-     *            the message caption
-     * @param message
-     *            the message to display
-     * @param actionPath
-     *            the action path
-     * @return response to show application message box
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    protected String showMessageBox(String caption, String message, String actionPath) throws UnifyException {
-        return showMessageBox(MessageIcon.INFO, MessageMode.OK, caption, message, actionPath);
-    }
-
-    /**
-     * Sets up a response that shows a message box. The message box is backed by the
-     * {@link MessageBox} value of the session attribute
-     * {@link JacklynSessionAttributeConstants#MESSAGEBOX}.
-     * 
-     * @param messageIcon
-     *            the message icon of enumeration type {@link MessageIcon}
-     * @param messageMode
-     *            the message mode of enumeration type {@link MessageMode}
-     * @param caption
-     *            the message caption
-     * @param message
-     *            the message to display
-     * @param actionPath
-     *            the action path
-     * @return response to show application message box
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    protected String showMessageBox(MessageIcon messageIcon, MessageMode messageMode, String caption, String message,
-            String actionPath) throws UnifyException {
-        setSessionAttribute(JacklynSessionAttributeConstants.MESSAGEBOX,
-                new MessageBox(messageIcon, messageMode, caption, message, getName() + actionPath));
-        return "showapplicationmessage";
     }
 
     /**
@@ -179,21 +70,6 @@ public abstract class BasePageController extends AbstractPageController {
      *            the task setup
      * @param caption
      *            the task monitor box caption
-     * @return the show application monitor box result mapping name
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    protected String launchTaskWithMonitorBox(TaskSetup taskSetup, String caption) throws UnifyException {
-        return launchTaskWithMonitorBox(taskSetup, caption, null, null);
-    }
-
-    /**
-     * Launches a task and shows a monitoring box.
-     * 
-     * @param taskSetup
-     *            the task setup
-     * @param caption
-     *            the task monitor box caption
      * @param onSuccessPath
      *            optional on task success forward to path
      * @param onFailurePath
@@ -204,15 +80,11 @@ public abstract class BasePageController extends AbstractPageController {
      */
     protected String launchTaskWithMonitorBox(TaskSetup taskSetup, String caption, String onSuccessPath,
             String onFailurePath) throws UnifyException {
-        TaskMonitor taskMonitor = launchTask(taskSetup);
         if (taskSetup.getEventCode() != null) {
             logUserEvent(taskSetup.getEventCode(), taskSetup.getEventDetails());
         }
 
-        TaskMonitorInfo taskMonitorInfo = new TaskMonitorInfo(taskMonitor, resolveSessionMessage(caption), onSuccessPath,
-                onFailurePath);
-        setSessionAttribute(JacklynSessionAttributeConstants.TASKMONITORINFO, taskMonitorInfo);
-        return "showapplicationtaskmonitor";
+        return super.launchTaskWithMonitorBox(taskSetup, caption, onSuccessPath, onFailurePath);
     }
 
     /**

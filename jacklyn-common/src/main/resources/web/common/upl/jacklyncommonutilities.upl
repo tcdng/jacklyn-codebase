@@ -1,17 +1,9 @@
-// UPL template for common utilities
+// UPL template for jacklyn common utilities page controller.
 // Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$s{}
 
-//Message box popup
-!ui-messageboxpanel:messageBoxPopup
-    binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.MESSAGEBOX}
-
-//Task monitor box popup
-!ui-taskmonitorpanel:taskMonitorInfoPopup
-       binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.TASKMONITORINFO}
-    
 //Report runner popup
 !ui-reportrunnerpanel:reportRunnerPopup generateReportPath:$n{/generateReport} closeDialogPath:$n{/closeReport}
     binding:$j{com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants.REPORTOPTIONS}
