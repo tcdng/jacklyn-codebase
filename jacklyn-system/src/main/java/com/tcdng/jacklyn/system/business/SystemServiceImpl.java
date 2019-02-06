@@ -131,7 +131,6 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.web.RemoteCallController;
 import com.tcdng.unify.web.annotation.GatewayAction;
-import com.tcdng.unify.web.constant.SessionAttributeConstants;
 
 /**
  * Default implementation of system business service.
@@ -833,8 +832,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         setApplicationAttribute(ApplicationAttributeConstants.APPLICATION_MENUSET, menuSet);
 
-        broadcastToOtherSessions(SessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
-
+        broadcastRefreshMenu();
+        
         logInfo("Application menu loaded.");
     }
 

@@ -64,7 +64,6 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.TriState;
 import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.util.DataUtils;
-import com.tcdng.unify.web.constant.SessionAttributeConstants;
 
 /**
  * Default implementation of organization business service.
@@ -458,7 +457,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
                         docPrivilegeSettings, allAccessWidgetPrivileges, nonWidgetPrivilegeNames, wfStepNames));
             }
 
-            broadcastToOtherSessions(SessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
+            broadcastRefreshMenu();
         }
     }
 

@@ -26,12 +26,6 @@ public interface JacklynSessionAttributeConstants {
     /** Shortcut deck */
     String SHORTCUTDECK = "JKLN.SHORTCUTDECK";
 
-    /** Message Box */
-    String MESSAGEBOX = "JKLN.MESSAGEBOX";
-
-    /** Task monitor info */
-    String TASKMONITORINFO = "JKLN.TASKMONITORINFO";
-
     /** Report options */
     String REPORTOPTIONS = "JKLN.REPORTOPTIONS";
 

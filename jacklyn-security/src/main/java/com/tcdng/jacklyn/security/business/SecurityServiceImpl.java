@@ -85,6 +85,7 @@ import com.tcdng.unify.core.system.UserSessionManager;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.web.UnifyWebSessionAttributeConstants;
 import com.tcdng.unify.web.util.WebUtils;
 
 /**
@@ -457,13 +458,14 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         if (StringUtils.isBlank(branchDesc)) {
             branchDesc = getApplicationMessage("application.no.branch");
         }
+
+        setSessionAttribute(UnifyWebSessionAttributeConstants.MESSAGEBOX, null);
+        setSessionAttribute(UnifyWebSessionAttributeConstants.TASKMONITORINFO, null);
         setSessionAttribute(JacklynSessionAttributeConstants.BRANCHDESC, branchDesc);
         setSessionAttribute(JacklynSessionAttributeConstants.RESERVEDFLAG, user.isReserved());
         setSessionAttribute(JacklynSessionAttributeConstants.SUPERVISORFLAG, user.getSupervisor());
         setSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS, null);
         setSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS, null);
-        setSessionAttribute(JacklynSessionAttributeConstants.MESSAGEBOX, null);
-        setSessionAttribute(JacklynSessionAttributeConstants.TASKMONITORINFO, null);
         setSessionAttribute(JacklynSessionAttributeConstants.SHORTCUTDECK, null);
 
         return user;
