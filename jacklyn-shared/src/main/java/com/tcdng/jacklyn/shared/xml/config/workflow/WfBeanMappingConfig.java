@@ -20,10 +20,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
-import com.tcdng.jacklyn.shared.xml.adapter.WorkflowBeanMappingTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -34,24 +31,17 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfBeanMappingConfig extends BaseConfig {
 
-    private WorkflowBeanMappingType type;
-
     private String beanType;
+
+    private Boolean receptacleMapping;
+
+    private Boolean primaryMapping;
 
     private List<WfFieldMappingConfig> fieldMappingList;
 
     public WfBeanMappingConfig() {
-        this.type = WorkflowBeanMappingType.NONENTRY;
-    }
-
-    public WorkflowBeanMappingType getType() {
-        return type;
-    }
-
-    @XmlJavaTypeAdapter(WorkflowBeanMappingTypeXmlAdapter.class)
-    @XmlAttribute(required = true)
-    public void setType(WorkflowBeanMappingType type) {
-        this.type = type;
+        this.receptacleMapping = Boolean.FALSE;
+        this.primaryMapping = Boolean.FALSE;
     }
 
     public String getBeanType() {
@@ -63,8 +53,26 @@ public class WfBeanMappingConfig extends BaseConfig {
         this.beanType = beanType;
     }
 
+    public Boolean getReceptacleMapping() {
+        return receptacleMapping;
+    }
+
+    @XmlAttribute(name = "receptacle")
+    public void setReceptacleMapping(Boolean receptacleMapping) {
+        this.receptacleMapping = receptacleMapping;
+    }
+
     public List<WfFieldMappingConfig> getFieldMappingList() {
         return fieldMappingList;
+    }
+
+    public Boolean getPrimaryMapping() {
+        return primaryMapping;
+    }
+
+    @XmlAttribute(name = "primary")
+    public void setPrimaryMapping(Boolean primaryMapping) {
+        this.primaryMapping = primaryMapping;
     }
 
     @XmlElement(name = "field-mapping", required = true)

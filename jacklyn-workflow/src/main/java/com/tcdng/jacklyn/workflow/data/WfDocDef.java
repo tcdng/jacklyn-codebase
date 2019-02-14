@@ -51,7 +51,7 @@ public class WfDocDef extends BaseWfDef {
 
     private List<StringToken> itemDescFormat;
 
-    private Map<Class<?>, WfDocBeanMappingDef> entryBeanMappings;
+    private Map<Class<?>, WfDocBeanMappingDef> receptacleBeanMappings;
 
     private Map<String, WfDocBeanMappingDef> beanMappings;
 
@@ -72,18 +72,18 @@ public class WfDocDef extends BaseWfDef {
         this.itemDescFormat = itemDescFormat;
 
         if (beanMappingList != null) {
-            entryBeanMappings = new HashMap<Class<?>, WfDocBeanMappingDef>();
+            receptacleBeanMappings = new HashMap<Class<?>, WfDocBeanMappingDef>();
             beanMappings = new HashMap<String, WfDocBeanMappingDef>();
             for (WfDocBeanMappingDef wfDocBeanMappingDef : beanMappingList) {
-                if (wfDocBeanMappingDef.isEntryMapping()) {
-                    entryBeanMappings.put(wfDocBeanMappingDef.getBeanType(), wfDocBeanMappingDef);
+                if (wfDocBeanMappingDef.isReceptacleMapping()) {
+                    receptacleBeanMappings.put(wfDocBeanMappingDef.getBeanType(), wfDocBeanMappingDef);
                 }
 
                 beanMappings.put(wfDocBeanMappingDef.getName(), wfDocBeanMappingDef);
             }
         } else {
             beanMappings = Collections.emptyMap();
-            entryBeanMappings = Collections.emptyMap();
+            receptacleBeanMappings = Collections.emptyMap();
         }
 
         if (attachmentList != null) {
@@ -149,8 +149,8 @@ public class WfDocDef extends BaseWfDef {
         return beanMappings.get(name);
     }
 
-    public WfDocBeanMappingDef getEntryWfDocBeanMappingDef(Class<?> beanType) throws UnifyException {
-        WfDocBeanMappingDef wfDocBeanMappingDef = entryBeanMappings.get(beanType);
+    public WfDocBeanMappingDef getReceptacleWfDocBeanMappingDef(Class<?> beanType) throws UnifyException {
+        WfDocBeanMappingDef wfDocBeanMappingDef = receptacleBeanMappings.get(beanType);
         if (wfDocBeanMappingDef == null) {
             throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_DOCUMENT_ENTRY_BEANMAPPING_FOR_TYPE_UNKNOWN,
                     getDescription(), beanType);

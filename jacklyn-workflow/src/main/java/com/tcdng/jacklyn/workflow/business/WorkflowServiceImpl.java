@@ -263,9 +263,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     Class<? extends Document> beanType =
                             (Class<? extends Document>) ReflectUtils.getClassForName(wfDocBeanMapping.getBeanType());
-                    beanMappingList
-                            .add(new WfDocBeanMappingDef(wfDocBeanMapping.getName(), wfDocBeanMapping.getDescription(),
-                                    new PackableDocRWConfig(beanType, fieldMappings), wfDocBeanMapping.getType()));
+                    beanMappingList.add(new WfDocBeanMappingDef(wfDocBeanMapping.getName(),
+                            wfDocBeanMapping.getDescription(), new PackableDocRWConfig(beanType, fieldMappings),
+                            wfDocBeanMapping.getReceptacleMapping(), wfDocBeanMapping.getPrimaryMapping()));
                 }
 
                 // Attachments
@@ -721,7 +721,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfDocDef wfDocDef = wfTemplateDef.getWfDocDef();
         PackableDoc packableDoc = new PackableDoc(wfDocDef.getDocConfig(), wfStepDef.isAudit());
         for (Document document : documents) {
-            packableDoc.readFrom(wfDocDef.getEntryWfDocBeanMappingDef(document.getClass()).getRwConfig(), document);
+            packableDoc.readFrom(wfDocDef.getReceptacleWfDocBeanMappingDef(document.getClass()).getRwConfig(),
+                    document);
         }
 
         return submitToReceptacle(wfTemplateDef, wfStepDef, (Long) pDocument.getId(), (Long) pDocument.getOwnerId(),
@@ -1335,7 +1336,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfDocBeanMapping.setName(wfDocBeanMappingConfig.getName());
                 wfDocBeanMapping.setDescription(resolveApplicationMessage(wfDocBeanMappingConfig.getDescription()));
                 wfDocBeanMapping.setBeanType(wfDocBeanMappingConfig.getBeanType());
-                wfDocBeanMapping.setType(wfDocBeanMappingConfig.getType());
+                wfDocBeanMapping.setReceptacleMapping(wfDocBeanMappingConfig.getReceptacleMapping());
+                wfDocBeanMapping.setPrimaryMapping(wfDocBeanMappingConfig.getPrimaryMapping());
 
                 List<WfDocFieldMapping> fieldMappingList = new ArrayList<WfDocFieldMapping>();
                 for (WfFieldMappingConfig wfDocFieldMappingConfig : wfDocBeanMappingConfig.getFieldMappingList()) {
@@ -1713,46 +1715,46 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 PackableDocRWConfig rwConfig = wfDocBeanMappingDef.getRwConfig();
                 String docIdName = rwConfig.getMappedDocField("id");
                 switch (wfRecordActionDef.getActionType()) {
-                case CREATE: {
-                    Document document = ReflectUtils.newInstance(wfDocBeanMappingDef.getBeanType());
-                    packableDoc.writeTo(rwConfig, document);
-                    Object id = genericService.create(document);
-                    packableDoc.writeFieldValue(docIdName, id);
+                    case CREATE: {
+                        Document document = ReflectUtils.newInstance(wfDocBeanMappingDef.getBeanType());
+                        packableDoc.writeTo(rwConfig, document);
+                        Object id = genericService.create(document);
+                        packableDoc.writeFieldValue(docIdName, id);
 
-                    if (wfDocBeanMappingDef.isPrimaryMapping()) {
-                        // Update document id in item history
-                        db().updateById(WfItemHist.class, wfItemHistId, new Update().add("documentId", id));
+                        if (wfDocBeanMappingDef.isPrimaryMapping()) {
+                            // Update document id in item history
+                            db().updateById(WfItemHist.class, wfItemHistId, new Update().add("documentId", id));
+                        }
                     }
-                }
-                    break;
-                case DELETE: {
-                    Object id = packableDoc.readFieldValue(docIdName);
-                    genericService.delete(wfDocBeanMappingDef.getBeanType(), id);
-                }
-                    break;
-                case READ: {
-                    Object id = packableDoc.readFieldValue(docIdName);
-                    Document document = genericService.find(wfDocBeanMappingDef.getBeanType(), id);
-                    packableDoc.readFrom(wfDocBeanMappingDef.getRwConfig(), document);
-                }
-                    break;
-                case UPDATE: {
-                    Object id = packableDoc.readFieldValue(docIdName);
-                    Update update = new Update();
-                    for (PackableDocRWConfig.FieldMapping fieldMapping : wfDocBeanMappingDef.getRwConfig()
-                            .getFieldMappings()) {
-                        if (docIdName.equals(fieldMapping.getDocFieldName())) {
-                            // Skip. Do not update ID.
-                            continue;
+                        break;
+                    case DELETE: {
+                        Object id = packableDoc.readFieldValue(docIdName);
+                        genericService.delete(wfDocBeanMappingDef.getBeanType(), id);
+                    }
+                        break;
+                    case READ: {
+                        Object id = packableDoc.readFieldValue(docIdName);
+                        Document document = genericService.find(wfDocBeanMappingDef.getBeanType(), id);
+                        packableDoc.readFrom(wfDocBeanMappingDef.getRwConfig(), document);
+                    }
+                        break;
+                    case UPDATE: {
+                        Object id = packableDoc.readFieldValue(docIdName);
+                        Update update = new Update();
+                        for (PackableDocRWConfig.FieldMapping fieldMapping : wfDocBeanMappingDef.getRwConfig()
+                                .getFieldMappings()) {
+                            if (docIdName.equals(fieldMapping.getDocFieldName())) {
+                                // Skip. Do not update ID.
+                                continue;
+                            }
+
+                            update.add(fieldMapping.getBeanFieldName(),
+                                    packableDoc.readFieldValue(fieldMapping.getDocFieldName()));
                         }
 
-                        update.add(fieldMapping.getBeanFieldName(),
-                                packableDoc.readFieldValue(fieldMapping.getDocFieldName()));
+                        genericService.updateById(wfDocBeanMappingDef.getBeanType(), id, update);
                     }
-
-                    genericService.updateById(wfDocBeanMappingDef.getBeanType(), id, update);
-                }
-                    break;
+                        break;
                 }
             }
         }
