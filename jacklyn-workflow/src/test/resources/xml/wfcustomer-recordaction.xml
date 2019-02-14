@@ -27,7 +27,7 @@
 			</classifiers>
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
-					type="primary" bean-type="com.tcdng.jacklyn.common.TestCustomer">
+					primary="true" receptacle="true" bean-type="com.tcdng.jacklyn.common.TestCustomer">
 					<field-mapping doc-field="id" bean-field="id" />
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />

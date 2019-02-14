@@ -32,7 +32,6 @@ import com.tcdng.jacklyn.common.TestCustomer;
 import com.tcdng.jacklyn.common.TestCustomerService;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
-import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepPriority;
@@ -262,7 +261,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("custBeanMapping", wfDocBeanMapping.getName());
         assertEquals("Customer Bean Mapping", wfDocBeanMapping.getDescription());
         assertEquals("com.tcdng.jacklyn.common.TestCustomer", wfDocBeanMapping.getBeanType());
-        assertEquals(WorkflowBeanMappingType.PRIMARY, wfDocBeanMapping.getType());
+        assertEquals(Boolean.TRUE, wfDocBeanMapping.getPrimaryMapping());
+        assertEquals(Boolean.TRUE, wfDocBeanMapping.getReceptacleMapping());
         List<WfDocFieldMapping> fieldMappingList = wfDocBeanMapping.getFieldMappingList();
         assertNotNull(fieldMappingList);
         assertEquals(5, fieldMappingList.size());

@@ -19,7 +19,6 @@ package com.tcdng.jacklyn.workflow.entities;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.entities.BaseEntity;
-import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
 import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -40,9 +39,6 @@ public class WfDocBeanMapping extends BaseEntity {
     @ForeignKey(WfDoc.class)
     private Long wfDocId;
 
-    @ForeignKey(name = "MAPPING_TY")
-    private WorkflowBeanMappingType type;
-
     @Column(name = "BEANMAPPING_NM", length = 32)
     private String name;
 
@@ -52,14 +48,17 @@ public class WfDocBeanMapping extends BaseEntity {
     @Column(name = "BEAN_TY", length = 128)
     private String beanType;
 
+    @Column(name = "RECEPTACLE_MAPPING_FG")
+    private Boolean receptacleMapping;
+
+    @Column(name = "PRIMARY_MAPPING_FG")
+    private Boolean primaryMapping;
+    
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
 
     @ListOnly(key = "wfDocId", property = "description")
     private String wfDocDesc;
-
-    @ListOnly(key = "type", property = "description")
-    private String typeDesc;
 
     @ChildList
     private List<WfDocFieldMapping> fieldMappingList;
@@ -81,22 +80,6 @@ public class WfDocBeanMapping extends BaseEntity {
         this.wfDocId = wfDocId;
     }
 
-    public WorkflowBeanMappingType getType() {
-        return type;
-    }
-
-    public void setType(WorkflowBeanMappingType type) {
-        this.type = type;
-    }
-
-    public String getTypeDesc() {
-        return typeDesc;
-    }
-
-    public void setTypeDesc(String typeDesc) {
-        this.typeDesc = typeDesc;
-    }
-
     public String getName() {
         return name;
     }
@@ -111,6 +94,22 @@ public class WfDocBeanMapping extends BaseEntity {
 
     public void setBeanType(String beanType) {
         this.beanType = beanType;
+    }
+
+    public Boolean getReceptacleMapping() {
+        return receptacleMapping;
+    }
+
+    public void setReceptacleMapping(Boolean receptacleMapping) {
+        this.receptacleMapping = receptacleMapping;
+    }
+
+    public Boolean getPrimaryMapping() {
+        return primaryMapping;
+    }
+
+    public void setPrimaryMapping(Boolean primaryMapping) {
+        this.primaryMapping = primaryMapping;
     }
 
     public String getWfDocName() {

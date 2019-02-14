@@ -584,9 +584,9 @@ public final class WfCategoryConfigUtils {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_DESC, beanMappingCounter);
             }
 
-            if (wfBeanMappingConfig.getType() == null) {
-                addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_TYPE, beanMappingCounter, name);
-            }
+//            if (wfBeanMappingConfig.getType() == null) {
+//                addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_TYPE, beanMappingCounter, name);
+//            }
 
             if (wfBeanMappingConfig.getBeanType() == null) {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_BEANTYPE, beanMappingCounter, name);

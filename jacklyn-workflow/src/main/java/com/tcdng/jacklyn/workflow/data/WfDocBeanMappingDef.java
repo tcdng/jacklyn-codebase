@@ -16,7 +16,6 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
-import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.PackableDocRWConfig;
 
@@ -32,21 +31,20 @@ public class WfDocBeanMappingDef extends BaseWfDef {
 
     private PackableDocRWConfig rwConfig;
 
-    private WorkflowBeanMappingType type;
+    private boolean receptacleMapping;
 
-    public WfDocBeanMappingDef(String name, String description, PackableDocRWConfig rwConfig,
-            WorkflowBeanMappingType type) {
+    private boolean primaryMapping;
+
+    public WfDocBeanMappingDef(String name, String description, PackableDocRWConfig rwConfig, boolean receptacleMapping,
+            boolean primaryMapping) {
         super(name, description);
         this.rwConfig = rwConfig;
-        this.type = type;
+        this.receptacleMapping = receptacleMapping;
+        this.primaryMapping = primaryMapping;
     }
 
     public PackableDocRWConfig getRwConfig() {
         return rwConfig;
-    }
-
-    public WorkflowBeanMappingType getType() {
-        return type;
     }
 
     @SuppressWarnings("unchecked")
@@ -54,12 +52,12 @@ public class WfDocBeanMappingDef extends BaseWfDef {
         return (Class<? extends Document>) rwConfig.getBeanType();
     }
 
-    public boolean isEntryMapping() {
-        return type.isEntry();
+    public boolean isReceptacleMapping() {
+        return receptacleMapping;
     }
 
     public boolean isPrimaryMapping() {
-        return type.isPrimary();
+        return primaryMapping;
     }
 
 }
