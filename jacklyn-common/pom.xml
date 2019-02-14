@@ -59,5 +59,12 @@
 			<artifactId>jacklyn-shared</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- Test dependencies -->
+        <dependency>
+            <groupId>com.tcdng.unify</groupId>
+            <artifactId>unify-jetty</artifactId>
+            <version>${unify.version}</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 </project>
