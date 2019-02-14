@@ -217,11 +217,6 @@
 			<artifactId>unify-web</artifactId>
 			<version>${unify.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.tcdng.unify</groupId>
-			<artifactId>unify-jetty</artifactId>
-			<version>${unify.version}</version>
-		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.tcdng.unify</groupId>
