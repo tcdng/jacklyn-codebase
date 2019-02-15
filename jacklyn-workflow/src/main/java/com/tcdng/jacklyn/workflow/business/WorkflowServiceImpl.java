@@ -37,6 +37,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowCategoryBinaryPublicationTaskCo
 import com.tcdng.jacklyn.shared.workflow.WorkflowCategoryPublicationTaskConstants;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAlertConfig;
@@ -968,6 +969,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public int deleteWorkflowItemAttachment(Long wfItemId, String name) throws UnifyException {
         return db().deleteAll(new WfItemAttachmentQuery().wfItemId(wfItemId).name(name));
+    }
+
+    @Override
+    public List<ToolingItemClassifierLogicItem> findToolingItemClassifierLogicTypes() throws UnifyException {
+        return getToolingTypes(ToolingItemClassifierLogicItem.class, WfItemClassifierLogic.class);
     }
 
     @Override

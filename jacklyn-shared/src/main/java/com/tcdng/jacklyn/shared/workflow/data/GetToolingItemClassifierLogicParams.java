@@ -14,21 +14,24 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared.workflow;
+package com.tcdng.jacklyn.shared.workflow.data;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
+import com.tcdng.unify.web.RemoteCallParams;
 
 /**
- * Workflow module remote gate name constants.
+ * Get tooling item classifier logic request parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WorkflowRemoteCallNameConstants {
+@XmlRootElement
+public class GetToolingItemClassifierLogicParams extends RemoteCallParams {
 
-    String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
+    public GetToolingItemClassifierLogicParams() {
+        super(WorkflowRemoteCallNameConstants.GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST);
+    }
 
-    String GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST = "wfGetToolingItemClassifierLogicList";
-    
-    String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
-
-    String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
 }

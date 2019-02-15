@@ -23,11 +23,14 @@ import com.tcdng.jacklyn.common.controllers.BaseRemoteCallController;
 import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingEnrichmentLogicParams;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingEnrichmentLogicResult;
+import com.tcdng.jacklyn.shared.workflow.data.GetToolingItemClassifierLogicParams;
+import com.tcdng.jacklyn.shared.workflow.data.GetToolingItemClassifierLogicResult;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicParams;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicResult;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryParams;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
@@ -54,6 +57,14 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
     public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
         workflowService.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
         return new PublishWfCategoryResult();
+    }
+
+    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST,
+            description = "$m{workflow.gate.remotecall.gettoolingclassifierlogic}")
+    public GetToolingItemClassifierLogicResult getToolingItemClassifierLogicList(GetToolingItemClassifierLogicParams params)
+            throws UnifyException {
+        List<ToolingItemClassifierLogicItem> list = workflowService.findToolingItemClassifierLogicTypes();
+        return new GetToolingItemClassifierLogicResult(list);
     }
 
     @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
