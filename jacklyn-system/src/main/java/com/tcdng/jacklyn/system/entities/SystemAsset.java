@@ -42,10 +42,10 @@ public class SystemAsset extends BaseInstallEntity {
     @ForeignKey(name = "SYSASSET_TYPE")
     private SystemAssetType type;
 
-    @Column(name = "SYSASSET_NM", length = 32)
+    @Column(name = "SYSASSET_NM", length = 48)
     private String name;
 
-    @Column(name = "SYSASSET_DESC", length = 48)
+    @Column(name = "SYSASSET_DESC", length = 64)
     private String description;
 
     @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")

@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
@@ -499,6 +500,15 @@ public interface WorkflowService extends JacklynBusinessService {
      *             unknown if an error occurs
      */
     int deleteWorkflowItemAttachment(Long wfItemId, String name) throws UnifyException;
+
+    /**
+     * Finds all tooling item classifier logic types.
+     * 
+     * @return list of item classifier logic types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingItemClassifierLogicItem> findToolingItemClassifierLogicTypes() throws UnifyException;
 
     /**
      * Finds all tooling enrichment logic types.

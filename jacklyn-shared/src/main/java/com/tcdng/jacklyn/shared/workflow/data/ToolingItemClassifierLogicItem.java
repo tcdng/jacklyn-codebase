@@ -14,21 +14,24 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared.workflow;
+package com.tcdng.jacklyn.shared.workflow.data;
+
+import com.tcdng.jacklyn.shared.BaseToolingItem;
 
 /**
- * Workflow module remote gate name constants.
+ * Tooling item classifier logic item.
  * 
- * @author Lateef Ojulari
+ * @author Lateef
  * @since 1.0
  */
-public interface WorkflowRemoteCallNameConstants {
+public class ToolingItemClassifierLogicItem extends BaseToolingItem {
 
-    String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
+    public ToolingItemClassifierLogicItem(String name, String description) {
+        super(name, description);
+    }
 
-    String GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST = "wfGetToolingItemClassifierLogicList";
-    
-    String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
+    public ToolingItemClassifierLogicItem() {
 
-    String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
+    }
+
 }
