@@ -42,7 +42,7 @@ public class WfPolicy extends BaseEntity {
     @Column(name = "POLICY_DESC", length = 64)
     private String description;
 
-    @Column
+    @Column(length=48)
     private String logic;
 
     @ListOnly(key = "wfStepId", property = "name")

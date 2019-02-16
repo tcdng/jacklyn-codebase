@@ -19,10 +19,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.tcdng.unify.core.constant.DataType;
-import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
 
 /**
  * Document complex field configuration.
@@ -34,8 +32,10 @@ public class WfComplexFieldConfig extends WfFieldConfig {
 
     private List<WfFieldConfig> wfFieldConfigList;
 
+    private int presetLength;
+    
     public WfComplexFieldConfig() {
-        super(DataType.COMPLEX, Boolean.FALSE);
+        super(DataType.COMPLEX, false);
     }
 
     public List<WfFieldConfig> getWfFieldConfigList() {
@@ -47,10 +47,12 @@ public class WfComplexFieldConfig extends WfFieldConfig {
         this.wfFieldConfigList = wfFieldConfigList;
     }
 
-    @Override
-    @XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
-    @XmlAttribute(name = "type", required = true)
-    public void setDataType(DataType dataType) {
+    public int getPresetLength() {
+        return presetLength;
+    }
 
+    @XmlAttribute(name="preset-length")
+    public void setPresetLength(int presetLength) {
+        this.presetLength = presetLength;
     }
 }

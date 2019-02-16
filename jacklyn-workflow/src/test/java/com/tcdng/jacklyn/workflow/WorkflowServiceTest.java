@@ -139,7 +139,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("id", wfDocField.getName());
         assertEquals("Customer ID", wfDocField.getDescription());
         assertEquals(DataType.LONG, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(1);
         assertNotNull(wfDocField);
@@ -147,7 +148,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("firstName", wfDocField.getName());
         assertEquals("First Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(2);
         assertNotNull(wfDocField);
@@ -155,7 +157,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("lastName", wfDocField.getName());
         assertEquals("Last Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(3);
         assertNotNull(wfDocField);
@@ -163,7 +166,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("age", wfDocField.getName());
         assertEquals("Age", wfDocField.getDescription());
         assertEquals(DataType.INTEGER, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(4);
         assertNotNull(wfDocField);
@@ -171,7 +175,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("height", wfDocField.getName());
         assertEquals("Height", wfDocField.getDescription());
         assertEquals(DataType.DOUBLE, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(5);
         assertNotNull(wfDocField);
@@ -179,7 +184,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("accountNo", wfDocField.getName());
         assertEquals("Account Number", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(6);
         assertNotNull(wfDocField);
@@ -187,7 +193,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("fullName", wfDocField.getName());
         assertEquals("Full Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(7);
         assertNotNull(wfDocField);
@@ -195,7 +202,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("driversLicense", wfDocField.getName());
         assertEquals("Driver's License", wfDocField.getDescription());
         assertEquals(DataType.COMPLEX, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(8);
         assertNotNull(wfDocField);
@@ -203,7 +211,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("licenseNo", wfDocField.getName());
         assertEquals("License No.", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(9);
         assertNotNull(wfDocField);
@@ -211,7 +220,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("issueDt", wfDocField.getName());
         assertEquals("Issue Date", wfDocField.getDescription());
         assertEquals(DataType.DATE, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         wfDocField = docFieldList.get(10);
         assertNotNull(wfDocField);
@@ -219,7 +229,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("expiryDt", wfDocField.getName());
         assertEquals("Expiry Date", wfDocField.getDescription());
         assertEquals(DataType.DATE, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertEquals(Boolean.FALSE, wfDocField.getMultiple());
+        assertEquals(Integer.valueOf(0), wfDocField.getPresetLength());
 
         /* Classifier */
         List<WfDocClassifier> classifierList = wfDoc.getClassifierList();

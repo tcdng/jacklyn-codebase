@@ -45,7 +45,7 @@ public class WfDocClassifier extends BaseEntity {
     @Column(name = "CLASSIFIER_DESC", length = 64)
     private String description;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length=48)
     private String logic;
 
     @Column(nullable = true)

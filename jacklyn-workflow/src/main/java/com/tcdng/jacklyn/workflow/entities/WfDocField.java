@@ -49,8 +49,11 @@ public class WfDocField extends BaseEntity {
     @Column(name = "FIELD_DESC", length = 64)
     private String description;
 
-    @Column(name = "REPEAT_COUNT")
-    private Integer repeat;
+    @Column(name = "MULTIPLE_FG")
+    private Boolean multiple;
+
+    @Column(name = "PRESET_LEN")
+    private Integer presetLength;
 
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
@@ -102,12 +105,20 @@ public class WfDocField extends BaseEntity {
         this.dataType = dataType;
     }
 
-    public Integer getRepeat() {
-        return repeat;
+    public Boolean getMultiple() {
+        return multiple;
     }
 
-    public void setRepeat(Integer repeat) {
-        this.repeat = repeat;
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
+    }
+
+    public Integer getPresetLength() {
+        return presetLength;
+    }
+
+    public void setPresetLength(Integer presetLength) {
+        this.presetLength = presetLength;
     }
 
     public String getWfDocName() {
