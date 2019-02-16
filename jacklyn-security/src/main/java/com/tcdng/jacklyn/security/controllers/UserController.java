@@ -68,7 +68,7 @@ public class UserController extends AbstractSecurityCrudController<User> {
         User userData = getRecord();
         getSecurityService().resetUserPassword(userData.getId());
         logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, userData.getFullName());
-        hintUser("security.user.hint.passwordreset", userData.getFullName());
+        hintUser("$m{security.user.hint.passwordreset}", userData.getFullName());
         return noResult();
     }
 

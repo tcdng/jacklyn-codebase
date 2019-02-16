@@ -55,7 +55,7 @@ public class ChangeUserPasswordController extends AbstractSecurityController {
             setDisplayMessage(null);
             getSecurityService().changeUserPassword(oldPassword, newPassword);
             logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
-            hintUser("security.changepassword.hint.passwordchanged");
+            hintUser("$m{security.changepassword.hint.passwordchanged}");
         } catch (UnifyException e) {
             UnifyError err = e.getUnifyError();
             setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));

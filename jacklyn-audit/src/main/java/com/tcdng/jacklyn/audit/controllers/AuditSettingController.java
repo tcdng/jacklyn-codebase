@@ -81,7 +81,7 @@ public class AuditSettingController extends AbstractAuditCrudController<AuditDef
             getAuditService().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
                     RecordStatus.ACTIVE);
             logUserEvent(AuditModuleAuditConstants.ACTIVATE_AUDITTYPE, getSelectedDescription());
-            hintUser("hint.records.activated");
+            hintUser("$m{hint.records.activated}");
         }
         return findRecords();
     }
@@ -93,7 +93,7 @@ public class AuditSettingController extends AbstractAuditCrudController<AuditDef
             getAuditService().setAuditTypeStatus((AuditDefinitionQuery) new AuditDefinitionQuery().idIn(auditTypeIds),
                     RecordStatus.INACTIVE);
             logUserEvent(AuditModuleAuditConstants.DEACTIVATE_AUDITTYPE, getSelectedDescription());
-            hintUser("hint.records.deactivated");
+            hintUser("$m{hint.records.deactivated}");
         }
         return findRecords();
     }

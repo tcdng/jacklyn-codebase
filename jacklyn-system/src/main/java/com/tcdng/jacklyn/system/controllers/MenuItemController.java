@@ -68,7 +68,7 @@ public class MenuItemController extends AbstractSystemCrudController<Application
         getSystemService().saveMenuItemOrder(menuItemOrderList);
         logUserEvent(SystemModuleAuditConstants.SET_MENUITEM_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, menuItemOrderList, "caption"));
-        hintUser("system.order.menuitem.saved");
+        hintUser("$m{system.order.menuitem.saved}");
         menuItemOrderList = null;
         return hidePopup();
     }

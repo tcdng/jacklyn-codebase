@@ -106,7 +106,6 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
     @Override
     protected void onIndexPage() throws UnifyException {
         super.onIndexPage();
-
         buildUserRoleTemplateListing();
     }
 
@@ -126,12 +125,12 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 
     private void pendItem() throws UnifyException {
         getWorkflowService().pendManualInitItem(manualInitItem);
-        hintUser("hint.workflow.manualinit.pend.success", manualInitItem.getTitle());
+        hintUser("$m{hint.workflow.manualinit.pend.success}", manualInitItem.getTitle());
     }
 
     private void submitItem() throws UnifyException {
         getWorkflowService().submitManualInitItem(manualInitItem);
-        hintUser("hint.workflow.manualinit.submit.success");
+        hintUser("$m{hint.workflow.manualinit.submit.success}");
     }
 
     private void buildUserRoleTemplateListing() throws UnifyException {
