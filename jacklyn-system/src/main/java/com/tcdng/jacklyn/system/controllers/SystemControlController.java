@@ -54,10 +54,10 @@ public class SystemControlController extends AbstractSystemController {
         updateControlStatus();
         if (newState) {
             logUserEvent(SystemModuleAuditConstants.ENABLE_SYS_CONTROL, systemControlState.getDescription());
-            hintUser("system.systemcontrol.state.enabled.hint", systemControlState.getDescription());
+            hintUser("$m{system.systemcontrol.state.enabled.hint}", systemControlState.getDescription());
         } else {
             logUserEvent(SystemModuleAuditConstants.DISABLE_SYS_CONTROL, systemControlState.getDescription());
-            hintUser("system.systemcontrol.state.disabled.hint", systemControlState.getDescription());
+            hintUser("$m{system.systemcontrol.state.disabled.hint}", systemControlState.getDescription());
         }
         return "refreshcontrolpanel";
     }

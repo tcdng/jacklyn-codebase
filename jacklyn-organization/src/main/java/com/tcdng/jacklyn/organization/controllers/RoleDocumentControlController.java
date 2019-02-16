@@ -63,7 +63,7 @@ public class RoleDocumentControlController extends AbstractOrganizationControlle
     @Action
     public String savePrivileges() throws UnifyException {
         getOrganizationService().updateRoleDocumentControls(rolePrivilegeWidgetList);
-        hintUser("hint.organization.roleprivilege.saved");
+        hintUser("$m{hint.organization.roleprivilege.saved}");
         doFindPrivileges();
         return "refreshtable";
     }

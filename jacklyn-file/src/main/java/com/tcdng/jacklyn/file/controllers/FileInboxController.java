@@ -71,7 +71,7 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
             getFileService().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
                     FileInboxReadStatus.READ);
             logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKREAD, getSelectedDescription());
-            hintUser("hint.records.markedread");
+            hintUser("$m{hint.records.markedread}");
         }
         return findRecords();
     }
@@ -83,7 +83,7 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
             getFileService().updateFileInboxItemsReadStatus((FileInboxQuery) new FileInboxQuery().idIn(fileInboxIds),
                     FileInboxReadStatus.NOT_READ);
             logUserEvent(FileModuleAuditConstants.FILEINBOX_MARKUNREAD, getSelectedDescription());
-            hintUser("hint.records.markedunread");
+            hintUser("$m{hint.records.markedunread}");
         }
         return findRecords();
     }

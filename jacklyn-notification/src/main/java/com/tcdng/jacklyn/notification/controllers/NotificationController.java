@@ -62,7 +62,7 @@ public class NotificationController extends AbstractNotificationCrudController<N
         if (!messageIds.isEmpty()) {
             getNotificationService().setNotificationStatus(messageIds, NotificationStatus.NOT_SENT);
             logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_UNSENT, getSelectedDescription());
-            hintUser("hint.message.marked.unsent");
+            hintUser("$m{hint.message.marked.unsent}");
         }
         return findRecords();
     }
@@ -73,7 +73,7 @@ public class NotificationController extends AbstractNotificationCrudController<N
         if (!messageIds.isEmpty()) {
             getNotificationService().setNotificationStatus(messageIds, NotificationStatus.SENT);
             logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_SENT, getSelectedDescription());
-            hintUser("hint.message.marked.sent");
+            hintUser("$m{hint.message.marked.sent}");
         }
         return findRecords();
     }
@@ -84,7 +84,7 @@ public class NotificationController extends AbstractNotificationCrudController<N
         if (!messageIds.isEmpty()) {
             getNotificationService().setNotificationStatus(messageIds, NotificationStatus.ABORTED);
             logUserEvent(NotificationModuleAuditConstants.MARK_OUTWARD_ABORT, getSelectedDescription());
-            hintUser("hint.message.marked.abort");
+            hintUser("$m{hint.message.marked.abort}");
         }
         return findRecords();
     }

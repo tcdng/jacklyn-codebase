@@ -133,7 +133,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
         if (recordList != null && recordList.size() >= getContainerSetting(int.class,
                 UnifyCorePropertyConstants.APPLICATION_QUERY_LIMIT, UnifyContainer.DEFAULT_APPLICATION_QUERY_LIMIT)) {
-            hintUser(MODE.WARNING, "managerecord.hint.applicationquerylimit.reached");
+            hintUser(MODE.WARNING, "$m{managerecord.hint.applicationquerylimit.reached}");
         }
 
         updateSearch();
@@ -211,7 +211,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     public String deleteRecord() throws UnifyException {
         delete(record);
         logUserEvent(EventType.DELETE, record, false);
-        hintUser("hint.record.delete.success", recordHintName);
+        hintUser("$m{hint.record.delete.success}", recordHintName);
         recordList.remove(table.getViewIndex());
 
         if (recordList.isEmpty()) {
@@ -608,9 +608,9 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         Object id = create(record);
         if (id != null) {
             logUserEvent(EventType.CREATE, record, true);
-            hintUser("hint.record.create.success", recordHintName);
+            hintUser("$m{hint.record.create.success}", recordHintName);
         } else {
-            hintUser("hint.record.createtoworkflow.success", recordHintName);
+            hintUser("$m{hint.record.createtoworkflow.success}", recordHintName);
         }
     }
 
@@ -618,9 +618,9 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         int result = update(record);
         if (result > 0) {
             logUserEvent(EventType.UPDATE, oldRecord, record);
-            hintUser("hint.record.update.success", recordHintName);
+            hintUser("$m{hint.record.update.success}", recordHintName);
         } else {
-            hintUser("hint.record.updatetoworkflow.success", recordHintName);
+            hintUser("$m{hint.record.updatetoworkflow.success}", recordHintName);
         }
     }
 

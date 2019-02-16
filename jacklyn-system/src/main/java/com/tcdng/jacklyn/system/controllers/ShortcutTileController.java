@@ -71,7 +71,7 @@ public class ShortcutTileController extends AbstractSystemCrudController<Shortcu
         getSystemService().saveShortcutTileOrder(shortcutTileOrderList);
         logUserEvent(SystemModuleAuditConstants.SET_SHORTCUTTILE_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, shortcutTileOrderList, "description"));
-        hintUser("system.order.shortcuttile.saved");
+        hintUser("$m{system.order.shortcuttile.saved}");
         return cancelShortcutTileOrder();
     }
 
