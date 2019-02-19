@@ -13,26 +13,25 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.common.entities;
 
-import com.tcdng.unify.core.annotation.Policy;
-import com.tcdng.unify.core.annotation.Tooling;
-import com.tcdng.unify.core.data.Document;
-import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
+package com.tcdng.jacklyn.shared.system.data;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tcdng.jacklyn.shared.system.SystemRemoteCallNameConstants;
+import com.tcdng.unify.web.RemoteCallParams;
 
 /**
- * Base class for all entities.
+ * Get tooling transformer types request parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Common")
-@Policy("baseentity-policy")
-public abstract class BaseEntity extends AbstractSequencedEntity implements Document {
+@XmlRootElement
+public class GetToolingTransformerTypeParams extends RemoteCallParams {
 
-    @Override
-    public Long getOwnerId() {
-        return null;
+    public GetToolingTransformerTypeParams() {
+        super(SystemRemoteCallNameConstants.GET_TOOLING_TRANSFORMER_TYPES);
     }
 
 }

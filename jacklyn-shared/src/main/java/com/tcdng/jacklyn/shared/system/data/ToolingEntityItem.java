@@ -23,12 +23,12 @@ import javax.xml.bind.annotation.XmlElement;
 import com.tcdng.jacklyn.shared.ToolingItem;
 
 /**
- * Tooling record type item.
+ * Tooling entity type item.
  * 
  * @author Lateef
  * @since 1.0
  */
-public class ToolingRecordTypeItem implements ToolingItem {
+public class ToolingEntityItem implements ToolingItem {
 
     private String title;
 
@@ -36,16 +36,16 @@ public class ToolingRecordTypeItem implements ToolingItem {
 
     private String idField;
 
-    private List<String> fieldList;
+    private List<ToolingEntityFieldItem> fieldList;
 
-    public ToolingRecordTypeItem(String title, String type, String idField, List<String> fieldList) {
+    public ToolingEntityItem(String title, String type, String idField, List<ToolingEntityFieldItem> fieldList) {
         this.title = title;
         this.type = type;
         this.idField = idField;
         this.fieldList = fieldList;
     }
 
-    public ToolingRecordTypeItem() {
+    public ToolingEntityItem() {
 
     }
 
@@ -86,12 +86,12 @@ public class ToolingRecordTypeItem implements ToolingItem {
         this.idField = idField;
     }
 
-    public List<String> getFieldList() {
+    public List<ToolingEntityFieldItem> getFieldList() {
         return fieldList;
     }
 
     @XmlElement(name = "field")
-    public void setFieldList(List<String> fieldList) {
+    public void setFieldList(List<ToolingEntityFieldItem> fieldList) {
         this.fieldList = fieldList;
     }
 }

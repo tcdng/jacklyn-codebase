@@ -29,7 +29,11 @@ public interface SystemRemoteCallNameConstants {
 
     String GET_APPLICATION_MODULES = "sysGetAppModules";
 
-    String GET_TOOLING_RECORD_TYPES = "sysGetToolingRecordTypes";
+    String GET_TOOLING_BASE_TYPES = "sysGetToolingBaseTypes";
 
+    String GET_TOOLING_RECORD_TYPES = "sysGetToolingRecordTypes";
+    
     String GET_TOOLING_LIST_TYPES = "sysGetToolingListTypes";
+    
+    String GET_TOOLING_TRANSFORMER_TYPES = "sysGetToolingTransformerTypes";
 }

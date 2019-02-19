@@ -31,9 +31,12 @@ import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityFieldItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.InputControlConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuConfig;
@@ -118,6 +121,7 @@ import com.tcdng.unify.core.task.TaskParameterConstants;
 import com.tcdng.unify.core.task.TaskStatus;
 import com.tcdng.unify.core.task.TaskStatusLogger;
 import com.tcdng.unify.core.task.TaskableMethodConfig;
+import com.tcdng.unify.core.transform.Transformer;
 import com.tcdng.unify.core.ui.Menu;
 import com.tcdng.unify.core.ui.MenuItem;
 import com.tcdng.unify.core.ui.MenuItemSet;
@@ -566,31 +570,28 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
-    public List<ToolingRecordTypeItem> findToolingRecordTypes() throws UnifyException {
-        List<ToolingRecordTypeItem> resultList = new ArrayList<ToolingRecordTypeItem>();
-        for (Class<? extends Entity> entityClass : getAnnotatedClasses(Entity.class, Tooling.class)) {
-            Tooling ta = entityClass.getAnnotation(Tooling.class);
-            List<String> fieldList = new ArrayList<String>();
-            String id = null;
-
-            for (Field f : ReflectUtils.getAnnotatedFields(entityClass, Id.class)) {
-                id = f.getName();
-                fieldList.add(id);
-                break;
-            }
-
-            for (Field f : ReflectUtils.getAnnotatedFields(entityClass, ForeignKey.class)) {
-                fieldList.add(f.getName());
-            }
-
-            for (Field f : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
-                fieldList.add(f.getName());
-            }
-
-            resultList.add(new ToolingRecordTypeItem(ta.value(), entityClass.getName(), id, fieldList));
+    public List<ToolingEntityItem> findToolingBaseTypes() throws UnifyException {
+        List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
+        for (Class<? extends Entity> entityClass : getAnnotatedClasses(BaseEntity.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            resultList.add(createToolingEntityItem(entityClass));
         }
-
         return resultList;
+    }
+
+    @Override
+    public List<ToolingEntityItem> findToolingRecordTypes() throws UnifyException {
+        List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
+        for (Class<? extends Entity> entityClass : getAnnotatedClassesExcluded(Entity.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            resultList.add(createToolingEntityItem(entityClass));
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<ToolingTransformerTypeItem> findToolingTransformerTypes() throws UnifyException {
+        return getToolingTypes(ToolingTransformerTypeItem.class, Transformer.class);
     }
 
     @Override
@@ -833,7 +834,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         setApplicationAttribute(ApplicationAttributeConstants.APPLICATION_MENUSET, menuSet);
 
         broadcastRefreshMenu();
-        
+
         logInfo("Application menu loaded.");
     }
 
@@ -1200,6 +1201,28 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         }
 
+    }
+
+    private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {
+        Tooling ta = entityClass.getAnnotation(Tooling.class);
+        List<ToolingEntityFieldItem> fieldList = new ArrayList<ToolingEntityFieldItem>();
+        String id = null;
+
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Id.class)) {
+            id = field.getName();
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
+            break;
+        }
+
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ForeignKey.class)) {
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
+        }
+
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
+        }
+
+        return new ToolingEntityItem(ta.value(), entityClass.getName(), id, fieldList);
     }
 
     private AuthenticationLargeData internalFindAuthentication(Authentication authentication) throws UnifyException {

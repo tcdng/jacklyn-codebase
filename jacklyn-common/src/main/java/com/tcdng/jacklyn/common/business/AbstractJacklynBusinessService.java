@@ -53,7 +53,7 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
 
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
-        
+
     }
 
     protected ParameterService getParameterService() {
@@ -73,10 +73,10 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
         return (Long) getSessionAttribute(JacklynSessionAttributeConstants.BRANCHID);
     }
 
-    protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type)
-            throws UnifyException {
+    protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type,
+            String... basePackages) throws UnifyException {
         List<T> list = new ArrayList<T>();
-        for (Class<? extends U> typeClass : getAnnotatedClasses(type, Tooling.class)) {
+        for (Class<? extends U> typeClass : getAnnotatedClasses(type, Tooling.class, basePackages)) {
             Component ca = typeClass.getAnnotation(Component.class);
             if (ca != null) {
                 Tooling ta = typeClass.getAnnotation(Tooling.class);
@@ -86,8 +86,8 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
         }
         return list;
     }
-    
+
     protected void broadcastRefreshMenu() throws UnifyException {
-        broadcastToOtherSessions(UnifyWebSessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);        
+        broadcastToOtherSessions(UnifyWebSessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
     }
 }

@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.common.entities;
 
 import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.Version;
 
 /**
@@ -25,6 +26,7 @@ import com.tcdng.unify.core.annotation.Version;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling("Base Versioned Timestamped Status")
 @Policy("versionedtimestampedstatusentity-policy")
 public abstract class BaseVersionedTimestampedStatusEntity extends BaseTimestampedStatusEntity {
 
