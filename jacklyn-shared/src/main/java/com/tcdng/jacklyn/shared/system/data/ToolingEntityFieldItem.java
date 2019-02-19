@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,38 +16,47 @@
 
 package com.tcdng.jacklyn.shared.system.data;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.RemoteCallResult;
+import com.tcdng.unify.core.annotation.ColumnType;
 
 /**
- * Get tooling record types request result.
+ * Tooling entity field item.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@XmlRootElement
-public class GetToolingRecordTypeResult extends RemoteCallResult {
+public class ToolingEntityFieldItem {
 
-    private List<ToolingEntityItem> recordTypeList;
+    private String name;
 
-    public GetToolingRecordTypeResult(List<ToolingEntityItem> recordTypeList) {
-        this.recordTypeList = recordTypeList;
+    private String type;
+
+    public ToolingEntityFieldItem(String name, ColumnType type) {
+        this.name = name;
+        this.type = type.code();
     }
 
-    public GetToolingRecordTypeResult() {
+    public ToolingEntityFieldItem() {
 
     }
 
-    public List<ToolingEntityItem> getRecordTypeList() {
-        return recordTypeList;
+    public String getName() {
+        return name;
     }
 
-    @XmlElement(name = "recordType")
-    public void setRecordTypeList(List<ToolingEntityItem> recordTypeList) {
-        this.recordTypeList = recordTypeList;
+    @XmlElement
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    @XmlElement
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

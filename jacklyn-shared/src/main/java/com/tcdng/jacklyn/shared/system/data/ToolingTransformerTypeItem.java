@@ -13,26 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.common.entities;
 
-import com.tcdng.unify.core.annotation.Policy;
-import com.tcdng.unify.core.annotation.Tooling;
-import com.tcdng.unify.core.data.Document;
-import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
+package com.tcdng.jacklyn.shared.system.data;
+
+import com.tcdng.jacklyn.shared.BaseToolingItem;
 
 /**
- * Base class for all entities.
+ * Tooling transformer type item.
  * 
- * @author Lateef Ojulari
+ * @author Lateef
  * @since 1.0
  */
-@Tooling("Base Common")
-@Policy("baseentity-policy")
-public abstract class BaseEntity extends AbstractSequencedEntity implements Document {
+public class ToolingTransformerTypeItem extends BaseToolingItem {
 
-    @Override
-    public Long getOwnerId() {
-        return null;
+    public ToolingTransformerTypeItem(String name, String description) {
+        super(name, description);
     }
 
+    public ToolingTransformerTypeItem() {
+
+    }
 }

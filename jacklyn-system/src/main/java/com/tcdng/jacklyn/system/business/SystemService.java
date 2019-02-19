@@ -20,7 +20,8 @@ import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
@@ -838,13 +839,31 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     int getUniqueActiveUserSessions() throws UnifyException;
 
     /**
+     * Finds all tooling base types.
+     * 
+     * @return list of base types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingEntityItem> findToolingBaseTypes() throws UnifyException;
+
+    /**
      * Finds all tooling record types.
      * 
      * @return list of record types
      * @throws UnifyException
      *             if an error occurs
      */
-    List<ToolingRecordTypeItem> findToolingRecordTypes() throws UnifyException;
+    List<ToolingEntityItem> findToolingRecordTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling transformer types.
+     * 
+     * @return list of transformer types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingTransformerTypeItem> findToolingTransformerTypes() throws UnifyException;
 
     /**
      * Finds all tooling list types.

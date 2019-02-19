@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 
 /**
  * Base class for entity that require a time stamp.
@@ -28,6 +29,7 @@ import com.tcdng.unify.core.annotation.Policy;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling("Base Timestamped")
 @Policy("timestampedentity-policy")
 public abstract class BaseTimestampedEntity extends BaseEntity {
 

@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 
 /**
  * Base class for entity that require status.
@@ -27,6 +28,7 @@ import com.tcdng.unify.core.annotation.Policy;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling("Base Status")
 @Policy("statusentity-policy")
 public abstract class BaseStatusEntity extends BaseEntity {
 

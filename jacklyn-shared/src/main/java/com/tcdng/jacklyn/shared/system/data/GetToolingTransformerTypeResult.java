@@ -24,30 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.tcdng.unify.web.RemoteCallResult;
 
 /**
- * Get tooling record types request result.
+ * Get tooling transformer types request result.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @XmlRootElement
-public class GetToolingRecordTypeResult extends RemoteCallResult {
+public class GetToolingTransformerTypeResult extends RemoteCallResult {
 
-    private List<ToolingEntityItem> recordTypeList;
+    private List<ToolingTransformerTypeItem> transformerTypeList;
 
-    public GetToolingRecordTypeResult(List<ToolingEntityItem> recordTypeList) {
-        this.recordTypeList = recordTypeList;
+    public GetToolingTransformerTypeResult(List<ToolingTransformerTypeItem> transformerTypeList) {
+        this.transformerTypeList = transformerTypeList;
     }
 
-    public GetToolingRecordTypeResult() {
+    public GetToolingTransformerTypeResult() {
 
     }
 
-    public List<ToolingEntityItem> getRecordTypeList() {
-        return recordTypeList;
+    public List<ToolingTransformerTypeItem> getTransformerTypeList() {
+        return transformerTypeList;
     }
 
-    @XmlElement(name = "recordType")
-    public void setRecordTypeList(List<ToolingEntityItem> recordTypeList) {
-        this.recordTypeList = recordTypeList;
+    @XmlElement(name = "transformerType")
+    public void setTransformerTypeList(List<ToolingTransformerTypeItem> transformerTypeList) {
+        this.transformerTypeList = transformerTypeList;
     }
 }

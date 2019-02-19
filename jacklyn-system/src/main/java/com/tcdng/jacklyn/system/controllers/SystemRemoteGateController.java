@@ -30,10 +30,14 @@ import com.tcdng.jacklyn.shared.system.data.GetAppMenuParams;
 import com.tcdng.jacklyn.shared.system.data.GetAppMenuResult;
 import com.tcdng.jacklyn.shared.system.data.GetAppModulesParams;
 import com.tcdng.jacklyn.shared.system.data.GetAppModulesResult;
+import com.tcdng.jacklyn.shared.system.data.GetToolingBaseTypeParams;
+import com.tcdng.jacklyn.shared.system.data.GetToolingBaseTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeResult;
+import com.tcdng.jacklyn.shared.system.data.GetToolingTransformerTypeParams;
+import com.tcdng.jacklyn.shared.system.data.GetToolingTransformerTypeResult;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
@@ -132,10 +136,25 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
     }
 
     @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_TOOLING_BASE_TYPES,
+            description = "$m{system.gate.remotecall.getbasetypes}")
+    public GetToolingBaseTypeResult getToolingBaseTypes(GetToolingBaseTypeParams params) throws UnifyException {
+        return new GetToolingBaseTypeResult(systemService.findToolingBaseTypes());
+    }
+
+    @GatewayAction(
             name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
             description = "$m{system.gate.remotecall.getrecordtypes}")
     public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
         return new GetToolingRecordTypeResult(systemService.findToolingRecordTypes());
+    }
+
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_TOOLING_TRANSFORMER_TYPES,
+            description = "$m{system.gate.remotecall.gettransformertypes}")
+    public GetToolingTransformerTypeResult getToolingTransformerTypes(GetToolingTransformerTypeParams params)
+            throws UnifyException {
+        return new GetToolingTransformerTypeResult(systemService.findToolingTransformerTypes());
     }
 
     @GatewayAction(
