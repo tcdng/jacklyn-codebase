@@ -20,7 +20,7 @@ import com.tcdng.jacklyn.common.controllers.CommonRemoteCallGateImpl;
 import com.tcdng.unify.core.Setting;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.jetty.JettyApplicationComponents;
-import com.tcdng.unify.jetty.http.JettyHttpInterface;
+import com.tcdng.unify.jetty.http.JettyEmbeddedWebServer;
 import com.tcdng.unify.web.RemoteCallClient;
 import com.tcdng.unify.web.WebApplicationComponents;
 
@@ -38,11 +38,11 @@ public abstract class AbstractJacklynWebTest extends AbstractJacklynTest {
     protected void doAddSettingsAndDependencies() throws Exception {
         super.doAddSettingsAndDependencies();
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_INTERFACES,
-                new String[] { JettyApplicationComponents.JETTY_HTTPINTERFACE });
+                new String[] { JettyApplicationComponents.JETTY_EMBEDDEDWEBSERVER });
 
         addDependency(CommonModuleNameConstants.JACKLYNAPPLICATIONSERVICEGATE, CommonRemoteCallGateImpl.class, true,
                 true, new Setting("openMode", "true"));
-        addDependency(JettyApplicationComponents.JETTY_HTTPINTERFACE, JettyHttpInterface.class, true, true,
+        addDependency(JettyApplicationComponents.JETTY_EMBEDDEDWEBSERVER, JettyEmbeddedWebServer.class, true, true,
                 new Setting("contextPath", "/jacklyn"), new Setting("httpPort", String.valueOf(TEST_HTTPPORT)));
     }
 
