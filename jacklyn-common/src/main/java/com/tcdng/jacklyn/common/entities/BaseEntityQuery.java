@@ -29,8 +29,4 @@ public abstract class BaseEntityQuery<T extends BaseEntity> extends SequencedEnt
         super(entityClass);
     }
 
-    public BaseEntityQuery<T> workflowFlag(Boolean workflowFlag) {
-        return (BaseEntityQuery<T>) equals("workflowFlag", workflowFlag);
-    }
-
 }

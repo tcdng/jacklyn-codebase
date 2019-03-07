@@ -22,24 +22,25 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Entity policy class for time-stamped entity.
+ * Entity policy class for event entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("timestampedentity-policy")
-public class BaseTimestampedEntityPolicy extends BaseEventEntityPolicy {
+@Component("evententity-policy")
+public class BaseEventEntityPolicy extends BaseEntityPolicy {
 
-    @Override
-    public Object preCreate(Entity record, Date now) throws UnifyException {
-        BaseTimestampedEntity baseTimestampedRecord = (BaseTimestampedEntity) record;
-        baseTimestampedRecord.setUpdateDt(now);
-        return super.preCreate(record, now);
+    public BaseEventEntityPolicy() {
+        super(true); // Set now
     }
 
     @Override
-    public void preUpdate(Entity record, Date now) throws UnifyException {
-        ((BaseTimestampedEntity) record).setUpdateDt(now);
-        super.preUpdate(record, now);
+    public Object preCreate(Entity record, Date now) throws UnifyException {
+        BaseEventEntity baseEventRecord = (BaseEventEntity) record;
+        if (baseEventRecord.getCreateDt() == null) {
+            baseEventRecord.setCreateDt(now);
+        }
+
+        return super.preCreate(record, now);
     }
 }

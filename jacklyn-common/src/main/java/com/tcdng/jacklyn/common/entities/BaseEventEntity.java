@@ -17,29 +17,31 @@ package com.tcdng.jacklyn.common.entities;
 
 import java.util.Date;
 
-import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.database.Entity;
+import com.tcdng.jacklyn.common.annotation.Format;
+import com.tcdng.unify.core.annotation.Column;
+import com.tcdng.unify.core.annotation.ColumnType;
+import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 
 /**
- * Entity policy class for time-stamped entity.
+ * Base class for entity that require a creation event timestamp.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("timestampedentity-policy")
-public class BaseTimestampedEntityPolicy extends BaseEventEntityPolicy {
+@Tooling("Base Event")
+@Policy("evententity-policy")
+public abstract class BaseEventEntity extends BaseEntity {
 
-    @Override
-    public Object preCreate(Entity record, Date now) throws UnifyException {
-        BaseTimestampedEntity baseTimestampedRecord = (BaseTimestampedEntity) record;
-        baseTimestampedRecord.setUpdateDt(now);
-        return super.preCreate(record, now);
+    @Format(formatter = "!datetimeformat")
+    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    private Date createDt;
+
+    public Date getCreateDt() {
+        return createDt;
     }
 
-    @Override
-    public void preUpdate(Entity record, Date now) throws UnifyException {
-        ((BaseTimestampedEntity) record).setUpdateDt(now);
-        super.preUpdate(record, now);
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
     }
 }

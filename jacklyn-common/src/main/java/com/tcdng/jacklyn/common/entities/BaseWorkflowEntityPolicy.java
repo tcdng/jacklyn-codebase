@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.common.entities;
 
 import java.util.Date;
@@ -22,24 +23,17 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Entity policy class for time-stamped entity.
+ * Entity policy class for workflow entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("timestampedentity-policy")
-public class BaseTimestampedEntityPolicy extends BaseEventEntityPolicy {
+@Component("workflowentity-policy")
+public class BaseWorkflowEntityPolicy extends BaseVersionedTimestampedStatusEntityPolicy {
 
     @Override
     public Object preCreate(Entity record, Date now) throws UnifyException {
-        BaseTimestampedEntity baseTimestampedRecord = (BaseTimestampedEntity) record;
-        baseTimestampedRecord.setUpdateDt(now);
+        ((BaseWorkflowEntity) record).setWorkflowFlag(Boolean.FALSE);
         return super.preCreate(record, now);
-    }
-
-    @Override
-    public void preUpdate(Entity record, Date now) throws UnifyException {
-        ((BaseTimestampedEntity) record).setUpdateDt(now);
-        super.preUpdate(record, now);
     }
 }

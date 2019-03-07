@@ -13,17 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.common.entities;
 
 /**
- * Query class for base time-stamped entity.
+ * Query class for base workflow entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseTimestampedEntityQuery<T extends BaseTimestampedEntity> extends BaseEventEntityQuery<T> {
+public abstract class BaseWorkflowEntityQuery<T extends BaseWorkflowEntity>
+        extends BaseVersionedTimestampedStatusEntityQuery<T> {
 
-    public BaseTimestampedEntityQuery(Class<T> entityClass) {
+    public BaseWorkflowEntityQuery(Class<T> entityClass) {
         super(entityClass);
+    }
+
+    public BaseWorkflowEntityQuery<T> workflowFlag(Boolean workflowFlag) {
+        return (BaseWorkflowEntityQuery<T>) equals("workflowFlag", workflowFlag);
     }
 }
