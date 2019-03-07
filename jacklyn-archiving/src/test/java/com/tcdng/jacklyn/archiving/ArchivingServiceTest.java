@@ -80,25 +80,25 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
                 ArchivingModuleNameConstants.ARCHIVINGSERVICE);
         ArchivingFieldQuery query = new ArchivingFieldQuery();
         query.recordName(TestChequeImage.class.getName());
-        query.orderByFieldType();
+        query.order("fieldName");
         List<ArchivingField> archivableFieldList = archivingService.findArchivingFields(query);
         assertNotNull(archivableFieldList);
         assertEquals(4, archivableFieldList.size());
 
         ArchivingField archivableField = archivableFieldList.get(0);
+        assertEquals("createDt", archivableField.getFieldName());
+        assertEquals("Create Dt", archivableField.getDescription());
+        assertEquals(ArchivingFieldType.TIMESTAMP, archivableField.getFieldType());
+
+        archivableField = archivableFieldList.get(1);
         assertEquals("image", archivableField.getFieldName());
         assertEquals("Image", archivableField.getDescription());
         assertEquals(ArchivingFieldType.BLOB, archivableField.getFieldType());
 
-        archivableField = archivableFieldList.get(1);
+        archivableField = archivableFieldList.get(2);
         assertEquals("template", archivableField.getFieldName());
         assertEquals("Template", archivableField.getDescription());
         assertEquals(ArchivingFieldType.CLOB, archivableField.getFieldType());
-
-        archivableField = archivableFieldList.get(2);
-        assertEquals("createDt", archivableField.getFieldName());
-        assertEquals("Create Dt", archivableField.getDescription());
-        assertEquals(ArchivingFieldType.TIMESTAMP, archivableField.getFieldType());
 
         archivableField = archivableFieldList.get(3);
         assertEquals("updateDt", archivableField.getFieldName());
@@ -545,20 +545,29 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         ArchivingService archivingService = (ArchivingService) getComponent(
                 ArchivingModuleNameConstants.ARCHIVINGSERVICE);
         ArchivingFieldQuery query = new ArchivingFieldQuery();
-        query.recordName(TestChequeImage.class.getName());
-        query.orderByFieldType();
-        List<ArchivingField> archivableFieldList = archivingService.findArchivingFields(query);
 
         FileArchiveConfig fileArchiveConfig = new FileArchiveConfig();
         ArchivingField afd = null;
         if (clob) {
-            afd = archivableFieldList.get(1);
+            query.clear();
+            query.recordName(TestChequeImage.class.getName());
+            query.fieldName("template");
+            afd = archivingService.findArchivingField(query);
         } else {
-            afd = archivableFieldList.get(0);
+            query.clear();
+            query.recordName(TestChequeImage.class.getName());
+            query.fieldName("image");
+            afd = archivingService.findArchivingField(query);
         }
+        
+        query.clear();
+        query.recordName(TestChequeImage.class.getName());
+        query.fieldName("createDt");
+        ArchivingField dfd = archivingService.findArchivingField(query);
+        
         fileArchiveConfig.setArchivableDefId(afd.getArchivableDefId());
         fileArchiveConfig.setArchivableFieldId(afd.getId());
-        fileArchiveConfig.setArchivableDateFieldId(archivableFieldList.get(2).getId());
+        fileArchiveConfig.setArchivableDateFieldId(dfd.getId());
         fileArchiveConfig.setName("ChequeImageArchive");
         fileArchiveConfig.setDescription("Cheque ImageImpl Archive");
         fileArchiveConfig.setLocalArchivePath("c:\\archive\\images");

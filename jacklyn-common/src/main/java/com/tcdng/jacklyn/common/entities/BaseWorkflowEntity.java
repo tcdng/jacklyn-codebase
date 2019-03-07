@@ -15,15 +15,28 @@
  */
 package com.tcdng.jacklyn.common.entities;
 
+import com.tcdng.unify.core.annotation.Column;
+import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
+
 /**
- * Query class for base time-stamped entity.
+ * Base class for entity that requires a workflow flag.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseTimestampedEntityQuery<T extends BaseTimestampedEntity> extends BaseEventEntityQuery<T> {
+@Tooling("Base Workflow")
+@Policy("workflowentity-policy")
+public abstract class BaseWorkflowEntity extends BaseVersionedTimestampedStatusEntity {
 
-    public BaseTimestampedEntityQuery(Class<T> entityClass) {
-        super(entityClass);
+    @Column(name = "WORKFLOW_FG")
+    private Boolean workflowFlag;
+
+    public Boolean getWorkflowFlag() {
+        return workflowFlag;
+    }
+
+    public void setWorkflowFlag(Boolean workflowFlag) {
+        this.workflowFlag = workflowFlag;
     }
 }

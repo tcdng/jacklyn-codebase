@@ -101,6 +101,11 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
     }
 
     @Override
+    public ArchivingField findArchivingField(ArchivingFieldQuery query) throws UnifyException {
+        return db().list(query);
+    }
+
+    @Override
     public Long createFileArchiveConfig(FileArchiveConfig fileArchiveConfig) throws UnifyException {
         return (Long) db().create(fileArchiveConfig);
     }

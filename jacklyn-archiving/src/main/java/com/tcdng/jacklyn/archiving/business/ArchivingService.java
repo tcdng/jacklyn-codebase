@@ -79,6 +79,17 @@ public interface ArchivingService extends JacklynBusinessService {
     ArchivingField findArchivingField(Long archivingFieldId) throws UnifyException;
 
     /**
+     * Finds archiving field by query
+     * 
+     * @param query
+     *            the
+     * @return archiving field data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. If an error occurs
+     */
+    ArchivingField findArchivingField(ArchivingFieldQuery query) throws UnifyException;
+
+    /**
      * Creates a new file archive config.
      * 
      * @param fileArchiveConfig

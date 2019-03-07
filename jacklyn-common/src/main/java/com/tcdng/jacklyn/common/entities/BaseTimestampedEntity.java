@@ -24,30 +24,18 @@ import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Tooling;
 
 /**
- * Base class for entity that require a time stamp.
+ * Base class for entity that require a timestamp on create and every update.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @Tooling("Base Timestamped")
 @Policy("timestampedentity-policy")
-public abstract class BaseTimestampedEntity extends BaseEntity {
-
-    @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-    private Date createDt;
+public abstract class BaseTimestampedEntity extends BaseEventEntity {
 
     @Format(formatter = "!datetimeformat")
     @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date updateDt;
-
-    public Date getCreateDt() {
-        return createDt;
-    }
-
-    public void setCreateDt(Date createDt) {
-        this.createDt = createDt;
-    }
 
     public Date getUpdateDt() {
         return updateDt;
