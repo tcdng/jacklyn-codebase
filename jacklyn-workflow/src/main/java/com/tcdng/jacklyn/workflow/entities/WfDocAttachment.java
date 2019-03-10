@@ -29,7 +29,7 @@ import com.tcdng.unify.core.constant.FileAttachmentType;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table(name = "WFDOCATTACHMENT", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
+@Table(name = "JKWFDOCATTACHMENT", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
         @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocAttachment extends BaseEntity {
 

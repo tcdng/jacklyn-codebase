@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Category", reportable = true,
         auditable = true)
-@Table(name = "WFCATEGORY", uniqueConstraints = { @UniqueConstraint({ "name", "version" }),
+@Table(name = "JKWFCATEGORY", uniqueConstraints = { @UniqueConstraint({ "name", "version" }),
         @UniqueConstraint({ "description", "version" }) })
 public class WfCategory extends BaseTimestampedStatusEntity {
 

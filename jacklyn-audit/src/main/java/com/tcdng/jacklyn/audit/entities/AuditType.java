@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @version 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Type")
-@Table(name = "AUDITTYPE", uniqueConstraints = { @UniqueConstraint({ "recordName" }) })
+@Table(name = "JKAUDITTYPE", uniqueConstraints = { @UniqueConstraint({ "recordName" }) })
 public class AuditType extends BaseInstallEntity {
 
     @Column(name = "RECORD_NM", length = 128)

@@ -35,7 +35,7 @@ import com.tcdng.unify.core.logging.EventType;
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Definition", reportable = true,
         auditable = true)
-@Table(name = "AUDITDEFINITION", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKAUDITDEFINITION", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class AuditDefinition extends BaseInstallEntity {
 
     @ForeignKey(Module.class)

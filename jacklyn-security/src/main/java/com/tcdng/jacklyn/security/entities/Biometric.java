@@ -30,7 +30,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table("BIOMETRIC")
+@Table("JKBIOMETRIC")
 public class Biometric extends BaseVersionedTimestampedEntity {
 
     @ForeignKey

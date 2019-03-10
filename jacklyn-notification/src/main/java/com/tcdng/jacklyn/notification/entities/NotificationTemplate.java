@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
         reportable = true, auditable = true)
-@Table(name = "NOTIFICATIONTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
+@Table(name = "JKNOTIFICATIONTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
         @UniqueConstraint({ "moduleId", "description" }) })
 public class NotificationTemplate extends BaseVersionedStatusEntity {
 

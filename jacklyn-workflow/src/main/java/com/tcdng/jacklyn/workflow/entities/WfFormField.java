@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFFORMFIELD", uniqueConstraints = { @UniqueConstraint({ "wfFormId", "binding" }) })
+@Table(name = "JKWFFORMFIELD", uniqueConstraints = { @UniqueConstraint({ "wfFormId", "binding" }) })
 public class WfFormField extends BaseEntity {
 
     @ForeignKey(WfForm.class)

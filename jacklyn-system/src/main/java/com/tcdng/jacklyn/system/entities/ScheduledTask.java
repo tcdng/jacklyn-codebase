@@ -35,7 +35,7 @@ import com.tcdng.unify.core.constant.FrequencyUnit;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task", reportable = true,
         auditable = true)
-@Table(name = "SCHEDTASK", uniqueConstraints = { @UniqueConstraint({ "description" }) })
+@Table(name = "JKSCHEDTASK", uniqueConstraints = { @UniqueConstraint({ "description" }) })
 public class ScheduledTask extends BaseVersionedStatusEntity {
 
     @Column(name = "SCHEDTASK_DESC", length = 64)

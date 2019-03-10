@@ -30,7 +30,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "PRIVILEGEGRP", uniqueConstraints = { @UniqueConstraint({ "moduleId", "privilegeCategoryId" }) })
+@Table(name = "JKPRIVILEGEGRP", uniqueConstraints = { @UniqueConstraint({ "moduleId", "privilegeCategoryId" }) })
 public class PrivilegeGroup extends BaseEntity {
 
     @ForeignKey(Module.class)

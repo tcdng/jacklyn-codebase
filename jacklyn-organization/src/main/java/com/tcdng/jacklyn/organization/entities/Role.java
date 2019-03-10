@@ -38,7 +38,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Managed(
         module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Role", reportable = true,
         auditable = true)
-@Table(name = "ROLE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKROLE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Role extends BaseVersionedStatusEntity {
 
     @ForeignKey(Department.class)

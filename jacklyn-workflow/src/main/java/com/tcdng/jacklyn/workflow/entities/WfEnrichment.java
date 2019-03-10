@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFENRICHMENT", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
+@Table(name = "JKWFENRICHMENT", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
         @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfEnrichment extends BaseEntity {
 

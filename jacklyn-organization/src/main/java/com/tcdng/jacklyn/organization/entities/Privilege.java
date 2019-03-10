@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table(name = "PRIVILEGE", uniqueConstraints = { @UniqueConstraint({ "privilegeGroupId", "name" }) })
+@Table(name = "JKPRIVILEGE", uniqueConstraints = { @UniqueConstraint({ "privilegeGroupId", "name" }) })
 public class Privilege extends BaseInstallEntity {
 
     @ForeignKey(PrivilegeGroup.class)

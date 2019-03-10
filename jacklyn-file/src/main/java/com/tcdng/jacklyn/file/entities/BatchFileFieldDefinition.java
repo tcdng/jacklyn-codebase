@@ -28,7 +28,7 @@ import com.tcdng.unify.core.constant.PadDirection;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "BATCHFILEFLDDEF", uniqueConstraints = { @UniqueConstraint({ "batchFileDefinitionId", "name" }) })
+@Table(name = "JKBATCHFILEFLDDEF", uniqueConstraints = { @UniqueConstraint({ "batchFileDefinitionId", "name" }) })
 public class BatchFileFieldDefinition extends BaseVersionedEntity {
 
     @ForeignKey(BatchFileDefinition.class)

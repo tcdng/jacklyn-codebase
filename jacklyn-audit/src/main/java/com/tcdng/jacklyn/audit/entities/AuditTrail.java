@@ -32,7 +32,7 @@ import com.tcdng.unify.core.logging.EventType;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Trail", reportable = true, auditable = true)
-@Table("AUDITTRAIL")
+@Table("JKAUDITTRAIL")
 public class AuditTrail extends BaseTimestampedEntity {
 
     @ForeignKey(AuditDefinition.class)

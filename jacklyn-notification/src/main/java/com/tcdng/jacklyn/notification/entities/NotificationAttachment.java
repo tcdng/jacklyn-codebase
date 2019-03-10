@@ -32,7 +32,7 @@ import com.tcdng.unify.core.constant.FileAttachmentType;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Attachment",
         reportable = true)
-@Table("NOTIFICATIONATTACH")
+@Table("JKNOTIFICATIONATTACH")
 public class NotificationAttachment extends BaseEntity {
 
     @ForeignKey(Notification.class)

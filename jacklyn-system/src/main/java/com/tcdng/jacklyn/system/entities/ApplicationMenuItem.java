@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Application Menu Item", reportable = true,
         auditable = true)
-@Table(name = "MENUITEM", uniqueConstraints = { @UniqueConstraint({ "menuId", "name" }) })
+@Table(name = "JKMENUITEM", uniqueConstraints = { @UniqueConstraint({ "menuId", "name" }) })
 public class ApplicationMenuItem extends BaseInstallEntity {
 
     @ForeignKey(ApplicationMenu.class)

@@ -37,7 +37,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Template", reportable = true,
         auditable = true)
-@Table(name = "WFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
+@Table(name = "JKWFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
         @UniqueConstraint({ "wfCategoryId", "description" }) })
 public class WfTemplate extends BaseEntity {
 

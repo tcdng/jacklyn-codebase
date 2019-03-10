@@ -27,7 +27,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFITEMPACKEDDOC", uniqueConstraints = { @UniqueConstraint({ "wfItemId" }) })
+@Table(name = "JKWFITEMPACKEDDOC", uniqueConstraints = { @UniqueConstraint({ "wfItemId" }) })
 public class WfItemPackedDoc extends BaseTimestampedEntity {
 
     @ForeignKey(WfItem.class)

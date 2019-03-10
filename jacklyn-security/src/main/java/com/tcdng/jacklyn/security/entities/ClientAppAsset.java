@@ -32,7 +32,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "CLIENTAPPASSET", uniqueConstraints = { @UniqueConstraint({ "clientAppId", "systemAssetId" }) })
+@Table(name = "JKCLIENTAPPASSET", uniqueConstraints = { @UniqueConstraint({ "clientAppId", "systemAssetId" }) })
 public class ClientAppAsset extends BaseEntity implements Describable {
 
     @ForeignKey(ClientApp.class)

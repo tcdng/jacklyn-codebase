@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "System Parameter", reportable = true,
         auditable = true)
-@Table(name = "SYSPARAMETER", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
+@Table(name = "JKSYSPARAMETER", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class SystemParameter extends BaseEntity {
 
     @ForeignKey(Module.class)

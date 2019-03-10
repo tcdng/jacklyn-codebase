@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = ReportModuleNameConstants.REPORT_MODULE, title = "Reportable Definition", reportable = true,
         auditable = true)
-@Table(name = "REPORTABLEDEF", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKREPORTABLEDEF", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class ReportableDefinition extends BaseInstallEntity {
 
     @ForeignKey(Module.class)

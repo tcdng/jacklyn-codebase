@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = FileModuleNameConstants.FILE_MODULE, title = "File DataTransfer Configuration", reportable = true,
         auditable = true)
-@Table(name = "FILETRANSFERCFG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKFILETRANSFERCFG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class FileTransferConfig extends BaseVersionedStatusEntity {
 
     @ForeignKey(name = "DIRECTION_TY")

@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFDOCBEANMAPPING", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
+@Table(name = "JKWFDOCBEANMAPPING", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
         @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocBeanMapping extends BaseEntity {
 

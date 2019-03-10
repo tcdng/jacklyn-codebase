@@ -28,7 +28,7 @@ import com.tcdng.unify.core.operation.FilterConditionType;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table("WFDOCCLASSIFIERFILTER")
+@Table("JKWFDOCCLASSIFIERFILTER")
 public class WfDocClassifierFilter extends BaseEntity {
 
     @ForeignKey(WfDocClassifier.class)

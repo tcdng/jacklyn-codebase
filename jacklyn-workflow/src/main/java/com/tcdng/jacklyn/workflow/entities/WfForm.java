@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table("WFFORM")
+@Table("JKWFFORM")
 public class WfForm extends BaseEntity {
 
     @ForeignKey(WfDoc.class)

@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @version 1.0
  */
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Item Event")
-@Table("WFITEMEVENT")
+@Table("JKWFITEMEVENT")
 public class WfItemEvent extends BaseEntity {
 
     @ForeignKey(WfItemHist.class)

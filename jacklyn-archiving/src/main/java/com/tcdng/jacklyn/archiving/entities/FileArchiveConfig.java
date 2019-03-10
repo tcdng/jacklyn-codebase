@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "File Archive Config", reportable = true,
         auditable = true)
-@Table(name = "FILEARCHIVECFG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKFILEARCHIVECFG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class FileArchiveConfig extends BaseVersionedStatusEntity {
 
     @ForeignKey(ArchivableDefinition.class)

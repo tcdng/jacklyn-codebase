@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Input Control Definition", reportable = true,
         auditable = true)
-@Table(name = "INPUTCTRLDEF",
+@Table(name = "JKINPUTCTRLDEF",
         uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }), @UniqueConstraint({ "description" }) })
 public class InputCtrlDef extends BaseVersionedStatusEntity {
 

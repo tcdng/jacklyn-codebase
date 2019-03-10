@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.Table;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Recipient",
         reportable = true)
-@Table("NOTIFICATIONRECIPIENT")
+@Table("JKNOTIFICATIONRECIPIENT")
 public class NotificationRecipient extends BaseEntity {
 
     @ForeignKey(Notification.class)

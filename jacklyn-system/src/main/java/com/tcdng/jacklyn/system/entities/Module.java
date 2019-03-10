@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Managed", reportable = true, auditable = true)
-@Table(name = "MODULE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKMODULE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Module extends BaseInstallEntity {
 
     @Column(name = "MODULE_NM", length = 32)

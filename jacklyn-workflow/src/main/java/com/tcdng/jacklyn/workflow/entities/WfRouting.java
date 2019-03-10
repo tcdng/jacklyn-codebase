@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFROUTING", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
+@Table(name = "JKWFROUTING", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
         @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfRouting extends BaseEntity {
 

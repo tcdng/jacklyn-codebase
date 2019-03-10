@@ -28,7 +28,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table("WFDOCFIELDMAPPING")
+@Table("JKWFDOCFIELDMAPPING")
 public class WfDocFieldMapping extends BaseEntity {
 
     @ForeignKey(WfDocBeanMapping.class)

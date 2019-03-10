@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFMESSAGE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
+@Table(name = "JKWFMESSAGE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
         @UniqueConstraint({ "wfCategoryId", "description" }) })
 public class WfMessage extends BaseEntity {
 

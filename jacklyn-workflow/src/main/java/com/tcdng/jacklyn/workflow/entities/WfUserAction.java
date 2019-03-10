@@ -32,7 +32,7 @@ import com.tcdng.unify.core.constant.RequirementType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFUSERACTION", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
+@Table(name = "JKWFUSERACTION", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
         @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfUserAction extends BaseEntity {
 

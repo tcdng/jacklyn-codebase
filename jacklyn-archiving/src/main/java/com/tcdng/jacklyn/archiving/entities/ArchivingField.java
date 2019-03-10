@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "Archiving Field")
-@Table(name = "ARCHIVINGFLD", uniqueConstraints = { @UniqueConstraint({ "archivableDefId", "fieldName" }) })
+@Table(name = "JKARCHIVINGFLD", uniqueConstraints = { @UniqueConstraint({ "archivableDefId", "fieldName" }) })
 public class ArchivingField extends BaseInstallEntity {
 
     @ForeignKey(ArchivableDefinition.class)
