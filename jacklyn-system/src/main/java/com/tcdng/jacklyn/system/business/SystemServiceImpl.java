@@ -88,6 +88,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Broadcast;
 import com.tcdng.unify.core.annotation.Column;
+import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -585,6 +586,24 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         for (Class<? extends Entity> entityClass : getAnnotatedClassesExcluded(Entity.class, Tooling.class,
                 "com.tcdng.jacklyn.common.entities")) {
             resultList.add(createToolingEntityItem(entityClass));
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException {
+        List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
+        List<ToolingEntityFieldItem> fieldList = new ArrayList<ToolingEntityFieldItem>();
+        fieldList.add(new ToolingEntityFieldItem("code", ColumnType.STRING));
+        fieldList.add(new ToolingEntityFieldItem("description", ColumnType.STRING));
+        for (Class<? extends EnumConst> enumClass : getAnnotatedClassesExcluded(EnumConst.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            Tooling ta = enumClass.getAnnotation(Tooling.class);
+            StaticList sla = enumClass.getAnnotation(StaticList.class);
+            if (sla != null) {
+                resultList.add(new ToolingEntityItem(sla.value(), resolveApplicationMessage(ta.description()),
+                        enumClass.getName(), null, ta.guarded(), fieldList));
+            }
         }
         return resultList;
     }

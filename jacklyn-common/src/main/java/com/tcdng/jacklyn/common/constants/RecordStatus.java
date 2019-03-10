@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.common.constants;
 
 import com.tcdng.unify.core.annotation.StaticList;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
@@ -25,6 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(description = "Record Status List")
 @StaticList("recordstatuslist")
 public enum RecordStatus implements EnumConst {
 

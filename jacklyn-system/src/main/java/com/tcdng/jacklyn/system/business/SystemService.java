@@ -857,6 +857,15 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     List<ToolingEntityItem> findToolingRecordTypes() throws UnifyException;
 
     /**
+     * Finds all tooling enumeration types.
+     * 
+     * @return list of enumeration types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException;
+
+    /**
      * Finds all tooling transformer types.
      * 
      * @return list of transformer types

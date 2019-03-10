@@ -37,7 +37,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling(name = "jkln::User", description = "JKLN::User")
+@Tooling(name = "user", description = "User")
 @Policy("userpolicy")
 @Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true, auditable = true)
 @Table(name = "JKAPPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })

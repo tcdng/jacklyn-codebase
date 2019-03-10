@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(name = "jkln::Department", description = "JKLN::Department")
+@Tooling(name = "department", description = "Department")
 @Managed(
         module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Department", reportable = true,
         auditable = true)

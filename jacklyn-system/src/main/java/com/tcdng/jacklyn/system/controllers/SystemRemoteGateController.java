@@ -32,6 +32,8 @@ import com.tcdng.jacklyn.shared.system.data.GetAppModulesParams;
 import com.tcdng.jacklyn.shared.system.data.GetAppModulesResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingBaseTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingBaseTypeResult;
+import com.tcdng.jacklyn.shared.system.data.GetToolingEnumTypeParams;
+import com.tcdng.jacklyn.shared.system.data.GetToolingEnumTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeParams;
 import com.tcdng.jacklyn.shared.system.data.GetToolingListTypeResult;
 import com.tcdng.jacklyn.shared.system.data.GetToolingRecordTypeParams;
@@ -147,6 +149,13 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
             description = "$m{system.gate.remotecall.getrecordtypes}")
     public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
         return new GetToolingRecordTypeResult(systemService.findToolingRecordTypes());
+    }
+
+    @GatewayAction(
+            name = SystemRemoteCallNameConstants.GET_TOOLING_ENUMERATION_TYPES,
+            description = "$m{system.gate.remotecall.getenumtypes}")
+    public GetToolingEnumTypeResult getToolingEnumTypes(GetToolingEnumTypeParams params) throws UnifyException {
+        return new GetToolingEnumTypeResult(systemService.findToolingEnumTypes());
     }
 
     @GatewayAction(
