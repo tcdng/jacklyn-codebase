@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.Tooling;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Timestamped")
+@Tooling(name = "baseTStmpEntity", description = "Base Timestamped")
 @Policy("timestampedentity-policy")
 public abstract class BaseTimestampedEntity extends BaseEventEntity {
 

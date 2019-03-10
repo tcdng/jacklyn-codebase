@@ -26,10 +26,10 @@ import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Common")
+@Tooling(name = "baseEntity", description = "Base Common")
 @Policy("baseentity-policy")
 public abstract class BaseEntity extends AbstractSequencedEntity implements Document {
-    
+
     @Override
     public Long getOwnerId() {
         return null;

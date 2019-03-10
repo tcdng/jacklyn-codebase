@@ -27,7 +27,7 @@ import com.tcdng.unify.core.annotation.Tooling;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Test Customer")
+@Tooling(name = "testCustomer", description = "Test Customer")
 @Managed(module = "customer", title = "Test Customer", auditable = true)
 @Table(name = "TESTCUSTOMER")
 public class TestCustomer extends BaseEntity {

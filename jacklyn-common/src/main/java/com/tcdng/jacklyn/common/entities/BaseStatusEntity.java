@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.Tooling;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Status")
+@Tooling(name = "baseStatusEntity", description = "Base Status")
 @Policy("statusentity-policy")
 public abstract class BaseStatusEntity extends BaseEntity {
 

@@ -601,7 +601,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             StaticList sla = enumClass.getAnnotation(StaticList.class);
             if (sla != null) {
                 Tooling ta = enumClass.getAnnotation(Tooling.class);
-                resultList.add(new ToolingListTypeItem(sla.value(), resolveApplicationMessage(ta.value())));
+                resultList.add(new ToolingListTypeItem(sla.value(), resolveApplicationMessage(ta.description())));
             }
         }
 
@@ -1222,7 +1222,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
         }
 
-        return new ToolingEntityItem(ta.value(), entityClass.getName(), id, fieldList);
+        return new ToolingEntityItem(ta.name(), resolveApplicationMessage(ta.description()), entityClass.getName(), id,
+                ta.guarded(), fieldList);
     }
 
     private AuthenticationLargeData internalFindAuthentication(Authentication authentication) throws UnifyException {

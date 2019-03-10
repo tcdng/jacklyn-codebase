@@ -81,7 +81,7 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
             if (ca != null) {
                 Tooling ta = typeClass.getAnnotation(Tooling.class);
                 list.add(ReflectUtils.newInstance(itemClass, TOOLING_DESCRIBABLE_PARAM_TYPE,
-                        AnnotationUtils.getComponentName(typeClass), resolveApplicationMessage(ta.value())));
+                        AnnotationUtils.getComponentName(typeClass), resolveApplicationMessage(ta.description())));
             }
         }
         return list;

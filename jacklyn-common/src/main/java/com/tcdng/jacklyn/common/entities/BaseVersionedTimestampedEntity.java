@@ -25,7 +25,7 @@ import com.tcdng.unify.core.annotation.Version;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Versioned Timestamped")
+@Tooling(name = "baseVersionTStmpEntity", description = "Base Versioned Timestamped")
 @Policy("versionedtimestampedentity-policy")
 public abstract class BaseVersionedTimestampedEntity extends BaseTimestampedEntity {
 
