@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Detail")
-@Table("AUDITDETAIL")
+@Table("JKAUDITDETAIL")
 public class AuditDetail extends BaseEntity {
 
     @ForeignKey(AuditTrail.class)

@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = FileModuleNameConstants.FILE_MODULE, title = "Batch File Definition", reportable = true,
         auditable = true)
-@Table(name = "BATCHFILEDEF",
+@Table(name = "JKBATCHFILEDEF",
         uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class BatchFileDefinition extends BaseVersionedStatusEntity {
 

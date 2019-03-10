@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table("WFITEM")
+@Table("JKWFITEM")
 public class WfItem extends BaseTimestampedEntity {
 
     @ForeignKey(type = WfItemEvent.class, nullable = true)

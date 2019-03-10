@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Theme", reportable = true, auditable = true)
-@Table(name = "THEME", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKTHEME", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Theme extends BaseVersionedStatusEntity {
 
     @Column(name = "THEME_NM", length = 32)

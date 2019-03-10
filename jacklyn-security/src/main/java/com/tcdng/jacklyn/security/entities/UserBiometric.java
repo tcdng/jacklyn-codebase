@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "APPUSERBIOMETRIC", uniqueConstraints = { @UniqueConstraint({ "userId", "biometricId" }) })
+@Table(name = "JKAPPUSERBIOMETRIC", uniqueConstraints = { @UniqueConstraint({ "userId", "biometricId" }) })
 public class UserBiometric extends BaseEntity {
 
     @ForeignKey(User.class)

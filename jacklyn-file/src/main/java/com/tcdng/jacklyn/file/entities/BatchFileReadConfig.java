@@ -33,7 +33,7 @@ import com.tcdng.unify.core.batch.ConstraintAction;
  */
 @Managed(module = FileModuleNameConstants.FILE_MODULE, title = "Batch File Read Configuration", reportable = true,
         auditable = true)
-@Table(name = "BATCHFILEREADCONFIG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKBATCHFILEREADCONFIG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class BatchFileReadConfig extends BaseVersionedStatusEntity {
 
     @ForeignKey(BatchFileDefinition.class)

@@ -26,7 +26,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table("REPORTABLEFLD")
+@Table("JKREPORTABLEFLD")
 public class ReportableField extends BaseInstallEntity {
 
     @ForeignKey(ReportableDefinition.class)

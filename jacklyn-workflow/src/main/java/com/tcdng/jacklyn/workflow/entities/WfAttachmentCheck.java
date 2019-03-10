@@ -29,7 +29,7 @@ import com.tcdng.unify.core.constant.RequirementType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFATTACHMENTCHECK",
+@Table(name = "JKWFATTACHMENTCHECK",
         uniqueConstraints = { @UniqueConstraint({ "wfUserActionId", "wfDocAttachmentName" }) })
 public class WfAttachmentCheck extends BaseEntity {
 

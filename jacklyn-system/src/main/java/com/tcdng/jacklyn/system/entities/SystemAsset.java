@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.o
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "System Asset", reportable = true, auditable = true)
-@Table(name = "SYSASSET", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
+@Table(name = "JKSYSASSET", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class SystemAsset extends BaseInstallEntity {
 
     @ForeignKey(Module.class)

@@ -30,10 +30,10 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(name = "jklnBranch", description = "JKLN::Branch")
+@Tooling(name = "jkln::Branch", description = "JKLN::Branch")
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
         auditable = true)
-@Table(name = "BRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+@Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
     @Column(name = "BRANCH_NM", length = 32)

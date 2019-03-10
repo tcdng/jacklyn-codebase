@@ -33,7 +33,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "APPUSERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
+@Table(name = "JKAPPUSERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
 public class UserRole extends BaseEntity implements Describable {
 
     @ForeignKey(User.class)

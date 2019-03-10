@@ -32,7 +32,7 @@ import com.tcdng.unify.core.constant.BinaryLogicType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFDOCCLASSIFIER", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
+@Table(name = "JKWFDOCCLASSIFIER", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
         @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocClassifier extends BaseEntity {
 

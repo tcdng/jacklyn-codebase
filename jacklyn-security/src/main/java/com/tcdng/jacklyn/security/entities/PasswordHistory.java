@@ -26,7 +26,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table("PASSWORDHIST")
+@Table("JKPASSWORDHIST")
 public class PasswordHistory extends BaseTimestampedEntity {
 
     @ForeignKey(User.class)

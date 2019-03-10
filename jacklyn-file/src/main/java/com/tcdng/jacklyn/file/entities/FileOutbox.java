@@ -34,7 +34,7 @@ import com.tcdng.unify.core.constant.HAlignType;
  * @since 1.0
  */
 @Managed(module = FileModuleNameConstants.FILE_MODULE, title = "File Outbox", reportable = true, auditable = true)
-@Table("FILEOUTBOX")
+@Table("JKFILEOUTBOX")
 public class FileOutbox extends AbstractFileTransferBox {
 
     @Format(halign = HAlignType.RIGHT)

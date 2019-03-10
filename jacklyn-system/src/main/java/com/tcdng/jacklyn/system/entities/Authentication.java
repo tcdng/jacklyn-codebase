@@ -26,7 +26,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table("AUTHENTICATION")
+@Table("JKAUTHENTICATION")
 public class Authentication extends BaseStatusEntity {
 
     @Column(length = 32)

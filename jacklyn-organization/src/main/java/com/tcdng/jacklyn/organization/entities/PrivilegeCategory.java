@@ -26,7 +26,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "PRIVILEGECAT",
+@Table(name = "JKPRIVILEGECAT",
         uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class PrivilegeCategory extends BaseInstallEntity {
 

@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @version 1.0
  */
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Item History")
-@Table("WFITEMHISTORY")
+@Table("JKWFITEMHISTORY")
 public class WfItemHist extends BaseTimestampedEntity {
 
     @ForeignKey(WfTemplate.class)

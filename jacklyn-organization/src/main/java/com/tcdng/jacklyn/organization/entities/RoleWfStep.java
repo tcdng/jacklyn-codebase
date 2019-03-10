@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @since 1.0
  */
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Role Workflow Step")
-@Table("ROLEWFSTEP")
+@Table("JKROLEWFSTEP")
 public class RoleWfStep extends BaseEntity {
 
     @ForeignKey(Role.class)

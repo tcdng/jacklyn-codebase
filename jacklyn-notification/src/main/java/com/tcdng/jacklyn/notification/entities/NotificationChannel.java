@@ -36,7 +36,7 @@ import com.tcdng.unify.core.constant.NetworkSecurityType;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Channel",
         reportable = true, auditable = true)
-@Table(name = "NOTIFICATIONCHANNEL",
+@Table(name = "JKNOTIFICATIONCHANNEL",
         uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class NotificationChannel extends BaseVersionedStatusEntity {
 

@@ -37,10 +37,10 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling(name = "jklnUser", description = "JKLN::User")
+@Tooling(name = "jkln::User", description = "JKLN::User")
 @Policy("userpolicy")
 @Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true, auditable = true)
-@Table(name = "APPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
+@Table(name = "JKAPPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
 public class User extends BaseVersionedTimestampedStatusEntity {
 
     @ForeignKey(type = Theme.class, nullable = true)

@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFFORMPRIVILEGE", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "type", "wfFormElementName" }) })
+@Table(name = "JKWFFORMPRIVILEGE", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "type", "wfFormElementName" }) })
 public class WfFormPrivilege extends BaseEntity {
 
     @ForeignKey(WfStep.class)

@@ -30,7 +30,7 @@ import com.tcdng.unify.core.constant.DataType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFDOCFIELD", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
+@Table(name = "JKWFDOCFIELD", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
         @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocField extends BaseEntity {
 

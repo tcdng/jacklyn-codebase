@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Role Privilege Widget", reportable = true,
         auditable = true)
-@Table(name = "ROLEPRIVILEGEWGT", uniqueConstraints = { @UniqueConstraint({ "rolePrivilegeId" }) })
+@Table(name = "JKROLEPRIVILEGEWGT", uniqueConstraints = { @UniqueConstraint({ "rolePrivilegeId" }) })
 public class RolePrivilegeWidget extends BaseEntity {
 
     @ForeignKey(RolePrivilege.class)

@@ -35,7 +35,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @since 1.0
  */
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "File Archive", reportable = true)
-@Table(name = "FILEARCHIVE", uniqueConstraints = { @UniqueConstraint({ "filename" }) })
+@Table(name = "JKFILEARCHIVE", uniqueConstraints = { @UniqueConstraint({ "filename" }) })
 public class FileArchive extends BaseTimestampedEntity {
 
     @ForeignKey(FileArchiveConfig.class)

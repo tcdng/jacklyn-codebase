@@ -29,11 +29,11 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(name = "jklnDepartment", description = "JKLN::Department")
+@Tooling(name = "jkln::Department", description = "JKLN::Department")
 @Managed(
         module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Department", reportable = true,
         auditable = true)
-@Table(name = "DEPARTMENT", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+@Table(name = "JKDEPARTMENT", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class Department extends BaseVersionedStatusEntity {
 
     @Column(name = "DEPARTMENT_NM", length = 32)

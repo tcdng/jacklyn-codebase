@@ -33,7 +33,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Shortcut Tile", reportable = true,
         auditable = true)
-@Table(name = "SHORTCUTTILE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
+@Table(name = "JKSHORTCUTTILE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class ShortcutTile extends BaseInstallEntity {
 
     @ForeignKey(Module.class)

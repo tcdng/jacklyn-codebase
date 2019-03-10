@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Field")
-@Table(name = "AUDITFIELD", uniqueConstraints = { @UniqueConstraint({ "auditTypeId", "fieldName" }) })
+@Table(name = "JKAUDITFIELD", uniqueConstraints = { @UniqueConstraint({ "auditTypeId", "fieldName" }) })
 public class AuditField extends BaseInstallEntity {
 
     @ForeignKey(AuditType.class)

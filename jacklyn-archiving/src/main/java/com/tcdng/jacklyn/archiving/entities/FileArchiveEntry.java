@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = ArchivingModuleNameConstants.ARCHIVING_MODULE, title = "File Archive Entry")
-@Table(name = "FILEARCHIVEENTRY", uniqueConstraints = { @UniqueConstraint({ "fileArchiveId", "archivedItemId" }) })
+@Table(name = "JKFILEARCHIVEENTRY", uniqueConstraints = { @UniqueConstraint({ "fileArchiveId", "archivedItemId" }) })
 public class FileArchiveEntry extends BaseEntity {
 
     @ForeignKey(FileArchive.class)

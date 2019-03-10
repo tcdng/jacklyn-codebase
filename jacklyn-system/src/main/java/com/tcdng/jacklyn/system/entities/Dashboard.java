@@ -36,7 +36,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Dashboard", reportable = true, auditable = true)
-@Table(name = "DASHBOARD", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+@Table(name = "JKDASHBOARD", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
 public class Dashboard extends BaseVersionedTimestampedStatusEntity {
 
     @ForeignKey

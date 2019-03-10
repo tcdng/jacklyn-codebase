@@ -39,7 +39,7 @@ import com.tcdng.unify.core.annotation.Table;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Inbox", reportable = true)
 @Policy("notificationinbox-policy")
-@Table("NOTIFICATIONINBOX")
+@Table("JKNOTIFICATIONINBOX")
 public class NotificationInbox extends BaseEntity implements SystemNotification {
 
     @ForeignKey(name = "REC_ST")

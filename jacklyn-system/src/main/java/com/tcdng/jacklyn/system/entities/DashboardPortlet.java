@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "DASHBOARDPORTLET", uniqueConstraints = { @UniqueConstraint({ "dashboardId", "name" }),
+@Table(name = "JKDASHBOARDPORTLET", uniqueConstraints = { @UniqueConstraint({ "dashboardId", "name" }),
         @UniqueConstraint({ "dashboardId", "description" }) })
 public class DashboardPortlet extends BaseEntity {
 

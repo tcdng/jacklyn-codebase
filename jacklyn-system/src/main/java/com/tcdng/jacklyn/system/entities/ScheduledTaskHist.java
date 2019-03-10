@@ -34,7 +34,7 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task History", reportable = true,
         auditable = true)
-@Table("SCHEDTASKHIST")
+@Table("JKSCHEDTASKHIST")
 public class ScheduledTaskHist extends BaseTimestampedEntity {
 
     @ForeignKey(ScheduledTask.class)
