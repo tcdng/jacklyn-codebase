@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 import com.tcdng.unify.core.batch.BatchItemRecord;
 
@@ -29,6 +30,7 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @author Lateef Ojulari
  * @version 1.0
  */
+@Tooling(name = "jklnBranch", description = "JKLN::Branch")
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
         auditable = true)
 @Table(name = "BRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })

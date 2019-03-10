@@ -25,7 +25,7 @@ import com.tcdng.unify.core.annotation.Version;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Versioned Status")
+@Tooling(name = "baseVersionStEntity", description = "Base Versioned Status")
 @Policy("versionedstatusentity-policy")
 public abstract class BaseVersionedStatusEntity extends BaseStatusEntity {
 

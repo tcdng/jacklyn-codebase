@@ -25,7 +25,7 @@ import com.tcdng.unify.core.annotation.Tooling;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Workflow")
+@Tooling(name = "baseWfEntity", description = "Base Workflow")
 @Policy("workflowentity-policy")
 public abstract class BaseWorkflowEntity extends BaseVersionedTimestampedStatusEntity {
 

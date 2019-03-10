@@ -31,7 +31,7 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef
  * @since 1.0
  */
-@Tooling("Department List")
+@Tooling(description = "Department List")
 @Component("departmentlist")
 public class DepartmentListCommand extends AbstractZeroParamsOrganizationListCommand {
 

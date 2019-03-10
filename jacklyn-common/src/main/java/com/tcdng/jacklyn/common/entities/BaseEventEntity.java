@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.Tooling;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Base Event")
+@Tooling(name = "baseEventEntity", description = "Base Event")
 @Policy("evententity-policy")
 public abstract class BaseEventEntity extends BaseEntity {
 

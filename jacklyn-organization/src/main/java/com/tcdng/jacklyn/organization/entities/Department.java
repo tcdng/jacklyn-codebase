@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
@@ -28,6 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
+@Tooling(name = "jklnDepartment", description = "JKLN::Department")
 @Managed(
         module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Department", reportable = true,
         auditable = true)

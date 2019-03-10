@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.Tooling;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling("Base Install")
+@Tooling(name = "baseInstallEntity", description = "Base Install")
 @Policy("installentity-policy")
 public abstract class BaseInstallEntity extends BaseStatusEntity {
 

@@ -30,18 +30,24 @@ import com.tcdng.jacklyn.shared.ToolingItem;
  */
 public class ToolingEntityItem implements ToolingItem {
 
-    private String title;
+    private String name;
+
+    private String description;
 
     private String type;
 
     private String idField;
 
+    private boolean guarded;
+    
     private List<ToolingEntityFieldItem> fieldList;
 
-    public ToolingEntityItem(String title, String type, String idField, List<ToolingEntityFieldItem> fieldList) {
-        this.title = title;
+    public ToolingEntityItem(String name, String description, String type, String idField, boolean guarded, List<ToolingEntityFieldItem> fieldList) {
+        this.name = name;
+        this.description = description;
         this.type = type;
         this.idField = idField;
+        this.guarded = guarded;
         this.fieldList = fieldList;
     }
 
@@ -51,21 +57,22 @@ public class ToolingEntityItem implements ToolingItem {
 
     @Override
     public String getName() {
-        return title;
+        return name;
     }
 
     @Override
     public String getDescription() {
-        return title;
-    }
-
-    public String getTitle() {
-        return title;
+        return description;
     }
 
     @XmlElement
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlElement
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {
@@ -84,6 +91,15 @@ public class ToolingEntityItem implements ToolingItem {
     @XmlElement
     public void setIdField(String idField) {
         this.idField = idField;
+    }
+
+    public boolean isGuarded() {
+        return guarded;
+    }
+
+    @XmlElement
+   public void setGuarded(boolean guarded) {
+        this.guarded = guarded;
     }
 
     public List<ToolingEntityFieldItem> getFieldList() {

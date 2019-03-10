@@ -32,7 +32,7 @@ import com.tcdng.unify.core.data.FileAttachment;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling("Test Message Attachment Generator")
+@Tooling(description = "Test Message Attachment Generator")
 @Component("test-messageattachmentgenerator")
 public class TestMessageAttachmentGenerator extends AbstractMessageAttachmentGenerator {
 

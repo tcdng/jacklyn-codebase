@@ -31,7 +31,7 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef
  * @since 1.0
  */
-@Tooling("Branch List")
+@Tooling(description = "Branch List")
 @Component("branchlist")
 public class BranchListCommand extends AbstractZeroParamsOrganizationListCommand {
 
