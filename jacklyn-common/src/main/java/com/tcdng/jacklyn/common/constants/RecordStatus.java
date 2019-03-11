@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling(description = "Record Status List")
+@Tooling(description = "Record Status")
 @StaticList("recordstatuslist")
 public enum RecordStatus implements EnumConst {
 
