@@ -602,7 +602,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             StaticList sla = enumClass.getAnnotation(StaticList.class);
             if (sla != null) {
                 resultList.add(new ToolingEntityItem(sla.value(), resolveApplicationMessage(ta.description()),
-                        enumClass.getName(), null, ta.guarded(), fieldList));
+                        enumClass.getName(), "code", ta.guarded(), fieldList));
             }
         }
         return resultList;
