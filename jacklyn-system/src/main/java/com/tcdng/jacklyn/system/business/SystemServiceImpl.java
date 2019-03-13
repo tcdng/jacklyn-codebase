@@ -88,7 +88,6 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Broadcast;
 import com.tcdng.unify.core.annotation.Column;
-import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -594,8 +593,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException {
         List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
         List<ToolingEntityFieldItem> fieldList = new ArrayList<ToolingEntityFieldItem>();
-        fieldList.add(new ToolingEntityFieldItem("code", ColumnType.STRING));
-        fieldList.add(new ToolingEntityFieldItem("description", ColumnType.STRING));
+        fieldList.add(new ToolingEntityFieldItem("code", String.class.getCanonicalName()));
+        fieldList.add(new ToolingEntityFieldItem("description", String.class.getCanonicalName()));
         for (Class<? extends EnumConst> enumClass : getAnnotatedClassesExcluded(EnumConst.class, Tooling.class,
                 "com.tcdng.jacklyn.common.entities")) {
             Tooling ta = enumClass.getAnnotation(Tooling.class);
@@ -1229,16 +1228,16 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Id.class)) {
             id = field.getName();
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
             break;
         }
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ForeignKey.class)) {
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
         }
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), DataUtils.getColumnType(field)));
+            fieldList.add(new ToolingEntityFieldItem(field.getName(),field.getType().getCanonicalName()));
         }
 
         return new ToolingEntityItem(ta.name(), resolveApplicationMessage(ta.description()), entityClass.getName(), id,

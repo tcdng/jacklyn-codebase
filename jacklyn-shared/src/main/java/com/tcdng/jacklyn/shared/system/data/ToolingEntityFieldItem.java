@@ -18,8 +18,6 @@ package com.tcdng.jacklyn.shared.system.data;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.tcdng.unify.core.annotation.ColumnType;
-
 /**
  * Tooling entity field item.
  * 
@@ -32,9 +30,9 @@ public class ToolingEntityFieldItem {
 
     private String type;
 
-    public ToolingEntityFieldItem(String name, ColumnType type) {
+    public ToolingEntityFieldItem(String name, String type) {
         this.name = name;
-        this.type = type.code();
+        this.type = type;
     }
 
     public ToolingEntityFieldItem() {
