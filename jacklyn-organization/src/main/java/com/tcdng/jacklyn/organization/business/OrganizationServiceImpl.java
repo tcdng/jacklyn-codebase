@@ -482,7 +482,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         privilege.setStatus(RecordStatus.ACTIVE);
         privilege.setInstalled(Boolean.TRUE);
         for (ModuleConfig moduleConfig : moduleConfigList) {
-            if (moduleConfig.getPrivileges() != null) {
+            if (moduleConfig.getPrivileges() != null
+                    && !DataUtils.isBlank(moduleConfig.getPrivileges().getPrivilegeGroupList())) {
                 logDebug("Installing role privilege definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 PrivilegeQuery pQuery = new PrivilegeQuery();

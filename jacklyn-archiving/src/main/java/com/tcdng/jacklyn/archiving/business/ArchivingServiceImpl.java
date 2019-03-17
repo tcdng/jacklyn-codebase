@@ -59,6 +59,7 @@ import com.tcdng.unify.core.file.FileSystemIO;
 import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.CalendarUtils;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 
 /**
@@ -301,7 +302,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
 
             ArchivesConfig archivesConfig = moduleConfig.getArchives();
-            if (archivesConfig != null) {
+            if (archivesConfig != null && !DataUtils.isBlank(archivesConfig.getArchiveList())) {
                 logDebug("Installing archiving definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 ArchivableDefinitionQuery adQuery = new ArchivableDefinitionQuery();

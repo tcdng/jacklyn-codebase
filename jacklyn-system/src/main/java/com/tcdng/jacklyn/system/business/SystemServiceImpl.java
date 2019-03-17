@@ -1000,7 +1000,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             }
 
             Long moduleId = module.getId();
-            if (moduleConfig.getSysParams() != null) {
+            if (moduleConfig.getSysParams() != null
+                    && !DataUtils.isBlank(moduleConfig.getSysParams().getSysParamList())) {
                 logDebug("Updating system parameter definitions for module [{0}]...", module.getDescription());
                 for (SysParamConfig sysParamConfig : moduleConfig.getSysParams().getSysParamList()) {
                     SystemParameter sysParameter = findSysParameter(sysParamConfig.getName());
@@ -1030,7 +1031,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getMenus() != null) {
+            if (moduleConfig.getMenus() != null && !DataUtils.isBlank(moduleConfig.getMenus().getMenuList())) {
                 logDebug("Updating menu definitions for module [{0}]...", module.getDescription());
                 List<MenuConfig> menuConfigList = moduleConfig.getMenus().getMenuList();
 
@@ -1095,7 +1096,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getShortcutTiles() != null) {
+            if (moduleConfig.getShortcutTiles() != null
+                    && !DataUtils.isBlank(moduleConfig.getShortcutTiles().getShortcutTileList())) {
                 logDebug("Reading shortcut tile definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
@@ -1129,7 +1131,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getInputControls() != null) {
+            if (moduleConfig.getInputControls() != null
+                    && !DataUtils.isBlank(moduleConfig.getInputControls().getInputControlList())) {
                 logDebug("Reading input control defintions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
@@ -1237,7 +1240,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
-            fieldList.add(new ToolingEntityFieldItem(field.getName(),field.getType().getCanonicalName()));
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
         }
 
         return new ToolingEntityItem(ta.name(), resolveApplicationMessage(ta.description()), entityClass.getName(), id,

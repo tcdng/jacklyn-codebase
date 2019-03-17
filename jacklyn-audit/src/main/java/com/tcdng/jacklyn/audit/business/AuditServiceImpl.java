@@ -49,6 +49,7 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
 
@@ -132,8 +133,8 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
             auditItems = new ArrayList<InspectUserAuditItem>();
             for (AuditTrail auditTrail : auditTrailList) {
                 List<String> details = Collections.emptyList();
-                List<AuditDetail> auditDetailList = db()
-                        .findAll(new AuditDetailQuery().auditTrailId(auditTrail.getId()));
+                List<AuditDetail> auditDetailList =
+                        db().findAll(new AuditDetailQuery().auditTrailId(auditTrail.getId()));
                 if (!auditDetailList.isEmpty()) {
                     details = new ArrayList<String>();
                     for (AuditDetail auditDetailData : auditDetailList) {
@@ -155,7 +156,8 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         // Uninstall old records
-        db().updateAll(new AuditDefinitionQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));
+        db().updateAll(new AuditDefinitionQuery().installed(Boolean.TRUE),
+                new Update().add("installed", Boolean.FALSE));
 
         // Install new and update old
         AuditDefinition auditDefinition = new AuditDefinition();
@@ -163,7 +165,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
 
-            if (moduleConfig.getAudits() != null) {
+            if (moduleConfig.getAudits() != null && !DataUtils.isBlank(moduleConfig.getAudits().getAuditList())) {
                 logDebug("Installing audit definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 AuditDefinitionQuery adQuery = new AuditDefinitionQuery();
@@ -171,8 +173,10 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
                     adQuery.clear();
                     Long auditTypeId = null;
                     if (auditConfig.isType()) {
-                        auditTypeId = installAuditType(
-                                JacklynUtils.getManagedConfig(moduleConfig, auditConfig.getAuditable()), auditConfig);
+                        auditTypeId =
+                                installAuditType(
+                                        JacklynUtils.getManagedConfig(moduleConfig, auditConfig.getAuditable()),
+                                        auditConfig);
                     }
 
                     AuditDefinition oldAuditDefinition = db().find(adQuery.name(auditConfig.getName()));

@@ -223,7 +223,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         ReportableDefinition reportableDefinition = new ReportableDefinition();
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
-            if (moduleConfig.getReports() != null) {
+            if (moduleConfig.getReports() != null && !DataUtils.isBlank(moduleConfig.getReports().getReportList())) {
                 logDebug("Installing report definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 ReportableDefinitionQuery rdQuery = new ReportableDefinitionQuery();

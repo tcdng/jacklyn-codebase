@@ -66,6 +66,7 @@ import com.tcdng.unify.core.data.FileAttachment;
 import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.CalendarUtils;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.StringUtils;
 
@@ -410,7 +411,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         NotificationTemplate notificationTemplate = new NotificationTemplate();
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
-            if (moduleConfig.getNotificationTemplates() != null) {
+            if (moduleConfig.getNotificationTemplates() != null && !DataUtils.isBlank(moduleConfig.getNotificationTemplates()
+                        .getNotificationTemplateList())) {
                 logDebug("Installing message type definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 NotificationTemplateQuery mtQuery = new NotificationTemplateQuery();
