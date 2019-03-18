@@ -182,7 +182,7 @@ public class UserController extends AbstractSecurityCrudController<User> {
     }
 
     @Override
-    protected void onPrepareForm(int mode) throws UnifyException {
+    protected void onPrepareForm(User record, int mode) throws UnifyException {
         setVisible("resetBtn", mode != ManageRecordModifier.ADD);
         if (mode == ManageRecordModifier.ADD) {
             setEditable("frmRoleAssignPanel", true);
