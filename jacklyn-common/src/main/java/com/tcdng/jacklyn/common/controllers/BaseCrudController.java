@@ -142,6 +142,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     @Action
     public String prepareCreateRecord() throws UnifyException {
         record = prepareCreate();
+        onPrepareView(record, false);
         loadSessionOnCreate();
         updateForm(ManageRecordModifier.ADD);
         return "switchcrud";
