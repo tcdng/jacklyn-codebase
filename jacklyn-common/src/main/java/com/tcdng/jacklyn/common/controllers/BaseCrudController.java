@@ -47,8 +47,8 @@ import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
 
 /**
- * Convenient abstract base class for page controllers that manage CRUD actions on
- * records.
+ * Convenient abstract base class for page controllers that manage CRUD actions
+ * on records.
  * 
  * @author Lateef Ojulari
  * @since 1.0
@@ -65,23 +65,22 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
         @ResultMapping(name = "refreshform", response = { "!refreshpanelresponse panels:$l{crudPanel}" }),
         @ResultMapping(
                 name = "switchsearch",
-                response = { "!switchpanelresponse panels:$l{manageBodyPanel.searchBodyPanel}",
+                response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{manageBodyPanel.searchBodyPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(
                 name = "switchcrud",
-                response = { "!switchpanelresponse panels:$l{manageBodyPanel.crudPanel}",
+                response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{manageBodyPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(
                 name = "switchsearch_io",
-                response = { "!switchpanelresponse panels:$l{mainResultPanel.searchResultPanel}",
+                response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{mainResultPanel.searchResultPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(
                 name = "switchcrud_io",
-                response = { "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}",
+                response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
-public abstract class BaseCrudController<T extends Entity, U> extends BasePageController
-        implements DocViewController {
+public abstract class BaseCrudController<T extends Entity, U> extends BasePageController implements DocViewController {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
 
@@ -331,8 +330,8 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
             contentList.add(record);
         }
 
-        ReportOptions reportOptions = getCommonReportProvider().getDynamicReportOptions(entityClass.getName(),
-                table.getColumnPropertyList());
+        ReportOptions reportOptions =
+                getCommonReportProvider().getDynamicReportOptions(entityClass.getName(), table.getColumnPropertyList());
         reportOptions.setReportResourcePath("/common/resource/report");
         reportOptions.setReportFormat(reportType);
         reportOptions.setColumnarLayout(mode != ManageRecordModifier.SEARCH);
@@ -576,16 +575,18 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
     @SuppressWarnings("unchecked")
     private void manageReportable() throws UnifyException {
-        boolean isReportable = ManageRecordModifier.isReportable(modifier)
-                && !getCommonReportProvider().isReportable(entityClass.getName());
+        boolean isReportable =
+                ManageRecordModifier.isReportable(modifier)
+                        && !getCommonReportProvider().isReportable(entityClass.getName());
         if (isReportable) {
             // Hide report button base on role privilege if necessary
             ManagedEntityPrivilegeNames managedPrivilegeNames =
-                ((Map<Class<? extends Entity>, ManagedEntityPrivilegeNames>) getApplicationAttribute(
-                JacklynApplicationAttributeConstants.MANAGED_PRIVILEGES)).get(entityClass);
+                    ((Map<Class<? extends Entity>, ManagedEntityPrivilegeNames>) getApplicationAttribute(
+                            JacklynApplicationAttributeConstants.MANAGED_PRIVILEGES)).get(entityClass);
             if (managedPrivilegeNames != null) {
-                isReportable = isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
-                        managedPrivilegeNames.getReportableName());
+                isReportable =
+                        isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
+                                managedPrivilegeNames.getReportableName());
             }
         }
 
@@ -675,45 +676,45 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         setDisabled("searchPanel", true);
 
         switch (mode) {
-        case ManageRecordModifier.ADD:
-            setEditable("crudFormPanel.mainBodyPanel", true);
-            setVisible("createNextFrmBtn", true);
-            setVisible("createCloseFrmBtn", true);
-            setVisible("cancelFrmBtn", true);
-            setPageValidationEnabled(true);
-            break;
-        case ManageRecordModifier.MODIFY:
-            if (ManageRecordModifier.isEditable(modifier) && record != null && !record.isReserved()
-                    && isEditable(record)) {
-                if (!ManageRecordModifier.isAlternateSave(modifier)) {
-                    setVisible("saveNextFrmBtn", true);
-                    setVisible("saveCloseFrmBtn", true);
-                }
+            case ManageRecordModifier.ADD:
                 setEditable("crudFormPanel.mainBodyPanel", true);
+                setVisible("createNextFrmBtn", true);
+                setVisible("createCloseFrmBtn", true);
+                setVisible("cancelFrmBtn", true);
                 setPageValidationEnabled(true);
-            } else {
+                break;
+            case ManageRecordModifier.MODIFY:
+                if (ManageRecordModifier.isEditable(modifier) && record != null && !record.isReserved()
+                        && isEditable(record)) {
+                    if (!ManageRecordModifier.isAlternateSave(modifier)) {
+                        setVisible("saveNextFrmBtn", true);
+                        setVisible("saveCloseFrmBtn", true);
+                    }
+                    setEditable("crudFormPanel.mainBodyPanel", true);
+                    setPageValidationEnabled(true);
+                } else {
+                    setEditable("crudFormPanel.mainBodyPanel", false);
+                }
+                setVisible("cancelFrmBtn", true);
+                break;
+            case ManageRecordModifier.VIEW:
                 setEditable("crudFormPanel.mainBodyPanel", false);
-            }
-            setVisible("cancelFrmBtn", true);
-            break;
-        case ManageRecordModifier.VIEW:
-            setEditable("crudFormPanel.mainBodyPanel", false);
-            setVisible("doneFrmBtn", true);
-            if (ManageRecordModifier.isActivatable(modifier)) {
-                setVisible("activateFrmBtn", isActivatable(record));
-                setVisible("deactivateFrmBtn", isDeactivatable(record));
-            }
-            break;
+                setVisible("doneFrmBtn", true);
+                if (ManageRecordModifier.isActivatable(modifier)) {
+                    setVisible("activateFrmBtn", isActivatable(record));
+                    setVisible("deactivateFrmBtn", isDeactivatable(record));
+                }
+                break;
 
-        case ManageRecordModifier.DELETE:
-            setEditable("crudFormPanel.mainBodyPanel", false);
-            setVisible("deleteFrmBtn", true);
-            setVisible("cancelFrmBtn", true);
-            break;
+            case ManageRecordModifier.DELETE:
+                setEditable("crudFormPanel.mainBodyPanel", false);
+                setVisible("deleteFrmBtn", true);
+                setVisible("cancelFrmBtn", true);
+                break;
 
-        default:
-            setDisabled("searchPanel", false);
-            break;
+            default:
+                setDisabled("searchPanel", false);
+                break;
         }
 
         // Index description
@@ -728,27 +729,27 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     private void updateModeDescription() throws UnifyException {
         modeDescription = null;
         switch (mode) {
-        case ManageRecordModifier.ADD:
-            modeDescription = "managerecord.mode.add";
-            modeStyle = EventType.CREATE.colorMode();
-            break;
-        case ManageRecordModifier.DELETE:
-            modeDescription = "managerecord.mode.delete";
-            modeStyle = EventType.DELETE.colorMode();
-            break;
-        case ManageRecordModifier.MODIFY:
-            modeDescription = "managerecord.mode.modify";
-            modeStyle = EventType.UPDATE.colorMode();
-            break;
-        case ManageRecordModifier.VIEW:
-            modeDescription = "managerecord.mode.view";
-            modeStyle = EventType.VIEW.colorMode();
-            break;
-        case ManageRecordModifier.SEARCH:
-        default:
-            modeDescription = "managerecord.mode.search";
-            modeStyle = EventType.SEARCH.colorMode();
-            break;
+            case ManageRecordModifier.ADD:
+                modeDescription = "managerecord.mode.add";
+                modeStyle = EventType.CREATE.colorMode();
+                break;
+            case ManageRecordModifier.DELETE:
+                modeDescription = "managerecord.mode.delete";
+                modeStyle = EventType.DELETE.colorMode();
+                break;
+            case ManageRecordModifier.MODIFY:
+                modeDescription = "managerecord.mode.modify";
+                modeStyle = EventType.UPDATE.colorMode();
+                break;
+            case ManageRecordModifier.VIEW:
+                modeDescription = "managerecord.mode.view";
+                modeStyle = EventType.VIEW.colorMode();
+                break;
+            case ManageRecordModifier.SEARCH:
+            default:
+                modeDescription = "managerecord.mode.search";
+                modeStyle = EventType.SEARCH.colorMode();
+                break;
         }
 
         modeDescription = getSessionMessage(modeDescription, recordHintName);
@@ -757,18 +758,18 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     private String performModeAction() throws UnifyException {
         String result = null;
         switch (mode) {
-        case ManageRecordModifier.ADD:
-            return prepareCreateRecord();
-        case ManageRecordModifier.DELETE:
-            return prepareDeleteRecord();
-        case ManageRecordModifier.MODIFY:
-            return prepareUpdateRecord();
-        case ManageRecordModifier.VIEW:
-            return prepareViewRecord();
-        case ManageRecordModifier.SEARCH:
-            break;
-        default:
-            break;
+            case ManageRecordModifier.ADD:
+                return prepareCreateRecord();
+            case ManageRecordModifier.DELETE:
+                return prepareDeleteRecord();
+            case ManageRecordModifier.MODIFY:
+                return prepareUpdateRecord();
+            case ManageRecordModifier.VIEW:
+                return prepareViewRecord();
+            case ManageRecordModifier.SEARCH:
+                break;
+            default:
+                break;
         }
         return result;
     }
