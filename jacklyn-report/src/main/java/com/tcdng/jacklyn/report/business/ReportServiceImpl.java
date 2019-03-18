@@ -74,7 +74,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ReportableDefinition> findReportables(ReportableDefinitionQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -248,6 +248,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                         reportableDefinition.setTemplate(reportConfig.getTemplate());
                         reportableDefinition.setProcessor(reportConfig.getProcessor());
                         reportableDefinition.setDynamic(reportConfig.isDynamic());
+                        reportableDefinition.setInstalled(Boolean.TRUE);
                         reportableId = (Long) db().create(reportableDefinition);
                     } else {
                         // Update old definition
@@ -280,6 +281,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 reportableField.setParameterOnly(rfd.isParameterOnly());
                                 reportableField.setType(rfd.getType());
                                 reportableField.setWidth(rfd.getWidth());
+                                reportableField.setInstalled(Boolean.TRUE);
                                 db().create(reportableField);
                             }
                         }

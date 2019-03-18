@@ -62,6 +62,7 @@ public class ModuleController extends AbstractSystemCrudController<Module> {
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        query.installed(Boolean.TRUE);
         query.order("description").ignoreEmptyCriteria(true);
         return getSystemService().findModules(query);
     }

@@ -60,6 +60,7 @@ public class ShortcutTileController extends AbstractSystemCrudController<Shortcu
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        query.installed(Boolean.TRUE);
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);
         shortcutTileOrderList = getSystemService().findShortcutTiles(query);
@@ -108,6 +109,7 @@ public class ShortcutTileController extends AbstractSystemCrudController<Shortcu
             query.status(getSearchStatus());
         }
 
+        query.installed(Boolean.TRUE);
         query.ignoreEmptyCriteria(true);
         return getSystemService().findShortcutTiles(query);
 

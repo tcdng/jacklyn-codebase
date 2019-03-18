@@ -70,6 +70,7 @@ public class ArchivableDefinitionController extends AbstractArchivingCrudControl
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        query.installed(Boolean.TRUE);
         query.ignoreEmptyCriteria(true);
         return getArchivingService().findArchivableDefinitions(query);
     }

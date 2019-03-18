@@ -110,6 +110,7 @@ public class AuditSettingController extends AbstractAuditCrudController<AuditDef
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        query.installed(Boolean.TRUE);
         query.ignoreEmptyCriteria(true);
         return getAuditService().findAuditTypes(query);
     }

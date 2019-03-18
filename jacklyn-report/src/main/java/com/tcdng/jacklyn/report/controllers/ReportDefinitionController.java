@@ -70,6 +70,7 @@ public class ReportDefinitionController extends AbstractReportCrudController<Rep
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        query.installed(Boolean.TRUE);
         query.ignoreEmptyCriteria(true);
         return getReportService().findReportables(query);
     }

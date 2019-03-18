@@ -83,7 +83,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
     @Override
     public List<ArchivableDefinition> findArchivableDefinitions(ArchivableDefinitionQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
     @Override
     public List<ArchivingField> findArchivingFields(ArchivingFieldQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -317,6 +317,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                         archiveDefinition.setName(archiveConfig.getName());
                         archiveDefinition.setDescription(archiveConfig.getDescription());
                         archiveDefinition.setRecordType(archiveConfig.getArchivable());
+                        archiveDefinition.setInstalled(Boolean.TRUE);
                         Long archivableDefId = (Long) db().create(archiveDefinition);
 
                         archivableField.setArchivableDefId(archivableDefId);
@@ -325,6 +326,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                                 archivableField.setDescription(fieldConfig.getDescription());
                                 archivableField.setFieldName(fieldConfig.getName());
                                 archivableField.setFieldType(fieldConfig.getArchFieldType());
+                                archivableField.setInstalled(Boolean.TRUE);
                                 db().create(archivableField);
                             }
                         }
@@ -348,6 +350,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                                     archivableField.setDescription(fieldConfig.getDescription());
                                     archivableField.setFieldName(fieldConfig.getName());
                                     archivableField.setFieldType(fieldConfig.getArchFieldType());
+                                    archivableField.setInstalled(Boolean.TRUE);
                                     db().create(archivableField);
                                 } else {
                                     oldArchivableField.setDescription(fieldConfig.getDescription());

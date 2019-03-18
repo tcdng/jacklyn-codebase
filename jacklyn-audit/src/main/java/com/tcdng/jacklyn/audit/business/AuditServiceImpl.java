@@ -71,7 +71,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
 
     @Override
     public List<AuditDefinition> findAuditTypes(AuditDefinitionQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -188,6 +188,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
                         auditDefinition.setName(auditConfig.getName());
                         auditDefinition.setDescription(description);
                         auditDefinition.setEventType(auditConfig.getAction());
+                        auditDefinition.setInstalled(Boolean.TRUE);
                         if (auditConfig.isActive()) {
                             auditDefinition.setStatus(RecordStatus.ACTIVE);
                         } else {

@@ -51,6 +51,7 @@ public class SystemAssetInListCommand extends AbstractAssignParamsSystemListComm
                 query.moduleId(params.getFilterId2(Long.class));
             }
 
+            query.installed(Boolean.TRUE);
             query.order("description");
             return getSystemService().findSystemAssets(query);
         }

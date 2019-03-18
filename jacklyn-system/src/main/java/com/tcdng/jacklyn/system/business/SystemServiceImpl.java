@@ -296,7 +296,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public Module findModule(String name) throws UnifyException {
-        return db().list(new ModuleQuery().name(name).installed(Boolean.TRUE));
+        return db().list(new ModuleQuery().name(name));
     }
 
     @Override
@@ -311,7 +311,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public Long getModuleId(String moduleName) throws UnifyException {
-        return db().value(Long.class, "id", new ModuleQuery().name(moduleName).installed(Boolean.TRUE));
+        return db().value(Long.class, "id", new ModuleQuery().name(moduleName));
     }
 
     @Override
@@ -331,7 +331,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ApplicationMenuItem> findMenuItems(ApplicationMenuItemQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -341,7 +341,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ApplicationMenu> findMenus(ApplicationMenuQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -553,7 +553,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<SystemAsset> findSystemAssets(SystemAssetQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -868,7 +868,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ShortcutTile> findShortcutTiles(ShortcutTileQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -883,7 +883,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<Tile> generateTiles(ShortcutTileQuery query) throws UnifyException {
-        return generateTiles(db().findAll(query.installed(Boolean.TRUE)));
+        return generateTiles(db().findAll(query));
     }
 
     @Override
@@ -975,6 +975,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     module.setDescription(resolveApplicationMessage(moduleConfig.getDescription()));
                     module.setDeactivatable(moduleConfig.isDeactivatable());
                     module.setRemote(Boolean.FALSE);
+                    module.setInstalled(Boolean.TRUE);
                     db().create(module);
                 } else {
                     // Otherwise perform update
@@ -1003,6 +1004,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             if (moduleConfig.getSysParams() != null
                     && !DataUtils.isBlank(moduleConfig.getSysParams().getSysParamList())) {
                 logDebug("Updating system parameter definitions for module [{0}]...", module.getDescription());
+                boolean updateVersion = true;
                 for (SysParamConfig sysParamConfig : moduleConfig.getSysParams().getSysParamList()) {
                     SystemParameter sysParameter = findSysParameter(sysParamConfig.getName());
                     String description = resolveApplicationMessage(sysParamConfig.getDescription());
@@ -1026,6 +1028,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setType(sysParamConfig.getType());
                         sysParameter.setControl(sysParamConfig.isControl());
                         sysParameter.setEditable(sysParamConfig.isEditable());
+                        // Check for application version
+                        if (updateVersion && SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION.equals(sysParamConfig.getName())) {
+                            sysParameter.setValue(getDeploymentVersion());
+                            updateVersion = false;
+                        }
                         db().updateByIdVersion(sysParameter);
                     }
                 }
@@ -1052,6 +1059,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         applicationMenu.setCaption(menuConfig.getCaption());
                         applicationMenu.setPath(menuConfig.getPath());
                         applicationMenu.setRemotePath(menuConfig.getRemotePath());
+                        applicationMenu.setInstalled(Boolean.TRUE);
                         menuId = (Long) db().create(applicationMenu);
                     } else {
                         logDebug("Updating module menu definition [{0}]...", oldApplicationMenu.getName());
@@ -1080,6 +1088,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 applicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 applicationMenuItem.setPath(menuItemConfig.getPath());
                                 applicationMenuItem.setRemotePath(menuItemConfig.getRemotePath());
+                                applicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().create(applicationMenuItem);
                             } else {
                                 oldApplicationMenuItem.setMenuId(menuId);
@@ -1115,6 +1124,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 .setGenerator(AnnotationUtils.getAnnotationString(shortcutTileConfig.getGenerator()));
                         shortcutTile.setPath(shortcutTileConfig.getPath());
                         shortcutTile.setLandscape(shortcutTileConfig.isLandscape());
+                        shortcutTile.setInstalled(Boolean.TRUE);
                         db().create(shortcutTile);
                     } else {
                         oldShortcutTile.setDescription(resolveApplicationMessage(shortcutTileConfig.getDescription()));

@@ -38,6 +38,7 @@ public class MenuListCommand extends AbstractZeroParamsSystemListCommand {
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ApplicationMenuQuery query = new ApplicationMenuQuery();
+        query.installed(Boolean.TRUE);
         query.status(RecordStatus.ACTIVE).order("caption");
         List<ApplicationMenu> menuList = getSystemService().findMenus(query);
         for (ApplicationMenu menuData : menuList) {

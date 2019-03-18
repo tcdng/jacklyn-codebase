@@ -278,7 +278,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public PrivilegeCategory findPrivilegeCategory(String name) throws UnifyException {
-        return db().list(new PrivilegeCategoryQuery().name(name).installed(Boolean.TRUE));
+        return db().list(new PrivilegeCategoryQuery().name(name));
     }
 
     @Override
@@ -298,7 +298,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public List<Privilege> findPrivileges(PrivilegeQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -515,6 +515,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
                         if (oldPrivilege == null) {
                             privilege.setName(privilegeConfig.getName());
                             privilege.setDescription(description);
+                            privilege.setInstalled(Boolean.TRUE);
                             db().create(privilege);
                         } else {
                             oldPrivilege.setName(privilegeConfig.getName());

@@ -44,11 +44,11 @@ public class ArchivableListCommand extends AbstractArchivingListCommand<StatusPa
         if (!StringUtils.isBlank(params.getStatus())) {
             return getArchivingService()
                     .findArchivableDefinitions((ArchivableDefinitionQuery) new ArchivableDefinitionQuery()
-                            .orderByDescription().status(RecordStatus.fromName(params.getStatus())));
+                            .orderByDescription().installed(Boolean.TRUE).status(RecordStatus.fromName(params.getStatus())));
         }
 
         return getArchivingService()
                 .findArchivableDefinitions((ArchivableDefinitionQuery) new ArchivableDefinitionQuery()
-                        .orderByDescription().ignoreEmptyCriteria(true));
+                        .orderByDescription().installed(Boolean.TRUE).ignoreEmptyCriteria(true));
     }
 }

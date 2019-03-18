@@ -47,6 +47,7 @@ public class ArchivingTimestampFieldListCommand extends AbstractArchivingListCom
             ArchivingFieldQuery query = new ArchivingFieldQuery();
             query.archivableDefId(params.getArchivableDefId());
             query.fieldTypeIn(TIME);
+            query.installed(Boolean.TRUE);
             query.orderByDescription();
             return getArchivingService().findArchivingFields(query);
         }

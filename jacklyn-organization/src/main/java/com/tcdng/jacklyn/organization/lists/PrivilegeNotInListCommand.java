@@ -50,6 +50,7 @@ public class PrivilegeNotInListCommand extends AbstractAssignParamsOrganizationL
                 query.idNotIn(params.getAssignedIdList(Long.class));
             }
 
+            query.installed(Boolean.TRUE);
             query.select("id", "description").order("description").ignoreEmptyCriteria(true);
             return getOrganizationService().findPrivileges(query);
         }

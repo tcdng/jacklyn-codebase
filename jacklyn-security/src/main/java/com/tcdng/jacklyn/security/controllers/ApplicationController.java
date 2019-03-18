@@ -191,6 +191,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
         List<Tile> tileList = Collections.emptyList();
         ShortcutTileQuery query = new ShortcutTileQuery().orderByDisplayOrder();
+        query.installed(Boolean.TRUE);
         if (getUserToken().isReservedUser()) {
             query.ignoreEmptyCriteria(true);
             tileList = systemService.generateTiles(query);
