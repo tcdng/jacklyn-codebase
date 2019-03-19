@@ -26,7 +26,7 @@
 //Form components   
 !ui-name:frmName caption:$m{organization.branch.name} binding:name minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{organization.branch.description} binding:description minLen:1 maxLen:48 size:32 required:true
-!ui-checkbox:frmHeadOffice caption:$m{organization.branch.headoffice} binding:headOffice
+!ui-checkbox:frmHeadOffice caption:$m{organization.branch.headoffice} layoutCaption:true binding:headOffice
 !ui-select:frmStatus caption:$m{organization.branch.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
 //Validations
