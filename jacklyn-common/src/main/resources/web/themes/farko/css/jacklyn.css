@@ -69,6 +69,10 @@
 
 .jk-searchboxpanel {width: 480px; background: #FFFFFF; border: 1px solid #A9A9A9;}
 
+.jk-searchgrid {}
+.jk-searchgrid .lcelltp {padding-right:4px;}
+
+
 .jk-mildlabel {margin-bottom:2px; width:120px; height:32px; display:table-cell; text-align:center; vertical-align:middle;
 	color: white; background: #5DDC5D; border: 1px solid #47A447; font-weight:bold;}
 
