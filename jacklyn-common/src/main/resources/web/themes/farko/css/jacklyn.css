@@ -87,9 +87,9 @@
 
 .jk-bold-panel {font-weight:bold; font-size: 12pt; border:1px solid #A9A9A9; background-color: #ECECEC;}
 
-.jk-button {margin-bottom:2px; padding: 0px 16px; width:120px; height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
+.jk-button {margin-bottom:2px; padding: 0px 16px; width:120px; min-height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
 .jk-button:hover:enabled {color: #FFFFFF; background-color: #6080F0 !important;}
-.jk-button-alert {margin-bottom:2px; padding: 0px 16px; width:120px; height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
+.jk-button-alert {margin-bottom:2px; padding: 0px 16px; width:120px; min-height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
 .jk-button-alert:hover:enabled {color: #FFFFFF; background-color: #F06060 !important;}
 
 .jk-wfitemlabel {display:block; font-size:20px; padding:8px; background-color:#D0E0F0;}
