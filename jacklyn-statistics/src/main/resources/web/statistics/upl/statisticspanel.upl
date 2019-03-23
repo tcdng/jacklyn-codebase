@@ -1,0 +1,3 @@
+// UPL template for base statistics panel
+// Copyright 2018-2019 The Code Department.
+!ui-statisticspanel style:$s{width:100%;height:100%;}

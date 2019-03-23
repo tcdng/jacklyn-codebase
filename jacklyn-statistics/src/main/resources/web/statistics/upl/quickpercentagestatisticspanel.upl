@@ -1,0 +1,24 @@
+// UPL template for base quick percentage portlet panel
+// Copyright 2018-2019 The Code Department.
+!ui-quickpercentagestatisticspanel styleClass:$s{jk-quickpercentage}
+    components:$c{bodyPanel}
+    qpTotalTitle:$m{statistics.quickpercentage.total}
+    qpPercentTitle:$m{statistics.quickpercentage.percentage}
+    
+!ui-panel:bodyPanel styleClass:$f{qpStyleClass}
+    layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{title qpValue footerPanel}
+
+!ui-label:title caption:$f{qpTitle} styleClass:$e{qptitle}
+!ui-label:qpValue styleClass:$e{qpvalue} formatter:$f{qpValueFormatter} binding:value
+
+!ui-panel:footerPanel  styleClass:$e{qpfooter} layout:$d{!ui-horizontal style:$s{width:100%;}}
+    components:$c{totalPanel percentPanel}
+!ui-panel:totalPanel layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{totalTitle qpTotalValue}
+!ui-label:totalTitle caption:$f{qpTotalTitle}
+!ui-label:qpTotalValue formatter:$f{qpValueFormatter} styleClass:$e{qpfootervalue} binding:totalValue
+
+!ui-panel:percentPanel layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{percentTitle qpPercentage}
+!ui-label:percentTitle caption:$f{qpPercentTitle} style:$s{text-align:right;}
+!ui-label:qpPercentage formatter:$f{qpPercentFormatter} styleClass:$e{qpfootervalue} style:$s{text-align:right;}
+    binding:fraction
+
