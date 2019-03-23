@@ -126,6 +126,18 @@
 .ui-wfitemattachmentspanel {}
 .ui-wfitemattachmentspanel .abody{padding:1px; overflow-y:scroll;}
 
+.ui-quickpercentagestatisticspanel {color: #FFF;min-width:240px;margin:4px;}
+.ui-quickpercentagestatisticspanel .qpred{background-color: #C03333;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qpblue{background-color: #3378C0;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qpgreen{background-color: #33C078;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qporange{background-color: #C07833;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qpgray{background-color: #787878;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qptitle{text-align:center; font-size:14px;border-bottom: solid 1px #FFF;
+       margin: 0px 4px;padding-bottom: 12px;}
+.ui-quickpercentagestatisticspanel .qpvalue{text-align:center; font-size:28px; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+.ui-quickpercentagestatisticspanel .qpfooter{font-size:10px;}
+.ui-quickpercentagestatisticspanel .qpfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+
 .jk-maintaintype {display:inline-block; padding:2px; margin-left:4px; text-align:center; font-weight:bold; font-size:9pt;}
 
 .jk-inpectuserimg {width: 120px; height: 120px;padding:1px;border:solid 1px #A0A0A0;margin:2px;}
