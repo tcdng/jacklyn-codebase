@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.security.business;
 
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.list.AbstractDBSearchProvider;
 
 /**
@@ -25,6 +26,7 @@ import com.tcdng.unify.core.list.AbstractDBSearchProvider;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(description = "User by Name Search Provider")
 @Component("userbyname-searchprovider")
 public class UserByNameSearchProvider extends AbstractDBSearchProvider {
 

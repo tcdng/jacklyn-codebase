@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.organization.entities.RoleQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
@@ -31,6 +32,7 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(description = "Role List")
 @Component("rolelist")
 public class RoleListCommand extends AbstractZeroParamsOrganizationListCommand {
 

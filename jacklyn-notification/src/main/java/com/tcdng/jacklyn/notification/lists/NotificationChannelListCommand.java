@@ -22,6 +22,7 @@ import java.util.Locale;
 import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
@@ -31,6 +32,7 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(description = "Notification Channel List")
 @Component("notificationchannellist")
 public class NotificationChannelListCommand extends AbstractZeroParamsNotificationListCommand {
 
