@@ -30,6 +30,7 @@ import com.tcdng.unify.core.util.EnumUtils;
 public enum FormWidgetType implements EnumConst {
 
     TEXT("TXT", "ui-text"),
+    TEXTAREA("TXA", "ui-textarea"),
     NAME("NME", "ui-name"),
     WORD("WRD", "ui-word"),
     DATE("DTE", "ui-date"),
@@ -42,6 +43,7 @@ public enum FormWidgetType implements EnumConst {
     SELECT("SEL", "ui-select"),
     IMAGE("IMG", "ui-image"),
     PICTURE("PIC", "ui-picture"),
+    FILEUPLOAD("FLU", "ui-fileupload"),
     MONEY("MON", "ui-money"),
     PASSWORD("PWD", "ui-password");
 
