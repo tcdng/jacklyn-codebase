@@ -309,6 +309,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     private String internalApplyActionToWorkflowItem() throws UnifyException {
         getWorkflowService().applyWorkflowAction(workflowItem, actionName);
+        hintUser("$m{hint.workflow.userworkitems.applyaction.success}");
         Long wfItemId = wfItemIds.remove(viewIndex);
         workingCache.remove(wfItemId);
 
