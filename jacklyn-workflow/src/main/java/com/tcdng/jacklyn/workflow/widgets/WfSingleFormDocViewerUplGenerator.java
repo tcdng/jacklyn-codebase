@@ -38,8 +38,13 @@ public class WfSingleFormDocViewerUplGenerator extends AbstractWorkflowUplGenera
 
     @Override
     protected void doGenerateBody(StringBuilder sb, WfFormDef wfFormDef) throws UnifyException {
+        // Generate viewer attributes
+        sb.append("formColumns:2"); // TODO fetch form definition
+        appendNewline(sb);
+        
         // Generate form sections and widgets
         StringBuilder fsb = new StringBuilder();
+        boolean appendFocus = true;
         for (WfFormTabDef wfFormTabDef : wfFormDef.getTabList()) {
             for (WfFormSectionDef wfFormSectionDef : wfFormTabDef.getSectionList()) {
                 sb.append("formSection:$d{!ui-section:").append(wfFormSectionDef.getName()).append(" caption:$s{");
@@ -53,10 +58,25 @@ public class WfSingleFormDocViewerUplGenerator extends AbstractWorkflowUplGenera
                         appendSym = true;
                     }
 
-                    sb.append(wfFormFieldDef.getName());
-
                     // Form field
                     String editorUpl = wfFormFieldDef.getEditorUpl();
+                    String secFieldName = wfFormFieldDef.getName();
+                    boolean isPicture = editorUpl.startsWith("!ui-picture");
+                    if (isPicture) {
+                        // Always wrap picture field in panel
+                        secFieldName = secFieldName + "Panel";
+                        fsb.append("!ui-panel:");
+                        fsb.append(secFieldName);
+                        fsb.append(" caption:$s{");
+                        appendLabel(fsb, wfFormFieldDef);
+                        fsb.append("} components:$c{");
+                        fsb.append(wfFormFieldDef.getName());
+                        fsb.append("}");
+                        appendNewline(fsb);
+                    }
+                    
+                    sb.append(secFieldName);
+
                     int spaceIndex = editorUpl.indexOf(' ');
                     if (spaceIndex > 0) {
                         fsb.append(editorUpl.substring(0, spaceIndex));
@@ -73,6 +93,12 @@ public class WfSingleFormDocViewerUplGenerator extends AbstractWorkflowUplGenera
                     if (wfFormFieldDef.isRequired()) {
                         fsb.append(" required:true");
                     }
+                    
+                    if (appendFocus) {
+                        fsb.append(" focus:true");
+                        appendFocus = false;
+                    }
+                    
                     appendNewline(fsb);
                 }
                 sb.append("}");
