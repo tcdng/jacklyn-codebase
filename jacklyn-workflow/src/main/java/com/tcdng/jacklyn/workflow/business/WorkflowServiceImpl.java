@@ -275,9 +275,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 if (!DataUtils.isBlank(wfDoc.getAttachmentList())) {
                     attachmentList = new ArrayList<WfDocAttachmentDef>();
                     for (WfDocAttachment wfDocAttachment : wfDoc.getAttachmentList()) {
-                        attachmentList
-                                .add(new WfDocAttachmentDef(wfDocAttachment.getName(), wfDocAttachment.getDescription(),
-                                        wfDocAttachment.getLabel(), wfDocAttachment.getAttachmentType()));
+                        String label = wfDocAttachment.getLabel();
+                        if (StringUtils.isBlank(label)) {
+                            label = wfDocAttachment.getDescription();
+                        }
+                        attachmentList.add(new WfDocAttachmentDef(wfDocAttachment.getName(),
+                                wfDocAttachment.getDescription(), label, wfDocAttachment.getAttachmentType()));
                     }
                 }
 
