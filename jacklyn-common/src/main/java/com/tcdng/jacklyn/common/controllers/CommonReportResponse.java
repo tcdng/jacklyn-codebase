@@ -19,7 +19,7 @@ import com.tcdng.jacklyn.common.constants.JacklynRequestAttributeConstants;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.constant.ContentTypeConstants;
+import com.tcdng.unify.core.constant.MimeType;
 import com.tcdng.unify.core.report.ReportFormat;
 import com.tcdng.unify.web.AbstractOpenWindowPageControllerResponse;
 
@@ -45,12 +45,12 @@ public class CommonReportResponse extends AbstractOpenWindowPageControllerRespon
                 + ReportFormat.fromName(reportOptions.getReportFormat()).fileExt();
         boolean download = reportOptions.isDownload();
 
-        String contentType = ContentTypeConstants.APPLICATION_OCTETSTREAM;
+        MimeType mimeType = MimeType.APPLICATION_OCTETSTREAM;
         if (!download) {
-            contentType = ReportFormat.fromName(reportFormat).contentType();
+            mimeType = ReportFormat.fromName(reportFormat).mimeType();
         }
 
-        return new WindowResourceInfo(reportOptions, reportOptions.getReportResourcePath(), resourceName, contentType,
+        return new WindowResourceInfo(reportOptions, reportOptions.getReportResourcePath(), resourceName, mimeType.template(),
                 download);
     }
 }
