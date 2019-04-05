@@ -38,6 +38,14 @@ public class AuditDetail extends BaseEntity {
     @Column(length = 256)
     private String detail;
 
+    public AuditDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public AuditDetail() {
+
+    }
+    
     @Override
     public String getDescription() {
         return this.detail;

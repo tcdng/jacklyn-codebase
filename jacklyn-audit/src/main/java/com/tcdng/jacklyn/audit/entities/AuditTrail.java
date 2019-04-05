@@ -15,10 +15,13 @@
  */
 package com.tcdng.jacklyn.audit.entities;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.audit.constants.AuditModuleNameConstants;
 import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntity;
+import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -49,6 +52,9 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     @Column(name = "REMOTE_FG", nullable = true)
     private Boolean remoteEvent;
+
+    @ChildList
+    private List<AuditDetail> auditDetailList;
 
     @ListOnly(key = "auditDefinitionId", property = "name")
     private String auditDefinitionName;
@@ -107,6 +113,14 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     public void setRemoteEvent(Boolean remoteEvent) {
         this.remoteEvent = remoteEvent;
+    }
+
+    public List<AuditDetail> getAuditDetailList() {
+        return auditDetailList;
+    }
+
+    public void setAuditDetailList(List<AuditDetail> auditDetailList) {
+        this.auditDetailList = auditDetailList;
     }
 
     public String getAuditDefinitionName() {

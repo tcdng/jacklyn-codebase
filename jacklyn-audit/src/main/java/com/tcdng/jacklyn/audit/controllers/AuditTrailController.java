@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.audit.controllers;
 import java.util.Date;
 import java.util.List;
 
-import com.tcdng.jacklyn.audit.entities.AuditDetail;
 import com.tcdng.jacklyn.audit.entities.AuditTrail;
 import com.tcdng.jacklyn.audit.entities.AuditTrailQuery;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
@@ -50,8 +49,6 @@ public class AuditTrailController extends AbstractAuditCrudController<AuditTrail
     private Long searchModuleId;
 
     private EventType searchEventType;
-
-    private List<AuditDetail> auditDetailList;
 
     public AuditTrailController() {
         super(AuditTrail.class, "$m{audit.audittrail.hint}",
@@ -88,10 +85,6 @@ public class AuditTrailController extends AbstractAuditCrudController<AuditTrail
 
     public void setSearchEventType(EventType searchEventType) {
         this.searchEventType = searchEventType;
-    }
-
-    public List<AuditDetail> getAuditDetailList() {
-        return auditDetailList;
     }
 
     @Override
@@ -137,20 +130,10 @@ public class AuditTrailController extends AbstractAuditCrudController<AuditTrail
     }
 
     @Override
-    protected void onPrepareView(AuditTrail auditTrailData, boolean paste) throws UnifyException {
-        auditDetailList = getAuditService().findAuditDetails(auditTrailData.getId());
-    }
-
-    @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
         if (searchCreateDt == null) {
             searchCreateDt = CalendarUtils.getCurrentMidnightDate();
         }
-    }
-
-    @Override
-    protected void onLoseView(AuditTrail auditTrailData) throws UnifyException {
-        auditDetailList = null;
     }
 }
