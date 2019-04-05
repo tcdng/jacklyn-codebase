@@ -35,7 +35,6 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
-import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 
 /**
@@ -145,29 +144,29 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
     }
 
     private Long createAuditTrail(Long auditDefinitionId, String[] details, Long recordId) throws UnifyException {
-        AuditTrail auditTrailData = new AuditTrail();
-        auditTrailData.setAuditDefinitionId(auditDefinitionId);
-        auditTrailData.setRecordId(recordId);
+        AuditTrail auditTrail = new AuditTrail();
+        auditTrail.setAuditDefinitionId(auditDefinitionId);
+        auditTrail.setRecordId(recordId);
         UserToken userToken = getUserToken();
         if (userToken != null) {
-            auditTrailData.setUserLoginId(userToken.getUserLoginId());
-            auditTrailData.setIpAddress(userToken.getIpAddress());
-            auditTrailData.setRemoteEvent(userToken.isRemote());
+            auditTrail.setUserLoginId(userToken.getUserLoginId());
+            auditTrail.setIpAddress(userToken.getIpAddress());
+            auditTrail.setRemoteEvent(userToken.isRemote());
         } else {
-            auditTrailData.setUserLoginId(SystemReservedUserConstants.ANONYMOUS_LOGINID);
-            auditTrailData.setIpAddress(getSessionContext().getRemoteAddress());
-            auditTrailData.setRemoteEvent(null);
+            auditTrail.setUserLoginId(SystemReservedUserConstants.ANONYMOUS_LOGINID);
+            auditTrail.setIpAddress(getSessionContext().getRemoteAddress());
+            auditTrail.setRemoteEvent(null);
         }
-        Long auditTrailId = (Long) db().create(auditTrailData);
-
-        if (QueryUtils.isValidStringArrayCriteria(details)) {
-            AuditDetail auditDetailData = new AuditDetail();
-            auditDetailData.setAuditTrailId(auditTrailId);
-            for (String detail : details) {
-                auditDetailData.setDetail(detail);
-                db().create(auditDetailData);
+        
+        if (details != null && details.length > 0) {
+            List<AuditDetail> auditDetailList = new ArrayList<AuditDetail>(details.length);
+            for(String detail:details) {
+                auditDetailList.add(new AuditDetail(detail));
             }
+            
+            auditTrail.setAuditDetailList(auditDetailList);
         }
-        return auditTrailId;
+        
+        return (Long) db().create(auditTrail);
     }
 }
