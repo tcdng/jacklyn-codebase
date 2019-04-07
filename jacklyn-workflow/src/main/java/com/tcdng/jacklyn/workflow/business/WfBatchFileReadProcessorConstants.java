@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,16 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.unify.core.batch.DBBatchFileReadProcessor;
-
 /**
- * Receptacle batch file read processor.
+ * Workflow batch file read processor constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfDBBatchFileReadProcessor extends DBBatchFileReadProcessor {
+public interface WfBatchFileReadProcessorConstants {
 
+    String WORKFLOW_TEMPLATENAME = "wf.templateName";
+
+    String WORKFLOW_DOCUMENTTYPE = "wf.documentType";
 }
