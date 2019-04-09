@@ -19,25 +19,25 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfigQuery;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * List command for batch upload configurations.
+ * List command for batch read definitions.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("batchfilereadconfiglist")
-public class BatchUploadConfigListCommand extends AbstractZeroParamsFileListCommand {
+@Component("batchfilereaddefinitionlist")
+public class BatchFileReadDefinitionListCommand extends AbstractZeroParamsFileListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        BatchFileReadDefinitionQuery query = new BatchFileReadDefinitionQuery();
         query.status(RecordStatus.ACTIVE).order("description");
-        return this.getFileModule().findBatchFileReadConfigs(query);
+        return this.getFileModule().findBatchFileReadDefinitions(query);
     }
 }

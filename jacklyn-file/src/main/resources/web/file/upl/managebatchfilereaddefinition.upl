@@ -1,0 +1,61 @@
+// UPL template for managing batch upload configuration
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{file.batchfilereaddefinition.manage}
+    searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+    tableColumnList:$c{batchFileDefinitionDesc name description statusDesc}
+    formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.basicdetails} components:$c{frmName frmDescription frmBatchFileDefinitionId frmReadProcessor frmFileReader frmConstraintAction frmStatus}}
+    formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.filereaderparameters} components:$c{frmReaderAttachment}}
+    formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.fileprocessorparameters} components:$c{frmProcessorAttachment}}
+    formBinding:largeData
+    addPrivilege:$s{fil-batchfilereaddefinitionadd} editPrivilege:$s{fil-batchfilereaddefinitionedit}
+    viewPrivilege:$s{fil-batchfilereaddefinitionview} deletePrivilege:$s{fil-batchfilereaddefinitiondelete}
+    addValidations:$c{frmNameVal frmDescVal frmReaderParamsVal frmProcessorParamsVal}
+    saveValidations:$c{frmNameVal frmDescVal frmReaderParamsVal frmProcessorParamsVal}
+
+//Search
+!ui-text:searchName caption:$m{file.batchfilereaddefinition.name} binding:searchName
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{file.batchfilereaddefinition.description} binding:searchDescription 
+    eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{file.batchfilereaddefinition.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:batchFileDefinitionDesc caption:$m{file.batchfilereaddefinition.batchfiledefinition} binding:batchFileDefinitionDesc  columnStyle:$s{width:100px;} sortable:true
+!ui-label:name caption:$m{file.batchfilereaddefinition.name} binding:name  columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{file.batchfilereaddefinition.description} binding:description  columnStyle:$s{width:200px;} sortable:true
+!ui-label:statusDesc caption:$m{file.batchfilereaddefinition.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:80px;} sortable:true
+
+//Form components
+!ui-name:frmName caption:$m{file.batchfilereaddefinition.name} binding:data.name focus:true dollar:true underscore:true maxLen:32 required:true
+!ui-text:frmDescription caption:$m{file.batchfilereaddefinition.description} binding:data.description size:40 maxLen:40 required:true
+!ui-select:frmBatchFileDefinitionId caption:$m{file.batchfilereaddefinition.batchfiledefinition} style:$s{width:200px;} binding:data.batchFileDefinitionId list:batchfiledefinitionlist blankOption:$s{} required:true
+!ui-select:frmFileReader caption:$m{file.batchfilereaddefinition.filereader} style:$s{width:200px;} binding:data.fileReader list:batchfilereaderlist blankOption:$s{} required:true
+    eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}}
+!ui-select:frmReadProcessor caption:$m{file.batchfilereaddefinition.readprocessor} style:$s{width:200px;} binding:data.readProcessor list:batchfilereadprocessorlist blankOption:$s{} required:true
+    eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}}
+!ui-select:frmConstraintAction caption:$m{file.batchfilereaddefinition.constraintaction} style:$s{width:200px;} binding:data.constraintAction
+    list:constraintactionlist blankOption:$s{} required:true
+!ui-select:frmStatus caption:$m{file.batchfilereaddefinition.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
+
+//
+//Form attachments
+!ui-panel:frmReaderAttachment layout:$d{!ui-vertical} components:$c{frmReaderParamsTbl}
+!ui-multidynamic:frmReaderParamsTbl binding:fileReaderParams.inputList
+
+!ui-panel:frmProcessorAttachment layout:$d{!ui-vertical} components:$c{frmProcessorParamsTbl}
+!ui-multidynamic:frmProcessorParamsTbl binding:fileProcessorParams.inputList
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}
+!ui-validation:frmReaderParamsVal components:$c{frmReaderAttachment}
+!ui-validation:frmProcessorParamsVal components:$c{frmProcessorAttachment}
+
+//Actions
+!ui-post:refreshParamsAct path:$n{/refreshParameters}
+    components:$c{frmName frmDescription frmBatchFileDefinitionId frmFileReader frmReadProcessor frmConstraintAction frmStatus frmReaderAttachment frmProcessorAttachment}
+    

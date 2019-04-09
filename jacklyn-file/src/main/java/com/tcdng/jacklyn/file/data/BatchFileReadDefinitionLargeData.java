@@ -16,30 +16,34 @@
 package com.tcdng.jacklyn.file.data;
 
 import com.tcdng.jacklyn.common.entities.BaseLargeData;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfig;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
 import com.tcdng.unify.core.data.Inputs;
 
 /**
- * Batch file read configuration large data.
+ * Batch file read definition large data.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class BatchFileReadConfigLargeData extends BaseLargeData<BatchFileReadConfig> {
+public class BatchFileReadDefinitionLargeData extends BaseLargeData<BatchFileReadDefinition> {
 
     private Inputs fileReaderParams;
 
-    public BatchFileReadConfigLargeData(BatchFileReadConfig batchFileReadConfigData, Inputs fileReaderParams) {
-        super(batchFileReadConfigData);
+    private Inputs fileProcessorParams;
+
+    public BatchFileReadDefinitionLargeData(BatchFileReadDefinition batchFileReadDefinition, Inputs fileReaderParams,
+            Inputs fileProcessorParams) {
+        super(batchFileReadDefinition);
         this.fileReaderParams = fileReaderParams;
+        this.fileProcessorParams = fileProcessorParams;
     }
 
-    public BatchFileReadConfigLargeData(BatchFileReadConfig batchFileReadConfigData) {
-        super(batchFileReadConfigData);
+    public BatchFileReadDefinitionLargeData(BatchFileReadDefinition batchFileReadDefinition) {
+        super(batchFileReadDefinition);
     }
 
-    public BatchFileReadConfigLargeData() {
-        super(new BatchFileReadConfig());
+    public BatchFileReadDefinitionLargeData() {
+        super(new BatchFileReadDefinition());
     }
 
     public Inputs getFileReaderParams() {
@@ -48,6 +52,14 @@ public class BatchFileReadConfigLargeData extends BaseLargeData<BatchFileReadCon
 
     public void setFileReaderParams(Inputs fileReaderParams) {
         this.fileReaderParams = fileReaderParams;
+    }
+
+    public Inputs getFileProcessorParams() {
+        return fileProcessorParams;
+    }
+
+    public void setFileProcessorParams(Inputs fileProcessorParams) {
+        this.fileProcessorParams = fileProcessorParams;
     }
 
 }

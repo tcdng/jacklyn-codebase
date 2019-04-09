@@ -44,7 +44,7 @@ import com.tcdng.unify.core.util.ReflectUtils;
         @Parameter(
                 name = WfBatchFileReadProcessorConstants.WORKFLOW_DOCUMENTTYPE,
                 description = "$m{wfbatchfilereadprocessor.documenttype}",
-                editor = "!ui-name minLen:1 size:48 period:true", mandatory = true) })
+                editor = "!ui-select list:toolingdocumentlist blankOption:$s{}", mandatory = true) })
 public class WfBatchFileReadProcessor extends AbstractBatchFileReadProcessor implements BatchFileReadProcessor {
 
     @Configurable

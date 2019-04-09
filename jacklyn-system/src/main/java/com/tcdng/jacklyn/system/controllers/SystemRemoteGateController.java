@@ -148,7 +148,7 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
             name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
             description = "$m{system.gate.remotecall.getrecordtypes}")
     public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
-        return new GetToolingRecordTypeResult(systemService.findToolingRecordTypes());
+        return new GetToolingRecordTypeResult(systemService.findToolingDocumentTypes());
     }
 
     @GatewayAction(

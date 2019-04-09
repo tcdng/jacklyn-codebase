@@ -18,26 +18,26 @@ package com.tcdng.jacklyn.file.entities;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 
 /**
- * Query class for batch file read configurations.
+ * Query class for batch file read definitions.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class BatchFileReadConfigQuery extends BaseVersionedStatusEntityQuery<BatchFileReadConfig> {
+public class BatchFileReadDefinitionQuery extends BaseVersionedStatusEntityQuery<BatchFileReadDefinition> {
 
-    public BatchFileReadConfigQuery() {
-        super(BatchFileReadConfig.class);
+    public BatchFileReadDefinitionQuery() {
+        super(BatchFileReadDefinition.class);
     }
 
-    public BatchFileReadConfigQuery name(String name) {
-        return (BatchFileReadConfigQuery) equals("name", name);
+    public BatchFileReadDefinitionQuery name(String name) {
+        return (BatchFileReadDefinitionQuery) equals("name", name);
     }
 
-    public BatchFileReadConfigQuery nameLike(String name) {
-        return (BatchFileReadConfigQuery) like("name", name);
+    public BatchFileReadDefinitionQuery nameLike(String name) {
+        return (BatchFileReadDefinitionQuery) like("name", name);
     }
 
-    public BatchFileReadConfigQuery descriptionLike(String description) {
-        return (BatchFileReadConfigQuery) like("description", description);
+    public BatchFileReadDefinitionQuery descriptionLike(String description) {
+        return (BatchFileReadDefinitionQuery) like("description", description);
     }
 }

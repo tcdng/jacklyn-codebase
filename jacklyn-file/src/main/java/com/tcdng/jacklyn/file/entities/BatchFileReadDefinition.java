@@ -31,12 +31,12 @@ import com.tcdng.unify.core.batch.ConstraintAction;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "Batch File Read Configuration", reportable = true,
+@Managed(module = FileModuleNameConstants.FILE_MODULE, title = "Batch File Read Definition", reportable = true,
         auditable = true)
-@Table(name = "JKBATCHFILEREADCONFIG", uniqueConstraints = { @UniqueConstraint({ "name" }) })
-public class BatchFileReadConfig extends BaseVersionedStatusEntity {
+@Table(name = "JKBATCHFILEREADDEF", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+public class BatchFileReadDefinition extends BaseVersionedStatusEntity {
 
-    @ForeignKey(BatchFileDefinition.class)
+    @ForeignKey(type = BatchFileDefinition.class, nullable = true)
     private Long batchFileDefinitionId;
 
     @ForeignKey

@@ -37,8 +37,8 @@ import com.tcdng.jacklyn.file.data.BatchFileReadInputParameters;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfig;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfigQuery;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.FileInbox;
 import com.tcdng.jacklyn.file.entities.FileInboxQuery;
 import com.tcdng.jacklyn.file.entities.FileOutbox;
@@ -221,80 +221,80 @@ public class FileServiceTest extends AbstractJacklynTest {
     }
 
     @Test
-    public void testCreateBatchFileReadConfig() throws Exception {
+    public void testCreateBatchFileReadDefinition() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        Long batchUploadConfigId = getFileService().createBatchFileReadConfig(batchFileReadConfig);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        Long batchUploadConfigId = getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
         assertNotNull(batchUploadConfigId);
     }
 
     @Test
-    public void testFindBatchFileReadConfigs() throws Exception {
+    public void testFindBatchFileReadDefinitions() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        getFileService().createBatchFileReadConfig(batchFileReadConfig);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
 
-        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        BatchFileReadDefinitionQuery query = new BatchFileReadDefinitionQuery();
         query.orderById();
         query.ignoreEmptyCriteria(true);
-        List<BatchFileReadConfig> batchUploadConfigList = getFileService().findBatchFileReadConfigs(query);
+        List<BatchFileReadDefinition> batchUploadConfigList = getFileService().findBatchFileReadDefinitions(query);
         assertNotNull(batchUploadConfigList);
         assertEquals(1, batchUploadConfigList.size());
 
-        BatchFileReadConfig foundBatchFileReadConfig = batchUploadConfigList.get(0);
-        assertEquals(batchFileReadConfig.getBatchFileDefinitionId(),
-                foundBatchFileReadConfig.getBatchFileDefinitionId());
-        assertEquals(batchFileReadConfig.getReadProcessor(), foundBatchFileReadConfig.getReadProcessor());
-        assertEquals(batchFileReadConfig.getConstraintAction(), foundBatchFileReadConfig.getConstraintAction());
-        assertEquals(batchFileReadConfig.getDescription(), foundBatchFileReadConfig.getDescription());
-        assertEquals(batchFileReadConfig.getFileReader(), foundBatchFileReadConfig.getFileReader());
-        assertEquals(batchFileReadConfig.getName(), foundBatchFileReadConfig.getName());
-        assertEquals(batchFileReadConfig.getStatus(), foundBatchFileReadConfig.getStatus());
+        BatchFileReadDefinition foundBatchFileReadDefinition = batchUploadConfigList.get(0);
+        assertEquals(batchFileReadDefinition.getBatchFileDefinitionId(),
+                foundBatchFileReadDefinition.getBatchFileDefinitionId());
+        assertEquals(batchFileReadDefinition.getReadProcessor(), foundBatchFileReadDefinition.getReadProcessor());
+        assertEquals(batchFileReadDefinition.getConstraintAction(), foundBatchFileReadDefinition.getConstraintAction());
+        assertEquals(batchFileReadDefinition.getDescription(), foundBatchFileReadDefinition.getDescription());
+        assertEquals(batchFileReadDefinition.getFileReader(), foundBatchFileReadDefinition.getFileReader());
+        assertEquals(batchFileReadDefinition.getName(), foundBatchFileReadDefinition.getName());
+        assertEquals(batchFileReadDefinition.getStatus(), foundBatchFileReadDefinition.getStatus());
     }
 
     @Test
-    public void testFindBatchFileReadConfig() throws Exception {
+    public void testFindBatchFileReadDefinition() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        Long id = getFileService().createBatchFileReadConfig(batchFileReadConfig);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        Long id = getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
 
-        BatchFileReadConfig fetchedDownloadConfig = getFileService().findBatchFileReadConfig(id);
+        BatchFileReadDefinition fetchedDownloadConfig = getFileService().findBatchFileReadDefinition(id);
         assertNotNull(fetchedDownloadConfig);
-        assertEquals(batchFileReadConfig, fetchedDownloadConfig);
+        assertEquals(batchFileReadDefinition, fetchedDownloadConfig);
     }
 
     @Test
-    public void testUpdateBatchFileReadConfig() throws Exception {
+    public void testUpdateBatchFileReadDefinition() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        Long id = getFileService().createBatchFileReadConfig(batchFileReadConfig);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        Long id = getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
 
-        BatchFileReadConfig fetchedBatchFileReadConfig = getFileService().findBatchFileReadConfig(id);
-        fetchedBatchFileReadConfig.setDescription("Main Sample Config");
-        int updateCount = getFileService().updateBatchFileReadConfig(fetchedBatchFileReadConfig);
+        BatchFileReadDefinition fetchedBatchFileReadDefinition = getFileService().findBatchFileReadDefinition(id);
+        fetchedBatchFileReadDefinition.setDescription("Main Sample Config");
+        int updateCount = getFileService().updateBatchFileReadDefinition(fetchedBatchFileReadDefinition);
         assertEquals(1, updateCount);
 
-        BatchFileReadConfig updatedBatchFileReadConfig = getFileService().findBatchFileReadConfig(id);
-        assertFalse(batchFileReadConfig.equals(updatedBatchFileReadConfig));
-        assertEquals(fetchedBatchFileReadConfig, updatedBatchFileReadConfig);
+        BatchFileReadDefinition updatedBatchFileReadDefinition = getFileService().findBatchFileReadDefinition(id);
+        assertFalse(batchFileReadDefinition.equals(updatedBatchFileReadDefinition));
+        assertEquals(fetchedBatchFileReadDefinition, updatedBatchFileReadDefinition);
     }
 
     @Test
-    public void testDeleteBatchFileReadConfig() throws Exception {
+    public void testDeleteBatchFileReadDefinition() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        Long id = getFileService().createBatchFileReadConfig(batchFileReadConfig);
-        int updateCount = getFileService().deleteBatchFileReadConfig(id);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        Long id = getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
+        int updateCount = getFileService().deleteBatchFileReadDefinition(id);
         assertEquals(1, updateCount);
 
-        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+        BatchFileReadDefinitionQuery query = new BatchFileReadDefinitionQuery();
         query.id(id);
-        List<BatchFileReadConfig> list = getFileService().findBatchFileReadConfigs(query);
+        List<BatchFileReadDefinition> list = getFileService().findBatchFileReadDefinitions(query);
         assertEquals(0, list.size());
     }
 
@@ -302,8 +302,8 @@ public class FileServiceTest extends AbstractJacklynTest {
     public void testGetBatchFileReadInputParameters() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        Long batchConfigId = getFileService().createBatchFileReadConfig(batchFileReadConfig);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        Long batchConfigId = getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
 
         BatchFileReadInputParameters buip = getFileService().getBatchFileReadInputParameters(batchConfigId);
         assertNotNull(buip);
@@ -507,8 +507,8 @@ public class FileServiceTest extends AbstractJacklynTest {
     public void testStartBatchFileReadTask() throws Exception {
         BatchFileDefinition batchFileDefinition = newBatchFileDefinition();
         Long batchFileDefinitionId = getFileService().createBatchFileDefinition(batchFileDefinition);
-        BatchFileReadConfig batchFileReadConfig = getBatchFileReadConfig(batchFileDefinitionId);
-        Long batchConfigId = getFileService().createBatchFileReadConfig(batchFileReadConfig);
+        BatchFileReadDefinition batchFileReadDefinition = getBatchFileReadDefinition(batchFileDefinitionId);
+        Long batchConfigId = getFileService().createBatchFileReadDefinition(batchFileReadDefinition);
 
         BatchFileReadInputParameters buip = getFileService().getBatchFileReadInputParameters(batchConfigId);
         byte[] file = IOUtils.createInMemoryTextFile("011First Bank          FBN 011000001",
@@ -569,7 +569,7 @@ public class FileServiceTest extends AbstractJacklynTest {
     @SuppressWarnings("unchecked")
     @Override
     protected void onTearDown() throws Exception {
-        deleteAll(FileInbox.class, FileOutbox.class, BatchFileReadConfig.class, BatchFileDefinition.class,
+        deleteAll(FileInbox.class, FileOutbox.class, BatchFileReadDefinition.class, BatchFileDefinition.class,
                 FileTransferConfig.class);
     }
 
@@ -628,15 +628,15 @@ public class FileServiceTest extends AbstractJacklynTest {
         return batchFileFieldDefinition;
     }
 
-    private BatchFileReadConfig getBatchFileReadConfig(Long batchFileDefinitionId) {
-        BatchFileReadConfig batchFileReadConfig = new BatchFileReadConfig();
-        batchFileReadConfig.setBatchFileDefinitionId(batchFileDefinitionId);
-        batchFileReadConfig.setReadProcessor("test-bankbatchfilereadprocessor");
-        batchFileReadConfig.setFileReader("fixedlength-batchfilereader");
-        batchFileReadConfig.setConstraintAction(ConstraintAction.FAIL);
-        batchFileReadConfig.setDescription("Bank Batch Config");
-        batchFileReadConfig.setName("BankBatchConfig");
-        return batchFileReadConfig;
+    private BatchFileReadDefinition getBatchFileReadDefinition(Long batchFileDefinitionId) {
+        BatchFileReadDefinition batchFileReadDefinition = new BatchFileReadDefinition();
+        batchFileReadDefinition.setBatchFileDefinitionId(batchFileDefinitionId);
+        batchFileReadDefinition.setReadProcessor("test-bankbatchfilereadprocessor");
+        batchFileReadDefinition.setFileReader("fixedlength-batchfilereader");
+        batchFileReadDefinition.setConstraintAction(ConstraintAction.FAIL);
+        batchFileReadDefinition.setDescription("Bank Batch Config");
+        batchFileReadDefinition.setName("BankBatchConfig");
+        return batchFileReadDefinition;
     }
 
     private FileService getFileService() throws Exception {

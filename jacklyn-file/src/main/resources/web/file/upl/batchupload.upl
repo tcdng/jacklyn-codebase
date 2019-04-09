@@ -19,8 +19,8 @@
 !ui-panel:batchParamPanel components:$c{inputParameters}
 !ui-multidynamic:inputParameters binding:batchUploadParameters.inputParameterList
         
-!ui-select:batchUploadConfigId binding:batchUploadConfigId caption:$m{file.batchupload.batchfilereadconfig} 
-    list:batchfilereadconfiglist blankOption:$s{} focus:true
+!ui-select:batchUploadConfigId binding:batchUploadConfigId caption:$m{file.batchupload.batchfilereaddefinition} 
+    list:batchfilereaddefinitionlist blankOption:$s{} focus:true
     eventHandler:$d{!ui-event event:onchange action:$c{disableUploadAct loadParamsAct}}
 !ui-fileupload:fileSelect caption:$m{file.batchupload.batchfile} binding:batchUploadParameters.fileBlob selectOnly:true
     
