@@ -20,7 +20,8 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Parameters;
 import com.tcdng.unify.core.batch.AbstractDBBatchItemFileReadProcessor;
-import com.tcdng.unify.core.business.BusinessLogicInput;
+import com.tcdng.unify.core.batch.BatchFileReadConfig;
+
 
 /**
  * Test bank batch file read processor.
@@ -37,9 +38,11 @@ public class TestBankBatchFileReadProcessor extends AbstractDBBatchItemFileReadP
     }
 
     @Override
-    protected void preBatchItemCreate(BusinessLogicInput input, TestBank batchItem) throws UnifyException {
+    protected void preBatchItemCreate(BatchFileReadConfig batchFileReadConfig, TestBank batchItem)
+            throws UnifyException {
         // Set bank country as input parameter
-        String country = input.getParameter(String.class, "country");
+        String country = batchFileReadConfig.getParameter(String.class, "country");
         ((TestBank) batchItem).setCountry(country);
     }
+
 }

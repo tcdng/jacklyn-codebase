@@ -36,6 +36,7 @@ import com.tcdng.jacklyn.shared.system.SystemAssetType;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityFieldItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.InputControlConfig;
@@ -102,6 +103,7 @@ import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.constant.FrequencyUnit;
 import com.tcdng.unify.core.data.AggregateType;
+import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
@@ -580,9 +582,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
-    public List<ToolingEntityItem> findToolingRecordTypes() throws UnifyException {
+    public List<ToolingEntityItem> findToolingDocumentTypes() throws UnifyException {
         List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
-        for (Class<? extends Entity> entityClass : getAnnotatedClassesExcluded(Entity.class, Tooling.class,
+        for (Class<? extends Document> entityClass : getAnnotatedClassesExcluded(Document.class, Tooling.class,
                 "com.tcdng.jacklyn.common.entities")) {
             resultList.add(createToolingEntityItem(entityClass));
         }
@@ -603,6 +605,17 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 resultList.add(new ToolingEntityItem(sla.value(), resolveApplicationMessage(ta.description()),
                         enumClass.getName(), "code", ta.guarded(), fieldList));
             }
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<ToolingDocumentListItem> findToolingDocumentListItems() throws UnifyException {
+        List<ToolingDocumentListItem> resultList = new ArrayList<ToolingDocumentListItem>();
+        for (Class<? extends Document> documentClass : getAnnotatedClassesExcluded(Document.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            Tooling ta = documentClass.getAnnotation(Tooling.class);
+            resultList.add(new ToolingDocumentListItem(documentClass.getName(), resolveApplicationMessage(ta.description())));
         }
         return resultList;
     }

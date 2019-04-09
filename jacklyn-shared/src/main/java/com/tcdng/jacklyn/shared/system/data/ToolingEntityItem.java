@@ -39,10 +39,11 @@ public class ToolingEntityItem implements ToolingItem {
     private String idField;
 
     private boolean guarded;
-    
+
     private List<ToolingEntityFieldItem> fieldList;
 
-    public ToolingEntityItem(String name, String description, String type, String idField, boolean guarded, List<ToolingEntityFieldItem> fieldList) {
+    public ToolingEntityItem(String name, String description, String type, String idField,
+            boolean guarded, List<ToolingEntityFieldItem> fieldList) {
         this.name = name;
         this.description = description;
         this.type = type;
@@ -98,7 +99,7 @@ public class ToolingEntityItem implements ToolingItem {
     }
 
     @XmlElement
-   public void setGuarded(boolean guarded) {
+    public void setGuarded(boolean guarded) {
         this.guarded = guarded;
     }
 

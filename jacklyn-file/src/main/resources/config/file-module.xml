@@ -37,9 +37,9 @@
 			<menuitem name="fil-managebatchfiledefinition" caption="$m{file.batchfiledefinition.menu.title}"
 				pageCaption="$m{file.batchfiledefinition.manage}" description="$m{file.menuitem.batchfiledefinition}"
 				path="/file/batchfiledefinition/openPage" remotePath="/file/batchfiledefinition/getRemoteDoc" />
-			<menuitem name="fil-managebatchfilereadconfig" caption="$m{file.batchfilereadconfig.menu.title}"
-				pageCaption="$m{file.batchfilereadconfig.manage}" description="$m{file.menuitem.batchfilereadconfig}"
-				path="/file/batchfilereadconfig/openPage" remotePath="/file/batchfilereadconfig/getRemoteDoc" />
+			<menuitem name="fil-managebatchfilereaddefinition" caption="$m{file.batchfilereaddefinition.menu.title}"
+				pageCaption="$m{file.batchfilereaddefinition.manage}" description="$m{file.menuitem.batchfilereaddefinition}"
+				path="/file/batchfilereaddefinition/openPage" remotePath="/file/batchfilereaddefinition/getRemoteDoc" />
 			<menuitem name="fil-managebatchupload" caption="$m{file.batchupload.menu.title}"
 				pageCaption="$m{file.batchupload.manage}" description="$m{file.menuitem.batchupload}"
 				path="/file/batchupload/openPage" remotePath="/file/batchupload/getRemoteDoc" />
@@ -65,14 +65,14 @@
 				description="$m{file.privilege.batchfiledefinition.view}" />
 			<privilege name="fil-batchfiledefinitiondelete"
 				description="$m{file.privilege.batchfiledefinition.delete}" />
-			<privilege name="fil-batchfilereadconfigadd"
-				description="$m{file.privilege.batchfilereadconfig.add}" />
-			<privilege name="fil-batchfilereadconfigedit"
-				description="$m{file.privilege.batchfilereadconfig.edit}" />
-			<privilege name="fil-batchfilereadconfigview"
-				description="$m{file.privilege.batchfilereadconfig.view}" />
-			<privilege name="fil-batchfilereadconfigdelete"
-				description="$m{file.privilege.batchfilereadconfig.delete}" />
+			<privilege name="fil-batchfilereaddefinitionadd"
+				description="$m{file.privilege.batchfilereaddefinition.add}" />
+			<privilege name="fil-batchfilereaddefinitionedit"
+				description="$m{file.privilege.batchfilereaddefinition.edit}" />
+			<privilege name="fil-batchfilereaddefinitionview"
+				description="$m{file.privilege.batchfilereaddefinition.view}" />
+			<privilege name="fil-batchfilereaddefinitiondelete"
+				description="$m{file.privilege.batchfilereaddefinition.delete}" />
 		</privilege-group>
 	</privileges>
 </module>

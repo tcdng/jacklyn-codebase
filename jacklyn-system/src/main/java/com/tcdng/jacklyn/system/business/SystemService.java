@@ -21,6 +21,7 @@ import java.util.Map;
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.data.DashboardDef;
@@ -848,13 +849,13 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     List<ToolingEntityItem> findToolingBaseTypes() throws UnifyException;
 
     /**
-     * Finds all tooling record types.
+     * Finds all tooling document types.
      * 
-     * @return list of record types
+     * @return list of document types
      * @throws UnifyException
      *             if an error occurs
      */
-    List<ToolingEntityItem> findToolingRecordTypes() throws UnifyException;
+    List<ToolingEntityItem> findToolingDocumentTypes() throws UnifyException;
 
     /**
      * Finds all tooling enumeration types.
@@ -865,6 +866,15 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      */
     List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException;
 
+    /**
+     * Finds all tooling document list items.
+     * 
+     * @return list of document list items
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingDocumentListItem> findToolingDocumentListItems() throws UnifyException;
+    
     /**
      * Finds all tooling transformer types.
      * 

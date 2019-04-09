@@ -19,9 +19,9 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.file.data.BatchFileReadConfigLargeData;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfig;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfigQuery;
+import com.tcdng.jacklyn.file.data.BatchFileReadDefinitionLargeData;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -35,9 +35,9 @@ import com.tcdng.unify.web.annotation.Action;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/file/batchfilereadconfig")
-@UplBinding("web/file/upl/managebatchfilereadconfig.upl")
-public class BatchFileReadConfigController extends AbstractFileCrudController<BatchFileReadConfig> {
+@Component("/file/batchfilereaddefinition")
+@UplBinding("web/file/upl/managebatchfilereaddefinition.upl")
+public class BatchFileReadDefinitionController extends AbstractFileCrudController<BatchFileReadDefinition> {
 
     private String searchName;
 
@@ -45,12 +45,12 @@ public class BatchFileReadConfigController extends AbstractFileCrudController<Ba
 
     private RecordStatus searchStatus;
 
-    private BatchFileReadConfigLargeData largeData;
+    private BatchFileReadDefinitionLargeData largeData;
 
-    private BatchFileReadConfigLargeData clipboardLargeData;
+    private BatchFileReadDefinitionLargeData clipboardLargeData;
 
-    public BatchFileReadConfigController() {
-        super(BatchFileReadConfig.class, "$m{file.batchfilereadconfig.hint}",
+    public BatchFileReadDefinitionController() {
+        super(BatchFileReadDefinition.class, "$m{file.batchfilereaddefinition.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
@@ -92,17 +92,17 @@ public class BatchFileReadConfigController extends AbstractFileCrudController<Ba
         this.searchStatus = searchStatus;
     }
 
-    public BatchFileReadConfigLargeData getLargeData() {
+    public BatchFileReadDefinitionLargeData getLargeData() {
         return largeData;
     }
 
-    public void setLargeData(BatchFileReadConfigLargeData largeData) {
+    public void setLargeData(BatchFileReadDefinitionLargeData largeData) {
         this.largeData = largeData;
     }
 
     @Override
-    protected List<BatchFileReadConfig> find() throws UnifyException {
-        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
+    protected List<BatchFileReadDefinition> find() throws UnifyException {
+        BatchFileReadDefinitionQuery query = new BatchFileReadDefinitionQuery();
         if (QueryUtils.isValidStringCriteria(searchName)) {
             query.nameLike(searchName);
         }
@@ -113,38 +113,38 @@ public class BatchFileReadConfigController extends AbstractFileCrudController<Ba
             query.status(getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
-        return getFileService().findBatchFileReadConfigs(query);
+        return getFileService().findBatchFileReadDefinitions(query);
     }
 
     @Override
-    protected BatchFileReadConfig find(Long id) throws UnifyException {
-        largeData = getFileService().findBatchFileReadConfigDocument(id);
+    protected BatchFileReadDefinition find(Long id) throws UnifyException {
+        largeData = getFileService().findBatchFileReadDefinitionDocument(id);
         return largeData.getData();
     }
 
     @Override
-    protected BatchFileReadConfig prepareCreate() throws UnifyException {
-        largeData = new BatchFileReadConfigLargeData();
+    protected BatchFileReadDefinition prepareCreate() throws UnifyException {
+        largeData = new BatchFileReadDefinitionLargeData();
         return largeData.getData();
     }
 
     @Override
-    protected Object create(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileService().createBatchFileReadConfig(largeData);
+    protected Object create(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
+        return getFileService().createBatchFileReadDefinition(largeData);
     }
 
     @Override
-    protected int update(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileService().updateBatchFileReadConfig(largeData);
+    protected int update(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
+        return getFileService().updateBatchFileReadDefinition(largeData);
     }
 
     @Override
-    protected int delete(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        return getFileService().deleteBatchFileReadConfig(batchUploadConfig.getId());
+    protected int delete(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
+        return getFileService().deleteBatchFileReadDefinition(batchUploadConfig.getId());
     }
 
     @Override
-    protected void onPrepareView(BatchFileReadConfig batchUploadConfig, boolean onPaste) throws UnifyException {
+    protected void onPrepareView(BatchFileReadDefinition batchUploadConfig, boolean onPaste) throws UnifyException {
         if (onPaste) {
             largeData.setFileReaderParams(clipboardLargeData.getFileReaderParams());
         } else {
@@ -153,8 +153,8 @@ public class BatchFileReadConfigController extends AbstractFileCrudController<Ba
     }
 
     @Override
-    protected void onLoseView(BatchFileReadConfig batchUploadConfig) throws UnifyException {
-        largeData = new BatchFileReadConfigLargeData();
+    protected void onLoseView(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
+        largeData = new BatchFileReadDefinitionLargeData();
         clipboardLargeData = null;
     }
 }

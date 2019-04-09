@@ -18,7 +18,6 @@ package com.tcdng.jacklyn.file.business;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +28,13 @@ import com.tcdng.jacklyn.file.constants.BatchFileReadTaskConstants;
 import com.tcdng.jacklyn.file.constants.FileModuleErrorConstants;
 import com.tcdng.jacklyn.file.constants.FileModuleNameConstants;
 import com.tcdng.jacklyn.file.constants.FileTransferTaskConstants;
-import com.tcdng.jacklyn.file.data.BatchFileReadConfigLargeData;
+import com.tcdng.jacklyn.file.data.BatchFileReadDefinitionLargeData;
 import com.tcdng.jacklyn.file.data.BatchFileReadInputParameters;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfig;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfigQuery;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.FileInbox;
 import com.tcdng.jacklyn.file.entities.FileInboxQuery;
 import com.tcdng.jacklyn.file.entities.FileOutbox;
@@ -55,12 +54,9 @@ import com.tcdng.unify.core.annotation.Synchronized;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
-import com.tcdng.unify.core.batch.BatchFileConfig;
+import com.tcdng.unify.core.batch.BatchFileReadConfig;
 import com.tcdng.unify.core.batch.BatchFileReadProcessor;
-import com.tcdng.unify.core.batch.BatchFileReadProcessorInputConstants;
-import com.tcdng.unify.core.batch.BatchFileReadProcessorOutputConstants;
 import com.tcdng.unify.core.batch.BatchFileReader;
-import com.tcdng.unify.core.business.BusinessLogicOutput;
 import com.tcdng.unify.core.data.Inputs;
 import com.tcdng.unify.core.file.FileFilter;
 import com.tcdng.unify.core.file.FileInfo;
@@ -83,7 +79,7 @@ import com.tcdng.unify.core.util.StringUtils;
 @Component(FileModuleNameConstants.FILESERVICE)
 public class FileServiceImpl extends AbstractJacklynBusinessService implements FileService {
 
-    private static final String BATCHFILE_READ_CONFIG = "batchFileReadConfig";
+    private static final String BATCHFILE_READ_DEFINITION = "batchFileReadDef";
 
     @Override
     public List<FileTransferConfig> findFileTransferConfigs(FileTransferConfigQuery query) throws UnifyException {
@@ -115,8 +111,8 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             int length) throws UnifyException {
         FileTransferConfig fileTransferConfig = db().list(FileTransferConfig.class, fileTransferConfigId);
         FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, workingDt);
-        FileTransferServer fileServer = (FileTransferServer) this
-                .getComponent(fileTransferConfig.getFileTransferServer());
+        FileTransferServer fileServer =
+                (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
         if (fileServer.remoteFileExists(fileTransferInfo, filename)) {
             return fileServer.readRemoteBlock(fileTransferInfo, filename, fileIndex, length);
         }
@@ -149,16 +145,17 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         return db().list(FileOutbox.class, id);
     }
 
-    @Taskable(name = FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK,
+    @Taskable(
+            name = FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK,
             description = "Test File DataTransfer Configuration Task",
-            parameters = { @Parameter(name = FileTransferTaskConstants.FILETRANSFERCONFIGDATA,
-                    type = FileTransferConfig.class) },
+            parameters = { @Parameter(
+                    name = FileTransferTaskConstants.FILETRANSFERCONFIGDATA, type = FileTransferConfig.class) },
             limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeTestFileTransferConfigTask(TaskMonitor taskMonitor, FileTransferConfig fileTransferConfig)
             throws UnifyException {
         FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, null);
-        FileTransferServer fileServer = (FileTransferServer) this
-                .getComponent(fileTransferConfig.getFileTransferServer());
+        FileTransferServer fileServer =
+                (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
 
         addTaskMessage(taskMonitor, "file.taskmonitor.testinglocalpath");
         fileServer.getLocalFileList(fileTransferInfo);
@@ -171,9 +168,11 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
     @Synchronized("updatefiletransferlist-lock")
-    @Taskable(name = FileTransferTaskConstants.FILETRANSFERLISTUPDATETASK,
+    @Taskable(
+            name = FileTransferTaskConstants.FILETRANSFERLISTUPDATETASK,
             description = "File DataTransfer List Update Task",
-            parameters = { @Parameter(name = FileTransferTaskConstants.FILETRANSFERCONFIGNAME,
+            parameters = { @Parameter(
+                    name = FileTransferTaskConstants.FILETRANSFERCONFIGNAME,
                     description = "$m{file.filetransfertask.parameter.transferconfig}",
                     editor = "!ui-select list:filetransferconfiglist listKey:name blankOption:$s{}", mandatory = true),
                     @Parameter(name = FileTransferTaskConstants.WORKINGDT, type = Date.class) },
@@ -182,10 +181,10 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             throws UnifyException {
         int updatedCount = 0;
         FileTransferConfig fileTransferConfig = getFileTransferConfig(fileTransferConfigName);
-        FileTransferServer fileTransferServer = (FileTransferServer) this
-                .getComponent(fileTransferConfig.getFileTransferServer());
-        FileTransferPolicy fileTransferPolicy = (FileTransferPolicy) this
-                .getComponent(fileTransferConfig.getFileTransferPolicy());
+        FileTransferServer fileTransferServer =
+                (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
+        FileTransferPolicy fileTransferPolicy =
+                (FileTransferPolicy) this.getComponent(fileTransferConfig.getFileTransferPolicy());
         FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, workingDt);
         if (FileTransferDirection.UPLOAD.equals(fileTransferConfig.getDirection())) {
             List<FileInfo> fileInfoList = fileTransferServer.getLocalFileList(fileTransferInfo);
@@ -196,8 +195,8 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                     filenames.add(fileInfoList.get(i).getFilename());
                 }
 
-                Set<String> oldFilenameSet = db().valueSet(String.class, "filename",
-                        new FileOutboxQuery().setFilenameIn(filenames));
+                Set<String> oldFilenameSet =
+                        db().valueSet(String.class, "filename", new FileOutboxQuery().setFilenameIn(filenames));
 
                 FileOutbox fileOutbox = new FileOutbox();
                 fileOutbox.setFileTransferConfigId(fileTransferConfig.getId());
@@ -228,8 +227,9 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                     filenames.add(fileInfoList.get(i).getFilename());
                 }
 
-                Set<String> oldFilenameSet = new HashSet<String>(
-                        db().valueList(String.class, "filename", new FileInboxQuery().setFilenameIn(filenames)));
+                Set<String> oldFilenameSet =
+                        new HashSet<String>(db().valueList(String.class, "filename",
+                                new FileInboxQuery().setFilenameIn(filenames)));
 
                 FileInbox fileInbox = new FileInbox();
                 fileInbox.setFileTransferConfigId(fileTransferConfig.getId());
@@ -258,14 +258,18 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
     }
 
     @Synchronized("executefiletransfer-lock")
-    @Taskable(name = FileTransferTaskConstants.FILETRANSFERTASK, description = "File DataTransfer Task", parameters = {
-            @Parameter(name = FileTransferTaskConstants.FILETRANSFERCONFIGNAME,
+    @Taskable(
+            name = FileTransferTaskConstants.FILETRANSFERTASK, description = "File DataTransfer Task",
+            parameters = { @Parameter(
+                    name = FileTransferTaskConstants.FILETRANSFERCONFIGNAME,
                     description = "$m{file.filetransfertask.parameter.transferconfig}",
                     editor = "!ui-select list:filetransferconfiglist listKey:name blankOption:$s{}", mandatory = true),
-            @Parameter(name = FileTransferTaskConstants.WORKINGDT, type = Date.class),
-            @Parameter(name = FileTransferTaskConstants.UPDATEFILEBOX,
-                    description = "$m{file.filetransfertask.parameter.updateboxflag}",
-                    editor = "!ui-select list:booleanlist blankOption:$s{}", type = boolean.class, mandatory = true) },
+                    @Parameter(name = FileTransferTaskConstants.WORKINGDT, type = Date.class),
+                    @Parameter(
+                            name = FileTransferTaskConstants.UPDATEFILEBOX,
+                            description = "$m{file.filetransfertask.parameter.updateboxflag}",
+                            editor = "!ui-select list:booleanlist blankOption:$s{}", type = boolean.class,
+                            mandatory = true) },
             schedulable = true)
     public int executeFileTransferTask(TaskMonitor taskMonitor, String fileTransferConfigName, Date workingDt,
             boolean updateFilebox) throws UnifyException {
@@ -276,15 +280,17 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
 
         FileTransferConfig fileTransferConfig = getFileTransferConfig(fileTransferConfigName);
         FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, workingDt);
-        FileTransferServer fileServer = (FileTransferServer) this
-                .getComponent(fileTransferConfig.getFileTransferServer());
-        FileTransferPolicy fileTransferPolicy = (FileTransferPolicy) this
-                .getComponent(fileTransferConfig.getFileTransferPolicy());
-        FileFilter fileFilter = new FileFilter(fileTransferPolicy.getFilePrefixes(workingDt),
-                fileTransferPolicy.getFileSuffixes(workingDt), true);
+        FileTransferServer fileServer =
+                (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
+        FileTransferPolicy fileTransferPolicy =
+                (FileTransferPolicy) this.getComponent(fileTransferConfig.getFileTransferPolicy());
+        FileFilter fileFilter =
+                new FileFilter(fileTransferPolicy.getFilePrefixes(workingDt),
+                        fileTransferPolicy.getFileSuffixes(workingDt), true);
         if (FileTransferDirection.UPLOAD.equals(fileTransferConfig.getDirection())) {
-            List<FileOutbox> fileOutboxList = db().listAll(new FileOutboxQuery().status(FileOutboxStatus.NOT_SENT)
-                    .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).order("filename"));
+            List<FileOutbox> fileOutboxList =
+                    db().listAll(new FileOutboxQuery().status(FileOutboxStatus.NOT_SENT)
+                            .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).order("filename"));
 
             List<FileOutbox> upFileOutboxList = new ArrayList<FileOutbox>();
             for (FileOutbox fileOutbox : fileOutboxList) {
@@ -306,8 +312,9 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             }
             addTaskMessage(taskMonitor, "file.taskmonitor.uploadcompleted");
         } else {
-            List<FileInbox> fileInboxList = db().listAll(new FileInboxQuery().status(FileInboxStatus.NOT_RECEIVED)
-                    .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).order("filename"));
+            List<FileInbox> fileInboxList =
+                    db().listAll(new FileInboxQuery().status(FileInboxStatus.NOT_RECEIVED)
+                            .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).order("filename"));
 
             List<FileInbox> downFileInboxList = new ArrayList<FileInbox>();
             for (FileInbox fileInbox : fileInboxList) {
@@ -329,37 +336,28 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         return transferCount;
     }
 
-    @Taskable(name = BatchFileReadTaskConstants.BATCHFILEREADTASK, description = "Batch Upload Task",
-            parameters = { @Parameter(name = BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS,
+    @Taskable(
+            name = BatchFileReadTaskConstants.BATCHFILEREADTASK, description = "Batch Upload Task",
+            parameters = { @Parameter(
+                    name = BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS,
                     type = BatchFileReadInputParameters.class) },
             limit = TaskExecLimit.ALLOW_MULTIPLE)
     public int executeBatchUploadTask(TaskMonitor taskMonitor,
             BatchFileReadInputParameters batchFileReadInputParameters) throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = getBatchUploadConfig(batchFileReadInputParameters.getName());
+        BatchFileReadConfig batchFileReadConfig =
+                getBatchFileReadConfig(batchFileReadInputParameters.getName(),
+                        DataUtils.getInputHolderNameValueMap(batchFileReadInputParameters.getInputParameterList()));
 
-        Map<String, Object> inputParameters = getBatchFileReadConfigParameters(batchFileReadConfig);
-        inputParameters
-                .putAll(DataUtils.getInputHolderNameValueMap(batchFileReadInputParameters.getInputParameterList()));
-
-        Object[] fileObjects = new Object[1];
-        fileObjects[0] = batchFileReadInputParameters.getFile();
-        if (fileObjects[0] == null) {
-            fileObjects[0] = batchFileReadInputParameters.getFileBlob();
+        Object file = batchFileReadInputParameters.getFile();
+        if (file == null) {
+            file = batchFileReadInputParameters.getFileBlob();
         }
-        inputParameters.put(BatchFileReadProcessorInputConstants.FILEOBJECTS, fileObjects);
 
-        BusinessLogicOutput output = executeBusinessLogic(taskMonitor, batchFileReadConfig.getReadProcessor(),
-                inputParameters);
+        BatchFileReadProcessor processor =
+                (BatchFileReadProcessor) getComponent(batchFileReadConfig.getReadProcessor());
+        processor.process(batchFileReadConfig, file);
 
-        taskMonitor.getCurrentTaskOutput().setResult(BatchFileReadProcessorOutputConstants.BATCHFILEREADRESULT,
-                output.getResult(Object.class, BatchFileReadProcessorOutputConstants.BATCHFILEREADRESULT));
         return 0;
-    }
-
-    @Override
-    public Map<String, Object> getBatchFileReadConfigExecutionParameters(Long batchFileReadConfigId)
-            throws UnifyException {
-        return getBatchFileReadConfigParameters(db().list(BatchFileReadConfig.class, batchFileReadConfigId));
     }
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
@@ -448,95 +446,135 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
     }
 
     @Override
-    public BatchFileConfig getBatchConfig(String batchFileDefinitionName) throws UnifyException {
-        BatchFileDefinition batchFileDefinition = db()
-                .find(new BatchFileDefinitionQuery().name(batchFileDefinitionName));
-        if (batchFileDefinition == null) {
-            throw new UnifyException(FileModuleErrorConstants.BATCHFILEDEFINITION_NAME_UNKNOWN,
-                    batchFileDefinitionName);
-        }
-
-        BatchFileConfig batchFileConfig = new BatchFileConfig(batchFileDefinition.isSkipFirst());
-        for (BatchFileFieldDefinition bffda : batchFileDefinition.getFieldDefList()) {
-            batchFileConfig.addFieldConfig(bffda.getName(), bffda.getMappedField(), bffda.getFormatter(),
-                    bffda.getPadDirection(), bffda.getLength(), bffda.isTrim(), bffda.isPad(),
-                    bffda.isUpdateOnConstraint(), bffda.getPadChar());
-        }
-        return batchFileConfig;
-    }
-
-    @Override
-    public List<BatchFileReadConfig> findBatchFileReadConfigs(BatchFileReadConfigQuery query) throws UnifyException {
+    public List<BatchFileReadDefinition> findBatchFileReadDefinitions(BatchFileReadDefinitionQuery query)
+            throws UnifyException {
         return db().listAll(query);
     }
 
     @Override
-    public BatchFileReadConfig findBatchFileReadConfig(Long id) throws UnifyException {
-        return db().find(BatchFileReadConfig.class, id);
+    public BatchFileReadDefinition findBatchFileReadDefinition(Long id) throws UnifyException {
+        return db().find(BatchFileReadDefinition.class, id);
     }
 
     @Override
-    public BatchFileReadConfigLargeData findBatchFileReadConfigDocument(Long id) throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = db().find(BatchFileReadConfig.class, id);
-        Inputs fileReaderParams = getParameterService()
-                .fetchNormalizedInputs(batchFileReadConfig.getFileReader(), BATCHFILE_READ_CONFIG, id);
-        return new BatchFileReadConfigLargeData(batchFileReadConfig, fileReaderParams);
+    public BatchFileReadDefinitionLargeData findBatchFileReadDefinitionDocument(Long id) throws UnifyException {
+        BatchFileReadDefinition batchFileReadConfig = db().find(BatchFileReadDefinition.class, id);
+        Inputs fileReaderParams =
+                getParameterService().fetchNormalizedInputs(batchFileReadConfig.getFileReader(),
+                        BATCHFILE_READ_DEFINITION, id);
+        Inputs fileProcessorParams =
+                getParameterService().fetchNormalizedInputs(batchFileReadConfig.getReadProcessor(),
+                        BATCHFILE_READ_DEFINITION, id);
+        return new BatchFileReadDefinitionLargeData(batchFileReadConfig, fileReaderParams, fileProcessorParams);
     }
 
     @Override
-    public Long createBatchFileReadConfig(BatchFileReadConfig record) throws UnifyException {
+    public Long createBatchFileReadDefinition(BatchFileReadDefinition record) throws UnifyException {
         return (Long) db().create(record);
     }
 
     @Override
-    public Long createBatchFileReadConfig(BatchFileReadConfigLargeData document) throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = document.getData();
-        Long batchFileReadConfigId = (Long) db().create(batchFileReadConfig);
-        getParameterService().updateParameterValues(batchFileReadConfig.getFileReader(), BATCHFILE_READ_CONFIG,
+    public Long createBatchFileReadDefinition(BatchFileReadDefinitionLargeData document) throws UnifyException {
+        BatchFileReadDefinition batchFileReadDefinition = document.getData();
+        Long batchFileReadConfigId = (Long) db().create(batchFileReadDefinition);
+        getParameterService().updateParameterValues(batchFileReadDefinition.getFileReader(), BATCHFILE_READ_DEFINITION,
                 batchFileReadConfigId, document.getFileReaderParams());
+        getParameterService().updateParameterValues(batchFileReadDefinition.getReadProcessor(), BATCHFILE_READ_DEFINITION,
+                batchFileReadConfigId, document.getFileProcessorParams());
         return batchFileReadConfigId;
     }
 
     @Override
-    public int updateBatchFileReadConfig(BatchFileReadConfig record) throws UnifyException {
+    public int updateBatchFileReadDefinition(BatchFileReadDefinition record) throws UnifyException {
         return db().updateByIdVersion(record);
     }
 
     @Override
-    public int updateBatchFileReadConfig(BatchFileReadConfigLargeData document) throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = document.getData();
-        int updateCount = db().updateByIdVersion(batchFileReadConfig);
-        getParameterService().updateParameterValues(batchFileReadConfig.getFileReader(), BATCHFILE_READ_CONFIG,
-                batchFileReadConfig.getId(), document.getFileReaderParams());
+    public int updateBatchFileReadDefinition(BatchFileReadDefinitionLargeData document) throws UnifyException {
+        BatchFileReadDefinition batchFileReadDefinition = document.getData();
+        int updateCount = db().updateByIdVersion(batchFileReadDefinition);
+        getParameterService().updateParameterValues(batchFileReadDefinition.getFileReader(), BATCHFILE_READ_DEFINITION,
+                batchFileReadDefinition.getId(), document.getFileReaderParams());
+        getParameterService().updateParameterValues(batchFileReadDefinition.getReadProcessor(), BATCHFILE_READ_DEFINITION,
+                batchFileReadDefinition.getId(), document.getFileProcessorParams());
         return updateCount;
     }
 
     @Override
-    public int deleteBatchFileReadConfig(Long id) throws UnifyException {
-        String fileReader = db().value(String.class, "fileReader", new BatchFileReadConfigQuery().id(id));
-        getParameterService().deleteParameterValues(fileReader, BATCHFILE_READ_CONFIG, id);
-        return db().delete(BatchFileReadConfig.class, id);
+    public int deleteBatchFileReadDefinition(Long id) throws UnifyException {
+        String fileReader = db().value(String.class, "fileReader", new BatchFileReadDefinitionQuery().id(id));
+        getParameterService().deleteParameterValues(fileReader, BATCHFILE_READ_DEFINITION, id);
+        String readProcessor = db().value(String.class, "readProcessor", new BatchFileReadDefinitionQuery().id(id));
+        getParameterService().deleteParameterValues(readProcessor, BATCHFILE_READ_DEFINITION, id);
+        return db().delete(BatchFileReadDefinition.class, id);
     }
 
     @Override
-    public BatchFileReadConfigLargeData loadBatchFileReadConfigDocumentValues(BatchFileReadConfigLargeData document)
-            throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = document.getData();
-        Inputs fileReaderParams = getParameterService().fetchNormalizedInputs(
-                batchFileReadConfig.getFileReader(), BATCHFILE_READ_CONFIG, batchFileReadConfig.getId());
-        return new BatchFileReadConfigLargeData(batchFileReadConfig, fileReaderParams);
+    public BatchFileReadDefinitionLargeData loadBatchFileReadConfigDocumentValues(
+            BatchFileReadDefinitionLargeData document) throws UnifyException {
+        BatchFileReadDefinition batchFileReadDefinition = document.getData();
+        Inputs fileReaderParams =
+                getParameterService().fetchNormalizedInputs(batchFileReadDefinition.getFileReader(),
+                        BATCHFILE_READ_DEFINITION, batchFileReadDefinition.getId());
+        Inputs fileProcessorParams =
+                getParameterService().fetchNormalizedInputs(batchFileReadDefinition.getReadProcessor(),
+                        BATCHFILE_READ_DEFINITION, batchFileReadDefinition.getId());
+        return new BatchFileReadDefinitionLargeData(batchFileReadDefinition, fileReaderParams, fileProcessorParams);
     }
 
     @Override
-    public BatchFileReadInputParameters getBatchFileReadInputParameters(Long batchUploadConfigId)
+    public BatchFileReadInputParameters getBatchFileReadInputParameters(Long batchFileReadDefinitionId)
             throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = db().find(BatchFileReadConfig.class, batchUploadConfigId);
+        BatchFileReadDefinition batchFileReadConfig =
+                db().find(BatchFileReadDefinition.class, batchFileReadDefinitionId);
         BatchFileReadInputParameters batchFileReadInputParameters = new BatchFileReadInputParameters();
         batchFileReadInputParameters.setName(batchFileReadConfig.getName());
         batchFileReadInputParameters.setDescription(batchFileReadConfig.getDescription());
-        batchFileReadInputParameters.addInputParameterList(
-                getParameterService().fetchInputList(batchFileReadConfig.getReadProcessor()));
+        batchFileReadInputParameters
+                .addInputParameterList(getParameterService().fetchInputList(batchFileReadConfig.getReadProcessor()));
         return batchFileReadInputParameters;
+    }
+
+    @Override
+    public BatchFileReadConfig getBatchFileReadConfig(String batchFileReadDefinitionName,
+            Map<String, Object> parameters) throws UnifyException {
+        BatchFileReadDefinition batchFileReadDefinition =
+                db().list(new BatchFileReadDefinitionQuery().name(batchFileReadDefinitionName));
+        if (batchFileReadDefinition == null) {
+            throw new UnifyException(FileModuleErrorConstants.BATCHUPLOADCONFIG_NAME_UNKNOWN,
+                    batchFileReadDefinitionName);
+        }
+
+        BatchFileReadConfig.Builder bb =
+                BatchFileReadConfig.newBuilder().reader(batchFileReadDefinition.getFileReader())
+                        .processor(batchFileReadDefinition.getReadProcessor())
+                        .onConstraint(batchFileReadDefinition.getConstraintAction());
+        if (batchFileReadDefinition.getBatchFileDefinitionId() != null) {
+            BatchFileDefinition batchFileDefinition =
+                    db().find(BatchFileDefinition.class, batchFileReadDefinition.getBatchFileDefinitionId());
+            for (BatchFileFieldDefinition bffda : batchFileDefinition.getFieldDefList()) {
+                bb.addFieldConfig(bffda.getName(), bffda.getMappedField(), bffda.getFormatter(),
+                        bffda.getPadDirection(), bffda.getLength(), bffda.isTrim(), bffda.isPad(),
+                        bffda.isUpdateOnConstraint(), bffda.getPadChar());
+            }
+
+            bb.skipFirstRecord(batchFileDefinition.isSkipFirst());
+        }
+
+        // Reader parameters
+        bb.addParams(getParameterService().findParameterTypeValues(batchFileReadDefinition.getFileReader(),
+                BATCHFILE_READ_DEFINITION, batchFileReadDefinition.getId()));
+
+        // Processor parameters
+        bb.addParams(getParameterService().findParameterTypeValues(batchFileReadDefinition.getReadProcessor(),
+                BATCHFILE_READ_DEFINITION, batchFileReadDefinition.getId()));
+
+        // Input parameters
+        if (parameters != null) {
+            bb.addParams(parameters);
+        }
+
+        return bb.build();
     }
 
     @Override
@@ -558,12 +596,14 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
 
     private FileTransferInfo getFileTransferInfo(FileTransferConfig fileTransferConfig, Date workingDt)
             throws UnifyException {
-        FileTransferPolicy fileTransferPolicy = (FileTransferPolicy) this
-                .getComponent(fileTransferConfig.getFileTransferPolicy());
-        String serverPath = fileTransferPolicy.getExtendedRemotePath(fileTransferConfig.getRemotePath(),
-                fileTransferConfig.getRemoteDateFormat(), workingDt);
-        String localPath = fileTransferPolicy.getExtendedLocalPath(fileTransferConfig.getLocalPath(),
-                fileTransferConfig.getLocalDateFormat(), workingDt);
+        FileTransferPolicy fileTransferPolicy =
+                (FileTransferPolicy) this.getComponent(fileTransferConfig.getFileTransferPolicy());
+        String serverPath =
+                fileTransferPolicy.getExtendedRemotePath(fileTransferConfig.getRemotePath(),
+                        fileTransferConfig.getRemoteDateFormat(), workingDt);
+        String localPath =
+                fileTransferPolicy.getExtendedLocalPath(fileTransferConfig.getLocalPath(),
+                        fileTransferConfig.getLocalDateFormat(), workingDt);
         int remotePort = DataUtils.convert(int.class, fileTransferConfig.getRemotePort(), null);
         return FileTransferInfo.newBuilder().remoteHost(fileTransferConfig.getRemoteHost()).remotePort(remotePort)
                 .useAuthenticationId(fileTransferConfig.getAuthenticationId())
@@ -581,25 +621,5 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 i++;
             }
         }
-    }
-
-    private BatchFileReadConfig getBatchUploadConfig(String name) throws UnifyException {
-        BatchFileReadConfig batchFileReadConfig = db().list(new BatchFileReadConfigQuery().name(name));
-        if (batchFileReadConfig == null) {
-            throw new UnifyException(FileModuleErrorConstants.BATCHUPLOADCONFIG_NAME_UNKNOWN, name);
-        }
-        return batchFileReadConfig;
-    }
-
-    private Map<String, Object> getBatchFileReadConfigParameters(BatchFileReadConfig batchFileReadConfig)
-            throws UnifyException {
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        BatchFileConfig batchFileConfig = getBatchConfig(batchFileReadConfig.getBatchFileDefinitionName());
-        batchFileConfig.setReader(batchFileReadConfig.getFileReader());
-        batchFileConfig.setOnConstraint(batchFileReadConfig.getConstraintAction());
-        parameters.put(BatchFileReadProcessorInputConstants.BATCHFILECONFIG, batchFileConfig);
-        parameters.putAll(getParameterService().findParameterTypeValues(batchFileReadConfig.getFileReader(),
-                BATCHFILE_READ_CONFIG, batchFileReadConfig.getId()));
-        return parameters;
     }
 }

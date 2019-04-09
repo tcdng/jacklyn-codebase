@@ -13,31 +13,34 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.file.lists;
+package com.tcdng.jacklyn.system.lists;
 
 import java.util.List;
 import java.util.Locale;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfigQuery;
+import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * List command for batch upload configurations.
+ * Tooling documents list command.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("batchfilereadconfiglist")
-public class BatchUploadConfigListCommand extends AbstractZeroParamsFileListCommand {
+@Component("toolingdocumentlist")
+public class ToolingDocumentListCommand extends AbstractZeroParamsSystemListCommand {
 
+    private List<ToolingDocumentListItem> list;
+    
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        BatchFileReadConfigQuery query = new BatchFileReadConfigQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
-        return this.getFileModule().findBatchFileReadConfigs(query);
+        if (list == null) {
+            list = getSystemService().findToolingDocumentListItems();
+        }
+        
+        return list;
     }
 }
