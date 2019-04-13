@@ -23,6 +23,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
  * Tooling documents list command.
@@ -39,6 +40,7 @@ public class ToolingDocumentListCommand extends AbstractZeroParamsSystemListComm
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         if (list == null) {
             list = getSystemService().findToolingDocumentListItems();
+            DataUtils.sort(list, ToolingDocumentListItem.class, "description", true);
         }
         
         return list;

@@ -62,7 +62,7 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
         @ResultMapping(
                 name = "refreshtable",
                 response = { "!refreshpanelresponse panels:$l{searchPanel tablePanel actionPanel}" }),
-        @ResultMapping(name = "refreshform", response = { "!refreshpanelresponse panels:$l{crudPanel}" }),
+        @ResultMapping(name = "refreshform", response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{crudPanel}" }),
         @ResultMapping(
                 name = "switchsearch",
                 response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{manageBodyPanel.searchBodyPanel}",

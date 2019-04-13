@@ -24,6 +24,7 @@ import com.tcdng.jacklyn.file.data.BatchFileReadDefinitionLargeData;
 import com.tcdng.jacklyn.file.data.BatchFileReadInputParameters;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinitionQuery;
+import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.FileInbox;
@@ -375,4 +376,18 @@ public interface FileService extends JacklynBusinessService {
      */
     BatchFileReadConfig getBatchFileReadConfig(String batchFileReadDefinitionName, Map<String, Object> parameters)
             throws UnifyException;
+
+    /**
+     * Merges bean fields to file field definition mappings.
+     * 
+     * @param beanType
+     *            the bean type
+     * @param baseFieldDefList
+     *            the base field definition list
+     * @return new list of batch file field definitions
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<BatchFileFieldDefinition> mergeBatchFileFieldMapping(String beanType,
+            List<BatchFileFieldDefinition> baseFieldDefList) throws UnifyException;
 }

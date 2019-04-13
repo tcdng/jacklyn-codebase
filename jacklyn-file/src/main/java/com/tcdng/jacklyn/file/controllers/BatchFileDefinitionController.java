@@ -29,6 +29,9 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.util.QueryUtils;
+import com.tcdng.unify.web.annotation.Action;
+import com.tcdng.unify.web.annotation.ResultMapping;
+import com.tcdng.unify.web.annotation.ResultMappings;
 
 /**
  * Controller for managing batch file definition records.
@@ -38,7 +41,10 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/file/batchfiledefinition")
 @UplBinding("web/file/upl/managebatchfiledefinition.upl")
-@SessionLoading(crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", property = "record.fieldDefList") })
+@SessionLoading(
+        crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", property = "record.fieldDefList") })
+@ResultMappings({
+        @ResultMapping(name = "selectbeantomap", response = { "!showpopupresponse popup:$s{selectBeanToMapPopup}" }) })
 public class BatchFileDefinitionController extends AbstractFileCrudController<BatchFileDefinition> {
 
     private String searchName;
@@ -47,10 +53,26 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
 
     private RecordStatus searchStatus;
 
+    private String beanType;
+
     public BatchFileDefinitionController() {
         super(BatchFileDefinition.class, "$m{file.batchfiledefinition.hint}",
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
+    }
+
+    @Action
+    public String prepareMapBean() throws UnifyException {
+        return "selectbeantomap";
+    }
+
+    @Action
+    public String performMapBean() throws UnifyException {
+        BatchFileDefinition batchFileDefinition = getRecord();
+        List<BatchFileFieldDefinition> fieldDefList =
+                getFileService().mergeBatchFileFieldMapping(beanType, batchFileDefinition.getFieldDefList());
+        batchFileDefinition.setFieldDefList(fieldDefList);
+        return refreshForm();
     }
 
     public String getSearchName() {
@@ -69,6 +91,14 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
         this.searchDescription = searchDescription;
     }
 
+    public String getBeanType() {
+        return beanType;
+    }
+
+    public void setBeanType(String beanType) {
+        this.beanType = beanType;
+    }
+
     public RecordStatus getSearchStatus() {
         return searchStatus;
     }
@@ -83,12 +113,15 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
         if (QueryUtils.isValidStringCriteria(searchName)) {
             query.nameLike(searchName);
         }
+
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
             query.descriptionLike(searchDescription);
         }
+
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+
         query.ignoreEmptyCriteria(true);
         return getFileService().findBatchFileDefinitions(query);
     }
@@ -118,5 +151,11 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
     @Override
     protected int delete(BatchFileDefinition record) throws UnifyException {
         return getFileService().deleteBatchFileDefinition(record.getId());
+    }
+
+    @Override
+    protected void onPrepareForm(BatchFileDefinition record, int mode) throws UnifyException {
+        boolean isMapBean = mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
+        setVisible("mapBeanBtn", isMapBean);
     }
 }

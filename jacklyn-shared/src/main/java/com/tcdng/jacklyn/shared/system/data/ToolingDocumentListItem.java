@@ -45,4 +45,12 @@ public class ToolingDocumentListItem implements Listable {
         return type;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
 }
