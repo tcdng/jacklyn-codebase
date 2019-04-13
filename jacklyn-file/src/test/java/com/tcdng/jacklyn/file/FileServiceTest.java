@@ -622,7 +622,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
     private BatchFileFieldDefinition newBatchFileFieldDefinition(String name, int length) {
         BatchFileFieldDefinition batchFileFieldDefinition = new BatchFileFieldDefinition();
-        batchFileFieldDefinition.setName(name);
+        batchFileFieldDefinition.setBeanFieldName(name);
         batchFileFieldDefinition.setLength(length);
         batchFileFieldDefinition.setTrim(true);
         return batchFileFieldDefinition;

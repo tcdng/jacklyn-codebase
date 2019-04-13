@@ -3,18 +3,18 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-batchfilefielddefcrudpanel
-    formSection:$d{!ui-section components:$c{frmName frmMappedField frmFormatter frmLength frmUpdateOnConstraint frmPadChar frmPadDirection frmPad frmTrim}}
-    tableColumnList:$c{name mappedField length formatter}
+    formSection:$d{!ui-section components:$c{frmBeanFieldName frmFileFieldName frmFormatter frmLength frmUpdateOnConstraint frmPadChar frmPadDirection frmPad frmTrim}}
+    tableColumnList:$c{beanFieldName fileFieldName length formatter}
 
 //Table columns
-!ui-label:name caption:$m{file.batchfilefielddefinition.name} binding:name  columnStyle:$s{width:120px;} sortable:true
-!ui-label:mappedField caption:$m{file.batchfilefielddefinition.mappedfield} binding:mappedField  columnStyle:$s{width:120px;} sortable:true
+!ui-label:fileFieldName caption:$m{file.batchfilefielddefinition.name} binding:fileFieldName  columnStyle:$s{width:120px;} sortable:true
+!ui-label:beanFieldName caption:$m{file.batchfilefielddefinition.mappedfield} binding:beanFieldName  columnStyle:$s{width:120px;} sortable:true
 !ui-label:length caption:$m{file.batchfilefielddefinition.length} binding:length style:$s{text-align:right;}  columnStyle:$s{width:80px;} sortable:true
 !ui-label:formatter caption:$m{file.batchfilefielddefinition.formatter} binding:formatter columnStyle:$s{width:140px;} sortable:true
 
 //Form components
-!ui-name:frmName caption:$m{file.batchfilefielddefinition.name} binding:name focus:true dollar:true underscore:true maxLen:32 required:true
-!ui-name:frmMappedField caption:$m{file.batchfilefielddefinition.mappedfield} binding:mappedField dollar:true underscore:true maxLen:32
+!ui-name:frmFileFieldName caption:$m{file.batchfilefielddefinition.name} binding:fileFieldName dollar:true underscore:true maxLen:32
+!ui-name:frmBeanFieldName caption:$m{file.batchfilefielddefinition.mappedfield} binding:beanFieldName dollar:true underscore:true maxLen:32 focus:true required:true
 !ui-select:frmFormatter caption:$m{file.batchfilefielddefinition.formatter} binding:formatter style:$s{width:200px;} list:formatterlist blankOption:$s{}
 !ui-integer:frmLength caption:$m{file.batchfilefielddefinition.length} binding:length size:4 maxLen:4
 !ui-text:frmPadChar caption:$m{file.batchfilefielddefinition.padchar} binding:padChar size:2  maxLen:1

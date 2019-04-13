@@ -6,7 +6,7 @@
     searchByList:$c{searchName searchDescription searchStatus}
     searchClearList:$c{searchName searchDescription searchStatus}
     tableColumnList:$c{batchFileDefinitionDesc name description statusDesc}
-    formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.basicdetails} components:$c{frmName frmDescription frmBatchFileDefinitionId frmReadProcessor frmFileReader frmConstraintAction frmStatus}}
+    formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.basicdetails} components:$c{frmName frmDescription frmBatchFileDefinitionId frmFileReader frmReadProcessor frmConstraintAction frmStatus}}
     formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.filereaderparameters} components:$c{frmReaderAttachment}}
     formSection:$d{!ui-section caption:$m{file.batchfilereaddefinition.section.fileprocessorparameters} components:$c{frmProcessorAttachment}}
     formBinding:largeData
@@ -32,7 +32,7 @@
 //Form components
 !ui-name:frmName caption:$m{file.batchfilereaddefinition.name} binding:data.name focus:true dollar:true underscore:true maxLen:32 required:true
 !ui-text:frmDescription caption:$m{file.batchfilereaddefinition.description} binding:data.description size:40 maxLen:40 required:true
-!ui-select:frmBatchFileDefinitionId caption:$m{file.batchfilereaddefinition.batchfiledefinition} style:$s{width:200px;} binding:data.batchFileDefinitionId list:batchfiledefinitionlist blankOption:$s{} required:true
+!ui-select:frmBatchFileDefinitionId caption:$m{file.batchfilereaddefinition.batchfiledefinition} style:$s{width:200px;} binding:data.batchFileDefinitionId list:batchfiledefinitionlist blankOption:$s{}
 !ui-select:frmFileReader caption:$m{file.batchfilereaddefinition.filereader} style:$s{width:200px;} binding:data.fileReader list:batchfilereaderlist blankOption:$s{} required:true
     eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}}
 !ui-select:frmReadProcessor caption:$m{file.batchfilereaddefinition.readprocessor} style:$s{width:200px;} binding:data.readProcessor list:batchfilereadprocessorlist blankOption:$s{} required:true

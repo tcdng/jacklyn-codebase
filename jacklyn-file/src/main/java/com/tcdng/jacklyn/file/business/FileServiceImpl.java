@@ -67,6 +67,7 @@ import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
+import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 
 /**
@@ -553,7 +554,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             BatchFileDefinition batchFileDefinition =
                     db().find(BatchFileDefinition.class, batchFileReadDefinition.getBatchFileDefinitionId());
             for (BatchFileFieldDefinition bffda : batchFileDefinition.getFieldDefList()) {
-                bb.addFieldConfig(bffda.getName(), bffda.getMappedField(), bffda.getFormatter(),
+                bb.addFieldConfig(bffda.getBeanFieldName(), bffda.getFileFieldName(), bffda.getFormatter(),
                         bffda.getPadDirection(), bffda.getLength(), bffda.isTrim(), bffda.isPad(),
                         bffda.isUpdateOnConstraint(), bffda.getPadChar());
             }
@@ -575,6 +576,30 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         }
 
         return bb.build();
+    }
+
+    @Override
+    public List<BatchFileFieldDefinition> mergeBatchFileFieldMapping(String beanType,
+            List<BatchFileFieldDefinition> baseFieldDefList) throws UnifyException {
+        List<BatchFileFieldDefinition> result = new ArrayList<BatchFileFieldDefinition>();
+        Set<String> beanFieldNames =  new HashSet<String>();
+        if (!DataUtils.isBlank(baseFieldDefList)) {
+            for(BatchFileFieldDefinition baseFieldDefinition: baseFieldDefList) {
+                beanFieldNames.add(baseFieldDefinition.getBeanFieldName());
+                result.add(baseFieldDefinition);
+            }
+        }
+
+        List<String> beanFieldNameList = ReflectUtils.getBeanCompliantFieldNames(beanType);
+        for (String newBeanFieldName: beanFieldNameList) {
+            if (!"id".equals(newBeanFieldName) && !beanFieldNames.contains(newBeanFieldName)) {
+                BatchFileFieldDefinition batchFileFieldDefinition = new BatchFileFieldDefinition();
+                batchFileFieldDefinition.setBeanFieldName(newBeanFieldName);
+                batchFileFieldDefinition.setFileFieldName(newBeanFieldName);
+                result.add(batchFileFieldDefinition);
+            }
+        }
+        return result;
     }
 
     @Override
