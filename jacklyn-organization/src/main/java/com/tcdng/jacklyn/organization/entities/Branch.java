@@ -44,7 +44,10 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     @Column(name="HEAD_OFFICE_FG")
     private Boolean headOffice;
-    
+
+    @Column(nullable = true)
+    private String languageTag;
+   
     @Override
     public Object getBatchId() {
         return null;
@@ -78,5 +81,13 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setHeadOffice(Boolean headOffice) {
         this.headOffice = headOffice;
+    }
+
+    public String getLanguageTag() {
+        return languageTag;
+    }
+
+    public void setLanguageTag(String languageTag) {
+        this.languageTag = languageTag;
     }
 }

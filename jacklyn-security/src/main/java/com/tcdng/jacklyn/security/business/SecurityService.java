@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.security.business;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.business.RemoteCallSystemAssetProvider;
@@ -133,11 +134,13 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      *            the login ID
      * @param password
      *            the password
+     * @param loginLocale
+     *            optional login locale
      * @return the user record
      * @throws UnifyException
      *             if login ID or password is invalid
      */
-    User login(String loginId, String password) throws UnifyException;
+    User login(String loginId, String password, Locale loginLocale) throws UnifyException;
 
     /**
      * Logs out current session user.

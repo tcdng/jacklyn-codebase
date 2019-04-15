@@ -46,6 +46,8 @@ import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.entities.SupportedLocale;
+import com.tcdng.jacklyn.system.entities.SupportedLocaleQuery;
 import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.jacklyn.system.entities.SystemParameter;
@@ -654,6 +656,61 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     int deleteTheme(Long id) throws UnifyException;
+
+    /**
+     * Creates a new supported locale.
+     * 
+     * @param supportedLocale
+     *            the supported locale data
+     * @return the created supported locale ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createSupportedLocale(SupportedLocale supportedLocale) throws UnifyException;
+
+    /**
+     * Finds supported locale by ID.
+     * 
+     * @param supportedLocaleId
+     *            the supported locale ID
+     * @return the supported locale data
+     * @throws UnifyException
+     *             if supported locale with ID is not found
+     */
+    SupportedLocale findSupportedLocale(Long supportedLocaleId) throws UnifyException;
+
+    /**
+     * Finds supported locales by query.
+     * 
+     * @param query
+     *            the supported locale query
+     * @return the list of supported locales found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<SupportedLocale> findSupportedLocales(SupportedLocaleQuery query) throws UnifyException;
+
+    /**
+     * Updates a supported locale.
+     * 
+     * @param supportedLocale
+     *            the supported locale
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateSupportedLocale(SupportedLocale supportedLocale) throws UnifyException;
+
+    /**
+     * Deletes a supported locale.
+     * 
+     * @param id
+     *            the supported locale ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteSupportedLocale(Long id) throws UnifyException;
 
     /**
      * Creates a new shortcut tile.

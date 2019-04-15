@@ -91,6 +91,9 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ListOnly(key = "branchId", property = "description")
     private String branchDesc;
 
+    @ListOnly(key = "branchId", property = "languageTag")
+    private String branchLanguageTag;
+
     @ListOnly(key = "themeId", property = "description")
     private String themeDesc;
 
@@ -222,6 +225,14 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setBranchDesc(String branchDesc) {
         this.branchDesc = branchDesc;
+    }
+
+    public String getBranchLanguageTag() {
+        return branchLanguageTag;
+    }
+
+    public void setBranchLanguageTag(String branchLanguageTag) {
+        this.branchLanguageTag = branchLanguageTag;
     }
 
     public String getThemeDesc() {
