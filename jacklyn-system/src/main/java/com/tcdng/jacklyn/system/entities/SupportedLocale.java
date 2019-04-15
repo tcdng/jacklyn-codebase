@@ -23,33 +23,23 @@ import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
- * Entity that represents theme information.
+ * Entity that represents supported locale information.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Theme", reportable = true, auditable = true)
-@Table(name = "JKTHEME", uniqueConstraints = { @UniqueConstraint({ "name" }) })
-public class Theme extends BaseVersionedStatusEntity {
+@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Supported Locale", reportable = true, auditable = true)
+@Table(name = "JKSUPPORTEDLOCALE", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+public class SupportedLocale extends BaseVersionedStatusEntity {
 
-    @Column(name = "THEME_NM", length = 32)
+    @Column(name = "SUPPORTEDLOCALE_NM", length = 32)
     private String name;
 
-    @Column(name = "THEME_DESC", length = 64)
+    @Column(name = "SUPPORTEDLOCALE_DESC", length = 64)
     private String description;
 
-    @Column(length = 64)
-    private String resourcePath;
-
-    public Theme(String name, String description, String resourcePath) {
-        this.name = name;
-        this.description = description;
-        this.resourcePath = resourcePath;
-    }
-
-    public Theme() {
-
-    }
+    @Column
+    private String languageTag;
 
     public String getName() {
         return name;
@@ -68,11 +58,11 @@ public class Theme extends BaseVersionedStatusEntity {
         this.description = description;
     }
 
-    public String getResourcePath() {
-        return resourcePath;
+    public String getLanguageTag() {
+        return languageTag;
     }
 
-    public void setResourcePath(String resourcePath) {
-        this.resourcePath = resourcePath;
+    public void setLanguageTag(String languageTag) {
+        this.languageTag = languageTag;
     }
 }

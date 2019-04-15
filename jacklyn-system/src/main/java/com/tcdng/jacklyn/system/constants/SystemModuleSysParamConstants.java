@@ -34,4 +34,6 @@ public interface SystemModuleSysParamConstants {
     String SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION = "SYS-0005";
 
     String SYSPARAM_APPLICATION_BANNER = "SYS-0006";
+
+    String SYSPARAM_USE_LOGIN_LOCALE = "SYS-0007";
 }

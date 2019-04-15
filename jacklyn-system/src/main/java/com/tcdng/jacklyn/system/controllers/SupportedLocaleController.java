@@ -18,29 +18,29 @@ package com.tcdng.jacklyn.system.controllers;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.system.entities.Theme;
-import com.tcdng.jacklyn.system.entities.ThemeQuery;
+import com.tcdng.jacklyn.system.entities.SupportedLocale;
+import com.tcdng.jacklyn.system.entities.SupportedLocaleQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
- * Controller for managing themes.
+ * Controller for managing supported locale.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/system/theme")
-@UplBinding("web/system/upl/managetheme.upl")
-public class ThemeController extends AbstractSystemCrudController<Theme> {
+@Component("/system/supportedlocale")
+@UplBinding("web/system/upl/managesupportedlocale.upl")
+public class SupportedLocaleController extends AbstractSystemCrudController<SupportedLocale> {
 
     private String searchName;
 
     private String searchDescription;
 
-    public ThemeController() {
-        super(Theme.class, "$m{system.theme.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+    public SupportedLocaleController() {
+        super(SupportedLocale.class, "$m{system.supportedlocale.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
@@ -61,8 +61,8 @@ public class ThemeController extends AbstractSystemCrudController<Theme> {
     }
 
     @Override
-    protected List<Theme> find() throws UnifyException {
-        ThemeQuery query = new ThemeQuery();
+    protected List<SupportedLocale> find() throws UnifyException {
+        SupportedLocaleQuery query = new SupportedLocaleQuery();
         if (QueryUtils.isValidStringCriteria(searchName)) {
             query.name(searchName);
         }
@@ -75,32 +75,32 @@ public class ThemeController extends AbstractSystemCrudController<Theme> {
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getSystemService().findThemes(query);
+        return getSystemService().findSupportedLocales(query);
     }
 
     @Override
-    protected Theme find(Long id) throws UnifyException {
-        return getSystemService().findTheme(id);
+    protected SupportedLocale find(Long id) throws UnifyException {
+        return getSystemService().findSupportedLocale(id);
     }
 
     @Override
-    protected Theme prepareCreate() throws UnifyException {
-        return new Theme();
+    protected SupportedLocale prepareCreate() throws UnifyException {
+        return new SupportedLocale();
     }
 
     @Override
-    protected Object create(Theme theme) throws UnifyException {
-        return getSystemService().createTheme(theme);
+    protected Object create(SupportedLocale supportedLocale) throws UnifyException {
+        return getSystemService().createSupportedLocale(supportedLocale);
     }
 
     @Override
-    protected int update(Theme theme) throws UnifyException {
-        return getSystemService().updateTheme(theme);
+    protected int update(SupportedLocale supportedLocale) throws UnifyException {
+        return getSystemService().updateSupportedLocale(supportedLocale);
     }
 
     @Override
-    protected int delete(Theme theme) throws UnifyException {
-        return getSystemService().deleteTheme(theme.getId());
+    protected int delete(SupportedLocale supportedLocale) throws UnifyException {
+        return getSystemService().deleteSupportedLocale(supportedLocale.getId());
     }
 
 }

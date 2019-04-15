@@ -33,16 +33,16 @@ import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
-import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityFieldItem;
-import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
 import com.tcdng.jacklyn.shared.xml.config.module.InputControlConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuItemConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.SysParamConfig;
 import com.tcdng.jacklyn.system.constants.SystemModuleErrorConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
@@ -66,8 +66,6 @@ import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
-import com.tcdng.jacklyn.system.entities.ShortcutTile;
-import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -76,6 +74,10 @@ import com.tcdng.jacklyn.system.entities.ScheduledTask;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.entities.SupportedLocale;
+import com.tcdng.jacklyn.system.entities.SupportedLocaleQuery;
 import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.jacklyn.system.entities.SystemParameter;
@@ -521,6 +523,31 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public int deleteTheme(Long id) throws UnifyException {
         return db().delete(Theme.class, id);
+    }
+
+    @Override
+    public Long createSupportedLocale(SupportedLocale supportedLocale) throws UnifyException {
+        return (Long) db().create(supportedLocale);
+    }
+
+    @Override
+    public SupportedLocale findSupportedLocale(Long supportedLocaleId) throws UnifyException {
+        return db().find(SupportedLocale.class, supportedLocaleId);
+    }
+
+    @Override
+    public List<SupportedLocale> findSupportedLocales(SupportedLocaleQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateSupportedLocale(SupportedLocale supportedLocale) throws UnifyException {
+        return db().updateByIdVersion(supportedLocale);
+    }
+
+    @Override
+    public int deleteSupportedLocale(Long id) throws UnifyException {
+        return db().delete(SupportedLocale.class, id);
     }
 
     @Override

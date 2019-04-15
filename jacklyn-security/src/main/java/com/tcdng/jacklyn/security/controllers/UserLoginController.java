@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.security.controllers;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
@@ -48,10 +49,12 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
 @UplBinding("web/security/upl/login.upl")
 @ResultMappings({
         @ResultMapping(name = "refreshlogin", response = { "!refreshpanelresponse panels:$l{loginSequencePanel}" }),
-        @ResultMapping(name = "switchlogin",
+        @ResultMapping(
+                name = "switchlogin",
                 response = { "!hidepopupresponse",
                         "!switchpanelresponse panels:$l{loginSequencePanel.loginBodyPanel}" }),
-        @ResultMapping(name = "switchchangepassword",
+        @ResultMapping(
+                name = "switchchangepassword",
                 response = { "!switchpanelresponse panels:$l{loginSequencePanel.changePasswordBodyPanel}" }),
         @ResultMapping(name = "switchrolepanel", response = { "!showpopupresponse popup:$s{selectRolePanel}" }) })
 public class UserLoginController extends AbstractApplicationForwarderController {
@@ -83,13 +86,15 @@ public class UserLoginController extends AbstractApplicationForwarderController 
     @Action
     public String login() throws UnifyException {
         try {
-            User user = getSecurityService().login(userName, password);
+            Locale loginLocale = null;
+            User user = getSecurityService().login(userName, password, loginLocale);
             userName = null;
             password = null;
 
             if (!user.isReserved() && is2FA) {
-                TwoFactorAutenticationService twoFactorAuthService = (TwoFactorAutenticationService) this
-                        .getComponent(ApplicationComponents.APPLICATION_TWOFACTORAUTHENTICATIONSERVICE);
+                TwoFactorAutenticationService twoFactorAuthService =
+                        (TwoFactorAutenticationService) this
+                                .getComponent(ApplicationComponents.APPLICATION_TWOFACTORAUTHENTICATIONSERVICE);
                 if (!twoFactorAuthService.authenticate(userName, token)) {
                     throw new UnifyException(SecurityModuleErrorConstants.INVALID_ONETIME_PASSWORD);
                 }
@@ -233,8 +238,9 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         setDisplayMessage(loginMessage);
 
         // Show/hide token field based on system parameter
-        is2FA = getSystemService().getSysParameterValue(boolean.class,
-                SecurityModuleSysParamConstants.ENABLE_TWOFACTOR_AUTHENTICATION);
+        is2FA =
+                getSystemService().getSysParameterValue(boolean.class,
+                        SecurityModuleSysParamConstants.ENABLE_TWOFACTOR_AUTHENTICATION);
         setVisible("loginPanel.tokenField", is2FA);
     }
 

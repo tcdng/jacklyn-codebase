@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -411,7 +412,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public User login(String loginId, String password) throws UnifyException {
+    public User login(String loginId, String password, Locale loginLocale) throws UnifyException {
         User user = db().list(new UserQuery().loginId(loginId));
         if (user == null) {
             throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
@@ -448,6 +449,15 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             user.setChangePassword(Boolean.TRUE);
         }
         db().updateAll(new UserQuery().id(user.getId()), update);
+
+        // Set session locale
+        if (loginLocale != null) {
+            getSessionContext().setLocale(loginLocale);
+        } else if (!StringUtils.isBlank(user.getBranchLanguageTag())){
+            getSessionContext().setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
+        } else {
+            // TODO In future, get locale from tenant settings
+        }
 
         // Login to session and set session attributes
         userSessionManager.logIn(createUserToken(user));
