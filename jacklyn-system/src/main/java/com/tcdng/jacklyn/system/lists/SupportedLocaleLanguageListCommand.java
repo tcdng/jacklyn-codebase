@@ -47,12 +47,12 @@ public class SupportedLocaleLanguageListCommand extends AbstractZeroParamsSystem
         List<SupportedLocale> supportedLocaleList = getSystemService().findSupportedLocales(query);
         if (!DataUtils.isBlank(supportedLocaleList)) {
             result = new ArrayList<ListData>();
-            for (SupportedLocale supportedLocale: supportedLocaleList) {
+            for (SupportedLocale supportedLocale : supportedLocaleList) {
                 Locale supLocale = Locale.forLanguageTag(supportedLocale.getLanguageTag());
                 result.add(new ListData(supportedLocale.getLanguageTag(), supLocale.getDisplayName(supLocale)));
             }
         }
-        
+
         return result;
     }
 }

@@ -26,6 +26,7 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
@@ -33,6 +34,7 @@ import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.security.TwoFactorAutenticationService;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -73,9 +75,15 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 
     private String loginMessage;
 
+    private String languageTag;
+    
     private List<UserRole> userRoleList;
 
     private Table selectRoleTable;
+
+    private Locale origLocale;
+    
+    private boolean isLanguage;
 
     private boolean is2FA;
 
@@ -87,6 +95,10 @@ public class UserLoginController extends AbstractApplicationForwarderController 
     public String login() throws UnifyException {
         try {
             Locale loginLocale = null;
+            if (isLanguage && !StringUtils.isBlank(languageTag)) {
+                loginLocale = Locale.forLanguageTag(languageTag);
+            }
+
             User user = getSecurityService().login(userName, password, loginLocale);
             userName = null;
             password = null;
@@ -156,6 +168,17 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         return cancelChangeUserPassword();
     }
 
+    @Action
+    public String changeLanguage() throws UnifyException {
+        if (!StringUtils.isBlank(languageTag)) {
+            getSessionContext().setLocale(Locale.forLanguageTag(languageTag));
+        } else {
+            getSessionContext().setLocale(origLocale);
+        }
+        
+        return "refreshlogin";
+    }
+    
     public String getUserName() {
         return userName;
     }
@@ -212,6 +235,14 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         this.loginMessage = loginMessage;
     }
 
+    public String getLanguageTag() {
+        return languageTag;
+    }
+
+    public void setLanguageTag(String languageTag) {
+        this.languageTag = languageTag;
+    }
+
     public List<UserRole> getUserRoleList() {
         return userRoleList;
     }
@@ -236,6 +267,14 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         SwitchPanel switchPanel = (SwitchPanel) getPanelByShortName("loginSequencePanel");
         switchPanel.switchContent("loginBodyPanel");
         setDisplayMessage(loginMessage);
+
+        // Show/hide language field based on system parameter
+        isLanguage = getSystemService().getSysParameterValue(boolean.class,
+                SystemModuleSysParamConstants.SYSPARAM_USE_LOGIN_LOCALE);
+        setVisible("loginPanel.languageField", isLanguage);
+        if (isLanguage) {
+            origLocale = getSessionLocale();
+        }
 
         // Show/hide token field based on system parameter
         is2FA =

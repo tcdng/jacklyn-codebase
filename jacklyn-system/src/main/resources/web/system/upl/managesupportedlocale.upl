@@ -25,8 +25,8 @@
 !ui-label:statusDesc caption:$m{system.supportedlocale.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
-!ui-name:frmName caption:$m{system.supportedlocale.name} binding:name minLen:3 maxLen:32 required:true
-!ui-text:frmDescription caption:$m{system.supportedlocale.description} binding:description minLen:1 maxLen:48 required:true
+!ui-name:frmName caption:$m{system.supportedlocale.name} binding:name minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{system.supportedlocale.description} binding:description size:40 minLen:1 maxLen:48 required:true
 !ui-select:frmLanguageTag caption:$m{system.supportedlocale.locale} binding:languageTag list:javalocalelist blankOption:$s{} required:true
 !ui-select:frmStatus caption:$m{system.supportedlocale.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
