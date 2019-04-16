@@ -24,6 +24,7 @@
 !ui-titlebar:loginCaptionPanel caption:$m{security.signin}
 !ui-loginpanel:loginPanel loginNameBinding:userName loginPasswordBinding:password
     loginTokenBinding:token loginMessageBinding:loginMessage loginPath:$n{/login}
+    languageList:$s{supportedlocalelanguagelist} languageBinding:languageTag languagePath:$n{/changeLanguage}
     formCaptionSuffix:$s{}
 
 // Change password
