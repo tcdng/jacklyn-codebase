@@ -94,6 +94,9 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ListOnly(key = "branchId", property = "languageTag")
     private String branchLanguageTag;
 
+    @ListOnly(key = "branchId", property = "timeZone")
+    private String branchTimeZone;
+
     @ListOnly(key = "themeId", property = "description")
     private String themeDesc;
 
@@ -233,6 +236,14 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setBranchLanguageTag(String branchLanguageTag) {
         this.branchLanguageTag = branchLanguageTag;
+    }
+
+    public String getBranchTimeZone() {
+        return branchTimeZone;
+    }
+
+    public void setBranchTimeZone(String branchTimeZone) {
+        this.branchTimeZone = branchTimeZone;
     }
 
     public String getThemeDesc() {

@@ -44,6 +44,8 @@ import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidgetQuery;
 import com.tcdng.jacklyn.organization.entities.RoleQuery;
 import com.tcdng.jacklyn.organization.entities.RoleWfStep;
 import com.tcdng.jacklyn.organization.entities.RoleWfStepQuery;
+import com.tcdng.jacklyn.organization.entities.Zone;
+import com.tcdng.jacklyn.organization.entities.ZoneQuery;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
@@ -138,6 +140,31 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     @Override
     public int deleteDepartment(Long id) throws UnifyException {
         return db().delete(Department.class, id);
+    }
+
+    @Override
+    public Long createZone(Zone zone) throws UnifyException {
+        return (Long) db().create(zone);
+    }
+
+    @Override
+    public Zone findZone(Long zoneId) throws UnifyException {
+        return db().find(Zone.class, zoneId);
+    }
+
+    @Override
+    public List<Zone> findZones(ZoneQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateZone(Zone zone) throws UnifyException {
+        return db().updateByIdVersion(zone);
+    }
+
+    @Override
+    public int deleteZone(Long id) throws UnifyException {
+        return db().delete(Zone.class, id);
     }
 
     @Override

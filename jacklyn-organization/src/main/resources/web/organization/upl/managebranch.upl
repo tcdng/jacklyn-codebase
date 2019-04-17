@@ -3,10 +3,10 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{organization.branch.manage}
-    searchByList:$c{searchName searchDescription searchStatus}
-    searchClearList:$c{searchName searchDescription searchStatus}
-    tableColumnList:$c{name description statusDesc}
-    formSection:$d{!ui-section caption:$m{organization.branch.section.basicdetails} components:$c{frmName frmDescription frmHeadOffice frmLanguageTag frmStatus}}
+    searchByList:$c{searchZoneId searchName searchDescription searchStatus}
+    searchClearList:$c{searchZoneId searchName searchDescription searchStatus}
+    tableColumnList:$c{zoneDesc name description timeZone statusDesc}
+    formSection:$d{!ui-section caption:$m{organization.branch.section.basicdetails} components:$c{frmName frmDescription frmZoneId frmHeadOffice frmStatus}}
     addPrivilege:$s{org-branchadd} editPrivilege:$s{org-branchedit}
     viewPrivilege:$s{org-branchview} deletePrivilege:$s{org-branchdelete}
     addValidations:$c{frmNameVal frmDescVal}
@@ -15,19 +15,23 @@
 //Search
 !ui-text:searchName caption:$m{organization.branch.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchDescription caption:$m{organization.branch.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchZoneId caption:$m{organization.branch.zone} binding:searchZoneId list:zonelist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{organization.branch.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:name caption:$m{organization.branch.name} binding:name columnStyle:$s{width:80px;} sortable:true
+!ui-label:zoneDesc caption:$m{organization.branch.zone} binding:zoneDesc columnStyle:$s{width:180px;} sortable:true
+!ui-label:name caption:$m{organization.branch.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{organization.branch.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:timeZone caption:$m{organization.branch.timezone} binding:timeZone  columnStyle:$s{width:180px;} sortable:true
 !ui-label:statusDesc caption:$m{organization.branch.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
+!ui-select:frmZoneId caption:$m{organization.branch.zone} binding:zoneId list:zonelist blankOption:$s{} required:true
 !ui-name:frmName caption:$m{organization.branch.name} binding:name minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{organization.branch.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-checkbox:frmHeadOffice caption:$m{organization.branch.headoffice} layoutCaption:true binding:headOffice
-!ui-select:frmLanguageTag caption:$m{organization.branch.locale} listKey:languageTag list:supportedlocalelist blankOption:$s{} binding:languageTag
 !ui-select:frmStatus caption:$m{organization.branch.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
 //Validations

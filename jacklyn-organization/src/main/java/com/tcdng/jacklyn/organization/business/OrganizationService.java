@@ -35,6 +35,8 @@ import com.tcdng.jacklyn.organization.entities.RolePrivilegeQuery;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidget;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidgetQuery;
 import com.tcdng.jacklyn.organization.entities.RoleQuery;
+import com.tcdng.jacklyn.organization.entities.Zone;
+import com.tcdng.jacklyn.organization.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 
 /**
@@ -165,6 +167,61 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteDepartment(Long id) throws UnifyException;
+
+    /**
+     * Creates a new zone.
+     * 
+     * @param zone
+     *            the zone data
+     * @return the created zone ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createZone(Zone zone) throws UnifyException;
+
+    /**
+     * Finds zone by ID.
+     * 
+     * @param zoneId
+     *            the zone ID
+     * @return the zone data
+     * @throws UnifyException
+     *             if zone with ID is not found
+     */
+    Zone findZone(Long zoneId) throws UnifyException;
+
+    /**
+     * Finds zones by query.
+     * 
+     * @param query
+     *            the zone query
+     * @return the list of zones found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Zone> findZones(ZoneQuery query) throws UnifyException;
+
+    /**
+     * Updates a zone.
+     * 
+     * @param zone
+     *            the zone data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateZone(Zone zone) throws UnifyException;
+
+    /**
+     * Deletes a zone.
+     * 
+     * @param id
+     *            the zone ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteZone(Long id) throws UnifyException;
 
     /**
      * Creates a new role.
