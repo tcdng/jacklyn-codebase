@@ -325,7 +325,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testFindNormalizedScheduledTaskParameters() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         Inputs paramValues = document.getScheduledTaskParams();
@@ -342,7 +342,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testCreateScheduledTask() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         Inputs paramValues = document.getScheduledTaskParams();
@@ -355,7 +355,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testCreateScheduledTaskWithMandatoryParamNotSet() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         systemService.createScheduledTask(document);
@@ -365,7 +365,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testFindScheduledTasks() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         Inputs paramValues = document.getScheduledTaskParams();
@@ -385,7 +385,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testFindScheduledTaskById() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         Inputs paramValues = document.getScheduledTaskParams();
@@ -401,7 +401,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testUpdateScheduledTask() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         Inputs paramValues = document.getScheduledTaskParams();
@@ -412,7 +412,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
         ScheduledTask fetchedScheduledTask = fetchDocument.getData();
         fetchedScheduledTask.setFrequency(Integer.valueOf(2));
         fetchedScheduledTask.setFrequencyUnit(FrequencyUnit.HOUR);
-        fetchedScheduledTask.setStartTime(new Date());
+        fetchedScheduledTask.setStartTime(systemService.getNow());
         fetchDocument.getScheduledTaskParams().setInputValue("batchSize", "1000");
 
         systemService.updateScheduledTask(fetchDocument);
@@ -428,7 +428,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testDeleteScheduledTask() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
@@ -442,7 +442,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testDeactivateScheduledTask() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
@@ -461,7 +461,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testActivateScheduledTask() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
@@ -481,7 +481,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testCreateScheduledTaskHistory() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
@@ -496,7 +496,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testFindScheduledTaskHistory() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
@@ -527,7 +527,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
     public void testFindScheduledTaskHistoryById() throws Exception {
         SystemService systemService = (SystemService) getComponent(SystemModuleNameConstants.SYSTEMSERVICE);
 
-        ScheduledTask scheduledTask = getScheduledTask();
+        ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
@@ -728,11 +728,11 @@ public class SystemServiceTest extends AbstractJacklynTest {
 
     }
 
-    private ScheduledTask getScheduledTask() {
+    private ScheduledTask getScheduledTask(Date now) {
         ScheduledTask scheduledTask = new ScheduledTask();
         scheduledTask.setDescription("Test Scheduled Taskable");
         scheduledTask.setExpires(Boolean.FALSE);
-        scheduledTask.setStartTime(new Date());
+        scheduledTask.setStartTime(now);
         scheduledTask.setTaskName("testschedulabletask");
         return scheduledTask;
     }

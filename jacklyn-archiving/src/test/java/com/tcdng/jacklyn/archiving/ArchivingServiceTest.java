@@ -372,7 +372,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         archivingService.createFileArchiveConfig(fileArchiveConfig);
 
         TestChequeImage testChequeImage = new TestChequeImage();
-        Date workingDt = CalendarUtils.getMidnightDate(new Date());
+        Date workingDt = archivingService.getToday();
         testChequeImage.setCreateDt(workingDt);
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         testChequeImage.setImage(image1);
@@ -416,7 +416,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         archivingService.createFileArchiveConfig(fileArchiveConfig);
 
         TestChequeImage testChequeImage = new TestChequeImage();
-        Date workingDt = CalendarUtils.getMidnightDate(new Date());
+        Date workingDt = archivingService.getToday();
         testChequeImage.setCreateDt(workingDt);
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         testChequeImage.setImage(image1);
@@ -462,7 +462,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         archivingService.createFileArchiveConfig(fileArchiveConfig);
 
         TestChequeImage testChequeImage = new TestChequeImage();
-        Date workingDt = CalendarUtils.getMidnightDate(new Date());
+        Date workingDt = archivingService.getToday();
         testChequeImage.setCreateDt(workingDt);
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         testChequeImage.setImage(image1);

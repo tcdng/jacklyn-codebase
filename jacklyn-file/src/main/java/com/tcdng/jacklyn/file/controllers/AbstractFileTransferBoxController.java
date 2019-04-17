@@ -19,7 +19,6 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.file.entities.AbstractFileTransferBox;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.util.CalendarUtils;
 
 /**
  * Abstract base file transfer box page controller.
@@ -58,7 +57,7 @@ public abstract class AbstractFileTransferBoxController<T extends AbstractFileTr
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
         if (this.searchCreateDt == null) {
-            this.searchCreateDt = CalendarUtils.getCurrentMidnightDate();
+            this.searchCreateDt = getFileService().getToday();
         }
     }
 

@@ -270,7 +270,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             notification.setSenderContact(message.getSenderContact());
             notification.setReference(message.getReference());
             notification.setDictionary(dictionary);
-            notification.setDueDt(new Date());
+            notification.setDueDt(db().getNow());
             notification.setAttempts(Integer.valueOf(0));
             notification.setStatus(NotificationStatus.NOT_SENT);
             Long notificationId = (Long) db().create(notification);
@@ -370,8 +370,9 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                         systemService.getSysParameterValue(int.class,
                                 NotificationModuleSysParamConstants.NOTIFICATION_RETRY_MINUTES);
 
+                Date now = db().getNow();
                 List<Notification> notificationList =
-                        db().listAll(new NotificationQuery().due().status(NotificationStatus.NOT_SENT).orderById()
+                        db().listAll(new NotificationQuery().due(now).status(NotificationStatus.NOT_SENT).orderById()
                                 .limit(maxBatchSize));
                 for (Notification notification : notificationList) {
                     int attempts = notification.getAttempts() + 1;
@@ -386,14 +387,14 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
                     if (sendNotification(notification, messageDictionary)) {
                         // Update to SENT status
-                        notification.setSentDt(new Date());
+                        notification.setSentDt(now);
                         notification.setStatus(NotificationStatus.SENT);
                     } else {
                         if (attempts >= maxAttempts) {
                             notification.setStatus(NotificationStatus.ABORTED);
                         } else {
                             // Shift and update due date by retry minutes
-                            Date dueDt = CalendarUtils.getNowWithFrequencyOffset(FrequencyUnit.MINUTE, retryMinutes);
+                            Date dueDt = CalendarUtils.getNowWithFrequencyOffset(now, FrequencyUnit.MINUTE, retryMinutes);
                             notification.setDueDt(dueDt);
                         }
                     }

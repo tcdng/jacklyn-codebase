@@ -375,7 +375,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             }
 
             db().updateAll(new FileOutboxQuery().id(fileOutbox.getId()),
-                    new Update().add("uploadAttempts", uploadAttempts).add("uploadedOn", new Date()).add("status",
+                    new Update().add("uploadAttempts", uploadAttempts).add("uploadedOn", db().getNow()).add("status",
                             FileOutboxStatus.SENT));
             return true;
         } catch (UnifyException e) {
@@ -404,8 +404,8 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             }
 
             db().updateAll(new FileInboxQuery().id(fileInbox.getId()),
-                    new Update().add("downloadAttempts", downloadAttempts).add("downloadedOn", new Date()).add("status",
-                            FileInboxStatus.RECEIVED));
+                    new Update().add("downloadAttempts", downloadAttempts).add("downloadedOn", db().getNow())
+                            .add("status", FileInboxStatus.RECEIVED));
             return true;
         } catch (UnifyException e) {
             Update update = new Update().add("downloadAttempts", downloadAttempts);
@@ -480,8 +480,8 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         Long batchFileReadConfigId = (Long) db().create(batchFileReadDefinition);
         getParameterService().updateParameterValues(batchFileReadDefinition.getFileReader(), BATCHFILE_READ_DEFINITION,
                 batchFileReadConfigId, document.getFileReaderParams());
-        getParameterService().updateParameterValues(batchFileReadDefinition.getReadProcessor(), BATCHFILE_READ_DEFINITION,
-                batchFileReadConfigId, document.getFileProcessorParams());
+        getParameterService().updateParameterValues(batchFileReadDefinition.getReadProcessor(),
+                BATCHFILE_READ_DEFINITION, batchFileReadConfigId, document.getFileProcessorParams());
         return batchFileReadConfigId;
     }
 
@@ -496,8 +496,8 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         int updateCount = db().updateByIdVersion(batchFileReadDefinition);
         getParameterService().updateParameterValues(batchFileReadDefinition.getFileReader(), BATCHFILE_READ_DEFINITION,
                 batchFileReadDefinition.getId(), document.getFileReaderParams());
-        getParameterService().updateParameterValues(batchFileReadDefinition.getReadProcessor(), BATCHFILE_READ_DEFINITION,
-                batchFileReadDefinition.getId(), document.getFileProcessorParams());
+        getParameterService().updateParameterValues(batchFileReadDefinition.getReadProcessor(),
+                BATCHFILE_READ_DEFINITION, batchFileReadDefinition.getId(), document.getFileProcessorParams());
         return updateCount;
     }
 
@@ -582,16 +582,16 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
     public List<BatchFileFieldDefinition> mergeBatchFileFieldMapping(String beanType,
             List<BatchFileFieldDefinition> baseFieldDefList) throws UnifyException {
         List<BatchFileFieldDefinition> result = new ArrayList<BatchFileFieldDefinition>();
-        Set<String> beanFieldNames =  new HashSet<String>();
+        Set<String> beanFieldNames = new HashSet<String>();
         if (!DataUtils.isBlank(baseFieldDefList)) {
-            for(BatchFileFieldDefinition baseFieldDefinition: baseFieldDefList) {
+            for (BatchFileFieldDefinition baseFieldDefinition : baseFieldDefList) {
                 beanFieldNames.add(baseFieldDefinition.getBeanFieldName());
                 result.add(baseFieldDefinition);
             }
         }
 
         List<String> beanFieldNameList = ReflectUtils.getBeanCompliantFieldNames(beanType);
-        for (String newBeanFieldName: beanFieldNameList) {
+        for (String newBeanFieldName : beanFieldNameList) {
             if (!"id".equals(newBeanFieldName) && !beanFieldNames.contains(newBeanFieldName)) {
                 BatchFileFieldDefinition batchFileFieldDefinition = new BatchFileFieldDefinition();
                 batchFileFieldDefinition.setBeanFieldName(newBeanFieldName);

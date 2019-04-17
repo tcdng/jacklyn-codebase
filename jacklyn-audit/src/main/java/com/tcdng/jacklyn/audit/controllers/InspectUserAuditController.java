@@ -97,7 +97,7 @@ public class InspectUserAuditController extends AbstractAuditController {
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
         if (searchCreateDt == null) {
-            searchCreateDt = new Date();
+            searchCreateDt = getAuditService().getToday();
         }
 
         performFetchInspectUserInfo();
@@ -111,8 +111,9 @@ public class InspectUserAuditController extends AbstractAuditController {
     }
 
     private void performFetchInspectUserInfo() throws UnifyException {
-        inspectUserInfo = getAuditService().fetchInspectUserInfo(searchUserLoginId, searchCreateDt, searchModuleId,
-                searchEventType);
+        inspectUserInfo =
+                getAuditService().fetchInspectUserInfo(searchUserLoginId, searchCreateDt, searchModuleId,
+                        searchEventType);
         setVisible("userDetailsPanel", inspectUserInfo.isUser());
     }
 }

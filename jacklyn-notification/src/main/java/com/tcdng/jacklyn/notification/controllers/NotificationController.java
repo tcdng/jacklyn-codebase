@@ -27,7 +27,6 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
 
@@ -133,7 +132,7 @@ public class NotificationController extends AbstractNotificationCrudController<N
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
         if (searchCreateDt == null) {
-            searchCreateDt = CalendarUtils.getCurrentMidnightDate();
+            searchCreateDt = getNotificationService().getToday();
         }
     }
 

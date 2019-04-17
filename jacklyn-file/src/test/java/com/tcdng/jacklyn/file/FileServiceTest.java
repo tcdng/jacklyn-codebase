@@ -325,7 +325,7 @@ public class FileServiceTest extends AbstractJacklynTest {
         FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
         fileService.createFileTransferConfig(downloadConfig);
 
-        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
@@ -358,7 +358,7 @@ public class FileServiceTest extends AbstractJacklynTest {
         FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
         fileService.createFileTransferConfig(downloadConfig);
 
-        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
@@ -377,7 +377,7 @@ public class FileServiceTest extends AbstractJacklynTest {
         FileTransferConfig downloadConfig = getDownloadFileTransferConfig();
         fileService.createFileTransferConfig(downloadConfig);
 
-        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
@@ -413,7 +413,7 @@ public class FileServiceTest extends AbstractJacklynTest {
         FileTransferConfig uploadConfig = getUploadFileTransferConfig();
         fileService.createFileTransferConfig(uploadConfig);
 
-        TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
+        TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
@@ -439,7 +439,7 @@ public class FileServiceTest extends AbstractJacklynTest {
         FileTransferConfig uploadConfig = getUploadFileTransferConfig();
         fileService.createFileTransferConfig(uploadConfig);
 
-        TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
+        TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
@@ -473,12 +473,13 @@ public class FileServiceTest extends AbstractJacklynTest {
         fileService.createFileTransferConfig(downloadConfig);
         fileService.createFileTransferConfig(uploadConfig);
 
-        TaskMonitor tm = launchUpdateFileTransferListTask("downloadFileTransfer", new Date());
+        Date today = fileService.getToday();
+        TaskMonitor tm = launchUpdateFileTransferListTask("downloadFileTransfer", today);
         assertNotNull(tm);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
-        tm = launchUpdateFileTransferListTask("uploadFileTransfer", new Date());
+        tm = launchUpdateFileTransferListTask("uploadFileTransfer", today);
         assertNotNull(tm);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
@@ -492,12 +493,13 @@ public class FileServiceTest extends AbstractJacklynTest {
         fileService.createFileTransferConfig(downloadConfig);
         fileService.createFileTransferConfig(uploadConfig);
 
-        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", new Date(), true);
+        Date today = fileService.getToday();
+        TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", today, true);
         assertNotNull(tm);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
 
-        tm = launchFileTransferTask("uploadFileTransfer", new Date(), true);
+        tm = launchFileTransferTask("uploadFileTransfer", today, true);
         assertNotNull(tm);
         waitForTask(tm);
         assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
