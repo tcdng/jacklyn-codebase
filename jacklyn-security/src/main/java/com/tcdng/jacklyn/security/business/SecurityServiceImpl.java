@@ -71,6 +71,7 @@ import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
+import com.tcdng.unify.core.SessionContext;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Broadcast;
@@ -452,14 +453,19 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         db().updateAll(new UserQuery().id(user.getId()), update);
 
         // Set session locale
+        SessionContext sessionCtx = getSessionContext();
         if (loginLocale != null) {
-            getSessionContext().setLocale(loginLocale);
+            sessionCtx.setLocale(loginLocale);
         } else if (!StringUtils.isBlank(user.getBranchLanguageTag())){
-            getSessionContext().setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
+            sessionCtx.setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
         } else {
             // TODO In future, get locale from tenant settings
         }
 
+        // Set session time zone
+        // TODO check branch or tenant settings for time zone
+        sessionCtx.setUseDaylightSavings(sessionCtx.getTimeZone().inDaylightTime(now));
+        
         // Login to session and set session attributes
         userSessionManager.logIn(createUserToken(user));
         setSessionAttribute(JacklynSessionAttributeConstants.USERID, user.getId());
