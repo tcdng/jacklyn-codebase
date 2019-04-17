@@ -28,7 +28,6 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.task.TaskStatus;
-import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
@@ -83,7 +82,7 @@ public class ScheduledTaskHistController extends BaseCrudController<ScheduledTas
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
         if (searchExecutionDt == null) {
-            searchExecutionDt = CalendarUtils.getCurrentMidnightDate();
+            searchExecutionDt = systemService.getToday();
         }
     }
 

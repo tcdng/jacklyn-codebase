@@ -25,7 +25,6 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
-import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.web.annotation.Action;
 
 /**
@@ -83,7 +82,7 @@ public class FileTransferController extends AbstractFileController {
     @Override
     protected void onOpenPage() throws UnifyException {
         if (workingDt == null) {
-            workingDt = CalendarUtils.getCurrentMidnightDate();
+            workingDt = getFileService().getToday();
         }
     }
 }

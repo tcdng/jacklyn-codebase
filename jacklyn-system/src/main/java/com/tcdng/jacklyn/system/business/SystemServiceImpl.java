@@ -688,7 +688,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         // Check working date. If not current day, stop all scheduled tasks,
         // then clear task information map
-        Date now = new Date();
+        Date now = db().getNow();
         Date currentDt = CalendarUtils.getMidnightDate(now);
         if (!currentDt.equals(workingDt)) {
             for (TaskInfo taskInfo : triggeredTaskInfoMap.values()) {

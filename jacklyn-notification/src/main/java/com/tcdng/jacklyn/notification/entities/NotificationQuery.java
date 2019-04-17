@@ -59,8 +59,8 @@ public class NotificationQuery extends BaseTimestampedEntityQuery<Notification> 
                 CalendarUtils.getLastSecondDate(date));
     }
 
-    public NotificationQuery due() {
-        return (NotificationQuery) lessEqual("dueDt", new Date());
+    public NotificationQuery due(Date now) {
+        return (NotificationQuery) lessEqual("dueDt", now);
     }
 
     public NotificationQuery createdOn(Date date) {

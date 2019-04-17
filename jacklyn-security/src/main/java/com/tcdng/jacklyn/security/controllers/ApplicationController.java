@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.security.controllers;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -164,7 +163,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
         }
         query.userLoginId(userToken.getUserLoginId());
         query.roleStatus(RecordStatus.ACTIVE);
-        query.roleActiveTime(new Date());
+        query.roleActiveTime(systemService.getNow());
         List<UserRole> userRoleList = getSecurityService().findUserRoles(query);
         UserRoleOptions userRoleOptions = new UserRoleOptions();
         userRoleOptions.setUserRoleList(userRoleList);

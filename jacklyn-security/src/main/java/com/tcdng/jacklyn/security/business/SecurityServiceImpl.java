@@ -442,9 +442,10 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
         }
 
-        Update update = new Update().add("lastLoginDt", new Date()).add("loginAttempts", Integer.valueOf(0));
+        Date now = db().getNow();
+        Update update = new Update().add("lastLoginDt", now).add("loginAttempts", Integer.valueOf(0));
         Date paswwordExpiryDt = user.getPasswordExpiryDt();
-        if (paswwordExpiryDt != null && paswwordExpiryDt.before(new Date())) {
+        if (paswwordExpiryDt != null && paswwordExpiryDt.before(now)) {
             update.add("changePassword", Boolean.TRUE);
             user.setChangePassword(Boolean.TRUE);
         }
