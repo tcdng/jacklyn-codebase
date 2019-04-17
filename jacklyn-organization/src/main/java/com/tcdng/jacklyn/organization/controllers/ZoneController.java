@@ -18,31 +18,29 @@ package com.tcdng.jacklyn.organization.controllers;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.organization.entities.Branch;
-import com.tcdng.jacklyn.organization.entities.BranchQuery;
+import com.tcdng.jacklyn.organization.entities.Zone;
+import com.tcdng.jacklyn.organization.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
- * Controller for managing branches.
+ * Controller for managing zones.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/organization/branch")
-@UplBinding("web/organization/upl/managebranch.upl")
-public class BranchController extends AbstractOrganizationCrudController<Branch> {
+@Component("/organization/zone")
+@UplBinding("web/organization/upl/managezone.upl")
+public class ZoneController extends AbstractOrganizationCrudController<Zone> {
 
     private String searchName;
 
     private String searchDescription;
 
-    private Long searchZoneId;
-
-    public BranchController() {
-        super(Branch.class, "$m{organization.branch.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+    public ZoneController() {
+        super(Zone.class, "$m{organization.zone.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
@@ -62,21 +60,9 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
         this.searchDescription = searchDescription;
     }
 
-    public Long getSearchZoneId() {
-        return searchZoneId;
-    }
-
-    public void setSearchZoneId(Long searchZoneId) {
-        this.searchZoneId = searchZoneId;
-    }
-
     @Override
-    protected List<Branch> find() throws UnifyException {
-        BranchQuery query = new BranchQuery();
-        if (QueryUtils.isValidLongCriteria(searchZoneId)) {
-            query.zoneId(searchZoneId);
-        }
-
+    protected List<Zone> find() throws UnifyException {
+        ZoneQuery query = new ZoneQuery();
         if (QueryUtils.isValidStringCriteria(searchName)) {
             query.name(searchName);
         }
@@ -89,32 +75,32 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getOrganizationService().findBranches(query);
+        return getOrganizationService().findZones(query);
     }
 
     @Override
-    protected Branch find(Long id) throws UnifyException {
-        return getOrganizationService().findBranch(id);
+    protected Zone find(Long id) throws UnifyException {
+        return getOrganizationService().findZone(id);
     }
 
     @Override
-    protected Branch prepareCreate() throws UnifyException {
-        return new Branch();
+    protected Zone prepareCreate() throws UnifyException {
+        return new Zone();
     }
 
     @Override
-    protected Object create(Branch branchData) throws UnifyException {
-        return getOrganizationService().createBranch(branchData);
+    protected Object create(Zone zoneData) throws UnifyException {
+        return getOrganizationService().createZone(zoneData);
     }
 
     @Override
-    protected int update(Branch branchData) throws UnifyException {
-        return getOrganizationService().updateBranch(branchData);
+    protected int update(Zone zoneData) throws UnifyException {
+        return getOrganizationService().updateZone(zoneData);
     }
 
     @Override
-    protected int delete(Branch branchData) throws UnifyException {
-        return getOrganizationService().deleteBranch(branchData.getId());
+    protected int delete(Zone zoneData) throws UnifyException {
+        return getOrganizationService().deleteZone(zoneData.getId());
     }
 
 }

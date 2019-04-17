@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.organization.lists;
 import java.util.List;
 import java.util.Locale;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -37,6 +38,7 @@ public class DepartmentListCommand extends AbstractZeroParamsOrganizationListCom
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getOrganizationService().findDepartments((DepartmentQuery) new DepartmentQuery().ignoreEmptyCriteria(true));
+        return getOrganizationService().findDepartments(
+                (DepartmentQuery) new DepartmentQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
     }
 }

@@ -18,56 +18,42 @@ package com.tcdng.jacklyn.organization.entities;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
+import com.tcdng.jacklyn.system.entities.SupportedLocale;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
-import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
-import com.tcdng.unify.core.batch.BatchItemRecord;
 
 /**
- * Represents branch entity.
+ * Represents zone entity.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(name = "Branch", description = "Branch")
-@Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
+@Managed(
+        module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Zone", reportable = true,
         auditable = true)
-@Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
-public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
+@Table(name = "JKZONE", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+public class Zone extends BaseVersionedStatusEntity {
 
-    @ForeignKey(Zone.class)
-    private Long zoneId;
+    @ForeignKey(type = SupportedLocale.class, nullable = true)
+    private Long supportedLocaleId;
 
-    @Column(name = "BRANCH_NM", length = 32)
+    @Column(name = "ZONE_NM", length = 32)
     private String name;
 
-    @Column(name = "BRANCH_DESC", length = 64)
+    @Column(name = "ZONE_DESC", length = 64)
     private String description;
 
-    @Column(name="HEAD_OFFICE_FG")
-    private Boolean headOffice;
-
-    @ListOnly(key = "zoneId", property = "description")
-    private String zoneDesc;
-
-    @ListOnly(key = "zoneId", property = "languageTag")
-    private String languageTag;
-
-    @ListOnly(key = "zoneId", property = "timeZone")
+    @Column(name = "ZONE_TIMEZONE", length = 64, nullable = true)
     private String timeZone;
-   
-    @Override
-    public Object getBatchId() {
-        return null;
-    }
 
-    @Override
-    public void setBatchId(Object id) {
+    @ListOnly(key = "supportedLocaleId", property = "description")
+    private String supportedLocaleDesc;
 
-    }
+    @ListOnly(key = "supportedLocaleId", property = "languageTag")
+    private String languageTag;
 
     @Override
     public String getDescription() {
@@ -86,28 +72,12 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
         this.description = description;
     }
 
-    public Boolean getHeadOffice() {
-        return headOffice;
+    public Long getSupportedLocaleId() {
+        return supportedLocaleId;
     }
 
-    public void setHeadOffice(Boolean headOffice) {
-        this.headOffice = headOffice;
-    }
-
-    public Long getZoneId() {
-        return zoneId;
-    }
-
-    public void setZoneId(Long zoneId) {
-        this.zoneId = zoneId;
-    }
-
-    public String getZoneDesc() {
-        return zoneDesc;
-    }
-
-    public void setZoneDesc(String zoneDesc) {
-        this.zoneDesc = zoneDesc;
+    public void setSupportedLocaleId(Long supportedLocaleId) {
+        this.supportedLocaleId = supportedLocaleId;
     }
 
     public String getTimeZone() {
@@ -116,6 +86,14 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+    }
+
+    public String getSupportedLocaleDesc() {
+        return supportedLocaleDesc;
+    }
+
+    public void setSupportedLocaleDesc(String supportedLocaleDesc) {
+        this.supportedLocaleDesc = supportedLocaleDesc;
     }
 
     public String getLanguageTag() {

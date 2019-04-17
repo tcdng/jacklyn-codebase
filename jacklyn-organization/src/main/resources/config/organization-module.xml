@@ -8,6 +8,9 @@
 	<menus>
 		<menu name="org-mainorg" description="$m{organization.menu.main}"
 			caption="$m{organization.menu.title}">
+            <menuitem name="org-managezone" description="$m{organization.menuitem.zone}"
+                caption="$m{organization.zone.menu.title}" pageCaption="$m{organization.zone.manage}"
+                path="/organization/zone/openPage" remotePath="/organization/zone/getRemoteDoc" />
 			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
 				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
 				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
@@ -24,6 +27,10 @@
 	</menus>
 	<privileges>
 		<privilege-group>
+            <privilege name="org-zoneadd" description="$m{organization.privilege.zone.add}" />
+            <privilege name="org-zoneedit" description="$m{organization.privilege.zone.edit}" />
+            <privilege name="org-zoneview" description="$m{organization.privilege.zone.view}" />
+            <privilege name="org-zonedelete" description="$m{organization.privilege.zone.delete}" />
 			<privilege name="org-branchadd" description="$m{organization.privilege.branch.add}" />
 			<privilege name="org-branchedit" description="$m{organization.privilege.branch.edit}" />
 			<privilege name="org-branchview" description="$m{organization.privilege.branch.view}" />

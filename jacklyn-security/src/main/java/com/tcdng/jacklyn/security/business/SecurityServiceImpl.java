@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
@@ -458,12 +459,13 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             sessionCtx.setLocale(loginLocale);
         } else if (!StringUtils.isBlank(user.getBranchLanguageTag())){
             sessionCtx.setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
-        } else {
-            // TODO In future, get locale from tenant settings
         }
 
         // Set session time zone
-        // TODO check branch or tenant settings for time zone
+        if (!StringUtils.isBlank(user.getBranchTimeZone())) {
+            sessionCtx.setTimeZone(TimeZone.getTimeZone(user.getBranchTimeZone()));
+        }
+        
         sessionCtx.setUseDaylightSavings(sessionCtx.getTimeZone().inDaylightTime(now));
         
         // Login to session and set session attributes

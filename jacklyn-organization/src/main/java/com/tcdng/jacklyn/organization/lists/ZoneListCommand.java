@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.organization.entities.BranchQuery;
+import com.tcdng.jacklyn.organization.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Tooling;
@@ -27,18 +27,18 @@ import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * Branch list command.
+ * Zone list command.
  * 
  * @author Lateef
  * @since 1.0
  */
-@Tooling(description = "Branch List")
-@Component("branchlist")
-public class BranchListCommand extends AbstractZeroParamsOrganizationListCommand {
+@Tooling(description = "Zone List")
+@Component("zonelist")
+public class ZoneListCommand extends AbstractZeroParamsOrganizationListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         return getOrganizationService()
-                .findBranches((BranchQuery) new BranchQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
+                .findZones((ZoneQuery) new ZoneQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
     }
 }

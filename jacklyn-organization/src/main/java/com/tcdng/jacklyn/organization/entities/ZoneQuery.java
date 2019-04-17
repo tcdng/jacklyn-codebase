@@ -18,30 +18,26 @@ package com.tcdng.jacklyn.organization.entities;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 
 /**
- * Query class for branches.
+ * Query class for zones.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class BranchQuery extends BaseVersionedStatusEntityQuery<Branch> {
+public class ZoneQuery extends BaseVersionedStatusEntityQuery<Zone> {
 
-    public BranchQuery() {
-        super(Branch.class);
+    public ZoneQuery() {
+        super(Zone.class);
     }
 
-    public BranchQuery zoneId(Long zoneId) {
-        return (BranchQuery) equals("zoneId", zoneId);
+    public ZoneQuery name(String name) {
+        return (ZoneQuery) equals("name", name);
     }
 
-    public BranchQuery name(String name) {
-        return (BranchQuery) equals("name", name);
+    public ZoneQuery nameLike(String name) {
+        return (ZoneQuery) like("name", name);
     }
 
-    public BranchQuery nameLike(String name) {
-        return (BranchQuery) like("name", name);
-    }
-
-    public BranchQuery descriptionLike(String description) {
-        return (BranchQuery) like("description", description);
+    public ZoneQuery descriptionLike(String description) {
+        return (ZoneQuery) like("description", description);
     }
 }
