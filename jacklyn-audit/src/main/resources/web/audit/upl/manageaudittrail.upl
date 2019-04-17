@@ -25,13 +25,13 @@
 !ui-label:moduleDesc caption:$m{audit.audittrail.module} binding:moduleDesc columnStyle:$s{width:100px;} sortable:true
 !ui-label:ipAddress caption:$m{audit.audittrail.ipaddress} binding:ipAddress columnStyle:$s{width:140px;} sortable:true
 !ui-label:userName caption:$m{audit.audittrail.user} binding:userLoginId columnStyle:$s{width:160px;} sortable:true
-!ui-label:createDt caption:$m{audit.audittrail.time} binding:createDt formatter:$d{!timeformat style:medium} columnStyle:$s{width:100px;} sortable:true
+!ui-label:createDt caption:$m{audit.audittrail.time} binding:createDt formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:100px;} sortable:true
 !ui-label:auditDesc caption:$m{audit.audittrail.description} binding:auditDesc  columnStyle:$s{width:220px;} sortable:true
 
 //Form components   
 !ui-text:frmIpAddress caption:$m{audit.audittrail.ipaddress} binding:ipAddress
 !ui-text:frmUserName caption:$m{audit.audittrail.user} binding:userLoginId
-!ui-time:frmCreateDt caption:$m{audit.audittrail.time} binding:createDt
+!ui-text:frmCreateDt caption:$m{audit.audittrail.time} binding:createDt formatter:$d{!datetimeformat style:medium}
 !ui-text:frmDescription caption:$m{audit.audittrail.description} binding:auditDesc size:40
 !ui-text:frmActionDesc caption:$m{audit.audittrail.action} binding:actionDesc
 
