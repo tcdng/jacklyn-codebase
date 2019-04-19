@@ -32,6 +32,10 @@ public class WfTemplateQuery extends BaseEntityQuery<WfTemplate> {
         super(WfTemplate.class);
     }
 
+    public WfTemplateQuery wfDocName(String wfDocName) {
+        return (WfTemplateQuery) equals("wfDocName", wfDocName);
+    }
+
     public WfTemplateQuery wfCategoryId(Long wfCategoryId) {
         return (WfTemplateQuery) equals("wfCategoryId", wfCategoryId);
     }

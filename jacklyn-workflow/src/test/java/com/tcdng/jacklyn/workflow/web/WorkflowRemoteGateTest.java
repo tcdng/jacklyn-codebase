@@ -60,7 +60,7 @@ public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
             inputStream = IOUtils.openClassLoaderResourceInputStream("xml/wfcustomer.xml");
             byte[] xml = IOUtils.readAll(inputStream);
 
-            PublishWfCategoryParams params = new PublishWfCategoryParams(xml);
+            PublishWfCategoryParams params = new PublishWfCategoryParams(xml, true);
             PublishWfCategoryResult result = getRemoteCallClient().remoteCall(PublishWfCategoryResult.class,
                     TEST_REMOTE_APP_URL, params);
             assertNotNull(result);

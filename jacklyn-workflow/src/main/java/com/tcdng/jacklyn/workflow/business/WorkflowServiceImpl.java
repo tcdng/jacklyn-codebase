@@ -108,6 +108,7 @@ import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfDocAttachment;
 import com.tcdng.jacklyn.workflow.entities.WfDocBeanMapping;
+import com.tcdng.jacklyn.workflow.entities.WfDocBeanMappingQuery;
 import com.tcdng.jacklyn.workflow.entities.WfDocClassifier;
 import com.tcdng.jacklyn.workflow.entities.WfDocClassifierFilter;
 import com.tcdng.jacklyn.workflow.entities.WfDocField;
@@ -664,6 +665,20 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         return new WfTemplateLargeData(wfTemplate, stepList, enrichmentList, routingList, recordActionList,
                 userActionList, formPrivilegeList, policyList, alertList);
+    }
+
+    @Override
+    public String autoDetectTemplate(String categoryName, Class<? extends Document> documentType)
+            throws UnifyException {
+        String wfDocName =
+                db().value(String.class, "wfDocName",
+                        new WfDocBeanMappingQuery().beanType(documentType.getName()).wfCategoryName(categoryName)
+                                .wfCategoryStatus(RecordStatus.ACTIVE).primaryMapping(Boolean.TRUE));
+
+        String wfTemplateName =
+                db().value(String.class, "name",
+                        new WfTemplateQuery().wfCategoryName(categoryName).wfDocName(wfDocName));
+        return WfNameUtils.getGlobalTemplateName(categoryName, wfTemplateName);
     }
 
     @Override

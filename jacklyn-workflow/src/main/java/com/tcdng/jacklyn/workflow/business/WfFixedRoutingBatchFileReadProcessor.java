@@ -16,12 +16,11 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.jacklyn.workflow.constants.WfBatchFileReadProcessorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Parameters;
-import com.tcdng.unify.core.batch.AbstractBatchFileReadProcessor;
 import com.tcdng.unify.core.batch.BatchFileReadConfig;
 import com.tcdng.unify.core.batch.BatchFileReadProcessor;
 import com.tcdng.unify.core.batch.BatchFileReader;
@@ -30,25 +29,22 @@ import com.tcdng.unify.core.data.ValueStore;
 import com.tcdng.unify.core.util.ReflectUtils;
 
 /**
- * Workflow batch file read processor.
+ * Workflow fixed routing batch file read processor.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(name = "wfbatchfilereadprocessor", description = "$m{workflow-batchfilereadprocessor}")
+@Component(name = "wffixedbatchfilereadprocessor", description = "$m{workflow-fixedbatchfilereadprocessor}")
 @Parameters({
         @Parameter(
                 name = WfBatchFileReadProcessorConstants.WORKFLOW_TEMPLATENAME,
                 description = "$m{wfbatchfilereadprocessor.workflowtemplatename}",
-                editor = "!ui-name minLen:1 size:24 period:true", mandatory = true),
+                editor = "!ui-select list:wfglobaltemplatelist blankOption:$s{}", mandatory = true),
         @Parameter(
                 name = WfBatchFileReadProcessorConstants.WORKFLOW_DOCUMENTTYPE,
                 description = "$m{wfbatchfilereadprocessor.documenttype}",
                 editor = "!ui-select list:toolingdocumentlist blankOption:$s{}", mandatory = true) })
-public class WfBatchFileReadProcessor extends AbstractBatchFileReadProcessor implements BatchFileReadProcessor {
-
-    @Configurable
-    private WorkflowService workflowService;
+public class WfFixedRoutingBatchFileReadProcessor extends AbstractWfBatchFileReadProcessor implements BatchFileReadProcessor {
 
     @Override
     protected Object doProcess(BatchFileReadConfig batchFileReadConfig, BatchFileReader reader) throws UnifyException {
@@ -59,7 +55,7 @@ public class WfBatchFileReadProcessor extends AbstractBatchFileReadProcessor imp
         Document item = ReflectUtils.newInstance(Document.class, documentType);
         ValueStore itemStore = getValueStore(item);
         while (reader.readNextRecord(itemStore)) {
-            workflowService.submitToWorkflow(globalTemplateName, (Document) item);
+            getWorkflowService().submitToWorkflow(globalTemplateName, (Document) item);
         }
 
         return null;

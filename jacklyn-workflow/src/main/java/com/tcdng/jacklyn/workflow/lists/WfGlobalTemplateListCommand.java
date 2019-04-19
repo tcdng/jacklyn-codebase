@@ -13,31 +13,49 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.tcdng.jacklyn.workflow.lists;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
+import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
+import com.tcdng.jacklyn.workflow.entities.WfTemplate;
+import com.tcdng.jacklyn.workflow.entities.WfTemplateQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.data.ListData;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
- * Workflow category list command.
+ * Workflow global template list command.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("wfcategorylist")
-public class WfCategoryListCommand extends AbstractZeroParamsWorkflowListCommand {
+@Component("wfglobaltemplatelist")
+public class WfGlobalTemplateListCommand extends AbstractZeroParamsWorkflowListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getWorkflowModule()
-                .findWfCategories((WfCategoryQuery) new WfCategoryQuery().status(RecordStatus.ACTIVE));
+        List<WfTemplate> templateList =
+                getWorkflowModule().findWfTemplates(new WfTemplateQuery().wfCategoryStatus(RecordStatus.ACTIVE));
+        if (!DataUtils.isBlank(templateList)) {
+            List<ListData> list = new ArrayList<ListData>();
+            for (WfTemplate wfTemplate : templateList) {
+                list.add(new ListData(
+                        WfNameUtils.getGlobalTemplateName(wfTemplate.getWfCategoryName(), wfTemplate.getName()),
+                        wfTemplate.getDescription()));
+            }
+            return list;
+        }
+
+        return Collections.emptyList();
     }
 
 }

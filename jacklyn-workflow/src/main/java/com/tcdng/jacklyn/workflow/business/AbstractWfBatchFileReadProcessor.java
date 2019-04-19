@@ -16,15 +16,22 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.batch.AbstractBatchFileReadProcessor;
+
 /**
- * Workflow batch file read processor constants.
+ * Abstract workflow batch file read processor.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfBatchFileReadProcessorConstants {
+public abstract class AbstractWfBatchFileReadProcessor extends AbstractBatchFileReadProcessor {
 
-    String WORKFLOW_TEMPLATENAME = "wf.templateName";
+    @Configurable
+    private WorkflowService workflowService;
 
-    String WORKFLOW_DOCUMENTTYPE = "wf.documentType";
+    protected WorkflowService getWorkflowService() {
+        return workflowService;
+    }
+
 }

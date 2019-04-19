@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import java.util.List;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
@@ -59,6 +60,12 @@ public class WfDocBeanMapping extends BaseEntity {
 
     @ListOnly(key = "wfDocId", property = "description")
     private String wfDocDesc;
+
+    @ListOnly(key = "wfDocId", property = "wfCategoryName")
+    private String wfCategoryName;
+
+    @ListOnly(key = "wfDocId", property = "wfCategoryStatus")
+    private RecordStatus wfCategoryStatus;
 
     @ChildList
     private List<WfDocFieldMapping> fieldMappingList;
@@ -126,6 +133,22 @@ public class WfDocBeanMapping extends BaseEntity {
 
     public void setWfDocDesc(String wfDocDesc) {
         this.wfDocDesc = wfDocDesc;
+    }
+
+    public String getWfCategoryName() {
+        return wfCategoryName;
+    }
+
+    public void setWfCategoryName(String wfCategoryName) {
+        this.wfCategoryName = wfCategoryName;
+    }
+
+    public RecordStatus getWfCategoryStatus() {
+        return wfCategoryStatus;
+    }
+
+    public void setWfCategoryStatus(RecordStatus wfCategoryStatus) {
+        this.wfCategoryStatus = wfCategoryStatus;
     }
 
     public List<WfDocFieldMapping> getFieldMappingList() {

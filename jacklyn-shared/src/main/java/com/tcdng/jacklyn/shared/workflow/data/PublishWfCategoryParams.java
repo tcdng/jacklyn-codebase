@@ -36,12 +36,13 @@ public class PublishWfCategoryParams extends RemoteCallParams {
     private boolean activate;
 
     public PublishWfCategoryParams() {
-        this(null);
+        this(null, false);
     }
 
-    public PublishWfCategoryParams(byte[] wfCategoryXml) {
+    public PublishWfCategoryParams(byte[] wfCategoryXml, boolean activate) {
         super(WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
         this.wfCategoryXml = wfCategoryXml;
+        this.activate = activate;
     }
 
     public byte[] getWfCategoryXml() {
@@ -57,6 +58,7 @@ public class PublishWfCategoryParams extends RemoteCallParams {
         return activate;
     }
 
+    @XmlElement
     public void setActivate(boolean activate) {
         this.activate = activate;
     }

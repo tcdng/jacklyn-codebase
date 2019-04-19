@@ -267,6 +267,19 @@ public interface WorkflowService extends JacklynBusinessService {
     WfTemplateLargeData findLargeWfTemplate(Long wfTemplateId) throws UnifyException;
 
     /**
+     * Auto detects template for workflow category and document type.
+     * 
+     * @param categoryName
+     *            the workflow category name
+     * @param documentType
+     *            the document type
+     * @return the global template name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String autoDetectTemplate(String categoryName, Class<? extends Document> documentType) throws UnifyException;
+
+    /**
      * Find workflow steps using query.
      * 
      * @param query

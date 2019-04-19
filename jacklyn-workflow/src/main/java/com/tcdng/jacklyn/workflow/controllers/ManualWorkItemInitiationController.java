@@ -135,16 +135,16 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 
     private void buildUserRoleTemplateListing() throws UnifyException {
         LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
-        for (WfTemplate wfTemplateData : getWorkflowService().findUserRoleManualInitWfTemplates()) {
-            String categoryName = wfTemplateData.getWfCategoryName();
+        for (WfTemplate wfTemplate : getWorkflowService().findUserRoleManualInitWfTemplates()) {
+            String categoryName = wfTemplate.getWfCategoryName();
             if (!lb.isCategory(categoryName)) {
-                lb.addCategory(categoryName, wfTemplateData.getWfCategoryDesc(),
+                lb.addCategory(categoryName, wfTemplate.getWfCategoryDesc(),
                         "/workflow/manualworkiteminitiation/openCreateItem");
             }
 
-            String templateName = WfNameUtils.getGlobalTemplateName(wfTemplateData.getWfCategoryName(),
-                    wfTemplateData.getName());
-            lb.addLink(categoryName, templateName, wfTemplateData.getDescription());
+            String templateName = WfNameUtils.getGlobalTemplateName(wfTemplate.getWfCategoryName(),
+                    wfTemplate.getName());
+            lb.addLink(categoryName, templateName, wfTemplate.getDescription());
         }
 
         wfTemplateGridInfo = lb.build();
