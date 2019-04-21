@@ -1,7 +1,7 @@
 // UPL template for workflow document field definition CRUD panel
 // Copyright 2018-2019 The Code Department.
 !ui-wfdocfieldcrudpanel
-    formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmParent frmTypeDesc frmMultiple frmPresetLen}}
+    formSection:$d{!ui-section components:$c{frmWfDocName frmName frmDescription frmParent frmTypeDesc}}
     tableColumnList:$c{wfDocName name description typeDesc}
 
 //Table columns
@@ -16,5 +16,3 @@
 !ui-text:frmDescription caption:$m{workflow.wfdoc.wfdocfield.description} binding:description size:40 required:true
 !ui-text:frmParent caption:$m{workflow.wfdoc.wfdocfield.parent} binding:parentName size:32
 !ui-text:frmTypeDesc caption:$m{workflow.wfdoc.wfdocfield.type} binding:typeDesc size:32 required:true
-!ui-checkbox:frmMultiple caption:$m{workflow.wfdoc.wfdocfield.multiple} binding:multiple
-!ui-integer:frmPresetLen caption:$m{workflow.wfdoc.wfdocfield.presetlength} binding:presetLength

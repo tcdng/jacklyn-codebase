@@ -14,23 +14,21 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared.workflow;
+package com.tcdng.jacklyn.shared.workflow.data;
+
+import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
+import com.tcdng.unify.core.data.TaggedMessage;
+import com.tcdng.unify.web.TaggedMessageParams;
 
 /**
- * Workflow module remote gate name constants.
+ * Submit packable document parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WorkflowRemoteCallNameConstants {
+public class SubmitPackableDocParams extends TaggedMessageParams {
 
-    String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
-
-    String SUBMIT_WORKFLOW_PACKABLEDOC = "wfSubmitWfPackableDoc";
-
-    String GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST = "wfGetToolingItemClassifierLogicList";
-    
-    String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
-
-    String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
+    public SubmitPackableDocParams(TaggedMessage taggedMessage) {
+        super(WorkflowRemoteCallNameConstants.SUBMIT_WORKFLOW_PACKABLEDOC, taggedMessage);
+    }
 }

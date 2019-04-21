@@ -29,14 +29,19 @@ import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicParams;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicResult;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryParams;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
+import com.tcdng.jacklyn.shared.workflow.data.SubmitPackableDocParams;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.data.WfTaggedMappingDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.data.PackableDoc;
+import com.tcdng.unify.core.data.TaggedMessage;
+import com.tcdng.unify.web.TaggedMessageResult;
 import com.tcdng.unify.web.annotation.GatewayAction;
 
 /**
@@ -52,22 +57,37 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
     @Configurable
     private WorkflowService workflowService;
 
-    @GatewayAction(name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
+    @GatewayAction(
+            name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
             description = "$m{workflow.gate.remotecall.publishwfcategory}")
     public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
         workflowService.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
         return new PublishWfCategoryResult();
     }
 
-    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST,
+    @GatewayAction(
+            name = WorkflowRemoteCallNameConstants.SUBMIT_WORKFLOW_PACKABLEDOC,
+            description = "$m{workflow.gate.remotecall.submitworkflowdocument}")
+    public TaggedMessageResult submitWorkflowDocument(SubmitPackableDocParams msg) throws UnifyException {
+        TaggedMessage taggedMessage = msg.getTaggedMessage();
+        WfTaggedMappingDef wfTaggedMappingDef = workflowService.getRuntimeWfTaggedMappingDef(taggedMessage.getTag());
+        PackableDoc packableDoc =
+                PackableDoc.unpack(wfTaggedMappingDef.getWfDocDef().getDocConfig(), taggedMessage.getMessage());
+        workflowService.submitToWorkflow(wfTaggedMappingDef.getWfTemplateDef().getGlobalName(), packableDoc);
+        return TaggedMessageResult.SUCCESS;
+    }
+
+    @GatewayAction(
+            name = WorkflowRemoteCallNameConstants.GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST,
             description = "$m{workflow.gate.remotecall.gettoolingclassifierlogic}")
-    public GetToolingItemClassifierLogicResult getToolingItemClassifierLogicList(GetToolingItemClassifierLogicParams params)
-            throws UnifyException {
+    public GetToolingItemClassifierLogicResult getToolingItemClassifierLogicList(
+            GetToolingItemClassifierLogicParams params) throws UnifyException {
         List<ToolingItemClassifierLogicItem> list = workflowService.findToolingItemClassifierLogicTypes();
         return new GetToolingItemClassifierLogicResult(list);
     }
 
-    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
+    @GatewayAction(
+            name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
             description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
     public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(GetToolingEnrichmentLogicParams params)
             throws UnifyException {
@@ -75,12 +95,12 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
         return new GetToolingEnrichmentLogicResult(list);
     }
 
-    @GatewayAction(name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
+    @GatewayAction(
+            name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
             description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
     public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
             throws UnifyException {
         List<ToolingPolicyLogicItem> list = workflowService.findToolingPolicyLogicTypes();
         return new GetToolingPolicyLogicResult(list);
     }
-
 }

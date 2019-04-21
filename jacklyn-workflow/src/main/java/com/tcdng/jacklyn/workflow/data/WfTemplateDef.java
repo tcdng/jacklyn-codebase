@@ -28,7 +28,7 @@ import com.tcdng.unify.core.UnifyException;
 /**
  * Workflow template definition.
  * 
- * @author Lateef
+ * @author Lateef Ojulari
  * @since 1.0
  */
 public class WfTemplateDef extends BaseWfDef {

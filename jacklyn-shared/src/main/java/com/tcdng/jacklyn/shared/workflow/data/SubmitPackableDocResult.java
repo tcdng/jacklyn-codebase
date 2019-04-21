@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,23 +14,16 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared.workflow;
+package com.tcdng.jacklyn.shared.workflow.data;
+
+import com.tcdng.unify.web.TaggedMessageResult;
 
 /**
- * Workflow module remote gate name constants.
+ * Submit packable document result.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WorkflowRemoteCallNameConstants {
+public class SubmitPackableDocResult extends TaggedMessageResult {
 
-    String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
-
-    String SUBMIT_WORKFLOW_PACKABLEDOC = "wfSubmitWfPackableDoc";
-
-    String GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST = "wfGetToolingItemClassifierLogicList";
-    
-    String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
-
-    String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
 }

@@ -30,6 +30,7 @@ import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
 import com.tcdng.jacklyn.workflow.data.WfItemObject;
 import com.tcdng.jacklyn.workflow.data.WfItemObjects;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
+import com.tcdng.jacklyn.workflow.data.WfTaggedMappingDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -302,6 +303,17 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<Long> findStepIds(Long wfTemplateId, Collection<String> stepNames) throws UnifyException;
+
+    /**
+     * Gets worklfow tagged mapping definition.
+     * 
+     * @param globalTagName
+     *            the global tag name
+     * @return the runtime object
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    WfTaggedMappingDef getRuntimeWfTaggedMappingDef(String globalTagName) throws UnifyException;
 
     /**
      * Gets the workflow form object.

@@ -124,4 +124,9 @@ public interface WorkflowModuleErrorConstants {
      * Workflow category with name {0} and version {1} is unknown.
      */
     String WORKFLOW_CATEGORY_NAME_VERSION_UNKNOWN = "WORKFLOW_0014";
+
+    /**
+     * Workflow tagged mapping with tag name {0} is unknown.
+     */
+    String WORKFLOW_TAGGEDMAPPING_WITH_TAGNAME_UNKNOWN = "WORKFLOW_0015";
 }
