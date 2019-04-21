@@ -7,15 +7,11 @@
 			<item-description-format>Customer:{firstName} {lastName}
 			</item-description-format>
 			<fields>
-				<field name="id" description="Customer ID" type="long"
-					multiple="false" />
-				<field name="firstName" description="First Name" type="string"
-					multiple="false" />
-				<field name="lastName" description="Last Name" type="string"
-					multiple="false" />
-				<field name="age" description="Age" type="integer" multiple="false" />
-				<field name="height" description="Height" type="double"
-					multiple="false" />
+				<field name="id" description="Customer ID" type="long" />
+				<field name="firstName" description="First Name" type="string" />
+				<field name="lastName" description="Last Name" type="string" />
+				<field name="age" description="Age" type="integer" />
+				<field name="height" description="Height" type="double" />
 			</fields>
 			<classifiers>
 				<classifier name="class1" description="Class 1">

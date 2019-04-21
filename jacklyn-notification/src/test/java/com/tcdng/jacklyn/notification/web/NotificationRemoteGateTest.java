@@ -43,7 +43,7 @@ public class NotificationRemoteGateTest extends AbstractJacklynWebTest {
     public void testGetToolingAttachmentGenList() throws Exception {
         GetToolingAttachmentGenParams params = new GetToolingAttachmentGenParams();
         GetToolingAttachmentGenResult result =
-                getRemoteCallClient().remoteCall(GetToolingAttachmentGenResult.class, TEST_REMOTE_APP_URL, params);
+                getWebClient().remoteCall(GetToolingAttachmentGenResult.class, TEST_REMOTE_APP_URL, params);
         assertNotNull(result);
         assertFalse(result.isError());
         assertNull(result.getErrorCode());
@@ -59,9 +59,9 @@ public class NotificationRemoteGateTest extends AbstractJacklynWebTest {
 
     @Override
     protected void onSetup() throws Exception {
-        if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
+        if (!getWebClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
                 NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST)) {
-            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+            getWebClient().setupRemoteCall(TEST_REMOTE_APP_URL,
                     NotificationRemoteCallNameConstants.GET_TOOLING_ATTACHMENT_GENERATOR_LIST);
         }
     }

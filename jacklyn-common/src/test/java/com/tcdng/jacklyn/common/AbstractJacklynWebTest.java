@@ -21,7 +21,7 @@ import com.tcdng.unify.core.Setting;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.jetty.JettyApplicationComponents;
 import com.tcdng.unify.jetty.http.JettyEmbeddedWebServer;
-import com.tcdng.unify.web.RemoteCallClient;
+import com.tcdng.unify.web.WebClient;
 import com.tcdng.unify.web.WebApplicationComponents;
 
 /**
@@ -46,7 +46,7 @@ public abstract class AbstractJacklynWebTest extends AbstractJacklynTest {
                 new Setting("contextPath", "/jacklyn"), new Setting("httpPort", String.valueOf(TEST_HTTPPORT)));
     }
 
-    protected RemoteCallClient getRemoteCallClient() throws Exception {
-        return (RemoteCallClient) this.getComponent(WebApplicationComponents.APPLICATION_REMOTECALLCLIENT);
+    protected WebClient getWebClient() throws Exception {
+        return (WebClient) getComponent(WebApplicationComponents.APPLICATION_WEBCLIENT);
     }
 }

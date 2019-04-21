@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import com.tcdng.unify.core.constant.DataType;
@@ -31,11 +30,9 @@ import com.tcdng.unify.core.constant.DataType;
 public class WfComplexFieldConfig extends WfFieldConfig {
 
     private List<WfFieldConfig> wfFieldConfigList;
-
-    private int presetLength;
     
     public WfComplexFieldConfig() {
-        super(DataType.COMPLEX, false);
+        super(DataType.COMPLEX);
     }
 
     public List<WfFieldConfig> getWfFieldConfigList() {
@@ -45,14 +42,5 @@ public class WfComplexFieldConfig extends WfFieldConfig {
     @XmlElement(name = "field", required = true)
     public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
         this.wfFieldConfigList = wfFieldConfigList;
-    }
-
-    public int getPresetLength() {
-        return presetLength;
-    }
-
-    @XmlAttribute(name="preset-length")
-    public void setPresetLength(int presetLength) {
-        this.presetLength = presetLength;
     }
 }
