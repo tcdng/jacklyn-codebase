@@ -38,4 +38,6 @@ public interface SystemRemoteCallNameConstants {
     String GET_TOOLING_LIST_TYPES = "sysGetToolingListTypes";
     
     String GET_TOOLING_TRANSFORMER_TYPES = "sysGetToolingTransformerTypes";
+    
+    String CONSUME_TAGGED_MESSAGE = "sysConsumeTaggedMessage";
 }

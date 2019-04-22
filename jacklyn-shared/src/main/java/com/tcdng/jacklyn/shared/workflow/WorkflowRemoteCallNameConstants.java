@@ -26,8 +26,6 @@ public interface WorkflowRemoteCallNameConstants {
 
     String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
 
-    String SUBMIT_WORKFLOW_PACKABLEDOC = "wfSubmitWfPackableDoc";
-
     String GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST = "wfGetToolingItemClassifierLogicList";
     
     String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";

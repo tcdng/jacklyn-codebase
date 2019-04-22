@@ -29,19 +29,14 @@ import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicParams;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicResult;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryParams;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
-import com.tcdng.jacklyn.shared.workflow.data.SubmitPackableDocParams;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
-import com.tcdng.jacklyn.workflow.data.WfTaggedMappingDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.data.PackableDoc;
-import com.tcdng.unify.core.data.TaggedMessage;
-import com.tcdng.unify.web.TaggedMessageResult;
 import com.tcdng.unify.web.annotation.GatewayAction;
 
 /**
@@ -63,18 +58,6 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
     public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
         workflowService.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
         return new PublishWfCategoryResult();
-    }
-
-    @GatewayAction(
-            name = WorkflowRemoteCallNameConstants.SUBMIT_WORKFLOW_PACKABLEDOC,
-            description = "$m{workflow.gate.remotecall.submitworkflowdocument}")
-    public TaggedMessageResult submitWorkflowDocument(SubmitPackableDocParams msg) throws UnifyException {
-        TaggedMessage taggedMessage = msg.getTaggedMessage();
-        WfTaggedMappingDef wfTaggedMappingDef = workflowService.getRuntimeWfTaggedMappingDef(taggedMessage.getTag());
-        PackableDoc packableDoc =
-                PackableDoc.unpack(wfTaggedMappingDef.getWfDocDef().getDocConfig(), taggedMessage.getMessage());
-        workflowService.submitToWorkflow(wfTaggedMappingDef.getWfTemplateDef().getGlobalName(), packableDoc);
-        return TaggedMessageResult.SUCCESS;
     }
 
     @GatewayAction(
