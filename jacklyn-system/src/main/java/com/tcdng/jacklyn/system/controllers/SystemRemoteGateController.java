@@ -52,12 +52,8 @@ import com.tcdng.jacklyn.system.entities.ModuleQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.business.TaggedMessageConsumer;
-import com.tcdng.unify.core.data.TaggedMessage;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.web.TaggedMessageParams;
-import com.tcdng.unify.web.TaggedMessageResult;
 import com.tcdng.unify.web.annotation.GatewayAction;
 
 /**
@@ -175,16 +171,6 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
             description = "$m{system.gate.remotecall.getlisttypes}")
     public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params) throws UnifyException {
         return new GetToolingListTypeResult(systemService.findToolingListTypes());
-    }
-
-    @GatewayAction(
-            name = SystemRemoteCallNameConstants.CONSUME_TAGGED_MESSAGE,
-            description = "$m{system.gate.remotecall.consumetaggedmessage}")
-    public TaggedMessageResult consumeTaggedMessage(TaggedMessageParams params) throws UnifyException {
-        TaggedMessage taggedMessage = params.getTaggedMessage();
-        TaggedMessageConsumer taggedMessageConsumer = (TaggedMessageConsumer) getComponent(taggedMessage.getConsumer());
-        taggedMessageConsumer.consume(taggedMessage);
-        return TaggedMessageResult.SUCCESS;
     }
 
 }

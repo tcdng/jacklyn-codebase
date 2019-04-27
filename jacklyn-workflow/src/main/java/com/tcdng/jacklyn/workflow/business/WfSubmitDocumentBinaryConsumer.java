@@ -21,28 +21,28 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Tooling;
-import com.tcdng.unify.core.business.AbstractTaggedMessageConsumer;
+import com.tcdng.unify.core.business.AbstractTaggedBinaryMessageConsumer;
 import com.tcdng.unify.core.data.PackableDoc;
-import com.tcdng.unify.core.data.TaggedMessage;
+import com.tcdng.unify.core.data.TaggedBinaryMessage;
 
 /**
- * Workflow tagged message consumer.
+ * Workflow submit document binary consumer.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling(description = "Workflow Tagged Message Consumer")
-@Component("workflow-taggedmessageconsumer")
-public class WfTaggedMessageConsumer extends AbstractTaggedMessageConsumer {
+@Tooling(description = "Workflow Submit Document Binary Consumer")
+@Component("workflow-submitdocumentbinaryconsumer")
+public class WfSubmitDocumentBinaryConsumer extends AbstractTaggedBinaryMessageConsumer {
 
     @Configurable
     private WorkflowService workflowService;
 
     @Override
-    public void consume(TaggedMessage taggedMessage) throws UnifyException {
-        WfTaggedMappingDef wfTaggedMappingDef = workflowService.getRuntimeWfTaggedMappingDef(taggedMessage.getTag());
+    public void consume(TaggedBinaryMessage binaryMessage) throws UnifyException {
+        WfTaggedMappingDef wfTaggedMappingDef = workflowService.getRuntimeWfTaggedMappingDef(binaryMessage.getTag());
         PackableDoc packableDoc =
-                PackableDoc.unpack(wfTaggedMappingDef.getWfDocDef().getDocConfig(), taggedMessage.getMessage());
+                PackableDoc.unpack(wfTaggedMappingDef.getWfDocDef().getDocConfig(), binaryMessage.getMessage());
         workflowService.submitToWorkflow(wfTaggedMappingDef.getWfTemplateDef().getGlobalName(), packableDoc);
     }
 

@@ -13,29 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.system;
+
+package com.tcdng.jacklyn.integration.constants;
+
+import com.tcdng.jacklyn.common.constants.AbstractJacklynModuleStaticSettings;
+import com.tcdng.unify.core.annotation.AutoDetect;
 
 /**
- * System module remote gate name constants.
+ * Integration module static settings
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface SystemRemoteCallNameConstants {
+@AutoDetect
+public class IntegrationModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
-    String GET_APPLICATION_INFO = "sysGetAppInfo";
+    public IntegrationModuleStaticSettings() {
+        super(IntegrationModuleNameConstants.INTEGRATIONSERVICE, "config/integration-module.xml",
+                "com.tcdng.jacklyn.resources.integration-messages");
+    }
 
-    String GET_APPLICATION_MENU = "sysGetAppMenu";
-
-    String GET_APPLICATION_MODULES = "sysGetAppModules";
-
-    String GET_TOOLING_BASE_TYPES = "sysGetToolingBaseTypes";
-
-    String GET_TOOLING_RECORD_TYPES = "sysGetToolingRecordTypes";
-    
-    String GET_TOOLING_ENUMERATION_TYPES = "sysGetToolingEnumTypes";
-    
-    String GET_TOOLING_LIST_TYPES = "sysGetToolingListTypes";
-    
-    String GET_TOOLING_TRANSFORMER_TYPES = "sysGetToolingTransformerTypes";
 }

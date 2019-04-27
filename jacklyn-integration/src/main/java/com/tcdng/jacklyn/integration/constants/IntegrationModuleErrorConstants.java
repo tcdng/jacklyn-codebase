@@ -13,29 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.system;
+package com.tcdng.jacklyn.integration.constants;
 
 /**
- * System module remote gate name constants.
+ * Integration module errors.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface SystemRemoteCallNameConstants {
+public interface IntegrationModuleErrorConstants {
 
-    String GET_APPLICATION_INFO = "sysGetAppInfo";
-
-    String GET_APPLICATION_MENU = "sysGetAppMenu";
-
-    String GET_APPLICATION_MODULES = "sysGetAppModules";
-
-    String GET_TOOLING_BASE_TYPES = "sysGetToolingBaseTypes";
-
-    String GET_TOOLING_RECORD_TYPES = "sysGetToolingRecordTypes";
-    
-    String GET_TOOLING_ENUMERATION_TYPES = "sysGetToolingEnumTypes";
-    
-    String GET_TOOLING_LIST_TYPES = "sysGetToolingListTypes";
-    
-    String GET_TOOLING_TRANSFORMER_TYPES = "sysGetToolingTransformerTypes";
 }
