@@ -17,7 +17,6 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,7 +44,7 @@ public class WfDocDef extends BaseWfDef {
 
     private String globalName;
 
-    private Date timestamp;
+    private long timestamp;
 
     private WfFormDef wfFormDef;
 
@@ -60,7 +59,7 @@ public class WfDocDef extends BaseWfDef {
     private Map<String, WfDocClassifierDef> classifiers;
 
     public WfDocDef(Long wfDocId, String globalName, String name, String description, PackableDocConfig docConfig,
-            Date timestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
+            long timestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
             List<WfDocBeanMappingDef> beanMappingList, List<WfDocAttachmentDef> attachmentList,
             List<WfDocClassifierDef> classifierList) {
         super(name, description);
@@ -121,7 +120,7 @@ public class WfDocDef extends BaseWfDef {
         return globalName;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 

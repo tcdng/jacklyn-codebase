@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<module name="integration" description="$m{integration.module}">
+	<menus>
+		<menu name="int-mainintegration" description="$m{integration.menu.main}"
+			caption="$m{integration.menu.title}">
+			<menuitem name="int-manageproducerdefinition" description="$m{integration.menuitem.producerdefinition}"
+				caption="$m{integration.producerdefinition.menu.title}" path="/integration/producerdefinition/openPage"
+				pageCaption="$m{integration.producerdefinition.manage}" remotePath="/integration/producerdefinition/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="int-producerdefinitionadd"
+				description="$m{integration.privilege.producerdefinition.add}" />
+			<privilege name="int-producerdefinitionedit"
+				description="$m{integration.privilege.producerdefinition.edit}" />
+			<privilege name="int-producerdefinitionview"
+				description="$m{integration.privilege.producerdefinition.view}" />
+			<privilege name="int-producerdefinitiondelete"
+				description="$m{integration.privilege.producerdefinition.delete}" />
+		</privilege-group>
+	</privileges>
+	<sys-parameters>
+		<int-parameter name="INT-0001" defaultValue="true"
+			description="$m{integration.sysparam.enableconsumers}" editor="!ui-select list:booleanlist"
+			type="boolean" control="true" editable="false" />
+	</sys-parameters>
+</module>

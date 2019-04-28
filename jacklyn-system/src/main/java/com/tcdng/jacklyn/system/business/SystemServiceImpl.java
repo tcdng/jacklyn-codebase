@@ -177,7 +177,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 boolean stale = false;
                 try {
                     Date updateDt = db().value(Date.class, "updateDt", new DashboardQuery().name(name));
-                    stale = !updateDt.equals(dashboardDef.getTimestamp());
+                    stale = resolveUTC(updateDt) != dashboardDef.getTimestamp();
                 } catch (Exception e) {
                     logError(e);
                 }
@@ -215,8 +215,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                 String dashboardViewer =
                         UplUtils.generateUplGeneratorTargetName("dashboard-generator", dashboard.getName());
-                return new DashboardDef(dashboard.getName(), dashboard.getOrientationType(), dashboard.getUpdateDt(),
-                        DataUtils.unmodifiableList(layerList), dashboardViewer);
+                return new DashboardDef(dashboard.getName(), dashboard.getOrientationType(),
+                        resolveUTC(dashboard.getUpdateDt()), DataUtils.unmodifiableList(layerList), dashboardViewer);
             }
         };
     }
@@ -642,7 +642,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         for (Class<? extends Document> documentClass : getAnnotatedClassesExcluded(Document.class, Tooling.class,
                 "com.tcdng.jacklyn.common.entities")) {
             Tooling ta = documentClass.getAnnotation(Tooling.class);
-            resultList.add(new ToolingDocumentListItem(documentClass.getName(), resolveApplicationMessage(ta.description())));
+            resultList.add(
+                    new ToolingDocumentListItem(documentClass.getName(), resolveApplicationMessage(ta.description())));
         }
         return resultList;
     }
@@ -1069,7 +1070,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setControl(sysParamConfig.isControl());
                         sysParameter.setEditable(sysParamConfig.isEditable());
                         // Check for application version
-                        if (updateVersion && SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION.equals(sysParamConfig.getName())) {
+                        if (updateVersion && SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION
+                                .equals(sysParamConfig.getName())) {
                             sysParameter.setValue(getDeploymentVersion());
                             updateVersion = false;
                         }

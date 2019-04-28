@@ -13,15 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.integration;
+package com.tcdng.jacklyn.integration.entities;
+
+import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 
 /**
- * Integration module remote gate name constants.
+ * Query class for producer definition.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface IntegrationRemoteCallNameConstants {
+public class ProducerDefinitionQuery extends BaseVersionedStatusEntityQuery<ProducerDefinition> {
 
-    String PUSH_TAGGEDXMLMESSAGE = "intPushTaggedXmlMessage";
+    public ProducerDefinitionQuery() {
+        super(ProducerDefinition.class);
+    }
+
+    public ProducerDefinitionQuery name(String name) {
+        return (ProducerDefinitionQuery) equals("name", name);
+    }
+
+    public ProducerDefinitionQuery descriptionLike(String description) {
+        return (ProducerDefinitionQuery) like("description", description);
+    }
 }

@@ -24,13 +24,14 @@ import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
+import com.tcdng.jacklyn.workflow.data.WfDocDef;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
 import com.tcdng.jacklyn.workflow.data.WfItemObject;
 import com.tcdng.jacklyn.workflow.data.WfItemObjects;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
-import com.tcdng.jacklyn.workflow.data.WfTaggedMappingDef;
+import com.tcdng.jacklyn.workflow.data.WfTemplateDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -305,15 +306,15 @@ public interface WorkflowService extends JacklynBusinessService {
     List<Long> findStepIds(Long wfTemplateId, Collection<String> stepNames) throws UnifyException;
 
     /**
-     * Gets worklfow tagged mapping definition.
+     * Gets workflow document definition.
      * 
-     * @param globalTagName
-     *            the global tag name
+     * @param globalDocName
+     *            the global document name
      * @return the runtime object
      * @throws UnifyException
      *             if an error occurs
      */
-    WfTaggedMappingDef getRuntimeWfTaggedMappingDef(String globalTagName) throws UnifyException;
+    WfDocDef getRuntimeWfDocDef(String globalDocName) throws UnifyException;
 
     /**
      * Gets the workflow form object.
@@ -326,6 +327,17 @@ public interface WorkflowService extends JacklynBusinessService {
      *             has no form
      */
     WfFormDef getRuntimeWfFormDef(String globalDocName) throws UnifyException;
+
+    /**
+     * Gets workflow document definition.
+     * 
+     * @param globalTemplateName
+     *            the global template name
+     * @return the runtime object
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    WfTemplateDef getRuntimeWfTemplateDef(String globalTemplateName) throws UnifyException;
 
     /**
      * Creates a manual initiation item for the supplied workflow template.

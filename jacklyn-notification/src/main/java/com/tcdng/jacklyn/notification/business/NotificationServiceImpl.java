@@ -357,7 +357,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
     @Periodic(PeriodicType.SLOWER)
     public void sendNotifications(TaskMonitor taskMonitor) throws UnifyException {
-        if (grabClusterMasterLock()) {
+        if (grabClusterMasterLock()) { // Puts burden on node until it dies
             if (systemService.getSysParameterValue(boolean.class,
                     NotificationModuleSysParamConstants.NOTIFICATION_ENABLED)) {
                 int maxBatchSize =

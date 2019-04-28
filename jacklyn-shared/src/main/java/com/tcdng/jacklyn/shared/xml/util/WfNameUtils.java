@@ -33,8 +33,6 @@ public final class WfNameUtils {
 
     private static FactoryMap<String, StepNameParts> stepNames;
 
-    private static FactoryMap<String, TaggedMappingNameParts> taggedMappingNames;
-
     static {
         docNames = new FactoryMap<String, DocNameParts>() {
 
@@ -62,16 +60,6 @@ public final class WfNameUtils {
             protected StepNameParts create(String globalName, Object... params) throws Exception {
                 String[] names = StringUtils.dotSplit(globalName);
                 return new StepNameParts(names[0], names[1], getGlobalTemplateName(names[0], names[1]), names[2]);
-            }
-
-        };
-
-        taggedMappingNames = new FactoryMap<String, TaggedMappingNameParts>() {
-
-            @Override
-            protected TaggedMappingNameParts create(String globalName, Object... arg1) throws Exception {
-                String[] names = StringUtils.dotSplit(globalName);
-                return new TaggedMappingNameParts(names[0], names[1]);
             }
 
         };
@@ -111,10 +99,6 @@ public final class WfNameUtils {
 
     public static StepNameParts getStepNameParts(String globalName) throws UnifyException {
         return stepNames.get(globalName);
-    }
-
-    public static TaggedMappingNameParts getTaggedMappingNameParts(String globalName) throws UnifyException {
-        return taggedMappingNames.get(globalName);
     }
 
     public static class DocNameParts {
@@ -212,25 +196,5 @@ public final class WfNameUtils {
             return stepName;
         }
 
-    }
-
-    public static class TaggedMappingNameParts {
-
-        private String categoryName;
-
-        private String tagName;
-
-        public TaggedMappingNameParts(String categoryName, String tagName) {
-            this.categoryName = categoryName;
-            this.tagName = tagName;
-        }
-
-        public String getCategoryName() {
-            return categoryName;
-        }
-
-        public String getTagName() {
-            return tagName;
-        }
     }
 }

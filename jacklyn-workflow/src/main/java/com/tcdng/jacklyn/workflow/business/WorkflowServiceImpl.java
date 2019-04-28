@@ -68,7 +68,6 @@ import com.tcdng.jacklyn.shared.xml.util.WfCategoryConfigUtils;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.DocNameParts;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.StepNameParts;
-import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.TaggedMappingNameParts;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.TemplateNameParts;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
@@ -99,7 +98,6 @@ import com.tcdng.jacklyn.workflow.data.WfPolicyDef;
 import com.tcdng.jacklyn.workflow.data.WfRecordActionDef;
 import com.tcdng.jacklyn.workflow.data.WfRoutingDef;
 import com.tcdng.jacklyn.workflow.data.WfStepDef;
-import com.tcdng.jacklyn.workflow.data.WfTaggedMappingDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.data.WfUserActionDef;
@@ -138,8 +136,6 @@ import com.tcdng.jacklyn.workflow.entities.WfRecordAction;
 import com.tcdng.jacklyn.workflow.entities.WfRouting;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
-import com.tcdng.jacklyn.workflow.entities.WfTaggedMapping;
-import com.tcdng.jacklyn.workflow.entities.WfTaggedMappingQuery;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateQuery;
 import com.tcdng.jacklyn.workflow.entities.WfUserAction;
@@ -196,8 +192,6 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     private FactoryMap<String, WfTemplateDef> wfTemplates;
 
-    private FactoryMap<String, WfTaggedMappingDef> wfTaggedMappings;
-
     public WorkflowServiceImpl() {
         wfDocs = new FactoryMap<String, WfDocDef>(true) {
 
@@ -210,7 +204,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             db().value(Date.class, "wfCategoryUpdateDt",
                                     new WfDocQuery().wfCategoryName(docNames.getCategoryName())
                                             .name(docNames.getDocName()).wfCategoryStatus(RecordStatus.ACTIVE));
-                    stale = !updateDt.equals(wfDocDef.getTimestamp());
+                    stale = resolveUTC(updateDt) != wfDocDef.getTimestamp();
                 } catch (Exception e) {
                     logError(e);
                 }
@@ -357,8 +351,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                 List<StringToken> itemDescFormat = StringUtils.breakdownParameterizedString(wfDoc.getItemDescFormat());
                 return new WfDocDef(wfDocId, globalDocName, wfDoc.getName(), wfDoc.getDescription(),
-                        new PackableDocConfig(globalDocName, fieldConfigList), wfDoc.getWfCategoryUpdateDt(), wfFormDef,
-                        itemDescFormat, beanMappingList, attachmentList, classifierList);
+                        new PackableDocConfig(globalDocName, fieldConfigList),
+                        resolveUTC(wfDoc.getWfCategoryUpdateDt()), wfFormDef, itemDescFormat, beanMappingList,
+                        attachmentList, classifierList);
             }
 
         };
@@ -375,7 +370,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                     new WfTemplateQuery().wfCategoryName(templateNames.getCategoryName())
                                             .name(templateNames.getTemplateName())
                                             .wfCategoryStatus(RecordStatus.ACTIVE));
-                    stale = !updateDt.equals(wfTemplateDef.getTimestamp());
+                    stale = resolveUTC(updateDt) != wfTemplateDef.getTimestamp();
                 } catch (Exception e) {
                     logError(e);
                 }
@@ -523,52 +518,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 }
 
                 return new WfTemplateDef(wfTemplateId, globalTemplateName, wfTemplate.getName(),
-                        wfTemplate.getDescription(), wfTemplate.getWfCategoryUpdateDt(), wfDocDef, stepList);
+                        wfTemplate.getDescription(), resolveUTC(wfTemplate.getWfCategoryUpdateDt()), wfDocDef,
+                        stepList);
             }
-        };
-
-        wfTaggedMappings = new FactoryMap<String, WfTaggedMappingDef>(true) {
-
-            @Override
-            protected boolean stale(String globalName, WfTaggedMappingDef wfTaggedMappingDef) throws Exception {
-                boolean stale = false;
-                try {
-                    TaggedMappingNameParts taggedMappingNameParts = WfNameUtils.getTaggedMappingNameParts(globalName);
-                    Date updateDt =
-                            db().value(Date.class, "wfCategoryUpdateDt",
-                                    new WfTaggedMappingQuery().wfCategoryName(taggedMappingNameParts.getCategoryName())
-                                            .tagName(taggedMappingNameParts.getTagName())
-                                            .wfCategoryStatus(RecordStatus.ACTIVE));
-                    stale = !updateDt.equals(wfTaggedMappingDef.getTimestamp());
-                } catch (Exception e) {
-                    logError(e);
-                }
-
-                return stale;
-            }
-
-            @Override
-            protected WfTaggedMappingDef create(String globalTagName, Object... params) throws Exception {
-                TaggedMappingNameParts taggedMappingNameParts = WfNameUtils.getTaggedMappingNameParts(globalTagName);
-                WfTaggedMapping wfTaggedMapping =
-                        db().list(new WfTaggedMappingQuery().wfCategoryName(taggedMappingNameParts.getCategoryName())
-                                .tagName(taggedMappingNameParts.getTagName()).wfCategoryStatus(RecordStatus.ACTIVE));
-                if (wfTaggedMapping == null) {
-                    throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_TAGGEDMAPPING_WITH_TAGNAME_UNKNOWN,
-                            globalTagName);
-                }
-
-                String globalDocName =
-                        WfNameUtils.getGlobalDocName(taggedMappingNameParts.getCategoryName(),
-                                wfTaggedMapping.getWfDocName());
-
-                String globalTemplateName =
-                        WfNameUtils.getGlobalTemplateName(taggedMappingNameParts.getCategoryName(),
-                                wfTaggedMapping.getName());
-                return new WfTaggedMappingDef(globalTagName, wfDocs.get(globalDocName),
-                        wfTemplates.get(globalTemplateName), wfTaggedMapping.getWfCategoryUpdateDt());
-            }
-
         };
     }
 
@@ -744,8 +696,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public WfTaggedMappingDef getRuntimeWfTaggedMappingDef(String globalTagName) throws UnifyException {
-        return wfTaggedMappings.get(globalTagName);
+    public WfDocDef getRuntimeWfDocDef(String globalDocName) throws UnifyException {
+        return wfDocs.get(globalDocName);
     }
 
     @Override
@@ -756,6 +708,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         return wfDocDef.getWfFormDef();
+    }
+
+    @Override
+    public WfTemplateDef getRuntimeWfTemplateDef(String globalTemplateName) throws UnifyException {
+        return wfTemplates.get(globalTemplateName);
     }
 
     @Override

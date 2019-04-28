@@ -17,17 +17,15 @@ package com.tcdng.jacklyn.integration.controllers;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.controllers.BaseRemoteCallController;
+import com.tcdng.jacklyn.integration.business.IntegrationService;
 import com.tcdng.jacklyn.integration.constants.IntegrationModuleNameConstants;
 import com.tcdng.jacklyn.shared.integration.IntegrationRemoteCallNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.business.TaggedBinaryMessageConsumer;
+import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.business.TaggedXmlMessageConsumer;
-import com.tcdng.unify.core.data.TaggedBinaryMessage;
 import com.tcdng.unify.core.data.TaggedXmlMessage;
 import com.tcdng.unify.web.annotation.GatewayAction;
-import com.tcdng.unify.web.data.TaggedBinaryMessageParams;
-import com.tcdng.unify.web.data.TaggedBinaryMessageResult;
 import com.tcdng.unify.web.data.TaggedXmlMessageParams;
 import com.tcdng.unify.web.data.TaggedXmlMessageResult;
 
@@ -41,26 +39,17 @@ import com.tcdng.unify.web.data.TaggedXmlMessageResult;
 @Component("/integration/gate")
 public class IntegrationRemoteGateController extends BaseRemoteCallController {
 
+    @Configurable
+    private IntegrationService integrationService;
+    
     @GatewayAction(
-            name = IntegrationRemoteCallNameConstants.CONSUME_TAGGEDBINARYMESSAGE,
-            description = "$m{integration.gate.remotecall.consumetaggedbinarymessage}")
-    public TaggedBinaryMessageResult consumeTaggedBinaryMessage(TaggedBinaryMessageParams params)
-            throws UnifyException {
-        TaggedBinaryMessage taggedMessage = params.getTaggedMessage();
-        TaggedBinaryMessageConsumer taggedMessageConsumer =
-                (TaggedBinaryMessageConsumer) getComponent(taggedMessage.getConsumer());
-        taggedMessageConsumer.consume(taggedMessage);
-        return TaggedBinaryMessageResult.SUCCESS;
-    }
-
-    @GatewayAction(
-            name = IntegrationRemoteCallNameConstants.CONSUME_TAGGEDXMLMESSAGE,
-            description = "$m{integration.gate.remotecall.consumetaggedxmlmessage}")
-    public TaggedXmlMessageResult consumeTaggedXmlMessage(TaggedXmlMessageParams params) throws UnifyException {
-        TaggedXmlMessage taggedMessage = params.getTaggedMessage();
+            name = IntegrationRemoteCallNameConstants.PUSH_TAGGEDXMLMESSAGE,
+            description = "$m{integration.gate.remotecall.pushtaggedxmlmessage}")
+    public TaggedXmlMessageResult pushTaggedXmlMessage(TaggedXmlMessageParams params) throws UnifyException {
+        TaggedXmlMessage xmlMessage = params.getTaggedMessage();
         TaggedXmlMessageConsumer taggedMessageConsumer =
-                (TaggedXmlMessageConsumer) getComponent(taggedMessage.getConsumer());
-        taggedMessageConsumer.consume(taggedMessage);
+                (TaggedXmlMessageConsumer) getComponent(xmlMessage.getConsumer());
+        taggedMessageConsumer.consume(xmlMessage);
         return TaggedXmlMessageResult.SUCCESS;
     }
 

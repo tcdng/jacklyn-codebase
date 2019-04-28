@@ -16,7 +16,6 @@
 
 package com.tcdng.jacklyn.system.data;
 
-import java.util.Date;
 import java.util.List;
 
 import com.tcdng.jacklyn.shared.constants.OrientationType;
@@ -33,7 +32,7 @@ public class DashboardDef {
     
     private OrientationType orientationType;
     
-    private Date timestamp;
+    private long timestamp;
 
     private List<DashboardLayerDef> layerList;
     
@@ -41,7 +40,7 @@ public class DashboardDef {
 
     private boolean read;
 
-    public DashboardDef(String name, OrientationType orientationType, Date timestamp,
+    public DashboardDef(String name, OrientationType orientationType, long timestamp,
             List<DashboardLayerDef> layerList, String viewer) {
         this.name = name;
         this.orientationType = orientationType;
@@ -58,7 +57,7 @@ public class DashboardDef {
         return orientationType;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 

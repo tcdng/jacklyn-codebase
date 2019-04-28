@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,28 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.tcdng.jacklyn.integration.entities;
 
-package com.tcdng.jacklyn.integration.business;
-
-import com.tcdng.unify.core.AbstractUnifyComponent;
-import com.tcdng.unify.core.UnifyException;
+import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 
 /**
- * Convenient base class for endpoint consumers.
+ * Query class for producer queue.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractEndPointConsumer extends AbstractUnifyComponent implements EndPointConsumer {
+public class ProducerQueueQuery extends BaseTimestampedEntityQuery<ProducerQueue> {
 
-    @Override
-    protected void onInitialize() throws UnifyException {
-
+    public ProducerQueueQuery() {
+        super(ProducerQueue.class);
     }
 
-    @Override
-    protected void onTerminate() throws UnifyException {
-
+    public ProducerQueueQuery producerDefinitionName(String producerDefinitionName) {
+        return (ProducerQueueQuery) equals("producerDefinitionName", producerDefinitionName);
     }
-
 }

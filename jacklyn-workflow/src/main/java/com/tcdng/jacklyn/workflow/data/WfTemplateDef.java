@@ -16,7 +16,6 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class WfTemplateDef extends BaseWfDef {
 
     private String globalName;
 
-    private Date timestamp;
+    private long timestamp;
 
     private WfDocDef wfDocDef;
 
@@ -49,7 +48,7 @@ public class WfTemplateDef extends BaseWfDef {
 
     private Map<String, WfStepDef> steps;
 
-    public WfTemplateDef(Long wfTemplateId, String globalName, String name, String description, Date timestamp,
+    public WfTemplateDef(Long wfTemplateId, String globalName, String name, String description, long timestamp,
             WfDocDef wfDocDef, List<WfStepDef> stepList) {
         super(name, description);
         this.wfTemplateId = wfTemplateId;
@@ -81,7 +80,7 @@ public class WfTemplateDef extends BaseWfDef {
         return globalName;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
