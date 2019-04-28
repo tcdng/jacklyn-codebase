@@ -26,8 +26,8 @@
 //Form components   
 !ui-name:frmName caption:$m{integration.producerdefinition.name} binding:name minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{integration.producerdefinition.description} binding:description size:40 minLen:1 maxLen:48 required:true
-!ui-text:frmMessageTag caption:$m{integration.producerdefinition.messagetag} binding:messageTag size:40 minLen:1 maxLen:96 required:true
-!ui-text:frmPreferredConsumer caption:$m{integration.producerdefinition.preferredconsumer} binding:preferredConsumer size:40 minLen:1 maxLen:64 required:true
+!ui-name:frmMessageTag caption:$m{integration.producerdefinition.messagetag} binding:messageTag size:40 minLen:1 maxLen:96 required:true period:true
+!ui-name:frmPreferredConsumer caption:$m{integration.producerdefinition.preferredconsumer} binding:preferredConsumer size:40 minLen:1 maxLen:64 required:true period:true dash:true
 !ui-select:frmStatus caption:$m{integration.producerdefinition.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
 //Validations
