@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.shared.workflow.data;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
-import com.tcdng.unify.web.RemoteCallParams;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
  * Get tooling policy logic request parameters.

@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.shared.workflow.data;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.RemoteCallResult;
+import com.tcdng.unify.web.remotecall.RemoteCallResult;
 
 /**
  * Publish workflow category request result.

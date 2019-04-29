@@ -21,8 +21,8 @@ import com.tcdng.unify.core.Setting;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.jetty.JettyApplicationComponents;
 import com.tcdng.unify.jetty.http.JettyEmbeddedWebServer;
-import com.tcdng.unify.web.WebClient;
 import com.tcdng.unify.web.WebApplicationComponents;
+import com.tcdng.unify.web.remotecall.WebClient;
 
 /**
  * Abstract jacklyn web test.

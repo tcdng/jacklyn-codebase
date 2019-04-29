@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.shared.system.data;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.RemoteCallResult;
+import com.tcdng.unify.web.remotecall.RemoteCallResult;
 
 /**
  * Get application information request result.

@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.tcdng.jacklyn.shared.system.SystemRemoteCallNameConstants;
-import com.tcdng.unify.web.RemoteCallParams;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
  * Get application menu request parameters.

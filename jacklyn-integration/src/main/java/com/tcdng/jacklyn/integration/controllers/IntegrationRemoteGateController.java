@@ -23,11 +23,9 @@ import com.tcdng.jacklyn.shared.integration.IntegrationRemoteCallNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.business.TaggedXmlMessageConsumer;
-import com.tcdng.unify.core.data.TaggedXmlMessage;
 import com.tcdng.unify.web.annotation.GatewayAction;
-import com.tcdng.unify.web.data.TaggedXmlMessageParams;
-import com.tcdng.unify.web.data.TaggedXmlMessageResult;
+import com.tcdng.unify.web.remotecall.PushXmlMessageParams;
+import com.tcdng.unify.web.remotecall.PushXmlMessageResult;
 
 /**
  * Integration module remote call controller.
@@ -41,16 +39,13 @@ public class IntegrationRemoteGateController extends BaseRemoteCallController {
 
     @Configurable
     private IntegrationService integrationService;
-    
+
     @GatewayAction(
             name = IntegrationRemoteCallNameConstants.PUSH_TAGGEDXMLMESSAGE,
             description = "$m{integration.gate.remotecall.pushtaggedxmlmessage}")
-    public TaggedXmlMessageResult pushTaggedXmlMessage(TaggedXmlMessageParams params) throws UnifyException {
-        TaggedXmlMessage xmlMessage = params.getTaggedMessage();
-        TaggedXmlMessageConsumer taggedMessageConsumer =
-                (TaggedXmlMessageConsumer) getComponent(xmlMessage.getConsumer());
-        taggedMessageConsumer.consume(xmlMessage);
-        return TaggedXmlMessageResult.SUCCESS;
+    public PushXmlMessageResult pushXmlMessage(PushXmlMessageParams params) throws UnifyException {
+        integrationService.processTaggedXmlMessage(params.getTaggedMessage());
+        return PushXmlMessageResult.SUCCESS;
     }
 
 }

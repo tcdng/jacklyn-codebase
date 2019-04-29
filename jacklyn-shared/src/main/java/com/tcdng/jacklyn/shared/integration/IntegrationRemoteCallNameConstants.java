@@ -23,5 +23,7 @@ package com.tcdng.jacklyn.shared.integration;
  */
 public interface IntegrationRemoteCallNameConstants {
 
+    String PULL_TAGGEDBINARYMESSAGE = "intPullTaggedBinMessage";
+
     String PUSH_TAGGEDXMLMESSAGE = "intPushTaggedXmlMessage";
 }

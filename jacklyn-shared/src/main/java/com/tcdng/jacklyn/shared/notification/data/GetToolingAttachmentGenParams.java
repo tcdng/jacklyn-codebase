@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.shared.notification.data;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.tcdng.jacklyn.shared.notification.NotificationRemoteCallNameConstants;
-import com.tcdng.unify.web.RemoteCallParams;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
  * Get tooling notification generator request parameters.

@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.shared.security.data;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.RemoteCallResult;
+import com.tcdng.unify.web.remotecall.RemoteCallResult;
 
 /**
  * OS installation request result.

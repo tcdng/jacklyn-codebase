@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
-import com.tcdng.unify.web.RemoteCallParams;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
  * Publish workflow category request parameters.

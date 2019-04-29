@@ -21,7 +21,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.RemoteCallResult;
+import com.tcdng.unify.web.remotecall.RemoteCallResult;
 
 /**
  * Get tooling base types request result.
