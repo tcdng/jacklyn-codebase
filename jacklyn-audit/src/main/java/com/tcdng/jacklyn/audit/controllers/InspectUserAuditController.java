@@ -103,6 +103,11 @@ public class InspectUserAuditController extends AbstractAuditController {
         performFetchInspectUserInfo();
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "manageInspectUserPanel";
+    }
+
     @Action
     public String fetchInspectUserInfo() throws UnifyException {
         logUserEvent(AuditModuleAuditConstants.INSPECTUSER_SEARCH);

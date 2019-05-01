@@ -42,7 +42,7 @@ public class IntegrationRemoteGateController extends BaseRemoteCallController {
 
     @GatewayAction(
             name = IntegrationRemoteCallNameConstants.PUSH_TAGGEDXMLMESSAGE,
-            description = "$m{integration.gate.remotecall.pushtaggedxmlmessage}")
+            description = "$m{integration.gate.remotecall.pushxmlmessage}")
     public PushXmlMessageResult pushXmlMessage(PushXmlMessageParams params) throws UnifyException {
         integrationService.processTaggedXmlMessage(params.getTaggedMessage());
         return PushXmlMessageResult.SUCCESS;

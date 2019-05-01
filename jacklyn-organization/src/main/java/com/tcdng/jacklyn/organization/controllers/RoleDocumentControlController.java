@@ -112,6 +112,11 @@ public class RoleDocumentControlController extends AbstractOrganizationControlle
         rolePrivilegeWidgetList = null;
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "searchBodyPanel";
+    }
+
     protected void doFindPrivileges() throws UnifyException {
         if (QueryUtils.isValidLongCriteria(searchRoleId) && QueryUtils.isValidLongCriteria(searchModuleId)) {
             RolePrivilegeWidgetQuery query = new RolePrivilegeWidgetQuery();

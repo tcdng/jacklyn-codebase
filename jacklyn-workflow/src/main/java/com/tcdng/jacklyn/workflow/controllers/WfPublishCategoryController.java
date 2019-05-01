@@ -65,4 +65,9 @@ public class WfPublishCategoryController extends AbstractWorkflowController {
     public void setActivate(boolean activate) {
         this.activate = activate;
     }
+
+    @Override
+    protected String getDocViewPanelName() {
+        return "managePublishWorkflowPanel";
+    }
 }

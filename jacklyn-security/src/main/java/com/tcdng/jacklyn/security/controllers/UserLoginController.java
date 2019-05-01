@@ -282,6 +282,11 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         setVisible("loginPanel.tokenField", is2FA);
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return null;
+    }
+
     private String selectRole() throws UnifyException {
         setDisplayMessage(null);
 

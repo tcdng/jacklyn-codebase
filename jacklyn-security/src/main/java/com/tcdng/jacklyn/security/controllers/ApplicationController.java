@@ -210,6 +210,11 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
         selectRoleTableState = getPageWidgetByShortName(Table.class, "userRoleOptionsPopup.roleTablePanel.contentTbl");
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return null;
+    }
+
     private boolean fetchUserNotifications() throws UnifyException {
         userNotifications = systemNotificationProvider.findUserSystemNotifications(getUserToken().getUserLoginId());
         return !userNotifications.isEmpty();

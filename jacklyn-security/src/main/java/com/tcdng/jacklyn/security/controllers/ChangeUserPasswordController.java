@@ -111,6 +111,11 @@ public class ChangeUserPasswordController extends AbstractSecurityController {
         setDisplayMessage(changePasswordMessage);
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "manageChangePasswordPanel";
+    }
+
     private void setDisplayMessage(String message) throws UnifyException {
         changePasswordMessage = message;
     }

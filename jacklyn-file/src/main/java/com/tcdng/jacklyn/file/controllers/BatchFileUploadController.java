@@ -65,6 +65,11 @@ public class BatchFileUploadController extends AbstractFileController {
         return launchTaskWithMonitorBox(taskSetup, "$m{file.batchupload.execution}");
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "manageBatchUploadPanel";
+    }
+
     public String getModeStyle() {
         return EventType.CREATE.colorMode();
     }

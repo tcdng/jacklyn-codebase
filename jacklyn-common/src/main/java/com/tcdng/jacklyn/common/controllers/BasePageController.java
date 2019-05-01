@@ -26,6 +26,11 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.AbstractPageController;
+import com.tcdng.unify.web.DocViewController;
+import com.tcdng.unify.web.annotation.Action;
+import com.tcdng.unify.web.annotation.ResultMapping;
+import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.ui.Panel;
 import com.tcdng.unify.web.ui.data.MessageResult;
 import com.tcdng.unify.web.ui.data.SearchBox;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
@@ -36,12 +41,24 @@ import com.tcdng.unify.web.ui.panel.TableCrudPanel;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BasePageController extends AbstractPageController {
+@ResultMappings({ @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
+public abstract class BasePageController extends AbstractPageController implements DocViewController {
 
     public BasePageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
 
+    @Action
+    public String getRemoteDoc() throws UnifyException {
+        openPage();
+        return "documentView";
+    }
+
+    @Override
+    public Panel getDocViewPanel() throws UnifyException {
+        return getPanelByShortName(getDocViewPanelName());
+    }
+    
     /**
      * Shows a search box.
      * 
@@ -211,4 +228,6 @@ public abstract class BasePageController extends AbstractPageController {
     protected ReportProvider getCommonReportProvider() throws UnifyException {
         return (ReportProvider) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER);
     }
+
+    protected abstract String getDocViewPanelName();
 }

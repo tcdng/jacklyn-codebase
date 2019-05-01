@@ -37,11 +37,9 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
-import com.tcdng.unify.web.DocViewController;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
-import com.tcdng.unify.web.ui.Panel;
 import com.tcdng.unify.web.ui.container.Form;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
@@ -80,7 +78,7 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
                 response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
-public abstract class BaseCrudController<T extends Entity, U> extends BasePageController implements DocViewController {
+public abstract class BaseCrudController<T extends Entity, U> extends BasePageController {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
 
@@ -339,17 +337,6 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         return showReportOptionsBox(reportOptions);
     }
 
-    @Action
-    public String getRemoteDoc() throws UnifyException {
-        openPage();
-        return "documentView";
-    }
-
-    @Override
-    public Panel getDocViewPanel() throws UnifyException {
-        return getPanelByShortName("manageRecordPanel");
-    }
-
     public List<T> getRecordList() {
         return recordList;
     }
@@ -411,6 +398,11 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         getPage().setAttribute("validationIdClass", Long.class);
 
         manageReportable();
+    }
+
+    @Override
+    protected String getDocViewPanelName() {
+        return "manageRecordPanel";
     }
 
     @Override

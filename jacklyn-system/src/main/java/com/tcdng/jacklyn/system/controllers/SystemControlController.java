@@ -79,6 +79,11 @@ public class SystemControlController extends AbstractSystemController {
         updateControlStatus();
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "manageSystemControlPanel";
+    }
+
     private void updateControlStatus() throws UnifyException {
         systemControlStateList = getSystemService()
                 .findSystemControlStates((SystemParameterQuery) new SystemParameterQuery().ignoreEmptyCriteria(true));

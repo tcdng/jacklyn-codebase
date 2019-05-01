@@ -2,7 +2,10 @@
 // Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-page caption:$m{system.systemcontrol.menu.title} layout:$d{!ui-vertical} 
+!ui-page caption:$m{system.systemcontrol.menu.title}
+    components:$c{manageSystemControlPanel}
+
+!ui-panel:manageSystemControlPanel layout:$d{!ui-vertical}
     components:$c{maintainTypeLabel controlPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle

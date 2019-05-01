@@ -85,4 +85,9 @@ public class FileTransferController extends AbstractFileController {
             workingDt = getFileService().getToday();
         }
     }
+
+    @Override
+    protected String getDocViewPanelName() {
+        return "basePanel";
+    }
 }

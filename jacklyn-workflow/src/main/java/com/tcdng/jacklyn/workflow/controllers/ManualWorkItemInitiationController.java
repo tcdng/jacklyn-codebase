@@ -116,6 +116,11 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
         }
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "manualWorkItemFrame";
+    }
+
     private String prepareCreate() throws UnifyException {
         manualInitItem = getWorkflowService().createManualInitItem(templateName);
         mode = CREATE_ITEM_MODE;

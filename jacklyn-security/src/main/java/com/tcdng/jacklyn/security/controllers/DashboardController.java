@@ -44,4 +44,9 @@ public class DashboardController extends AbstractSecurityController {
         super.onOpenPage();
         dashboardViewer = getSecurityService().getCurrentUserRoleDashboardViewer();
    }
+
+    @Override
+    protected String getDocViewPanelName() {
+        return "mainDashboardPanel";
+    }
 }

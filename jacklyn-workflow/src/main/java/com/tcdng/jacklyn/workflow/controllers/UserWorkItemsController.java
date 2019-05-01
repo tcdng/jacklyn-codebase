@@ -280,6 +280,11 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         manageDisplay();
     }
 
+    @Override
+    protected String getDocViewPanelName() {
+        return "userWorkItemsPanel";
+    }
+
     private String showNotes(boolean isAddNotes) throws UnifyException {
         WfItemHistObject wih = getWorkflowService().findWorkflowItemHistory(workflowItem.getWfItemHistId(), true);
         notesInfo.setNotesHistEventList(wih.getEventList());
