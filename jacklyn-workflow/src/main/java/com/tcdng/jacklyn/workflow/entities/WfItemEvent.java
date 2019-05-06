@@ -46,6 +46,9 @@ public class WfItemEvent extends BaseEntity {
     private Date stepDt;
 
     @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date expectedDt;
+
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
     private Date actionDt;
 
     @Column(nullable = true)
@@ -87,6 +90,14 @@ public class WfItemEvent extends BaseEntity {
 
     public void setStepDt(Date stepDt) {
         this.stepDt = stepDt;
+    }
+
+    public Date getExpectedDt() {
+        return expectedDt;
+    }
+
+    public void setExpectedDt(Date expectedDt) {
+        this.expectedDt = expectedDt;
     }
 
     public Date getActionDt() {

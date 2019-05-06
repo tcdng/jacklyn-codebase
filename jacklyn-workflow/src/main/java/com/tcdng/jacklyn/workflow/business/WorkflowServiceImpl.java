@@ -90,8 +90,8 @@ import com.tcdng.jacklyn.workflow.data.WfFormTabDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObjects;
+import com.tcdng.jacklyn.workflow.data.InteractWfItem;
+import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfManualInitDef;
 import com.tcdng.jacklyn.workflow.data.WfPolicyDef;
@@ -792,7 +792,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public WfItemObjects getCurrentUserWorkItems(String globalStepName) throws UnifyException {
+    public InteractWfItems getCurrentUserWorkItems(String globalStepName) throws UnifyException {
         WfStepDef wfStepDef = accessCurrentUserStep(globalStepName);
         String useLoginID = getUserToken().getUserLoginId();
         List<WfItem> wfItemList =
@@ -805,7 +805,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfUserActionDef.getNoteReqType(), wfUserActionDef.isValidatePage()));
         }
 
-        return new WfItemObjects(globalStepName, wfItemList, actions);
+        return new InteractWfItems(globalStepName, wfItemList, actions);
     }
 
     @Override
@@ -835,7 +835,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public void applyWorkflowAction(WfItemObject workflowItem, String actionName) throws UnifyException {
+    public void applyWorkflowAction(InteractWfItem workflowItem, String actionName) throws UnifyException {
         WfUserActionDef wfUserActionDef = workflowItem.getWfStepDef().getWfUserActionDef(actionName);
         WfStepDef trgWfStep = getWfStepDef(wfUserActionDef.getTargetGlobalName());
 
@@ -862,7 +862,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public WfItemObject findWorkflowItem(Long wfItemId) throws UnifyException {
+    public InteractWfItem findWorkflowItem(Long wfItemId) throws UnifyException {
         WfItem wfItem = db().list(WfItem.class, wfItemId);
         WfStepDef wfStepDef = getWfStepDef(wfItem);
         WfTemplateDef wfTemplateDef = getWfTemplateDef(wfStepDef);
@@ -873,8 +873,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 PackableDoc.unpack(wfTemplateDef.getWfDocDef().getDocConfig(), wfItemPackedDoc.getPackedDoc(),
                         wfStepDef.isAudit());
 
-        WfItemObject workflowItem =
-                new WfItemObject(wfStepDef, wfItem.getDocumentId(), wfItemId, wfItem.getWfItemHistId(),
+        InteractWfItem workflowItem =
+                new InteractWfItem(wfStepDef, wfItem.getDocumentId(), wfItemId, wfItem.getWfItemHistId(),
                         wfItem.getWfHistEventId(), wfItem.getDescription(), wfItem.getCreateDt(), wfItem.getStepDt(),
                         wfItem.getHeldBy(), pd);
 
@@ -1025,7 +1025,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     public int executeApplyActionToMultipleWorkflowItems(TaskMonitor taskMonitor, List<Long> wfItemIdList,
             String actionName, String notes) throws UnifyException {
         for (Long wfItemId : wfItemIdList) {
-            WfItemObject workflowItem = findWorkflowItem(wfItemId);
+            InteractWfItem workflowItem = findWorkflowItem(wfItemId);
             addTaskMonitorSessionMessage(taskMonitor, "workflow.taskmonitor.itemgrabbed",
                     workflowItem.getDescription());
             workflowItem.setNotes(notes);
@@ -1650,8 +1650,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         packableDoc.setChanged(false);
 
         // Push to step
-        WfItemObject workflowItem =
-                new WfItemObject(trgWfStepDef, id, wfItemId, null, null, wfItem.getDescription(), wfItem.getCreateDt(),
+        InteractWfItem workflowItem =
+                new InteractWfItem(trgWfStepDef, id, wfItemId, null, null, wfItem.getDescription(), wfItem.getCreateDt(),
                         wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
 
         WfStepDef settleStep = pushIntoStep(trgWfStepDef, workflowItem);
@@ -1696,7 +1696,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         return wfItemQuery;
     }
 
-    private WfStepDef pushIntoStep(WfStepDef wfStepDef, WfItemObject wfItem) throws UnifyException {
+    private WfStepDef pushIntoStep(WfStepDef wfStepDef, InteractWfItem wfItem) throws UnifyException {
         // Create history
         WfTemplateDef wfTemplateDef = getWfTemplateDef(wfStepDef);
         WfDocDef wfDocDef = wfTemplateDef.getWfDocDef();

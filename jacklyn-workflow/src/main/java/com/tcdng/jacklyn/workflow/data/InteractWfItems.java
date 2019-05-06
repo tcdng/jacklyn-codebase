@@ -24,12 +24,12 @@ import java.util.Set;
 import com.tcdng.jacklyn.workflow.entities.WfItem;
 
 /**
- * Workflow items.
+ * Interact workflow items.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfItemObjects implements Serializable {
+public class InteractWfItems implements Serializable {
 
     private static final long serialVersionUID = 161375477672079722L;
 
@@ -41,7 +41,7 @@ public class WfItemObjects implements Serializable {
 
     private Set<String> validatePageActions;
 
-    public WfItemObjects(String wfStepName, List<WfItem> wfItemList, List<WfAction> actions) {
+    public InteractWfItems(String wfStepName, List<WfItem> wfItemList, List<WfAction> actions) {
         this.wfStepName = wfStepName;
         this.wfItemList = wfItemList;
         this.actions = actions;

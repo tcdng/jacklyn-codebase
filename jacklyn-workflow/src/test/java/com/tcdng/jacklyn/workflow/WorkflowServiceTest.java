@@ -44,7 +44,7 @@ import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObject;
+import com.tcdng.jacklyn.workflow.data.InteractWfItem;
 import com.tcdng.jacklyn.workflow.entities.WfAlert;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -650,7 +650,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
         Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(wfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
         assertNotNull(workflowItem);
         assertEquals("customerCategory.custOnboarding.custApproval", workflowItem.getWfStepDef().getGlobalName());
         assertEquals("custApproval", workflowItem.getWfStepDef().getName());
@@ -669,7 +669,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
         Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(wfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
         WfItemHistObject workflowItemHist = wfService.findWorkflowItemHistory(workflowItem.getWfItemHistId(), false);
         assertNotNull(workflowItemHist);
         assertNotNull(workflowItemHist.getId());
@@ -727,7 +727,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         workflowItem.setNotes("Goody!");
         wfService.applyWorkflowAction(workflowItem, "rejectCust");
     }
@@ -742,7 +742,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         String errorName = null;
         try {
-            WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+            InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
             workflowItem.setNotes("Goody!");
             wfService.applyWorkflowAction(workflowItem, "rejectMyCust"); // Unknown action
         } catch (UnifyException e) {
@@ -758,7 +758,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
         Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(wfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
         String errorName = null;
         try {
             workflowItem.setNotes("Goody!");
@@ -778,7 +778,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         Long wfItemHistId = workflowItem.getWfItemHistId();
         workflowItem.setNotes("Goody!");
         wfService.applyWorkflowAction(workflowItem, "approveCust");
@@ -836,7 +836,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         workflowItem.setNotes("Goody!");
         wfService.applyWorkflowAction(workflowItem, "rejectCust");
 
@@ -858,7 +858,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         wfService.applyWorkflowAction(workflowItem, "rejectCust");
 
         String errorName = null;
@@ -879,7 +879,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         PackableDoc pd = workflowItem.getPd();
         assertEquals("Tom Jones", pd.readFieldValue(String.class, "fullName"));
         assertEquals("0123456789", pd.readFieldValue(String.class, "accountNo"));
@@ -913,7 +913,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
+        InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         workflowItem.setNotes("Goody!");
         wfService.applyWorkflowAction(workflowItem, "approveCust");
 
