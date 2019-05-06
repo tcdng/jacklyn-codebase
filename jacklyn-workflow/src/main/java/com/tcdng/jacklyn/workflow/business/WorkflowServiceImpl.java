@@ -404,6 +404,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 // Steps
                 List<WfStepDef> stepList = new ArrayList<WfStepDef>();
                 for (WfStep wfStep : wfTemplate.getStepList()) {
+                    String globalStepName =
+                            WfNameUtils.getGlobalStepName(templateNames.getCategoryName(),
+                                    templateNames.getTemplateName(), wfStep.getName());
+
                     // Enrichment information
                     List<WfEnrichmentDef> enrichmentList = null;
                     if (!DataUtils.isBlank(wfStep.getEnrichmentList())) {
@@ -487,8 +491,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                     NotificationUtils.getGlobalTemplateName(WorkflowModuleNameConstants.WORKFLOW_MODULE,
                                             WfNameUtils.getGlobalMessageName(templateNames.getCategoryName(),
                                                     wfAlert.getNotificationTemplateCode()));
-                            alertList.add(new WfAlertDef(wfAlert.getName(), wfAlert.getDescription(), wfAlert.getType(),
-                                    globalTemplateCode));
+                            alertList.add(new WfAlertDef(globalStepName, wfAlert.getName(), wfAlert.getDescription(),
+                                    wfAlert.getType(), globalTemplateCode));
                         }
                     }
 
@@ -507,9 +511,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     if (wfStep.getStepType().isUserInteractive()) {
                         docViewer = globalDocViewer;
                     }
-                    stepList.add(new WfStepDef(wfTemplateId, globalTemplateName, globalDocName,
-                            WfNameUtils.getGlobalStepName(templateNames.getCategoryName(),
-                                    templateNames.getTemplateName(), wfStep.getName()),
+                    stepList.add(new WfStepDef(wfTemplateId, globalTemplateName, globalDocName, globalStepName,
                             docViewer, wfStep.getName(), wfStep.getDescription(), wfStep.getLabel(),
                             wfStep.getStepType(), wfStep.getParticipantType(), enrichmentList, routingList,
                             recordActionList, userActionList, formPrivilegeList, alertList, policyList,
@@ -1651,8 +1653,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Push to step
         InteractWfItem workflowItem =
-                new InteractWfItem(trgWfStepDef, id, wfItemId, null, null, wfItem.getDescription(), wfItem.getCreateDt(),
-                        wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
+                new InteractWfItem(trgWfStepDef, id, wfItemId, null, null, wfItem.getDescription(),
+                        wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
 
         WfStepDef settleStep = pushIntoStep(trgWfStepDef, workflowItem);
 

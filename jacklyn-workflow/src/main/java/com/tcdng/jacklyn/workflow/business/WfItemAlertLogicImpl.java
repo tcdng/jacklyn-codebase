@@ -16,13 +16,17 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.notification.data.Message;
+import com.tcdng.jacklyn.notification.data.NotificationContact;
 import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
@@ -42,6 +46,8 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
         String senderName = null;
         String senderContact = null;
         String channelName = null;
+        List<NotificationContact> contactList = null;
+
         switch (wfAlertDef.getType()) {
             case EMAIL:
                 senderName =
@@ -53,6 +59,7 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
                 channelName =
                         getSystemService().getSysParameterValue(String.class,
                                 SystemModuleSysParamConstants.SYSPARAM_EMAIL_CHANNEL);
+                contactList = getWfStepEmailContactProvider().getEmailContacts(wfAlertDef.getGlobalStepName());
                 break;
             case SMS:
                 break;
@@ -61,19 +68,22 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
                 break;
         }
 
-        if (channelName != null) {
+        if (channelName != null && !DataUtils.isBlank(contactList)) {
             String globalTemplateName = wfAlertDef.getNotificationTemplateCode();
             NotificationTemplateDef notificationTemplateDef =
                     getNotificationService().getRuntimeNotificationTemplateDef(globalTemplateName);
 
             // Build message
             Message.Builder msgBuilder = Message.newBuilder(globalTemplateName).fromSender(senderName, senderContact);
-            // TODO get recipients from role
-            msgBuilder.toRecipient("Lateef Ojulari", "lateefojulari@gmail.com");
+
+            // Populate contacts
+            for (NotificationContact contact : contactList) {
+                msgBuilder.toRecipient(contact.getFullName(), contact.getContact());
+            }
 
             // Populate message dictionary from workflow item
             for (StringToken token : notificationTemplateDef.getTokenList()) {
-                if(token.isParam()) {
+                if (token.isParam()) {
                     String tokenName = token.getToken();
                     msgBuilder.usingDictionaryEntry(tokenName, wfItemReader.readFieldValue(tokenName));
                 }

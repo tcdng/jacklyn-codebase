@@ -49,7 +49,7 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ForeignKey(type = Branch.class, nullable = true)
     private Long branchId;
 
-    @Column(length = 64)
+    @Column(length = 72)
     private String fullName;
 
     @Column(transformer = "uppercase-transformer")

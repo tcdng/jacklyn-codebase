@@ -29,7 +29,7 @@
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:messageTypeDesc caption:$m{notification.notification.notificationtemplate} binding:messageTypeDesc columnStyle:$s{width:160px;} sortable:true
+!ui-label:messageTypeDesc caption:$m{notification.notification.notificationtemplate} binding:notificationTemplateDesc columnStyle:$s{width:160px;} sortable:true
 !ui-label:notificationTypeDesc caption:$m{notification.notification.notificationtype} binding:notificationTypeDesc columnStyle:$s{width:120px;} sortable:true
 !ui-label:senderName caption:$m{notification.notification.sendername} binding:senderName  columnStyle:$s{width:250px;} sortable:true
 !ui-label:senderContact caption:$m{notification.notification.sendercontact} binding:senderContact  columnStyle:$s{width:200px;} sortable:true
