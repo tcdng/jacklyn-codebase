@@ -36,6 +36,10 @@ public final class NotificationUtils {
             @Override
             protected TemplateNameParts create(String globalName, Object... params) throws Exception {
                 String[] names = StringUtils.dotSplit(globalName);
+                if (names.length > 2) {                    
+                    return new TemplateNameParts(names[0], StringUtils.dotify(names[1], names[2]));
+                }
+                
                 return new TemplateNameParts(names[0], names[1]);
             }
 

@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.notification.data.Message;
+import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.notification.entities.Notification;
 import com.tcdng.jacklyn.notification.entities.NotificationChannel;
 import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
@@ -160,6 +161,18 @@ public interface NotificationService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteNotificationTemplate(Long id) throws UnifyException;
+
+    /**
+     * Returns a runtime notification template definition.
+     * 
+     * @param globalTemplateName
+     *            the template name
+     * @return the runtime definition
+     * @throws UnifyException
+     *             if notification with global template name does not exist. if an
+     *             error occurs
+     */
+    NotificationTemplateDef getRuntimeNotificationTemplateDef(String globalTemplateName) throws UnifyException;
 
     /**
      * Sends a notification. This is an asynchronous call where message is pushed

@@ -207,6 +207,11 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
+    public NotificationTemplateDef getRuntimeNotificationTemplateDef(String globalTemplateName) throws UnifyException {
+        return templates.get(globalTemplateName);
+    }
+
+    @Override
     public Long createNotificationChannel(NotificationChannel notificationChannel) throws UnifyException {
         return (Long) db().create(notificationChannel);
     }

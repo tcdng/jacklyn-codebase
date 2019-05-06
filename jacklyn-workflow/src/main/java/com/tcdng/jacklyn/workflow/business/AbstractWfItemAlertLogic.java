@@ -16,8 +16,11 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.jacklyn.notification.business.NotificationService;
+import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.annotation.Configurable;
 
 /**
  * Convenient abstract base class for workflow item alert logic.
@@ -27,6 +30,12 @@ import com.tcdng.unify.core.UnifyException;
  */
 public abstract class AbstractWfItemAlertLogic extends AbstractUnifyComponent implements WfItemAlertLogic {
 
+    @Configurable
+    private SystemService systemService;
+
+    @Configurable
+    private NotificationService notificationService;
+
     @Override
     protected void onInitialize() throws UnifyException {
 
@@ -35,6 +44,14 @@ public abstract class AbstractWfItemAlertLogic extends AbstractUnifyComponent im
     @Override
     protected void onTerminate() throws UnifyException {
 
+    }
+
+    protected SystemService getSystemService() {
+        return systemService;
+    }
+
+    protected NotificationService getNotificationService() {
+        return notificationService;
     }
 
 }
