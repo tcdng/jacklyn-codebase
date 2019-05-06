@@ -55,6 +55,9 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(type = ColumnType.TIMESTAMP, nullable = true)
     private Date stepDt;
 
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date expectedDt;
+
     @Column(nullable = true)
     private String heldBy;
 
@@ -130,6 +133,14 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setStepDt(Date stepDt) {
         this.stepDt = stepDt;
+    }
+
+    public Date getExpectedDt() {
+        return expectedDt;
+    }
+
+    public void setExpectedDt(Date expectedDt) {
+        this.expectedDt = expectedDt;
     }
 
     public String getHeldBy() {

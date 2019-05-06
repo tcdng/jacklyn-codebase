@@ -23,12 +23,12 @@ import com.tcdng.jacklyn.workflow.business.WfItemReaderWriter;
 import com.tcdng.unify.core.data.PackableDoc;
 
 /**
- * Workflow item.
+ * Interact workflow item.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfItemObject implements ViewableWfItem {
+public class InteractWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
@@ -60,7 +60,7 @@ public class WfItemObject implements ViewableWfItem {
 
     private List<WfAction> actionList;
 
-    public WfItemObject(WfStepDef wfStepDef, Long docId, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
+    public InteractWfItem(WfStepDef wfStepDef, Long docId, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
             String description, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
         this.docId = docId;

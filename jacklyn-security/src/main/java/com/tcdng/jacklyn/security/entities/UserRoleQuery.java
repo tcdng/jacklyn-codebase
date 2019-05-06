@@ -60,6 +60,10 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
         return (UserRoleQuery) notEqual("roleName", roleName);
     }
 
+    public UserRoleQuery roleNameIn(Collection<String> roleName) {
+        return (UserRoleQuery) amongst("roleName", roleName);
+    }
+
     public UserRoleQuery roleIdIn(Collection<Long> roleId) {
         return (UserRoleQuery) amongst("roleId", roleId);
     }

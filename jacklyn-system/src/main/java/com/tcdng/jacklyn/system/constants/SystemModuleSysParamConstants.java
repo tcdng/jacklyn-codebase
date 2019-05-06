@@ -36,4 +36,10 @@ public interface SystemModuleSysParamConstants {
     String SYSPARAM_APPLICATION_BANNER = "SYS-0006";
 
     String SYSPARAM_USE_LOGIN_LOCALE = "SYS-0007";
+
+    String SYSPARAM_EMAIL_CHANNEL = "SYS-0008";
+
+    String SYSPARAM_SYSTEM_EMAIL = "SYS-0009";
+
+    String SYSPARAM_SYSTEM_NAME = "SYS-000A";
 }

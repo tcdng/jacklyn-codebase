@@ -49,7 +49,7 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ForeignKey(type = Branch.class, nullable = true)
     private Long branchId;
 
-    @Column(length = 64)
+    @Column(length = 72)
     private String fullName;
 
     @Column(transformer = "uppercase-transformer")
@@ -85,8 +85,8 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @Column(name = "SUPERVISOR_FG")
     private Boolean supervisor;
 
-    @ListOnly(key = "branchId", property = "name")
-    private String branchName;
+    @ListOnly(key = "branchId", property = "code")
+    private String branchCode;
 
     @ListOnly(key = "branchId", property = "description")
     private String branchDesc;
@@ -214,12 +214,12 @@ public class User extends BaseVersionedTimestampedStatusEntity {
         this.lastLoginDt = lastLoginDt;
     }
 
-    public String getBranchName() {
-        return branchName;
+    public String getBranchCode() {
+        return branchCode;
     }
 
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
     }
 
     public String getBranchDesc() {

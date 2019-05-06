@@ -35,7 +35,7 @@ import com.tcdng.unify.core.util.QueryUtils;
 @UplBinding("web/organization/upl/managebranch.upl")
 public class BranchController extends AbstractOrganizationCrudController<Branch> {
 
-    private String searchName;
+    private String searchCode;
 
     private String searchDescription;
 
@@ -46,12 +46,12 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
-    public String getSearchName() {
-        return searchName;
+    public String getSearchCode() {
+        return searchCode;
     }
 
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
+    public void setSearchCode(String searchCode) {
+        this.searchCode = searchCode;
     }
 
     public String getSearchDescription() {
@@ -77,8 +77,8 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
             query.zoneId(searchZoneId);
         }
 
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+        if (QueryUtils.isValidStringCriteria(searchCode)) {
+            query.code(searchCode);
         }
 
         if (QueryUtils.isValidStringCriteria(searchDescription)) {

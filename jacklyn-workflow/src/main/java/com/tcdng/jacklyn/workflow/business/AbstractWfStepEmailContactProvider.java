@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,29 +16,18 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.notification.business.NotificationService;
-import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Convenient abstract base class for workflow item alert logic.
+ * Convenient abstract base class for workflow step email contact provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAlertLogic extends AbstractUnifyComponent implements WfItemAlertLogic {
+public abstract class AbstractWfStepEmailContactProvider extends AbstractUnifyComponent
+        implements WfStepEmailContactProvider {
 
-    @Configurable
-    private SystemService systemService;
-
-    @Configurable
-    private NotificationService notificationService;
-
-    @Configurable
-    private WfStepEmailContactProvider wfStepEmailContactProvider;
-    
     @Override
     protected void onInitialize() throws UnifyException {
 
@@ -49,15 +38,4 @@ public abstract class AbstractWfItemAlertLogic extends AbstractUnifyComponent im
 
     }
 
-    protected SystemService getSystemService() {
-        return systemService;
-    }
-
-    protected NotificationService getNotificationService() {
-        return notificationService;
-    }
-
-    protected WfStepEmailContactProvider getWfStepEmailContactProvider() {
-        return wfStepEmailContactProvider;
-    }
 }

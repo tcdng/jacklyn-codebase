@@ -25,8 +25,8 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObjects;
+import com.tcdng.jacklyn.workflow.data.InteractWfItem;
+import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.widgets.NotesInfo;
 import com.tcdng.jacklyn.workflow.widgets.UserWorkItemsPage;
 import com.tcdng.jacklyn.workflow.widgets.WfItemNotesPanel;
@@ -69,9 +69,9 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     private String wfStepName;
 
-    private WfItemObjects csWorkItems;
+    private InteractWfItems csWorkItems;
 
-    private WfItemObject workflowItem;
+    private InteractWfItem workflowItem;
 
     private Table table;
 
@@ -85,7 +85,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     private NotesInfo notesInfo;
 
-    private Map<Long, WfItemObject> workingCache;
+    private Map<Long, InteractWfItem> workingCache;
 
     private WfItemNotesPanel wfItemNotesPanel;
 
@@ -237,15 +237,15 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         this.wfStepName = wfStepName;
     }
 
-    public WfItemObjects getCsWorkItems() {
+    public InteractWfItems getCsWorkItems() {
         return csWorkItems;
     }
 
-    public void setCsWorkItems(WfItemObjects csWorkItems) {
+    public void setCsWorkItems(InteractWfItems csWorkItems) {
         this.csWorkItems = csWorkItems;
     }
 
-    public WfItemObject getWorkflowItem() {
+    public InteractWfItem getWorkflowItem() {
         return workflowItem;
     }
 
@@ -302,7 +302,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
             workflowItem.setActionList(csWorkItems.getActionList());
 
             if (workingCache == null) {
-                workingCache = new HashMap<Long, WfItemObject>();
+                workingCache = new HashMap<Long, InteractWfItem>();
             }
 
             workingCache.put(wfItemId, workflowItem);

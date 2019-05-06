@@ -28,14 +28,22 @@ public class WfAlertDef extends BaseWfDef {
 
     private static final long serialVersionUID = 9168747124616981593L;
 
+    private String globalStepName;
+
     private NotificationType type;
 
     private String notificationTemplateCode;
 
-    public WfAlertDef(String name, String description, NotificationType type, String notificationTemplateCode) {
+    public WfAlertDef(String globalStepName, String name, String description, NotificationType type,
+            String notificationTemplateCode) {
         super(name, description);
+        this.globalStepName = globalStepName;
         this.type = type;
         this.notificationTemplateCode = notificationTemplateCode;
+    }
+
+    public String getGlobalStepName() {
+        return globalStepName;
     }
 
     public NotificationType getType() {

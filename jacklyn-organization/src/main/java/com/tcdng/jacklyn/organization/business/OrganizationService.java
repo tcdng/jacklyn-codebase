@@ -530,4 +530,15 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     void loadRoleAttributesToApplication(String... roleNames) throws UnifyException;
+
+    /**
+     * Find roles that are tied to a workflow step.
+     * 
+     * @param globalStepName
+     *            the global workflow step name
+     * @return list of role codes
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<String> findWfStepRoles(String globalStepName) throws UnifyException;
 }

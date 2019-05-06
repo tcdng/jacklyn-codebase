@@ -35,17 +35,20 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
 @Tooling(name = "Branch", description = "Branch")
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
         auditable = true)
-@Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+@Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
     @ForeignKey(Zone.class)
     private Long zoneId;
 
-    @Column(name = "BRANCH_NM", length = 32)
-    private String name;
+    @Column(name = "BRANCH_CD", length = 32)
+    private String code;
 
     @Column(name = "BRANCH_DESC", length = 64)
     private String description;
+
+    @Column(name = "SORT_CD", length = 32)
+    private String sortCode;
 
     @Column(name="HEAD_OFFICE_FG")
     private Boolean headOffice;
@@ -74,16 +77,24 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
         return this.description;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(String sortCode) {
+        this.sortCode = sortCode;
     }
 
     public Boolean getHeadOffice() {

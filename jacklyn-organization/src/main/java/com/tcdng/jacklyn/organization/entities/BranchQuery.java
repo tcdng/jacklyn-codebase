@@ -33,12 +33,16 @@ public class BranchQuery extends BaseVersionedStatusEntityQuery<Branch> {
         return (BranchQuery) equals("zoneId", zoneId);
     }
 
-    public BranchQuery name(String name) {
-        return (BranchQuery) equals("name", name);
+    public BranchQuery code(String code) {
+        return (BranchQuery) equals("code", code);
     }
 
-    public BranchQuery nameLike(String name) {
-        return (BranchQuery) like("name", name);
+    public BranchQuery sortCode(String sortCode) {
+        return (BranchQuery) equals("sortCode", sortCode);
+    }
+
+    public BranchQuery sortCodeLike(String sortCode) {
+        return (BranchQuery) like("sortCode", sortCode);
     }
 
     public BranchQuery descriptionLike(String description) {

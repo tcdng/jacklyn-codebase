@@ -51,6 +51,7 @@ import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
+import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.StepNameParts;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
@@ -486,6 +487,14 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
             broadcastRefreshMenu();
         }
+    }
+
+    @Override
+    public List<String> findWfStepRoles(String globalStepName) throws UnifyException {
+        // TODO Implement cache
+        StepNameParts stepNameParts = WfNameUtils.getStepNameParts(globalStepName);
+        return db().valueList(String.class, "roleName", new RoleWfStepQuery().stepName(stepNameParts.getStepName())
+                .wfTemplateName(stepNameParts.getTemplateName()).wfCategoryName(stepNameParts.getCategoryName()));
     }
 
     @Override

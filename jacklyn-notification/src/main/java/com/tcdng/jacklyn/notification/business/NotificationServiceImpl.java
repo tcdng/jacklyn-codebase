@@ -207,6 +207,11 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
+    public NotificationTemplateDef getRuntimeNotificationTemplateDef(String globalTemplateName) throws UnifyException {
+        return templates.get(globalTemplateName);
+    }
+
+    @Override
     public Long createNotificationChannel(NotificationChannel notificationChannel) throws UnifyException {
         return (Long) db().create(notificationChannel);
     }
@@ -355,6 +360,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         return getToolingTypes(ToolingAttachmentGenItem.class, MessageAttachmentGenerator.class);
     }
 
+    @SuppressWarnings("unchecked")
     @Periodic(PeriodicType.SLOWER)
     public void sendNotifications(TaskMonitor taskMonitor) throws UnifyException {
         if (grabClusterMasterLock()) { // Puts burden on node until it dies
@@ -380,7 +386,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                     MessageDictionary messageDictionary = null;
                     if (notification.getDictionary() != null) {
                         messageDictionary =
-                                IOUtils.streamFromBytes(MessageDictionary.class, notification.getDictionary());
+                                new MessageDictionary((Map<String, Object>) IOUtils.streamFromBytes(Map.class,
+                                        notification.getDictionary()));
                     } else {
                         messageDictionary = new MessageDictionary();
                     }
@@ -394,7 +401,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                             notification.setStatus(NotificationStatus.ABORTED);
                         } else {
                             // Shift and update due date by retry minutes
-                            Date dueDt = CalendarUtils.getNowWithFrequencyOffset(now, FrequencyUnit.MINUTE, retryMinutes);
+                            Date dueDt =
+                                    CalendarUtils.getNowWithFrequencyOffset(now, FrequencyUnit.MINUTE, retryMinutes);
                             notification.setDueDt(dueDt);
                         }
                     }
@@ -412,8 +420,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         NotificationTemplate notificationTemplate = new NotificationTemplate();
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
-            if (moduleConfig.getNotificationTemplates() != null && !DataUtils.isBlank(moduleConfig.getNotificationTemplates()
-                        .getNotificationTemplateList())) {
+            if (moduleConfig.getNotificationTemplates() != null
+                    && !DataUtils.isBlank(moduleConfig.getNotificationTemplates().getNotificationTemplateList())) {
                 logDebug("Installing message type definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 NotificationTemplateQuery mtQuery = new NotificationTemplateQuery();
@@ -461,13 +469,13 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             NotificationChannelDef notificationChannelDef = channels.get(notification.getNotificationChannelName());
             MessagingChannel notificationChannel = null;
             switch (notificationChannelDef.getNotificationType()) {
-            case SMS:
-                notificationChannel = smsNotificationChannel;
-                break;
-            case EMAIL:
-            default:
-                notificationChannel = emailNotificationChannel;
-                break;
+                case SMS:
+                    notificationChannel = smsNotificationChannel;
+                    break;
+                case EMAIL:
+                default:
+                    notificationChannel = emailNotificationChannel;
+                    break;
             }
 
             String subject = resolveApplicationMessage(notification.getSubject());

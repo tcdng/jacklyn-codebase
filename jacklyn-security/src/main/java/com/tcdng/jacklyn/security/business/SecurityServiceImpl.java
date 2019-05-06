@@ -688,7 +688,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getId(), user.getBranchName(), globalAccess, user.isReserved(), allowMultipleLogin, false);
+                user.getId(), user.getBranchCode(), globalAccess, user.isReserved(), allowMultipleLogin, false);
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {

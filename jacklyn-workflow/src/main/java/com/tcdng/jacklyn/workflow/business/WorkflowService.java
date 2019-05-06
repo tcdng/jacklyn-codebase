@@ -28,8 +28,8 @@ import com.tcdng.jacklyn.workflow.data.WfDocDef;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObjects;
+import com.tcdng.jacklyn.workflow.data.InteractWfItem;
+import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfTemplateDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
@@ -434,7 +434,7 @@ public interface WorkflowService extends JacklynBusinessService {
      * @throws UnifyException
      *             if current user is not a participant in step
      */
-    WfItemObjects getCurrentUserWorkItems(String globalStepName) throws UnifyException;
+    InteractWfItems getCurrentUserWorkItems(String globalStepName) throws UnifyException;
 
     /**
      * Returns the current user work item summary.
@@ -456,7 +456,7 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if item is not held by current user. If action is unknown for
      *             current step.
      */
-    void applyWorkflowAction(WfItemObject workflowItem, String actionName) throws UnifyException;
+    void applyWorkflowAction(InteractWfItem workflowItem, String actionName) throws UnifyException;
 
     /**
      * Finds workflow item.
@@ -467,7 +467,7 @@ public interface WorkflowService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    WfItemObject findWorkflowItem(Long wfItemId) throws UnifyException;
+    InteractWfItem findWorkflowItem(Long wfItemId) throws UnifyException;
 
     /**
      * Finds workflow TrailItem history.

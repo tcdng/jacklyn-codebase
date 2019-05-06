@@ -48,6 +48,9 @@ public class UserRole extends BaseEntity implements Describable {
     @ListOnly(key = "userId", property = "fullName")
     private String userName;
 
+    @ListOnly(key = "userId", property = "email")
+    private String userEmail;
+
     @ListOnly(key = "userId", property = "themeId")
     private Long userThemeId;
 
@@ -107,6 +110,14 @@ public class UserRole extends BaseEntity implements Describable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getRoleName() {

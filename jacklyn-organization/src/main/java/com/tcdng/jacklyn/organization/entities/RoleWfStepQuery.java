@@ -43,6 +43,18 @@ public class RoleWfStepQuery extends BaseEntityQuery<RoleWfStep> {
         return (RoleWfStepQuery) equals("wfTemplateId", wfTemplateId);
     }
 
+    public RoleWfStepQuery wfCategoryName(String wfCategoryName) {
+        return (RoleWfStepQuery) equals("wfCategoryName", wfCategoryName);
+    }
+
+    public RoleWfStepQuery wfTemplateName(String wfTemplateName) {
+        return (RoleWfStepQuery) equals("wfTemplateName", wfTemplateName);
+    }
+
+    public RoleWfStepQuery stepName(String stepName) {
+        return (RoleWfStepQuery) equals("stepName", stepName);
+    }
+
     public RoleWfStepQuery wfStepNameIn(Collection<String> stepName) {
         return (RoleWfStepQuery) amongst("stepName", stepName);
     }

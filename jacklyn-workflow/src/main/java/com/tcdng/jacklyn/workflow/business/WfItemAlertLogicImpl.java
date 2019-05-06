@@ -16,10 +16,18 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import java.util.List;
+
+import com.tcdng.jacklyn.notification.data.Message;
+import com.tcdng.jacklyn.notification.data.NotificationContact;
+import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
+import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
  * Default workflow item alert logic implementation.
@@ -27,14 +35,66 @@ import com.tcdng.unify.core.annotation.Component;
  * @author Lateef
  * @since 1.0
  */
-@Component(name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC,
+@Component(
+        name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC,
         description = "Default Workflow Item Alert Logic")
 public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
 
     @Override
     public void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
-        // TODO Auto-generated method stub
+        logDebug("Sending alert...");
+        String senderName = null;
+        String senderContact = null;
+        String channelName = null;
+        List<NotificationContact> contactList = null;
 
+        switch (wfAlertDef.getType()) {
+            case EMAIL:
+                senderName =
+                        getSystemService().getSysParameterValue(String.class,
+                                SystemModuleSysParamConstants.SYSPARAM_SYSTEM_NAME);
+                senderContact =
+                        getSystemService().getSysParameterValue(String.class,
+                                SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL);
+                channelName =
+                        getSystemService().getSysParameterValue(String.class,
+                                SystemModuleSysParamConstants.SYSPARAM_EMAIL_CHANNEL);
+                contactList = getWfStepEmailContactProvider().getEmailContacts(wfAlertDef.getGlobalStepName());
+                break;
+            case SMS:
+                break;
+            case SYSTEM:
+            default:
+                break;
+        }
+
+        if (channelName != null && !DataUtils.isBlank(contactList)) {
+            String globalTemplateName = wfAlertDef.getNotificationTemplateCode();
+            NotificationTemplateDef notificationTemplateDef =
+                    getNotificationService().getRuntimeNotificationTemplateDef(globalTemplateName);
+
+            // Build message
+            Message.Builder msgBuilder = Message.newBuilder(globalTemplateName).fromSender(senderName, senderContact);
+
+            // Populate contacts
+            for (NotificationContact contact : contactList) {
+                msgBuilder.toRecipient(contact.getFullName(), contact.getContact());
+            }
+
+            // Populate message dictionary from workflow item
+            for (StringToken token : notificationTemplateDef.getTokenList()) {
+                if (token.isParam()) {
+                    String tokenName = token.getToken();
+                    msgBuilder.usingDictionaryEntry(tokenName, wfItemReader.readFieldValue(tokenName));
+                }
+            }
+
+            // Set channel
+            msgBuilder.sendVia(channelName);
+
+            // Send notification
+            getNotificationService().sendNotification(msgBuilder.build());
+        }
     }
 
 }
