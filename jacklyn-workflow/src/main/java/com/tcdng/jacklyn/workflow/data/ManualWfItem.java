@@ -71,4 +71,9 @@ public class ManualWfItem implements ViewableWfItem {
     public String getProcessGlobalName() {
         return processGlobalName;
     }
+
+    @Override
+    public String getDocName() {
+        return wfTemplateDocDef.getDocName();
+    }
 }

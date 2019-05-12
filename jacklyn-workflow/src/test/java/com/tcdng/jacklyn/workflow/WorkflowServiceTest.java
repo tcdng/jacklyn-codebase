@@ -656,7 +656,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testSubmitToWorkflow() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82);
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
         assertNotNull(wfItemId);
     }
 
@@ -664,7 +664,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testFindWorkflowItem() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         InteractWfItem interactWfItem = wfService.findWorkflowItem(wfItemId);
         assertNotNull(interactWfItem);
@@ -675,7 +675,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Customer:Tom Jones", interactWfItem.getDescription());
         assertEquals("custDoc", interactWfItem.getWfTemplateDocDef().getDocName());
         assertNotNull(interactWfItem.getWfTemplateDocDef().getWfDocDef());
-        assertNull(interactWfItem.getWfTemplateDocDef().getViewer());
+        assertNotNull(interactWfItem.getWfTemplateDocDef().getViewer());
         assertNotNull(interactWfItem.getWfItemHistId());
         assertNotNull(interactWfItem.getWfHistEventId());
         assertNotNull(interactWfItem.getPd());
@@ -688,7 +688,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testFindWorkflowItemHistory() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
         WfItemHistory workflowItemHist = wfService.findWorkflowItemHistory(workflowItem.getWfItemHistId(), false);
@@ -724,7 +724,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testRouteWorkflowItemByClassifier() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 25, 1.82); // Use valid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
         assertNull(wfItemId);
     }
 
@@ -732,7 +732,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testGrabWorkflowItem() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 10, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         List<Long> grabItemIdList = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval");
         assertNotNull(grabItemIdList);
@@ -744,7 +744,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyWorkflowAction() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 10, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
@@ -757,7 +757,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyUnknownWorkflowAction() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 10, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
@@ -777,7 +777,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyWorkflowActionNotHeld() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
         String errorName = null;
@@ -795,7 +795,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyWorkflowActionHistory() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
@@ -853,7 +853,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testRouteWorkflowItemByAction() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
@@ -875,7 +875,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testWorkflowItemDeletedOnEndStep() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
@@ -896,7 +896,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyEnrichment() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
@@ -914,7 +914,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 20, 1.82); // Valid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         OpenAccountDetails openAccountDetails = testOpenAccountPolicyLogic.getOpenAccountDetails();
         assertNotNull(openAccountDetails);
@@ -926,7 +926,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testRecordActionCreate() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
 
         TestCustomerService tcbm = (TestCustomerService) getComponent("test-customerservice");
         TestCustomer createdCustomer = tcbm.findCustomer("Tom");
@@ -955,7 +955,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         WorkflowService wfService = getWorkflowService();
         testCustomer.setLastName("Doe");
         testCustomer.setHeight(2.86);
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust", testCustomer);
+        wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", testCustomer);
 
         testCustomer = tcbm.findCustomer(custId);
         assertEquals("Tom", testCustomer.getFirstName());
@@ -975,7 +975,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         mockCustomer.setId(custId);
         mockCustomer.setFirstName("mockFirstName");
         mockCustomer.setAge(45); // Class 2
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust", mockCustomer);
+        wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", mockCustomer);
     }
 
     @Test
@@ -988,7 +988,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(foundCustomer);
 
         WorkflowService wfService = getWorkflowService();
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust", testCustomer);
+        wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", testCustomer);
 
         foundCustomer = tcbm.findCustomer("Tom");
         assertNull(foundCustomer);

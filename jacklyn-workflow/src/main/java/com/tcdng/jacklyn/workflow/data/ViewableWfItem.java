@@ -55,4 +55,10 @@ public interface ViewableWfItem {
      * Returns the process global name
      */
     String getProcessGlobalName();
+    
+    /**
+     * Returns the document name
+     */
+    String getDocName();
+
 }

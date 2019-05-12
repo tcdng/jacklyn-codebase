@@ -42,7 +42,7 @@ public class WfEnrichment extends BaseEntity {
     @Column(name = "ENRICHMENT_DESC", length = 64)
     private String description;
 
-    @Column(name = "DOC_NM", length = 32)
+    @Column(name = "DOC_NM", length = 32, nullable = true)
     private String docName;
 
     @Column(length=48)

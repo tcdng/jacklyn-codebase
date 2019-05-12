@@ -135,8 +135,9 @@ public class InteractWfItem implements ViewableWfItem {
         return itemTypeName;
     }
 
+    @Override
     public String getDocName() {
-        return pd.getConfig().getName();
+        return wfTemplateDocDef.getDocName();
     }
 
     public Long getWfItemId() {

@@ -498,4 +498,9 @@ public interface WfTemplateErrorConstants {
      * Workflow template form privilege refers to unknown template document. Index = {0}, step = {1}, record action = {2}, document = {3}.
      */
     String WFTEMPLATE_FORMPRIVILEGE_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0059";
+
+    /**
+     * Workflow template alert refers to unknown template document. Index = {0}, step = {1}, alert = {2}, document = {3}.
+     */
+    String WFTEMPLATE_ALERT_UNKNOWN_TEMPLATE_DOC = "WFTMPL_005A";
 }

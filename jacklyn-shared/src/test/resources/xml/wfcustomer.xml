@@ -70,13 +70,16 @@
 	<templates>
 		<template name="custOnboarding" description="Customer Onboarding"
 			document="custDoc" version="1.0">
+			<documents>
+			 <document name="custDoc" manual="true"/>
+			</documents>
 			<steps>
                 <step name="manual" description="Manual Create Customer" type="manual"
                     participant="personnel" />
 				<step name="start" description="Start Step" type="start">
 					<routings>
 						<routing name="routToCreate" description="Route to Create"
-							target="createCust" classifier="validAge" />
+							target="createCust" document="custDoc" classifier="validAge" />
 						<routing name="routToApproval" description="Route to Approval"
 							target="custApproval" />
 					</routings>
@@ -88,7 +91,7 @@
 				<step name="createCust" description="Create Customer" type="automatic">
 					<record-actions>
 						<record-action name="createCust" description="Create Customer"
-							mapping="custBeanMapping" type="create" />
+							 document="custDoc" mapping="custBeanMapping" type="create" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
@@ -97,7 +100,6 @@
 					<policies>
 						<policy name="testOpenAccount" description="Open Account"
 							logic="testopenaccount-policylogic" />
-						.
 					</policies>
 				</step>
 				<step name="custApproval" description="Customer Approval"
@@ -113,7 +115,7 @@
 							label="Reject" target="end" comment-requirement="mandatory" />
 					</user-actions>
 					<form-privileges>
-						<form-privilege type="field" name="licenseNo"
+						<form-privilege  document="custDoc" type="field" name="licenseNo"
 							editable="false" />
 					</form-privileges>
 				</step>

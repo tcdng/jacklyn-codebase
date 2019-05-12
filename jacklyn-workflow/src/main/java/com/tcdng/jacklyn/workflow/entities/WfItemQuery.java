@@ -40,12 +40,8 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
         return (WfItemQuery) equals("ownerId", ownerId);
     }
 
-    public WfItemQuery templateGlobalName(String templateGlobalName) {
-        return (WfItemQuery) equals("templateGlobalName", templateGlobalName);
-    }
-
-    public WfItemQuery wfStepName(String wfStepName) {
-        return (WfItemQuery) equals("wfStepName", wfStepName);
+    public WfItemQuery stepGlobalName(String stepGlobalName) {
+        return (WfItemQuery) equals("stepGlobalName", stepGlobalName);
     }
 
     public WfItemQuery descriptionLike(String description) {

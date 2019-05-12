@@ -46,9 +46,6 @@ public class WfCategoryConfigUtilsTest {
         WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils.readWfCategoryConfig("xml/wfcustomer.xml");
         List<UnifyError> errorList = WfCategoryConfigUtils.validate(wfCategoryConfig);
         assertNotNull(errorList);
-//        for(UnifyError ue: errorList) {
-//            System.out.println("@Moe: ue = " + ue);
-//        }
         assertEquals(0, errorList.size());
     }
 }
