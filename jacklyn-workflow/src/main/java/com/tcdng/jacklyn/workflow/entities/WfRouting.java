@@ -44,6 +44,9 @@ public class WfRouting extends BaseEntity {
     @Column(name = "ROUTING_DESC", length = 64)
     private String description;
 
+    @Column(name = "DOC_NM", length = 32, nullable = true)
+    private String docName;
+
     @Column(name = "CLASSIFIER_NM", nullable = true)
     private String classifierName;
 
@@ -84,6 +87,14 @@ public class WfRouting extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getClassifierName() {

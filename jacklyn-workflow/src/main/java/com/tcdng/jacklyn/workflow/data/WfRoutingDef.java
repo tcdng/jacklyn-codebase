@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.workflow.data;
 
+import com.tcdng.unify.core.util.StringUtils;
+
 /**
  * Workflow routing definition.
  * 
@@ -23,16 +25,22 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfRoutingDef extends BaseWfDef {
 
-    private static final long serialVersionUID = -5773321795933701806L;
+    private String docName;
 
     private String targetGlobalName;
 
     private WfDocClassifierDef classifier;
 
-    public WfRoutingDef(String name, String description, String targetGlobalName, WfDocClassifierDef classifier) {
+    public WfRoutingDef(String name, String description, String docName, String targetGlobalName,
+            WfDocClassifierDef classifier) {
         super(name, description);
+        this.docName = docName;
         this.targetGlobalName = targetGlobalName;
         this.classifier = classifier;
+    }
+
+    public String getDocName() {
+        return docName;
     }
 
     public String getTargetGlobalName() {
@@ -41,6 +49,10 @@ public class WfRoutingDef extends BaseWfDef {
 
     public WfDocClassifierDef getClassifier() {
         return classifier;
+    }
+    
+    public boolean isDoc() {
+        return !StringUtils.isBlank(docName);
     }
 
 }

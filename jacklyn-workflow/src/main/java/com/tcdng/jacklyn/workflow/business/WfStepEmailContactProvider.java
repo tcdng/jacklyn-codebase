@@ -33,9 +33,9 @@ public interface WfStepEmailContactProvider extends UnifyComponent {
     /**
      * Returns a list of notification email contacts for a workflow step.
      * 
-     * @param globalStepName the workflow step
+     * @param stepGlobalName the workflow step
      * @return the list of contact information
      * @throws UnifyException if an error occurs
      */
-    List<NotificationContact> getEmailContacts(String globalStepName) throws UnifyException;
+    List<NotificationContact> getEmailContacts(String stepGlobalName) throws UnifyException;
 }

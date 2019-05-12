@@ -32,6 +32,10 @@ public class InteractWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
+    private WfTemplateDocDef wfTemplateDocDef;
+
+    private String itemTypeName;
+
     private Long docId;
 
     private Long wfItemId;
@@ -44,7 +48,7 @@ public class InteractWfItem implements ViewableWfItem {
 
     private String label;
 
-    private String notes;
+    private String comment;
 
     private PackableDoc pd;
 
@@ -60,9 +64,12 @@ public class InteractWfItem implements ViewableWfItem {
 
     private List<WfAction> actionList;
 
-    public InteractWfItem(WfStepDef wfStepDef, Long docId, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
-            String description, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
+    public InteractWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String itemTypeName, Long docId,
+            Long wfItemId, Long wfItemHistId, Long wfHistEventId, String description, Date createDt, Date stepDt,
+            String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
+        this.wfTemplateDocDef = wfTemplateDocDef;
+        this.itemTypeName = itemTypeName;
         this.docId = docId;
         this.wfItemId = wfItemId;
         this.wfItemHistId = wfItemHistId;
@@ -81,7 +88,7 @@ public class InteractWfItem implements ViewableWfItem {
 
     @Override
     public String getDocViewer() {
-        return wfStepDef.getDocViewer();
+        return wfTemplateDocDef.getViewer();
     }
 
     @Override
@@ -92,6 +99,11 @@ public class InteractWfItem implements ViewableWfItem {
     @Override
     public WfStepDef getWfStepDef() {
         return wfStepDef;
+    }
+
+    @Override
+    public WfTemplateDocDef getWfTemplateDocDef() {
+        return wfTemplateDocDef;
     }
 
     public WfItemReader getReader() {
@@ -116,6 +128,11 @@ public class InteractWfItem implements ViewableWfItem {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String getProcessGlobalName() {
+        return itemTypeName;
     }
 
     public String getDocName() {
@@ -158,12 +175,12 @@ public class InteractWfItem implements ViewableWfItem {
         this.label = label;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getComment() {
+        return comment;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Date getCreateDt() {

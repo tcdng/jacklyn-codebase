@@ -14,7 +14,7 @@
 !ui-userwfitempanel:wfItemPanel binding:workflowItem
     applyItemActionPath:$n{/applyActionToWorkflowItem}
     showAttachmentsPath:$n{/showWorkflowItemAttachments}
-    showNotesPath:$n{/showWorkflowItemNotes}
+    showCommentsPath:$n{/showWorkflowItemComments}
     closeViewItemPath:$n{/closeViewWorkflowItems}
 
 
@@ -44,7 +44,7 @@
 
 // Popup panels
 !ui-wfitemattachmentspanel:attachmentsPopup attachmentsBodyStyle:$s{width:420px; height:180px;} attachmentsInfoBinding:fileAttachmentsInfo
-!ui-wfitemnotespanel:notesPopup binding:notesInfo saveNotesPath:$n{/applyActionWithNotes}
+!ui-wfitemcommentspanel:commentsPopup binding:commentsInfo saveCommentsPath:$n{/applyActionWithComments}
                                            
 // Action panels
 !ui-panel:actionOnMultiplePanel layout:$d{!ui-horizontal style:$s{width:720px;} widths:$l{50% 50%}}

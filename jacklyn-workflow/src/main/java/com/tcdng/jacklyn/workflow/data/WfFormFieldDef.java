@@ -23,8 +23,6 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfFormFieldDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = 3410393972134663967L;
-
     private String editorUpl;
 
     private boolean required;

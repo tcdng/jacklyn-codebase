@@ -22,37 +22,37 @@ import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 
 /**
- * Workflow item notes panel.
+ * Workflow item comments panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-wfitemnotespanel")
-@UplBinding("web/workflow/upl/wfitemnotespanel.upl")
-public class WfItemNotesPanel extends AbstractDialogPanel {
+@Component("ui-wfitemcommentspanel")
+@UplBinding("web/workflow/upl/wfitemcommentspanel.upl")
+public class WfItemCommentsPanel extends AbstractDialogPanel {
 
-    private boolean addNotes;
+    private boolean addComments;
 
     @Action
     @Override
     public void switchState() throws UnifyException {
         super.switchState();
 
-        NotesInfo notesInfo = getValue(NotesInfo.class);
-        setVisible("frmNotes", !notesInfo.isRequired());
-        setVisible("frmNotesReq", notesInfo.isRequired());
+        CommentsInfo commentsInfo = getValue(CommentsInfo.class);
+        setVisible("frmComments", !commentsInfo.isRequired());
+        setVisible("frmCommentsReq", commentsInfo.isRequired());
 
-        setVisible("addNotesPanel", addNotes);
-        setVisible("saveBtn", addNotes);
-        setVisible("cancelBtn", addNotes);
-        setVisible("closeBtn", !addNotes);
+        setVisible("addCommentsPanel", addComments);
+        setVisible("saveBtn", addComments);
+        setVisible("cancelBtn", addComments);
+        setVisible("closeBtn", !addComments);
     }
 
-    public boolean isAddNotes() {
-        return addNotes;
+    public boolean isAddComments() {
+        return addComments;
     }
 
-    public void setAddNotes(boolean addNotes) {
-        this.addNotes = addNotes;
+    public void setAddComments(boolean addComments) {
+        this.addComments = addComments;
     }
 }

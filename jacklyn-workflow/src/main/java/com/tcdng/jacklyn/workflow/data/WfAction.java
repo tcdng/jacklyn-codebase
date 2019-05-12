@@ -29,14 +29,14 @@ public class WfAction {
 
     private String label;
 
-    private RequirementType noteReqType;
+    private RequirementType commentReqType;
 
     private boolean validatePage;
 
-    public WfAction(String name, String label, RequirementType noteReqType, boolean validatePage) {
+    public WfAction(String name, String label, RequirementType commentReqType, boolean validatePage) {
         this.name = name;
         this.label = label;
-        this.noteReqType = noteReqType;
+        this.commentReqType = commentReqType;
         this.validatePage = validatePage;
     }
 
@@ -48,8 +48,8 @@ public class WfAction {
         return label;
     }
 
-    public RequirementType getNoteReqType() {
-        return noteReqType;
+    public RequirementType getCommentReqType() {
+        return commentReqType;
     }
 
     public boolean isValidatePage() {

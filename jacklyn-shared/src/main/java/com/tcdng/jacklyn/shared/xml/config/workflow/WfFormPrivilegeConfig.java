@@ -29,6 +29,8 @@ import com.tcdng.jacklyn.shared.xml.adapter.WorkflowFormElementTypeXmlAdapter;
  */
 public class WfFormPrivilegeConfig {
 
+    private String document;
+    
     private WorkflowFormElementType type;
 
     private String name;
@@ -46,6 +48,15 @@ public class WfFormPrivilegeConfig {
         this.editable = Boolean.TRUE;
         this.disabled = Boolean.FALSE;
         this.required = Boolean.TRUE;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute(required = true)
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public WorkflowFormElementType getType() {

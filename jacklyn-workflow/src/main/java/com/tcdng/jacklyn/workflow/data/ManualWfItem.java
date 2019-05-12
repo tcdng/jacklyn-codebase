@@ -28,10 +28,17 @@ public class ManualWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
+    private WfTemplateDocDef wfTemplateDocDef;
+
+    private String processGlobalName;
+
     private PackableDoc pd;
 
-    public ManualWfItem(WfStepDef wfStepDef, PackableDoc pd) {
+    public ManualWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
+            PackableDoc pd) {
         this.wfStepDef = wfStepDef;
+        this.wfTemplateDocDef = wfTemplateDocDef;
+        this.processGlobalName = processGlobalName;
         this.pd = pd;
     }
 
@@ -42,7 +49,7 @@ public class ManualWfItem implements ViewableWfItem {
 
     @Override
     public String getDocViewer() {
-        return wfStepDef.getDocViewer();
+        return wfTemplateDocDef.getViewer();
     }
 
     @Override
@@ -53,5 +60,15 @@ public class ManualWfItem implements ViewableWfItem {
     @Override
     public WfStepDef getWfStepDef() {
         return wfStepDef;
+    }
+
+    @Override
+    public WfTemplateDocDef getWfTemplateDocDef() {
+        return wfTemplateDocDef;
+    }
+
+    @Override
+    public String getProcessGlobalName() {
+        return processGlobalName;
     }
 }

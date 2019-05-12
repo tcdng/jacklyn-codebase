@@ -27,8 +27,6 @@ import com.tcdng.unify.core.data.PackableDocRWConfig;
  */
 public class WfDocBeanMappingDef extends BaseWfDef {
 
-    private static final long serialVersionUID = -1053158706216881339L;
-
     private PackableDocRWConfig rwConfig;
 
     private boolean receptacleMapping;

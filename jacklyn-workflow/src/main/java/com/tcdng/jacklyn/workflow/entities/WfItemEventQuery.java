@@ -33,7 +33,7 @@ public class WfItemEventQuery extends BaseEntityQuery<WfItemEvent> {
         return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
     }
 
-    public WfItemEventQuery notesOnly() {
-        return (WfItemEventQuery) isNotNull("notes");
+    public WfItemEventQuery commentsOnly() {
+        return (WfItemEventQuery) isNotNull("comments");
     }
 }

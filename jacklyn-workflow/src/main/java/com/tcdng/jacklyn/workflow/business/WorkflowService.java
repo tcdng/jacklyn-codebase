@@ -24,14 +24,13 @@ import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
-import com.tcdng.jacklyn.workflow.data.WfDocDef;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
-import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
+import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.data.InteractWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
-import com.tcdng.jacklyn.workflow.data.WfTemplateDef;
+import com.tcdng.jacklyn.workflow.data.WfProcessDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -306,50 +305,39 @@ public interface WorkflowService extends JacklynBusinessService {
     List<Long> findStepIds(Long wfTemplateId, Collection<String> stepNames) throws UnifyException;
 
     /**
-     * Gets workflow document definition.
-     * 
-     * @param globalDocName
-     *            the global document name
-     * @return the runtime object
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    WfDocDef getRuntimeWfDocDef(String globalDocName) throws UnifyException;
-
-    /**
      * Gets the workflow form object.
      * 
-     * @param globalDocName
+     * @param docGlobalName
      *            the global document name
      * @return the runtime object
      * @throws UnifyException
      *             if document with global name is unknown. If document definition
      *             has no form
      */
-    WfFormDef getRuntimeWfFormDef(String globalDocName) throws UnifyException;
+    WfFormDef getRuntimeWfFormDef(String docGlobalName) throws UnifyException;
 
     /**
-     * Gets workflow document definition.
+     * Gets workflow process definition.
      * 
-     * @param globalTemplateName
-     *            the global template name
+     * @param processGlobalName
+     *            the global process name
      * @return the runtime object
      * @throws UnifyException
      *             if an error occurs
      */
-    WfTemplateDef getRuntimeWfTemplateDef(String globalTemplateName) throws UnifyException;
+    WfProcessDef getRuntimeWfProcessDef(String processGlobalName) throws UnifyException;
 
     /**
-     * Creates a manual initiation item for the supplied workflow template.
+     * Creates a manual initiation item for the supplied workflow process.
      * 
-     * @param globalTemplateName
-     *            the name of workflow template to use
-     * @return a new manual intiation item
+     * @param processGlobalName
+     *            the name of workflow process to use
+     * @return a new manual initiation item
      * @throws UnifyException
-     *             if template is unknown. If template does not allow manual
+     *             if template is unknown. If process does not allow manual
      *             initiation. if an error occurs
      */
-    ManualWfItem createManualInitItem(String globalTemplateName) throws UnifyException;
+    ManualWfItem createManualInitItem(String processGlobalName) throws UnifyException;
 
     /**
      * Pends supplied manual initiation item.
@@ -374,8 +362,8 @@ public interface WorkflowService extends JacklynBusinessService {
     /**
      * Submits a packable document to workflow.
      * 
-     * @param globalTemplateName
-     *            the workflow template name
+     * @param processGlobalName
+     *            the workflow process name
      * @param packableDoc
      *            the packable document to push into workflow
      * @return the workflow item ID
@@ -383,13 +371,13 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if packable document doesn't match template. if template is
      *             unknown. if an error occurs
      */
-    Long submitToWorkflow(String globalTemplateName, PackableDoc packableDoc) throws UnifyException;
+    Long submitToWorkflow(String processGlobalName, PackableDoc packableDoc) throws UnifyException;
 
     /**
      * Submits a document, with optional secondary documents, to workflow.
      * 
-     * @param globalTemplateName
-     *            the workflow template global name
+     * @param processGlobalName
+     *            the workflow global process name
      * @param documents
      *            the documents. The first document is considered the primary
      *            document.
@@ -397,25 +385,25 @@ public interface WorkflowService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    Long submitToWorkflow(String globalTemplateName, Document... documents) throws UnifyException;
+    Long submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException;
 
     /**
      * Grabs work items for current user from specified step. Items grabbed include
      * old grabbed items and unheld items. Total number of items grabbed is limited
      * by maximum hold property of step.
      * 
-     * @param globalStepName
+     * @param stepGlobalName
      *            the global step name
      * @return the list of grabbed work item IDs.
      * @throws UnifyException
      *             if current user is not a participant in step
      */
-    List<Long> grabCurrentUserWorkItems(String globalStepName) throws UnifyException;
+    List<Long> grabCurrentUserWorkItems(String stepGlobalName) throws UnifyException;
 
     /**
      * Releases work items for current user from specified step.
      * 
-     * @param globalStepName
+     * @param stepGlobalName
      *            the global step name
      * @param wfItemIds
      *            the workflow item IDs
@@ -423,18 +411,18 @@ public interface WorkflowService extends JacklynBusinessService {
      * @throws UnifyException
      *             if current user is not a participant in step if an error occurs
      */
-    int releaseCurrentUserWorkItems(String globalStepName, List<Long> wfItemIds) throws UnifyException;
+    int releaseCurrentUserWorkItems(String stepGlobalName, List<Long> wfItemIds) throws UnifyException;
 
     /**
      * Returns the current user work item list for particular step.
      * 
-     * @param globalStepName
+     * @param stepGlobalName
      *            the global step name
      * @return the current session work items
      * @throws UnifyException
      *             if current user is not a participant in step
      */
-    InteractWfItems getCurrentUserWorkItems(String globalStepName) throws UnifyException;
+    InteractWfItems getCurrentUserWorkItems(String stepGlobalName) throws UnifyException;
 
     /**
      * Returns the current user work item summary.
@@ -474,13 +462,13 @@ public interface WorkflowService extends JacklynBusinessService {
      * 
      * @param wfItemHistId
      *            the worklfow history ID
-     * @param notesOnly
-     *            indicates if to fetch only history events that have notes
+     * @param commentsOnly
+     *            indicates if to fetch only history events that have comments
      * @return the workflow item history
      * @throws UnifyException
      *             if an error occurs
      */
-    WfItemHistObject findWorkflowItemHistory(Long wfItemHistId, boolean notesOnly) throws UnifyException;
+    WfItemHistory findWorkflowItemHistory(Long wfItemHistId, boolean commentsOnly) throws UnifyException;
 
     /**
      * Attaches item to workflow item.

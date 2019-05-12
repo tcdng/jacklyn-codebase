@@ -53,7 +53,7 @@ import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 public class NotificationServiceTest extends AbstractJacklynTest {
 
     private static final String NOTIFICATION_TEMPLATE_NAME = NotificationUtils
-            .getGlobalTemplateName(SystemModuleNameConstants.SYSTEM_MODULE, "ACC-SMRY-001");
+            .getTemplateGlobalName(SystemModuleNameConstants.SYSTEM_MODULE, "ACC-SMRY-001");
 
     private static final String NOTIFICATION_CHANNEL_NAME = "testNotificationChannel";
 

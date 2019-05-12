@@ -28,7 +28,7 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfsteptypelist")
 public enum WorkflowStepType implements EnumConst {
 
-    START("S"), MANUAL("M"), RECEPTACLE("R"), AUTOMATIC("A"), INTERACTIVE("I"), END("E");
+    START("S"), MANUAL("M"), AUTOMATIC("A"), INTERACTIVE("I"), END("E");
 
     private final String code;
 
@@ -47,10 +47,6 @@ public enum WorkflowStepType implements EnumConst {
 
     public boolean isManual() {
         return MANUAL.equals(this);
-    }
-
-    public boolean isReceptacle() {
-        return RECEPTACLE.equals(this);
     }
 
     public boolean isEnd() {

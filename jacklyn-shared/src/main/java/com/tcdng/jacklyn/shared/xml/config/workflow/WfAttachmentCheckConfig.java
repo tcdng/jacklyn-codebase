@@ -29,9 +29,20 @@ import com.tcdng.unify.core.util.xml.adapter.RequirementTypeXmlAdapter;
  */
 public class WfAttachmentCheckConfig {
 
+    private String document;
+    
     private String attachmentName;
 
     private RequirementType requirementType;
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute(required = true)
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
     public String getAttachmentName() {
         return attachmentName;

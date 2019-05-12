@@ -35,17 +35,11 @@ import com.tcdng.unify.core.util.DataUtils;
  */
 public class WfStepDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = 1353403743220906693L;
-
     private Long wfTemplateId;
 
-    private String globalTemplateName;
-
-    private String globalFormName;
+    private String templateGlobalName;
 
     private String globalName;
-
-    private String docViewer;
 
     private WorkflowStepType stepType;
 
@@ -77,19 +71,19 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private boolean includeForwarder;
 
-    public WfStepDef(Long wfTemplateId, String globalTemplateName, String globalFormName, String globalName,
-            String docViewer, String name, String description, String label, WorkflowStepType stepType,
+    private long timestamp;
+
+    public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName,
+            String name, String description, String label, WorkflowStepType stepType,
             WorkflowParticipantType participantType, List<WfEnrichmentDef> enrichmentList,
             List<WfRoutingDef> routingList, List<WfRecordActionDef> recordActionList,
             List<WfUserActionDef> userActionList, List<WfFormPrivilegeDef> formPrivilegeList,
             List<WfAlertDef> alertList, List<WfPolicyDef> policyList, int itemsPerSession, int expiryHours,
-            boolean audit, boolean branchOnly, boolean includeForwarder) {
+            boolean audit, boolean branchOnly, boolean includeForwarder, long timestamp) {
         super(name, description, label);
         this.wfTemplateId = wfTemplateId;
-        this.globalTemplateName = globalTemplateName;
-        this.globalFormName = globalFormName;
+        this.templateGlobalName = templateGlobalName;
         this.globalName = globalName;
-        this.docViewer = docViewer;
         this.stepType = stepType;
         this.participantType = participantType;
         this.itemsPerSession = itemsPerSession;
@@ -97,6 +91,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.audit = audit;
         this.branchOnly = branchOnly;
         this.includeForwarder = includeForwarder;
+        this.timestamp = timestamp;
 
         this.enrichmentList = DataUtils.unmodifiableList(enrichmentList);
         this.routingList = DataUtils.unmodifiableList(routingList);
@@ -120,20 +115,12 @@ public class WfStepDef extends BaseLabelWfDef {
         return wfTemplateId;
     }
 
-    public String getGlobalTemplateName() {
-        return globalTemplateName;
-    }
-
-    public String getGlobalFormName() {
-        return globalFormName;
+    public String getTemplateGlobalName() {
+        return templateGlobalName;
     }
 
     public String getGlobalName() {
         return globalName;
-    }
-
-    public String getDocViewer() {
-        return docViewer;
     }
 
     public WorkflowStepType getStepType() {
@@ -192,16 +179,16 @@ public class WfStepDef extends BaseLabelWfDef {
         return includeForwarder;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
     public boolean isStart() {
         return stepType.isStart();
     }
 
     public boolean isManual() {
         return stepType.isManual();
-    }
-
-    public boolean isReceptacle() {
-        return stepType.isReceptacle();
     }
 
     public boolean isAutomatic() {

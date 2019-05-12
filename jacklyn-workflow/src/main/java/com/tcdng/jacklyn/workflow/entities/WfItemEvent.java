@@ -17,9 +17,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -32,7 +30,6 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Item Event")
 @Table("JKWFITEMEVENT")
 public class WfItemEvent extends BaseEntity {
 
@@ -58,14 +55,20 @@ public class WfItemEvent extends BaseEntity {
     private String wfAction;
 
     @Column(length = 512, nullable = true)
-    private String notes;
+    private String comment;
 
-    @ListOnly(key = "wfItemHistId", property = "documentId")
-    private Long documentId;
+    @ListOnly(key = "wfItemHistId", property = "processGlobalName")
+    private String processGlobalName;
+
+    @ListOnly(key = "wfItemHistId", property = "docId")
+    private Long docId;
+
+    @ListOnly(key = "wfItemHistId", property = "description")
+    private String wfItemDesc;
 
     @Override
     public String getDescription() {
-        return null;
+        return wfItemDesc;
     }
 
     public Long getWfItemHistId() {
@@ -124,19 +127,35 @@ public class WfItemEvent extends BaseEntity {
         this.wfAction = wfAction;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getComment() {
+        return comment;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public Long getDocumentId() {
-        return documentId;
+    public String getProcessGlobalName() {
+        return processGlobalName;
     }
 
-    public void setDocumentId(Long documentId) {
-        this.documentId = documentId;
+    public void setProcessGlobalName(String processGlobalName) {
+        this.processGlobalName = processGlobalName;
+    }
+
+    public Long getDocId() {
+        return docId;
+    }
+
+    public void setDocId(Long docId) {
+        this.docId = docId;
+    }
+
+    public String getWfItemDesc() {
+        return wfItemDesc;
+    }
+
+    public void setWfItemDesc(String wfItemDesc) {
+        this.wfItemDesc = wfItemDesc;
     }
 }

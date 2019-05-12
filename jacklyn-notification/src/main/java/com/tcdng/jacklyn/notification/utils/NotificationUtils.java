@@ -50,12 +50,12 @@ public final class NotificationUtils {
 
     }
 
-    public static String getGlobalTemplateName(String moduleName, String templateName) {
+    public static String getTemplateGlobalName(String moduleName, String templateName) {
         return StringUtils.dotify(moduleName, templateName);
     }
 
-    public static TemplateNameParts getTemplateNameParts(String globalTemplateName) throws UnifyException {
-        return templateNames.get(globalTemplateName);
+    public static TemplateNameParts getTemplateNameParts(String templateGlobalName) throws UnifyException {
+        return templateNames.get(templateGlobalName);
     }
 
     public static class TemplateNameParts {

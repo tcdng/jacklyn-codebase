@@ -36,11 +36,11 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
  */
 public class WfDocDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 5731603377730336455L;
-
     private Long wfDocId;
 
     private PackableDocConfig docConfig;
+
+    private String wfCategoryName;
 
     private String globalName;
 
@@ -58,12 +58,13 @@ public class WfDocDef extends BaseWfDef {
 
     private Map<String, WfDocClassifierDef> classifiers;
 
-    public WfDocDef(Long wfDocId, String globalName, String name, String description, PackableDocConfig docConfig,
-            long timestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
+    public WfDocDef(Long wfDocId, String wfCategoryName, String globalName, String name, String description,
+            PackableDocConfig docConfig, long timestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
             List<WfDocBeanMappingDef> beanMappingList, List<WfDocAttachmentDef> attachmentList,
             List<WfDocClassifierDef> classifierList) {
         super(name, description);
         this.wfDocId = wfDocId;
+        this.wfCategoryName = wfCategoryName;
         this.globalName = globalName;
         this.docConfig = docConfig;
         this.timestamp = timestamp;
@@ -118,6 +119,10 @@ public class WfDocDef extends BaseWfDef {
 
     public String getGlobalName() {
         return globalName;
+    }
+
+    public String getWfCategoryName() {
+        return wfCategoryName;
     }
 
     public long getTimestamp() {

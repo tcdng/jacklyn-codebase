@@ -46,8 +46,8 @@ public class SecurityWfStepEmailContactProvider extends AbstractWfStepEmailConta
     private SecurityService securityService;
 
     @Override
-    public List<NotificationContact> getEmailContacts(String globalStepName) throws UnifyException {
-        List<String> roleList = organizationService.findWfStepRoles(globalStepName);
+    public List<NotificationContact> getEmailContacts(String stepGlobalName) throws UnifyException {
+        List<String> roleList = organizationService.findWfStepRoles(stepGlobalName);
         if (!DataUtils.isBlank(roleList)) {
             List<UserRole> userRoleList =
                     securityService.findUserRoles(

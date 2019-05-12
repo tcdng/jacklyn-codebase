@@ -27,9 +27,20 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfRoutingConfig extends BaseConfig {
 
+    private String document;
+
     private String targetStepName;
 
     private String classifierName;
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
     public String getTargetStepName() {
         return targetStepName;

@@ -306,10 +306,10 @@ public interface WfTemplateErrorConstants {
     String WFTEMPLATE_USERACTION_INVALID_NAME = "WFTMPL_0035";
 
     /**
-     * Workflow template user action has no notes requirement type. Index = {0},
+     * Workflow template user action has no comment requirement type. Index = {0},
      * step = {1}, name = {2}.
      */
-    String WFTEMPLATE_USERACTION_NO_NOTES_TYPE = "WFTMPL_0036";
+    String WFTEMPLATE_USERACTION_NO_COMMENT_TYPE = "WFTMPL_0036";
 
     /**
      * Workflow template user action has no target. Index = {0}, step = {1}, name =
@@ -433,4 +433,69 @@ public interface WfTemplateErrorConstants {
      * name = {2}, message = {3}, document = {4}.
      */
     String WFTEMPLATE_ALERT_MESSAGE_INCOMPATIBLE = "WFTMPL_004C";
+
+    /**
+     * Workflow template document has no name. Index = {0}.
+     */
+    String WFTEMPLATE_DOC_NO_NAME = "WFTMPL_004D";
+
+    /**
+     * Workflow template document with name already exists. Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_DOC_EXIST = "WFTMPL_004E";
+
+    /**
+     * Workflow template document refers to unknown category document {0}.
+     */
+    String WFTEMPLATE_DOC_UNKNOWN_CATEGORY_DOC = "WFTMPL_004F";
+
+    /**
+     * Workflow template routing with classifier has no document reference. Index = {0}, step = {1}, classifier = {2}.
+     */
+    String WFTEMPLATE_ROUTING_WITH_CLASSIFIER_NO_DOC = "WFTMPL_0050";
+
+    /**
+     * Workflow template routing refers to unknown template document. Index = {0}, step = {1}, routing = {2}, document = {3}.
+     */
+    String WFTEMPLATE_ROUTING_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0051";
+
+    /**
+     * Workflow template policy refers to unknown template document. Index = {0}, step = {1}, policy = {2}, document = {3}.
+     */
+    String WFTEMPLATE_POLICY_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0052";
+
+    /**
+     * Workflow template enrichment refers to unknown template document. Index = {0}, step = {1}, enrichment = {2}, document = {3}.
+     */
+    String WFTEMPLATE_ENRICHMENT_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0053";
+
+    /**
+     * Workflow template record action has no document reference. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_RECORDACTION_WITH_NO_DOC = "WFTMPL_0054";
+
+    /**
+     * Workflow template record action refers to unknown template document. Index = {0}, step = {1}, record action = {2}, document = {3}.
+     */
+    String WFTEMPLATE_RECORDACTION_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0055";
+
+    /**
+     * Workflow template record action refers to unknown category document mapping. Index = {0}, step = {1}, record action = {2}, document = {3}, mapping = {4}.
+     */
+    String WFTEMPLATE_RECORDACTION_UNKNOWN_CATEGORY_DOC_MAPPING = "WFTMPL_0056";
+
+    /**
+     * Workflow template routing refers to unknown category document classifier. Index = {0}, step = {1}, routing = {2}, document = {3}, classifier = {4}.
+     */
+    String WFTEMPLATE_ROUTING_UNKNOWN_CATEGORY_DOC_CLASSIFIER = "WFTMPL_0057";
+
+    /**
+     * Workflow template form privilege has no document reference. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_FORMPRIVILEGE_WITH_NO_DOC = "WFTMPL_0058";
+
+    /**
+     * Workflow template form privilege refers to unknown template document. Index = {0}, step = {1}, record action = {2}, document = {3}.
+     */
+    String WFTEMPLATE_FORMPRIVILEGE_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0059";
 }

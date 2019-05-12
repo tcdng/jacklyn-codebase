@@ -63,7 +63,7 @@ public class WfHistEventListingWriter extends AbstractWidgetWriter {
                 writer.write("<div class=\"wwbody\">");
                 writer.write("<div style=\"display:table;width:100%;\">");
                 WfItemHistEvent workflowItemHistEvent = listing.get(i);
-                writeEventAttributeRow(writer, "wwcontent", workflowItemHistEvent.getNotes());
+                writeEventAttributeRow(writer, "wwcontent", workflowItemHistEvent.getComments());
                 writeEventAttributeRow(writer, "wwlabel", getSessionMessage("wfhisteventlisting.user.action",
                         workflowItemHistEvent.getActor(), workflowItemHistEvent.getWfActionDesc()));
                 writeEventAttributeRow(writer, "wwlabel",

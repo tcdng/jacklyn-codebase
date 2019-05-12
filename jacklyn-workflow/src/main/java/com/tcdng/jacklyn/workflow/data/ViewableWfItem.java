@@ -42,7 +42,17 @@ public interface ViewableWfItem {
     PackableDoc getPd();
 
     /**
+     * Returns the workflow item template document definition.
+     */
+    WfTemplateDocDef getWfTemplateDocDef();
+
+    /**
      * Returns the workflow item step.
      */
     WfStepDef getWfStepDef();
+
+    /**
+     * Returns the process global name
+     */
+    String getProcessGlobalName();
 }

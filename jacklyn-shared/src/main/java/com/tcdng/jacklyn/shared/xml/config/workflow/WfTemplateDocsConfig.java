@@ -14,37 +14,29 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.data;
+package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import com.tcdng.unify.core.util.StringUtils;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Workflow document enrichment definition.
+ * Workflow template documents configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfEnrichmentDef extends BaseWfDef {
+public class WfTemplateDocsConfig {
 
-    private String docName;
+    private List<WfTemplateDocConfig> wfTemplateDocConfigList;
 
-    private String logic;
-
-    public WfEnrichmentDef(String name, String description, String docName, String logic) {
-        super(name, description);
-        this.docName = docName;
-        this.logic = logic;
+    public List<WfTemplateDocConfig> getWfTemplateDocConfigList() {
+        return wfTemplateDocConfigList;
     }
 
-    public String getDocName() {
-        return docName;
+    @XmlElement(name = "document", required = true)
+    public void setWfTemplateDocConfigList(List<WfTemplateDocConfig> wfTemplateDocConfigList) {
+        this.wfTemplateDocConfigList = wfTemplateDocConfigList;
     }
 
-    public String getLogic() {
-        return logic;
-    }
-    
-    public boolean isDoc() {
-        return !StringUtils.isBlank(docName);
-    }
 }

@@ -29,10 +29,6 @@ public class WfItemHistQuery extends BaseTimestampedEntityQuery<WfItemHist> {
         super(WfItemHist.class);
     }
 
-    public WfItemHistQuery wfTemplateId(Long wfTemplateId) {
-        return (WfItemHistQuery) equals("wfTemplateId", wfTemplateId);
-    }
-
     public WfItemHistQuery descriptionLike(String description) {
         return (WfItemHistQuery) like("description", description);
     }

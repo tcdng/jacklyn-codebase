@@ -48,14 +48,14 @@ public class WfFixedRoutingBatchFileReadProcessor extends AbstractWfBatchFileRea
 
     @Override
     protected Object doProcess(BatchFileReadConfig batchFileReadConfig, BatchFileReader reader) throws UnifyException {
-        String globalTemplateName =
+        String templateGlobalName =
                 batchFileReadConfig.getParameter(String.class, WfBatchFileReadProcessorConstants.WORKFLOW_TEMPLATENAME);
         String documentType =
                 batchFileReadConfig.getParameter(String.class, WfBatchFileReadProcessorConstants.WORKFLOW_DOCUMENTTYPE);
         Document item = ReflectUtils.newInstance(Document.class, documentType);
         ValueStore itemStore = getValueStore(item);
         while (reader.readNextRecord(itemStore)) {
-            getWorkflowService().submitToWorkflow(globalTemplateName, (Document) item);
+            getWorkflowService().submitToWorkflow(templateGlobalName, item);
         }
 
         return null;

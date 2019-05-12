@@ -48,6 +48,7 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfRecordActionConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfRoutingConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfStepConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfTemplateConfig;
+import com.tcdng.jacklyn.shared.xml.config.workflow.WfTemplateDocConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfUserActionConfig;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
@@ -133,8 +134,13 @@ public final class WfCategoryConfigUtils {
         } else {
             for (WfDocumentConfig wfDocumentConfig : wfCategoryConfig.getWfDocumentsConfig()
                     .getWfDocumentConfigList()) {
-                ctx.addDocument(wfDocumentConfig);
-                List<UnifyError> errorList = WfCategoryConfigUtils.validate(taskMonitor, wfDocumentConfig);
+                if (!StringUtils.isBlank(wfDocumentConfig.getName()) && ctx.isDocument(wfDocumentConfig.getName())) {
+                    ctx.addError(WfCategoryErrorConstants.WFCATEGORY_DOCUMENT_EXISTS, wfDocumentConfig.getName());
+                }
+
+                WfDocumentValidationContext wfDocCtx = WfCategoryConfigUtils.validate(taskMonitor, wfDocumentConfig);
+                ctx.addDocument(wfDocCtx);
+                List<UnifyError> errorList = wfDocCtx.getErrorList();
                 if (!errorList.isEmpty()) {
                     ctx.addError(WfCategoryErrorConstants.WFCATEGORY_DOCUMENT_ERRORS, ctx.getDocumentCounter());
                     ctx.addErrorList(errorList);
@@ -169,9 +175,9 @@ public final class WfCategoryConfigUtils {
         return ctx.getErrorList();
     }
 
-    private static List<UnifyError> validate(TaskMonitor taskMonitor, WfDocumentConfig wfDocumentConfig)
+    private static WfDocumentValidationContext validate(TaskMonitor taskMonitor, WfDocumentConfig wfDocumentConfig)
             throws UnifyException {
-        WfDocumentValidationContext ctx = new WfDocumentValidationContext(taskMonitor);
+        WfDocumentValidationContext ctx = new WfDocumentValidationContext(wfDocumentConfig.getName(), taskMonitor);
         // Document name and description
         String name = wfDocumentConfig.getName();
         if (StringUtils.isBlank(name)) {
@@ -247,12 +253,13 @@ public final class WfCategoryConfigUtils {
                 }
             }
         }
-        return ctx.getErrorList();
+
+        return ctx;
     }
 
     private static List<UnifyError> validate(WfCategoryValidationContext wfCatCtx, WfTemplateConfig wfTemplateConfig)
             throws UnifyException {
-        WfTemplateValidationContext ctx = new WfTemplateValidationContext(wfCatCtx, wfTemplateConfig);
+        WfTemplateValidationContext ctx = new WfTemplateValidationContext(wfCatCtx);
         // Template name and description
         String name = wfTemplateConfig.getName();
         if (StringUtils.isBlank(name)) {
@@ -263,8 +270,20 @@ public final class WfCategoryConfigUtils {
             ctx.addError(WfTemplateErrorConstants.WFTEMPLATE_NO_DESC);
         }
 
-        if (StringUtils.isBlank(wfTemplateConfig.getDocument())) {
+        // Documents
+        if (wfTemplateConfig.getWfTemplateDocsConfig() == null
+                || DataUtils.isBlank(wfTemplateConfig.getWfTemplateDocsConfig().getWfTemplateDocConfigList())) {
             ctx.addError(WfTemplateErrorConstants.WFTEMPLATE_NO_DOCUMENT);
+        } else {
+            for (WfTemplateDocConfig wfTemplateDocConfig : wfTemplateConfig.getWfTemplateDocsConfig()
+                    .getWfTemplateDocConfigList()) {
+                if (ctx.addTemplateDoc(wfTemplateDocConfig)) {
+                    if (!wfCatCtx.isDocument(wfTemplateDocConfig.getDocument())) {
+                        ctx.addError(WfTemplateErrorConstants.WFTEMPLATE_DOC_UNKNOWN_CATEGORY_DOC,
+                                wfTemplateDocConfig.getDocument());
+                    }
+                }
+            }
         }
 
         // Steps
@@ -291,7 +310,7 @@ public final class WfCategoryConfigUtils {
 
         private List<UnifyError> errorList;
 
-        private Set<String> wfDocumentConfigs;
+        private Map<String, WfDocumentValidationContext> wfDocumentConfigs;
 
         private Map<String, WfMessageConfig> wfMessageConfigs;
 
@@ -306,7 +325,7 @@ public final class WfCategoryConfigUtils {
         public WfCategoryValidationContext(TaskMonitor taskMonitor) {
             this.taskMonitor = taskMonitor;
             errorList = new ArrayList<UnifyError>();
-            wfDocumentConfigs = new HashSet<String>();
+            wfDocumentConfigs = new HashMap<String, WfDocumentValidationContext>();
             wfMessageConfigs = new HashMap<String, WfMessageConfig>();
             wfTemplateConfigs = new HashSet<String>();
         }
@@ -320,13 +339,11 @@ public final class WfCategoryConfigUtils {
             errorList.add(ue);
         }
 
-        public void addDocument(WfDocumentConfig wfDocumentConfig) {
-            String name = wfDocumentConfig.getName();
-            if (!StringUtils.isBlank(name)) {
-                if (wfDocumentConfigs.contains(name)) {
-                    addError(WfCategoryErrorConstants.WFCATEGORY_DOCUMENT_EXISTS, name);
-                } else {
-                    wfDocumentConfigs.add(name);
+        public void addDocument(WfDocumentValidationContext wfDocCtx) {
+            String docName = wfDocCtx.getDocName();
+            if (!StringUtils.isBlank(docName)) {
+                if (!wfDocumentConfigs.containsKey(docName)) {
+                    wfDocumentConfigs.put(docName, wfDocCtx);
                 }
             }
             documentCounter++;
@@ -399,9 +416,19 @@ public final class WfCategoryConfigUtils {
         public WfMessageConfig getMessage(String name) {
             return wfMessageConfigs.get(name);
         }
+
+        public WfDocumentValidationContext getDocument(String docName) {
+            return wfDocumentConfigs.get(docName);
+        }
+
+        public boolean isDocument(String docName) {
+            return wfDocumentConfigs.containsKey(docName);
+        }
     }
 
     private static class WfDocumentValidationContext {
+
+        private String docName;
 
         private TaskMonitor taskMonitor;
 
@@ -431,7 +458,8 @@ public final class WfCategoryConfigUtils {
 
         private int sectionCounter;
 
-        public WfDocumentValidationContext(TaskMonitor taskMonitor) {
+        public WfDocumentValidationContext(String docName, TaskMonitor taskMonitor) {
+            this.docName = docName;
             this.taskMonitor = taskMonitor;
             errorList = new ArrayList<UnifyError>();
             wfFieldConfigs = new HashMap<String, WfFieldConfigInfo>();
@@ -440,6 +468,10 @@ public final class WfCategoryConfigUtils {
             wfBeanMappingConfigs = new HashSet<String>();
             wfTabConfigs = new HashSet<String>();
             wfSectionConfigs = new HashSet<String>();
+        }
+
+        public String getDocName() {
+            return docName;
         }
 
         public void addError(String errorCode, Object... params) {
@@ -584,9 +616,10 @@ public final class WfCategoryConfigUtils {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_DESC, beanMappingCounter);
             }
 
-//            if (wfBeanMappingConfig.getType() == null) {
-//                addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_TYPE, beanMappingCounter, name);
-//            }
+            // if (wfBeanMappingConfig.getType() == null) {
+            // addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_TYPE,
+            // beanMappingCounter, name);
+            // }
 
             if (wfBeanMappingConfig.getBeanType() == null) {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_NO_BEANTYPE, beanMappingCounter, name);
@@ -730,15 +763,23 @@ public final class WfCategoryConfigUtils {
         public int getFieldCounter() {
             return fieldCounter;
         }
+
+        public boolean isClassifier(String classifierName) {
+            return wfClassifierConfigs.contains(classifierName);
+        }
+
+        public boolean isBeanMapping(String beanMappingName) {
+            return wfBeanMappingConfigs.contains(beanMappingName);
+        }
     }
 
     private static class WfTemplateValidationContext {
 
         private WfCategoryValidationContext wfCatCtx;
 
-        private WfTemplateConfig wfTemplateConfig;
-
         private List<UnifyError> errorList;
+
+        private Map<String, WfTemplateDocConfig> wfTemplateDocConfigs;
 
         private Map<String, WfStepConfig> wfStepConfigs;
 
@@ -748,13 +789,15 @@ public final class WfCategoryConfigUtils {
 
         private int endCount;
 
+        private int templateDocCounter;
+
         private int stepCounter;
 
-        public WfTemplateValidationContext(WfCategoryValidationContext wfCatCtx, WfTemplateConfig wfTemplateConfig) {
+        public WfTemplateValidationContext(WfCategoryValidationContext wfCatCtx) {
             this.wfCatCtx = wfCatCtx;
-            this.wfTemplateConfig = wfTemplateConfig;
             errorList = new ArrayList<UnifyError>();
             wfStepConfigs = new HashMap<String, WfStepConfig>();
+            wfTemplateDocConfigs = new HashMap<String, WfTemplateDocConfig>();
         }
 
         public void addError(String errorCode, Object... params) {
@@ -763,6 +806,23 @@ public final class WfCategoryConfigUtils {
                 wfCatCtx.taskMonitor.addErrorMessage(ue);
             }
             errorList.add(ue);
+        }
+
+        public boolean addTemplateDoc(WfTemplateDocConfig wfTemplateDocConfig) {
+            String docName = wfTemplateDocConfig.getDocument();
+            if (!StringUtils.isBlank(docName)) {
+                if (wfTemplateDocConfigs.containsKey(docName)) {
+                    addError(WfTemplateErrorConstants.WFTEMPLATE_DOC_EXIST, templateDocCounter, docName);
+                } else {
+                    wfTemplateDocConfigs.put(docName, wfTemplateDocConfig);
+                }
+
+                return true;
+            } else {
+                addError(WfTemplateErrorConstants.WFTEMPLATE_DOC_NO_NAME, templateDocCounter);
+            }
+
+            return false;
         }
 
         public void addStepFirstPass(WfStepConfig wfStepConfig) {
@@ -823,55 +883,53 @@ public final class WfCategoryConfigUtils {
             WorkflowStepType type = wfStepConfig.getType();
             if (type != null) {
                 switch (type) {
-                case AUTOMATIC:
-                    validateEnrichments(wfStepConfig);
-                    validatePolicies(wfStepConfig);
-                    validateRecordActions(wfStepConfig);
-                    validateAlerts(wfStepConfig);
-                    validateRoutings(wfStepConfig);
-                    invalidateUserActions(wfStepConfig);
-                    invalidateFormPrivileges(wfStepConfig);
-                    break;
-                case END:
-                    validateAlerts(wfStepConfig);
-                    invalidateEnrichments(wfStepConfig);
-                    invalidateRoutings(wfStepConfig);
-                    invalidatePolicies(wfStepConfig);
-                    invalidateRecordActions(wfStepConfig);
-                    invalidateUserActions(wfStepConfig);
-                    invalidateFormPrivileges(wfStepConfig);
-                    break;
-                case INTERACTIVE:
-                    validateAlerts(wfStepConfig);
-                    validateUserActions(wfStepConfig);
-                    validateFormPrivileges(wfStepConfig);
-                    invalidateEnrichments(wfStepConfig);
-                    invalidatePolicies(wfStepConfig);
-                    invalidateRoutings(wfStepConfig);
-                    invalidateRecordActions(wfStepConfig);
-                    break;
-                case MANUAL:
-                    validateAlerts(wfStepConfig);
-                    validateFormPrivileges(wfStepConfig);
-                    invalidateEnrichments(wfStepConfig);
-                    invalidateRoutings(wfStepConfig);
-                    invalidatePolicies(wfStepConfig);
-                    invalidateRecordActions(wfStepConfig);
-                    invalidateUserActions(wfStepConfig);
-                    break;
-                case RECEPTACLE:
-                    break;
-                case START:
-                    validateEnrichments(wfStepConfig);
-                    validateAlerts(wfStepConfig);
-                    validateRoutings(wfStepConfig);
-                    invalidatePolicies(wfStepConfig);
-                    invalidateRecordActions(wfStepConfig);
-                    invalidateUserActions(wfStepConfig);
-                    invalidateFormPrivileges(wfStepConfig);
-                    break;
-                default:
-                    break;
+                    case AUTOMATIC:
+                        validateEnrichments(wfStepConfig);
+                        validatePolicies(wfStepConfig);
+                        validateRecordActions(wfStepConfig);
+                        validateAlerts(wfStepConfig);
+                        validateRoutings(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        invalidateFormPrivileges(wfStepConfig);
+                        break;
+                    case END:
+                        validateAlerts(wfStepConfig);
+                        invalidateEnrichments(wfStepConfig);
+                        invalidateRoutings(wfStepConfig);
+                        invalidatePolicies(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        invalidateFormPrivileges(wfStepConfig);
+                        break;
+                    case INTERACTIVE:
+                        validateAlerts(wfStepConfig);
+                        validateUserActions(wfStepConfig);
+                        validateFormPrivileges(wfStepConfig);
+                        invalidateEnrichments(wfStepConfig);
+                        invalidatePolicies(wfStepConfig);
+                        invalidateRoutings(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        break;
+                    case MANUAL:
+                        validateAlerts(wfStepConfig);
+                        validateFormPrivileges(wfStepConfig);
+                        invalidateEnrichments(wfStepConfig);
+                        invalidateRoutings(wfStepConfig);
+                        invalidatePolicies(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        break;
+                    case START:
+                        validateEnrichments(wfStepConfig);
+                        validateAlerts(wfStepConfig);
+                        validateRoutings(wfStepConfig);
+                        invalidatePolicies(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        invalidateFormPrivileges(wfStepConfig);
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -911,18 +969,18 @@ public final class WfCategoryConfigUtils {
                 Set<String> names = new HashSet<String>();
                 int index = 0;
                 for (WfRoutingConfig wfRoutingConfig : wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList()) {
-                    String name = wfRoutingConfig.getName();
-                    if (!StringUtils.isBlank(name)) {
-                        if (!WfNameUtils.isValidName(name)) {
+                    String routingName = wfRoutingConfig.getName();
+                    if (!StringUtils.isBlank(routingName)) {
+                        if (!WfNameUtils.isValidName(routingName)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_INVALID_NAME, index,
-                                    wfStepConfig.getName(), name);
+                                    wfStepConfig.getName(), routingName);
                         }
 
-                        if (names.contains(name)) {
+                        if (names.contains(routingName)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_EXIST, index, wfStepConfig.getName(),
-                                    name);
+                                    routingName);
                         } else {
-                            names.add(name);
+                            names.add(routingName);
                         }
                     } else {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_NO_NAME, index, wfStepConfig.getName());
@@ -932,24 +990,46 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_NO_DESC, index, wfStepConfig.getName());
                     }
 
+                    if (!StringUtils.isBlank(wfRoutingConfig.getClassifierName())) {
+                        if (StringUtils.isBlank(wfRoutingConfig.getDocument())) {//
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_WITH_CLASSIFIER_NO_DOC, index,
+                                    wfStepConfig.getName(), wfRoutingConfig.getClassifierName());
+                        } else {
+                            if (!wfTemplateDocConfigs.containsKey(wfRoutingConfig.getDocument())) {
+                                addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_UNKNOWN_TEMPLATE_DOC, index,
+                                        wfStepConfig.getName(), routingName, wfRoutingConfig.getDocument());
+                            } else {
+                                WfDocumentValidationContext wfDocCtx =
+                                        wfCatCtx.getDocument(wfRoutingConfig.getDocument());
+                                if (wfDocCtx != null && !wfDocCtx.isClassifier(wfRoutingConfig.getClassifierName())) {
+                                    addError(
+                                            WfTemplateErrorConstants.WFTEMPLATE_ROUTING_UNKNOWN_CATEGORY_DOC_CLASSIFIER,
+                                            index, wfStepConfig.getName(), routingName, wfRoutingConfig.getDocument(),
+                                            wfRoutingConfig.getClassifierName());
+                                }
+                            }
+
+                        }
+                    }
+
                     String target = wfRoutingConfig.getTargetStepName();
                     if (StringUtils.isBlank(target)) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_NO_TARGET, index, wfStepConfig.getName(),
-                                name);
+                                routingName);
                     } else {
                         WfStepConfig targetWfStepConfig = wfStepConfigs.get(target);
                         if (targetWfStepConfig == null) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_UNKNOWN, index,
-                                    wfStepConfig.getName(), name, target);
+                                    wfStepConfig.getName(), routingName, target);
                         } else {
                             if (WorkflowStepType.START.equals(targetWfStepConfig.getType())) {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_START, index,
-                                        wfStepConfig.getName(), name, target);
+                                        wfStepConfig.getName(), routingName, target);
                             }
 
                             if (target.equals(wfStepConfig.getName())) {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_SELF, index,
-                                        wfStepConfig.getName(), name, target);
+                                        wfStepConfig.getName(), routingName, target);
                             }
                         }
                     }
@@ -998,8 +1078,8 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_USERACTION_NO_DESC, index, wfStepConfig.getName());
                     }
 
-                    if (wfUserActionConfig.getNoteRequirement() == null) {
-                        addError(WfTemplateErrorConstants.WFTEMPLATE_USERACTION_NO_NOTES_TYPE, index,
+                    if (wfUserActionConfig.getCommentRequirement() == null) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_USERACTION_NO_COMMENT_TYPE, index,
                                 wfStepConfig.getName(), name);
                     }
 
@@ -1045,18 +1125,18 @@ public final class WfCategoryConfigUtils {
                 int index = 0;
                 for (WfRecordActionConfig wfRecordActionConfig : wfStepConfig.getWfRecordActionsConfig()
                         .getWfRecordActionConfigList()) {
-                    String name = wfRecordActionConfig.getName();
-                    if (!StringUtils.isBlank(name)) {
-                        if (!WfNameUtils.isValidName(name)) {
+                    String recordActionName = wfRecordActionConfig.getName();
+                    if (!StringUtils.isBlank(recordActionName)) {
+                        if (!WfNameUtils.isValidName(recordActionName)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_INVALID_NAME, index,
-                                    wfStepConfig.getName(), name);
+                                    wfStepConfig.getName(), recordActionName);
                         }
 
-                        if (names.contains(name)) {
+                        if (names.contains(recordActionName)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_EXIST, index,
-                                    wfStepConfig.getName(), name);
+                                    wfStepConfig.getName(), recordActionName);
                         } else {
-                            names.add(name);
+                            names.add(recordActionName);
                         }
                     } else {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_NAME, index,
@@ -1070,12 +1150,33 @@ public final class WfCategoryConfigUtils {
 
                     if (wfRecordActionConfig.getActionType() == null) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_TYPE, index,
-                                wfStepConfig.getName(), name);
+                                wfStepConfig.getName(), recordActionName);
                     }
 
-                    if (wfRecordActionConfig.getDocMappingName() == null) {
+                    if (StringUtils.isBlank(wfRecordActionConfig.getDocMappingName())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_NO_MAPPING, index,
-                                wfStepConfig.getName(), name);
+                                wfStepConfig.getName(), recordActionName);
+                    } else {
+                        if (StringUtils.isBlank(wfRecordActionConfig.getDocument())) {
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_WITH_NO_DOC, index,
+                                    wfStepConfig.getName());
+                        } else {
+                            if (!wfTemplateDocConfigs.containsKey(wfRecordActionConfig.getDocument())) {
+                                addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_UNKNOWN_TEMPLATE_DOC, index,
+                                        wfStepConfig.getName(), recordActionName, wfRecordActionConfig.getDocument());
+                            } else {
+                                WfDocumentValidationContext wfDocCtx =
+                                        wfCatCtx.getDocument(wfRecordActionConfig.getDocument());
+                                if (wfDocCtx != null
+                                        && !wfDocCtx.isBeanMapping(wfRecordActionConfig.getDocMappingName())) {
+                                    addError(
+                                            WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_UNKNOWN_CATEGORY_DOC_MAPPING,
+                                            index, wfStepConfig.getName(), recordActionName,
+                                            wfRecordActionConfig.getDocument(),
+                                            wfRecordActionConfig.getDocMappingName());
+                                }
+                            }
+                        }
                     }
 
                     index++;
@@ -1097,6 +1198,17 @@ public final class WfCategoryConfigUtils {
                 int index = 0;
                 for (WfFormPrivilegeConfig wfFormPrivilegeConfig : wfStepConfig.getWfFormPrivilegesConfig()
                         .getWfFormPrivilegesConfigList()) {
+                    if (StringUtils.isBlank(wfFormPrivilegeConfig.getDocument())) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_FORMPRIVILEGE_WITH_NO_DOC, index,
+                                wfStepConfig.getName());
+                    } else {
+                        if (!wfTemplateDocConfigs.containsKey(wfFormPrivilegeConfig.getDocument())) {
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_FORMPRIVILEGE_UNKNOWN_TEMPLATE_DOC, index,
+                                    wfStepConfig.getName(), wfFormPrivilegeConfig.getName(),
+                                    wfFormPrivilegeConfig.getDocument());
+                        }
+                    }
+
                     if (StringUtils.isBlank(wfFormPrivilegeConfig.getName())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_FORMPRIVILEGE_NO_ELEMENT_NAME, index,
                                 wfStepConfig.getName());
@@ -1148,6 +1260,12 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ENRICHMENT_NO_DESC, index, wfStepConfig.getName());
                     }
 
+                    if (!StringUtils.isBlank(wfEnrichmentConfig.getDocument())
+                            && !wfTemplateDocConfigs.containsKey(wfEnrichmentConfig.getDocument())) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_ENRICHMENT_UNKNOWN_TEMPLATE_DOC, index,
+                                wfStepConfig.getName(), wfEnrichmentConfig.getName(), wfEnrichmentConfig.getDocument());
+                    }
+
                     if (StringUtils.isBlank(wfEnrichmentConfig.getLogic())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ENRICHMENT_NO_LOGIC, index, wfStepConfig.getName(),
                                 name);
@@ -1191,6 +1309,12 @@ public final class WfCategoryConfigUtils {
 
                     if (StringUtils.isBlank(wfPolicyConfig.getDescription())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_POLICY_NO_DESC, index, wfStepConfig.getName());
+                    }
+
+                    if (!StringUtils.isBlank(wfPolicyConfig.getDocument())
+                            && !wfTemplateDocConfigs.containsKey(wfPolicyConfig.getDocument())) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_POLICY_UNKNOWN_TEMPLATE_DOC, index,
+                                wfStepConfig.getName(), wfPolicyConfig.getName(), wfPolicyConfig.getDocument());
                     }
 
                     if (StringUtils.isBlank(wfPolicyConfig.getLogic())) {
@@ -1251,11 +1375,10 @@ public final class WfCategoryConfigUtils {
                         if (wfMessageConfig == null) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_MESSAGE_UNKNOWN, index,
                                     wfStepConfig.getName(), name, wfAlertConfig.getMessage());
-                        } else if (!StringUtils.isBlank(wfTemplateConfig.getDocument())
-                                && !wfTemplateConfig.getDocument().equals(wfMessageConfig.getDocument())) {
+                        } else if (!wfTemplateDocConfigs.containsKey(wfMessageConfig.getDocument())) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_MESSAGE_INCOMPATIBLE, index,
                                     wfStepConfig.getName(), name, wfAlertConfig.getMessage(),
-                                    wfTemplateConfig.getDocument());
+                                    wfMessageConfig.getDocument());
                         }
                     }
 

@@ -108,9 +108,9 @@
 					</alerts>
 					<user-actions>
 						<user-action name="approveCust" description="Approve Customer"
-							label="Approve" target="createCust" notes-requirement="optional" />
+							label="Approve" target="createCust" comment-requirement="optional" />
 						<user-action name="rejectCust" description="Reject Customer"
-							label="Reject" target="end" notes-requirement="mandatory" />
+							label="Reject" target="end" comment-requirement="mandatory" />
 					</user-actions>
 					<form-privileges>
 						<form-privilege type="field" name="licenseNo"

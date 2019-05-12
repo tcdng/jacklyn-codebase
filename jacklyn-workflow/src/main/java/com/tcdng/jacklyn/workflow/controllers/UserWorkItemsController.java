@@ -24,12 +24,12 @@ import java.util.Map;
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
-import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
+import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.data.InteractWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
-import com.tcdng.jacklyn.workflow.widgets.NotesInfo;
+import com.tcdng.jacklyn.workflow.widgets.CommentsInfo;
 import com.tcdng.jacklyn.workflow.widgets.UserWorkItemsPage;
-import com.tcdng.jacklyn.workflow.widgets.WfItemNotesPanel;
+import com.tcdng.jacklyn.workflow.widgets.WfItemCommentsPanel;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -63,8 +63,8 @@ import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
                         "!switchpanelresponse panels:$l{userWorkItemsBodyPanel.wfItemsMainPanel}" }),
         @ResultMapping(name = "showattachments",
                 response = { "!validationerrorresponse", "!showpopupresponse popup:$s{attachmentsPopup}" }),
-        @ResultMapping(name = "shownotes",
-                response = { "!validationerrorresponse", "!showpopupresponse popup:$s{notesPopup}" }) })
+        @ResultMapping(name = "showcomments",
+                response = { "!validationerrorresponse", "!showpopupresponse popup:$s{commentsPopup}" }) })
 public class UserWorkItemsController extends AbstractWorkflowController {
 
     private String wfStepName;
@@ -83,15 +83,15 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     private FileAttachmentsInfo fileAttachmentsInfo;
 
-    private NotesInfo notesInfo;
+    private CommentsInfo commentsInfo;
 
     private Map<Long, InteractWfItem> workingCache;
 
-    private WfItemNotesPanel wfItemNotesPanel;
+    private WfItemCommentsPanel wfItemCommentsPanel;
 
     public UserWorkItemsController() {
         super(true, false);
-        notesInfo = new NotesInfo();
+        commentsInfo = new CommentsInfo();
     }
 
     @Action
@@ -128,19 +128,19 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     @Action
     public String applyActionToWorkflowItem() throws UnifyException {
         actionName = getRequestTarget(String.class);
-        notesInfo.setNotes(null);
+        commentsInfo.setComment(null);
 
-        // Check for notes
+        // Check for comments
         for (WfAction wfAction : workflowItem.getActionList()) {
             if (actionName.equals(wfAction.getName())) {
-                RequirementType notesReq = wfAction.getNoteReqType();
-                if (notesReq == null || RequirementType.NONE.equals(notesReq)) {
+                RequirementType commentsReq = wfAction.getCommentReqType();
+                if (commentsReq == null || RequirementType.NONE.equals(commentsReq)) {
                     break;
                 }
 
-                notesInfo.setRequired(RequirementType.MANDATORY.equals(notesReq));
-                notesInfo.setApplyActionCaption(getSessionMessage("button.addnotesapplyaction", wfAction.getLabel()));
-                return showNotes(true);
+                commentsInfo.setRequired(RequirementType.MANDATORY.equals(commentsReq));
+                commentsInfo.setApplyActionCaption(getSessionMessage("button.addcommentsapplyaction", wfAction.getLabel()));
+                return showComments(true);
             }
         }
 
@@ -148,8 +148,8 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     }
 
     @Action
-    public String applyActionWithNotes() throws UnifyException {
-        workflowItem.setNotes(notesInfo.getNotes());
+    public String applyActionWithComments() throws UnifyException {
+        workflowItem.setComment(commentsInfo.getComment());
         return internalApplyActionToWorkflowItem();
     }
 
@@ -190,8 +190,8 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     }
 
     @Action
-    public String showWorkflowItemNotes() throws UnifyException {
-        return showNotes(false);
+    public String showWorkflowItemComments() throws UnifyException {
+        return showComments(false);
     }
 
     @Action
@@ -265,14 +265,14 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         return fileAttachmentsInfo;
     }
 
-    public NotesInfo getNotesInfo() {
-        return notesInfo;
+    public CommentsInfo getCommentsInfo() {
+        return commentsInfo;
     }
 
     @Override
     protected void onSetPage() throws UnifyException {
         table = getPageWidgetByShortName(Table.class, "wfItemsTbl");
-        wfItemNotesPanel = getPageWidgetByShortName(WfItemNotesPanel.class, "notesPopup");
+        wfItemCommentsPanel = getPageWidgetByShortName(WfItemCommentsPanel.class, "commentsPopup");
     }
 
     @Override
@@ -285,11 +285,11 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         return "userWorkItemsPanel";
     }
 
-    private String showNotes(boolean isAddNotes) throws UnifyException {
-        WfItemHistObject wih = getWorkflowService().findWorkflowItemHistory(workflowItem.getWfItemHistId(), true);
-        notesInfo.setNotesHistEventList(wih.getEventList());
-        wfItemNotesPanel.setAddNotes(isAddNotes);
-        return "shownotes";
+    private String showComments(boolean isAddComment) throws UnifyException {
+        WfItemHistory wih = getWorkflowService().findWorkflowItemHistory(workflowItem.getWfItemHistId(), true);
+        commentsInfo.setCommentsHistEventList(wih.getEventList());
+        wfItemCommentsPanel.setAddComments(isAddComment);
+        return "showcomments";
     }
 
     private String prepareWorkflowItemForView() throws UnifyException {
@@ -333,7 +333,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
             Integer[] selectedIndexes = table.getSelectedRowIndexes();
             List<Long> selectedIds = new ArrayList<Long>();
             for (int i = 0; i < selectedIndexes.length; i++) {
-                selectedIds.add((Long) csWorkItems.getWfItemList().get(selectedIndexes[i]).getId());
+                selectedIds.add(csWorkItems.getWfItemList().get(selectedIndexes[i]).getId());
             }
             return selectedIds;
         }
