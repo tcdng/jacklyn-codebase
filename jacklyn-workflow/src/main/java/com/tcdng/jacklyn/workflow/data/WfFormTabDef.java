@@ -27,8 +27,6 @@ import java.util.List;
  */
 public class WfFormTabDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = 5412600207864222636L;
-
     private boolean pseudo;
 
     private List<WfFormSectionDef> sectionList;

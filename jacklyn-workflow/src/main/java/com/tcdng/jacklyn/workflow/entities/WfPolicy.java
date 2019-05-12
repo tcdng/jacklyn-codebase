@@ -42,6 +42,9 @@ public class WfPolicy extends BaseEntity {
     @Column(name = "POLICY_DESC", length = 64)
     private String description;
 
+    @Column(name = "DOC_NM", length = 32, nullable = true)
+    private String docName;
+
     @Column(length=48)
     private String logic;
 
@@ -70,6 +73,14 @@ public class WfPolicy extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getLogic() {

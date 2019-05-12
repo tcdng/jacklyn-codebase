@@ -49,11 +49,11 @@ public class WfAutoRoutingBatchFileReadProcessor extends AbstractWfBatchFileRead
                 batchFileReadConfig.getParameter(String.class, WfBatchFileReadProcessorConstants.WORKFLOW_CATEGORYNAME);
         if (reader.detectPreferredBean()) {
             Class<? extends Document> documentType = (Class<? extends Document>) reader.getPreferredBean();
-            String globalTemplateName = getWorkflowService().autoDetectTemplate(wfCategoryName, documentType);
+            String templateGlobalName = getWorkflowService().autoDetectTemplate(wfCategoryName, documentType);
             Document item = ReflectUtils.newInstance(documentType);
             ValueStore itemStore = getValueStore(item);
             while (reader.readNextRecord(itemStore)) {
-                getWorkflowService().submitToWorkflow(globalTemplateName, (Document) item);
+                getWorkflowService().submitToWorkflow(templateGlobalName, item);
             }
         }
 

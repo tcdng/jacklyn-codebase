@@ -31,9 +31,20 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfRecordActionConfig extends BaseConfig {
 
+    private String document;
+    
     private WorkflowRecordActionType actionType;
 
     private String docMappingName;
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute(required = true)
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
     public WorkflowRecordActionType getActionType() {
         return actionType;

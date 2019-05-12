@@ -16,6 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import com.tcdng.unify.core.util.StringUtils;
+
 /**
  * Workflow document policy definition.
  * 
@@ -24,16 +26,25 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfPolicyDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 9168747124616981593L;
+    private String docName;
 
     private String logic;
 
-    public WfPolicyDef(String name, String description, String logic) {
+    public WfPolicyDef(String name, String description, String docName, String logic) {
         super(name, description);
+        this.docName = docName;
         this.logic = logic;
+    }
+
+    public String getDocName() {
+        return docName;
     }
 
     public String getLogic() {
         return logic;
+    }
+    
+    public boolean isDoc() {
+        return !StringUtils.isBlank(docName);
     }
 }

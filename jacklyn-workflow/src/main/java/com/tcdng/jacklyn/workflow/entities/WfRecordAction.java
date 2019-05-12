@@ -46,6 +46,9 @@ public class WfRecordAction extends BaseEntity {
     @Column(name = "RECORDACTION_DESC", length = 64)
     private String description;
 
+    @Column(name = "DOC_NM", length = 32)
+    private String docName;
+
     @Column(name = "DOCMAPPING_NM", length = 32)
     private String docMappingName;
 
@@ -89,6 +92,14 @@ public class WfRecordAction extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getDocMappingName() {

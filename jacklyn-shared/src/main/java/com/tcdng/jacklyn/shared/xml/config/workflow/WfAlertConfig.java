@@ -31,9 +31,20 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfAlertConfig extends BaseConfig {
 
+    private String document;
+    
     private NotificationType type;
 
     private String message;
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
     public NotificationType getType() {
         return type;

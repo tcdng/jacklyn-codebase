@@ -129,4 +129,14 @@ public interface WorkflowModuleErrorConstants {
      * Workflow tagged mapping with tag name {0} is unknown.
      */
     String WORKFLOW_TAGGEDMAPPING_WITH_TAGNAME_UNKNOWN = "WORKFLOW_0015";
+
+    /**
+     * Workflow template {0} has no manual initiation step for document {1}.
+     */
+    String WORKFLOW_TEMPLATE_NO_DOC_MANUAL_INIT = "WORKFLOW_0016";
+
+    /**
+     * Workflow {0} with document {1} is unknown.
+     */
+    String WORKFLOW_TEMPLATE_DOCUMENT_WITH_NAME_UNKNOWN = "WORKFLOW_0017";
 }

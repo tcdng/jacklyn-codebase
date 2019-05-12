@@ -165,14 +165,14 @@ public interface NotificationService extends JacklynBusinessService {
     /**
      * Returns a runtime notification template definition.
      * 
-     * @param globalTemplateName
+     * @param templateGlobalName
      *            the template name
      * @return the runtime definition
      * @throws UnifyException
      *             if notification with global template name does not exist. if an
      *             error occurs
      */
-    NotificationTemplateDef getRuntimeNotificationTemplateDef(String globalTemplateName) throws UnifyException;
+    NotificationTemplateDef getRuntimeNotificationTemplateDef(String templateGlobalName) throws UnifyException;
 
     /**
      * Sends a notification. This is an asynchronous call where message is pushed

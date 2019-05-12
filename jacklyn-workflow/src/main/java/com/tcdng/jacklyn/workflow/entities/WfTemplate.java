@@ -44,9 +44,6 @@ public class WfTemplate extends BaseEntity {
     @ForeignKey(WfCategory.class)
     private Long wfCategoryId;
 
-    @Column(name = "DOCUMENT_NM", length = 32)
-    private String wfDocName;
-
     @Column(name = "TEMPLATE_NM", length = 32)
     private String name;
 
@@ -75,6 +72,9 @@ public class WfTemplate extends BaseEntity {
     private Date wfCategoryUpdateDt;
 
     @ChildList
+    private List<WfTemplateDoc> templateDocList;
+    
+    @ChildList
     private List<WfStep> stepList;
 
     @Override
@@ -92,14 +92,6 @@ public class WfTemplate extends BaseEntity {
 
     public void setWfCategoryId(Long wfCategoryId) {
         this.wfCategoryId = wfCategoryId;
-    }
-
-    public String getWfDocName() {
-        return wfDocName;
-    }
-
-    public void setWfDocName(String wfDocName) {
-        this.wfDocName = wfDocName;
     }
 
     public String getName() {
@@ -164,6 +156,14 @@ public class WfTemplate extends BaseEntity {
 
     public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
         this.wfCategoryUpdateDt = wfCategoryUpdateDt;
+    }
+
+    public List<WfTemplateDoc> getTemplateDocList() {
+        return templateDocList;
+    }
+
+    public void setTemplateDocList(List<WfTemplateDoc> templateDocList) {
+        this.templateDocList = templateDocList;
     }
 
     public List<WfStep> getStepList() {

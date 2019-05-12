@@ -59,7 +59,7 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
                 channelName =
                         getSystemService().getSysParameterValue(String.class,
                                 SystemModuleSysParamConstants.SYSPARAM_EMAIL_CHANNEL);
-                contactList = getWfStepEmailContactProvider().getEmailContacts(wfAlertDef.getGlobalStepName());
+                contactList = getWfStepEmailContactProvider().getEmailContacts(wfAlertDef.getStepGlobalName());
                 break;
             case SMS:
                 break;
@@ -69,12 +69,12 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
         }
 
         if (channelName != null && !DataUtils.isBlank(contactList)) {
-            String globalTemplateName = wfAlertDef.getNotificationTemplateCode();
+            String templateGlobalName = wfAlertDef.getNotificationTemplateCode();
             NotificationTemplateDef notificationTemplateDef =
-                    getNotificationService().getRuntimeNotificationTemplateDef(globalTemplateName);
+                    getNotificationService().getRuntimeNotificationTemplateDef(templateGlobalName);
 
             // Build message
-            Message.Builder msgBuilder = Message.newBuilder(globalTemplateName).fromSender(senderName, senderContact);
+            Message.Builder msgBuilder = Message.newBuilder(templateGlobalName).fromSender(senderName, senderContact);
 
             // Populate contacts
             for (NotificationContact contact : contactList) {

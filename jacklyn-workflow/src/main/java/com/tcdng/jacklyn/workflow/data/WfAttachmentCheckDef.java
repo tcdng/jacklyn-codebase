@@ -19,6 +19,7 @@ package com.tcdng.jacklyn.workflow.data;
 import java.io.Serializable;
 
 import com.tcdng.unify.core.constant.RequirementType;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow attachment check definition.
@@ -34,7 +35,10 @@ public class WfAttachmentCheckDef implements Serializable {
 
     private WfDocAttachmentDef attachment;
 
-    public WfAttachmentCheckDef(RequirementType requirementType, WfDocAttachmentDef attachment) {
+    private String docName;
+
+    public WfAttachmentCheckDef(String docName, RequirementType requirementType, WfDocAttachmentDef attachment) {
+        this.docName = docName;
         this.requirementType = requirementType;
         this.attachment = attachment;
     }
@@ -47,4 +51,11 @@ public class WfAttachmentCheckDef implements Serializable {
         return attachment;
     }
 
+    public String getDocName() {
+        return docName;
+    }
+
+    public boolean isDoc() {
+        return !StringUtils.isBlank(docName);
+    }
 }

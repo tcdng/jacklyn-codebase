@@ -49,7 +49,7 @@ public class WfGlobalTemplateListCommand extends AbstractZeroParamsWorkflowListC
             List<ListData> list = new ArrayList<ListData>();
             for (WfTemplate wfTemplate : templateList) {
                 list.add(new ListData(
-                        WfNameUtils.getGlobalTemplateName(wfTemplate.getWfCategoryName(), wfTemplate.getName()),
+                        WfNameUtils.getTemplateGlobalName(wfTemplate.getWfCategoryName(), wfTemplate.getName()),
                         wfTemplate.getDescription()));
             }
             return list;

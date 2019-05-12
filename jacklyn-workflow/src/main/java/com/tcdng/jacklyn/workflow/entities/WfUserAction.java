@@ -43,7 +43,7 @@ public class WfUserAction extends BaseEntity {
     private String targetWfStepName;
 
     @ForeignKey
-    private RequirementType noteReqType;
+    private RequirementType commentReqType;
 
     @Column(name = "USERACTION_NM", length = 32)
     private String name;
@@ -63,8 +63,8 @@ public class WfUserAction extends BaseEntity {
     @ListOnly(key = "wfStepId", property = "description")
     private String wfStepDesc;
 
-    @ListOnly(key = "noteReqType", property = "description")
-    private String noteReqTypeDesc;
+    @ListOnly(key = "commentReqType", property = "description")
+    private String commentReqTypeDesc;
 
     @ChildList
     private List<WfAttachmentCheck> attachmentCheckList;
@@ -94,12 +94,12 @@ public class WfUserAction extends BaseEntity {
         this.targetWfStepName = targetWfStepName;
     }
 
-    public RequirementType getNoteReqType() {
-        return noteReqType;
+    public RequirementType getCommentReqType() {
+        return commentReqType;
     }
 
-    public void setNoteReqType(RequirementType noteReqType) {
-        this.noteReqType = noteReqType;
+    public void setCommentReqType(RequirementType commentReqType) {
+        this.commentReqType = commentReqType;
     }
 
     public String getName() {
@@ -142,12 +142,12 @@ public class WfUserAction extends BaseEntity {
         this.wfStepDesc = wfStepDesc;
     }
 
-    public String getNoteReqTypeDesc() {
-        return noteReqTypeDesc;
+    public String getCommentReqTypeDesc() {
+        return commentReqTypeDesc;
     }
 
-    public void setNoteReqTypeDesc(String noteReqTypeDesc) {
-        this.noteReqTypeDesc = noteReqTypeDesc;
+    public void setCommentReqTypeDesc(String commentReqTypeDesc) {
+        this.commentReqTypeDesc = commentReqTypeDesc;
     }
 
     public Boolean getValidatePage() {

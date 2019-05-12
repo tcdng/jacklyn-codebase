@@ -8,12 +8,12 @@
 !ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
     components:$c{itemOfLabel firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn}
 !ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
-    components:$c{attachmentsBtn notesBtn wfActionButtons closeBtn}
+    components:$c{attachmentsBtn commentsBtn wfActionButtons closeBtn}
 
 !ui-button:attachmentsBtn styleClass:$e{jk-button} caption:$m{button.attachments}
     eventHandler:$d{!ui-event event:onclick action:$c{showAttachmentsAct}}
-!ui-button:notesBtn styleClass:$e{jk-button} caption:$m{button.notes}
-    eventHandler:$d{!ui-event event:onclick action:$c{showNotesAct}}
+!ui-button:commentsBtn styleClass:$e{jk-button} caption:$m{button.comments}
+    eventHandler:$d{!ui-event event:onclick action:$c{showCommentsAct}}
 !ui-wfactionbuttons:wfActionButtons buttonClass:$s{jk-button} verticalLayout:true binding:actionList
      eventHandler:$d{!ui-event event:onclick action:$c{applySingleItemActionAct}}
 !ui-button:closeBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
@@ -38,5 +38,5 @@
 !ui-post:applySingleItemActionAct path:$g{applyItemActionPath}
     validations:$c{validateDynamicPanel} components:$c{dynamicPanel}
 !ui-post:showAttachmentsAct path:$g{showAttachmentsPath}
-!ui-post:showNotesAct path:$g{showNotesPath}
+!ui-post:showCommentsAct path:$g{showCommentsPath}
 !ui-post:closeItemViewerAct path:$g{closeViewItemPath}

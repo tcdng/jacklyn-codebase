@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow document alert definition.
@@ -26,24 +27,25 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
  */
 public class WfAlertDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 9168747124616981593L;
+    private String docName;
 
-    private String globalStepName;
+    private String stepGlobalName;
 
     private NotificationType type;
 
     private String notificationTemplateCode;
 
-    public WfAlertDef(String globalStepName, String name, String description, NotificationType type,
+    public WfAlertDef(String docName, String stepGlobalName, String name, String description, NotificationType type,
             String notificationTemplateCode) {
         super(name, description);
-        this.globalStepName = globalStepName;
+        this.docName = docName;
+        this.stepGlobalName = stepGlobalName;
         this.type = type;
         this.notificationTemplateCode = notificationTemplateCode;
     }
 
-    public String getGlobalStepName() {
-        return globalStepName;
+    public String getStepGlobalName() {
+        return stepGlobalName;
     }
 
     public NotificationType getType() {
@@ -52,5 +54,13 @@ public class WfAlertDef extends BaseWfDef {
 
     public String getNotificationTemplateCode() {
         return notificationTemplateCode;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public boolean isDoc() {
+        return !StringUtils.isBlank(docName);
     }
 }

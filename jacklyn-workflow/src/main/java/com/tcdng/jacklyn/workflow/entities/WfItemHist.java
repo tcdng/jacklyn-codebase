@@ -15,12 +15,8 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
-import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntity;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
-import com.tcdng.unify.core.annotation.ForeignKey;
-import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 
 /**
@@ -29,45 +25,35 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Item History")
 @Table("JKWFITEMHISTORY")
 public class WfItemHist extends BaseTimestampedEntity {
 
-    @ForeignKey(WfTemplate.class)
-    private Long wfTemplateId;
-
-    @ForeignKey(WfDoc.class)
-    private Long wfDocId;
+    @Column(name="GLOBAL_ITEM_TYPE_NM", length = 96)
+    private String processGlobalName;
 
     @Column(nullable = true)
-    private Long documentId;
+    private Long docId;
 
-    @Column(length = 64)
+    @Column(name = "ITEM_DESC", length = 64)
     private String description;
 
-    @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-    private String wfCategoryName;
-
-    @ListOnly(key = "wfTemplateId", property = "name")
-    private String wfTemplateName;
-
-    @ListOnly(key = "wfTemplateId", property = "description")
-    private String wfTemplateDesc;
-
-    @ListOnly(key = "wfDocId", property = "name")
-    private String wfDocName;
-
-    @ListOnly(key = "wfDocId", property = "description")
-    private String wfDocDesc;
-
-    public Long getDocumentId() {
-        return documentId;
+    public String getProcessGlobalName() {
+        return processGlobalName;
     }
 
-    public void setDocumentId(Long documentId) {
-        this.documentId = documentId;
+    public void setProcessGlobalName(String processGlobalName) {
+        this.processGlobalName = processGlobalName;
     }
 
+    public Long getDocId() {
+        return docId;
+    }
+
+    public void setDocId(Long docId) {
+        this.docId = docId;
+    }
+
+    @Override
     public String getDescription() {
         return description;
     }
@@ -75,61 +61,4 @@ public class WfItemHist extends BaseTimestampedEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Long getWfTemplateId() {
-        return wfTemplateId;
-    }
-
-    public void setWfTemplateId(Long wfTemplateId) {
-        this.wfTemplateId = wfTemplateId;
-    }
-
-    public Long getWfDocId() {
-        return wfDocId;
-    }
-
-    public void setWfDocId(Long wfDocId) {
-        this.wfDocId = wfDocId;
-    }
-
-    public String getWfCategoryName() {
-        return wfCategoryName;
-    }
-
-    public void setWfCategoryName(String wfCategoryName) {
-        this.wfCategoryName = wfCategoryName;
-    }
-
-    public String getWfTemplateName() {
-        return wfTemplateName;
-    }
-
-    public void setWfTemplateName(String wfTemplateName) {
-        this.wfTemplateName = wfTemplateName;
-    }
-
-    public String getWfTemplateDesc() {
-        return wfTemplateDesc;
-    }
-
-    public void setWfTemplateDesc(String wfTemplateDesc) {
-        this.wfTemplateDesc = wfTemplateDesc;
-    }
-
-    public String getWfDocName() {
-        return wfDocName;
-    }
-
-    public void setWfDocName(String wfDocName) {
-        this.wfDocName = wfDocName;
-    }
-
-    public String getWfDocDesc() {
-        return wfDocDesc;
-    }
-
-    public void setWfDocDesc(String wfDocDesc) {
-        this.wfDocDesc = wfDocDesc;
-    }
-
 }

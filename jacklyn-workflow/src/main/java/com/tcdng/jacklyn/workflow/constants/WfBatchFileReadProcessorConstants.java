@@ -26,7 +26,7 @@ public interface WfBatchFileReadProcessorConstants {
 
     String WORKFLOW_CATEGORYNAME = "wf.categoryName";
 
-    String WORKFLOW_TEMPLATENAME = "wf.globalTemplateName";
+    String WORKFLOW_TEMPLATENAME = "wf.templateGlobalName";
 
     String WORKFLOW_DOCUMENTTYPE = "wf.documentType";
 }

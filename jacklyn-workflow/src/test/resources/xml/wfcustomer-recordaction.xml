@@ -34,15 +34,17 @@
 		</document>
 	</documents>
 	<templates>
-		<template name="manageCust" description="Manage Customer"
-			document="custDoc" version="1.0">
+		<template name="manageCust" description="Manage Customer" version="1.0">
+			<documents>
+			     <document name="custDoc" manual="true"/>
+			</documents>
 			<steps>
 				<step name="start" description="Start Step" type="start">
 					<routings>
 						<routing name="routToUpdate" description="Route to Update"
-							target="updateCust" classifier="class1" />
+							target="updateCust" document ="custDoc" classifier="class1" />
 						<routing name="routToRead" description="Route to Read"
-							target="readCust" classifier="class2" />
+							target="readCust" document ="custDoc" classifier="class2" />
 						<routing name="routToDelete" description="Route to Delete"
 							target="deleteCust" />
 					</routings>
@@ -50,7 +52,7 @@
 				<step name="updateCust" description="Update Customer" type="automatic">
 					<record-actions>
 						<record-action name="updateCust" description="Update Customer"
-							mapping="custBeanMapping" type="update" />
+							 document ="custDoc" mapping="custBeanMapping" type="update" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
@@ -60,7 +62,7 @@
 				<step name="readCust" description="Read Customer" type="automatic">
 					<record-actions>
 						<record-action name="readCust" description="Read Customer"
-							mapping="custBeanMapping" type="read" />
+							 document ="custDoc" mapping="custBeanMapping" type="read" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
@@ -70,7 +72,7 @@
 				<step name="deleteCust" description="Delete Customer" type="automatic">
 					<record-actions>
 						<record-action name="deleteCust" description="Delete Customer"
-							mapping="custBeanMapping" type="delete" />
+							 document ="custDoc" mapping="custBeanMapping" type="delete" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"

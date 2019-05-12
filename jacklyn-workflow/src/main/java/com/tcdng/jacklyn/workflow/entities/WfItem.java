@@ -37,17 +37,11 @@ public class WfItem extends BaseTimestampedEntity {
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
 
-    @Column(name = "GLOBAL_TEMPLATE_NM", length = 64)
-    private String globalTemplateName;
-
     @Column(nullable = true)
     private Long ownerId;
 
-    @Column(length = 32, nullable = true)
-    private String wfStepName;
-
-    @Column(name = "WFITEM_DESC", length = 128)
-    private String description;
+    @Column(name="GLOBAL_STEP_NM", length = 96)
+    private String stepGlobalName;
 
     @Column(nullable = true)
     private WorkflowParticipantType participantType;
@@ -58,6 +52,9 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(type = ColumnType.TIMESTAMP, nullable = true)
     private Date expectedDt;
 
+    @Column
+    private String initiatedBy;
+
     @Column(nullable = true)
     private String heldBy;
 
@@ -67,8 +64,19 @@ public class WfItem extends BaseTimestampedEntity {
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
     private Long wfItemHistId;
 
-    @ListOnly(key = "wfHistEventId", property = "documentId")
-    private Long documentId;
+    @ListOnly(key = "wfHistEventId", property = "processGlobalName")
+    private String processGlobalName;
+
+    @ListOnly(key = "wfHistEventId", property = "docId")
+    private Long docId;
+
+    @ListOnly(key = "wfHistEventId", property = "wfItemDesc")
+    private String wfItemDesc;
+
+    @Override
+    public String getDescription() {
+        return wfItemDesc;
+    }
 
     public Long getWfItemHistId() {
         return wfItemHistId;
@@ -76,22 +84,6 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setWfItemHistId(Long wfItemHistId) {
         this.wfItemHistId = wfItemHistId;
-    }
-
-    public String getGlobalTemplateName() {
-        return globalTemplateName;
-    }
-
-    public void setGlobalTemplateName(String globalTemplateName) {
-        this.globalTemplateName = globalTemplateName;
-    }
-
-    public Long getDocumentId() {
-        return documentId;
-    }
-
-    public void setDocumentId(Long documentId) {
-        this.documentId = documentId;
     }
 
     public Long getWfHistEventId() {
@@ -111,20 +103,20 @@ public class WfItem extends BaseTimestampedEntity {
         this.ownerId = ownerId;
     }
 
-    public String getWfStepName() {
-        return wfStepName;
+    public String getStepGlobalName() {
+        return stepGlobalName;
     }
 
-    public void setWfStepName(String wfStepName) {
-        this.wfStepName = wfStepName;
+    public void setStepGlobalName(String stepGlobalName) {
+        this.stepGlobalName = stepGlobalName;
     }
 
-    public String getDescription() {
-        return description;
+    public WorkflowParticipantType getParticipantType() {
+        return participantType;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setParticipantType(WorkflowParticipantType participantType) {
+        this.participantType = participantType;
     }
 
     public Date getStepDt() {
@@ -143,6 +135,14 @@ public class WfItem extends BaseTimestampedEntity {
         this.expectedDt = expectedDt;
     }
 
+    public String getInitiatedBy() {
+        return initiatedBy;
+    }
+
+    public void setInitiatedBy(String initiatedBy) {
+        this.initiatedBy = initiatedBy;
+    }
+
     public String getHeldBy() {
         return heldBy;
     }
@@ -159,12 +159,28 @@ public class WfItem extends BaseTimestampedEntity {
         this.forwardedBy = forwardedBy;
     }
 
-    public WorkflowParticipantType getParticipantType() {
-        return participantType;
+    public String getProcessGlobalName() {
+        return processGlobalName;
     }
 
-    public void setParticipantType(WorkflowParticipantType participantType) {
-        this.participantType = participantType;
+    public void setProcessGlobalName(String processGlobalName) {
+        this.processGlobalName = processGlobalName;
+    }
+
+    public Long getDocId() {
+        return docId;
+    }
+
+    public void setDocId(Long docId) {
+        this.docId = docId;
+    }
+
+    public String getWfItemDesc() {
+        return wfItemDesc;
+    }
+
+    public void setWfItemDesc(String wfItemDesc) {
+        this.wfItemDesc = wfItemDesc;
     }
 
 }

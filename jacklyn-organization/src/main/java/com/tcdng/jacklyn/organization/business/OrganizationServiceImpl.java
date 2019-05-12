@@ -475,7 +475,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
                 Set<String> wfStepNames = new HashSet<String>();
                 List<RoleWfStep> roleWfStepList = db().listAll(new RoleWfStepQuery().roleName(roleName));
                 for (RoleWfStep roleWfStep : roleWfStepList) {
-                    wfStepNames.add(WfNameUtils.getGlobalStepName(roleWfStep.getWfCategoryName(),
+                    wfStepNames.add(WfNameUtils.getStepGlobalName(roleWfStep.getWfCategoryName(),
                             roleWfStep.getWfTemplateName(), roleWfStep.getStepName()));
                 }
 
@@ -490,9 +490,9 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
-    public List<String> findWfStepRoles(String globalStepName) throws UnifyException {
+    public List<String> findWfStepRoles(String stepGlobalName) throws UnifyException {
         // TODO Implement cache
-        StepNameParts stepNameParts = WfNameUtils.getStepNameParts(globalStepName);
+        StepNameParts stepNameParts = WfNameUtils.getStepNameParts(stepGlobalName);
         return db().valueList(String.class, "roleName", new RoleWfStepQuery().stepName(stepNameParts.getStepName())
                 .wfTemplateName(stepNameParts.getTemplateName()).wfCategoryName(stepNameParts.getCategoryName()));
     }

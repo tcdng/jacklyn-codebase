@@ -16,7 +16,6 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,9 +25,7 @@ import java.util.List;
  * @author Lateef
  * @since 1.0
  */
-public class WfFormDef implements Serializable {
-
-    private static final long serialVersionUID = 5731603377730336455L;
+public class WfFormDef {
 
     private Long wfFormId;
 

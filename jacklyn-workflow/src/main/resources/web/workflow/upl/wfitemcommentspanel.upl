@@ -1,0 +1,30 @@
+// UPL template for workflow item comments panel
+// Copyright 2018-2019 The Code Department.
+!ui-wfitemcommentspanel dialogCaption:$m{common.workflow.comments}
+    dialogBodyLayout:$d{!ui-vertical}
+    dialogBodyComponents:$c{wfHistEventPanel addCommentsPanel}
+    dialogActionComponents:$c{saveBtn cancelBtn closeBtn}
+
+// Workflow history events
+!ui-wfhisteventlisting:wfHistEventPanel style:$s{width:420px;height:200px;} binding:commentsHistEventList
+
+// Add comments panel
+!ui-formpanel:addCommentsPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;}}
+    formSection:$d{!ui-section components:$c{frmComments frmCommentsReq}}
+    formCaptionSuffix:$s{:} formColumns:1
+!ui-textarea:frmComments caption:$m{common.workflow.comments} style:$s{width:260px;overflow-y:scroll;} wordWrap:true maxLen:512 binding:comments focus:true
+!ui-textarea:frmCommentsReq caption:$m{common.workflow.comments} style:$s{width:100%;overflow-y:scroll;} wordWrap:true maxLen:512 binding:comments focus:true required:true
+
+// Action components
+!ui-button:saveBtn captionBinding:applyActionCaption eventHandler:$d{!ui-event event:onclick action:$c{saveCommentsAct}}
+!ui-button:cancelBtn styleClass:$e{ui-button-alert} caption:$m{button.cancelaction}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+!ui-button:closeBtn styleClass:$e{ui-button-alert} caption:$m{button.close}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+
+// Actions
+!ui-post:saveCommentsAct path:$g{saveCommentsPath} components:$c{addCommentsPanel}
+    validations:$c{commentsValidation}
+
+// Validations
+!ui-validation:commentsValidation components:$c{frmComments frmCommentsReq}

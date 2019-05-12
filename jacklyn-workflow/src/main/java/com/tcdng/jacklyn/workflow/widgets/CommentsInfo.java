@@ -20,35 +20,35 @@ import java.util.List;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 
 /**
- * Notes information data object.
+ * Comments information data object.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class NotesInfo {
+public class CommentsInfo {
 
-    private List<WfItemHistEvent> notesHistEventList;
+    private List<WfItemHistEvent> commentsHistEventList;
 
-    private String notes;
+    private String comment;
 
     private String applyActionCaption;
 
     private boolean required;
 
-    public List<WfItemHistEvent> getNotesHistEventList() {
-        return notesHistEventList;
+    public List<WfItemHistEvent> getCommentsHistEventList() {
+        return commentsHistEventList;
     }
 
-    public void setNotesHistEventList(List<WfItemHistEvent> notesHistEventList) {
-        this.notesHistEventList = notesHistEventList;
+    public void setCommentsHistEventList(List<WfItemHistEvent> commentsHistEventList) {
+        this.commentsHistEventList = commentsHistEventList;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getComment() {
+        return comment;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public boolean isRequired() {

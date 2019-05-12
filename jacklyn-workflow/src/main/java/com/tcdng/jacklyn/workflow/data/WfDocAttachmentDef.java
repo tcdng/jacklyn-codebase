@@ -26,8 +26,6 @@ import com.tcdng.unify.core.constant.FileAttachmentType;
  */
 public class WfDocAttachmentDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = -2716941379368718045L;
-
     private FileAttachmentType attachmentType;
 
     public WfDocAttachmentDef(String name, String description, String label, FileAttachmentType attachmentType) {

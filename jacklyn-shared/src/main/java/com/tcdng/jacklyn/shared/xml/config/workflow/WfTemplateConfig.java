@@ -15,7 +15,6 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,17 +29,17 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 @XmlRootElement(name = "template")
 public class WfTemplateConfig extends BaseConfig {
 
-    private String document;
-
+    private WfTemplateDocsConfig wfTemplateDocsConfig;
+    
     private WfStepsConfig wfStepsConfig;
 
-    public String getDocument() {
-        return document;
+    public WfTemplateDocsConfig getWfTemplateDocsConfig() {
+        return wfTemplateDocsConfig;
     }
 
-    @XmlAttribute(name = "document", required = true)
-    public void setDocument(String document) {
-        this.document = document;
+    @XmlElement(name = "documents", required = true)
+    public void setWfTemplateDocsConfig(WfTemplateDocsConfig wfTemplateDocsConfig) {
+        this.wfTemplateDocsConfig = wfTemplateDocsConfig;
     }
 
     public WfStepsConfig getWfStepsConfig() {

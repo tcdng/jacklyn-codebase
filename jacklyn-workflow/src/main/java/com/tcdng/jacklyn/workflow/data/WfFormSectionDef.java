@@ -27,8 +27,6 @@ import java.util.List;
  */
 public class WfFormSectionDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = 800388073154871802L;
-
     private String binding;
 
     private List<WfFormFieldDef> fieldList;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,35 +16,40 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
-import com.tcdng.unify.core.util.StringUtils;
-
 /**
- * Workflow document enrichment definition.
+ * Workflow template document definition.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfEnrichmentDef extends BaseWfDef {
+public class WfTemplateDocDef {
 
-    private String docName;
+    private WfDocDef wfDocDef;
 
-    private String logic;
+    private String viewer;
+    
+    private boolean manual;
 
-    public WfEnrichmentDef(String name, String description, String docName, String logic) {
-        super(name, description);
-        this.docName = docName;
-        this.logic = logic;
+    public WfTemplateDocDef(WfDocDef wfDocDef, String viewer, boolean manual) {
+        this.wfDocDef = wfDocDef;
+        this.viewer = viewer;
+        this.manual = manual;
+    }
+
+    public WfDocDef getWfDocDef() {
+        return wfDocDef;
     }
 
     public String getDocName() {
-        return docName;
+        return wfDocDef.getName();
     }
 
-    public String getLogic() {
-        return logic;
+    public String getViewer() {
+        return viewer;
     }
-    
-    public boolean isDoc() {
-        return !StringUtils.isBlank(docName);
+
+    public boolean isManual() {
+        return manual;
     }
+
 }

@@ -147,7 +147,7 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
                         "/workflow/manualworkiteminitiation/openCreateItem");
             }
 
-            String templateName = WfNameUtils.getGlobalTemplateName(wfTemplate.getWfCategoryName(),
+            String templateName = WfNameUtils.getTemplateGlobalName(wfTemplate.getWfCategoryName(),
                     wfTemplate.getName());
             lb.addLink(categoryName, templateName, wfTemplate.getDescription());
         }

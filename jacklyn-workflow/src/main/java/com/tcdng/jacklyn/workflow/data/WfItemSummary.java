@@ -31,7 +31,7 @@ public class WfItemSummary implements Listable, Serializable {
 
     private String description;
 
-    private String globalStepName;
+    private String stepGlobalName;
 
     private String stepDesc;
 
@@ -39,9 +39,9 @@ public class WfItemSummary implements Listable, Serializable {
 
     private int holdCount;
 
-    public WfItemSummary(String description, String globalStepName, String stepDesc, int itemCount, int holdCount) {
+    public WfItemSummary(String description, String stepGlobalName, String stepDesc, int itemCount, int holdCount) {
         this.description = description;
-        this.globalStepName = globalStepName;
+        this.stepGlobalName = stepGlobalName;
         this.stepDesc = stepDesc;
         this.itemCount = itemCount;
         this.holdCount = holdCount;
@@ -49,7 +49,7 @@ public class WfItemSummary implements Listable, Serializable {
 
     @Override
     public String getListKey() {
-        return globalStepName;
+        return stepGlobalName;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class WfItemSummary implements Listable, Serializable {
         return description;
     }
 
-    public String getGlobalStepName() {
-        return globalStepName;
+    public String getStepGlobalName() {
+        return stepGlobalName;
     }
 
     public String getStepDesc() {

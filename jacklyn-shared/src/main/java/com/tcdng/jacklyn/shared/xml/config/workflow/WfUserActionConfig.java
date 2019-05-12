@@ -37,14 +37,14 @@ public class WfUserActionConfig extends BaseConfig {
 
     private String targetStepName;
 
-    private RequirementType noteRequirement;
+    private RequirementType commentRequirement;
 
     private Boolean validatePage;
 
     private List<WfAttachmentCheckConfig> attachmentCheckConfigList;
 
     public WfUserActionConfig() {
-        this.noteRequirement = RequirementType.NONE;
+        this.commentRequirement = RequirementType.NONE;
         this.validatePage = Boolean.FALSE;
     }
 
@@ -66,14 +66,14 @@ public class WfUserActionConfig extends BaseConfig {
         this.targetStepName = targetStepName;
     }
 
-    public RequirementType getNoteRequirement() {
-        return noteRequirement;
+    public RequirementType getCommentRequirement() {
+        return commentRequirement;
     }
 
     @XmlJavaTypeAdapter(RequirementTypeXmlAdapter.class)
-    @XmlAttribute(name = "notes-requirement", required = true)
-    public void setNoteRequirement(RequirementType noteRequirement) {
-        this.noteRequirement = noteRequirement;
+    @XmlAttribute(name = "comment-requirement", required = true)
+    public void setCommentRequirement(RequirementType commentRequirement) {
+        this.commentRequirement = commentRequirement;
     }
 
     public Boolean getValidatePage() {

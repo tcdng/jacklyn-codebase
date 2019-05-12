@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow record action definition.
@@ -26,17 +27,22 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
  */
 public class WfRecordActionDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 6228193786297652259L;
+    private String docName;
 
     private WorkflowRecordActionType actionType;
 
     private WfDocBeanMappingDef beanMapping;
 
-    public WfRecordActionDef(String name, String description, WorkflowRecordActionType actionType,
+    public WfRecordActionDef(String name, String description, String docName, WorkflowRecordActionType actionType,
             WfDocBeanMappingDef beanMapping) {
         super(name, description);
+        this.docName = docName;
         this.actionType = actionType;
         this.beanMapping = beanMapping;
+    }
+
+    public String getDocName() {
+        return docName;
     }
 
     public WorkflowRecordActionType getActionType() {
@@ -45,5 +51,9 @@ public class WfRecordActionDef extends BaseWfDef {
 
     public WfDocBeanMappingDef getBeanMapping() {
         return beanMapping;
+    }
+    
+    public boolean isDoc() {
+        return !StringUtils.isBlank(docName);
     }
 }

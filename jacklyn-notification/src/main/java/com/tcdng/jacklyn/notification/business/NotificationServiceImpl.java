@@ -98,11 +98,11 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         templates = new FactoryMap<String, NotificationTemplateDef>(true) {
 
             @Override
-            protected boolean stale(String globalTemplateName, NotificationTemplateDef notificationTemplateDef)
+            protected boolean stale(String templateGlobalName, NotificationTemplateDef notificationTemplateDef)
                     throws Exception {
                 boolean stale = false;
                 try {
-                    TemplateNameParts templateNames = NotificationUtils.getTemplateNameParts(globalTemplateName);
+                    TemplateNameParts templateNames = NotificationUtils.getTemplateNameParts(templateGlobalName);
                     long versionNo =
                             db().value(long.class, "versionNo", new NotificationTemplateQuery()
                                     .moduleName(templateNames.getModuleName()).name(templateNames.getTemplateName()));
@@ -115,14 +115,14 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             }
 
             @Override
-            protected NotificationTemplateDef create(String globalTemplateName, Object... params) throws Exception {
-                TemplateNameParts templateNames = NotificationUtils.getTemplateNameParts(globalTemplateName);
+            protected NotificationTemplateDef create(String templateGlobalName, Object... params) throws Exception {
+                TemplateNameParts templateNames = NotificationUtils.getTemplateNameParts(templateGlobalName);
                 NotificationTemplate notificationTemplate =
                         db().list(new NotificationTemplateQuery().moduleName(templateNames.getModuleName())
                                 .name(templateNames.getTemplateName()));
                 if (notificationTemplate == null) {
                     throw new UnifyException(NotificationModuleErrorConstants.MESSAGE_TEMPLATE_WITH_NAME_UNKNOWN,
-                            globalTemplateName);
+                            templateGlobalName);
                 }
 
                 return new NotificationTemplateDef(notificationTemplate.getId(),
@@ -207,8 +207,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
-    public NotificationTemplateDef getRuntimeNotificationTemplateDef(String globalTemplateName) throws UnifyException {
-        return templates.get(globalTemplateName);
+    public NotificationTemplateDef getRuntimeNotificationTemplateDef(String templateGlobalName) throws UnifyException {
+        return templates.get(templateGlobalName);
     }
 
     @Override
@@ -238,7 +238,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
     @Override
     public void sendNotification(Message message) throws UnifyException {
-        NotificationTemplateDef notificationTemplateDef = templates.get(message.getGlobalTemplateName());
+        NotificationTemplateDef notificationTemplateDef = templates.get(message.getTemplateGlobalName());
         NotificationChannelDef notifChannelDef = channels.get(message.getNotificationChannelName());
 
         if (notifChannelDef.getNotificationType().internal()) {
@@ -260,7 +260,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         } else {
             // Put notification in external communication system
             Notification notification = new Notification();
-            Long notificationTemplateId = templates.get(message.getGlobalTemplateName()).getNotificationTemplateId();
+            Long notificationTemplateId = templates.get(message.getTemplateGlobalName()).getNotificationTemplateId();
             notification.setNotificationTemplateId(notificationTemplateId);
 
             Long notificationChannelId = notifChannelDef.getNotificationChannelId();
@@ -464,7 +464,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     private boolean sendNotification(Notification notification, MessageDictionary messageDictionary) {
         try {
             NotificationTemplateDef notificationTemplateDef =
-                    templates.get(NotificationUtils.getGlobalTemplateName(notification.getModuleName(),
+                    templates.get(NotificationUtils.getTemplateGlobalName(notification.getModuleName(),
                             notification.getNotificationTemplateName()));
             NotificationChannelDef notificationChannelDef = channels.get(notification.getNotificationChannelName());
             MessagingChannel notificationChannel = null;

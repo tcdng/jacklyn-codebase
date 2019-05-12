@@ -28,8 +28,6 @@ import com.tcdng.unify.core.util.DataUtils;
  * @since 1.0
  */
 public class WfDocClassifierDef extends BaseWfDef {
-
-    private static final long serialVersionUID = 4973270364809680350L;
     
     private String logic;
 

@@ -42,6 +42,6 @@ public class WfHistEventListing extends AbstractWidget {
     }
 
     public Formatter<?> getFormatter() throws UnifyException {
-        return (Formatter<?>) this.getUplAttribute(Formatter.class, "timeFormatter");
+        return this.getUplAttribute(Formatter.class, "timeFormatter");
     }
 }

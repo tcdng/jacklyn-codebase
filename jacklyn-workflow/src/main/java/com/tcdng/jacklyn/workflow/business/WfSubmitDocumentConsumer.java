@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.workflow.data.WfTemplateDef;
+import com.tcdng.jacklyn.workflow.data.WfProcessDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -40,10 +40,10 @@ public class WfSubmitDocumentConsumer extends AbstractTaggedBinaryMessageConsume
 
     @Override
     public void consume(TaggedBinaryMessage binaryMessage) throws UnifyException {
-        WfTemplateDef wfTemplateDef = workflowService.getRuntimeWfTemplateDef(binaryMessage.getTag());
+        String processGlobalName = binaryMessage.getTag();
+        WfProcessDef wfProcessDef = workflowService.getRuntimeWfProcessDef(binaryMessage.getTag());
         PackableDoc packableDoc =
-                PackableDoc.unpack(wfTemplateDef.getWfDocDef().getDocConfig(), binaryMessage.getMessage());
-        workflowService.submitToWorkflow(wfTemplateDef.getGlobalName(), packableDoc);
+                PackableDoc.unpack(wfProcessDef.getWfDocDef().getDocConfig(), binaryMessage.getMessage());
+        workflowService.submitToWorkflow(processGlobalName, packableDoc);
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,35 +18,44 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
-
 /**
- * Workflow enrichment configuration.
+ * Workflow template document configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfEnrichmentConfig extends BaseConfig {
+public class WfTemplateDocConfig {
 
-    private String document;
+    private String name;
+    
+    private String viewer;
+    
+    private boolean manual;
 
-    private String logic;
-
-    public String getDocument() {
-        return document;
+    public String getName() {
+        return name;
     }
 
     @XmlAttribute(required = true)
-    public void setDocument(String document) {
-        this.document = document;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLogic() {
-        return logic;
+    public String getViewer() {
+        return viewer;
+    }
+
+    @XmlAttribute
+    public void setViewer(String viewer) {
+        this.viewer = viewer;
+    }
+
+    public boolean isManual() {
+        return manual;
     }
 
     @XmlAttribute(required = true)
-    public void setLogic(String logic) {
-        this.logic = logic;
+    public void setManual(boolean manual) {
+        this.manual = manual;
     }
 }

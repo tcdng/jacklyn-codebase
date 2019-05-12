@@ -38,6 +38,9 @@ public class WfFormPrivilege extends BaseEntity {
     @ForeignKey
     private WorkflowFormElementType type;
 
+    @Column(name = "DOC_NM", length = 32)
+    private String docName;
+
     @Column(name = "ELEMENT_NM")
     private String wfFormElementName;
 
@@ -145,5 +148,13 @@ public class WfFormPrivilege extends BaseEntity {
 
     public void setTypeDesc(String typeDesc) {
         this.typeDesc = typeDesc;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 }

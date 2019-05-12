@@ -29,5 +29,5 @@ public interface WorkflowApplyActionTaskConstants {
 
     String WFACTION_NAME = "wfActionName";
 
-    String NOTES = "notes";
+    String COMMENT = "comment";
 }

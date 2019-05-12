@@ -24,28 +24,28 @@ import java.util.List;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfItemHistObject implements Serializable {
+public class WfItemHistory implements Serializable {
 
     private static final long serialVersionUID = -4226588442406967392L;
 
     private Long id;
 
-    private Long documentId;
+    private Long docId;
 
-    private String globalDocName;
+    private String docGlobalName;
 
-    private String globalTemplateName;
+    private String templateGlobalName;
 
     private String description;
 
     private List<WfItemHistEvent> eventList;
 
-    public WfItemHistObject(Long id, Long documentId, String globalDocName, String globalTemplateName,
+    public WfItemHistory(Long id, Long docId, String docGlobalName, String templateGlobalName,
             String description, List<WfItemHistEvent> eventList) {
         this.id = id;
-        this.documentId = documentId;
-        this.globalDocName = globalDocName;
-        this.globalTemplateName = globalTemplateName;
+        this.docId = docId;
+        this.docGlobalName = docGlobalName;
+        this.templateGlobalName = templateGlobalName;
         this.description = description;
         this.eventList = eventList;
     }
@@ -54,24 +54,24 @@ public class WfItemHistObject implements Serializable {
         return id;
     }
 
-    public Long getDocumentId() {
-        return documentId;
+    public Long getDocId() {
+        return docId;
     }
 
-    public String getGlobalDocName() {
-        return globalDocName;
+    public String getDocGlobalName() {
+        return docGlobalName;
     }
 
-    public void setGlobalDocName(String globalDocName) {
-        this.globalDocName = globalDocName;
+    public void setDocGlobalName(String docGlobalName) {
+        this.docGlobalName = docGlobalName;
     }
 
-    public String getGlobalTemplateName() {
-        return globalTemplateName;
+    public String getTemplateGlobalName() {
+        return templateGlobalName;
     }
 
-    public void setGlobalTemplateName(String globalTemplateName) {
-        this.globalTemplateName = globalTemplateName;
+    public void setTemplateGlobalName(String templateGlobalName) {
+        this.templateGlobalName = templateGlobalName;
     }
 
     public String getDescription() {

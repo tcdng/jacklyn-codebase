@@ -28,7 +28,18 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfPolicyConfig extends BaseConfig {
 
+    private String document;
+
     private String logic;
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
     public String getLogic() {
         return logic;

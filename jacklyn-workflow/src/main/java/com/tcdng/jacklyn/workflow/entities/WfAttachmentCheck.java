@@ -39,6 +39,9 @@ public class WfAttachmentCheck extends BaseEntity {
     @ForeignKey
     private RequirementType requirementType;
 
+    @Column(name = "DOC_NM", length = 32)
+    private String docName;
+
     @Column(name = "ATTACHMENT_NM")
     private String wfDocAttachmentName;
 
@@ -64,6 +67,14 @@ public class WfAttachmentCheck extends BaseEntity {
 
     public void setRequirementType(RequirementType requirementType) {
         this.requirementType = requirementType;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getWfDocAttachmentName() {
