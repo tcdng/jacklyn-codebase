@@ -1478,7 +1478,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         for (WfTemplateDocConfig wfTemplateDocConfig : wfTemplateConfig.getWfTemplateDocsConfig()
                 .getWfTemplateDocConfigList()) {
             WfTemplateDoc wfTemplateDoc = new WfTemplateDoc();
-            wfTemplateDoc.setWfDocName(wfTemplateDocConfig.getDocument());
+            wfTemplateDoc.setWfDocName(wfTemplateDocConfig.getName());
             wfTemplateDoc.setWfDocViewer(wfTemplateDocConfig.getViewer());
             wfTemplateDoc.setManual(wfTemplateDocConfig.isManual());
             templateDocList.add(wfTemplateDoc);

@@ -278,9 +278,9 @@ public final class WfCategoryConfigUtils {
             for (WfTemplateDocConfig wfTemplateDocConfig : wfTemplateConfig.getWfTemplateDocsConfig()
                     .getWfTemplateDocConfigList()) {
                 if (ctx.addTemplateDoc(wfTemplateDocConfig)) {
-                    if (!wfCatCtx.isDocument(wfTemplateDocConfig.getDocument())) {
+                    if (!wfCatCtx.isDocument(wfTemplateDocConfig.getName())) {
                         ctx.addError(WfTemplateErrorConstants.WFTEMPLATE_DOC_UNKNOWN_CATEGORY_DOC,
-                                wfTemplateDocConfig.getDocument());
+                                wfTemplateDocConfig.getName());
                     }
                 }
             }
@@ -809,7 +809,7 @@ public final class WfCategoryConfigUtils {
         }
 
         public boolean addTemplateDoc(WfTemplateDocConfig wfTemplateDocConfig) {
-            String docName = wfTemplateDocConfig.getDocument();
+            String docName = wfTemplateDocConfig.getName();
             if (!StringUtils.isBlank(docName)) {
                 if (wfTemplateDocConfigs.containsKey(docName)) {
                     addError(WfTemplateErrorConstants.WFTEMPLATE_DOC_EXIST, templateDocCounter, docName);

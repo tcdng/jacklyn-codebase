@@ -26,19 +26,19 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class WfTemplateDocConfig {
 
-    private String document;
+    private String name;
     
     private String viewer;
     
     private boolean manual;
 
-    public String getDocument() {
-        return document;
+    public String getName() {
+        return name;
     }
 
     @XmlAttribute(required = true)
-    public void setDocument(String document) {
-        this.document = document;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getViewer() {

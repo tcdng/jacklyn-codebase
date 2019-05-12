@@ -71,15 +71,17 @@
         </message>
     </messages>
 	<templates>
-		<template name="custOnboarding" description="Customer Onboarding"
-			document="custDoc">
+		<template name="custOnboarding" description="Customer Onboarding">
+			<documents>
+			     <document name="custDoc" manual="true"/>
+			</documents>
 			<steps>
 				<step name="manual" description="Manual Create Customer" type="manual"
 					participant="personnel" />
 				<step name="start" description="Start Step" type="start">
 					<routings>
 						<routing name="routToCreate" description="Route to Create"
-							target="createCust" classifier="validAge" />
+							target="createCust" document="custDoc" classifier="validAge" />
 						<routing name="routToApproval" description="Route to Approval"
 							target="custApproval" />
 					</routings>
@@ -91,7 +93,7 @@
 				<step name="createCust" description="Create Customer" type="automatic">
 					<record-actions>
 						<record-action name="createCust" description="Create Customer"
-							mapping="custBeanMapping" type="create" />
+							 document="custDoc" mapping="custBeanMapping" type="create" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
