@@ -154,6 +154,7 @@ import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericService;
 import com.tcdng.unify.core.constant.DataType;
+import com.tcdng.unify.core.constant.FrequencyUnit;
 import com.tcdng.unify.core.constant.RequirementType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
@@ -166,6 +167,7 @@ import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.core.upl.UplUtils;
+import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -213,7 +215,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             db().value(Date.class, "wfCategoryUpdateDt",
                                     new WfDocQuery().wfCategoryName(docNames.getCategoryName())
                                             .name(docNames.getDocName()).wfCategoryStatus(RecordStatus.ACTIVE));
-                    stale = resolveUTC(updateDt) != wfDocDef.getTimestamp();
+                    stale = resolveUTC(updateDt) != wfDocDef.getVersionTimestamp();
                 } catch (Exception e) {
                     logError(e);
                 }
@@ -371,7 +373,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             @Override
             protected boolean stale(String globalName, WfTemplateDef wfTemplateDef) throws Exception {
-                return checkWfTemplateStale(globalName, wfTemplateDef.getTimestamp());
+                return checkWfTemplateStale(globalName, wfTemplateDef.getVersionTimestamp());
             }
 
             @Override
@@ -395,7 +397,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     String docGlobalName = WfNameUtils.getDocGlobalName(wfTemplate.getWfCategoryName(), docName);
                     String viewerGenerator = wfTemplateDoc.getWfDocViewer();
                     if (StringUtils.isBlank(viewerGenerator)) {
-                        viewerGenerator = "wfsingleformdocviewer-generator";
+                        viewerGenerator = "wfsingleformviewer-generator";
                     }
 
                     wfTemplateDocDefs.put(docName,
@@ -516,12 +518,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     }
 
                     // Step
+                    long expiryMilliSec =
+                            CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, stepGlobalName, wfStep.getName(),
                             wfStep.getDescription(), wfStep.getLabel(), wfStep.getStepType(),
                             wfStep.getParticipantType(), enrichmentList, routingList, recordActionList, userActionList,
-                            formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
-                            wfStep.getExpiryHours(), wfStep.getAudit(), wfStep.getBranchOnly(),
-                            wfStep.getIncludeForwarder(), templateTimestamp));
+                            formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(), expiryMilliSec,
+                            wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getIncludeForwarder(),
+                            templateTimestamp));
                 }
 
                 return new WfTemplateDef(wfTemplateId, templateNames.getCategoryName(), templateGlobalName,
@@ -535,7 +539,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             @Override
             protected boolean stale(String stepGlobalName, WfStepDef wfStepDef) throws Exception {
                 StepNameParts stepNameParts = WfNameUtils.getStepNameParts(stepGlobalName);
-                return checkWfTemplateStale(stepNameParts.getTemplateGlobalName(), wfStepDef.getTimestamp());
+                return checkWfTemplateStale(stepNameParts.getTemplateGlobalName(), wfStepDef.getVersionTimestamp());
             }
 
             @Override
@@ -550,7 +554,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             @Override
             protected boolean stale(String processGlobalName, WfProcessDef wfProcessDef) throws Exception {
-                return checkWfTemplateStale(wfProcessDef.getTemplateGlobalName(), wfProcessDef.getTimestamp());
+                return checkWfTemplateStale(wfProcessDef.getTemplateGlobalName(), wfProcessDef.getVersionTimestamp());
             }
 
             @Override
@@ -1757,10 +1761,16 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfItemHistId = (Long) db().create(wfHist);
         }
 
+        Date expectedDt = null;
+        if (wfStepDef.isExpiry()) {
+            expectedDt = CalendarUtils.getDateWithOffset(stepDt, wfStepDef.getExpiryMilliSec());
+        }
+
         WfItemEvent wfHistEvent = new WfItemEvent();
         wfHistEvent.setWfItemHistId(wfItemHistId);
         wfHistEvent.setWfStepName(wfStepDef.getName());
         wfHistEvent.setStepDt(stepDt);
+        wfHistEvent.setExpectedDt(expectedDt);
         Long wfHistEventId = (Long) db().create(wfHistEvent);
 
         // Update workflow item information.
@@ -1777,8 +1787,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfItem.setWfStepDef(wfStepDef);
         db().updateById(WfItem.class, wfItemId,
                 new Update().add("wfHistEventId", wfHistEventId).add("stepGlobalName", wfStepDef.getGlobalName())
-                        .add("stepDt", stepDt).add("participantType", wfStepDef.getParticipantType())
-                        .add("forwardedBy", forwardedBy));
+                        .add("stepDt", stepDt).add("expectedDt", expectedDt)
+                        .add("participantType", wfStepDef.getParticipantType()).add("forwardedBy", forwardedBy));
 
         // Perform enrichment if any
         String docName = wfItem.getDocName();

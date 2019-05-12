@@ -44,7 +44,7 @@ public class WfDocDef extends BaseWfDef {
 
     private String globalName;
 
-    private long timestamp;
+    private long versionTimestamp;
 
     private WfFormDef wfFormDef;
 
@@ -59,7 +59,7 @@ public class WfDocDef extends BaseWfDef {
     private Map<String, WfDocClassifierDef> classifiers;
 
     public WfDocDef(Long wfDocId, String wfCategoryName, String globalName, String name, String description,
-            PackableDocConfig docConfig, long timestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
+            PackableDocConfig docConfig, long versionTimestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
             List<WfDocBeanMappingDef> beanMappingList, List<WfDocAttachmentDef> attachmentList,
             List<WfDocClassifierDef> classifierList) {
         super(name, description);
@@ -67,7 +67,7 @@ public class WfDocDef extends BaseWfDef {
         this.wfCategoryName = wfCategoryName;
         this.globalName = globalName;
         this.docConfig = docConfig;
-        this.timestamp = timestamp;
+        this.versionTimestamp = versionTimestamp;
         this.wfFormDef = wfFormDef;
         this.itemDescFormat = itemDescFormat;
 
@@ -125,8 +125,8 @@ public class WfDocDef extends BaseWfDef {
         return wfCategoryName;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public long getVersionTimestamp() {
+        return versionTimestamp;
     }
 
     public WfFormDef getWfFormDef() {

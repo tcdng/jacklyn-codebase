@@ -38,7 +38,7 @@ public class WfTemplateDef extends BaseWfDef {
 
     private String globalName;
 
-    private long timestamp;
+    private long versionTimestamp;
 
     private WfStepDef startStep;
 
@@ -49,12 +49,12 @@ public class WfTemplateDef extends BaseWfDef {
     private Map<String, WfStepDef> steps;
 
     public WfTemplateDef(Long wfTemplateId, String wfCategoryName, String globalName, String name, String description,
-            long timestamp, Map<String, WfTemplateDocDef> wfTemplateDocDefs, List<WfStepDef> wfStepDefList) {
+            long versionTimestamp, Map<String, WfTemplateDocDef> wfTemplateDocDefs, List<WfStepDef> wfStepDefList) {
         super(name, description);
         this.wfTemplateId = wfTemplateId;
         this.wfCategoryName = wfCategoryName;
         this.globalName = globalName;
-        this.timestamp = timestamp;
+        this.versionTimestamp = versionTimestamp;
         this.templateDocDefs = wfTemplateDocDefs;
 
         if (wfStepDefList != null) {
@@ -94,8 +94,8 @@ public class WfTemplateDef extends BaseWfDef {
         return globalName;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public long getVersionTimestamp() {
+        return versionTimestamp;
     }
 
     public WfStepDef getStartStep() {
