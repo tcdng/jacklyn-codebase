@@ -63,7 +63,7 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private int itemsPerSession;
 
-    private int expiryHours;
+    private long expiryMilliSec;
 
     private boolean audit;
 
@@ -71,15 +71,15 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private boolean includeForwarder;
 
-    private long timestamp;
+    private long versionTimestamp;
 
-    public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName,
-            String name, String description, String label, WorkflowStepType stepType,
-            WorkflowParticipantType participantType, List<WfEnrichmentDef> enrichmentList,
-            List<WfRoutingDef> routingList, List<WfRecordActionDef> recordActionList,
-            List<WfUserActionDef> userActionList, List<WfFormPrivilegeDef> formPrivilegeList,
-            List<WfAlertDef> alertList, List<WfPolicyDef> policyList, int itemsPerSession, int expiryHours,
-            boolean audit, boolean branchOnly, boolean includeForwarder, long timestamp) {
+    public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName, String name, String description,
+            String label, WorkflowStepType stepType, WorkflowParticipantType participantType,
+            List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
+            List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
+            List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
+            int itemsPerSession, long expiryMilliSec, boolean audit, boolean branchOnly, boolean includeForwarder,
+            long versionTimestamp) {
         super(name, description, label);
         this.wfTemplateId = wfTemplateId;
         this.templateGlobalName = templateGlobalName;
@@ -87,11 +87,11 @@ public class WfStepDef extends BaseLabelWfDef {
         this.stepType = stepType;
         this.participantType = participantType;
         this.itemsPerSession = itemsPerSession;
-        this.expiryHours = expiryHours;
+        this.expiryMilliSec = expiryMilliSec;
         this.audit = audit;
         this.branchOnly = branchOnly;
         this.includeForwarder = includeForwarder;
-        this.timestamp = timestamp;
+        this.versionTimestamp = versionTimestamp;
 
         this.enrichmentList = DataUtils.unmodifiableList(enrichmentList);
         this.routingList = DataUtils.unmodifiableList(routingList);
@@ -163,10 +163,14 @@ public class WfStepDef extends BaseLabelWfDef {
         return itemsPerSession;
     }
 
-    public int getExpiryHours() {
-        return expiryHours;
+    public long getExpiryMilliSec() {
+        return expiryMilliSec;
     }
 
+    public boolean isExpiry() {
+        return expiryMilliSec > 0;
+    }
+    
     public boolean isAudit() {
         return audit;
     }
@@ -179,8 +183,8 @@ public class WfStepDef extends BaseLabelWfDef {
         return includeForwarder;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public long getVersionTimestamp() {
+        return versionTimestamp;
     }
 
     public boolean isStart() {

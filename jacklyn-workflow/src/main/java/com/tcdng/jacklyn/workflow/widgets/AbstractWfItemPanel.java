@@ -36,9 +36,8 @@ public abstract class AbstractWfItemPanel extends AbstractPanel {
         super.switchState();
 
         DynamicPanel dynamicPanel = (DynamicPanel) getWidgetByShortName("dynamicPanel");
-        WfDocViewer wfDocumentViewer = (WfDocViewer) dynamicPanel.getStandalonePanel();
-        ViewableWfItem wfStepItem = getValue(ViewableWfItem.class);
-        wfDocumentViewer.setDocumentMode(wfStepItem.getWfStepDef());
+        WfItemViewer wfDocumentViewer = (WfItemViewer) dynamicPanel.getStandalonePanel();
+        wfDocumentViewer.setDocumentMode(getValue(ViewableWfItem.class));
     }
 
 }

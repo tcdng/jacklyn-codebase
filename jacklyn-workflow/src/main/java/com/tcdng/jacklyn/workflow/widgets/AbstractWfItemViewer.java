@@ -15,25 +15,14 @@
  */
 package com.tcdng.jacklyn.workflow.widgets;
 
-import com.tcdng.jacklyn.workflow.data.WfStepDef;
-import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.web.ui.panel.StandalonePanel;
+import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
 
 /**
- * Workflow document viewer.
+ * Abstract workflow item viewer.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfDocViewer extends StandalonePanel {
+public abstract class AbstractWfItemViewer extends AbstractStandalonePanel implements WfItemViewer {
 
-    /**
-     * Sets viewer document mode based on privileges in supplied step.
-     * 
-     * @param wfStepDef
-     *            the step definition
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    void setDocumentMode(WfStepDef wfStepDef) throws UnifyException;
 }

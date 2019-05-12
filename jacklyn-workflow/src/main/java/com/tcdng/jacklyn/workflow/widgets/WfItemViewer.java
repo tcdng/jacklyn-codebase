@@ -15,14 +15,26 @@
  */
 package com.tcdng.jacklyn.workflow.widgets;
 
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
+import com.tcdng.jacklyn.workflow.data.ViewableWfItem;
+import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.web.ui.panel.StandalonePanel;
 
 /**
- * Abstract workflow document viewer.
+ * Workflow item viewer.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfDocViewer extends AbstractStandalonePanel implements WfDocViewer {
+public interface WfItemViewer extends StandalonePanel {
 
+    /**
+     * Sets viewer document mode based on privileges in viewable item's supplied
+     * step.
+     * 
+     * @param viewableWfItem
+     *            the viewable workflow item
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void setDocumentMode(ViewableWfItem viewableWfItem) throws UnifyException;
 }

@@ -24,16 +24,16 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Single form document viewer UPL generator.
+ * Single form workflow item viewer UPL generator.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("wfsingleformdocviewer-generator")
-public class WfSingleFormDocViewerUplGenerator extends AbstractWorkflowUplGenerator {
+@Component("wfsingleformviewer-generator")
+public class WfSingleFormViewerUplGenerator extends AbstractWorkflowUplGenerator {
 
-    public WfSingleFormDocViewerUplGenerator() {
-        super("ui-wfsingleformdocviewer");
+    public WfSingleFormViewerUplGenerator() {
+        super("ui-wfsingleformviewer");
     }
 
     @Override

@@ -72,7 +72,7 @@ public class WfProcessDef {
         return wfTemplateDocDef.getWfDocDef().getName();
     }
 
-    public long getTimestamp() {
-        return wfTemplateDef.getTimestamp();
+    public long getVersionTimestamp() {
+        return wfTemplateDef.getVersionTimestamp();
     }
 }
