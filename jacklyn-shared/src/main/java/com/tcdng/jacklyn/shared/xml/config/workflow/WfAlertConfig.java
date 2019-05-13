@@ -41,7 +41,7 @@ public class WfAlertConfig extends BaseConfig {
         return document;
     }
 
-    @XmlAttribute
+    @XmlAttribute(required = true)
     public void setDocument(String document) {
         this.document = document;
     }

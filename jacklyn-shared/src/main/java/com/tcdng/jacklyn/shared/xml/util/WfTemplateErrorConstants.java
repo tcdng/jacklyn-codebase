@@ -503,4 +503,9 @@ public interface WfTemplateErrorConstants {
      * Workflow template alert refers to unknown template document. Index = {0}, step = {1}, alert = {2}, document = {3}.
      */
     String WFTEMPLATE_ALERT_UNKNOWN_TEMPLATE_DOC = "WFTMPL_005A";
+
+    /**
+     * Workflow template alert has no document reference. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_ALERT_WITH_NO_DOC = "WFTMPL_005B";
 }
