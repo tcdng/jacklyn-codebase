@@ -29,6 +29,7 @@ import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.data.InteractWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
+import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfProcessDef;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
@@ -237,13 +238,13 @@ public interface WorkflowService extends JacklynBusinessService {
     List<WfTemplate> findWfTemplates(Long wfCategoryId) throws UnifyException;
 
     /**
-     * Finds manual initiation workflow templates base on user role.
+     * Finds manual initiation information based on user role.
      * 
-     * @return list of workflow templates
+     * @return list of manual initiation information
      * @throws UnifyException
      *             if an error occurs
      */
-    List<WfTemplate> findUserRoleManualInitWfTemplates() throws UnifyException;
+    List<ManualInitInfo> findUserRoleManualInitInfos() throws UnifyException;
 
     /**
      * Find workflow template by ID.
