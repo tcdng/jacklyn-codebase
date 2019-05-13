@@ -46,7 +46,7 @@ public class WfAlert extends BaseEntity {
     @Column(name = "ALERT_DESC", length = 64)
     private String description;
 
-    @Column(name = "DOC_NM", length = 32, nullable = true)
+    @Column(name = "DOC_NM", length = 32)
     private String docName;
 
     @Column(name = "NOTIFICATION_TMPL_CD")

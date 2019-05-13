@@ -17,7 +17,6 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.shared.notification.NotificationType;
-import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow document alert definition.
@@ -58,9 +57,5 @@ public class WfAlertDef extends BaseWfDef {
 
     public String getDocName() {
         return docName;
-    }
-
-    public boolean isDoc() {
-        return !StringUtils.isBlank(docName);
     }
 }

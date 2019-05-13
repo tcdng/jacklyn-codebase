@@ -1864,7 +1864,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Send alerts
         for (WfAlertDef wfAlertDef : wfStepDef.getAlertList()) {
-            if (!wfAlertDef.isDoc() || wfAlertDef.getDocName().equals(docName)) {
+            if (wfAlertDef.getDocName().equals(docName)) {
                 wfItemAlertLogic.sendAlert(wfItemReader, wfAlertDef);
             }
         }

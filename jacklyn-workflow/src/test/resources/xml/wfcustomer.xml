@@ -108,7 +108,7 @@
 					participant="all" priority="high" type="interactive">
 					<alerts>
 						<alert name="awaitApproval" description="Awaiting Approval"
-							message="awaitCustApproval" type="system" />
+							document="custDoc" message="awaitCustApproval" type="system" />
 					</alerts>
 					<user-actions>
 						<user-action name="approveCust" description="Approve Customer"

@@ -1358,10 +1358,14 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_NAME, index, wfStepConfig.getName());
                     }
 
-                    if (!StringUtils.isBlank(wfAlertConfig.getDocument())
-                            && !wfTemplateDocConfigs.containsKey(wfAlertConfig.getDocument())) {
-                        addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_UNKNOWN_TEMPLATE_DOC, index,
-                                wfStepConfig.getName(), wfAlertConfig.getName(), wfAlertConfig.getDocument());
+                    if (StringUtils.isBlank(wfAlertConfig.getDocument())) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_WITH_NO_DOC, index,
+                                wfStepConfig.getName());
+                    } else {
+                        if (!wfTemplateDocConfigs.containsKey(wfAlertConfig.getDocument())) {
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_UNKNOWN_TEMPLATE_DOC, index,
+                                    wfStepConfig.getName(), wfAlertConfig.getName(), wfAlertConfig.getDocument());
+                        }
                     }
 
                     if (StringUtils.isBlank(wfAlertConfig.getDescription())) {
