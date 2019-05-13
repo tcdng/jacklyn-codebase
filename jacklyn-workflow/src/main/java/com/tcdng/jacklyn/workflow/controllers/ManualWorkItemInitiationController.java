@@ -16,9 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.controllers;
 
-import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
+import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
-import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -35,10 +34,10 @@ import com.tcdng.unify.web.ui.data.LinkGridInfo;
  */
 @Component("/workflow/manualworkiteminitiation")
 @UplBinding("web/workflow/upl/manualworkiteminitiation.upl")
-@ResultMappings({
-        @ResultMapping(name = "switchlisting",
-                response = { "!switchpanelresponse panels:$l{manualWorkItemPanel.listingMainPanel}" }),
-        @ResultMapping(name = "switchworkitem",
+@ResultMappings({ @ResultMapping(
+        name = "switchlisting", response = { "!switchpanelresponse panels:$l{manualWorkItemPanel.listingMainPanel}" }),
+        @ResultMapping(
+                name = "switchworkitem",
                 response = { "!switchpanelresponse panels:$l{manualWorkItemPanel.createItemMainPanel}" }) })
 public class ManualWorkItemInitiationController extends AbstractWorkflowController {
 
@@ -140,16 +139,14 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 
     private void buildUserRoleTemplateListing() throws UnifyException {
         LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
-        for (WfTemplate wfTemplate : getWorkflowService().findUserRoleManualInitWfTemplates()) {
-            String categoryName = wfTemplate.getWfCategoryName();
+        for (ManualInitInfo manualInitInfo : getWorkflowService().findUserRoleManualInitInfos()) {
+            String categoryName = manualInitInfo.getCategoryName();
             if (!lb.isCategory(categoryName)) {
-                lb.addCategory(categoryName, wfTemplate.getWfCategoryDesc(),
+                lb.addCategory(categoryName, manualInitInfo.getCategoryDesc(),
                         "/workflow/manualworkiteminitiation/openCreateItem");
             }
 
-            String templateName = WfNameUtils.getTemplateGlobalName(wfTemplate.getWfCategoryName(),
-                    wfTemplate.getName());
-            lb.addLink(categoryName, templateName, wfTemplate.getDescription());
+            lb.addLink(categoryName, manualInitInfo.getProcessGlobalName(), manualInitInfo.getProcessDesc());
         }
 
         wfTemplateGridInfo = lb.build();

@@ -18,22 +18,22 @@ package com.tcdng.jacklyn.workflow.entities;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 
 /**
- * Workflow item event query.
+ * Query class for workflow template documents.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
-public class WfItemEventQuery extends BaseEntityQuery<WfItemEvent> {
+public class WfTemplateDocQuery extends BaseEntityQuery<WfTemplateDoc> {
 
-    public WfItemEventQuery() {
-        super(WfItemEvent.class);
+    public WfTemplateDocQuery() {
+        super(WfTemplateDoc.class);
     }
 
-    public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
-        return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
+    public WfTemplateDocQuery wfTemplateId(Long wfTemplateId) {
+        return (WfTemplateDocQuery) equals("wfTemplateId", wfTemplateId);
     }
 
-    public WfItemEventQuery commentsOnly() {
-        return (WfItemEventQuery) isNotNull("comment");
+    public WfTemplateDocQuery manual(Boolean manual) {
+        return (WfTemplateDocQuery) equals("manual", manual);
     }
 }

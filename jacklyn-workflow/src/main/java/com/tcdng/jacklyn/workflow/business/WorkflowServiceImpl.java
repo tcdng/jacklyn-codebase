@@ -76,6 +76,7 @@ import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.InteractWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
+import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
@@ -142,6 +143,7 @@ import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateDoc;
+import com.tcdng.jacklyn.workflow.entities.WfTemplateDocQuery;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateQuery;
 import com.tcdng.jacklyn.workflow.entities.WfUserAction;
 import com.tcdng.unify.core.UnifyError;
@@ -639,7 +641,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public List<WfTemplate> findUserRoleManualInitWfTemplates() throws UnifyException {
+    public List<ManualInitInfo> findUserRoleManualInitInfos() throws UnifyException {
         WfTemplateQuery query = new WfTemplateQuery();
         if (!getUserToken().isReservedUser()) {
             Set<String> steps = getCurrentUserRoleStepCodes();
@@ -663,7 +665,27 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         query.wfCategoryStatus(RecordStatus.ACTIVE);
         query.manualOption(Boolean.TRUE);
         query.order("wfCategoryDesc", "description");
-        return db().listAll(query);
+        List<WfTemplate> templateList = db().listAll(query);
+
+        if (!templateList.isEmpty()) {
+            List<ManualInitInfo> resultList = new ArrayList<ManualInitInfo>();
+            for (WfTemplate wfTemplate : templateList) {
+                for (WfTemplateDoc wfTemplateDoc : db()
+                        .findAll(new WfTemplateDocQuery().wfTemplateId(wfTemplate.getId()).manual(Boolean.TRUE))) {
+                    String processGlobalName =
+                            WfNameUtils.getProcessGlobalName(wfTemplate.getWfCategoryName(), wfTemplate.getName(),
+                                    wfTemplateDoc.getWfDocName());
+                    String processDesc =
+                            String.format("%s::%s", wfTemplate.getDescription(), wfTemplateDoc.getWfDocName());
+                    resultList.add(new ManualInitInfo(wfTemplate.getWfCategoryName(), wfTemplate.getWfCategoryDesc(),
+                            processGlobalName, processDesc));
+                }
+            }
+
+            return resultList;
+        }
+
+        return Collections.emptyList();
     }
 
     @Override
