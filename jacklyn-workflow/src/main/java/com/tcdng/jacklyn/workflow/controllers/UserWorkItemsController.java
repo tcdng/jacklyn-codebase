@@ -54,16 +54,22 @@ import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
 @UplBinding("web/workflow/upl/userworkflowitems.upl")
 @ResultMappings({
         @ResultMapping(name = "refreshsummary", response = { "!refreshpanelresponse panels:$l{wfItemsMainPanel}" }),
-        @ResultMapping(name = "refreshitems",
+        @ResultMapping(
+                name = "refreshitems",
                 response = { "!refreshpanelresponse panels:$l{wfItemsPanel actionOnMultiplePanel}" }),
-        @ResultMapping(name = "switchdocviewer",
-                response = { "!switchpanelresponse panels:$l{userWorkItemsBodyPanel.wfItemViewerPanel}" }),
-        @ResultMapping(name = "switchsearchitems",
+        @ResultMapping(
+                name = "switchdocviewer",
+                response = { "!hidepopupresponse",
+                        "!switchpanelresponse panels:$l{userWorkItemsBodyPanel.wfItemViewerPanel}" }),
+        @ResultMapping(
+                name = "switchsearchitems",
                 response = { "!hidepopupresponse",
                         "!switchpanelresponse panels:$l{userWorkItemsBodyPanel.wfItemsMainPanel}" }),
-        @ResultMapping(name = "showattachments",
+        @ResultMapping(
+                name = "showattachments",
                 response = { "!validationerrorresponse", "!showpopupresponse popup:$s{attachmentsPopup}" }),
-        @ResultMapping(name = "showcomments",
+        @ResultMapping(
+                name = "showcomments",
                 response = { "!validationerrorresponse", "!showpopupresponse popup:$s{commentsPopup}" }) })
 public class UserWorkItemsController extends AbstractWorkflowController {
 
@@ -118,9 +124,10 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     public String applyActionToMultipleWorkflowItems() throws UnifyException {
         actionName = getRequestTarget(String.class);
         List<Long> wfItemIds = getSelectedIds();
-        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowApplyActionTaskConstants.TASK_NAME)
-                .setParam(WorkflowApplyActionTaskConstants.WFACTION_NAME, actionName)
-                .setParam(WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, wfItemIds).logMessages().build();
+        TaskSetup taskSetup =
+                TaskSetup.newBuilder().addTask(WorkflowApplyActionTaskConstants.TASK_NAME)
+                        .setParam(WorkflowApplyActionTaskConstants.WFACTION_NAME, actionName)
+                        .setParam(WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, wfItemIds).logMessages().build();
         String donePath = getName() + "/refreshWorkflowItemSummary";
         return launchTaskWithMonitorBox(taskSetup, "$m{workflow.applyactiontomultiple.execution}", donePath, donePath);
     }
@@ -139,7 +146,8 @@ public class UserWorkItemsController extends AbstractWorkflowController {
                 }
 
                 commentsInfo.setRequired(RequirementType.MANDATORY.equals(commentsReq));
-                commentsInfo.setApplyActionCaption(getSessionMessage("button.addcommentsapplyaction", wfAction.getLabel()));
+                commentsInfo
+                        .setApplyActionCaption(getSessionMessage("button.addcommentsapplyaction", wfAction.getLabel()));
                 return showComments(true);
             }
         }
@@ -179,8 +187,9 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         List<WfItemAttachmentInfo> wfAttachmentList = getWorkflowService().fetchWorkflowItemAttachments(wfItemId, true);
         List<FileAttachmentInfo> filaAttachmentInfoList = new ArrayList<FileAttachmentInfo>();
         for (WfItemAttachmentInfo workflowItemAttachment : wfAttachmentList) {
-            FileAttachmentInfo fileAttachmentInfo = new FileAttachmentInfo(workflowItemAttachment.getName(),
-                    workflowItemAttachment.getLabel(), workflowItemAttachment.getType());
+            FileAttachmentInfo fileAttachmentInfo =
+                    new FileAttachmentInfo(workflowItemAttachment.getName(), workflowItemAttachment.getLabel(),
+                            workflowItemAttachment.getType());
             fileAttachmentInfo.setFilename(workflowItemAttachment.getFilename());
             filaAttachmentInfoList.add(fileAttachmentInfo);
         }
