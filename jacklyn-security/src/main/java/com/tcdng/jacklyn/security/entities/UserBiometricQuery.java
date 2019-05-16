@@ -34,6 +34,10 @@ public class UserBiometricQuery extends BaseEntityQuery<UserBiometric> {
         return (UserBiometricQuery) equals("userId", userId);
     }
 
+    public UserBiometricQuery userLoginId(String userLoginId) {
+        return (UserBiometricQuery) equals("userLoginId", userLoginId);
+    }
+
     public UserBiometricQuery typeName(BiometricType typeName) {
         return (UserBiometricQuery) equals("typeName", typeName);
     }

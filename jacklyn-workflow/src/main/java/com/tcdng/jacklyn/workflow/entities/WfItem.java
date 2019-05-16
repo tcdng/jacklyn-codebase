@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
+import com.tcdng.unify.core.annotation.Index;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 
@@ -31,16 +32,19 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table("JKWFITEM")
+@Table(name = "JKWFITEM", indexes = { @Index("branchCode"), @Index("departmentCode"), @Index("stepGlobalName") })
 public class WfItem extends BaseTimestampedEntity {
 
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
 
     @Column(nullable = true)
-    private Long ownerId;
+    private String branchCode;
 
-    @Column(name="GLOBAL_STEP_NM", length = 96)
+    @Column(nullable = true)
+    private String departmentCode;
+
+    @Column(name = "GLOBAL_STEP_NM", length = 96)
     private String stepGlobalName;
 
     @Column(nullable = true)
@@ -95,12 +99,21 @@ public class WfItem extends BaseTimestampedEntity {
     }
 
     @Override
-    public Long getOwnerId() {
-        return ownerId;
+    public String getBranchCode() {
+        return branchCode;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    @Override
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     public String getStepGlobalName() {

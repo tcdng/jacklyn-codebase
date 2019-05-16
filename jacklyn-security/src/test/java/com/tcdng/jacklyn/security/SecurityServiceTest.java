@@ -115,8 +115,8 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setPhotograph(photograph);
-        Long userId = securityService.createUser(userDoc);
-        byte[] fetchedPhotograph = securityService.findUserPhotograph(userId);
+        securityService.createUser(userDoc);
+        byte[] fetchedPhotograph = securityService.findUserPhotograph("joemoe");
         assertNotNull(fetchedPhotograph);
         assertTrue(Arrays.equals(photograph, fetchedPhotograph));
     }
@@ -245,7 +245,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         userDoc.setPhotograph(photograph1);
         Long userId = securityService.createUser(userDoc);
         securityService.updateUserPhotograph(userId, photograph2);
-        byte[] fetchedPhotograph = securityService.findUserPhotograph(userId);
+        byte[] fetchedPhotograph = securityService.findUserPhotograph("joemoe");
         assertTrue(Arrays.equals(photograph2, fetchedPhotograph));
     }
 
@@ -605,7 +605,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         securityService.login("joemoe", "joemoe", null);
 
         List<UserRole> userRoleList = securityService.findUserRoles(new UserRoleQuery().userId(userId));
-        securityService.setCurrentUserRole(userRoleList.get(0).getId());
+        securityService.setCurrentUserRole(userRoleList.get(0));
 
         UserToken userToken = securityService.getCurrentUserToken();
         assertEquals("sec-001", userToken.getRoleCode());

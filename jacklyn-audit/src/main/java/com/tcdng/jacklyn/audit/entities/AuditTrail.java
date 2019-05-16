@@ -24,6 +24,7 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedEntity;
 import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
+import com.tcdng.unify.core.annotation.Index;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.logging.EventType;
@@ -35,7 +36,7 @@ import com.tcdng.unify.core.logging.EventType;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Trail", reportable = true, auditable = true)
-@Table("JKAUDITTRAIL")
+@Table(name = "JKAUDITTRAIL", indexes = {@Index("userLoginId")})
 public class AuditTrail extends BaseTimestampedEntity {
 
     @ForeignKey(AuditDefinition.class)

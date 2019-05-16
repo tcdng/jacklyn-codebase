@@ -31,7 +31,12 @@ import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
 public abstract class BaseEntity extends AbstractSequencedEntity implements Document {
 
     @Override
-    public Long getOwnerId() {
+    public String getBranchCode() {
+        return null;
+    }
+
+    @Override
+    public String getDepartmentCode() {
         return null;
     }
 

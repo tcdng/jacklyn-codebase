@@ -53,6 +53,9 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
     @Column(name="HEAD_OFFICE_FG")
     private Boolean headOffice;
 
+    @ListOnly(key = "zoneId", property = "name")
+    private String zoneName;
+
     @ListOnly(key = "zoneId", property = "description")
     private String zoneDesc;
 
@@ -111,6 +114,14 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setZoneId(Long zoneId) {
         this.zoneId = zoneId;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
     }
 
     public String getZoneDesc() {

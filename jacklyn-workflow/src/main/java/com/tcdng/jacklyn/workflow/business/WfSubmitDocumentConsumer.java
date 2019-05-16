@@ -44,6 +44,7 @@ public class WfSubmitDocumentConsumer extends AbstractTaggedBinaryMessageConsume
         WfProcessDef wfProcessDef = workflowService.getRuntimeWfProcessDef(binaryMessage.getTag());
         PackableDoc packableDoc =
                 PackableDoc.unpack(wfProcessDef.getWfDocDef().getDocConfig(), binaryMessage.getMessage());
-        workflowService.submitToWorkflow(processGlobalName, packableDoc);
+        workflowService.submitToWorkflow(processGlobalName, binaryMessage.getBranchCode(),
+                binaryMessage.getDepartmentCode(), packableDoc);
     }
 }

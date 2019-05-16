@@ -30,6 +30,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.TaggedXmlMessageConsumer;
 import com.tcdng.unify.core.data.FactoryMap;
+import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.data.TaggedBinaryMessage;
 import com.tcdng.unify.core.data.TaggedXmlMessage;
 import com.tcdng.unify.core.util.StringUtils;
@@ -83,13 +84,20 @@ public class IntegrationServiceImpl extends AbstractJacklynBusinessService imple
     }
 
     @Override
-    public void produceMessage(String producerDefinitionName, byte[] msg) throws UnifyException {
+    public void produceMessage(String producerDefinitionName, String branchCode, String departmentCode,
+            PackableDoc packableDoc) throws UnifyException {
+        produceMessage(producerDefinitionName, branchCode, departmentCode, packableDoc.pack());
+    }
+
+    @Override
+    public void produceMessage(String producerDefinitionName, String branchCode, String departmentCode, byte[] msg)
+            throws UnifyException {
         beginClusterLock(producerLockKeys.get(producerDefinitionName));
         try {
             Long producerDefinitionId =
                     db().value(Long.class, "id",
                             new ProducerDefinitionQuery().name(producerDefinitionName).status(RecordStatus.ACTIVE));
-            db().create(new ProducerQueue(producerDefinitionId, msg));
+            db().create(new ProducerQueue(producerDefinitionId, branchCode, departmentCode, msg));
         } finally {
             endClusterLock(producerLockKeys.get(producerDefinitionName));
         }
@@ -103,10 +111,10 @@ public class IntegrationServiceImpl extends AbstractJacklynBusinessService imple
             Long producerMessageId =
                     db().min(Long.class, "id", new ProducerQueueQuery().producerDefinitionName(producerDefinitionName));
             if (producerMessageId != null) {
-                ProducerQueue producerMessage = db().list(ProducerQueue.class, producerMessageId);
+                ProducerQueue msg = db().list(ProducerQueue.class, producerMessageId);
                 db().delete(ProducerQueue.class, producerMessageId);
-                return new TaggedBinaryMessage(producerMessage.getMessageTag(), producerMessage.getPreferredConsumer(),
-                        producerMessage.getMessage());
+                return new TaggedBinaryMessage(msg.getMessageTag(), msg.getBranchCode(), msg.getDepartmentCode(),
+                        msg.getPreferredConsumer(), msg.getMessage());
             }
         } finally {
             endClusterLock(producerLockKeys.get(producerDefinitionName));

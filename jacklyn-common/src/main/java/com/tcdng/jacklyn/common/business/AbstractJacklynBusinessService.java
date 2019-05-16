@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
-import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -67,10 +66,6 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
             return (UserToken) getApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN);
         }
         return userToken;
-    }
-
-    protected Long getUserBranchId() throws UnifyException {
-        return (Long) getSessionAttribute(JacklynSessionAttributeConstants.BRANCHID);
     }
 
     protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type,

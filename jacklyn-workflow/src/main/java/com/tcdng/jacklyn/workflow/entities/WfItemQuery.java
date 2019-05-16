@@ -36,8 +36,12 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
         super(WfItem.class);
     }
 
-    public WfItemQuery ownerId(Long ownerId) {
-        return (WfItemQuery) equals("ownerId", ownerId);
+    public WfItemQuery branchCode(String branchCode) {
+        return (WfItemQuery) equals("branchCode", branchCode);
+    }
+
+    public WfItemQuery departmentCode(String departmentCode) {
+        return (WfItemQuery) equals("departmentCode", departmentCode);
     }
 
     public WfItemQuery stepGlobalName(String stepGlobalName) {
