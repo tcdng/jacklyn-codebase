@@ -32,6 +32,6 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class DashboardLayerCrudPanel extends AbstractInMemoryTableCrudPanel<DashboardLayer> {
 
     public DashboardLayerCrudPanel() {
-        super(DashboardLayer.class, "system.dashboard.dashboardlayer", false);
+        super(DashboardLayer.class, "$m{system.dashboard.dashboardlayer}", false);
     }
 }

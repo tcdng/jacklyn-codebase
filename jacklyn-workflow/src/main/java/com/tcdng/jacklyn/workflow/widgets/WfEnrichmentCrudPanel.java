@@ -32,7 +32,7 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfEnrichmentCrudPanel extends AbstractInMemoryTableCrudPanel<WfEnrichment> {
 
     public WfEnrichmentCrudPanel() {
-        super(WfEnrichment.class, "workflow.wftemplate.wfstep.wfenrichment", false);
+        super(WfEnrichment.class, "$m{workflow.wftemplate.wfstep.wfenrichment}", false);
     }
 
 }

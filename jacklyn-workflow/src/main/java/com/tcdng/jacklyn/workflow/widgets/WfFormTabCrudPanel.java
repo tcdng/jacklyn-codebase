@@ -32,7 +32,7 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfFormTabCrudPanel extends AbstractInMemoryTableCrudPanel<WfFormTab> {
 
     public WfFormTabCrudPanel() {
-        super(WfFormTab.class, "workflow.wfform.wfformtab", false);
+        super(WfFormTab.class, "$m{workflow.wfform.wfformtab}", false);
     }
 
 }

@@ -32,7 +32,7 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfRoutingCrudPanel extends AbstractInMemoryTableCrudPanel<WfRouting> {
 
     public WfRoutingCrudPanel() {
-        super(WfRouting.class, "workflow.wftemplate.wfstep.wfrouting", false);
+        super(WfRouting.class, "$m{workflow.wftemplate.wfstep.wfrouting}", false);
     }
 
 }
