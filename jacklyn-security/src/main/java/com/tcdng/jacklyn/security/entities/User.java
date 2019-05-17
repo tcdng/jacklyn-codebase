@@ -40,7 +40,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Tooling(name = "user", description = "User")
 @Policy("userpolicy")
 @Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true, auditable = true)
-@Table(name = "JKAPPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
+@Table(name = "JKUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
 public class User extends BaseVersionedTimestampedStatusEntity {
 
     @ForeignKey(type = Theme.class, nullable = true)
@@ -87,6 +87,9 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     @ListOnly(key = "branchId", property = "code")
     private String branchCode;
+
+    @ListOnly(key = "branchId", property = "zoneName")
+    private String zoneName;
 
     @ListOnly(key = "branchId", property = "description")
     private String branchDesc;
@@ -220,6 +223,14 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setBranchCode(String branchCode) {
         this.branchCode = branchCode;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
     }
 
     public String getBranchDesc() {

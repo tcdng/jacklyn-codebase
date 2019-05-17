@@ -51,17 +51,15 @@ public abstract class AbstractApplicationForwarderController extends AbstractSec
     /**
      * Forwards to application base on supplied user role.
      * 
-     * @param userRoleData
+     * @param userRole
      *            the user role information
      * @return the forward-to-application result mapping name
      * @throws UnifyException
      *             if an error occurs
      */
-    protected String forwardToApplication(UserRole userRoleData) throws UnifyException {
-        Long userRoleId = null;
-        if (userRoleData != null) {
-            userRoleId = userRoleData.getId();
-            applicationPath = userRoleData.getRoleApplication();
+    protected String forwardToApplication(UserRole userRole) throws UnifyException {
+        if (userRole != null) {
+            applicationPath = userRole.getRoleApplication();
         }
 
         if (StringUtils.isBlank(applicationPath)) {
@@ -69,7 +67,7 @@ public abstract class AbstractApplicationForwarderController extends AbstractSec
                     SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
         }
 
-        getSecurityService().setCurrentUserRole(userRoleId);
+        getSecurityService().setCurrentUserRole(userRole);
         return "forwardtoapplication";
     }
 

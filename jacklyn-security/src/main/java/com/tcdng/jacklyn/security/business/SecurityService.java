@@ -334,13 +334,13 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     /**
      * Gets photograph for specified user.
      * 
-     * @param userId
-     *            the user ID
+     * @param userLoginId
+     *            the user login ID
      * @return the user photograph if found otherwise null
      * @throws UnifyException
      *             if an error occurs
      */
-    byte[] findUserPhotograph(Long userId) throws UnifyException;
+    byte[] findUserPhotograph(String userLoginId) throws UnifyException;
 
     /**
      * Gets role ID list for specified user.
@@ -375,12 +375,12 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     /**
      * Sets the role of the current user using user role information.
      * 
-     * @param userRoleId
-     *            the id of the user role information
+     * @param userRole
+     *            the user role to set
      * @throws UnifyException
      *             if an error occurs
      */
-    void setCurrentUserRole(Long userRoleId) throws UnifyException;
+    void setCurrentUserRole(UserRole userRole) throws UnifyException;
 
     /**
      * Returns the current user role dashboard viewer component.

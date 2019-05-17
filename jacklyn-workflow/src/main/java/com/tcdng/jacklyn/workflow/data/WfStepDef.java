@@ -69,6 +69,8 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private boolean branchOnly;
 
+    private boolean departmentOnly;
+
     private boolean includeForwarder;
 
     private long versionTimestamp;
@@ -78,8 +80,8 @@ public class WfStepDef extends BaseLabelWfDef {
             List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
             List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
-            int itemsPerSession, long expiryMilliSec, boolean audit, boolean branchOnly, boolean includeForwarder,
-            long versionTimestamp) {
+            int itemsPerSession, long expiryMilliSec, boolean audit, boolean branchOnly, boolean departmentOnly,
+            boolean includeForwarder, long versionTimestamp) {
         super(name, description, label);
         this.wfTemplateId = wfTemplateId;
         this.templateGlobalName = templateGlobalName;
@@ -90,6 +92,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.expiryMilliSec = expiryMilliSec;
         this.audit = audit;
         this.branchOnly = branchOnly;
+        this.departmentOnly = departmentOnly;
         this.includeForwarder = includeForwarder;
         this.versionTimestamp = versionTimestamp;
 
@@ -170,13 +173,17 @@ public class WfStepDef extends BaseLabelWfDef {
     public boolean isExpiry() {
         return expiryMilliSec > 0;
     }
-    
+
     public boolean isAudit() {
         return audit;
     }
 
     public boolean isBranchOnly() {
         return branchOnly;
+    }
+
+    public boolean isDepartmentOnly() {
+        return departmentOnly;
     }
 
     public boolean isIncludeForwarder() {

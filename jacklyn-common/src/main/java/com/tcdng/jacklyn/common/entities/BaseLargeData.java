@@ -30,30 +30,34 @@ public abstract class BaseLargeData<T extends BaseEntity> extends AbstractWrappe
     }
 
     public void setId(Long id) {
-        this.getData().setId(id);
+        getData().setId(id);
     }
 
     public Long getId() {
         return (Long) this.getData().getId();
     }
 
-    public Object getOwnerId() {
-        return this.getData().getOwnerId();
+    public String getBranchCode() {
+        return getData().getBranchCode();
+    }
+
+    public String getDepartmentCode() {
+        return getData().getDepartmentCode();
     }
 
     public String getDescription() {
-        return this.getData().getDescription();
+        return getData().getDescription();
     }
 
     public boolean isReserved() {
-        return this.getData().isReserved();
+        return getData().isReserved();
     }
 
     public String getListKey() {
-        return this.getData().getListKey();
+        return getData().getListKey();
     }
 
     public String getListDescription() {
-        return this.getData().getListDescription();
+        return getData().getListDescription();
     }
 }

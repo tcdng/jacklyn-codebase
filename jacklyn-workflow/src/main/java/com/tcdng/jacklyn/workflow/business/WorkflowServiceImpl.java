@@ -526,8 +526,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             wfStep.getDescription(), wfStep.getLabel(), wfStep.getStepType(),
                             wfStep.getParticipantType(), enrichmentList, routingList, recordActionList, userActionList,
                             formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(), expiryMilliSec,
-                            wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getIncludeForwarder(),
-                            templateTimestamp));
+                            wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
+                            wfStep.getIncludeForwarder(), templateTimestamp));
                 }
 
                 return new WfTemplateDef(wfTemplateId, templateNames.getCategoryName(), templateGlobalName,
@@ -787,20 +787,24 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public void pendManualInitItem(ManualWfItem manualInitItem) throws UnifyException {
         WfProcessDef wfProcessDef = wfProcesses.get(manualInitItem.getProcessGlobalName());
-        submitToReceptacle(wfProcessDef, manualInitItem.getWfStepDef(), null, getUserBranchId(),
-                manualInitItem.getPd());
+        UserToken userToken = getUserToken();
+        submitToReceptacle(wfProcessDef, manualInitItem.getWfStepDef(), userToken.getBranchCode(),
+                userToken.getDepartmentCode(), null, manualInitItem.getPd());
     }
 
     @Override
     public void submitManualInitItem(ManualWfItem manualInitItem) throws UnifyException {
-        submitToWorkflow(manualInitItem.getProcessGlobalName(), manualInitItem.getPd());
+        UserToken userToken = getUserToken();
+        submitToWorkflow(manualInitItem.getProcessGlobalName(), userToken.getBranchCode(),
+                userToken.getDepartmentCode(), manualInitItem.getPd());
     }
 
     @Override
-    public Long submitToWorkflow(String processGlobalName, PackableDoc packableDoc) throws UnifyException {
+    public Long submitToWorkflow(String processGlobalName, String branchCode, String departmentCode,
+            PackableDoc packableDoc) throws UnifyException {
         WfProcessDef wfProcessDef = wfProcesses.get(processGlobalName);
-        return submitToReceptacle(wfProcessDef, wfProcessDef.getWfTemplateDef().getStartStep(), null, getUserBranchId(),
-                packableDoc);
+        return submitToReceptacle(wfProcessDef, wfProcessDef.getWfTemplateDef().getStartStep(), branchCode,
+                departmentCode, null, packableDoc);
     }
 
     @Override
@@ -818,8 +822,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     document);
         }
 
-        return submitToReceptacle(wfProcessDef, wfStepDef, (Long) pDocument.getId(), (Long) pDocument.getOwnerId(),
-                packableDoc);
+        return submitToReceptacle(wfProcessDef, wfStepDef, pDocument.getBranchCode(), pDocument.getDepartmentCode(),
+                (Long) pDocument.getId(), packableDoc);
     }
 
     @Override
@@ -1085,11 +1089,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             String actionName, String comment) throws UnifyException {
         for (Long wfItemId : wfItemIdList) {
             InteractWfItem workflowItem = findWorkflowItem(wfItemId);
-            addTaskMonitorSessionMessage(taskMonitor, "workflow.taskmonitor.itemgrabbed",
+            addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.itemgrabbed}",
                     workflowItem.getDescription());
             workflowItem.setComment(comment);
             applyWorkflowAction(workflowItem, actionName);
-            addTaskMessage(taskMonitor, "workflow.taskmonitor.actionapplied");
+            addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.actionapplied}");
         }
         return wfItemIdList.size();
     }
@@ -1523,6 +1527,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfStep.setIncludeForwarder(wfStepConfig.getIncludeForwarder());
             wfStep.setAudit(wfStepConfig.getAudit());
             wfStep.setBranchOnly(wfStepConfig.getBranchOnly());
+            wfStep.setDepartmentOnly(wfStepConfig.getDepartmentOnly());
 
             if (wfStepConfig.getType().isStart()) {
                 startWfStep = wfStep;
@@ -1702,8 +1707,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfTemplate.setStepList(stepList);
     }
 
-    private Long submitToReceptacle(WfProcessDef wfProcessDef, WfStepDef trgWfStepDef, Long id, Long ownerId,
-            PackableDoc packableDoc) throws UnifyException {
+    private Long submitToReceptacle(WfProcessDef wfProcessDef, WfStepDef trgWfStepDef, String branchCode,
+            String departmentCode, Long id, PackableDoc packableDoc) throws UnifyException {
         if (!trgWfStepDef.isStart() && !trgWfStepDef.isManual()) {
             throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_SUBMIT_NONSTART_NONRECEPTACLE,
                     trgWfStepDef.getGlobalName());
@@ -1712,7 +1717,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Create workflow item
         WfItem wfItem = new WfItem();
         wfItem.setStepGlobalName(trgWfStepDef.getGlobalName());
-        wfItem.setOwnerId(ownerId);
+        wfItem.setBranchCode(branchCode);
+        wfItem.setDepartmentCode(departmentCode);
         wfItem.setInitiatedBy(getUserToken().getUserLoginId());
         wfItem.setCreateDt(db().getNow());
         Long wfItemId = (Long) db().create(wfItem);
@@ -1755,7 +1761,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     private WfItemQuery getCurrentUserParticipationWfItemQuery(WfStepDef wfStepDef) throws UnifyException {
         WfItemQuery wfItemQuery = new WfItemQuery().stepGlobalName(wfStepDef.getGlobalName());
-        if (!getUserToken().isReservedUser()) {
+        UserToken userToken = getUserToken();
+        if (!userToken.isReservedUser()) {
             Boolean supervisor = (Boolean) this.getSessionAttribute(JacklynSessionAttributeConstants.SUPERVISORFLAG);
             if (Boolean.TRUE.equals(supervisor)) {
                 wfItemQuery.allOrParticipantType(WorkflowParticipantType.SUPERVISOR);
@@ -1764,7 +1771,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             }
 
             if (wfStepDef.isBranchOnly()) {
-                wfItemQuery.ownerId(getUserBranchId());
+                wfItemQuery.branchCode(userToken.getBranchCode());
+            }
+
+            if (wfStepDef.isDepartmentOnly()) {
+                wfItemQuery.departmentCode(userToken.getDepartmentCode());
             }
         }
 

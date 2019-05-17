@@ -398,9 +398,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public byte[] findUserPhotograph(Long userId) throws UnifyException {
+    public byte[] findUserPhotograph(String userLoginId) throws UnifyException {
         return db().value(byte[].class, "biometric",
-                new UserBiometricQuery().userId(userId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
+                new UserBiometricQuery().userLoginId(userLoginId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
     }
 
     @Override
@@ -457,7 +457,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         SessionContext sessionCtx = getSessionContext();
         if (loginLocale != null) {
             sessionCtx.setLocale(loginLocale);
-        } else if (!StringUtils.isBlank(user.getBranchLanguageTag())){
+        } else if (!StringUtils.isBlank(user.getBranchLanguageTag())) {
             sessionCtx.setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
         }
 
@@ -465,14 +465,12 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         if (!StringUtils.isBlank(user.getBranchTimeZone())) {
             sessionCtx.setTimeZone(TimeZone.getTimeZone(user.getBranchTimeZone()));
         }
-        
+
         sessionCtx.setUseDaylightSavings(sessionCtx.getTimeZone().inDaylightTime(now));
-        
+
         // Login to session and set session attributes
         userSessionManager.logIn(createUserToken(user));
-        setSessionAttribute(JacklynSessionAttributeConstants.USERID, user.getId());
         setSessionAttribute(JacklynSessionAttributeConstants.USERNAME, user.getFullName());
-        setSessionAttribute(JacklynSessionAttributeConstants.BRANCHID, user.getBranchId());
         String branchDesc = user.getBranchDesc();
         if (StringUtils.isBlank(branchDesc)) {
             branchDesc = getApplicationMessage("application.no.branch");
@@ -565,15 +563,15 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public void setCurrentUserRole(Long userRoleId) throws UnifyException {
-        if (userRoleId != null) {
-            UserRole userRole = db().list(UserRole.class, userRoleId);
+    public void setCurrentUserRole(UserRole userRole) throws UnifyException {
+        if (userRole != null) {
             if (!isRoleAttributes(userRole.getRoleName())) {
                 organizationService.loadRoleAttributesToApplication(new String[] { userRole.getRoleName() });
             }
 
             UserToken userToken = getUserToken();
             userToken.setRoleCode(userRole.getRoleName());
+            userToken.setDepartmentCode(userRole.getDepartmentName());
             userToken.setThemePath(getUserRoleThemeResourcePath(userRole.getId()));
             setSessionAttribute(JacklynSessionAttributeConstants.ROLEDESCRIPTION, userRole.getRoleDesc());
         } else {
@@ -688,7 +686,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getId(), user.getBranchCode(), globalAccess, user.isReserved(), allowMultipleLogin, false);
+                user.getBranchCode(), user.getZoneName(), globalAccess, user.isReserved(), allowMultipleLogin, false);
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {

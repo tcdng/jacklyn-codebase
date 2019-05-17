@@ -72,6 +72,9 @@ public class WfStep extends BaseEntity {
     @Column(name = "BRANCH_ONLY_FG")
     private Boolean branchOnly;
 
+    @Column(name = "DEPARTMENT_ONLY_FG")
+    private Boolean departmentOnly;
+
     @Column(name = "INCLUDE_FORWARDER_FG")
     private Boolean includeForwarder;
 
@@ -203,6 +206,14 @@ public class WfStep extends BaseEntity {
 
     public void setBranchOnly(Boolean branchOnly) {
         this.branchOnly = branchOnly;
+    }
+
+    public Boolean getDepartmentOnly() {
+        return departmentOnly;
+    }
+
+    public void setDepartmentOnly(Boolean departmentOnly) {
+        this.departmentOnly = departmentOnly;
     }
 
     public Boolean getIncludeForwarder() {

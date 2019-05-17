@@ -35,20 +35,14 @@ public interface JacklynSessionAttributeConstants {
     /** Search box */
     String SEARCHBOX = "JKLN.SEARCHBOX";
 
-    /** Role description */
-    String ROLEDESCRIPTION = "JKLN.ROLEDESCRIPTION";
-
     /** User name */
     String USERNAME = "JKLN.USERNAME";
 
-    /** User ID */
-    String USERID = "JKLN.USERID";
-
-    /** Branch ID */
-    String BRANCHID = "JKLN.BRANCHID";
-
     /** Branch Description */
     String BRANCHDESC = "JKLN.BRANCHDESC";
+
+    /** Role description */
+    String ROLEDESCRIPTION = "JKLN.ROLEDESCRIPTION";
 
     /** Reserved flag */
     String RESERVEDFLAG = "JKLN.RESERVEDFLAG";

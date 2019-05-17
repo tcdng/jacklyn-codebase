@@ -962,16 +962,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public void onApplicationStartup() throws UnifyException {
         // Default system user tokens
         setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN,
-                createUserToken(SystemReservedUserConstants.SYSTEM_LOGINID, SystemReservedUserConstants.SYSTEM_ID));
-        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN, createUserToken(
+                createReservedUserToken(SystemReservedUserConstants.SYSTEM_LOGINID, SystemReservedUserConstants.SYSTEM_ID));
+        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN, createReservedUserToken(
                 SystemReservedUserConstants.ANONYMOUS_LOGINID, SystemReservedUserConstants.ANONYMOUS_ID));
 
         loadApplicationMenu();
-    }
-
-    private UserToken createUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), id, null, true, true, true,
-                false);
     }
 
     @Override
@@ -1274,6 +1269,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         }
 
+    }
+
+    private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, true, true, true,
+                false);
     }
 
     private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {

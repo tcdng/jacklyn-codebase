@@ -44,7 +44,7 @@ public class Department extends BaseVersionedStatusEntity {
 
     @Override
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public String getName() {

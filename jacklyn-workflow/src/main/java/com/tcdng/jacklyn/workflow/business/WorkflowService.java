@@ -365,6 +365,10 @@ public interface WorkflowService extends JacklynBusinessService {
      * 
      * @param processGlobalName
      *            the workflow process name
+     * @param branchCode
+     *            optional item branch code
+     * @param departmentCode
+     *            optional item department code
      * @param packableDoc
      *            the packable document to push into workflow
      * @return the workflow item ID
@@ -372,7 +376,8 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if packable document doesn't match template. if template is
      *             unknown. if an error occurs
      */
-    Long submitToWorkflow(String processGlobalName, PackableDoc packableDoc) throws UnifyException;
+    Long submitToWorkflow(String processGlobalName, String branchCode, String departmentCode, PackableDoc packableDoc)
+            throws UnifyException;
 
     /**
      * Submits a document, with optional secondary documents, to workflow.

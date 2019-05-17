@@ -36,25 +36,43 @@ public class ProducerQueue extends BaseTimestampedEntity {
     @ForeignKey(type = ProducerDefinition.class)
     private Long producerDefinitionId;
 
+    @Column(nullable = true)
+    private String branchCode;
+
+    @Column(nullable = true)
+    private String departmentCode;
+
     @Column
     private byte[] message;
-    
-    @ListOnly(key="producerDefinitionId", property="name")
+
+    @ListOnly(key = "producerDefinitionId", property = "name")
     private String producerDefinitionName;
-    
-    @ListOnly(key="producerDefinitionId", property="messageTag")
+
+    @ListOnly(key = "producerDefinitionId", property = "messageTag")
     private String messageTag;
-    
-    @ListOnly(key="producerDefinitionId", property="preferredConsumer")
+
+    @ListOnly(key = "producerDefinitionId", property = "preferredConsumer")
     private String preferredConsumer;
 
-    public ProducerQueue(Long producerDefinitionId, byte[] message) {
+    public ProducerQueue(Long producerDefinitionId, String branchCode, String departmentCode, byte[] message) {
         this.producerDefinitionId = producerDefinitionId;
+        this.branchCode = branchCode;
+        this.departmentCode = departmentCode;
         this.message = message;
     }
 
     public ProducerQueue() {
 
+    }
+
+    @Override
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    @Override
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
     @Override
@@ -76,6 +94,14 @@ public class ProducerQueue extends BaseTimestampedEntity {
 
     public void setMessageTag(String messageTag) {
         this.messageTag = messageTag;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     public String getPreferredConsumer() {

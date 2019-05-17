@@ -112,7 +112,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         }
 
         User user = securityService.findUser(userLoginId);
-        byte[] photo = securityService.findUserPhotograph(user.getId());
+        byte[] photo = securityService.findUserPhotograph(userLoginId);
 
         AuditTrailQuery query = new AuditTrailQuery();
         query.userLoginId(userLoginId);

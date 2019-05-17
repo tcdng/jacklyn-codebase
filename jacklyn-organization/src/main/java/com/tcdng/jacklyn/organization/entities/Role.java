@@ -65,6 +65,9 @@ public class Role extends BaseVersionedStatusEntity {
     @Column(length = 64, nullable = true)
     private String application;
 
+    @ListOnly(key = "departmentId", property = "name")
+    private String departmentName;
+
     @ListOnly(key = "departmentId", property = "description")
     private String departmentDesc;
     
@@ -152,6 +155,14 @@ public class Role extends BaseVersionedStatusEntity {
 
     public void setDashboardName(String dashboardName) {
         this.dashboardName = dashboardName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getDepartmentDesc() {

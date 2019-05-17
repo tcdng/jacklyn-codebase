@@ -33,7 +33,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "JKAPPUSERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
+@Table(name = "JKUSERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
 public class UserRole extends BaseEntity implements Describable {
 
     @ForeignKey(User.class)
@@ -74,6 +74,15 @@ public class UserRole extends BaseEntity implements Describable {
 
     @ListOnly(key = "roleId", property = "themeId")
     private Long roleThemeId;
+
+    @ListOnly(key = "roleId", property = "departmentId")
+    private Long departmentId;
+
+    @ListOnly(key = "roleId", property = "departmentName")
+    private String departmentName;
+
+    @ListOnly(key = "roleId", property = "departmentDesc")
+    private String departmentDesc;
 
     @Override
     public String getDescription() {
@@ -182,5 +191,29 @@ public class UserRole extends BaseEntity implements Describable {
 
     public void setRoleThemeId(Long roleThemeId) {
         this.roleThemeId = roleThemeId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getDepartmentDesc() {
+        return departmentDesc;
+    }
+
+    public void setDepartmentDesc(String departmentDesc) {
+        this.departmentDesc = departmentDesc;
     }
 }

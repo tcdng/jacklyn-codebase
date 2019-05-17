@@ -51,6 +51,8 @@ public class WfStepConfig extends BaseConfig {
 
     private Boolean branchOnly;
 
+    private Boolean departmentOnly;
+
     private Boolean includeForwarder;
 
     private WfEnrichmentsConfig wfEnrichmentsConfig;
@@ -73,6 +75,7 @@ public class WfStepConfig extends BaseConfig {
         this.priority = WorkflowStepPriority.NORMAL;
         this.audit = Boolean.FALSE;
         this.branchOnly = Boolean.FALSE;
+        this.departmentOnly = Boolean.FALSE;
         this.includeForwarder = Boolean.FALSE;
         this.itemsPerSession = Integer.valueOf(0);
         this.expiryHours = Integer.valueOf(0);
@@ -151,6 +154,15 @@ public class WfStepConfig extends BaseConfig {
     @XmlAttribute(name = "branch-only")
     public void setBranchOnly(Boolean branchOnly) {
         this.branchOnly = branchOnly;
+    }
+
+    public Boolean getDepartmentOnly() {
+        return departmentOnly;
+    }
+
+    @XmlAttribute(name = "department-only")
+    public void setDepartmentOnly(Boolean departmentOnly) {
+        this.departmentOnly = departmentOnly;
     }
 
     public Boolean getIncludeForwarder() {

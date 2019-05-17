@@ -15,7 +15,6 @@ package com.tcdng.jacklyn.security.widgets;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -53,16 +52,12 @@ public class UserPhotoGenerator extends AbstractImageGenerator {
 
     @Override
     public boolean isReady() throws UnifyException {
-        Long userId = getUserId();
-        if (userId != null && userId > 0) {
-            photo = securityModule.findUserPhotograph(userId);
+        String userLoginId = getUserToken().getUserLoginId();
+        if (userLoginId != null) {
+            photo = securityModule.findUserPhotograph(userLoginId);
             return photo != null;
         }
 
         return false;
-    }
-
-    private Long getUserId() throws UnifyException {
-        return (Long) getSessionAttribute(JacklynSessionAttributeConstants.USERID);
     }
 }

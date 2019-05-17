@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "JKAPPUSERBIOMETRIC", uniqueConstraints = { @UniqueConstraint({ "userId", "biometricId" }) })
+@Table(name = "JKUSERBIOMETRIC", uniqueConstraints = { @UniqueConstraint({ "userId", "biometricId" }) })
 public class UserBiometric extends BaseEntity {
 
     @ForeignKey(User.class)
@@ -36,6 +36,9 @@ public class UserBiometric extends BaseEntity {
 
     @ForeignKey(Biometric.class)
     private Long biometricId;
+
+    @ListOnly(key = "userId", property = "loginId")
+    private String userLoginId;
 
     @ListOnly(key = "biometricId", property = "type")
     private BiometricType typeName;
@@ -65,6 +68,14 @@ public class UserBiometric extends BaseEntity {
 
     public void setBiometricId(Long biometricId) {
         this.biometricId = biometricId;
+    }
+
+    public String getUserLoginId() {
+        return userLoginId;
+    }
+
+    public void setUserLoginId(String userLoginId) {
+        this.userLoginId = userLoginId;
     }
 
     public BiometricType getTypeName() {

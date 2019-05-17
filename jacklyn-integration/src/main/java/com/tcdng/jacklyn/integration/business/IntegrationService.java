@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.integration.entities.ProducerDefinition;
 import com.tcdng.jacklyn.integration.entities.ProducerDefinitionQuery;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.data.TaggedBinaryMessage;
 import com.tcdng.unify.core.data.TaggedXmlMessage;
 
@@ -88,19 +89,43 @@ public interface IntegrationService extends JacklynBusinessService {
     int deleteProducerDefinition(Long id) throws UnifyException;
 
     /**
-     * Produces an integration message form supplied producer definition and tagged
-     * binary message. Messages produced is consumed by
+     * Produces an integration message for supplied producer definition and a
+     * packable document. Messages produced is consumed by
      * {@link #consumeMessage(String)}.
      * 
      * @param producerDefinitionName
      *            the producer definition name
+     * @param branchCode
+     *            optional target branch code
+     * @param departmentCode
+     *            optional target department code
+     * @param packableDoc
+     *            the packable document
+     * @throws UnifyException
+     *             if producer definition is unknown or is inactive. If an error
+     *             occurs
+     */
+    void produceMessage(String producerDefinitionName, String branchCode, String departmentCode,
+            PackableDoc packableDoc) throws UnifyException;
+
+    /**
+     * Produces an integration message for supplied producer definition and binary
+     * message. Messages produced is consumed by {@link #consumeMessage(String)}.
+     * 
+     * @param producerDefinitionName
+     *            the producer definition name
+     * @param branchCode
+     *            optional target branch code
+     * @param departmentCode
+     *            optional target department code
      * @param msg
      *            the message
      * @throws UnifyException
      *             if producer definition is unknown or is inactive. If an error
      *             occurs
      */
-    void produceMessage(String producerDefinitionName, byte[] msg) throws UnifyException;
+    void produceMessage(String producerDefinitionName, String branchCode, String departmentCode, byte[] msg)
+            throws UnifyException;
 
     /**
      * Consumes next available message in producer's queue.
