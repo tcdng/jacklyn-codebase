@@ -1089,11 +1089,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             String actionName, String comment) throws UnifyException {
         for (Long wfItemId : wfItemIdList) {
             InteractWfItem workflowItem = findWorkflowItem(wfItemId);
-            addTaskMonitorSessionMessage(taskMonitor, "workflow.taskmonitor.itemgrabbed",
+            addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.itemgrabbed}",
                     workflowItem.getDescription());
             workflowItem.setComment(comment);
             applyWorkflowAction(workflowItem, actionName);
-            addTaskMessage(taskMonitor, "workflow.taskmonitor.actionapplied");
+            addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.actionapplied}");
         }
         return wfItemIdList.size();
     }

@@ -158,12 +158,12 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         FileTransferServer fileServer =
                 (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
 
-        addTaskMessage(taskMonitor, "file.taskmonitor.testinglocalpath");
+        addTaskMessage(taskMonitor, "$m{file.taskmonitor.testinglocalpath}");
         fileServer.getLocalFileList(fileTransferInfo);
 
-        addTaskMessage(taskMonitor, "file.taskmonitor.testingremotepath");
+        addTaskMessage(taskMonitor, "$m{file.taskmonitor.testingremotepath}");
         fileServer.getRemoteFileList(fileTransferInfo);
-        addTaskMessage(taskMonitor, "file.taskmonitor.testingsuccess");
+        addTaskMessage(taskMonitor, "$m{file.taskmonitor.testingsuccess}");
         return true;
     }
 
@@ -311,7 +311,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                     transferCount++;
                 }
             }
-            addTaskMessage(taskMonitor, "file.taskmonitor.uploadcompleted");
+            addTaskMessage(taskMonitor, "$m{file.taskmonitor.uploadcompleted}");
         } else {
             List<FileInbox> fileInboxList =
                     db().listAll(new FileInboxQuery().status(FileInboxStatus.NOT_RECEIVED)
@@ -367,7 +367,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         int uploadAttempts = fileOutbox.getUploadAttempts() + 1;
         try {
             String filename = fileOutbox.getFilename();
-            addTaskMonitorSessionMessage(taskMonitor, "file.taskmonitor.uploading", filename);
+            addTaskMessage(taskMonitor, "$m{file.taskmonitor.uploading}", filename);
             fileServer.uploadFile(fileTransferInfo, filename, filename);
 
             if (!StringUtils.isBlank(semaphoreSuffix)) {
@@ -396,7 +396,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         int downloadAttempts = fileInbox.getDownloadAttempts() + 1;
         try {
             String filename = fileInbox.getFilename();
-            addTaskMonitorSessionMessage(taskMonitor, "file.taskmonitor.downloading", filename);
+            addTaskMessage(taskMonitor, "$m{file.taskmonitor.downloading}", filename);
             fileServer.downloadFile(fileTransferInfo, filename, filename);
 
             if (!StringUtils.isBlank(semaphoreSuffix)) {
