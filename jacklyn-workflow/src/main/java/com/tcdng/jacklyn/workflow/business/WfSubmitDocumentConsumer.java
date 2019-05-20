@@ -21,7 +21,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Tooling;
-import com.tcdng.unify.core.business.AbstractTaggedBinaryMessageConsumer;
+import com.tcdng.unify.core.data.AbstractTaggedBinaryMessageConsumer;
 import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.data.TaggedBinaryMessage;
 
