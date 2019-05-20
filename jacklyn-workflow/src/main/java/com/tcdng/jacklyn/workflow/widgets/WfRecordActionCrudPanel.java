@@ -32,7 +32,7 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfRecordActionCrudPanel extends AbstractInMemoryTableCrudPanel<WfRecordAction> {
 
     public WfRecordActionCrudPanel() {
-        super(WfRecordAction.class, "workflow.wftemplate.wfstep.wfrecordaction", false);
+        super(WfRecordAction.class, "$m{workflow.wftemplate.wfstep.wfrecordaction}", false);
     }
 
 }

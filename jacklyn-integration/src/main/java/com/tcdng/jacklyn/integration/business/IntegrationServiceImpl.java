@@ -28,11 +28,11 @@ import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Transactional;
-import com.tcdng.unify.core.business.TaggedXmlMessageConsumer;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.data.TaggedBinaryMessage;
 import com.tcdng.unify.core.data.TaggedXmlMessage;
+import com.tcdng.unify.core.data.TaggedXmlMessageConsumer;
 import com.tcdng.unify.core.util.StringUtils;
 
 /**

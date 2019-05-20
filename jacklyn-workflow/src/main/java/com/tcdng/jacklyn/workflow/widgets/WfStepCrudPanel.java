@@ -32,6 +32,6 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfStepCrudPanel extends AbstractInMemoryTableCrudPanel<WfStep> {
 
     public WfStepCrudPanel() {
-        super(WfStep.class, "workflow.wftemplate.wfstep", false);
+        super(WfStep.class, "$m{workflow.wftemplate.wfstep}", false);
     }
 }

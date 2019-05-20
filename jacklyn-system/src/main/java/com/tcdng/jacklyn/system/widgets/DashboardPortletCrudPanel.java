@@ -32,6 +32,6 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class DashboardPortletCrudPanel extends AbstractInMemoryTableCrudPanel<DashboardPortlet> {
 
     public DashboardPortletCrudPanel() {
-        super(DashboardPortlet.class, "system.dashboard.dashboardportlet", false);
+        super(DashboardPortlet.class, "$m{system.dashboard.dashboardportlet}", false);
     }
 }

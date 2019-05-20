@@ -32,7 +32,7 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfAlertCrudPanel extends AbstractInMemoryTableCrudPanel<WfAlert> {
 
     public WfAlertCrudPanel() {
-        super(WfAlert.class, "workflow.wftemplate.wfstep.wfalert", false);
+        super(WfAlert.class, "$m{workflow.wftemplate.wfstep.wfalert}", false);
     }
 
 }

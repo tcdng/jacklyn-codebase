@@ -32,6 +32,6 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfFormPrivilegeCrudPanel extends AbstractInMemoryTableCrudPanel<WfFormPrivilege> {
 
     public WfFormPrivilegeCrudPanel() {
-        super(WfFormPrivilege.class, "workflow.wftemplate.wfstep.wfformprivilege", false);
+        super(WfFormPrivilege.class, "$m{workflow.wftemplate.wfstep.wfformprivilege}", false);
     }
 }

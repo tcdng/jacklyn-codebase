@@ -32,7 +32,7 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
 public class WfDocAttachmentCrudPanel extends AbstractInMemoryTableCrudPanel<WfDocAttachment> {
 
     public WfDocAttachmentCrudPanel() {
-        super(WfDocAttachment.class, "workflow.wfdoc.wfdocattachment", false);
+        super(WfDocAttachment.class, "$m{workflow.wfdoc.wfdocattachment}", false);
     }
 
 }
