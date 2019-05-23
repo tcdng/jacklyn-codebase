@@ -38,10 +38,10 @@ public class WfItem extends BaseTimestampedEntity {
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
 
-    @Column(nullable = true)
+    @Column(name= "BRANCH_CD", nullable = true)
     private String branchCode;
 
-    @Column(nullable = true)
+    @Column(name= "DEPARTMENT_CD", nullable = true)
     private String departmentCode;
 
     @Column(name = "GLOBAL_STEP_NM", length = 96)

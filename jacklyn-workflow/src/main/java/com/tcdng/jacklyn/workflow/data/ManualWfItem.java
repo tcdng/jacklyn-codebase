@@ -29,16 +29,23 @@ public class ManualWfItem implements ViewableWfItem {
     private WfStepDef wfStepDef;
 
     private WfTemplateDocDef wfTemplateDocDef;
+    
+    private String branchCode;
+    
+    private String departmentCode;
 
     private String processGlobalName;
 
     private PackableDoc pd;
 
     public ManualWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
+            String branchCode, String departmentCode,
             PackableDoc pd) {
         this.wfStepDef = wfStepDef;
         this.wfTemplateDocDef = wfTemplateDocDef;
         this.processGlobalName = processGlobalName;
+        this.branchCode = branchCode;
+        this.departmentCode = departmentCode;
         this.pd = pd;
     }
 
@@ -65,6 +72,16 @@ public class ManualWfItem implements ViewableWfItem {
     @Override
     public WfTemplateDocDef getWfTemplateDocDef() {
         return wfTemplateDocDef;
+    }
+
+    @Override
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    @Override
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
     @Override

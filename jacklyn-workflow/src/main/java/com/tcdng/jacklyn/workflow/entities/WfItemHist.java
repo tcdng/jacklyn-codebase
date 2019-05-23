@@ -34,6 +34,12 @@ public class WfItemHist extends BaseTimestampedEntity {
     @Column(nullable = true)
     private Long docId;
 
+    @Column(name= "BRANCH_CD", nullable = true)
+    private String branchCode;
+
+    @Column(name= "DEPARTMENT_CD", nullable = true)
+    private String departmentCode;
+
     @Column(name = "ITEM_DESC", length = 64)
     private String description;
 
@@ -51,6 +57,22 @@ public class WfItemHist extends BaseTimestampedEntity {
 
     public void setDocId(Long docId) {
         this.docId = docId;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
     @Override

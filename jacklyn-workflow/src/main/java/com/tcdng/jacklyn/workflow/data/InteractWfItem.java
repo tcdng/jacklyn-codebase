@@ -34,7 +34,11 @@ public class InteractWfItem implements ViewableWfItem {
 
     private WfTemplateDocDef wfTemplateDocDef;
 
-    private String itemTypeName;
+    private String processGlobalName;
+
+    private String branchCode;
+
+    private String departmentCode;
 
     private Long docId;
 
@@ -64,12 +68,14 @@ public class InteractWfItem implements ViewableWfItem {
 
     private List<WfAction> actionList;
 
-    public InteractWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String itemTypeName, Long docId,
-            Long wfItemId, Long wfItemHistId, Long wfHistEventId, String description, Date createDt, Date stepDt,
-            String heldBy, PackableDoc pd) {
+    public InteractWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
+            String branchCode, String departmentCode, Long docId, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
+            String description, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
         this.wfTemplateDocDef = wfTemplateDocDef;
-        this.itemTypeName = itemTypeName;
+        this.processGlobalName = processGlobalName;
+        this.branchCode = branchCode;
+        this.departmentCode = departmentCode;
         this.docId = docId;
         this.wfItemId = wfItemId;
         this.wfItemHistId = wfItemHistId;
@@ -131,8 +137,18 @@ public class InteractWfItem implements ViewableWfItem {
     }
 
     @Override
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    @Override
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    @Override
     public String getProcessGlobalName() {
-        return itemTypeName;
+        return processGlobalName;
     }
 
     @Override

@@ -52,6 +52,16 @@ public interface ViewableWfItem {
     WfStepDef getWfStepDef();
 
     /**
+     * Returns the branch code
+     */
+    String getBranchCode();
+
+    /**
+     * Returns the department code
+     */
+    String getDepartmentCode();
+
+    /**
      * Returns the process global name
      */
     String getProcessGlobalName();

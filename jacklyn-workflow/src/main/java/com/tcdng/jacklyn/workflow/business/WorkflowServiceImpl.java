@@ -780,7 +780,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     public ManualWfItem createManualInitItem(String processGlobalName) throws UnifyException {
         WfProcessDef wfProcessDef = wfProcesses.get(processGlobalName);
         WfManualInitDef manualInitDef = wfProcessDef.getWfTemplateDef().getManualInitDef(wfProcessDef.getDocName());
+        UserToken userToken = getUserToken();
         return new ManualWfItem(manualInitDef.getWfStepDef(), wfProcessDef.getWfTemplateDocDef(), processGlobalName,
+                userToken.getBranchCode(), userToken.getDepartmentCode(),
                 new PackableDoc(wfProcessDef.getWfDocDef().getDocConfig()).preset());
     }
 
@@ -938,9 +940,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         wfStepDef.isAudit());
 
         InteractWfItem workflowItem =
-                new InteractWfItem(wfStepDef, wfTemplateDocDef, wfItem.getProcessGlobalName(), wfItem.getDocId(),
-                        wfItemId, wfItem.getWfItemHistId(), wfItem.getWfHistEventId(), wfItem.getDescription(),
-                        wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
+                new InteractWfItem(wfStepDef, wfTemplateDocDef, wfItem.getProcessGlobalName(), wfItem.getBranchCode(),
+                        wfItem.getDepartmentCode(), wfItem.getDocId(), wfItemId, wfItem.getWfItemHistId(),
+                        wfItem.getWfHistEventId(), wfItem.getDescription(), wfItem.getCreateDt(), wfItem.getStepDt(),
+                        wfItem.getHeldBy(), pd);
 
         return workflowItem;
     }
@@ -1089,8 +1092,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             String actionName, String comment) throws UnifyException {
         for (Long wfItemId : wfItemIdList) {
             InteractWfItem workflowItem = findWorkflowItem(wfItemId);
-            addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.itemgrabbed}",
-                    workflowItem.getDescription());
+            addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.itemgrabbed}", workflowItem.getDescription());
             workflowItem.setComment(comment);
             applyWorkflowAction(workflowItem, actionName);
             addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.actionapplied}");
@@ -1733,8 +1735,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
         String description = packableDoc.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat());
         InteractWfItem intWfItem =
-                new InteractWfItem(trgWfStepDef, wfTemplateDocDef, wfProcessDef.getGlobalName(), id, wfItemId, null,
-                        null, description, wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
+                new InteractWfItem(trgWfStepDef, wfTemplateDocDef, wfProcessDef.getGlobalName(), branchCode,
+                        departmentCode, id, wfItemId, null, null, description, wfItem.getCreateDt(), wfItem.getStepDt(),
+                        wfItem.getHeldBy(), packableDoc);
 
         WfStepDef settleStep = pushIntoStep(trgWfStepDef, intWfItem);
 
