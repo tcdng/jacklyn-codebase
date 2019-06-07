@@ -22,14 +22,16 @@ import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
- * DataSource record.
+ * DataSource entity.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(name = "dataSource", description = "DataSource")
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "DataSource", reportable = true, auditable = true)
 @Table(name = "JKDATASOURCE", uniqueConstraints = { @UniqueConstraint({ "name" }),
 		@UniqueConstraint({ "description" }) })
