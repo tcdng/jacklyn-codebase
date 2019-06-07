@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.common;
 
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
-import com.tcdng.jacklyn.common.controllers.CommonRemoteCallGateImpl;
+import com.tcdng.jacklyn.common.web.controllers.CommonRemoteCallGateImpl;
 import com.tcdng.unify.core.Setting;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.jetty.JettyApplicationComponents;
