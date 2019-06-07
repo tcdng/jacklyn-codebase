@@ -47,6 +47,9 @@ public class DataSource extends BaseVersionedStatusEntity {
 	@Column(length = 96)
 	private String connectionUrl;
 
+    @Column(length = 256, nullable = true)
+    private String schemas;
+
 	@Column
 	private Integer maxConnections;
 
@@ -94,7 +97,15 @@ public class DataSource extends BaseVersionedStatusEntity {
 		this.connectionUrl = connectionUrl;
 	}
 
-	public Integer getMaxConnections() {
+	public String getSchemas() {
+        return schemas;
+    }
+
+    public void setSchemas(String schemas) {
+        this.schemas = schemas;
+    }
+
+    public Integer getMaxConnections() {
 		return maxConnections;
 	}
 
