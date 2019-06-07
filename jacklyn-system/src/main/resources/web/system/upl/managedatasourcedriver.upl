@@ -1,0 +1,38 @@
+// UPL template for managing data source drivers
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.datasourcedriver.manage}
+	searchByList:$c{searchCode searchDescription searchStatus}
+    searchClearList:$c{searchCode searchDescription searchStatus}
+	tableColumnList:$c{name description dialect statusDesc}
+	formSection:$d{!ui-section caption:$m{system.datasourcedriver.section.basicdetails} components:$c{frmName frmDescription frmDriverType frmDialect frmStatus}}
+	addPrivilege:$s{sys-adddatasourcedriver} editPrivilege:$s{sys-editdatasourcedriver}
+	viewPrivilege:$s{sys-viewdatasourcedriver} deletePrivilege:$s{sys-deletedatasourcedriver}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchCode caption:$m{system.datasourcedriver.name} binding:searchCode
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{system.datasourcedriver.description} binding:searchDescription
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.datasourcedriver.status} list:recordstatuslist blankOption:$s{} binding:searchStatus
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{system.datasourcedriver.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{system.datasourcedriver.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:dialect caption:$m{system.datasourcedriver.dialect} binding:dialect style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{system.datasourcedriver.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{system.datasourcedriver.name} binding:name case:upper minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{system.datasourcedriver.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-text:frmDriverType caption:$m{system.datasourcedriver.type} binding:driverType minLen:1 maxLen:96 size:40 required:true
+!ui-select:frmDialect caption:$m{system.datasourcedriver.dialect} binding:dialect list:sqldatasourcedialectlist blankOption:$s{} required:true
+!ui-select:frmStatus caption:$m{system.datasourcedriver.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

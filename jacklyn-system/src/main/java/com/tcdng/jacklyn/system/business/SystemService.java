@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
-import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
@@ -36,6 +36,10 @@ import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
 import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
+import com.tcdng.jacklyn.system.entities.DataSource;
+import com.tcdng.jacklyn.system.entities.DataSourceDriver;
+import com.tcdng.jacklyn.system.entities.DataSourceDriverQuery;
+import com.tcdng.jacklyn.system.entities.DataSourceQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -895,6 +899,140 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     int getUniqueActiveUserSessions() throws UnifyException;
+
+    /**
+     * Creates a new datasource driver.
+     * 
+     * @param dataSourceDriver
+     *            the data source driver data
+     * @return the created data source driver ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createDataSourceDriver(DataSourceDriver dataSourceDriver) throws UnifyException;
+
+    /**
+     * Finds datasource driver by ID.
+     * 
+     * @param dataSourceDriverId
+     *            the data source driver ID
+     * @return the data source driver data
+     * @throws UnifyException
+     *             if data source driver with ID is not found
+     */
+    DataSourceDriver findDataSourceDriver(Long dataSourceDriverId) throws UnifyException;
+
+    /**
+     * Finds datasource drivers by query.
+     * 
+     * @param query
+     *            the datasource driver query
+     * @return the list of data source drivers found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<DataSourceDriver> findDataSourceDrivers(DataSourceDriverQuery query) throws UnifyException;
+
+    /**
+     * Updates a datasource driver.
+     * 
+     * @param dataSourceDriver
+     *            the datasource driver data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateDataSourceDriver(DataSourceDriver dataSourceDriver) throws UnifyException;
+
+    /**
+     * Deletes a datasource driver.
+     * 
+     * @param dataSourceDriverId
+     *            the data source driver ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteDataSourceDriver(Long dataSourceDriverId) throws UnifyException;
+
+    /**
+     * Creates a new datasource.
+     * 
+     * @param dataSource
+     *            the data source data
+     * @return the created data source ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createDataSource(DataSource dataSource) throws UnifyException;
+
+    /**
+     * Finds datasource by ID.
+     * 
+     * @param dataSourceId
+     *            the data source ID
+     * @return the datasource data
+     * @throws UnifyException
+     *             if data source with ID is not found
+     */
+    DataSource findDataSource(Long dataSourceId) throws UnifyException;
+
+    /**
+     * Finds datasources by query.
+     * 
+     * @param query
+     *            the datasource query
+     * @return the list of datasources found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<DataSource> findDataSources(DataSourceQuery query) throws UnifyException;
+
+    /**
+     * Updates a datasource.
+     * 
+     * @param dataSource
+     *            the datasource record
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateDataSource(DataSource dataSource) throws UnifyException;
+
+    /**
+     * Deletes a datasource.
+     * 
+     * @param dataSourceId
+     *            the datasource ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteDataSource(Long dataSourceId) throws UnifyException;
+
+    /**
+     * Activates datasource in application datasource manager for use if not already
+     * activated.
+     * 
+     * @param dataSourceName
+     *            the datasource name
+     * @return a true value if activated otherwise false when already activated
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean activateDataSource(String dataSourceName) throws UnifyException;
+
+    /**
+     * Activates datasource in application datasource manager for use if not already
+     * activated.
+     * 
+     * @param dataSourceId
+     *            the datasource ID
+     * @return the datasource name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String activateDataSource(Long dataSourceId) throws UnifyException;
 
     /**
      * Finds all tooling base types.

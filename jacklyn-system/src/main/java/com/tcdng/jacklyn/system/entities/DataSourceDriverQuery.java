@@ -13,18 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.datasource.constants;
+package com.tcdng.jacklyn.system.entities;
+
+import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 
 /**
- * DataSource module name constants.
+ * Datasource driver query.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface DataSourceModuleNameConstants {
+public class DataSourceDriverQuery extends BaseVersionedStatusEntityQuery<DataSourceDriver> {
 
-    String DATASOURCE_MODULE = "datasource";
+	public DataSourceDriverQuery() {
+		super(DataSourceDriver.class);
+	}
 
-    String DATASOURCESERVICE = "jacklyn-datasourceservice";
+	public DataSourceDriverQuery name(String name) {
+		return (DataSourceDriverQuery) equals("name", name);
+	}
 
+	public DataSourceDriverQuery descriptionLike(String description) {
+		return (DataSourceDriverQuery) like("description", description);
+	}
 }

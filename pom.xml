@@ -42,7 +42,6 @@
 		<module>jacklyn-audit</module>
 		<module>jacklyn-statistics</module>
 		<module>jacklyn-integration</module>
-		<module>jacklyn-datasource</module>
 	</modules>
 
 	<properties>

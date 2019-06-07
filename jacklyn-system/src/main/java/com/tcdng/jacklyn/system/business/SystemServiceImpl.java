@@ -44,6 +44,8 @@ import com.tcdng.jacklyn.shared.xml.config.module.MenuItemConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.SysParamConfig;
+import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskConstants;
+import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleErrorConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
@@ -66,6 +68,10 @@ import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
+import com.tcdng.jacklyn.system.entities.DataSource;
+import com.tcdng.jacklyn.system.entities.DataSourceDriver;
+import com.tcdng.jacklyn.system.entities.DataSourceDriverQuery;
+import com.tcdng.jacklyn.system.entities.DataSourceQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -95,9 +101,11 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.Id;
+import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.StaticList;
+import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
@@ -111,6 +119,8 @@ import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
+import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
+import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceManager;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
 import com.tcdng.unify.core.operation.Criteria;
@@ -119,6 +129,7 @@ import com.tcdng.unify.core.security.TwoWayStringCryptograph;
 import com.tcdng.unify.core.system.entities.ParameterDef;
 import com.tcdng.unify.core.system.entities.UserSessionTrackingQuery;
 import com.tcdng.unify.core.task.Task;
+import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskManager;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskParameterConstants;
@@ -158,6 +169,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Configurable("scheduledtaskstatuslogger")
     private TaskStatusLogger taskStatusLogger;
+
+    @Configurable
+    private DynamicSqlDataSourceManager dataSourceManager;
 
     private static final String SCHEDULED_TASK = "scheduledTask";
 
@@ -596,6 +610,101 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 .aggregate(AggregateType.COUNT,
                         new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
                 .get(0).getValue());
+    }
+
+    @Override
+    public Long createDataSourceDriver(DataSourceDriver datasourceDriver) throws UnifyException {
+        return (Long) db().create(datasourceDriver);
+    }
+
+    @Override
+    public DataSourceDriver findDataSourceDriver(Long datasourceDriverId) throws UnifyException {
+        return db().find(DataSourceDriver.class, datasourceDriverId);
+    }
+
+    @Override
+    public List<DataSourceDriver> findDataSourceDrivers(DataSourceDriverQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateDataSourceDriver(DataSourceDriver datasourceDriver) throws UnifyException {
+        return db().updateByIdVersion(datasourceDriver);
+    }
+
+    @Override
+    public int deleteDataSourceDriver(Long id) throws UnifyException {
+        return db().delete(DataSourceDriver.class, id);
+    }
+
+    @Override
+    public Long createDataSource(DataSource dataSourceName) throws UnifyException {
+        return (Long) db().create(dataSourceName);
+    }
+
+    @Override
+    public DataSource findDataSource(Long dataSourceId) throws UnifyException {
+        return db().find(DataSource.class, dataSourceId);
+    }
+
+    @Override
+    public List<DataSource> findDataSources(DataSourceQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateDataSource(DataSource dataSource) throws UnifyException {
+        int updateCount = db().updateByIdVersion(dataSource);
+        if (dataSourceManager.isConfigured(dataSource.getName())) {
+            dataSourceManager.reconfigure(getDynamicSqlDataSourceConfig(dataSource));
+        }
+        return updateCount;
+    }
+
+    @Override
+    public int deleteDataSource(Long id) throws UnifyException {
+        String name = db().value(String.class, "name", new DataSourceQuery().id(id));
+        int updateCount = db().delete(DataSource.class, id);
+        if (dataSourceManager.isConfigured(name)) {
+            dataSourceManager.terminateConfiguration(name);
+        }
+        return updateCount;
+    }
+
+    @Override
+    public boolean activateDataSource(String dataSourceName) throws UnifyException {
+        if (!dataSourceManager.isConfigured(dataSourceName)) {
+            DataSource dataSource = db().list(new DataSourceQuery().name(dataSourceName));
+            dataSourceManager.configure(getDynamicSqlDataSourceConfig(dataSource));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String activateDataSource(Long dataSourceId) throws UnifyException {
+        DataSource dataSource = db().list(new DataSourceQuery().id(dataSourceId));
+        if (!dataSourceManager.isConfigured(dataSource.getName())) {
+            dataSourceManager.configure(getDynamicSqlDataSourceConfig(dataSource));
+        }
+        return dataSource.getName();
+    }
+
+    @Taskable(name = SystemDataSourceTaskConstants.DATASOURCETESTTASK, description = "DataSource Test Task", parameters = {
+            @Parameter(name = SystemDataSourceTaskParamConstants.DATASOURCE, type = DataSource.class, mandatory = true) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
+    public boolean executeTestDataSourceTask(TaskMonitor taskMonitor, DataSource dataSource)
+            throws UnifyException {
+        boolean result = false;
+
+        addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.performing}");
+        addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.connecting}",
+                dataSource.getConnectionUrl());
+        DataSourceDriver driver = findDataSourceDriver(dataSource.getDataSourceDriverId());
+        result = dataSourceManager.testConfiguration(new DynamicSqlDataSourceConfig(taskMonitor.getTaskId(0),
+                driver.getDialect(), driver.getDriverType(), dataSource.getConnectionUrl(),
+                dataSource.getUserName(), dataSource.getPassword(), 1, false));
+        addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.completed}", result);
+        return result;
     }
 
     @Override
@@ -1330,6 +1439,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         return RecordStatus.ACTIVE.equals(scheduledTask.getStatus()) && CalendarUtils.isWithinCalendar(
                 scheduledTask.getWeekdays(), scheduledTask.getDays(), scheduledTask.getMonths(), workingDt);
+    }
+
+    private DynamicSqlDataSourceConfig getDynamicSqlDataSourceConfig(DataSource dataSource) {
+        return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
+                dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(), dataSource.getMaxConnections(),
+                false);
     }
 
     private List<ScheduledTask> listNewScheduledTasks(Date time, List<Long> oldScheduledTaskIds) throws UnifyException {

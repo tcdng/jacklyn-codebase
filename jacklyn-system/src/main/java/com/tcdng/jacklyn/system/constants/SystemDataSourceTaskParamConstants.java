@@ -13,24 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-package com.tcdng.jacklyn.datasource.constants;
-
-import com.tcdng.jacklyn.common.constants.AbstractJacklynModuleStaticSettings;
-import com.tcdng.unify.core.annotation.AutoDetect;
+package com.tcdng.jacklyn.system.constants;
 
 /**
- * DataSource module static settings
+ * DataSource task parameter constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@AutoDetect
-public class DataSourceModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
+public interface SystemDataSourceTaskParamConstants {
 
-    public DataSourceModuleStaticSettings() {
-        super(DataSourceModuleNameConstants.DATASOURCESERVICE, "config/datasource-module.xml",
-                "com.tcdng.jacklyn.resources.datasource-messages");
-    }
+	String DATASOURCE = "dataSource";
 
+	String DATASOURCETESTRESULT = "dataSourceTestResult";
 }
