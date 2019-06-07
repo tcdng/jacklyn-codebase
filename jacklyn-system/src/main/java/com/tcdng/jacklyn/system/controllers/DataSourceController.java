@@ -7,16 +7,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.datasource.controllers;
+package com.tcdng.jacklyn.system.controllers;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.datasource.constants.DataSourceTaskConstants;
-import com.tcdng.jacklyn.datasource.constants.DataSourceTaskParamConstants;
-import com.tcdng.jacklyn.datasource.entities.DataSource;
-import com.tcdng.jacklyn.datasource.entities.DataSourceQuery;
+import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskConstants;
+import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskParamConstants;
+import com.tcdng.jacklyn.system.entities.DataSource;
+import com.tcdng.jacklyn.system.entities.DataSourceQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -30,9 +30,9 @@ import com.tcdng.unify.web.annotation.Action;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/datasource/datasource")
-@UplBinding("web/datasource/upl/managedatasource.upl")
-public class ManageDataSourceController extends AbstractDataSourceCrudController<DataSource> {
+@Component("/system/datasource")
+@UplBinding("web/system/upl/managedatasource.upl")
+public class DataSourceController extends AbstractSystemCrudController<DataSource> {
 
     private String searchCode;
 
@@ -40,17 +40,17 @@ public class ManageDataSourceController extends AbstractDataSourceCrudController
 
 	private RecordStatus searchStatus;
 
-	public ManageDataSourceController() {
-		super(DataSource.class, "$m{datasource.datasource.hint}",
+	public DataSourceController() {
+		super(DataSource.class, "$m{system.datasource.hint}",
 				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
 						| ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
 	}
 
 	@Action
 	public String testDataSource() throws UnifyException {
-		TaskSetup taskSetup = TaskSetup.newBuilder().addTask(DataSourceTaskConstants.DATASOURCETESTTASK)
-				.setParam(DataSourceTaskParamConstants.DATASOURCE, getRecord()).logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "$m{datasource.datasource.test}");
+		TaskSetup taskSetup = TaskSetup.newBuilder().addTask(SystemDataSourceTaskConstants.DATASOURCETESTTASK)
+				.setParam(SystemDataSourceTaskParamConstants.DATASOURCE, getRecord()).logMessages().build();
+		return launchTaskWithMonitorBox(taskSetup, "$m{system.datasource.test}");
 	}
 
 	public String getSearchCode() {
@@ -79,12 +79,12 @@ public class ManageDataSourceController extends AbstractDataSourceCrudController
 
 	@Override
 	protected Object create(DataSource dataSource) throws UnifyException {
-		return getDataSourceService().createDataSource(dataSource);
+		return getSystemService().createDataSource(dataSource);
 	}
 
 	@Override
 	protected int delete(DataSource dataSource) throws UnifyException {
-		return getDataSourceService().deleteDataSource(dataSource.getId());
+		return getSystemService().deleteDataSource(dataSource.getId());
 	}
 
 	@Override
@@ -103,12 +103,12 @@ public class ManageDataSourceController extends AbstractDataSourceCrudController
 		}
 
 		query.order("description").ignoreEmptyCriteria(true);
-		return getDataSourceService().findDataSources(query);
+		return getSystemService().findDataSources(query);
 	}
 
 	@Override
 	protected DataSource find(Long dataSourceId) throws UnifyException {
-		return getDataSourceService().findDataSource(dataSourceId);
+		return getSystemService().findDataSource(dataSourceId);
 	}
 
 	@Override
@@ -118,6 +118,6 @@ public class ManageDataSourceController extends AbstractDataSourceCrudController
 
 	@Override
 	protected int update(DataSource dataSource) throws UnifyException {
-		return getDataSourceService().updateDataSource(dataSource);
+		return getSystemService().updateDataSource(dataSource);
 	}
 }

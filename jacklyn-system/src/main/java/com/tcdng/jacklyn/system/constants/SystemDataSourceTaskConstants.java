@@ -13,14 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.datasource.constants;
+package com.tcdng.jacklyn.system.constants;
 
 /**
- * DataSource module system parameter constants.
+ * DataSource task constants.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
-public interface DataSourceModuleSysParamConstants {
+public interface SystemDataSourceTaskConstants {
 
+	String DATASOURCETESTTASK = "datasourcetesttask";
 }

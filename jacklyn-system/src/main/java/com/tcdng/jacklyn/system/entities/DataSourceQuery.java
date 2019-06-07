@@ -13,17 +13,32 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.datasource.constants;
+package com.tcdng.jacklyn.system.entities;
+
+import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 
 /**
- * DataSource task parameter constants.
+ * Datasource query.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface DataSourceTaskParamConstants {
+public class DataSourceQuery extends BaseVersionedStatusEntityQuery<DataSource> {
 
-	String DATASOURCE = "dataSource";
+	public DataSourceQuery() {
+		super(DataSource.class);
+	}
 
-	String DATASOURCETESTRESULT = "dataSourceTestResult";
+	public DataSourceQuery dataSourceDriverId(Long dataSourceDriverId) {
+		return (DataSourceQuery) equals("dataSourceDriverId", dataSourceDriverId);
+	}
+
+	public DataSourceQuery name(String name) {
+		return (DataSourceQuery) equals("name", name);
+	}
+
+	public DataSourceQuery descriptionLike(String description) {
+		return (DataSourceQuery) like("description", description);
+	}
+
 }

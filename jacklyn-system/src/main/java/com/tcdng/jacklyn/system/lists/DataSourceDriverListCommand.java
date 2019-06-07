@@ -13,29 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.datasource.lists;
+package com.tcdng.jacklyn.system.lists;
 
 import java.util.List;
 import java.util.Locale;
 
-import com.tcdng.jacklyn.datasource.entities.DataSourceQuery;
+import com.tcdng.jacklyn.system.entities.DataSourceDriverQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * Data source list command.
+ * Datasource driver list command.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("datasourcelist")
-public class DataSourceListCommand extends AbstractZeroParamsDataSourceListCommand {
+@Component("datasourcedriverlist")
+public class DataSourceDriverListCommand extends AbstractZeroParamsSystemListCommand {
 
-    @Override
-    public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getDataSourceService().findDataSources(
-                (DataSourceQuery) new DataSourceQuery().order("description").ignoreEmptyCriteria(true));
-    }
+	@Override
+	public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
+		return getSystemService().findDataSourceDrivers(
+				(DataSourceDriverQuery) new DataSourceDriverQuery().order("description").ignoreEmptyCriteria(true));
+	}
 }
