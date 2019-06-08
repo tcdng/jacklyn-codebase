@@ -121,7 +121,6 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
 import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
 import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceManager;
-import com.tcdng.unify.core.database.sql.SqlUtils;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
 import com.tcdng.unify.core.operation.Criteria;
@@ -149,7 +148,6 @@ import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
-import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.RemoteCallController;
 import com.tcdng.unify.web.annotation.GatewayAction;
 
@@ -658,30 +656,20 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public int updateDataSource(DataSource dataSource) throws UnifyException {
         int updateCount = db().updateByIdVersion(dataSource);
         if (dataSourceManager.isConfigured(dataSource.getName())) {
-            for (DynamicSqlDataSourceConfig dynamicSqlDataSourceConfig : getDynamicSqlDataSourceConfig(dataSource)) {
-                dataSourceManager.reconfigure(dynamicSqlDataSourceConfig);
-            }
+            dataSourceManager.reconfigure(getDynamicSqlDataSourceConfig(dataSource));
         }
+
         return updateCount;
     }
 
     @Override
     public int deleteDataSource(Long id) throws UnifyException {
-        DataSource dataSource = db().list( new DataSourceQuery().id(id));
+        DataSource dataSource = db().list(new DataSourceQuery().id(id));
         int updateCount = db().delete(DataSource.class, id);
-        if (StringUtils.isBlank(dataSource.getSchemas())) {            
-            if (dataSourceManager.isConfigured(dataSource.getName())) {
-                dataSourceManager.terminateConfiguration(dataSource.getName());
-            }
-        } else {
-            String[] schemas = StringUtils.commaSplit(dataSource.getSchemas());
-            for (String schema : schemas) {
-                String fullDsName = SqlUtils.getFullDataSourceName(dataSource.getName(), schema.trim());
-                if (dataSourceManager.isConfigured(fullDsName)) {
-                    dataSourceManager.terminateConfiguration(fullDsName);
-                }
-            }
+        if (dataSourceManager.isConfigured(dataSource.getName())) {
+            dataSourceManager.terminateConfiguration(dataSource.getName());
         }
+
         return updateCount;
     }
 
@@ -689,11 +677,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public boolean activateDataSource(String dataSourceName) throws UnifyException {
         if (!dataSourceManager.isConfigured(dataSourceName)) {
             DataSource dataSource = db().list(new DataSourceQuery().name(dataSourceName));
-            for (DynamicSqlDataSourceConfig dynamicSqlDataSourceConfig : getDynamicSqlDataSourceConfig(dataSource)) {
-                dataSourceManager.configure(dynamicSqlDataSourceConfig);
-            }
+            dataSourceManager.configure(getDynamicSqlDataSourceConfig(dataSource));
             return true;
         }
+
         return false;
     }
 
@@ -701,10 +688,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public String activateDataSource(Long dataSourceId) throws UnifyException {
         DataSource dataSource = db().list(new DataSourceQuery().id(dataSourceId));
         if (!dataSourceManager.isConfigured(dataSource.getName())) {
-            for (DynamicSqlDataSourceConfig dynamicSqlDataSourceConfig : getDynamicSqlDataSourceConfig(dataSource)) {
-                dataSourceManager.configure(dynamicSqlDataSourceConfig);
-            }
+            dataSourceManager.configure(getDynamicSqlDataSourceConfig(dataSource));
         }
+
         return dataSource.getName();
     }
 
@@ -1462,23 +1448,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 scheduledTask.getWeekdays(), scheduledTask.getDays(), scheduledTask.getMonths(), workingDt);
     }
 
-    private List<DynamicSqlDataSourceConfig> getDynamicSqlDataSourceConfig(DataSource dataSource)
-            throws UnifyException {
-        List<DynamicSqlDataSourceConfig> list = new ArrayList<DynamicSqlDataSourceConfig>();
-        if (StringUtils.isBlank(dataSource.getSchemas())) {
-            list.add(new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(),
-                    dataSource.getDriverType(), dataSource.getConnectionUrl(), dataSource.getUserName(),
-                    dataSource.getPassword(), dataSource.getMaxConnections(), false));
-        } else {
-            String[] schemas = StringUtils.commaSplit(dataSource.getSchemas());
-            for (String schema : schemas) {
-                list.add(new DynamicSqlDataSourceConfig(SqlUtils.getFullDataSourceName(dataSource.getName(), schema),
-                        dataSource.getDialect(), dataSource.getDriverType(), dataSource.getConnectionUrl(),
-                        dataSource.getUserName(), dataSource.getPassword(), dataSource.getMaxConnections(), false));
-            }
-        }
-
-        return list;
+    private DynamicSqlDataSourceConfig getDynamicSqlDataSourceConfig(DataSource dataSource) throws UnifyException {
+        return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
+                dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(),
+                dataSource.getMaxConnections(), false);
     }
 
     private List<ScheduledTask> listNewScheduledTasks(Date time, List<Long> oldScheduledTaskIds) throws UnifyException {
