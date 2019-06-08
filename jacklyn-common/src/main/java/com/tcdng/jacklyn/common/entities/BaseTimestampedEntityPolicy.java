@@ -34,12 +34,14 @@ public class BaseTimestampedEntityPolicy extends BaseEventEntityPolicy {
     public Object preCreate(Entity record, Date now) throws UnifyException {
         BaseTimestampedEntity baseTimestampedRecord = (BaseTimestampedEntity) record;
         baseTimestampedRecord.setUpdateDt(now);
+        baseTimestampedRecord.setUpdateBy(getUserLoginId());
         return super.preCreate(record, now);
     }
 
     @Override
     public void preUpdate(Entity record, Date now) throws UnifyException {
         ((BaseTimestampedEntity) record).setUpdateDt(now);
+        ((BaseTimestampedEntity) record).setUpdateBy(getUserLoginId());
         super.preUpdate(record, now);
     }
 }

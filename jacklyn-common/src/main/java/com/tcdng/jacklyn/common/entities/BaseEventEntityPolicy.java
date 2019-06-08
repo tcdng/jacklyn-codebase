@@ -41,6 +41,10 @@ public class BaseEventEntityPolicy extends BaseEntityPolicy {
             baseEventRecord.setCreateDt(now);
         }
 
+        if (baseEventRecord.getCreateBy() == null) {
+            baseEventRecord.setCreateBy(getUserLoginId());
+        }
+
         return super.preCreate(record, now);
     }
 }

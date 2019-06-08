@@ -31,6 +31,10 @@ public abstract class BaseEventEntityQuery<T extends BaseEventEntity> extends Ba
         super(entityClass);
     }
 
+    public BaseEventEntityQuery<T> createBy(String createBy) {
+        return (BaseEventEntityQuery<T>) equals("createBy", createBy);
+    }
+
     public BaseEventEntityQuery<T> createdOn(Date date) {
         return (BaseEventEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));

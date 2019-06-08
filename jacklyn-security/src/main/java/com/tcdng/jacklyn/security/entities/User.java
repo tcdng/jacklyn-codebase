@@ -49,10 +49,10 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ForeignKey(type = Branch.class, nullable = true)
     private Long branchId;
 
-    @Column(length = 72)
+    @Column(length = 96)
     private String fullName;
 
-    @Column(transformer = "uppercase-transformer")
+    @Column(length = 64, transformer = "uppercase-transformer")
     private String loginId;
 
     @Column(length = 256)
@@ -60,6 +60,9 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     @Column(length = 64)
     private String email;
+
+    @Column(length = 24, nullable = true)
+    private String mobileNo;
 
     @Column
     private Integer loginAttempts;
@@ -167,6 +170,14 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     public Boolean getLoginLocked() {

@@ -32,6 +32,10 @@ public abstract class BaseTimestampedStatusEntityQuery<T extends BaseTimestamped
         super(entityClass);
     }
 
+    public BaseTimestampedStatusEntityQuery<T> createBy(String createBy) {
+        return (BaseTimestampedStatusEntityQuery<T>) equals("createBy", createBy);
+    }
+
     public BaseTimestampedStatusEntityQuery<T> createdOn(Date date) {
         return (BaseTimestampedStatusEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
@@ -57,4 +61,35 @@ public abstract class BaseTimestampedStatusEntityQuery<T extends BaseTimestamped
     public BaseTimestampedStatusEntityQuery<T> createdOnAfter(Date date) {
         return (BaseTimestampedStatusEntityQuery<T>) greaterEqual("createDt", date);
     }
+    
+    public BaseTimestampedStatusEntityQuery<T> updateBy(String updateBy) {
+        return (BaseTimestampedStatusEntityQuery<T>) equals("updateBy", updateBy);
+    }
+
+    public BaseTimestampedStatusEntityQuery<T> updatedOn(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) between("updateDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
+
+    public BaseTimestampedStatusEntityQuery<T> updatedBetween(Date fromDate, Date toDate) {
+        return (BaseTimestampedStatusEntityQuery<T>) between("updateDt", CalendarUtils.getMidnightDate(fromDate),
+                CalendarUtils.getLastSecondDate(toDate));
+    }
+
+    public BaseTimestampedStatusEntityQuery<T> updatedBefore(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) less("updateDt", date);
+    }
+
+    public BaseTimestampedStatusEntityQuery<T> updatedOnBefore(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) lessEqual("updateDt", date);
+    }
+
+    public BaseTimestampedStatusEntityQuery<T> updatedAfter(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) greater("updateDt", date);
+    }
+
+    public BaseTimestampedStatusEntityQuery<T> updatedOnAfter(Date date) {
+        return (BaseTimestampedStatusEntityQuery<T>) greaterEqual("updateDt", date);
+    }
+    
 }

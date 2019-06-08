@@ -35,9 +35,15 @@ public abstract class BaseTimestampedStatusEntity extends BaseStatusEntity {
     @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date createDt;
 
+    @Column(length = 64)
+    private String createBy;
+
     @Format(formatter = "!datetimeformat")
     @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date updateDt;
+
+    @Column(length = 64)
+    private String updateBy;
 
     public Date getCreateDt() {
         return createDt;
@@ -47,6 +53,14 @@ public abstract class BaseTimestampedStatusEntity extends BaseStatusEntity {
         this.createDt = createDt;
     }
 
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
     public Date getUpdateDt() {
         return updateDt;
     }
@@ -54,5 +68,14 @@ public abstract class BaseTimestampedStatusEntity extends BaseStatusEntity {
     public void setUpdateDt(Date updateDt) {
         this.updateDt = updateDt;
     }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
 
 }
