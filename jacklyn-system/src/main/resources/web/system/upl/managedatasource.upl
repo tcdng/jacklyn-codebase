@@ -7,7 +7,7 @@
    	searchClearList:$c{searchCode searchDescription searchStatus}
 	tableColumnList:$c{dataSourceDriverDesc name description statusDesc}
 	formSection:$d{!ui-section caption:$m{system.datasource.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
-	formSection:$d{!ui-section caption:$m{system.datasource.section.connection} components:$c{frmDataSourceDriverId frmConnectionUrl frmMaxConnections frmUserName frmPassword frmSchemas}}
+	formSection:$d{!ui-section caption:$m{system.datasource.section.connection} components:$c{frmDataSourceDriverId frmConnectionUrl frmMaxConnections frmUserName frmPassword}}
     moreCrudFooterComponentList:$c{spacer testBtn}
  	addPrivilege:$s{sys-adddatasource} editPrivilege:$s{sys-editdatasource}
 	viewPrivilege:$s{sys-viewdatasource} deletePrivilege:$s{sys-deletedatasource}
@@ -34,7 +34,6 @@
 !ui-name:frmName caption:$m{system.datasource.name} binding:name underscore:true case:upper minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{system.datasource.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-text:frmConnectionUrl caption:$m{system.datasource.connectionurl} binding:connectionUrl minLen:3 maxLen:48 size:40 required:true
-!ui-textarea:frmSchemas caption:$m{system.datasource.schemas} binding:schemas maxLen:256 columns:40 rows:8
 !ui-integer:frmMaxConnections caption:$m{system.datasource.maxconnections} binding:maxConnections maxLen:3 required:true
 !ui-name:frmUserName caption:$m{system.datasource.username} binding:userName maxLen:32
 !ui-password:frmPassword caption:$m{system.datasource.password} binding:password maxLen:32
