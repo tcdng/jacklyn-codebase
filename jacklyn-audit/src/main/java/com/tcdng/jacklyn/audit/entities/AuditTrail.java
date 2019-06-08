@@ -42,7 +42,7 @@ public class AuditTrail extends BaseTimestampedEntity {
     @ForeignKey(AuditDefinition.class)
     private Long auditDefinitionId;
 
-    @Column(length = 32)
+    @Column(length = 64)
     private String userLoginId;
 
     @Column(length = 64)

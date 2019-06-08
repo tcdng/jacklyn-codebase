@@ -37,11 +37,22 @@ public abstract class BaseEventEntity extends BaseEntity {
     @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date createDt;
 
+    @Column(length = 64)
+    private String createBy;
+
     public Date getCreateDt() {
         return createDt;
     }
 
     public void setCreateDt(Date createDt) {
         this.createDt = createDt;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 }

@@ -15,6 +15,10 @@
  */
 package com.tcdng.jacklyn.common.entities;
 
+import java.util.Date;
+
+import com.tcdng.unify.core.util.CalendarUtils;
+
 /**
  * Query class for base time-stamped entity.
  * 
@@ -25,5 +29,35 @@ public abstract class BaseTimestampedEntityQuery<T extends BaseTimestampedEntity
 
     public BaseTimestampedEntityQuery(Class<T> entityClass) {
         super(entityClass);
+    }
+
+    public BaseTimestampedEntityQuery<T> updateBy(String updateBy) {
+        return (BaseTimestampedEntityQuery<T>) equals("updateBy", updateBy);
+    }
+
+    public BaseTimestampedEntityQuery<T> updatedOn(Date date) {
+        return (BaseTimestampedEntityQuery<T>) between("updateDt", CalendarUtils.getMidnightDate(date),
+                CalendarUtils.getLastSecondDate(date));
+    }
+
+    public BaseTimestampedEntityQuery<T> updatedBetween(Date fromDate, Date toDate) {
+        return (BaseTimestampedEntityQuery<T>) between("updateDt", CalendarUtils.getMidnightDate(fromDate),
+                CalendarUtils.getLastSecondDate(toDate));
+    }
+
+    public BaseTimestampedEntityQuery<T> updatedBefore(Date date) {
+        return (BaseTimestampedEntityQuery<T>) less("updateDt", date);
+    }
+
+    public BaseTimestampedEntityQuery<T> updatedOnBefore(Date date) {
+        return (BaseTimestampedEntityQuery<T>) lessEqual("updateDt", date);
+    }
+
+    public BaseTimestampedEntityQuery<T> updatedAfter(Date date) {
+        return (BaseTimestampedEntityQuery<T>) greater("updateDt", date);
+    }
+
+    public BaseTimestampedEntityQuery<T> updatedOnAfter(Date date) {
+        return (BaseTimestampedEntityQuery<T>) greaterEqual("updateDt", date);
     }
 }

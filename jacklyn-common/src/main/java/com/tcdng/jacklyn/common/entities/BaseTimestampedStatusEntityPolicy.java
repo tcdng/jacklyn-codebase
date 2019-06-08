@@ -41,13 +41,19 @@ public class BaseTimestampedStatusEntityPolicy extends BaseStatusEntityPolicy {
             baseTimestampedRecord.setCreateDt(now);
         }
 
+        if (baseTimestampedRecord.getCreateBy() == null) {
+            baseTimestampedRecord.setCreateBy(getUserLoginId());
+        }
+
         baseTimestampedRecord.setUpdateDt(now);
+        baseTimestampedRecord.setUpdateBy(getUserLoginId());
         return super.preCreate(record, now);
     }
 
     @Override
     public void preUpdate(Entity record, Date now) throws UnifyException {
         ((BaseTimestampedStatusEntity) record).setUpdateDt(now);
+        ((BaseTimestampedStatusEntity) record).setUpdateBy(getUserLoginId());
         super.preUpdate(record, now);
     }
 }

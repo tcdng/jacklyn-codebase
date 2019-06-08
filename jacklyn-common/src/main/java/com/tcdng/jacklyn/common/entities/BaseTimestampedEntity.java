@@ -37,11 +37,22 @@ public abstract class BaseTimestampedEntity extends BaseEventEntity {
     @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date updateDt;
 
+    @Column(length = 64)
+    private String updateBy;
+
     public Date getUpdateDt() {
         return updateDt;
     }
 
     public void setUpdateDt(Date updateDt) {
         this.updateDt = updateDt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }

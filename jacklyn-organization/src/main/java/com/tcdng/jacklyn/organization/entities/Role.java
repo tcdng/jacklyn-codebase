@@ -65,6 +65,9 @@ public class Role extends BaseVersionedStatusEntity {
     @Column(length = 64, nullable = true)
     private String application;
 
+    @Column(length = 64, nullable = true)
+    private String email;
+
     @ListOnly(key = "departmentId", property = "name")
     private String departmentName;
 
@@ -139,6 +142,14 @@ public class Role extends BaseVersionedStatusEntity {
 
     public void setApplication(String application) {
         this.application = application;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getThemeDesc() {
