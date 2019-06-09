@@ -56,13 +56,13 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(type = ColumnType.TIMESTAMP, nullable = true)
     private Date expectedDt;
 
-    @Column
+    @Column(length = 64)
     private String initiatedBy;
 
-    @Column(nullable = true)
+    @Column(length = 64, nullable = true)
     private String heldBy;
 
-    @Column(nullable = true)
+    @Column(length = 64, nullable = true)
     private String forwardedBy;
 
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
