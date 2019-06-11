@@ -117,6 +117,7 @@ import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
+import com.tcdng.unify.core.database.AbstractEntity;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
 import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
@@ -126,6 +127,7 @@ import com.tcdng.unify.core.list.ListManager;
 import com.tcdng.unify.core.operation.Criteria;
 import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.TwoWayStringCryptograph;
+import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
 import com.tcdng.unify.core.system.entities.ParameterDef;
 import com.tcdng.unify.core.system.entities.UserSessionTrackingQuery;
 import com.tcdng.unify.core.task.Task;
@@ -720,6 +722,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 "com.tcdng.jacklyn.common.entities")) {
             resultList.add(createToolingEntityItem(entityClass));
         }
+
+        resultList.add(createToolingEntityItem(AbstractEntity.class));
+        resultList.add(createToolingEntityItem(AbstractSequencedEntity.class));
         return resultList;
     }
 
