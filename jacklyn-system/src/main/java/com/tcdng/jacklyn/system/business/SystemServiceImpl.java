@@ -999,8 +999,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         MenuSet menuSet = new MenuSet();
-        menuSet.add(
-                new Menu(getApplicationName(), getApplicationName(), Collections.unmodifiableList(menuItemSetList)));
+        menuSet.add(new Menu(getApplicationName(), getApplicationName(), null,
+                Collections.unmodifiableList(menuItemSetList)));
         if (getContainerSetting(boolean.class, UnifyCorePropertyConstants.APPLICATION_OSMODE, false)) {
             // Load application menus
             menuSet.setAlwaysSelect(true);
@@ -1393,8 +1393,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, true, true, true,
-                false);
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, null, true, true,
+                true, false);
     }
 
     private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {
