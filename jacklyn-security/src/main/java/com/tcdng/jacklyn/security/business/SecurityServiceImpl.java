@@ -685,8 +685,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             globalAccess = organizationService.getBranchHeadOfficeFlag(user.getBranchId());
         }
 
+        String colorScheme = null; // For now always use default color scheme
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getBranchCode(), user.getZoneName(), globalAccess, user.isReserved(), allowMultipleLogin, false);
+                user.getBranchCode(), user.getZoneName(), colorScheme, globalAccess, user.isReserved(), allowMultipleLogin, false);
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {
