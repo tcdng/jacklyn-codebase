@@ -149,14 +149,14 @@ public class UserController extends AbstractSecurityCrudController<User> {
             setDisabled("frmImage", false);
             setEditable("frmLoginId", true);
             setEditable("frmRoleAssignPanel", true);
-            setEditable("crudFormPanel.mainBodyPanel", true);
+            setCrudViewerEditable(true);
         } else {
             boolean isDisabled = userData.isReserved();
             setDisabled("resetBtn", isDisabled);
             setDisabled("frmImage", isDisabled);
             setEditable("frmLoginId", false);
             setEditable("frmRoleAssignPanel", !isDisabled);
-            setEditable("crudFormPanel.mainBodyPanel", !isDisabled);
+            setCrudViewerEditable(!isDisabled);
         }
     }
 
@@ -182,7 +182,7 @@ public class UserController extends AbstractSecurityCrudController<User> {
     }
 
     @Override
-    protected void onPrepareForm(User record, int mode) throws UnifyException {
+    protected void onPrepareCrudViewer(User record, int mode) throws UnifyException {
         setVisible("resetBtn", mode != ManageRecordModifier.ADD);
         if (mode == ManageRecordModifier.ADD) {
             setEditable("frmRoleAssignPanel", true);

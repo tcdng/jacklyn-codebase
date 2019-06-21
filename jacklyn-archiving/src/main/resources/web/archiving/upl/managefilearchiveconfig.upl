@@ -29,7 +29,7 @@
 !ui-name:frmName caption:$m{archiving.filearchiveconfig.name} binding:name focus:true dollar:true underscore:true maxLen:32 required:true
 !ui-text:frmDescription caption:$m{archiving.filearchiveconfig.description} binding:description size:40 maxLen:40 required:true
 !ui-select:frmArchivableDef caption:$m{archiving.filearchiveconfig.archivable} style:$s{width:200px;} binding:archivableDefId list:archivabledeflist blankOption:$s{}
-    eventHandler:$d{!ui-event event:onchange action:$c{refreshFormAct}} required:true
+    eventHandler:$d{!ui-event event:onchange action:$c{refreshCrudViewerAct}} required:true
 !ui-select:frmLobField caption:$m{archiving.filearchiveconfig.lobfield} style:$s{width:200px;}
     binding:archivableFieldId list:archivablelobfieldlist listParams:$l{archivableDefId} blankOption:$s{} required:true
 !ui-select:frmTimestampField caption:$m{archiving.filearchiveconfig.timestampfield} style:$s{width:200px;}

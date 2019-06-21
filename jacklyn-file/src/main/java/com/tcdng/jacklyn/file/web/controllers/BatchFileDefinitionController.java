@@ -72,7 +72,7 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
         List<BatchFileFieldDefinition> fieldDefList =
                 getFileService().mergeBatchFileFieldMapping(beanType, batchFileDefinition.getFieldDefList());
         batchFileDefinition.setFieldDefList(fieldDefList);
-        return refreshForm();
+        return refreshCrudViewer();
     }
 
     public String getSearchName() {
@@ -154,7 +154,7 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
     }
 
     @Override
-    protected void onPrepareForm(BatchFileDefinition record, int mode) throws UnifyException {
+    protected void onPrepareCrudViewer(BatchFileDefinition record, int mode) throws UnifyException {
         boolean isMapBean = mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
         setVisible("mapBeanBtn", isMapBean);
     }
