@@ -29,7 +29,7 @@
 //Form components   
 !ui-name:frmName caption:$m{system.datasourcedriver.name} binding:name case:upper minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{system.datasourcedriver.description} binding:description minLen:1 maxLen:48 size:32 required:true
-!ui-text:frmDriverType caption:$m{system.datasourcedriver.type} binding:driverType minLen:1 maxLen:96 size:40 required:true
+!ui-text:frmDriverType caption:$m{system.datasourcedriver.type} binding:driverType minLen:1 maxLen:128 size:40 required:true
 !ui-select:frmDialect caption:$m{system.datasourcedriver.dialect} binding:dialect list:sqldatasourcedialectlist blankOption:$s{} required:true
 !ui-select:frmStatus caption:$m{system.datasourcedriver.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
