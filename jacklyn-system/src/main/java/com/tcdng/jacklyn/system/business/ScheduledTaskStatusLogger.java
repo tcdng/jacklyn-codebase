@@ -64,11 +64,11 @@ public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
                 errorMessages = sb.toString();
             }
 
-            TaskStatus oldTaskStatus = (TaskStatus) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
+            TaskStatus oldTaskStatus = (TaskStatus) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_STATUS);
             if (!taskStatus.equals(oldTaskStatus)) {
                 systemService.createScheduledTaskHistory(
                         (Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID), taskStatus, errorMessages);
-                parameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, taskStatus);
+                parameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_STATUS, taskStatus);
             }
         } catch (UnifyException e) {
             logError(e);

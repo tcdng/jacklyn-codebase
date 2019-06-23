@@ -20,8 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
+import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
@@ -40,7 +40,6 @@ import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
-import com.tcdng.unify.web.ui.container.Form;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
 
@@ -60,7 +59,7 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
         @ResultMapping(
                 name = "refreshtable",
                 response = { "!refreshpanelresponse panels:$l{searchPanel tablePanel actionPanel}" }),
-        @ResultMapping(name = "refreshform", response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{crudPanel}" }),
+        @ResultMapping(name = "refreshcrudviewer", response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{crudPanel}" }),
         @ResultMapping(
                 name = "switchsearch",
                 response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{manageBodyPanel.searchBodyPanel}",
@@ -141,7 +140,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     public String prepareCreateRecord() throws UnifyException {
         record = prepareCreate();
         loadSessionOnCreate();
-        updateForm(ManageRecordModifier.ADD);
+        updateCrudViewer(ManageRecordModifier.ADD);
         return "switchcrud";
     }
 
@@ -164,7 +163,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         if (ManageRecordModifier.isActivatable(modifier)) {
             oldRecord = ReflectUtils.shallowBeanCopy(record);
         }
-        updateForm(ManageRecordModifier.VIEW);
+        updateCrudViewer(ManageRecordModifier.VIEW);
         return "switchcrud";
     }
 
@@ -172,7 +171,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     public String prepareUpdateRecord() throws UnifyException {
         prepareView();
         oldRecord = ReflectUtils.shallowBeanCopy(record);
-        updateForm(ManageRecordModifier.MODIFY);
+        updateCrudViewer(ManageRecordModifier.MODIFY);
         return "switchcrud";
     }
 
@@ -200,7 +199,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     @Action
     public String prepareDeleteRecord() throws UnifyException {
         prepareView();
-        updateForm(ManageRecordModifier.DELETE);
+        updateCrudViewer(ManageRecordModifier.DELETE);
         return "switchcrud";
     }
 
@@ -306,10 +305,10 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     }
 
     @Action
-    public String refreshForm() throws UnifyException {
-        onRefreshForm();
+    public String refreshCrudViewer() throws UnifyException {
+        onRefreshCrudViewer();
         loadSessionOnRefresh();
-        return "refreshform";
+        return "refreshcrudviewer";
     }
 
     @Action
@@ -470,6 +469,8 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
     protected abstract int delete(T record) throws UnifyException;
 
+    protected abstract void setCrudViewerEditable(boolean editable) throws UnifyException;
+
     /**
      * Returns the currently selected record from table list.
      * 
@@ -537,7 +538,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
     }
 
-    protected void onPrepareForm(T record, int mode) throws UnifyException {
+    protected void onPrepareCrudViewer(T record, int mode) throws UnifyException {
 
     }
 
@@ -545,16 +546,12 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
     }
 
-    protected void onRefreshForm() throws UnifyException {
+    protected void onRefreshCrudViewer() throws UnifyException {
 
     }
 
     protected Table getTable() {
         return table;
-    }
-
-    protected Form getForm() throws UnifyException {
-        return getPageWidgetByShortName(Form.class, "crudFormPanel.form");
     }
 
     protected int getMode() {
@@ -564,7 +561,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     protected boolean isEditableMode() {
         return mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
     }
-
+    
     @SuppressWarnings("unchecked")
     private void manageReportable() throws UnifyException {
         boolean isReportable =
@@ -626,10 +623,10 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         loadSessionOnRefresh();
     }
 
-    private void updateForm(int mode) throws UnifyException {
+    private void updateCrudViewer(int mode) throws UnifyException {
         this.mode = mode;
 
-        // FormImpl Navigation buttons
+        // Navigation buttons
         int viewIndex = table.getViewIndex();
         boolean isCreateMode = mode == ManageRecordModifier.ADD;
         setVisible("pasteFrmBtn", isCreateMode);
@@ -640,7 +637,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         setVisible("copyFrmBtn", !isCreateMode);
         setVisible("itemOfLabel", !isCreateMode);
         if (isCreateMode) {
-            // FormImpl Enable/disable paste button
+            // Enable/disable paste button
             setDisabled("pasteFrmBtn", clipRecord == null);
             setVisible("pasteFrmBtn", ManageRecordModifier.isPastable(modifier));
         } else {
@@ -669,7 +666,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
         switch (mode) {
             case ManageRecordModifier.ADD:
-                setEditable("crudFormPanel.mainBodyPanel", true);
+                setCrudViewerEditable(true);
                 setVisible("createNextFrmBtn", true);
                 setVisible("createCloseFrmBtn", true);
                 setVisible("cancelFrmBtn", true);
@@ -682,15 +679,15 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
                         setVisible("saveNextFrmBtn", true);
                         setVisible("saveCloseFrmBtn", true);
                     }
-                    setEditable("crudFormPanel.mainBodyPanel", true);
+                    setCrudViewerEditable(true);
                     setPageValidationEnabled(true);
                 } else {
-                    setEditable("crudFormPanel.mainBodyPanel", false);
+                    setCrudViewerEditable(false);
                 }
                 setVisible("cancelFrmBtn", true);
                 break;
             case ManageRecordModifier.VIEW:
-                setEditable("crudFormPanel.mainBodyPanel", false);
+                setCrudViewerEditable(false);
                 setVisible("doneFrmBtn", true);
                 if (ManageRecordModifier.isActivatable(modifier)) {
                     setVisible("activateFrmBtn", isActivatable(record));
@@ -699,7 +696,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
                 break;
 
             case ManageRecordModifier.DELETE:
-                setEditable("crudFormPanel.mainBodyPanel", false);
+                setCrudViewerEditable(false);
                 setVisible("deleteFrmBtn", true);
                 setVisible("cancelFrmBtn", true);
                 break;
@@ -715,7 +712,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         }
 
         updateModeDescription();
-        onPrepareForm(record, mode);
+        onPrepareCrudViewer(record, mode);
     }
 
     private void updateModeDescription() throws UnifyException {

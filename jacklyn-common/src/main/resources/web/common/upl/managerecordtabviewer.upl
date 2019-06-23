@@ -1,0 +1,9 @@
+// UPL generic base template for managing records
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$s{} tabBinding:record
+
+// Tab panel
+!ui-tabbedpanel:crudViewPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
+    binding:$f{tabBinding} components:$f{tabComponents}

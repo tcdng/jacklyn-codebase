@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.audit.web.controllers;
 
 import com.tcdng.jacklyn.audit.business.AuditService;
-import com.tcdng.jacklyn.common.web.controllers.BaseCrudController;
+import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -27,7 +27,7 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractAuditCrudController<T extends Entity> extends BaseCrudController<T, Long> {
+public abstract class AbstractAuditCrudController<T extends Entity> extends BaseFormCrudController<T, Long> {
 
     @Configurable
     private AuditService auditService;

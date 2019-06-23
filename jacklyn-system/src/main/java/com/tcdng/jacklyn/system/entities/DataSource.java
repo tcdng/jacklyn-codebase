@@ -46,7 +46,7 @@ public class DataSource extends BaseVersionedStatusEntity {
 	@Column(name = "DATASOURCE_DESC", length = 48)
 	private String description;
 
-	@Column(length = 96)
+	@Column(length = 128)
 	private String connectionUrl;
 
 	@Column

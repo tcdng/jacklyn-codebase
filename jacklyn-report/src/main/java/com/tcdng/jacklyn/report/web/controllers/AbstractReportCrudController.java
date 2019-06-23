@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.report.web.controllers;
 
-import com.tcdng.jacklyn.common.web.controllers.BaseCrudController;
+import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
 import com.tcdng.jacklyn.report.business.ReportService;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -27,7 +27,7 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractReportCrudController<T extends Entity> extends BaseCrudController<T, Long> {
+public abstract class AbstractReportCrudController<T extends Entity> extends BaseFormCrudController<T, Long> {
 
     @Configurable
     private ReportService reportService;

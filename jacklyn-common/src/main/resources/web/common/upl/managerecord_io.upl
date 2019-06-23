@@ -5,7 +5,6 @@
 !ui-page caption:$s{} components:$c{manageRecordPanel}
     tableSerialNumbers:true
     tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
-    formColumns:2 formBinding:record
 
 !ui-panel:manageRecordPanel style:$s{height:100%;}
     layout:$d{!ui-horizontal style:$s{height:100%;} widths:$l{none 100%} heights:$l{100% 100%}}
@@ -49,14 +48,9 @@
     components:$c{crudBasePanel crudActionsGrpPanel}
 
 !ui-panel:crudBasePanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-    components:$c{maintainTypeLabel crudFormPanel}
+    components:$c{maintainTypeLabel crudViewPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} binding:modeDescription styleClassBinding:modeStyle
-
-!ui-formpanel:crudFormPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-    formBinding:$f{formBinding} formAttachment:$f{formAttachment}
-    formColumns:$f{formColumns} formSection:$f{formSection}
-    formSection:$d{!ui-section components:$c{frmId} hidden:true}
 
 !ui-panel:crudActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
     components:$c{topActionPanel bottomActionPanel}
@@ -68,7 +62,7 @@
     components:$c{activateFrmBtn deactivateFrmBtn cancelFrmBtn doneFrmBtn}
     components:$f{moreCrudFooterComponentList}
 
-//Common form components
+//Common components
 !ui-hidden:frmId binding:id
 
 //Labels
@@ -134,10 +128,10 @@
 !ui-post:prevAct path:$n{/previousRecord}
 !ui-post:nextAct path:$n{/nextRecord}
 !ui-post:lastAct path:$n{/lastRecord}
-!ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{addValidations}
-!ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{addValidations}
-!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{saveValidations}
-!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{saveValidations}
+!ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{addValidations}
+!ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{addValidations}
+!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
+!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
 !ui-post:deleteAct path:$n{/deleteRecord} confirm:$f{deleteConfirm}
 !ui-post:doneAct path:$n{/done}
 !ui-post:cancelAct path:$n{/cancel}
@@ -147,12 +141,12 @@
 !ui-post:pasteAct path:$n{/pasteRecord}
 
 // Validations
-!ui-validation:formValidation components:$c{crudFormPanel}
+!ui-validation:crudViewerVal components:$c{crudViewPanel}
 
 //Other actions
 !ui-post:searchAct path:$n{/findRecords} components:$g{searchByList}
 !ui-post:refreshSearchAct path:$n{/refreshSearch} components:$c{searchPanel}
-!ui-post:refreshFormAct path:$n{/refreshForm} components:$c{crudPanel}
+!ui-post:refreshCrudViewerAct path:$n{/refreshCrudViewer} components:$c{crudPanel}
 !ui-post:manageDoneAct path:$n{/closePage}
 
 //Report actions 
