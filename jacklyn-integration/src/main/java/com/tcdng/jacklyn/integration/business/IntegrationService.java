@@ -36,8 +36,8 @@ public interface IntegrationService extends JacklynBusinessService {
     /**
      * Creates a new producer definition.
      * 
-     * @param producer
-     *            definition the producer definition data
+     * @param producerDefinition
+     *            definition the producer definition
      * @return the created producer definition ID
      * @throws UnifyException
      *             if an error occurs
@@ -69,7 +69,7 @@ public interface IntegrationService extends JacklynBusinessService {
     /**
      * Updates a producer definition.
      * 
-     * @param producer
+     * @param producerDefinition
      *            definition the producer definition
      * @return the update count
      * @throws UnifyException

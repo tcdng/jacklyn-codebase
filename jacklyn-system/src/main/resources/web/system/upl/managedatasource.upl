@@ -26,7 +26,7 @@
 !ui-label:dataSourceDriverDesc caption:$m{system.datasource.driver} binding:dataSourceDriverDesc columnStyle:$s{width:180px;} sortable:true
 !ui-label:name caption:$m{system.datasource.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{system.datasource.description} binding:description  columnStyle:$s{width:250px;} sortable:true
-!ui-label:statusDesc caption:$m{system.datasource.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px} sortable:true
+!ui-label:statusDesc caption:$m{system.datasource.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
 !ui-select:frmDataSourceDriverId caption:$m{system.datasource.driver} binding:dataSourceDriverId
