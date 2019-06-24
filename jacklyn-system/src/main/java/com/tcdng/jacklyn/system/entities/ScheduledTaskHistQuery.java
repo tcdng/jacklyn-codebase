@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.system.entities;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
+import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.unify.core.task.TaskStatus;
 import com.tcdng.unify.core.util.CalendarUtils;
 
@@ -27,7 +27,7 @@ import com.tcdng.unify.core.util.CalendarUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class ScheduledTaskHistQuery extends BaseTimestampedEntityQuery<ScheduledTaskHist> {
+public class ScheduledTaskHistQuery extends BaseEntityQuery<ScheduledTaskHist> {
 
     public ScheduledTaskHistQuery() {
         super(ScheduledTaskHist.class);
@@ -45,8 +45,8 @@ public class ScheduledTaskHistQuery extends BaseTimestampedEntityQuery<Scheduled
         return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
     }
 
-    public ScheduledTaskHistQuery createdOn(Date date) {
-        return (ScheduledTaskHistQuery) between("createDt", CalendarUtils.getMidnightDate(date),
+    public ScheduledTaskHistQuery startedOn(Date date) {
+        return (ScheduledTaskHistQuery) between("startedOn", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 }

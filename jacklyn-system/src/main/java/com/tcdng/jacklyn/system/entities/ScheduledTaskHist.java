@@ -15,11 +15,14 @@
  */
 package com.tcdng.jacklyn.system.entities;
 
+import java.util.Date;
+
 import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.jacklyn.common.annotation.Managed;
-import com.tcdng.jacklyn.common.entities.BaseTimestampedEntity;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
+import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
@@ -32,19 +35,26 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task History", reportable = true,
+@Managed(
+        module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task History", reportable = true,
         auditable = true)
 @Table("JKSCHEDTASKHIST")
-public class ScheduledTaskHist extends BaseTimestampedEntity {
+public class ScheduledTaskHist extends BaseEntity {
 
     @ForeignKey(ScheduledTask.class)
     private Long scheduledTaskId;
 
-    @Column(length = 256, nullable = true)
-    private String errorMsg;
-
-    @Column
+    @ForeignKey
     private TaskStatus taskStatus;
+
+    @Column(type = ColumnType.TIMESTAMP)
+    private Date startedOn;
+
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date finishedOn;
+
+    @Column(length = 1024, nullable = true)
+    private String errorMsg;
 
     @Format(description = "$m{system.scheduledtaskhist.scheduledtask}")
     @ListOnly(key = "scheduledTaskId", property = "description")
@@ -53,10 +63,12 @@ public class ScheduledTaskHist extends BaseTimestampedEntity {
     @ListOnly(key = "scheduledTaskId", property = "taskName")
     private String taskName;
 
+    @ListOnly(key = "taskStatus", property = "description")
+    private String taskStatusDesc;
+
     @Override
     public String getDescription() {
-        return StringUtils.concatenate(scheduledTaskDesc, " - timestamp:", getCreateDt(), "- status: ",
-                this.taskStatus);
+        return StringUtils.concatenate(scheduledTaskDesc, " - startedOn:", getStartedOn(), "- status: ", taskStatus);
     }
 
     public Long getScheduledTaskId() {
@@ -83,6 +95,22 @@ public class ScheduledTaskHist extends BaseTimestampedEntity {
         this.taskStatus = taskStatus;
     }
 
+    public Date getStartedOn() {
+        return startedOn;
+    }
+
+    public void setStartedOn(Date startedOn) {
+        this.startedOn = startedOn;
+    }
+
+    public Date getFinishedOn() {
+        return finishedOn;
+    }
+
+    public void setFinishedOn(Date finishedOn) {
+        this.finishedOn = finishedOn;
+    }
+
     public String getScheduledTaskDesc() {
         return scheduledTaskDesc;
     }
@@ -97,5 +125,13 @@ public class ScheduledTaskHist extends BaseTimestampedEntity {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public String getTaskStatusDesc() {
+        return taskStatusDesc;
+    }
+
+    public void setTaskStatusDesc(String taskStatusDesc) {
+        this.taskStatusDesc = taskStatusDesc;
     }
 }

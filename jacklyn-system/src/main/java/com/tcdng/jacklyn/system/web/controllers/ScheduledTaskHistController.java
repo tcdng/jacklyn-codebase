@@ -95,7 +95,7 @@ public class ScheduledTaskHistController extends BaseFormCrudController<Schedule
         if (getSearchStatus() != null) {
             query.taskStatus(getSearchStatus());
         }
-        query.createdOn(searchExecutionDt);
+        query.startedOn(searchExecutionDt);
         return systemService.findScheduledTaskHistory(query);
     }
 

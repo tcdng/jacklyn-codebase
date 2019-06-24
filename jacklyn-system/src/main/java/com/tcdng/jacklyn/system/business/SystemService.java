@@ -95,12 +95,15 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
 
     /**
      * Finds a dashboard definition by name.
-     * @param name the name to find with
+     * 
+     * @param name
+     *            the name to find with
      * @return dashboard with corresponding name otherwise null
-     * @throws UnifyException if an error occurs
+     * @throws UnifyException
+     *             if an error occurs
      */
     Dashboard findDashboard(String name) throws UnifyException;
-    
+
     /**
      * Finds dashboards by query.
      * 
@@ -583,6 +586,23 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      */
     Long createScheduledTaskHistory(Long scheduledTaskId, TaskStatus taskStatus, String errorMessages)
             throws UnifyException;
+
+    /**
+     * Release a scheduled task.
+     * 
+     * @param scheduledTaskId
+     *            the scheduled task ID
+     * @param scheduledTaskHistId
+     *            the scheduled task history
+     * @param completionTaskStatus
+     *            the task completion status
+     * @param errorMessages
+     *            optional error messages
+     * @throws UnifyException
+     *             if scheduled task history does not exist. if an error occurs
+     */
+    void releaseScheduledTask(Long scheduledTaskId, Long scheduledTaskHistId, TaskStatus completionTaskStatus,
+            String errorMessages) throws UnifyException;
 
     /**
      * Finds scheduled task history by query.
@@ -1069,7 +1089,7 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     List<ToolingDocumentListItem> findToolingDocumentListItems() throws UnifyException;
-    
+
     /**
      * Finds all tooling transformer types.
      * 

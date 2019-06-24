@@ -52,6 +52,6 @@ public class ScheduledTaskHistReportProcessor extends BaseRecordReportProcessor 
             ((ScheduledTaskHistQuery) query).taskStatus(status);
         }
 
-        ((ScheduledTaskHistQuery) query).createdOn((Date) reportParameters.getParameter("executionDt"));
+        ((ScheduledTaskHistQuery) query).startedOn((Date) reportParameters.getParameter("executionDt"));
     }
 }

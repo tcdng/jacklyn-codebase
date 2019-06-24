@@ -23,7 +23,7 @@ package com.tcdng.jacklyn.system.constants;
  */
 public interface SystemSchedTaskConstants {
 
-    String SCHEDULEDTASK_ID = "system.scheduledtaskid";
+    String SCHEDULEDTASK_ID = "sys.scheduledtaskid";
 
-    String SCHEDULEDTASK_STATUS = "system.scheduledtaskstatus";
+    String SCHEDULEDTASKHIST_ID = "sys.scheduledtaskhistid";
 }

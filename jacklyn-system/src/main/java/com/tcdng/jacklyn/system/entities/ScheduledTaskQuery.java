@@ -17,7 +17,8 @@ package com.tcdng.jacklyn.system.entities;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntityQuery;
 
 /**
  * Query class for scheduled tasks.
@@ -25,7 +26,7 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class ScheduledTaskQuery extends BaseVersionedStatusEntityQuery<ScheduledTask> {
+public class ScheduledTaskQuery extends BaseVersionedTimestampedStatusEntityQuery<ScheduledTask> {
 
     public ScheduledTaskQuery() {
         super(ScheduledTask.class);
@@ -39,11 +40,7 @@ public class ScheduledTaskQuery extends BaseVersionedStatusEntityQuery<Scheduled
         return (ScheduledTaskQuery) equals("taskName", taskName);
     }
 
-    public ScheduledTaskQuery updated(Boolean updated) {
-        return (ScheduledTaskQuery) equals("updated", updated);
-    }
-
-    public ScheduledTaskQuery startTimeBeforeOrOn(Date date) {
-        return (ScheduledTaskQuery) lessEqual("startTime", date);
+    public ScheduledTaskQuery readyToRunOn(Date date) {
+        return (ScheduledTaskQuery) lessEqual("nextExecutionOn", date).equals("status", RecordStatus.ACTIVE);
     }
 }
