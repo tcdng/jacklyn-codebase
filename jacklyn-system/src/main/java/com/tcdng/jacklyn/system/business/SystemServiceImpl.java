@@ -533,6 +533,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             throws UnifyException {
         ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
         scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
+        scheduledTaskHist.setStartedOn(db().getNow());
         if (errorMessages != null) {
             if (errorMessages.length() > 250) {
                 errorMessages = errorMessages.substring(0, 250);
