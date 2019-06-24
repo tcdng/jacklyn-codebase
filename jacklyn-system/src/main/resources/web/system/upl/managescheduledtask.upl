@@ -38,8 +38,6 @@
 !ui-time:frmStartTime caption:$m{system.scheduledtask.starttime} binding:data.startTime required:true
 !ui-time:frmEndTime caption:$m{system.scheduledtask.endtime} binding:data.endTime
 !ui-group:frmFreqCombo caption:$m{system.scheduledtask.frequency} components:$c{frmFreq frmFreqUnit} space:true
-!ui-integer:frmNumberOfTimes caption:$m{system.scheduledtask.numberoftimes} binding:data.numberOfTimes precision:4 size:5
-!ui-checkbox:frmExpires caption:$m{system.scheduledtask.expires} binding:data.expires
 !ui-dropdowncheckboxlist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
     selectAllOption:$m{system.scheduledtask.selectalldays}
 !ui-dropdowncheckboxlist:frmDays binding:data.days caption:$m{system.scheduledtask.daysinmonth} list:dayinmonthlist columns:7
@@ -51,9 +49,9 @@
 !ui-integer:frmFreq binding:data.frequency precision:3 size:4
 !ui-select:frmFreqUnit binding:data.frequencyUnit list:frequencyunitlist blankOption:$s{}
 
-!ui-text:frmNextExecutionOn caption:$m{system.scheduledtask.nextexecutionon} binding:nextExecutionOn
+!ui-text:frmNextExecutionOn caption:$m{system.scheduledtask.nextexecutionon} binding:data.nextExecutionOn
     formatter:$d{!datetimeformat style:medium} size:32 readOnly:true
-!ui-text:frmLastExecutionOn caption:$m{system.scheduledtask.lastexecutionon} binding:lastExecutionOn
+!ui-text:frmLastExecutionOn caption:$m{system.scheduledtask.lastexecutionon} binding:data.lastExecutionOn
     formatter:$d{!datetimeformat style:medium} size:32 readOnly:true
 
 //Form attachments
@@ -67,4 +65,4 @@
 
 //Actions
 !ui-post:refreshParamsAct path:$n{/refreshParameters}
-    components:$c{frmTaskName frmDescription frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths frmStatus}
+    components:$c{frmTaskName frmDescription frmStartTime frmEndTime frmFreqCombo frmWeekDays frmDays frmMonths frmStatus}

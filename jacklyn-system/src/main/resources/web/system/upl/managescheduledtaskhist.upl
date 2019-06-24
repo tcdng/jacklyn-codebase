@@ -21,7 +21,7 @@
 !ui-label:scheduledTaskDesc caption:$m{system.scheduledtaskhist.taskname} binding:scheduledTaskDesc  columnStyle:$s{width:300px;} sortable:true
 !ui-label:startedOn caption:$m{system.scheduledtaskhist.startedon} binding:startedOn style:$s{text-align:center;} formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
 !ui-label:finishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn style:$s{text-align:center;} formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
-!ui-label:statusDesc caption:$m{system.scheduledtaskhist.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{system.scheduledtaskhist.status} binding:taskStatusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
 !ui-text:frmTaskName caption:$m{system.scheduledtaskhist.taskname} binding:taskName
@@ -31,4 +31,4 @@
 !ui-text:frmFinishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn
     formatter:$d{!datetimeformat style:medium} size:32
 !ui-textarea:frmErrorMsg caption:$m{system.scheduledtaskhist.errormsg} binding:errorMsg wordWrap:true
-!ui-select:frmStatus caption:$m{system.scheduledtaskhist.status} binding:status  list:taskstatuslist
+!ui-select:frmStatus caption:$m{system.scheduledtaskhist.status} binding:taskStatus  list:taskstatuslist

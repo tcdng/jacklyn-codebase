@@ -204,7 +204,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 long startTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getStartTime());
                 long endTimeOffset = 0;
                 if (scheduledTask.getEndTime() != null) {
-                    startTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getEndTime());
+                    endTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getEndTime());
                 }
 
                 long repeatMillSecs = 0;
@@ -840,9 +840,16 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return resultList;
     }
 
-    @Periodic(PeriodicType.NORMAL)
+    @Periodic(PeriodicType.SLOW)
     @Transactional(TransactionAttribute.REQUIRES_NEW)
     public void triggerScheduledTasksForExecution(TaskMonitor taskMonitor) throws UnifyException {
+        // If periodic task is canceled or scheduler is disabled cancel all
+        // scheduled tasks
+        if (taskMonitor.isCanceled() || !getSysParameterValue(Boolean.class,
+                SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_ENABLED)) {
+            return;
+        }
+
         // Working dates
         Date now = db().getNow();
         Date workingDt = CalendarUtils.getMidnightDate(now);
@@ -869,8 +876,13 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         for (Long scheduledTaskId : readyScheduledTaskIdList) {
             ScheduledTaskDef scheduledTaskDef = scheduledTaskDefs.get(scheduledTaskId);
             String taskLock = scheduledTaskDef.getLock();
+            logDebug("Attempting to grab scheduled task lock [{0}] ...", taskLock);
+
             if (!isWithClusterLock(taskLock) && grabClusterLock(taskLock)) {
+                logDebug("Grabbed scheduled task lock [{0}] ...", taskLock);
+                
                 try {
+                    logDebug("Setting up scheduled task [{0}] ...", scheduledTaskDef.getDescription());
                     Map<String, Object> taskParameters = new HashMap<String, Object>();
                     taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, scheduledTaskId);
 
@@ -901,23 +913,23 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     }
 
                     // Calculate and set next execution
-                    Date updNextExecutionOn = null;
+                    Date calcNextExecutionOn = null;
                     if (scheduledTaskDef.getRepeatMillSecs() > 0) {
                         Date limit = lastMinDt;
                         if (scheduledTaskDef.getEndOffset() > 0) {
                             limit = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getEndOffset());
                         }
 
-                        updNextExecutionOn =
+                        calcNextExecutionOn =
                                 CalendarUtils.getDateWithOffset(nextExecutionOn, scheduledTaskDef.getRepeatMillSecs());
-                        if (updNextExecutionOn.after(limit)) {
-                            updNextExecutionOn = null;
+                        if (calcNextExecutionOn.after(limit)) {
+                            calcNextExecutionOn = null;
                         }
                     }
 
-                    if (updNextExecutionOn == null) {
+                    if (calcNextExecutionOn == null) {
                         // Use next eligible date start time
-                        updNextExecutionOn =
+                        calcNextExecutionOn =
                                 CalendarUtils.getDateWithOffset(
                                         CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
                                                 scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
@@ -925,9 +937,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     }
 
                     db().updateById(ScheduledTask.class, scheduledTaskId,
-                            new Update().add("nextExecutionOn", nextExecutionOn).add("lastExecutionOn", now));
+                            new Update().add("nextExecutionOn", calcNextExecutionOn).add("lastExecutionOn", now));
                     logDebug("Task [{0}] is scheduled to run next on [{1}]...", scheduledTaskDef.getDescription(),
-                            nextExecutionOn);
+                            calcNextExecutionOn);
 
                 } catch (UnifyException e) {
                     try {
