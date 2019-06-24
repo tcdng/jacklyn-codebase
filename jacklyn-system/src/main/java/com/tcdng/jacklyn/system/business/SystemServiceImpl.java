@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
@@ -56,6 +55,7 @@ import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
 import com.tcdng.jacklyn.system.data.DashboardLayerDef;
 import com.tcdng.jacklyn.system.data.DashboardPortletDef;
+import com.tcdng.jacklyn.system.data.ScheduledTaskDef;
 import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.data.SystemControlState;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
@@ -134,7 +134,6 @@ import com.tcdng.unify.core.task.Task;
 import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskManager;
 import com.tcdng.unify.core.task.TaskMonitor;
-import com.tcdng.unify.core.task.TaskParameterConstants;
 import com.tcdng.unify.core.task.TaskStatus;
 import com.tcdng.unify.core.task.TaskStatusLogger;
 import com.tcdng.unify.core.task.TaskableMethodConfig;
@@ -163,6 +162,8 @@ import com.tcdng.unify.web.annotation.GatewayAction;
 @Component(SystemModuleNameConstants.SYSTEMSERVICE)
 public class SystemServiceImpl extends AbstractJacklynBusinessService implements SystemService {
 
+    private static final String SCHEDULED_TASK = "scheduledTask";
+
     @Configurable
     private TaskManager taskManager;
 
@@ -175,18 +176,56 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Configurable
     private DynamicSqlDataSourceManager dataSourceManager;
 
-    private static final String SCHEDULED_TASK = "scheduledTask";
+    private FactoryMap<Long, ScheduledTaskDef> scheduledTaskDefs;
 
-    private Map<Long, TaskInfo> triggeredTaskInfoMap;
-
-    private Date workingDt;
-
-    private FactoryMap<String, DashboardDef> dashboards;
+    private FactoryMap<String, DashboardDef> dashboardDefs;
 
     public SystemServiceImpl() {
-        triggeredTaskInfoMap = new ConcurrentHashMap<Long, TaskInfo>();
+        scheduledTaskDefs = new FactoryMap<Long, ScheduledTaskDef>(true) {
 
-        dashboards = new FactoryMap<String, DashboardDef>(true) {
+            @Override
+            protected boolean stale(Long scheduledTaskId, ScheduledTaskDef scheduledTaskDef) throws Exception {
+                boolean stale = false;
+                try {
+                    Date updateDt = db().value(Date.class, "updateDt", new ScheduledTaskQuery().id(scheduledTaskId));
+                    stale = resolveUTC(updateDt) != scheduledTaskDef.getTimestamp();
+                } catch (Exception e) {
+                    logError(e);
+                }
+
+                return stale;
+            }
+
+            @Override
+            protected ScheduledTaskDef create(Long scheduledTaskId, Object... params) throws Exception {
+                ScheduledTask scheduledTask = db().find(ScheduledTask.class, scheduledTaskId);
+
+                String lock = "scheduledtask-lock" + scheduledTaskId;
+                long startTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getStartTime());
+                long endTimeOffset = 0;
+                if (scheduledTask.getEndTime() != null) {
+                    endTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getEndTime());
+                }
+
+                long repeatMillSecs = 0;
+                if (scheduledTask.getFrequency() != null && scheduledTask.getFrequencyUnit() != null) {
+                    repeatMillSecs =
+                            CalendarUtils.getMilliSecondsByFrequency(scheduledTask.getFrequencyUnit(),
+                                    scheduledTask.getFrequency());
+                }
+
+                List<Input> inputList =
+                        getParameterService()
+                                .fetchNormalizedInputs(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId)
+                                .getInputList();
+                return new ScheduledTaskDef(lock, scheduledTask.getDescription(), scheduledTask.getTaskName(),
+                        startTimeOffset, endTimeOffset, repeatMillSecs, scheduledTask.getWeekdays(),
+                        scheduledTask.getDays(), scheduledTask.getMonths(), inputList,
+                        resolveUTC(scheduledTask.getUpdateDt()));
+            }
+        };
+
+        dashboardDefs = new FactoryMap<String, DashboardDef>(true) {
 
             @Override
             protected boolean stale(String name, DashboardDef dashboardDef) throws Exception {
@@ -275,7 +314,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public DashboardDef getRuntimeDashboardDef(String name) throws UnifyException {
-        return dashboards.get(name);
+        return dashboardDefs.get(name);
     }
 
     @Override
@@ -448,14 +487,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public int updateScheduledTask(ScheduledTask scheduledTask) throws UnifyException {
-        scheduledTask.setUpdated(Boolean.TRUE);
         return db().updateByIdVersion(scheduledTask);
     }
 
     @Override
     public int updateScheduledTask(ScheduledTaskLargeData scheduledTaskFormData) throws UnifyException {
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
-        scheduledTask.setUpdated(Boolean.TRUE);
         int updateCount = db().updateByIdVersion(scheduledTask);
         getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTask.getId(),
                 scheduledTaskFormData.getScheduledTaskParams());
@@ -496,6 +533,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             throws UnifyException {
         ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
         scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
+        scheduledTaskHist.setStartedOn(db().getNow());
         if (errorMessages != null) {
             if (errorMessages.length() > 250) {
                 errorMessages = errorMessages.substring(0, 250);
@@ -504,6 +542,20 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         scheduledTaskHist.setErrorMsg(errorMessages);
         scheduledTaskHist.setTaskStatus(taskStatus);
         return (Long) db().create(scheduledTaskHist);
+    }
+
+    @Override
+    public void releaseScheduledTask(Long scheduledTaskId, Long scheduledTaskHistId, TaskStatus completionTaskStatus,
+            String errorMessages) throws UnifyException {
+        // Release lock on scheduled task
+        releaseClusterLock(scheduledTaskDefs.get(scheduledTaskId).getLock());
+
+        // Update history
+        ScheduledTaskHist scheduledTaskHist = db().find(ScheduledTaskHist.class, scheduledTaskHistId);
+        scheduledTaskHist.setFinishedOn(db().getNow());
+        scheduledTaskHist.setTaskStatus(completionTaskStatus);
+        scheduledTaskHist.setErrorMsg(errorMessages);
+        db().updateByIdVersion(scheduledTaskHist);
     }
 
     @Override
@@ -795,144 +847,104 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         // scheduled tasks
         if (taskMonitor.isCanceled() || !getSysParameterValue(Boolean.class,
                 SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_ENABLED)) {
-            if (!triggeredTaskInfoMap.isEmpty()) {
-                logDebug("Stopping all running scheduled tasks...");
-                for (TaskInfo taskInfo : triggeredTaskInfoMap.values()) {
-                    if (!taskInfo.isDummy()) {
-                        taskInfo.getTaskMonitor().cancel();
-                    }
-                }
-                triggeredTaskInfoMap.clear();
-            }
             return;
         }
 
-        // Check working date. If not current day, stop all scheduled tasks,
-        // then clear task information map
+        // Working dates
         Date now = db().getNow();
-        Date currentDt = CalendarUtils.getMidnightDate(now);
-        if (!currentDt.equals(workingDt)) {
-            for (TaskInfo taskInfo : triggeredTaskInfoMap.values()) {
-                if (!taskInfo.isDummy()) {
-                    logDebug("Stopping scheduled task [{0}] from running...", taskInfo.getDescription());
-                    taskInfo.getTaskMonitor().cancel();
-                }
-            }
-            triggeredTaskInfoMap.clear();
-            workingDt = currentDt;
-        }
+        Date workingDt = CalendarUtils.getMidnightDate(now);
+        Date lastMinDt = CalendarUtils.getLastSecondDate(now);
 
-        long scheduledTaskExpirationAllowance =
-                getSysParameterValue(long.class,
+        // Expiration allowance
+        int expirationAllowanceMins =
+                getSysParameterValue(int.class,
                         SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION);
-        // Convert to milliseconds
-        scheduledTaskExpirationAllowance = scheduledTaskExpirationAllowance * 60 * 1000;
+        long expirationAllowanceMilliSec =
+                CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.MINUTE, expirationAllowanceMins);
 
         int maxScheduledTaskTrigger =
                 getSysParameterValue(int.class, SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER);
 
-        // Fetch new scheduled tasks with start time less or equal current
-        // time
-        logDebug("Fetching new scheduled tasks...");
-        now = CalendarUtils.getTimeOfDay(now);
-        List<ScheduledTask> scheduledTaskList =
-                listNewScheduledTasks(now, new ArrayList<Long>(triggeredTaskInfoMap.keySet()));
+        // Fetch tasks ready to run
+        logDebug("Fetching ready tasks...");
+        List<Long> readyScheduledTaskIdList =
+                db().valueList(Long.class, "id", new ScheduledTaskQuery().readyToRunOn(now));
 
         // Schedule tasks that are active only today
-        logDebug("[{0}] new scheduled task(s) fetched...", scheduledTaskList.size());
+        logDebug("[{0}] potential scheduled task(s) to run...", readyScheduledTaskIdList.size());
         int triggered = 0;
-        for (ScheduledTask scheduledTask : scheduledTaskList) {
-            Long scheduledTaskId = scheduledTask.getId();
-            // Cancel any task that has been updated
-            TaskInfo taskInfo = triggeredTaskInfoMap.remove(scheduledTaskId);
-            if (taskInfo != null && !taskInfo.isDummy()) {
-                taskInfo.getTaskMonitor().cancel();
-            }
+        for (Long scheduledTaskId : readyScheduledTaskIdList) {
+            ScheduledTaskDef scheduledTaskDef = scheduledTaskDefs.get(scheduledTaskId);
+            String taskLock = scheduledTaskDef.getLock();
+            logDebug("Attempting to grab scheduled task lock [{0}] ...", taskLock);
 
-            Date scheduledTaskTime = CalendarUtils.getTimeOfDay(scheduledTask.getStartTime());
-            if (now.after(scheduledTaskTime) && isOkToRunOnWorkingDate(scheduledTask)) {
-                String taskLock = "scheduledtask-lock" + scheduledTaskId;
-                if (grabClusterLock(taskLock)) {
-                    Map<String, Object> schdParameters = new HashMap<String, Object>();
+            if (!isWithClusterLock(taskLock) && grabClusterLock(taskLock)) {
+                logDebug("Grabbed scheduled task lock [{0}] ...", taskLock);
+                
+                try {
+                    logDebug("Setting up scheduled task [{0}] ...", scheduledTaskDef.getDescription());
+                    Map<String, Object> taskParameters = new HashMap<String, Object>();
+                    taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, scheduledTaskId);
+
+                    Date nextExecutionOn =
+                            db().value(Date.class, "nextExecutionOn", new ScheduledTaskQuery().id(scheduledTaskId));
+                    Date expiryOn = CalendarUtils.getDateWithOffset(nextExecutionOn, expirationAllowanceMilliSec);
+                    if (now.before(expiryOn)) {
+                        // Task execution has not expired. Start task
+                        // Load settings
+                        for (Input input : scheduledTaskDef.getInputList()) {
+                            taskParameters.put(input.getName(), input.getTypeValue());
+                        }
+
+                        // Create history
+                        ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
+                        scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
+                        scheduledTaskHist.setStartedOn(now);
+                        scheduledTaskHist.setTaskStatus(TaskStatus.INITIALISED);
+                        Long scheduledTaskHistId = (Long) db().create(scheduledTaskHist);
+                        taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASKHIST_ID, scheduledTaskHistId);
+
+                        // Fire task
+                        taskManager.startTask(scheduledTaskDef.getTaskName(), taskParameters, false,
+                                taskStatusLogger.getName());
+
+                        triggered++;
+                        logDebug("Task [{0}] is setup to run...", scheduledTaskDef.getDescription());
+                    }
+
+                    // Calculate and set next execution
+                    Date calcNextExecutionOn = null;
+                    if (scheduledTaskDef.getRepeatMillSecs() > 0) {
+                        Date limit = lastMinDt;
+                        if (scheduledTaskDef.getEndOffset() > 0) {
+                            limit = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getEndOffset());
+                        }
+
+                        calcNextExecutionOn =
+                                CalendarUtils.getDateWithOffset(nextExecutionOn, scheduledTaskDef.getRepeatMillSecs());
+                        if (calcNextExecutionOn.after(limit)) {
+                            calcNextExecutionOn = null;
+                        }
+                    }
+
+                    if (calcNextExecutionOn == null) {
+                        // Use next eligible date start time
+                        calcNextExecutionOn =
+                                CalendarUtils.getDateWithOffset(
+                                        CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
+                                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
+                                        scheduledTaskDef.getStartOffset());
+                    }
+
+                    db().updateById(ScheduledTask.class, scheduledTaskId,
+                            new Update().add("nextExecutionOn", calcNextExecutionOn).add("lastExecutionOn", now));
+                    logDebug("Task [{0}] is scheduled to run next on [{1}]...", scheduledTaskDef.getDescription(),
+                            calcNextExecutionOn);
+
+                } catch (UnifyException e) {
                     try {
-                        schdParameters.put(TaskParameterConstants.LOCK_TO_RELEASE, taskLock);
-                        schdParameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, scheduledTaskId);
-                        for (Input parameterValue : getParameterService().fetchNormalizedInputs(
-                                scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTask.getId()).getInputList()) {
-                            schdParameters.put(parameterValue.getName(), parameterValue.getTypeValue());
-                        }
-
-                        TaskMonitor schdTaskMonitor = null;
-                        if (scheduledTask.getFrequency() != null && scheduledTask.getFrequencyUnit() != null) {
-                            long periodInMillSec =
-                                    CalendarUtils.getMilliSecondsByFrequency(scheduledTask.getFrequencyUnit(),
-                                            scheduledTask.getFrequency());
-
-                            int numberOfTimes = 0;
-                            if (scheduledTask.getNumberOfTimes() != null) {
-                                numberOfTimes = scheduledTask.getNumberOfTimes();
-                            }
-
-                            // Check for expiry
-                            boolean isExpired = false;
-                            if (scheduledTask.getExpires()) {
-                                long windowToRunMillSec =
-                                        numberOfTimes * periodInMillSec + scheduledTaskExpirationAllowance;
-                                long actualWindowToRunMillSec =
-                                        windowToRunMillSec - (now.getTime() - scheduledTaskTime.getTime());
-                                if (actualWindowToRunMillSec > 0) {
-                                    // Recalculate number of times to repeat
-                                    if (periodInMillSec > 0) {
-                                        int reCalcNumberOfTimes = (int) (actualWindowToRunMillSec / periodInMillSec);
-                                        if (reCalcNumberOfTimes < numberOfTimes) {
-                                            numberOfTimes = reCalcNumberOfTimes;
-                                        }
-                                    }
-                                } else {
-                                    isExpired = true;
-                                }
-                            }
-
-                            // Schedule periodic if not expired
-                            if (!isExpired) {
-                                logDebug("Scheduling task [{0}] to run every [{1}ms] with a [{2}ms] delay...",
-                                        scheduledTask.getDescription(), periodInMillSec, 0);
-                                schdTaskMonitor =
-                                        taskManager.scheduleTaskToRunPeriodically(scheduledTask.getTaskName(),
-                                                schdParameters, false, 0, periodInMillSec, numberOfTimes,
-                                                taskStatusLogger.getName());
-                            }
-                        } else {
-                            // Check for expiry
-                            boolean isExpired = false;
-                            if (scheduledTask.getExpires()) {
-                                long actualWindowToRunMillSec =
-                                        scheduledTaskExpirationAllowance
-                                                - (now.getTime() - scheduledTask.getStartTime().getTime());
-                                isExpired = actualWindowToRunMillSec <= 0;
-                            }
-
-                            if (!isExpired) {
-                                // Schedule one-shot
-                                logDebug("Scheduling task [{0}] to run one time...", scheduledTask.getDescription());
-                                schdTaskMonitor =
-                                        taskManager.startTask(scheduledTask.getTaskName(), schdParameters, false,
-                                                taskStatusLogger.getName());
-                            }
-                        }
-
-                        if (schdTaskMonitor != null) {
-                            triggered++;
-                            triggeredTaskInfoMap.put(scheduledTaskId,
-                                    new TaskInfo(schdTaskMonitor, scheduledTask.getDescription()));
-                        }
-                    } catch (UnifyException e) {
-                        try {
-                            releaseClusterLock(taskLock);
-                        } catch (Exception e1) {
-                        }
-
-                        taskStatusLogger.logCriticalFailure(scheduledTask.getTaskName(), schdParameters, e);
+                        releaseClusterLock(taskLock);
+                    } catch (Exception e1) {
                     }
                 }
             }
@@ -1444,79 +1456,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         db().updateAll(query, new Update().add("status", status));
     }
 
-    private boolean isOkToRunOnWorkingDate(ScheduledTask scheduledTask) throws UnifyException {
-        // Add scheduled task ID to triggeredTaskInfoMap, marking the scheduled
-        // task as treated using a dummy task
-        triggeredTaskInfoMap.put(scheduledTask.getId(), new TaskInfo());
-
-        return RecordStatus.ACTIVE.equals(scheduledTask.getStatus()) && CalendarUtils.isWithinCalendar(
-                scheduledTask.getWeekdays(), scheduledTask.getDays(), scheduledTask.getMonths(), workingDt);
-    }
-
     private DynamicSqlDataSourceConfig getDynamicSqlDataSourceConfig(DataSource dataSource) throws UnifyException {
         return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
                 dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(),
                 dataSource.getMaxConnections(), false);
-    }
-
-    private List<ScheduledTask> listNewScheduledTasks(Date time, List<Long> oldScheduledTaskIds) throws UnifyException {
-        // Fetch truly new tasks
-        ScheduledTaskQuery query = new ScheduledTaskQuery();
-        if (!oldScheduledTaskIds.isEmpty()) {
-            query.idNotIn(oldScheduledTaskIds);
-        }
-        query.startTimeBeforeOrOn(time);
-        query.status(RecordStatus.ACTIVE);
-        List<ScheduledTask> list = db().findAll(query);
-
-        // Fetch old tasks that may have been modified
-        if (!oldScheduledTaskIds.isEmpty()) {
-            query.clear();
-            query.idIn(oldScheduledTaskIds);
-            query.updated(Boolean.TRUE);
-            List<ScheduledTask> oldList = db().findAll(query);
-            list.addAll(oldList);
-        }
-
-        // Clear update flags
-        if (!list.isEmpty()) {
-            List<Long> idList = new ArrayList<Long>();
-            for (ScheduledTask scheduledTask : list) {
-                idList.add(scheduledTask.getId());
-            }
-
-            query.clear();
-            query.idIn(idList);
-            db().updateAll(query, new Update().add("updated", Boolean.FALSE));
-        }
-        return list;
-    }
-
-    private class TaskInfo {
-
-        private TaskMonitor taskMonitor;
-
-        private String description;
-
-        public TaskInfo() {
-
-        }
-
-        public TaskInfo(TaskMonitor taskMonitor, String description) {
-            this.taskMonitor = taskMonitor;
-            this.description = description;
-        }
-
-        public TaskMonitor getTaskMonitor() {
-            return taskMonitor;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public boolean isDummy() {
-            return taskMonitor == null;
-        }
     }
 }

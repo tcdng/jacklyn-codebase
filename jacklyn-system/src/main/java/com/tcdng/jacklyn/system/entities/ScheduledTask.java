@@ -19,10 +19,11 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.jacklyn.common.annotation.Managed;
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
+import com.tcdng.jacklyn.common.entities.BaseVersionedTimestampedStatusEntity;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
+import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 import com.tcdng.unify.core.constant.FrequencyUnit;
@@ -33,10 +34,11 @@ import com.tcdng.unify.core.constant.FrequencyUnit;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Policy("scheduledtask-policy")
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Scheduled Task", reportable = true,
         auditable = true)
 @Table(name = "JKSCHEDTASK", uniqueConstraints = { @UniqueConstraint({ "description" }) })
-public class ScheduledTask extends BaseVersionedStatusEntity {
+public class ScheduledTask extends BaseVersionedTimestampedStatusEntity {
 
     @Column(name = "SCHEDTASK_DESC", length = 64)
     private String description;
@@ -47,18 +49,21 @@ public class ScheduledTask extends BaseVersionedStatusEntity {
     @Column(type = ColumnType.TIMESTAMP)
     private Date startTime;
 
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date endTime;
+
+    @Column(type = ColumnType.TIMESTAMP)
+    private Date nextExecutionOn;
+
+    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    private Date lastExecutionOn;
+
     @Column(nullable = true)
     private Integer frequency;
 
     @Format(description = "$m{system.scheduledtask.frequencyunit}")
     @Column(nullable = true)
     private FrequencyUnit frequencyUnit;
-
-    @Column(nullable = true)
-    private Integer numberOfTimes;
-
-    @Column
-    private Boolean expires;
 
     @Column(nullable = true)
     private String[] weekdays;
@@ -68,13 +73,6 @@ public class ScheduledTask extends BaseVersionedStatusEntity {
 
     @Column(nullable = true)
     private String[] months;
-
-    @Column(nullable = true)
-    private Boolean updated;
-
-    public ScheduledTask() {
-        this.expires = Boolean.FALSE;
-    }
 
     public String getDescription() {
         return description;
@@ -100,6 +98,30 @@ public class ScheduledTask extends BaseVersionedStatusEntity {
         this.startTime = startTime;
     }
 
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getNextExecutionOn() {
+        return nextExecutionOn;
+    }
+
+    public void setNextExecutionOn(Date nextExecutionOn) {
+        this.nextExecutionOn = nextExecutionOn;
+    }
+
+    public Date getLastExecutionOn() {
+        return lastExecutionOn;
+    }
+
+    public void setLastExecutionOn(Date lastExecutionOn) {
+        this.lastExecutionOn = lastExecutionOn;
+    }
+
     public Integer getFrequency() {
         return frequency;
     }
@@ -114,22 +136,6 @@ public class ScheduledTask extends BaseVersionedStatusEntity {
 
     public void setFrequencyUnit(FrequencyUnit frequencyUnit) {
         this.frequencyUnit = frequencyUnit;
-    }
-
-    public Integer getNumberOfTimes() {
-        return numberOfTimes;
-    }
-
-    public void setNumberOfTimes(Integer numberOfTimes) {
-        this.numberOfTimes = numberOfTimes;
-    }
-
-    public Boolean getExpires() {
-        return expires;
-    }
-
-    public void setExpires(Boolean expires) {
-        this.expires = expires;
     }
 
     public String[] getWeekdays() {
@@ -154,13 +160,5 @@ public class ScheduledTask extends BaseVersionedStatusEntity {
 
     public void setMonths(String[] months) {
         this.months = months;
-    }
-
-    public Boolean getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Boolean updated) {
-        this.updated = updated;
     }
 }

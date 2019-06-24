@@ -58,4 +58,7 @@ public interface SystemModuleErrorConstants {
 
     /** Dashboard with name {0} is unknown*/
     String DASHBOARD_NAME_UNKNOWN = "SYSTEM_000A";
+
+    /** Scheduled task with ID {0} is unknown*/
+    String SCHEDULED_TASK_ID_UNKNOWN = "SYSTEM_000B";
 }

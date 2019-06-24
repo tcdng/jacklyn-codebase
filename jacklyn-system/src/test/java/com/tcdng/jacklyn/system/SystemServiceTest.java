@@ -376,7 +376,6 @@ public class SystemServiceTest extends AbstractJacklynTest {
         assertNotNull(scheduledTaskList);
         assertEquals(1, scheduledTaskList.size());
         assertEquals(scheduledTask.getDescription(), scheduledTaskList.get(0).getDescription());
-        assertEquals(scheduledTask.getExpires(), scheduledTaskList.get(0).getExpires());
         assertEquals(scheduledTask.getStartTime(), scheduledTaskList.get(0).getStartTime());
         assertEquals(scheduledTask.getTaskName(), scheduledTaskList.get(0).getTaskName());
     }
@@ -731,7 +730,6 @@ public class SystemServiceTest extends AbstractJacklynTest {
     private ScheduledTask getScheduledTask(Date now) {
         ScheduledTask scheduledTask = new ScheduledTask();
         scheduledTask.setDescription("Test Scheduled Taskable");
-        scheduledTask.setExpires(Boolean.FALSE);
         scheduledTask.setStartTime(now);
         scheduledTask.setTaskName("testschedulabletask");
         return scheduledTask;
