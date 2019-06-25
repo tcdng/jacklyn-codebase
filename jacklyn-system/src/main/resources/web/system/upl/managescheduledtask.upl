@@ -5,10 +5,10 @@
 !ui-page caption:$m{system.scheduledtask.manage}
     searchByList:$c{searchDescription searchTaskName searchStatus}
     searchClearList:$c{searchDescription searchTaskName searchStatus}
-    tableColumnList:$c{taskName description nextExecutionOn lastExecutionOn statusDesc}
+    tableColumnList:$c{taskName description lastExecutionOn nextExecutionOn statusDesc}
     formSection:$d{!ui-section caption:$m{system.scheduledtask.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
     formSection:$d{!ui-section caption:$m{system.scheduledtask.section.schedule} components:$c{frmStartTime frmEndTime frmFreqCombo frmWeekDays frmDays frmMonths}}
-    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.execution} components:$c{frmNextExecutionOn frmLastExecutionOn}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.execution} components:$c{frmLastExecutionOn frmNextExecutionOn}}
     formSection:$d{!ui-section caption:$m{system.scheduledtask.section.parameters} components:$c{frmAttachment}}
     formBinding:largeData
     addPrivilege:$s{sys-schdtaskadd} editPrivilege:$s{sys-schdtaskedit}

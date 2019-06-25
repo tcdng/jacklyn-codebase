@@ -6,7 +6,9 @@
     searchByList:$c{searchExecutionDt searchScheduledTaskId searchStatus}
     searchClearList:$c{searchScheduledTaskId searchStatus}
     tableColumnList:$c{scheduledTaskDesc startedOn finishedOn statusDesc}
-    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.basicdetails} components:$c{frmTaskName frmDescription frmStartedOn frmFinishedOn frmErrorMsg frmStatus}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.timestamp} components:$c{frmStartedOn frmFinishedOn}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.exception} components:$c{frmErrorMsg}}
     viewPrivilege:$s{sys-schdtaskhistview}
 
 //Search
@@ -31,4 +33,5 @@
 !ui-text:frmFinishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn
     formatter:$d{!datetimeformat style:medium} size:32
 !ui-textarea:frmErrorMsg caption:$m{system.scheduledtaskhist.errormsg} binding:errorMsg wordWrap:true
+     columns:40 rows:8
 !ui-select:frmStatus caption:$m{system.scheduledtaskhist.status} binding:taskStatus  list:taskstatuslist

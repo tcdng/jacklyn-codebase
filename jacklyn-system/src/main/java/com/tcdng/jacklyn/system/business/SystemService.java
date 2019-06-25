@@ -596,13 +596,13 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *            the scheduled task history
      * @param completionTaskStatus
      *            the task completion status
-     * @param errorMessages
+     * @param errorMsg
      *            optional error messages
      * @throws UnifyException
      *             if scheduled task history does not exist. if an error occurs
      */
     void releaseScheduledTask(Long scheduledTaskId, Long scheduledTaskHistId, TaskStatus completionTaskStatus,
-            String errorMessages) throws UnifyException;
+            String errorMsg) throws UnifyException;
 
     /**
      * Finds scheduled task history by query.
