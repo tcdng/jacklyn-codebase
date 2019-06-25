@@ -881,6 +881,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             if (!isWithClusterLock(taskLock) && grabClusterLock(taskLock)) {
                 logDebug("Grabbed scheduled task lock [{0}] ...", taskLock);
                 
+                boolean lockHeldForTask = false;
                 try {
                     logDebug("Setting up scheduled task [{0}] ...", scheduledTaskDef.getDescription());
                     Map<String, Object> taskParameters = new HashMap<String, Object>();
@@ -907,21 +908,25 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         // Fire task
                         taskManager.startTask(scheduledTaskDef.getTaskName(), taskParameters, false,
                                 taskStatusLogger.getName());
-
-                        triggered++;
                         logDebug("Task [{0}] is setup to run...", scheduledTaskDef.getDescription());
+
+                        lockHeldForTask = true;
+                        triggered++;
                     }
 
                     // Calculate and set next execution
                     Date calcNextExecutionOn = null;
-                    if (scheduledTaskDef.getRepeatMillSecs() > 0) {
+                    long repeatMillSecs = scheduledTaskDef.getRepeatMillSecs();
+                    if (repeatMillSecs > 0) {
                         Date limit = lastMinDt;
                         if (scheduledTaskDef.getEndOffset() > 0) {
                             limit = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getEndOffset());
                         }
 
+                        long factor = ((now.getTime() - nextExecutionOn.getTime()) / repeatMillSecs) + 1;
+                        long actNextOffsetMillSecs = factor * repeatMillSecs;
                         calcNextExecutionOn =
-                                CalendarUtils.getDateWithOffset(nextExecutionOn, scheduledTaskDef.getRepeatMillSecs());
+                                CalendarUtils.getDateWithOffset(nextExecutionOn, actNextOffsetMillSecs);
                         if (calcNextExecutionOn.after(limit)) {
                             calcNextExecutionOn = null;
                         }
@@ -945,6 +950,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     try {
                         releaseClusterLock(taskLock);
                     } catch (Exception e1) {
+                    }
+                } finally {
+                    if (!lockHeldForTask) {
+                        releaseClusterLock(taskLock);
                     }
                 }
             }
