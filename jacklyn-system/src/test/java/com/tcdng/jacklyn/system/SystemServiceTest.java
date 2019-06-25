@@ -486,7 +486,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
         Long scheduledTaskId = systemService.createScheduledTask(document);
 
-        Long scheduledTaskHistId = systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.INITIALISED,
+        Long scheduledTaskHistId = systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.INITIALIZED,
                 null);
         assertNotNull(scheduledTaskHistId);
     }
@@ -501,7 +501,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
         Long scheduledTaskId = systemService.createScheduledTask(document);
 
-        systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.INITIALISED, null);
+        systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.INITIALIZED, null);
         systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.CANCELED, "Some message!");
 
         List<ScheduledTaskHist> scheduledTaskHistList = systemService.findScheduledTaskHistory(
@@ -513,7 +513,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
         assertEquals(scheduledTaskId, scheduledTaskHist.getScheduledTaskId());
         assertEquals("testschedulabletask", scheduledTaskHist.getTaskName());
         assertNull(scheduledTaskHist.getErrorMsg());
-        assertEquals(TaskStatus.INITIALISED, scheduledTaskHist.getTaskStatus());
+        assertEquals(TaskStatus.INITIALIZED, scheduledTaskHist.getTaskStatus());
 
         scheduledTaskHist = scheduledTaskHistList.get(1);
         assertEquals(scheduledTaskId, scheduledTaskHist.getScheduledTaskId());
@@ -532,13 +532,13 @@ public class SystemServiceTest extends AbstractJacklynTest {
         document.getScheduledTaskParams().setInputValue("batchSize", "400");
         Long scheduledTaskId = systemService.createScheduledTask(document);
 
-        Long scheduledTaskHistId = systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.INITIALISED,
+        Long scheduledTaskHistId = systemService.createScheduledTaskHistory(scheduledTaskId, TaskStatus.INITIALIZED,
                 "Started!");
         ScheduledTaskHist scheduledTaskHist = systemService.findScheduledTaskHist(scheduledTaskHistId);
         assertEquals(scheduledTaskId, scheduledTaskHist.getScheduledTaskId());
         assertEquals("testschedulabletask", scheduledTaskHist.getTaskName());
         assertEquals("Started!", scheduledTaskHist.getErrorMsg());
-        assertEquals(TaskStatus.INITIALISED, scheduledTaskHist.getTaskStatus());
+        assertEquals(TaskStatus.INITIALIZED, scheduledTaskHist.getTaskStatus());
     }
 
     @Test

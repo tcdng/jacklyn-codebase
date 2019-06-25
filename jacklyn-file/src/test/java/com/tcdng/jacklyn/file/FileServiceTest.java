@@ -327,7 +327,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         FileInboxQuery query = new FileInboxQuery();
         query.fileTransferConfigName("downloadFileTransfer");
@@ -360,7 +360,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         FileInboxQuery query = new FileInboxQuery();
         query.fileTransferConfigName("downloadFileTransfer");
@@ -379,7 +379,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         FileInboxQuery query = new FileInboxQuery();
         query.fileTransferConfigName("downloadFileTransfer");
@@ -415,7 +415,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         FileOutboxQuery query = new FileOutboxQuery();
         query.fileTransferConfigName("uploadFileTransfer");
@@ -441,7 +441,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         TaskMonitor tm = launchFileTransferTask("uploadFileTransfer", fileService.getToday(), true);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         FileOutboxQuery query = new FileOutboxQuery();
         query.fileTransferConfigName("uploadFileTransfer");
@@ -462,7 +462,7 @@ public class FileServiceTest extends AbstractJacklynTest {
                         .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, downloadConfig).build());
         assertNotNull(tm);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
     }
 
     @Test(timeout = 4000)
@@ -477,12 +477,12 @@ public class FileServiceTest extends AbstractJacklynTest {
         TaskMonitor tm = launchUpdateFileTransferListTask("downloadFileTransfer", today);
         assertNotNull(tm);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         tm = launchUpdateFileTransferListTask("uploadFileTransfer", today);
         assertNotNull(tm);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
     }
 
     @Test(timeout = 4000)
@@ -497,12 +497,12 @@ public class FileServiceTest extends AbstractJacklynTest {
         TaskMonitor tm = launchFileTransferTask("downloadFileTransfer", today, true);
         assertNotNull(tm);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         tm = launchFileTransferTask("uploadFileTransfer", today, true);
         assertNotNull(tm);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
     }
 
     @Test
@@ -523,7 +523,7 @@ public class FileServiceTest extends AbstractJacklynTest {
                         .setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS, buip).build());
         assertNotNull(tm);
         waitForTask(tm);
-        assertEquals(TaskStatus.COMPLETED, tm.getTaskStatus(0));
+        assertEquals(TaskStatus.SUCCESSFUL, tm.getTaskStatus(0));
 
         GenericService genericService = (GenericService) this
                 .getComponent(ApplicationComponents.APPLICATION_GENERICSERVICE);

@@ -901,7 +901,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
                         scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
                         scheduledTaskHist.setStartedOn(now);
-                        scheduledTaskHist.setTaskStatus(TaskStatus.INITIALISED);
+                        scheduledTaskHist.setTaskStatus(TaskStatus.INITIALIZED);
                         Long scheduledTaskHistId = (Long) db().create(scheduledTaskHist);
                         taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASKHIST_ID, scheduledTaskHistId);
 
