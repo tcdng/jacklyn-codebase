@@ -546,7 +546,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public void releaseScheduledTask(Long scheduledTaskId, Long scheduledTaskHistId, TaskStatus completionTaskStatus,
-            String errorMessages) throws UnifyException {
+            String errorMsg) throws UnifyException {
         // Release lock on scheduled task
         releaseClusterLock(scheduledTaskDefs.get(scheduledTaskId).getLock());
 
@@ -554,7 +554,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         ScheduledTaskHist scheduledTaskHist = db().find(ScheduledTaskHist.class, scheduledTaskHistId);
         scheduledTaskHist.setFinishedOn(db().getNow());
         scheduledTaskHist.setTaskStatus(completionTaskStatus);
-        scheduledTaskHist.setErrorMsg(errorMessages);
+        scheduledTaskHist.setErrorMsg(errorMsg);
         db().updateByIdVersion(scheduledTaskHist);
     }
 
@@ -880,7 +880,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
             if (!isWithClusterLock(taskLock) && grabClusterLock(taskLock)) {
                 logDebug("Grabbed scheduled task lock [{0}] ...", taskLock);
-                
+
                 boolean lockHeldForTask = false;
                 try {
                     logDebug("Setting up scheduled task [{0}] ...", scheduledTaskDef.getDescription());
@@ -906,7 +906,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASKHIST_ID, scheduledTaskHistId);
 
                         // Fire task
-                        taskManager.startTask(scheduledTaskDef.getTaskName(), taskParameters, false,
+                        taskManager.startTask(scheduledTaskDef.getTaskName(), taskParameters, true,
                                 taskStatusLogger.getName());
                         logDebug("Task [{0}] is setup to run...", scheduledTaskDef.getDescription());
 
@@ -925,8 +925,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                         long factor = ((now.getTime() - nextExecutionOn.getTime()) / repeatMillSecs) + 1;
                         long actNextOffsetMillSecs = factor * repeatMillSecs;
-                        calcNextExecutionOn =
-                                CalendarUtils.getDateWithOffset(nextExecutionOn, actNextOffsetMillSecs);
+                        calcNextExecutionOn = CalendarUtils.getDateWithOffset(nextExecutionOn, actNextOffsetMillSecs);
                         if (calcNextExecutionOn.after(limit)) {
                             calcNextExecutionOn = null;
                         }
