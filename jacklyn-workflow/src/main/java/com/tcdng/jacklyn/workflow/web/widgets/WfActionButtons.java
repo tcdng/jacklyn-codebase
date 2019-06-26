@@ -40,8 +40,8 @@ public class WfActionButtons extends AbstractValueListMultiControl<ValueStore, O
     private Control actionCtrl;
 
     @Override
-    public void onPageInitialize() throws UnifyException {
-        super.onPageInitialize();
+    public void onPageConstruct() throws UnifyException {
+        super.onPageConstruct();
         String buttonClass = getUplAttribute(String.class, "buttonClass");
         if (StringUtils.isBlank(buttonClass)) {
             actionCtrl = addInternalChildControl("!ui-button captionBinding:label binding:name");
