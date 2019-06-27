@@ -27,11 +27,14 @@ import com.tcdng.jacklyn.shared.workflow.data.GetToolingItemClassifierLogicParam
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingItemClassifierLogicResult;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicParams;
 import com.tcdng.jacklyn.shared.workflow.data.GetToolingPolicyLogicResult;
+import com.tcdng.jacklyn.shared.workflow.data.GetToolingWfDocUplGeneratorParams;
+import com.tcdng.jacklyn.shared.workflow.data.GetToolingWfDocUplGeneratorResult;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryParams;
 import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
@@ -85,5 +88,14 @@ public class WorkflowRemoteGateController extends BaseRemoteCallController {
             throws UnifyException {
         List<ToolingPolicyLogicItem> list = workflowService.findToolingPolicyLogicTypes();
         return new GetToolingPolicyLogicResult(list);
+    }
+
+    @GatewayAction(
+            name = WorkflowRemoteCallNameConstants.GET_TOOLING_WFDOC_UPLGENERATOR_LIST,
+            description = "$m{workflow.gate.remotecall.gettoolingwfdocuplgenerator}")
+    public GetToolingWfDocUplGeneratorResult getToolingWfDocUplGeneratorList(GetToolingWfDocUplGeneratorParams params)
+            throws UnifyException {
+        List<ToolingWfDocUplGeneratorItem> list = workflowService.findToolingWfDocUplGeneratorTypes();
+        return new GetToolingWfDocUplGeneratorResult(list);
     }
 }

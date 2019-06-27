@@ -24,30 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.tcdng.unify.web.remotecall.RemoteCallResult;
 
 /**
- * Get tooling policy logic request result.
+ * Get tooling workflow document UPL generator request result.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @XmlRootElement
-public class GetToolingPolicyLogicResult extends RemoteCallResult {
+public class GetToolingWfDocUplGeneratorResult extends RemoteCallResult {
 
-    private List<ToolingPolicyLogicItem> policyLogicList;
+    private List<ToolingWfDocUplGeneratorItem> wfDocUplGenList;
 
-    public GetToolingPolicyLogicResult(List<ToolingPolicyLogicItem> policyLogicList) {
-        this.policyLogicList = policyLogicList;
+    public GetToolingWfDocUplGeneratorResult(List<ToolingWfDocUplGeneratorItem> policyLogicList) {
+        this.wfDocUplGenList = policyLogicList;
     }
 
-    public GetToolingPolicyLogicResult() {
+    public GetToolingWfDocUplGeneratorResult() {
 
     }
 
-    public List<ToolingPolicyLogicItem> getPolicyLogicList() {
-        return policyLogicList;
+    public List<ToolingWfDocUplGeneratorItem> getWfDocUplGenList() {
+        return wfDocUplGenList;
     }
 
-    @XmlElement(name = "policyLogicList")
-    public void setPolicyLogicList(List<ToolingPolicyLogicItem> policyLogicList) {
-        this.policyLogicList = policyLogicList;
+    @XmlElement(name = "wfDocUplGenList")
+    public void setWfDocUplGenList(List<ToolingWfDocUplGeneratorItem> wfDocUplGenList) {
+        this.wfDocUplGenList = wfDocUplGenList;
     }
 }

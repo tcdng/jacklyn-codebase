@@ -16,6 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import com.tcdng.jacklyn.workflow.web.widgets.WfDocUplGenerator;
+
 /**
  * Workflow template document definition.
  * 
@@ -26,13 +28,13 @@ public class WfTemplateDocDef {
 
     private WfDocDef wfDocDef;
 
-    private String viewer;
-    
+    private WfDocUplGenerator wfDocUplGenerator;
+
     private boolean manual;
 
-    public WfTemplateDocDef(WfDocDef wfDocDef, String viewer, boolean manual) {
+    public WfTemplateDocDef(WfDocDef wfDocDef, WfDocUplGenerator wfDocUplGenerator, boolean manual) {
         this.wfDocDef = wfDocDef;
-        this.viewer = viewer;
+        this.wfDocUplGenerator = wfDocUplGenerator;
         this.manual = manual;
     }
 
@@ -44,8 +46,8 @@ public class WfTemplateDocDef {
         return wfDocDef.getName();
     }
 
-    public String getViewer() {
-        return viewer;
+    public WfDocUplGenerator getWfDocUplGenerator() {
+        return wfDocUplGenerator;
     }
 
     public boolean isManual() {

@@ -39,6 +39,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAlertConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAttachmentCheckConfig;
@@ -146,6 +147,7 @@ import com.tcdng.jacklyn.workflow.entities.WfTemplateDoc;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateDocQuery;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateQuery;
 import com.tcdng.jacklyn.workflow.entities.WfUserAction;
+import com.tcdng.jacklyn.workflow.web.widgets.WfDocUplGenerator;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
@@ -168,7 +170,6 @@ import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskSetup;
-import com.tcdng.unify.core.upl.UplUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
@@ -184,6 +185,8 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
 @Transactional
 @Component(WorkflowModuleNameConstants.WORKFLOWSERVICE)
 public class WorkflowServiceImpl extends AbstractJacklynBusinessService implements WorkflowService {
+
+    private static final String DEFAULT_WFDOCGENERATOR = "wfsingleformviewer-generator";
 
     @Configurable
     private SystemService systemService;
@@ -399,13 +402,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     String docGlobalName = WfNameUtils.getDocGlobalName(wfTemplate.getWfCategoryName(), docName);
                     String viewerGenerator = wfTemplateDoc.getWfDocViewer();
                     if (StringUtils.isBlank(viewerGenerator)) {
-                        viewerGenerator = "wfsingleformviewer-generator";
+                        viewerGenerator = DEFAULT_WFDOCGENERATOR;
                     }
 
-                    wfTemplateDocDefs.put(docName,
-                            new WfTemplateDocDef(wfDocs.get(docGlobalName),
-                                    UplUtils.generateUplGeneratorTargetName(viewerGenerator, docGlobalName),
-                                    wfTemplateDoc.getManual()));
+                    WfDocUplGenerator wfDocUplGenerator = (WfDocUplGenerator) getComponent(viewerGenerator);
+                    wfTemplateDocDefs.put(docName, new WfTemplateDocDef(wfDocs.get(docGlobalName), wfDocUplGenerator,
+                            wfTemplateDoc.getManual()));
                 }
 
                 // Steps
@@ -1079,6 +1081,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public List<ToolingPolicyLogicItem> findToolingPolicyLogicTypes() throws UnifyException {
         return getToolingTypes(ToolingPolicyLogicItem.class, WfItemPolicyLogic.class);
+    }
+
+    @Override
+    public List<ToolingWfDocUplGeneratorItem> findToolingWfDocUplGeneratorTypes() throws UnifyException {
+        return getToolingTypes(ToolingWfDocUplGeneratorItem.class, WfDocUplGenerator.class);
     }
 
     @Taskable(

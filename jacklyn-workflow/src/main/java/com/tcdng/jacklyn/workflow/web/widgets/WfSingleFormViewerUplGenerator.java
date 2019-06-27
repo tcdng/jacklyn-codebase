@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.workflow.data.WfFormSectionDef;
 import com.tcdng.jacklyn.workflow.data.WfFormTabDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Tooling;
 
 /**
  * Single form workflow item viewer UPL generator.
@@ -29,8 +30,9 @@ import com.tcdng.unify.core.annotation.Component;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(description = "Single Form Viewer")
 @Component("wfsingleformviewer-generator")
-public class WfSingleFormViewerUplGenerator extends AbstractWorkflowUplGenerator {
+public class WfSingleFormViewerUplGenerator extends AbstractWorkflowWfDocUplGenerator {
 
     public WfSingleFormViewerUplGenerator() {
         super("ui-wfsingleformviewer");

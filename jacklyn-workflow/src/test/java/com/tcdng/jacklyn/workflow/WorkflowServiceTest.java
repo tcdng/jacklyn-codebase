@@ -675,13 +675,14 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Customer:Tom Jones", interactWfItem.getDescription());
         assertEquals("custDoc", interactWfItem.getWfTemplateDocDef().getDocName());
         assertNotNull(interactWfItem.getWfTemplateDocDef().getWfDocDef());
-        assertNotNull(interactWfItem.getWfTemplateDocDef().getViewer());
+        assertNotNull(interactWfItem.getWfTemplateDocDef().getWfDocUplGenerator());
         assertNotNull(interactWfItem.getWfItemHistId());
         assertNotNull(interactWfItem.getWfHistEventId());
         assertNotNull(interactWfItem.getPd());
         assertNotNull(interactWfItem.getCreateDt());
         assertNotNull(interactWfItem.getStepDt());
         assertNull(interactWfItem.getHeldBy());
+        assertEquals("wfsingleformviewer-generator>g>customerCategory.custDoc", interactWfItem.getDocViewer());
     }
 
     @Test

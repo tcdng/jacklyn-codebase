@@ -21,21 +21,20 @@ import com.tcdng.jacklyn.workflow.data.BaseLabelWfDef;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.upl.AbstractUplGenerator;
 import com.tcdng.unify.core.util.StringUtils;
 
 /**
- * Base class for workflow UPL generator.
+ * Base class for workflow module workflow document UPL generator.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWorkflowUplGenerator extends AbstractUplGenerator {
+public abstract class AbstractWorkflowWfDocUplGenerator extends AbstractWfDocUplGenerator {
 
     @Configurable
     private WorkflowService workflowService;
 
-    public AbstractWorkflowUplGenerator(String uplComponentName) {
+    public AbstractWorkflowWfDocUplGenerator(String uplComponentName) {
         super(uplComponentName);
     }
 

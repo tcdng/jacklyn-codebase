@@ -94,7 +94,7 @@ public class InteractWfItem implements ViewableWfItem {
 
     @Override
     public String getDocViewer() {
-        return wfTemplateDocDef.getViewer();
+        return wfTemplateDocDef.getWfDocUplGenerator().getDocViewer(pd);
     }
 
     @Override

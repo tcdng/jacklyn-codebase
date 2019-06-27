@@ -16,38 +16,22 @@
 
 package com.tcdng.jacklyn.shared.workflow.data;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.remotecall.RemoteCallResult;
+import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
- * Get tooling policy logic request result.
+ * Get tooling workflow document UPL generator request parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @XmlRootElement
-public class GetToolingPolicyLogicResult extends RemoteCallResult {
+public class GetToolingWfDocUplGeneratorParams extends RemoteCallParams {
 
-    private List<ToolingPolicyLogicItem> policyLogicList;
-
-    public GetToolingPolicyLogicResult(List<ToolingPolicyLogicItem> policyLogicList) {
-        this.policyLogicList = policyLogicList;
+    public GetToolingWfDocUplGeneratorParams() {
+        super(WorkflowRemoteCallNameConstants.GET_TOOLING_WFDOC_UPLGENERATOR_LIST);
     }
 
-    public GetToolingPolicyLogicResult() {
-
-    }
-
-    public List<ToolingPolicyLogicItem> getPolicyLogicList() {
-        return policyLogicList;
-    }
-
-    @XmlElement(name = "policyLogicList")
-    public void setPolicyLogicList(List<ToolingPolicyLogicItem> policyLogicList) {
-        this.policyLogicList = policyLogicList;
-    }
 }

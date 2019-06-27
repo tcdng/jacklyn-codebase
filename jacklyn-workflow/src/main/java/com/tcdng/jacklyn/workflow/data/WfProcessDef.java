@@ -52,10 +52,6 @@ public class WfProcessDef {
         return globalName;
     }
 
-    public String getViewer() {
-        return wfTemplateDocDef.getViewer();
-    }
-
     public String getTemplateGlobalName() {
         return wfTemplateDef.getGlobalName();
     }

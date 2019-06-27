@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
@@ -558,4 +559,13 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<ToolingPolicyLogicItem> findToolingPolicyLogicTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling workflow document UPL generator types.
+     * 
+     * @return list of workflow document UPL generator types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingWfDocUplGeneratorItem> findToolingWfDocUplGeneratorTypes() throws UnifyException;
 }
