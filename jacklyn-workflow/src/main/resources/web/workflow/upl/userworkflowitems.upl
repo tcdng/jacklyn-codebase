@@ -10,7 +10,9 @@
 !ui-switchpanel:userWorkItemsBodyPanel style:$s{height:100%;} components:$c{wfItemsMainPanel wfItemViewerPanel}
 
 // Workflow item viewer panel
-!ui-panel:wfItemViewerPanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}} components:$c{wfItemPanel}
+!ui-panel:wfItemViewerPanel style:$s{height:100%;}
+	layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}
+	heights:$l{100%}} components:$c{wfItemPanel}
 !ui-userwfitempanel:wfItemPanel binding:workflowItem
     applyItemActionPath:$n{/applyActionToWorkflowItem}
     showAttachmentsPath:$n{/showWorkflowItemAttachments}
