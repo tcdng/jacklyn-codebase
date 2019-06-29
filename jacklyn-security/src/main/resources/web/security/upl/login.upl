@@ -10,7 +10,7 @@
 !ui-panel:mainSection styleClass:$e{jk-loginsection} layout:$d{!ui-horizontal} components:$c{jacklynImg loginBoxFrame}
 
 !ui-panel:loginBoxFrame styleClass:$e{jk-loginboxframe} components:$c{loginBox}
-!ui-image:jacklynImg src:$s{web/images/applicationbanner.jpg} styleClass:$e{jk-logintopbannerimg}
+!ui-image:jacklynImg src:$s{web/images/applicationloginbanner.png} styleClass:$e{jk-logintopbannerimg}
 !ui-panel:loginBox styleClass:$e{jk-loginbox} layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{loginSequencePanel}
 

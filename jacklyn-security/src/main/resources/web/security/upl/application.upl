@@ -6,7 +6,7 @@
 
 // Header    
 !ui-panel:topBanner styleClass:$e{jk-topbanner} components:$c{topBannerImg navigationBand topAlert topBannerControl userImg}
-!ui-image:topBannerImg src:$s{web/images/applicationbanner.jpg} styleClass:$e{jk-topbannerimg}
+!ui-image:topBannerImg src:$s{web/images/applicationbanner.png} styleClass:$e{jk-topbannerimg}
 !ui-panel:topBannerControl layout:$d{!ui-vertical style:$s{width:100%;}} styleClass:$e{jk-topbannercontrol}
     components:$c{userInfoBand clockInfoBand}
 
