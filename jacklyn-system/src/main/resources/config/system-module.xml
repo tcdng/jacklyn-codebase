@@ -167,7 +167,7 @@
 			type="number" />
 		<sys-parameter name="SYS-0006" defaultValue="web/images/applicationbanner.png"
 			description="$m{system.sysparam.applicationbanner}" editor="!ui-text size:40"
-			editable="false" />
+			editable="true" />
 		<sys-parameter name="SYS-0007" description="$m{system.sysparam.useloginlocale}"
 			 defaultValue="false" editor="!ui-select list:booleanlist" type="boolean" editable="true" />
         <sys-parameter name="SYS-0008" defaultValue=""
