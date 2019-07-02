@@ -48,6 +48,8 @@ public class InteractWfItem implements ViewableWfItem {
 
     private String description;
 
+    private String title;
+
     private String label;
 
     private String comment;
@@ -68,7 +70,7 @@ public class InteractWfItem implements ViewableWfItem {
 
     public InteractWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
             String branchCode, String departmentCode, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
-            String description, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
+            String description, String title, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
         this.wfTemplateDocDef = wfTemplateDocDef;
         this.processGlobalName = processGlobalName;
@@ -78,6 +80,7 @@ public class InteractWfItem implements ViewableWfItem {
         this.wfItemHistId = wfItemHistId;
         this.wfHistEventId = wfHistEventId;
         this.description = description;
+        this.title = title;
         this.createDt = createDt;
         this.stepDt = stepDt;
         this.heldBy = heldBy;
@@ -86,7 +89,7 @@ public class InteractWfItem implements ViewableWfItem {
 
     @Override
     public String getTitle() {
-        return description;
+        return title;
     }
 
     @Override

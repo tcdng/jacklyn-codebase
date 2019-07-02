@@ -957,15 +957,23 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfItem wfItem = db().list(WfItem.class, wfItemId);
         WfItemPackedDoc wfItemPackedDoc = db().find(WfItemPackedDoc.class, wfItemId);
         WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
-        WfTemplateDocDef wfTemplateDocDef = wfProcesses.get(wfItem.getProcessGlobalName()).getWfTemplateDocDef();
+        WfProcessDef wfProcessDef = wfProcesses.get(wfItem.getProcessGlobalName());
+        WfTemplateDef wfTemplateDef = wfProcessDef.getWfTemplateDef();
+        WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
         PackableDoc pd =
                 PackableDoc.unpack(wfTemplateDocDef.getWfDocDef().getDocConfig(), wfItemPackedDoc.getPackedDoc(),
                         wfStepDef.isAudit());
 
+        // Construct title
+        String title =
+                getSessionMessage("workflowitem.title.struct", wfTemplateDef.getName(), wfStepDef.getName(),
+                        wfTemplateDocDef.getWfDocDef().getName(), wfItem.getDescription());
+
+        // Create work item
         InteractWfItem workflowItem =
                 new InteractWfItem(wfStepDef, wfTemplateDocDef, wfItem.getProcessGlobalName(), wfItem.getBranchCode(),
                         wfItem.getDepartmentCode(), wfItemId, wfItem.getWfItemHistId(), wfItem.getWfHistEventId(),
-                        wfItem.getDescription(), wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
+                        wfItem.getDescription(), title, wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
 
         return workflowItem;
     }
@@ -1763,7 +1771,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         String description = packableDoc.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat());
         InteractWfItem intWfItem =
                 new InteractWfItem(trgWfStepDef, wfTemplateDocDef, wfProcessDef.getGlobalName(), branchCode,
-                        departmentCode, wfItemId, null, null, description, wfItem.getCreateDt(), wfItem.getStepDt(),
+                        departmentCode, wfItemId, null, null, description, null, wfItem.getCreateDt(), wfItem.getStepDt(),
                         wfItem.getHeldBy(), packableDoc);
 
         WfStepDef settleStep = pushIntoStep(trgWfStepDef, intWfItem);
