@@ -793,7 +793,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfProcessDef wfProcessDef = wfProcesses.get(manualInitItem.getProcessGlobalName());
         UserToken userToken = getUserToken();
         submitToReceptacle(wfProcessDef, manualInitItem.getWfStepDef(), userToken.getBranchCode(),
-                userToken.getDepartmentCode(), null, manualInitItem.getPd());
+                userToken.getDepartmentCode(), manualInitItem.getPd());
     }
 
     @Override
@@ -808,26 +808,48 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             PackableDoc packableDoc) throws UnifyException {
         WfProcessDef wfProcessDef = wfProcesses.get(processGlobalName);
         return submitToReceptacle(wfProcessDef, wfProcessDef.getWfTemplateDef().getStartStep(), branchCode,
-                departmentCode, null, packableDoc);
+                departmentCode, packableDoc);
     }
 
     @Override
-    public Long submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException {
+    public Long submitToWorkflow(String processGlobalName, Document document) throws UnifyException {
         WfProcessDef wfProcessDef = wfProcesses.get(processGlobalName);
         WfDocDef wfDocDef = wfProcessDef.getWfDocDef();
         WfTemplateDef wfTemplateDef = wfProcessDef.getWfTemplateDef();
         WfStepDef wfStepDef = wfTemplateDef.getStartStep();
 
         // Create and populate packable document
-        Document pDocument = documents[0];
-        PackableDoc packableDoc = new PackableDoc(wfDocDef.getDocConfig(), wfStepDef.isAudit());
+        PackableDoc pDoc = new PackableDoc(wfDocDef.getDocConfig(), wfStepDef.isAudit());
+        pDoc.setId(document.getId());
+        pDoc.readFrom(wfDocDef.getReceptacleWfDocBeanMappingDef(document.getClass()).getRwConfig(), document);
+
+        // Submit to workflow
+        return submitToReceptacle(wfProcessDef, wfStepDef, document.getBranchCode(), document.getDepartmentCode(),
+                pDoc);
+    }
+
+    @Override
+    public List<Long> submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException {
+        WfProcessDef wfProcessDef = wfProcesses.get(processGlobalName);
+        WfDocDef wfDocDef = wfProcessDef.getWfDocDef();
+        WfTemplateDef wfTemplateDef = wfProcessDef.getWfTemplateDef();
+        WfStepDef wfStepDef = wfTemplateDef.getStartStep();
+
+        List<Long> wfItemIdList = new ArrayList<Long>();
         for (Document document : documents) {
-            packableDoc.readFrom(wfDocDef.getReceptacleWfDocBeanMappingDef(document.getClass()).getRwConfig(),
-                    document);
+            // Create and populate packable document
+            PackableDoc pDoc = new PackableDoc(wfDocDef.getDocConfig(), wfStepDef.isAudit());
+            pDoc.setId(document.getId());
+            pDoc.readFrom(wfDocDef.getReceptacleWfDocBeanMappingDef(document.getClass()).getRwConfig(), document);
+
+            // Submit to workflow
+            Long wfItemId =
+                    submitToReceptacle(wfProcessDef, wfStepDef, document.getBranchCode(), document.getDepartmentCode(),
+                            pDoc);
+            wfItemIdList.add(wfItemId);
         }
 
-        return submitToReceptacle(wfProcessDef, wfStepDef, pDocument.getBranchCode(), pDocument.getDepartmentCode(),
-                (Long) pDocument.getId(), packableDoc);
+        return wfItemIdList;
     }
 
     @Override
@@ -933,7 +955,6 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public InteractWfItem findWorkflowItem(Long wfItemId) throws UnifyException {
         WfItem wfItem = db().list(WfItem.class, wfItemId);
-
         WfItemPackedDoc wfItemPackedDoc = db().find(WfItemPackedDoc.class, wfItemId);
         WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
         WfTemplateDocDef wfTemplateDocDef = wfProcesses.get(wfItem.getProcessGlobalName()).getWfTemplateDocDef();
@@ -943,9 +964,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         InteractWfItem workflowItem =
                 new InteractWfItem(wfStepDef, wfTemplateDocDef, wfItem.getProcessGlobalName(), wfItem.getBranchCode(),
-                        wfItem.getDepartmentCode(), wfItem.getDocId(), wfItemId, wfItem.getWfItemHistId(),
-                        wfItem.getWfHistEventId(), wfItem.getDescription(), wfItem.getCreateDt(), wfItem.getStepDt(),
-                        wfItem.getHeldBy(), pd);
+                        wfItem.getDepartmentCode(), wfItemId, wfItem.getWfItemHistId(), wfItem.getWfHistEventId(),
+                        wfItem.getDescription(), wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
 
         return workflowItem;
     }
@@ -1717,7 +1737,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private Long submitToReceptacle(WfProcessDef wfProcessDef, WfStepDef trgWfStepDef, String branchCode,
-            String departmentCode, Long id, PackableDoc packableDoc) throws UnifyException {
+            String departmentCode, PackableDoc packableDoc) throws UnifyException {
         if (!trgWfStepDef.isStart() && !trgWfStepDef.isManual()) {
             throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_SUBMIT_NONSTART_NONRECEPTACLE,
                     trgWfStepDef.getGlobalName());
@@ -1736,14 +1756,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfItemPackedDoc.setWfItemId(wfItemId);
         wfItemPackedDoc.setPackedDoc(packableDoc.pack());
         db().create(wfItemPackedDoc);
-        packableDoc.setChanged(false);
+        packableDoc.clearUpdated();
 
         // Push to step
         WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
         String description = packableDoc.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat());
         InteractWfItem intWfItem =
                 new InteractWfItem(trgWfStepDef, wfTemplateDocDef, wfProcessDef.getGlobalName(), branchCode,
-                        departmentCode, id, wfItemId, null, null, description, wfItem.getCreateDt(), wfItem.getStepDt(),
+                        departmentCode, wfItemId, null, null, description, wfItem.getCreateDt(), wfItem.getStepDt(),
                         wfItem.getHeldBy(), packableDoc);
 
         WfStepDef settleStep = pushIntoStep(trgWfStepDef, intWfItem);
@@ -1849,14 +1869,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 if (wfRecordActionDef.getDocName().equals(docName)) {
                     WfDocBeanMappingDef wfDocBeanMappingDef = wfRecordActionDef.getBeanMapping();
                     PackableDocRWConfig rwConfig = wfDocBeanMappingDef.getRwConfig();
-                    String docIdName = rwConfig.getMappedDocField("id");
                     switch (wfRecordActionDef.getActionType()) {
                         case CREATE: {
                             Document document = ReflectUtils.newInstance(wfDocBeanMappingDef.getBeanType());
                             packableDoc.writeTo(rwConfig, document);
                             Object id = genericService.create(document);
-                            packableDoc.writeFieldValue(docIdName, id);
-
+                            packableDoc.setId(id);
                             if (wfDocBeanMappingDef.isPrimaryMapping()) {
                                 // Update document id in item history
                                 db().updateById(WfItemHist.class, wfItemHistId, new Update().add("docId", id));
@@ -1864,31 +1882,24 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         }
                             break;
                         case DELETE: {
-                            Object id = packableDoc.readFieldValue(docIdName);
-                            genericService.delete(wfDocBeanMappingDef.getBeanType(), id);
+                            genericService.delete(wfDocBeanMappingDef.getBeanType(), packableDoc.getId());
                         }
                             break;
                         case READ: {
-                            Object id = packableDoc.readFieldValue(docIdName);
-                            Document document = genericService.find(wfDocBeanMappingDef.getBeanType(), id);
+                            Document document =
+                                    genericService.find(wfDocBeanMappingDef.getBeanType(), packableDoc.getId());
                             packableDoc.readFrom(wfDocBeanMappingDef.getRwConfig(), document);
                         }
                             break;
                         case UPDATE: {
-                            Object id = packableDoc.readFieldValue(docIdName);
                             Update update = new Update();
                             for (PackableDocRWConfig.FieldMapping fieldMapping : wfDocBeanMappingDef.getRwConfig()
                                     .getFieldMappings()) {
-                                if (docIdName.equals(fieldMapping.getDocFieldName())) {
-                                    // Skip. Do not update ID.
-                                    continue;
-                                }
-
                                 update.add(fieldMapping.getBeanFieldName(),
                                         packableDoc.readFieldValue(fieldMapping.getDocFieldName()));
                             }
 
-                            genericService.updateById(wfDocBeanMappingDef.getBeanType(), id, update);
+                            genericService.updateById(wfDocBeanMappingDef.getBeanType(), packableDoc.getId(), update);
                         }
                             break;
                     }
@@ -1980,10 +1991,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private boolean commitPackableDoc(PackableDoc packableDoc, Long wfItemId) throws UnifyException {
-        if (packableDoc.isChanged()) {
+        if (packableDoc.isUpdated()) {
             db().updateAll(new WfItemPackedDocQuery().wfItemId(wfItemId),
                     new Update().add("packedDoc", packableDoc.pack()).add("updateDt", db().getNow()));
-            packableDoc.setChanged(false);
+            packableDoc.clearUpdated();
             return true;
         }
 
