@@ -381,18 +381,30 @@ public interface WorkflowService extends JacklynBusinessService {
             throws UnifyException;
 
     /**
-     * Submits a document, with optional secondary documents, to workflow.
+     * Submits document to workflow.
      * 
      * @param processGlobalName
      *            the workflow global process name
-     * @param documents
-     *            the documents. The first document is considered the primary
-     *            document.
+     * @param document
+     *            the document to submit
      * @return the workflow item ID
      * @throws UnifyException
      *             if an error occurs
      */
-    Long submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException;
+    Long submitToWorkflow(String processGlobalName, Document document) throws UnifyException;
+
+    /**
+     * Submits one or more documents to workflow.
+     * 
+     * @param processGlobalName
+     *            the workflow global process name
+     * @param documents
+     *            the documents to submit
+     * @return list of workflow item IDs
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException;
 
     /**
      * Grabs work items for current user from specified step. Items grabbed include

@@ -5,7 +5,6 @@
 		<document name="custDoc" description="Customer Information">
 			<item-description-format>Customer:{firstName} {lastName}</item-description-format>
 			<fields>
-				<field name="id" description="Customer ID" type="long" />
 				<field name="firstName" description="First Name" type="string" />
 				<field name="lastName" description="Last Name" type="string" />
 				<field name="age" description="Age" type="integer" />
@@ -31,7 +30,6 @@
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
 					primary="true" receptacle="true" bean-type="com.tcdng.jacklyn.common.TestCustomer">
-					<field-mapping doc-field="id" bean-field="id" />
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />
 					<field-mapping doc-field="age" bean-field="age" />

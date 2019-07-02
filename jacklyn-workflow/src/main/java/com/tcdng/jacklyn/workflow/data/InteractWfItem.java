@@ -40,8 +40,6 @@ public class InteractWfItem implements ViewableWfItem {
 
     private String departmentCode;
 
-    private Long docId;
-
     private Long wfItemId;
 
     private Long wfItemHistId;
@@ -69,14 +67,13 @@ public class InteractWfItem implements ViewableWfItem {
     private List<WfAction> actionList;
 
     public InteractWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
-            String branchCode, String departmentCode, Long docId, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
+            String branchCode, String departmentCode, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
             String description, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
         this.wfTemplateDocDef = wfTemplateDocDef;
         this.processGlobalName = processGlobalName;
         this.branchCode = branchCode;
         this.departmentCode = departmentCode;
-        this.docId = docId;
         this.wfItemId = wfItemId;
         this.wfItemHistId = wfItemHistId;
         this.wfHistEventId = wfHistEventId;
@@ -161,11 +158,7 @@ public class InteractWfItem implements ViewableWfItem {
     }
 
     public Long getDocId() {
-        return this.docId;
-    }
-
-    public void setDocId(Long docId) {
-        this.docId = docId;
+        return (Long) pd.getId();
     }
 
     public Long getWfItemHistId() {

@@ -132,79 +132,72 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         /* Document fields */
         List<WfDocField> docFieldList = wfDoc.getFieldList();
         assertNotNull(docFieldList);
-        assertEquals(11, docFieldList.size());
+        assertEquals(10, docFieldList.size());
 
         WfDocField wfDocField = docFieldList.get(0);
-        assertNotNull(wfDocField);
-        assertNull(wfDocField.getParentName());
-        assertEquals("id", wfDocField.getName());
-        assertEquals("Customer ID", wfDocField.getDescription());
-        assertEquals(DataType.LONG, wfDocField.getDataType());
-
-        wfDocField = docFieldList.get(1);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("firstName", wfDocField.getName());
         assertEquals("First Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(2);
+        wfDocField = docFieldList.get(1);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("lastName", wfDocField.getName());
         assertEquals("Last Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(3);
+        wfDocField = docFieldList.get(2);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("age", wfDocField.getName());
         assertEquals("Age", wfDocField.getDescription());
         assertEquals(DataType.INTEGER, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(4);
+        wfDocField = docFieldList.get(3);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("height", wfDocField.getName());
         assertEquals("Height", wfDocField.getDescription());
         assertEquals(DataType.DOUBLE, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(5);
+        wfDocField = docFieldList.get(4);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("accountNo", wfDocField.getName());
         assertEquals("Account Number", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(6);
+        wfDocField = docFieldList.get(5);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("fullName", wfDocField.getName());
         assertEquals("Full Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(7);
+        wfDocField = docFieldList.get(6);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("driversLicense", wfDocField.getName());
         assertEquals("Driver's License", wfDocField.getDescription());
         assertEquals(DataType.COMPLEX, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(8);
+        wfDocField = docFieldList.get(7);
         assertNotNull(wfDocField);
         assertEquals("driversLicense", wfDocField.getParentName());
         assertEquals("licenseNo", wfDocField.getName());
         assertEquals("License No.", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(9);
+        wfDocField = docFieldList.get(8);
         assertNotNull(wfDocField);
         assertEquals("driversLicense", wfDocField.getParentName());
         assertEquals("issueDt", wfDocField.getName());
         assertEquals("Issue Date", wfDocField.getDescription());
         assertEquals(DataType.DATE, wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(10);
+        wfDocField = docFieldList.get(9);
         assertNotNull(wfDocField);
         assertEquals("driversLicense", wfDocField.getParentName());
         assertEquals("expiryDt", wfDocField.getName());
@@ -255,29 +248,24 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(Boolean.TRUE, wfDocBeanMapping.getReceptacleMapping());
         List<WfDocFieldMapping> fieldMappingList = wfDocBeanMapping.getFieldMappingList();
         assertNotNull(fieldMappingList);
-        assertEquals(5, fieldMappingList.size());
+        assertEquals(4, fieldMappingList.size());
 
         WfDocFieldMapping wfDocFieldMapping = fieldMappingList.get(0);
-        assertNotNull(wfDocFieldMapping);
-        assertEquals("id", wfDocFieldMapping.getDocFieldName());
-        assertEquals("id", wfDocFieldMapping.getBeanFieldName());
-
-        wfDocFieldMapping = fieldMappingList.get(1);
         assertNotNull(wfDocFieldMapping);
         assertEquals("firstName", wfDocFieldMapping.getDocFieldName());
         assertEquals("firstName", wfDocFieldMapping.getBeanFieldName());
 
-        wfDocFieldMapping = fieldMappingList.get(2);
+        wfDocFieldMapping = fieldMappingList.get(1);
         assertNotNull(wfDocFieldMapping);
         assertEquals("lastName", wfDocFieldMapping.getDocFieldName());
         assertEquals("lastName", wfDocFieldMapping.getBeanFieldName());
 
-        wfDocFieldMapping = fieldMappingList.get(3);
+        wfDocFieldMapping = fieldMappingList.get(2);
         assertNotNull(wfDocFieldMapping);
         assertEquals("age", wfDocFieldMapping.getDocFieldName());
         assertEquals("age", wfDocFieldMapping.getBeanFieldName());
 
-        wfDocFieldMapping = fieldMappingList.get(4);
+        wfDocFieldMapping = fieldMappingList.get(3);
         assertNotNull(wfDocFieldMapping);
         assertEquals("height", wfDocFieldMapping.getDocFieldName());
         assertEquals("height", wfDocFieldMapping.getBeanFieldName());
@@ -976,7 +964,15 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         mockCustomer.setId(custId);
         mockCustomer.setFirstName("mockFirstName");
         mockCustomer.setAge(45); // Class 2
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", mockCustomer);
+        Long wfItemId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", mockCustomer);
+        
+        //  Read should have updated packable document fields with details from database
+        InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
+        PackableDoc pd = workflowItem.getPd();
+        assertEquals("Tom", pd.readFieldValue("firstName"));
+        assertEquals("Jones", pd.readFieldValue("lastName"));
+        assertEquals(Integer.valueOf(24), pd.readFieldValue("age"));
+        assertEquals(Double.valueOf(1.82), pd.readFieldValue("height"));
     }
 
     @Test

@@ -7,7 +7,6 @@
 			<item-description-format>Customer:{firstName} {lastName}
 			</item-description-format>
 			<fields>
-				<field name="id" description="Customer ID" type="long" />
 				<field name="firstName" description="First Name" type="string" />
 				<field name="lastName" description="Last Name" type="string" />
 				<field name="age" description="Age" type="integer" />
@@ -24,7 +23,6 @@
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
 					primary="true" receptacle="true" bean-type="com.tcdng.jacklyn.common.TestCustomer">
-					<field-mapping doc-field="id" bean-field="id" />
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />
 					<field-mapping doc-field="age" bean-field="age" />
@@ -65,10 +63,17 @@
 							 document ="custDoc" mapping="custBeanMapping" type="read" />
 					</record-actions>
 					<routings>
-						<routing name="routToEnd" description="Route to End"
-							target="end" />
+						<routing name="routToPend" description="Route to Pend"
+							target="pendCust" />
 					</routings>
 				</step>
+                <step name="pendCust" description="Pending Customer" 
+                    participant="all" priority="high" type="interactive">
+                    <user-actions>
+                        <user-action name="approveCust" description="Approve Customer"
+                            label="Approve" target="end" comment-requirement="optional" />
+                    </user-actions>
+                </step>
 				<step name="deleteCust" description="Delete Customer" type="automatic">
 					<record-actions>
 						<record-action name="deleteCust" description="Delete Customer"
