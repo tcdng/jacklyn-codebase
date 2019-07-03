@@ -30,7 +30,7 @@ import com.tcdng.unify.core.util.EnumUtils;
 public enum ArchivingFieldType implements EnumConst {
 
     BLOB(ColumnType.BLOB.code(), true, false), CLOB(ColumnType.CLOB.code(), true, false), DATE(ColumnType.DATE.code(),
-            false, true), TIMESTAMP(ColumnType.TIMESTAMP.code(), false, true);
+            false, true), TIMESTAMP_UTC(ColumnType.TIMESTAMP_UTC.code(), false, true);
 
     private final String code;
 

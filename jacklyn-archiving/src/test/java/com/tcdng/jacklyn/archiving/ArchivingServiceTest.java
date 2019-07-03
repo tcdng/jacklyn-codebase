@@ -88,7 +88,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         ArchivingField archivableField = archivableFieldList.get(0);
         assertEquals("createDt", archivableField.getFieldName());
         assertEquals("Create Dt", archivableField.getDescription());
-        assertEquals(ArchivingFieldType.TIMESTAMP, archivableField.getFieldType());
+        assertEquals(ArchivingFieldType.TIMESTAMP_UTC, archivableField.getFieldType());
 
         archivableField = archivableFieldList.get(1);
         assertEquals("image", archivableField.getFieldName());
@@ -103,7 +103,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         archivableField = archivableFieldList.get(3);
         assertEquals("updateDt", archivableField.getFieldName());
         assertEquals("Update Dt", archivableField.getDescription());
-        assertEquals(ArchivingFieldType.TIMESTAMP, archivableField.getFieldType());
+        assertEquals(ArchivingFieldType.TIMESTAMP_UTC, archivableField.getFieldType());
     }
 
     @Test

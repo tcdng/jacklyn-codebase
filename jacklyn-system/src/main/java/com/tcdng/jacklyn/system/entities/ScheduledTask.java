@@ -46,16 +46,16 @@ public class ScheduledTask extends BaseVersionedTimestampedStatusEntity {
     @Column(name = "TASK_NM")
     private String taskName;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date startTime;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date endTime;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date nextExecutionOn;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date lastExecutionOn;
 
     @Column(nullable = true)

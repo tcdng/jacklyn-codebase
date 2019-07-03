@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.Tooling;
 public abstract class BaseEventEntity extends BaseEntity {
 
     @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    @Column(type = ColumnType.TIMESTAMP_UTC, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date createDt;
 
     @Column(length = 64)

@@ -42,7 +42,7 @@ public class FileInbox extends AbstractFileTransferBox {
     @Column
     private int downloadAttempts;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date downloadedOn;
 
     @Format(description = "$m{file.fileinbox.readstatus}", halign = HAlignType.CENTER)

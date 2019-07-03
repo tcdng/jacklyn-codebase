@@ -82,7 +82,7 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @Column(nullable = true)
     private Date passwordExpiryDt;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date lastLoginDt;
 
     @Column(name = "SUPERVISOR_FG")
