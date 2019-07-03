@@ -50,10 +50,10 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(nullable = true)
     private WorkflowParticipantType participantType;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date stepDt;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date expectedDt;
 
     @Column(length = 64)

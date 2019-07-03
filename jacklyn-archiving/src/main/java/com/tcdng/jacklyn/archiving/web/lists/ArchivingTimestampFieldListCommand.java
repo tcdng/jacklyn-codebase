@@ -39,7 +39,7 @@ public class ArchivingTimestampFieldListCommand extends AbstractArchivingListCom
         super(ArchivingParams.class);
     }
 
-    private static final ArchivingFieldType[] TIME = { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP };
+    private static final ArchivingFieldType[] TIME = { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP_UTC };
 
     @Override
     public List<? extends Listable> execute(Locale locale, ArchivingParams params) throws UnifyException {

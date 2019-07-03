@@ -32,14 +32,14 @@ import com.tcdng.unify.core.annotation.Policy;
 public abstract class BaseTimestampedStatusEntity extends BaseStatusEntity {
 
     @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    @Column(type = ColumnType.TIMESTAMP_UTC, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date createDt;
 
     @Column(length = 64)
     private String createBy;
 
     @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    @Column(type = ColumnType.TIMESTAMP_UTC, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date updateDt;
 
     @Column(length = 64)

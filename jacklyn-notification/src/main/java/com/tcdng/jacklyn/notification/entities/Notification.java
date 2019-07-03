@@ -55,10 +55,10 @@ public class Notification extends BaseTimestampedEntity {
     @Column
     private Integer attempts;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date dueDt;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date sentDt;
 
     @Column(name = "REC_ST")

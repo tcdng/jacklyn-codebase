@@ -63,7 +63,7 @@ public class NotificationInbox extends BaseEntity implements SystemNotification 
     @Column(name = "USER_ID")
     private String userId;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date createDt;
 
     @ListOnly(key = "status", property = "description")

@@ -41,7 +41,7 @@ public class FileOutbox extends AbstractFileTransferBox {
     @Column
     private int uploadAttempts;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date uploadedOn;
 
     @Column(name = "REC_ST", position = ColumnPositionConstants.BASE_COLUMN_POSITION)
