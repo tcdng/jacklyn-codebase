@@ -101,6 +101,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.Id;
+import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
@@ -1436,6 +1437,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
         }
 
+        // Add list-only fields 11/7/19
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ListOnly.class)) {
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+        }
+        
         return new ToolingEntityItem(ta.name(), resolveApplicationMessage(ta.description()), entityClass.getName(), id,
                 ta.guarded(), fieldList);
     }
