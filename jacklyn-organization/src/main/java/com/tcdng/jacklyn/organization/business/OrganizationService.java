@@ -22,8 +22,6 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.organization.data.RoleLargeData;
 import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
-import com.tcdng.jacklyn.organization.entities.Country;
-import com.tcdng.jacklyn.organization.entities.CountryQuery;
 import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
@@ -37,10 +35,6 @@ import com.tcdng.jacklyn.organization.entities.RolePrivilegeQuery;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidget;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidgetQuery;
 import com.tcdng.jacklyn.organization.entities.RoleQuery;
-import com.tcdng.jacklyn.organization.entities.State;
-import com.tcdng.jacklyn.organization.entities.StateQuery;
-import com.tcdng.jacklyn.organization.entities.Zone;
-import com.tcdng.jacklyn.organization.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 
 /**
@@ -171,171 +165,6 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteDepartment(Long id) throws UnifyException;
-
-    /**
-     * Creates a new zone.
-     * 
-     * @param zone
-     *            the zone data
-     * @return the created zone ID
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    Long createZone(Zone zone) throws UnifyException;
-
-    /**
-     * Finds zone by ID.
-     * 
-     * @param zoneId
-     *            the zone ID
-     * @return the zone data
-     * @throws UnifyException
-     *             if zone with ID is not found
-     */
-    Zone findZone(Long zoneId) throws UnifyException;
-
-    /**
-     * Finds zones by query.
-     * 
-     * @param query
-     *            the zone query
-     * @return the list of zones found
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    List<Zone> findZones(ZoneQuery query) throws UnifyException;
-
-    /**
-     * Updates a zone.
-     * 
-     * @param zone
-     *            the zone data
-     * @return the update count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int updateZone(Zone zone) throws UnifyException;
-
-    /**
-     * Deletes a zone.
-     * 
-     * @param id
-     *            the zone ID
-     * @return the delete count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int deleteZone(Long id) throws UnifyException;
-
-    /**
-     * Creates a new country.
-     * 
-     * @param country
-     *            the country data
-     * @return the created country ID
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    Long createCountry(Country country) throws UnifyException;
-
-    /**
-     * Finds country by ID.
-     * 
-     * @param countryId
-     *            the country ID
-     * @return the country data
-     * @throws UnifyException
-     *             if country with ID is not found
-     */
-    Country findCountry(Long countryId) throws UnifyException;
-
-    /**
-     * Finds countries by query.
-     * 
-     * @param query
-     *            the country query
-     * @return the list of countries found
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    List<Country> findCountries(CountryQuery query) throws UnifyException;
-
-    /**
-     * Updates a country.
-     * 
-     * @param country
-     *            the country data
-     * @return the update count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int updateCountry(Country country) throws UnifyException;
-
-    /**
-     * Deletes a country.
-     * 
-     * @param id
-     *            the country ID
-     * @return the delete count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int deleteCountry(Long id) throws UnifyException;
-
-    /**
-     * Creates a new state.
-     * 
-     * @param state
-     *            the state data
-     * @return the created state ID
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    Long createState(State state) throws UnifyException;
-
-    /**
-     * Finds state by ID.
-     * 
-     * @param stateId
-     *            the state ID
-     * @return the state data
-     * @throws UnifyException
-     *             if state with ID is not found
-     */
-    State findState(Long stateId) throws UnifyException;
-
-    /**
-     * Finds states by query.
-     * 
-     * @param query
-     *            the state query
-     * @return the list of states found
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    List<State> findStates(StateQuery query) throws UnifyException;
-
-    /**
-     * Updates a state.
-     * 
-     * @param state
-     *            the state data
-     * @return the update count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int updateState(State state) throws UnifyException;
-
-    /**
-     * Deletes a state.
-     * 
-     * @param id
-     *            the state ID
-     * @return the delete count
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    int deleteState(Long id) throws UnifyException;
 
     /**
      * Creates a new role.

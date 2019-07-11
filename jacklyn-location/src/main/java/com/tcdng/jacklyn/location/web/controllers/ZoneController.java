@@ -13,43 +13,43 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.web.controllers;
+package com.tcdng.jacklyn.location.web.controllers;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.organization.entities.Country;
-import com.tcdng.jacklyn.organization.entities.CountryQuery;
+import com.tcdng.jacklyn.location.entities.Zone;
+import com.tcdng.jacklyn.location.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
- * Controller for managing countries.
+ * Controller for managing zones.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/organization/country")
-@UplBinding("web/organization/upl/managecountry.upl")
-public class CountryController extends AbstractOrganizationCrudController<Country> {
+@Component("/location/zone")
+@UplBinding("web/location/upl/managezone.upl")
+public class ZoneController extends AbstractLocationCrudController<Zone> {
 
-    private String searchCode;
+    private String searchName;
 
     private String searchDescription;
 
-    public CountryController() {
-        super(Country.class, "$m{organization.country.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+    public ZoneController() {
+        super(Zone.class, "$m{location.zone.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
-    public String getSearchCode() {
-        return searchCode;
+    public String getSearchName() {
+        return searchName;
     }
 
-    public void setSearchCode(String searchCode) {
-        this.searchCode = searchCode;
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
     }
 
     public String getSearchDescription() {
@@ -61,10 +61,10 @@ public class CountryController extends AbstractOrganizationCrudController<Countr
     }
 
     @Override
-    protected List<Country> find() throws UnifyException {
-        CountryQuery query = new CountryQuery();
-        if (QueryUtils.isValidStringCriteria(searchCode)) {
-            query.code(searchCode);
+    protected List<Zone> find() throws UnifyException {
+        ZoneQuery query = new ZoneQuery();
+        if (QueryUtils.isValidStringCriteria(searchName)) {
+            query.name(searchName);
         }
 
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
@@ -75,32 +75,32 @@ public class CountryController extends AbstractOrganizationCrudController<Countr
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getOrganizationService().findCountries(query);
+        return getLocationService().findZones(query);
     }
 
     @Override
-    protected Country find(Long id) throws UnifyException {
-        return getOrganizationService().findCountry(id);
+    protected Zone find(Long id) throws UnifyException {
+        return getLocationService().findZone(id);
     }
 
     @Override
-    protected Country prepareCreate() throws UnifyException {
-        return new Country();
+    protected Zone prepareCreate() throws UnifyException {
+        return new Zone();
     }
 
     @Override
-    protected Object create(Country country) throws UnifyException {
-        return getOrganizationService().createCountry(country);
+    protected Object create(Zone zone) throws UnifyException {
+        return getLocationService().createZone(zone);
     }
 
     @Override
-    protected int update(Country country) throws UnifyException {
-        return getOrganizationService().updateCountry(country);
+    protected int update(Zone zone) throws UnifyException {
+        return getLocationService().updateZone(zone);
     }
 
     @Override
-    protected int delete(Country country) throws UnifyException {
-        return getOrganizationService().deleteCountry(country.getId());
+    protected int delete(Zone zone) throws UnifyException {
+        return getLocationService().deleteZone(zone.getId());
     }
 
 }

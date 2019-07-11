@@ -19,7 +19,7 @@
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchZoneId caption:$m{organization.branch.zone} binding:searchZoneId list:zonelist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
-!ui-select:searchStateId caption:$m{organization.branch.state} binding:searchStateId list:zonelist blankOption:$s{}
+!ui-select:searchStateId caption:$m{organization.branch.state} binding:searchStateId list:statelist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{organization.branch.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}

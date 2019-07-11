@@ -13,31 +13,14 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.entities;
-
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+package com.tcdng.jacklyn.location.constants;
 
 /**
- * Query class for zones.
+ * Location module errors.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class ZoneQuery extends BaseVersionedStatusEntityQuery<Zone> {
+public interface LocationModuleErrorConstants {
 
-    public ZoneQuery() {
-        super(Zone.class);
-    }
-
-    public ZoneQuery name(String name) {
-        return (ZoneQuery) equals("name", name);
-    }
-
-    public ZoneQuery nameLike(String name) {
-        return (ZoneQuery) like("name", name);
-    }
-
-    public ZoneQuery descriptionLike(String description) {
-        return (ZoneQuery) like("description", description);
-    }
 }
