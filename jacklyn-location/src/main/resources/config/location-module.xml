@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<module name="location" description="$m{location.module}">
+	<menus>
+		<menu name="loc-mainloc" description="$m{location.menu.main}"
+			caption="$m{location.menu.title}">
+			<menuitem name="loc-managezone" description="$m{location.menuitem.zone}"
+				caption="$m{location.zone.menu.title}" pageCaption="$m{location.zone.manage}"
+				path="/location/zone/openPage" remotePath="/location/zone/getRemoteDoc" />
+			<menuitem name="loc-managecountry" description="$m{location.menuitem.country}"
+				caption="$m{location.country.menu.title}" pageCaption="$m{location.country.manage}"
+				path="/location/country/openPage" remotePath="/location/country/getRemoteDoc" />
+			<menuitem name="loc-managestate" description="$m{location.menuitem.state}"
+				caption="$m{location.state.menu.title}" pageCaption="$m{location.state.manage}"
+				path="/location/state/openPage" remotePath="/location/state/getRemoteDoc" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="loc-zoneadd" description="$m{location.privilege.zone.add}" />
+			<privilege name="loc-zoneedit" description="$m{location.privilege.zone.edit}" />
+			<privilege name="loc-zoneview" description="$m{location.privilege.zone.view}" />
+			<privilege name="loc-zonedelete" description="$m{location.privilege.zone.delete}" />
+			<privilege name="loc-countryadd" description="$m{location.privilege.country.add}" />
+			<privilege name="loc-countryedit" description="$m{location.privilege.country.edit}" />
+			<privilege name="loc-countryview" description="$m{location.privilege.country.view}" />
+			<privilege name="loc-countrydelete" description="$m{location.privilege.country.delete}" />
+			<privilege name="loc-stateadd" description="$m{location.privilege.state.add}" />
+			<privilege name="loc-stateedit" description="$m{location.privilege.state.edit}" />
+			<privilege name="loc-stateview" description="$m{location.privilege.state.view}" />
+			<privilege name="loc-statedelete" description="$m{location.privilege.state.delete}" />
+		</privilege-group>
+	</privileges>
+</module>

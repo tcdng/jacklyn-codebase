@@ -13,31 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+package com.tcdng.jacklyn.location.web.controllers;
+
+import com.tcdng.jacklyn.common.web.controllers.BasePageController;
+import com.tcdng.jacklyn.location.business.LocationService;
+import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Query class for states.
+ * Abstract base page controller for location module.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class StateQuery extends BaseVersionedStatusEntityQuery<State> {
+public abstract class AbstractLocationController extends BasePageController {
 
-    public StateQuery() {
-        super(State.class);
+    @Configurable
+    private LocationService locationService;
+
+    public AbstractLocationController(boolean secured, boolean readOnly) {
+        super(secured, readOnly);
     }
 
-    public StateQuery countryId(Long countryId) {
-        return (StateQuery) equals("countryId", countryId);
+    protected LocationService getLocationService() throws UnifyException {
+        return locationService;
     }
 
-    public StateQuery code(String code) {
-        return (StateQuery) equals("code", code);
-    }
-
-    public StateQuery descriptionLike(String description) {
-        return (StateQuery) like("description", description);
-    }
 }

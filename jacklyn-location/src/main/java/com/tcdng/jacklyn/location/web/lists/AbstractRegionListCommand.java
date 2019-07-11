@@ -13,27 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.entities;
+package com.tcdng.jacklyn.location.web.lists;
 
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+import com.tcdng.jacklyn.location.business.LocationService;
+import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
- * Query class for countries.
+ * Abstract base class for region module list commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class CountryQuery extends BaseVersionedStatusEntityQuery<Country> {
+public abstract class AbstractRegionListCommand<T> extends AbstractListCommand<T> {
 
-    public CountryQuery() {
-        super(Country.class);
+    @Configurable
+    private LocationService regionService;
+
+    public AbstractRegionListCommand(Class<T> paramType) {
+        super(paramType);
     }
 
-    public CountryQuery code(String code) {
-        return (CountryQuery) equals("code", code);
+    protected LocationService getRegionService() {
+        return regionService;
     }
 
-    public CountryQuery descriptionLike(String description) {
-        return (CountryQuery) like("description", description);
-    }
 }

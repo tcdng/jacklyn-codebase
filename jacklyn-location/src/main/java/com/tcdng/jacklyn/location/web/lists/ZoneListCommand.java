@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.web.lists;
+package com.tcdng.jacklyn.location.web.lists;
 
 import java.util.List;
 import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.organization.entities.ZoneQuery;
+import com.tcdng.jacklyn.location.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Tooling;
@@ -34,11 +34,11 @@ import com.tcdng.unify.core.list.ZeroParams;
  */
 @Tooling(description = "Zone List")
 @Component("zonelist")
-public class ZoneListCommand extends AbstractZeroParamsOrganizationListCommand {
+public class ZoneListCommand extends AbstractZeroParamsRegionListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getOrganizationService()
+        return getRegionService()
                 .findZones((ZoneQuery) new ZoneQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
     }
 }

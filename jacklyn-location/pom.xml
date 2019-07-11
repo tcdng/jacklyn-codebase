@@ -9,9 +9,9 @@
 		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jacklyn-organization</artifactId>
-	<name>jacklyn-organization</name>
-	<description>Jacklyn Organization Module</description>
+	<artifactId>jacklyn-location</artifactId>
+	<name>jacklyn-location</name>
+	<description>Jacklyn Location Module</description>
 	<url>http://www.tcdng.com/jacklyn</url>
 
 	<licenses>
@@ -31,44 +31,39 @@
 		</developer>
 	</developers>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugin</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugin</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<!-- Main dependencies -->
         <dependency>
             <groupId>com.tcdng.jacklyn</groupId>
-            <artifactId>jacklyn-workflow</artifactId>
+            <artifactId>jacklyn-system</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tcdng.jacklyn</groupId>
-            <artifactId>jacklyn-location</artifactId>
+            <artifactId>jacklyn-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-		<dependency>
-			<groupId>com.tcdng.jacklyn</groupId>
-			<artifactId>jacklyn-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.tcdng.jacklyn</groupId>

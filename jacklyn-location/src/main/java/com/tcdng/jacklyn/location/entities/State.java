@@ -13,11 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.entities;
+package com.tcdng.jacklyn.location.entities;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
-import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
+import com.tcdng.jacklyn.location.constants.LocationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @version 1.0
  */
 @Managed(
-        module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "State", reportable = true,
+        module = LocationModuleNameConstants.LOCATION_MODULE, title = "State", reportable = true,
         auditable = true)
 @Table(name = "JKSTATE", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }) })
 public class State extends BaseVersionedStatusEntity {

@@ -17,6 +17,8 @@ package com.tcdng.jacklyn.organization.entities;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
+import com.tcdng.jacklyn.location.entities.State;
+import com.tcdng.jacklyn.location.entities.Zone;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;

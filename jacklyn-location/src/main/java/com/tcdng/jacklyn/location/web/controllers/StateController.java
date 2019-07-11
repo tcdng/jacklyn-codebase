@@ -13,13 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.organization.web.controllers;
+package com.tcdng.jacklyn.location.web.controllers;
 
 import java.util.List;
 
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.organization.entities.State;
-import com.tcdng.jacklyn.organization.entities.StateQuery;
+import com.tcdng.jacklyn.location.entities.State;
+import com.tcdng.jacklyn.location.entities.StateQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -31,9 +31,9 @@ import com.tcdng.unify.core.util.QueryUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/organization/state")
-@UplBinding("web/organization/upl/managestate.upl")
-public class StateController extends AbstractOrganizationCrudController<State> {
+@Component("/location/state")
+@UplBinding("web/location/upl/managestate.upl")
+public class StateController extends AbstractLocationCrudController<State> {
 
     private Long searchCountryId;
     
@@ -42,7 +42,7 @@ public class StateController extends AbstractOrganizationCrudController<State> {
     private String searchDescription;
 
     public StateController() {
-        super(State.class, "$m{organization.state.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(State.class, "$m{location.state.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
@@ -89,12 +89,12 @@ public class StateController extends AbstractOrganizationCrudController<State> {
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getOrganizationService().findStates(query);
+        return getLocationService().findStates(query);
     }
 
     @Override
     protected State find(Long id) throws UnifyException {
-        return getOrganizationService().findState(id);
+        return getLocationService().findState(id);
     }
 
     @Override
@@ -104,17 +104,17 @@ public class StateController extends AbstractOrganizationCrudController<State> {
 
     @Override
     protected Object create(State state) throws UnifyException {
-        return getOrganizationService().createState(state);
+        return getLocationService().createState(state);
     }
 
     @Override
     protected int update(State state) throws UnifyException {
-        return getOrganizationService().updateState(state);
+        return getLocationService().updateState(state);
     }
 
     @Override
     protected int delete(State state) throws UnifyException {
-        return getOrganizationService().deleteState(state.getId());
+        return getLocationService().deleteState(state.getId());
     }
 
 }

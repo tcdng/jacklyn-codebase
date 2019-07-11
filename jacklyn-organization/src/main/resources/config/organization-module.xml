@@ -8,15 +8,6 @@
 	<menus>
 		<menu name="org-mainorg" description="$m{organization.menu.main}"
 			caption="$m{organization.menu.title}">
-            <menuitem name="org-managezone" description="$m{organization.menuitem.zone}"
-                caption="$m{organization.zone.menu.title}" pageCaption="$m{organization.zone.manage}"
-                path="/organization/zone/openPage" remotePath="/organization/zone/getRemoteDoc" />
-            <menuitem name="org-managecountry" description="$m{organization.menuitem.country}"
-                caption="$m{organization.country.menu.title}" pageCaption="$m{organization.country.manage}"
-                path="/organization/country/openPage" remotePath="/organization/country/getRemoteDoc" />
-            <menuitem name="org-managestate" description="$m{organization.menuitem.state}"
-                caption="$m{organization.state.menu.title}" pageCaption="$m{organization.state.manage}"
-                path="/organization/state/openPage" remotePath="/organization/state/getRemoteDoc" />
 			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
 				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
 				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
@@ -33,18 +24,6 @@
 	</menus>
 	<privileges>
 		<privilege-group>
-            <privilege name="org-zoneadd" description="$m{organization.privilege.zone.add}" />
-            <privilege name="org-zoneedit" description="$m{organization.privilege.zone.edit}" />
-            <privilege name="org-zoneview" description="$m{organization.privilege.zone.view}" />
-            <privilege name="org-zonedelete" description="$m{organization.privilege.zone.delete}" />
-            <privilege name="org-countryadd" description="$m{organization.privilege.country.add}" />
-            <privilege name="org-countryedit" description="$m{organization.privilege.country.edit}" />
-            <privilege name="org-countryview" description="$m{organization.privilege.country.view}" />
-            <privilege name="org-countrydelete" description="$m{organization.privilege.country.delete}" />
-            <privilege name="org-stateadd" description="$m{organization.privilege.state.add}" />
-            <privilege name="org-stateedit" description="$m{organization.privilege.state.edit}" />
-            <privilege name="org-stateview" description="$m{organization.privilege.state.view}" />
-            <privilege name="org-statedelete" description="$m{organization.privilege.state.delete}" />
 			<privilege name="org-branchadd" description="$m{organization.privilege.branch.add}" />
 			<privilege name="org-branchedit" description="$m{organization.privilege.branch.edit}" />
 			<privilege name="org-branchview" description="$m{organization.privilege.branch.view}" />
