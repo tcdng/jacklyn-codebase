@@ -38,6 +38,9 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
 @Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
+    @ForeignKey(State.class)
+    private Long stateId;
+
     @ForeignKey(Zone.class)
     private Long zoneId;
 
@@ -52,6 +55,12 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     @Column(name="HEAD_OFFICE_FG")
     private Boolean headOffice;
+
+    @ListOnly(key = "stateId", property = "code")
+    private String stateCode;
+
+    @ListOnly(key = "stateId", property = "description")
+    private String stateDesc;
 
     @ListOnly(key = "zoneId", property = "name")
     private String zoneName;
@@ -106,6 +115,30 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setHeadOffice(Boolean headOffice) {
         this.headOffice = headOffice;
+    }
+
+    public Long getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getStateDesc() {
+        return stateDesc;
+    }
+
+    public void setStateDesc(String stateDesc) {
+        this.stateDesc = stateDesc;
     }
 
     public Long getZoneId() {

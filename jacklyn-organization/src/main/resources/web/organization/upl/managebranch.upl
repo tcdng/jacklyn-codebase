@@ -3,11 +3,11 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{organization.branch.manage}
-    searchByList:$c{searchZoneId searchCode searchDescription searchStatus}
-    searchClearList:$c{searchZoneId searchCode searchDescription searchStatus}
-    tableColumnList:$c{zoneDesc code description sortCode timeZone statusDesc}
+    searchByList:$c{searchZoneId searchStateId searchCode searchDescription searchStatus}
+    searchClearList:$c{searchZoneId searchStateId searchCode searchDescription searchStatus}
+    tableColumnList:$c{zoneDesc stateDesc code description sortCode timeZone statusDesc}
     formSection:$d{!ui-section caption:$m{organization.branch.section.basicdetails}
-        components:$c{frmCode frmDescription frmZoneId frmSortCode frmHeadOffice frmStatus}}
+        components:$c{frmCode frmDescription frmSortCode frmHeadOffice frmZoneId frmStateId frmStatus}}
     addPrivilege:$s{org-branchadd} editPrivilege:$s{org-branchedit}
     viewPrivilege:$s{org-branchview} deletePrivilege:$s{org-branchdelete}
     addValidations:$c{frmCodeVal frmDescVal frmSortCodeVal}
@@ -19,6 +19,8 @@
     eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchZoneId caption:$m{organization.branch.zone} binding:searchZoneId list:zonelist blankOption:$s{}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStateId caption:$m{organization.branch.state} binding:searchStateId list:zonelist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{organization.branch.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
@@ -28,10 +30,12 @@
 !ui-label:sortCode caption:$m{organization.branch.sortcode} binding:sortCode columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{organization.branch.description} binding:description  columnStyle:$s{width:250px;} sortable:true
 !ui-label:timeZone caption:$m{organization.branch.timezone} binding:timeZone  columnStyle:$s{width:180px;} sortable:true
+!ui-label:stateDesc caption:$m{organization.branch.state} binding:stateDesc columnStyle:$s{width:100px;} sortable:true
 !ui-label:statusDesc caption:$m{organization.branch.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
 !ui-select:frmZoneId caption:$m{organization.branch.zone} binding:zoneId list:zonelist blankOption:$s{} required:true
+!ui-select:frmStateId caption:$m{organization.branch.state} binding:stateId list:statelist blankOption:$s{} required:true
 !ui-name:frmCode caption:$m{organization.branch.code} binding:code minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{organization.branch.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-name:frmSortCode caption:$m{organization.branch.sortcode} binding:sortCode minLen:9 maxLen:9 required:true
