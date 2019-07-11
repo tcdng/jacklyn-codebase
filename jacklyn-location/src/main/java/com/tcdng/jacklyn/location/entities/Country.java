@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
 import com.tcdng.jacklyn.location.constants.LocationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
@@ -28,6 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
+@Tooling(description = "Country")
 @Managed(
         module = LocationModuleNameConstants.LOCATION_MODULE, title = "Country", reportable = true,
         auditable = true)
