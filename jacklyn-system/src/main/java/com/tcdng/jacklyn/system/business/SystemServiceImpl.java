@@ -150,6 +150,7 @@ import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.RemoteCallController;
 import com.tcdng.unify.web.annotation.GatewayAction;
 
@@ -1442,7 +1443,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
         }
         
-        return new ToolingEntityItem(ta.name(), resolveApplicationMessage(ta.description()), entityClass.getName(), id,
+        String entityToolingName = AnnotationUtils.getAnnotationString(ta.name());
+        if (StringUtils.isBlank(entityToolingName)) {
+            throw new UnifyException(SystemModuleErrorConstants.TOOLING_ENTITY_NAME_REQUIRED, entityClass);
+        }
+        
+        return new ToolingEntityItem(entityToolingName, resolveApplicationMessage(ta.description()), entityClass.getName(), id,
                 ta.guarded(), fieldList);
     }
 

@@ -34,7 +34,7 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(name = "Branch", description = "Branch")
+@Tooling(name = "branch", description = "Branch")
 @Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
         auditable = true)
 @Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }) })

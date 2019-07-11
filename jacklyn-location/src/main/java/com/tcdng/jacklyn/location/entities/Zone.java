@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(description = "Zone")
+@Tooling(name = "zone", description = "Zone")
 @Managed(
         module = LocationModuleNameConstants.LOCATION_MODULE, title = "Zone", reportable = true,
         auditable = true)

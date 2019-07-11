@@ -61,4 +61,7 @@ public interface SystemModuleErrorConstants {
 
     /** Scheduled task with ID {0} is unknown*/
     String SCHEDULED_TASK_ID_UNKNOWN = "SYSTEM_000B";
+
+    /** Name attribute is required for tooling annotation of entity {0}.*/
+    String TOOLING_ENTITY_NAME_REQUIRED = "SYSTEM_000C";
 }

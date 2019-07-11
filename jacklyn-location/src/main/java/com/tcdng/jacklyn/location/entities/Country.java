@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(description = "Country")
+@Tooling(name = "country", description = "Country")
 @Managed(
         module = LocationModuleNameConstants.LOCATION_MODULE, title = "Country", reportable = true,
         auditable = true)

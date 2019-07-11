@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Tooling(description = "State")
+@Tooling(name = "state", description = "State")
 @Managed(
         module = LocationModuleNameConstants.LOCATION_MODULE, title = "State", reportable = true,
         auditable = true)
