@@ -18,38 +18,48 @@ package com.tcdng.jacklyn.organization.web.controllers;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.organization.entities.Zone;
-import com.tcdng.jacklyn.organization.entities.ZoneQuery;
+import com.tcdng.jacklyn.organization.entities.State;
+import com.tcdng.jacklyn.organization.entities.StateQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
- * Controller for managing zones.
+ * Controller for managing states.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("/organization/zone")
-@UplBinding("web/organization/upl/managezone.upl")
-public class ZoneController extends AbstractOrganizationCrudController<Zone> {
+@Component("/organization/state")
+@UplBinding("web/organization/upl/managestate.upl")
+public class StateController extends AbstractOrganizationCrudController<State> {
 
-    private String searchName;
+    private Long searchCountryId;
+    
+    private String searchCode;
 
     private String searchDescription;
 
-    public ZoneController() {
-        super(Zone.class, "$m{organization.zone.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+    public StateController() {
+        super(State.class, "$m{organization.state.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
-    public String getSearchName() {
-        return searchName;
+    public Long getSearchCountryId() {
+        return searchCountryId;
     }
 
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
+    public void setSearchCountryId(Long searchCountryId) {
+        this.searchCountryId = searchCountryId;
+    }
+
+    public String getSearchCode() {
+        return searchCode;
+    }
+
+    public void setSearchCode(String searchCode) {
+        this.searchCode = searchCode;
     }
 
     public String getSearchDescription() {
@@ -61,10 +71,14 @@ public class ZoneController extends AbstractOrganizationCrudController<Zone> {
     }
 
     @Override
-    protected List<Zone> find() throws UnifyException {
-        ZoneQuery query = new ZoneQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+    protected List<State> find() throws UnifyException {
+        StateQuery query = new StateQuery();
+        if (QueryUtils.isValidLongCriteria(searchCountryId)) {
+            query.countryId(searchCountryId);
+        }
+        
+        if (QueryUtils.isValidStringCriteria(searchCode)) {
+            query.code(searchCode);
         }
 
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
@@ -75,32 +89,32 @@ public class ZoneController extends AbstractOrganizationCrudController<Zone> {
             query.status(getSearchStatus());
         }
         query.order("description").ignoreEmptyCriteria(true);
-        return getOrganizationService().findZones(query);
+        return getOrganizationService().findStates(query);
     }
 
     @Override
-    protected Zone find(Long id) throws UnifyException {
-        return getOrganizationService().findZone(id);
+    protected State find(Long id) throws UnifyException {
+        return getOrganizationService().findState(id);
     }
 
     @Override
-    protected Zone prepareCreate() throws UnifyException {
-        return new Zone();
+    protected State prepareCreate() throws UnifyException {
+        return new State();
     }
 
     @Override
-    protected Object create(Zone zone) throws UnifyException {
-        return getOrganizationService().createZone(zone);
+    protected Object create(State state) throws UnifyException {
+        return getOrganizationService().createState(state);
     }
 
     @Override
-    protected int update(Zone zone) throws UnifyException {
-        return getOrganizationService().updateZone(zone);
+    protected int update(State state) throws UnifyException {
+        return getOrganizationService().updateState(state);
     }
 
     @Override
-    protected int delete(Zone zone) throws UnifyException {
-        return getOrganizationService().deleteZone(zone.getId());
+    protected int delete(State state) throws UnifyException {
+        return getOrganizationService().deleteState(state.getId());
     }
 
 }

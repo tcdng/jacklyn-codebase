@@ -41,6 +41,8 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
 
     private Long searchZoneId;
 
+    private Long searchStateId;
+
     public BranchController() {
         super(Branch.class, "$m{organization.branch.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
@@ -70,11 +72,23 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
         this.searchZoneId = searchZoneId;
     }
 
+    public Long getSearchStateId() {
+        return searchStateId;
+    }
+
+    public void setSearchStateId(Long searchStateId) {
+        this.searchStateId = searchStateId;
+    }
+
     @Override
     protected List<Branch> find() throws UnifyException {
         BranchQuery query = new BranchQuery();
         if (QueryUtils.isValidLongCriteria(searchZoneId)) {
             query.zoneId(searchZoneId);
+        }
+
+        if (QueryUtils.isValidLongCriteria(searchStateId)) {
+            query.stateId(searchStateId);
         }
 
         if (QueryUtils.isValidStringCriteria(searchCode)) {
@@ -103,18 +117,18 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
     }
 
     @Override
-    protected Object create(Branch branchData) throws UnifyException {
-        return getOrganizationService().createBranch(branchData);
+    protected Object create(Branch branch) throws UnifyException {
+        return getOrganizationService().createBranch(branch);
     }
 
     @Override
-    protected int update(Branch branchData) throws UnifyException {
-        return getOrganizationService().updateBranch(branchData);
+    protected int update(Branch branch) throws UnifyException {
+        return getOrganizationService().updateBranch(branch);
     }
 
     @Override
-    protected int delete(Branch branchData) throws UnifyException {
-        return getOrganizationService().deleteBranch(branchData.getId());
+    protected int delete(Branch branch) throws UnifyException {
+        return getOrganizationService().deleteBranch(branch.getId());
     }
 
 }
