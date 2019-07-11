@@ -19,14 +19,14 @@ package com.tcdng.jacklyn.location.web.lists;
 import com.tcdng.unify.core.list.ZeroParams;
 
 /**
- * Abstract base class for zero parameters region module list commands.
+ * Abstract base class for zero parameters location module list commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractZeroParamsRegionListCommand extends AbstractRegionListCommand<ZeroParams> {
+public abstract class AbstractZeroParamsLocationListCommand extends AbstractLocationListCommand<ZeroParams> {
 
-    public AbstractZeroParamsRegionListCommand() {
+    public AbstractZeroParamsLocationListCommand() {
         super(ZeroParams.class);
     }
 

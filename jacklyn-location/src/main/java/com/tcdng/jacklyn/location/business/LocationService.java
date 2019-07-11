@@ -27,7 +27,7 @@ import com.tcdng.jacklyn.location.entities.ZoneQuery;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Region business service.
+ * Location business service.
  * 
  * @author Lateef Ojulari
  * @since 1.0

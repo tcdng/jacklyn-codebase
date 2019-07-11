@@ -31,14 +31,14 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Transactional;
 
 /**
- * Default implementation of region business service.
+ * Default implementation of location business service.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @Transactional
 @Component(LocationModuleNameConstants.LOCATIONSERVICE)
-public class RegionServiceImpl extends AbstractJacklynBusinessService implements LocationService {
+public class LocationServiceImpl extends AbstractJacklynBusinessService implements LocationService {
 
     @Override
     public Long createZone(Zone zone) throws UnifyException {

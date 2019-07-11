@@ -34,11 +34,11 @@ import com.tcdng.unify.core.list.ZeroParams;
  */
 @Tooling(description = "Zone List")
 @Component("zonelist")
-public class ZoneListCommand extends AbstractZeroParamsRegionListCommand {
+public class ZoneListCommand extends AbstractZeroParamsLocationListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getRegionService()
+        return getLocationService()
                 .findZones((ZoneQuery) new ZoneQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
     }
 }

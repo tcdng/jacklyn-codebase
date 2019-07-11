@@ -20,22 +20,22 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
- * Abstract base class for region module list commands.
+ * Abstract base class for location module list commands.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractRegionListCommand<T> extends AbstractListCommand<T> {
+public abstract class AbstractLocationListCommand<T> extends AbstractListCommand<T> {
 
     @Configurable
-    private LocationService regionService;
+    private LocationService locationService;
 
-    public AbstractRegionListCommand(Class<T> paramType) {
+    public AbstractLocationListCommand(Class<T> paramType) {
         super(paramType);
     }
 
-    protected LocationService getRegionService() {
-        return regionService;
+    protected LocationService getLocationService() {
+        return locationService;
     }
 
 }
