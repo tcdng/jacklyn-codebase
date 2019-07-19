@@ -93,6 +93,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public Branch findBranch(BranchQuery query) throws UnifyException {
+        return db().find(query);
+    }
+
+    @Override
     public List<Branch> findBranches(BranchQuery query) throws UnifyException {
         return db().listAll(query);
     }
