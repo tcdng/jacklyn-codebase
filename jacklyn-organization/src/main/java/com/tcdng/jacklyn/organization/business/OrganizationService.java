@@ -68,6 +68,17 @@ public interface OrganizationService extends JacklynBusinessService {
     Branch findBranch(Long branchId) throws UnifyException;
 
     /**
+     * Finds branch by criteria.
+     * 
+     * @param query
+     *            the criteria to use
+     * @return the branch data if found otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Branch findBranch(BranchQuery query) throws UnifyException;
+
+    /**
      * Finds branches by query.
      * 
      * @param query
