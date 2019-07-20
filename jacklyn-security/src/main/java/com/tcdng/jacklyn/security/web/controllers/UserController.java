@@ -116,6 +116,7 @@ public class UserController extends AbstractSecurityCrudController<User> {
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        query.excludeSysRecords();
         query.order("fullName").ignoreEmptyCriteria(true);
         return getSecurityService().findUsers(query);
     }
