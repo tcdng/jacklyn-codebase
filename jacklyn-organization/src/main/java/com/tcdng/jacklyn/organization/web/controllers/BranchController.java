@@ -43,6 +43,8 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
 
     private Long searchStateId;
 
+    private Long searchHubId;
+
     public BranchController() {
         super(Branch.class, "$m{organization.branch.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
@@ -80,6 +82,14 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
         this.searchStateId = searchStateId;
     }
 
+    public Long getSearchHubId() {
+        return searchHubId;
+    }
+
+    public void setSearchHubId(Long searchHubId) {
+        this.searchHubId = searchHubId;
+    }
+
     @Override
     protected List<Branch> find() throws UnifyException {
         BranchQuery query = new BranchQuery();
@@ -89,6 +99,10 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
 
         if (QueryUtils.isValidLongCriteria(searchStateId)) {
             query.stateId(searchStateId);
+        }
+
+        if (QueryUtils.isValidLongCriteria(searchHubId)) {
+            query.hubId(searchHubId);
         }
 
         if (QueryUtils.isValidStringCriteria(searchCode)) {

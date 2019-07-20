@@ -14,6 +14,9 @@
             <menuitem name="org-managedepartment" description="$m{organization.menuitem.department}"
                 caption="$m{organization.department.menu.title}" pageCaption="$m{organization.department.manage}"
                 path="/organization/department/openPage" remotePath="/organization/department/getRemoteDoc" />
+            <menuitem name="org-managehub" description="$m{organization.menuitem.hub}"
+                caption="$m{organization.hub.menu.title}" pageCaption="$m{organization.hub.manage}"
+                path="/organization/hub/openPage" remotePath="/organization/hub/getRemoteDoc" />
             <menuitem name="org-managerole" caption="$m{organization.role.menu.title}"
                 pageCaption="$m{organization.role.manage}" description="$m{organization.menuitem.role}"
                 path="/organization/role/openPage" remotePath="/organization/role/getRemoteDoc" />
@@ -32,6 +35,10 @@
             <privilege name="org-departmentedit" description="$m{organization.privilege.department.edit}" />
             <privilege name="org-departmentview" description="$m{organization.privilege.department.view}" />
             <privilege name="org-departmentdelete" description="$m{organization.privilege.department.delete}" />
+            <privilege name="org-hubadd" description="$m{organization.privilege.hub.add}" />
+            <privilege name="org-hubedit" description="$m{organization.privilege.hub.edit}" />
+            <privilege name="org-hubview" description="$m{organization.privilege.hub.view}" />
+            <privilege name="org-hubdelete" description="$m{organization.privilege.hub.delete}" />
             <privilege name="org-role-add" description="$m{organization.privilege.role.add}" />
             <privilege name="org-role-view" description="$m{organization.privilege.role.view}" />
             <privilege name="org-role-edit" description="$m{organization.privilege.role.edit}" />
