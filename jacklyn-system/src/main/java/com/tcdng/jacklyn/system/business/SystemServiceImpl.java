@@ -29,6 +29,7 @@ import java.util.Set;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
@@ -1193,7 +1194,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setModuleId(module.getId());
                         sysParameter.setName(sysParamConfig.getName());
                         sysParameter.setDescription(description);
-                        sysParameter.setValue(sysParamConfig.getDefaultValue());
+                        String defaultVal = sysParamConfig.getDefaultValue();
+                        if (SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL.equals(sysParamConfig.getName())) {
+                            defaultVal = getContainerSetting(String.class, JacklynContainerPropertyConstants.SYSTEM_DEFAULT_EMAIL, defaultVal);
+                        }
+                       
+                        sysParameter.setValue(defaultVal);
                         sysParameter.setEditor(sysParamConfig.getEditor());
                         sysParameter.setType(sysParamConfig.getType());
                         sysParameter.setControl(sysParamConfig.isControl());
