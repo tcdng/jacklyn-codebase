@@ -30,6 +30,8 @@ import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
 import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
+import com.tcdng.jacklyn.organization.entities.Hub;
+import com.tcdng.jacklyn.organization.entities.HubQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategory;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategoryQuery;
@@ -144,6 +146,31 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     @Override
     public int deleteDepartment(Long id) throws UnifyException {
         return db().delete(Department.class, id);
+    }
+
+    @Override
+    public Long createHub(Hub hub) throws UnifyException {
+        return (Long) db().create(hub);
+    }
+
+    @Override
+    public Hub findHub(Long hubId) throws UnifyException {
+        return db().find(Hub.class, hubId);
+    }
+
+    @Override
+    public List<Hub> findHubs(HubQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateHub(Hub hub) throws UnifyException {
+        return db().updateByIdVersion(hub);
+    }
+
+    @Override
+    public int deleteHub(Long id) throws UnifyException {
+        return db().delete(Hub.class, id);
     }
 
     @Override

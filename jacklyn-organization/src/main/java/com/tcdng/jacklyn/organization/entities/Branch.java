@@ -46,6 +46,9 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
     @ForeignKey(Zone.class)
     private Long zoneId;
 
+    @ForeignKey(type = Hub.class, nullable = true)
+    private Long hubId;
+
     @Column(name = "BRANCH_CD", length = 32)
     private String code;
 
@@ -75,6 +78,12 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     @ListOnly(key = "zoneId", property = "timeZone")
     private String timeZone;
+
+    @ListOnly(key = "hubId", property = "name")
+    private String hubName;
+
+    @ListOnly(key = "hubId", property = "description")
+    private String hubDesc;
    
     @Override
     public Object getBatchId() {
@@ -181,5 +190,29 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setLanguageTag(String languageTag) {
         this.languageTag = languageTag;
+    }
+
+    public Long getHubId() {
+        return hubId;
+    }
+
+    public void setHubId(Long hubId) {
+        this.hubId = hubId;
+    }
+
+    public String getHubName() {
+        return hubName;
+    }
+
+    public void setHubName(String hubName) {
+        this.hubName = hubName;
+    }
+
+    public String getHubDesc() {
+        return hubDesc;
+    }
+
+    public void setHubDesc(String hubDesc) {
+        this.hubDesc = hubDesc;
     }
 }

@@ -24,6 +24,8 @@ import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
 import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
+import com.tcdng.jacklyn.organization.entities.Hub;
+import com.tcdng.jacklyn.organization.entities.HubQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategory;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategoryQuery;
@@ -176,6 +178,61 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteDepartment(Long id) throws UnifyException;
+
+    /**
+     * Creates a new hub.
+     * 
+     * @param hub
+     *            the hub data
+     * @return the created hub ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createHub(Hub hub) throws UnifyException;
+
+    /**
+     * Finds hub by ID.
+     * 
+     * @param hubId
+     *            the hub ID
+     * @return the hub data
+     * @throws UnifyException
+     *             if hub with ID is not found
+     */
+    Hub findHub(Long hubId) throws UnifyException;
+
+    /**
+     * Finds hubs by query.
+     * 
+     * @param query
+     *            the hub query
+     * @return the list of hubs found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Hub> findHubs(HubQuery query) throws UnifyException;
+
+    /**
+     * Updates a hub.
+     * 
+     * @param hub
+     *            the hub data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateHub(Hub hub) throws UnifyException;
+
+    /**
+     * Deletes a hub.
+     * 
+     * @param id
+     *            the hub ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteHub(Long id) throws UnifyException;
 
     /**
      * Creates a new role.
