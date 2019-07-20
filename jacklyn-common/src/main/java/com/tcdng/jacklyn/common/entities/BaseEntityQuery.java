@@ -29,4 +29,7 @@ public abstract class BaseEntityQuery<T extends BaseEntity> extends SequencedEnt
         super(entityClass);
     }
 
+    public BaseEntityQuery<T> excludeSysRecords() {
+        return (BaseEntityQuery<T>) greater("id", Long.valueOf(0L));
+    }
 }
