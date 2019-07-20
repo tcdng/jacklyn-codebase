@@ -616,7 +616,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             createUser(new User(SystemReservedUserConstants.ANONYMOUS_ID, "Anonymous",
                     SystemReservedUserConstants.ANONYMOUS_LOGINID, sysEmail, Boolean.FALSE));
         } else {
-            db().updateById(User.class, SystemReservedUserConstants.ANONYMOUS_LOGINID,
+            db().updateById(User.class, SystemReservedUserConstants.ANONYMOUS_ID,
                     new Update().add("email", sysEmail));
         }
 
