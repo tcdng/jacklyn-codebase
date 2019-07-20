@@ -29,6 +29,7 @@ import java.util.TimeZone;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
@@ -602,14 +603,28 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         logInfo("Managing security module...");
+        String sysEmail =
+                systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL);
         if (db().countAll(new UserQuery().id(SystemReservedUserConstants.SYSTEM_ID)) == 0) {
             createUser(new User(SystemReservedUserConstants.SYSTEM_ID, "System",
-                    SystemReservedUserConstants.SYSTEM_LOGINID, "info@tcdng.com", Boolean.FALSE));
+                    SystemReservedUserConstants.SYSTEM_LOGINID, sysEmail, Boolean.FALSE));
+        } else {
+            db().updateById(User.class, SystemReservedUserConstants.SYSTEM_ID, new Update().add("email", sysEmail));
         }
 
         if (db().countAll(new UserQuery().id(SystemReservedUserConstants.ANONYMOUS_ID)) == 0) {
             createUser(new User(SystemReservedUserConstants.ANONYMOUS_ID, "Anonymous",
-                    SystemReservedUserConstants.ANONYMOUS_LOGINID, "info@tcdng.com", Boolean.FALSE));
+                    SystemReservedUserConstants.ANONYMOUS_LOGINID, sysEmail, Boolean.FALSE));
+        } else {
+            db().updateById(User.class, SystemReservedUserConstants.ANONYMOUS_LOGINID,
+                    new Update().add("email", sysEmail));
+        }
+
+        String adminEmail =
+                systemService.getSysParameterValue(String.class, SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
+        if (StringUtils.isBlank(adminEmail)) {
+            systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL,
+                    getContainerSetting(String.class, JacklynContainerPropertyConstants.ADMINISTRATOR_DEFAULT_EMAIL));
         }
 
         // Check for default dashboard and create if necessary
@@ -687,7 +702,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         String colorScheme = null; // For now always use default color scheme
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getBranchCode(), user.getZoneName(), colorScheme, globalAccess, user.isReserved(), allowMultipleLogin, false);
+                user.getBranchCode(), user.getZoneName(), colorScheme, globalAccess, user.isReserved(),
+                allowMultipleLogin, false);
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {

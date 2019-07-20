@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.common;
 
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.web.AbstractUnifyWebTest;
 
@@ -29,11 +30,13 @@ public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
 
     @Override
     protected void doAddSettingsAndDependencies() throws Exception {
-        super.doAddSettingsAndDependencies();
+        super.doAddSettingsAndDependencies();//JacklynContainerPropertyConstants
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_NAME, "jacklyn-codebase");
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_BOOT, CommonModuleNameConstants.JACKLYNBOOTSERVICE);
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_MESSAGES_BASE,
                 new String[] { "com.tcdng.unify.core.resources.test" });
+        addContainerSetting(JacklynContainerPropertyConstants.SYSTEM_DEFAULT_EMAIL, "info@tcdng.com");
+        addContainerSetting(JacklynContainerPropertyConstants.ADMINISTRATOR_DEFAULT_EMAIL, "info@tcdng.com");
     }
 
     protected void swapApplicationSystemAnonymousUserTokens() throws Exception {

@@ -120,7 +120,7 @@
 			description="$m{security.sysparam.emailnotificationchannel}" editor="!ui-select list:notificationchannellist listKey:name"
 			type="string" />
 		<sys-parameter name="SEC-0014"
-			defaultValue="info@tcdng.com" description="$m{security.sysparam.administratoremail}"
+			description="$m{security.sysparam.administratoremail}"
 			editor="!ui-text size:40"/>
 		<sys-parameter name="SEC-0015"
 			defaultValue="Administrator" description="$m{security.sysparam.administratorname}"

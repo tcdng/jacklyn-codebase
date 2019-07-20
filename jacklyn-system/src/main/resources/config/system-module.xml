@@ -174,7 +174,7 @@
             description="$m{system.sysparam.emailnotificationchannel}" editor="!ui-select list:notificationchannellist listKey:name"
             type="string" />
         <sys-parameter name="SYS-0009"
-            defaultValue="info@tcdng.com" description="$m{system.sysparam.systememail}"
+            description="$m{system.sysparam.systememail}"
             editor="!ui-text size:40"/>
         <sys-parameter name="SYS-000A"
             defaultValue="System" description="$m{system.sysparam.systemname}"
