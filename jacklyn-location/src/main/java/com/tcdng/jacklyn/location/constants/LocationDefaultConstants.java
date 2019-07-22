@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,27 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.location.entities;
 
-import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+package com.tcdng.jacklyn.location.constants;
 
 /**
- * Query class for countries.
+ * Location default Constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class CountryQuery extends BaseVersionedStatusEntityQuery<Country> {
+public interface LocationDefaultConstants {
 
-    public CountryQuery() {
-        super(Country.class);
-    }
-
-    public CountryQuery iso3Code(String iso3Code) {
-        return (CountryQuery) equals("iso3Code", iso3Code);
-    }
-
-    public CountryQuery descriptionLike(String description) {
-        return (CountryQuery) like("description", description);
-    }
+    String DEFAULT_ZONE_NAME = "DZN";
 }
