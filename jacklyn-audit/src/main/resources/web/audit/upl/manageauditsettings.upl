@@ -5,7 +5,7 @@
 !ui-page caption:$m{audit.auditsettings.manage}
     searchByList:$c{searchModuleId searchEventType searchStatus}
     searchClearList:$c{searchModuleId searchEventType searchStatus}
-    moreSearchActionComponentList:$c{activateItemsBtn deactivateItemsBtn}
+    moreTableActionComponentList:$c{activateItemsBtn deactivateItemsBtn}
     tableColumnList:$c{moduleDesc name description actionDesc statusDesc}
     tableMultiSelect:true tableMultiSelDependentList:$c{activateItemsBtn deactivateItemsBtn}
     tableRowEventHandler:$d{!ui-event event:none}
