@@ -16,8 +16,10 @@
 package com.tcdng.jacklyn.location.business;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
+import com.tcdng.jacklyn.location.constants.LocationDefaultConstants;
 import com.tcdng.jacklyn.location.constants.LocationModuleNameConstants;
 import com.tcdng.jacklyn.location.entities.Country;
 import com.tcdng.jacklyn.location.entities.CountryQuery;
@@ -117,6 +119,15 @@ public class LocationServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
+        if (db().countAll(new ZoneQuery().name(LocationDefaultConstants.DEFAULT_ZONE_NAME)) == 0) {
+            db().create(new Zone(LocationDefaultConstants.DEFAULT_ZONE_NAME,
+                    resolveApplicationMessage("$m{location.defaultzone}")));
+        }
 
+        Locale locale = getApplicationLocale();
+        if (db().countAll(new CountryQuery().iso3Code(locale.getISO3Country())) == 0) {
+            db().create(new Country(locale.getISO3Country(),
+                    locale.getDisplayCountry()));
+        }
     }
 }

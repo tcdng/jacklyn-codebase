@@ -47,7 +47,7 @@ public class State extends BaseVersionedStatusEntity {
     @Column(name = "STATE_DESC", length = 64)
     private String description;
 
-    @ListOnly(key = "countryId", property = "code")
+    @ListOnly(key = "countryId", property = "iso3Code")
     private String countryCode;
 
     @ListOnly(key = "countryId", property = "description")

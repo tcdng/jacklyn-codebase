@@ -30,32 +30,41 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @version 1.0
  */
 @Tooling(name = "country", description = "Country")
-@Managed(
-        module = LocationModuleNameConstants.LOCATION_MODULE, title = "Country", reportable = true,
-        auditable = true)
-@Table(name = "JKCOUNTRY", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }) })
+@Managed(module = LocationModuleNameConstants.LOCATION_MODULE, title = "Country", reportable = true, auditable = true)
+@Table(
+        name = "JKCOUNTRY",
+        uniqueConstraints = { @UniqueConstraint({ "iso3Code" }), @UniqueConstraint({ "description" }) })
 public class Country extends BaseVersionedStatusEntity {
 
     @Column(name = "COUNTRY_CD", length = 32)
-    private String code;
+    private String iso3Code;
 
     @Column(name = "COUNTRY_DESC", length = 64)
     private String description;
 
+    public Country(String iso3Code, String description) {
+        this.iso3Code = iso3Code;
+        this.description = description;
+    }
+
+    public Country() {
+
+    }
+
     @Override
     public String getDescription() {
-        return this.description;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIso3Code() {
+        return iso3Code;
+    }
+
+    public void setIso3Code(String iso3Code) {
+        this.iso3Code = iso3Code;
     }
 }

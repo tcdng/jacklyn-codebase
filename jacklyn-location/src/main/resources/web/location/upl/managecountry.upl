@@ -19,12 +19,12 @@
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:code caption:$m{location.country.code} binding:code columnStyle:$s{width:120px;} sortable:true
+!ui-label:code caption:$m{location.country.code} binding:iso3Code columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{location.country.description} binding:description  columnStyle:$s{width:250px;} sortable:true
 !ui-label:statusDesc caption:$m{location.country.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
-!ui-name:frmCode caption:$m{location.country.code} binding:code minLen:3 maxLen:32 required:true focus:true
+!ui-name:frmCode caption:$m{location.country.code} binding:iso3Code minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{location.country.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-select:frmStatus caption:$m{location.country.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 

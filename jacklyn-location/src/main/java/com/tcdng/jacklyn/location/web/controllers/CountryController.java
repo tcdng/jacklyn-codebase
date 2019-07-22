@@ -64,7 +64,7 @@ public class CountryController extends AbstractLocationCrudController<Country> {
     protected List<Country> find() throws UnifyException {
         CountryQuery query = new CountryQuery();
         if (QueryUtils.isValidStringCriteria(searchCode)) {
-            query.code(searchCode);
+            query.iso3Code(searchCode);
         }
 
         if (QueryUtils.isValidStringCriteria(searchDescription)) {

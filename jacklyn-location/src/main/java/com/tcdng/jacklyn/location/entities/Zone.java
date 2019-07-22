@@ -57,9 +57,18 @@ public class Zone extends BaseVersionedStatusEntity {
     @ListOnly(key = "supportedLocaleId", property = "languageTag")
     private String languageTag;
 
+    public Zone(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Zone() {
+        
+    }
+    
     @Override
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public String getName() {
