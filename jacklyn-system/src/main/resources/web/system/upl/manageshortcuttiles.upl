@@ -8,7 +8,7 @@
     tableColumnList:$c{moduleDesc name description statusDesc}
     formSection:$d{!ui-section caption:$m{system.shortcuttile.section.basicdetails} components:$c{frmModule frmDescription
         frmImage frmGist frmPath frmGenerator frmLandscape frmStatus}}
-    moreSearchActionComponentList:$c{setOrderBtn}
+    moreTableActionComponentList:$c{setOrderBtn}
     moreTableSelDependentList:$c{setOrderBtn}
     viewPrivilege:$s{sys-shortcuttileview}
 

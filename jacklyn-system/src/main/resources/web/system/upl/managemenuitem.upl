@@ -7,7 +7,7 @@
     searchClearList:$c{searchStatus}
     tableColumnList:$c{menuCaption name caption path statusDesc}
     formSection:$d{!ui-section caption:$m{system.menuitem.section.basicdetails} components:$c{frmMenuCaption frmName frmCaption frmPath frmStatus}}
-    moreSearchActionComponentList:$c{setOrderBtn}
+    moreTableActionComponentList:$c{setOrderBtn}
     moreTableSelDependentList:$c{setOrderBtn}
     viewPrivilege:$s{sys-menuitemview}
 

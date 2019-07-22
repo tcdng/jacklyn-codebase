@@ -6,7 +6,7 @@
 !ui-page caption:$m{file.fileinbox.manage}
     searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
     searchClearList:$c{searchFileTransferConfigId searchReadStatus searchStatus}
-    moreSearchActionComponentList:$c{markReadBtn markUnreadBtn}
+    moreTableActionComponentList:$c{markReadBtn markUnreadBtn}
     tableColumnList:$c{filename fileLength downloadAttempts readStatusDesc statusDesc}
     tableMultiSelect:true tableMultiSelDependentList:$c{markReadBtn markUnreadBtn}
     formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}

@@ -9,7 +9,7 @@
     formSection:$d{!ui-section caption:$m{security.usersession.section.basicdetails} components:$c{frmNode frmUserLoginId frmUserName frmRemoteAddress frmCreateTime frmLastAccessTime}}
     formColumns:1
     viewPrivilege:$s{sec-user-viewsession}
-    moreSearchActionComponentList:$c{forceLogoutBtn forceLogoutAllBtn}
+    moreTableActionComponentList:$c{forceLogoutBtn forceLogoutAllBtn}
     tableMultiSelect:true tableMultiSelDependentList:$c{forceLogoutBtn}
 
 //Search

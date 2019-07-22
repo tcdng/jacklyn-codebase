@@ -9,7 +9,7 @@
     tableMultiSelect:true tableMultiSelDependentList:$c{markUnsentBtn markSentBtn markAbortBtn}
     formSection:$d{!ui-section caption:$m{notification.notification.section-basicdetails} components:$c{frmNotificationTemplate frmNotificationType frmAttempts frmCreateDt frmDueDt frmSentDt frmStatus}}
     formSection:$d{!ui-section caption:$m{notification.notification.section-sender} components:$c{frmSenderName frmSenderContact}}
-    moreSearchActionComponentList:$c{markUnsentBtn markSentBtn markAbortBtn}
+    moreTableActionComponentList:$c{markUnsentBtn markSentBtn markAbortBtn}
      viewPrivilege:$s{not-notification-view}
 
 //Search

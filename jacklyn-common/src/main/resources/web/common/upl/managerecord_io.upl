@@ -39,7 +39,7 @@
     components:$c{actionPanel reportPanel}
 !ui-panel:actionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
     components:$c{addTblBtn viewTblBtn editTblBtn deleteTblBtn}
-    components:$f{moreSearchActionComponentList}
+    components:$f{moreTableActionComponentList}
     components:$c{doneTblBtn}
 !ui-panel:reportPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{reportType reportBtn}
