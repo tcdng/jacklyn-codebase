@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.system.entities;
 
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
+import com.tcdng.unify.core.constant.BooleanType;
 
 /**
  * Datasource query.
@@ -40,5 +41,9 @@ public class DataSourceQuery extends BaseVersionedStatusEntityQuery<DataSource> 
 	public DataSourceQuery descriptionLike(String description) {
 		return (DataSourceQuery) like("description", description);
 	}
+
+    public DataSourceQuery appReserved(BooleanType appReserved) {
+        return (DataSourceQuery) equals("appReserved", appReserved);
+    }
 
 }

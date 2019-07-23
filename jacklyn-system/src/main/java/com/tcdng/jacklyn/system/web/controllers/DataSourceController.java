@@ -20,6 +20,7 @@ import com.tcdng.jacklyn.system.entities.DataSourceQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.constant.BooleanType;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
@@ -38,6 +39,8 @@ public class DataSourceController extends AbstractSystemCrudController<DataSourc
 
     private String searchDescription;
 
+    private BooleanType searchAppReserved;
+    
 	private RecordStatus searchStatus;
 
 	public DataSourceController() {
@@ -69,6 +72,14 @@ public class DataSourceController extends AbstractSystemCrudController<DataSourc
         this.searchDescription = searchDescription;
     }
 
+    public BooleanType getSearchAppReserved() {
+        return searchAppReserved;
+    }
+
+    public void setSearchAppReserved(BooleanType searchAppReserved) {
+        this.searchAppReserved = searchAppReserved;
+    }
+
     public RecordStatus getSearchStatus() {
 		return searchStatus;
 	}
@@ -98,6 +109,10 @@ public class DataSourceController extends AbstractSystemCrudController<DataSourc
 			query.descriptionLike(getSearchDescription());
 		}
 
+		if (searchAppReserved != null) {
+		    query.appReserved(searchAppReserved);
+		}
+
 		if (searchStatus != null) {
 			query.status(searchStatus);
 		}
@@ -120,4 +135,12 @@ public class DataSourceController extends AbstractSystemCrudController<DataSourc
 	protected int update(DataSource dataSource) throws UnifyException {
 		return getSystemService().updateDataSource(dataSource);
 	}
+
+    @Override
+    protected void onPrepareCrudViewer(DataSource dataSource, int mode) throws UnifyException {
+        setVisible("frmAppReserved", ManageRecordModifier.ADD != mode);
+        if (ManageRecordModifier.isEditable(mode)) {
+            setCrudViewerEditable(!BooleanType.TRUE.equals(dataSource.getAppReserved()));
+        }
+    }
 }
