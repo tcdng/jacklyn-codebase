@@ -21,9 +21,11 @@ import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
+import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
+import com.tcdng.unify.core.constant.BooleanType;
 
 /**
  * DataSource entity.
@@ -31,14 +33,18 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Policy("datasource-policy")
 @Tooling(name = "dataSource", description = "DataSource")
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "DataSource", reportable = true, auditable = true)
 @Table(name = "JKDATASOURCE", uniqueConstraints = { @UniqueConstraint({ "name" }),
 		@UniqueConstraint({ "description" }) })
 public class DataSource extends BaseVersionedStatusEntity {
 
-	@ForeignKey(value = DataSourceDriver.class, name = "DATASOURCEDRIVER_ID")
-	private Long dataSourceDriverId;
+    @ForeignKey(value = DataSourceDriver.class, name = "DATASOURCEDRIVER_ID")
+    private Long dataSourceDriverId;
+
+    @ForeignKey(name = "APPRESERVED_FG")
+    private BooleanType appReserved;
 
 	@Column(name = "DATASOURCE_NM")
 	private String name;
@@ -57,15 +63,18 @@ public class DataSource extends BaseVersionedStatusEntity {
 
 	@Column(name = "USER_PASSWORD", length = 128, transformer = "twoway-stringcryptograph", nullable = true)
 	private String password;
-
+	
 	@ListOnly(key = "dataSourceDriverId", property = "dialect")
 	private String dialect;
 
 	@ListOnly(key = "dataSourceDriverId", property = "driverType")
 	private String driverType;
 
-	@ListOnly(key = "dataSourceDriverId", property = "description")
-	private String dataSourceDriverDesc;
+    @ListOnly(key = "dataSourceDriverId", property = "description")
+    private String dataSourceDriverDesc;
+
+    @ListOnly(key = "appReserved", property = "description")
+    private String appReservedDesc;
 
 	@Override
 	public String getDescription() {
@@ -120,7 +129,7 @@ public class DataSource extends BaseVersionedStatusEntity {
 		this.password = password;
 	}
 
-	public String getDialect() {
+    public String getDialect() {
 		return dialect;
 	}
 
@@ -147,5 +156,21 @@ public class DataSource extends BaseVersionedStatusEntity {
 	public void setDataSourceDriverDesc(String dataSourceDriverDesc) {
 		this.dataSourceDriverDesc = dataSourceDriverDesc;
 	}
+
+    public BooleanType getAppReserved() {
+        return appReserved;
+    }
+
+    public void setAppReserved(BooleanType appReserved) {
+        this.appReserved = appReserved;
+    }
+
+    public String getAppReservedDesc() {
+        return appReservedDesc;
+    }
+
+    public void setAppReservedDesc(String appReservedDesc) {
+        this.appReservedDesc = appReservedDesc;
+    }
 
 }
