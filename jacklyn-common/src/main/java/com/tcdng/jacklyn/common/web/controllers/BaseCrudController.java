@@ -42,6 +42,7 @@ import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
+import com.tcdng.unify.web.ui.panel.SearchCriteriaPanel;
 
 /**
  * Convenient abstract base class for page controllers that manage CRUD actions
@@ -59,7 +60,9 @@ import com.tcdng.unify.web.ui.data.Hint.MODE;
         @ResultMapping(
                 name = "refreshtable",
                 response = { "!refreshpanelresponse panels:$l{searchPanel tablePanel actionPanel}" }),
-        @ResultMapping(name = "refreshcrudviewer", response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{crudPanel}" }),
+        @ResultMapping(
+                name = "refreshcrudviewer",
+                response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{crudPanel}" }),
         @ResultMapping(
                 name = "switchsearch",
                 response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{manageBodyPanel.searchBodyPanel}",
@@ -429,6 +432,14 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         clipRecord = null;
     }
 
+    protected void showSearchActionButtons() throws UnifyException {
+        getPageWidgetByShortName(SearchCriteriaPanel.class, "searchPanel").showActionButtons();
+    }
+
+    protected void hideSearchActionButtons() throws UnifyException {
+        getPageWidgetByShortName(SearchCriteriaPanel.class, "searchPanel").hideActionButtons();
+    }
+
     protected void onLoseView(T record) throws UnifyException {
         onloadSessionOnLoseView();
     }
@@ -561,7 +572,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     protected boolean isEditableMode() {
         return mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
     }
-    
+
     @SuppressWarnings("unchecked")
     private void manageReportable() throws UnifyException {
         boolean isReportable =
