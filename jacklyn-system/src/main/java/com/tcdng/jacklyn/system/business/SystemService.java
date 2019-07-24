@@ -998,6 +998,17 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     DataSource findDataSource(Long dataSourceId) throws UnifyException;
 
     /**
+     * Finds datasource by name.
+     * 
+     * @param dataSourceName
+     *            the data source name
+     * @return the datasource data if found otherwise null
+     * @throws UnifyException
+     *             if multiple data sources with name found. if an error occurs
+     */
+    DataSource findDataSource(String dataSourceName) throws UnifyException;
+
+    /**
      * Finds datasources by query.
      * 
      * @param query

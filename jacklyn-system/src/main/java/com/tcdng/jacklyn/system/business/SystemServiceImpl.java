@@ -705,6 +705,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
+    public DataSource findDataSource(String dataSourceName) throws UnifyException {
+        return db().find(new DataSourceQuery().name(dataSourceName));
+    }
+
+    @Override
     public List<DataSource> findDataSources(DataSourceQuery query) throws UnifyException {
         return db().listAll(query);
     }
