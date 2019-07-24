@@ -43,7 +43,7 @@ public class DataSource extends BaseVersionedStatusEntity {
     @ForeignKey(value = DataSourceDriver.class, name = "DATASOURCEDRIVER_ID")
     private Long dataSourceDriverId;
 
-    @ForeignKey(name = "APPRESERVED_FG")
+    @ForeignKey(name = "APPRESERVED_FG", defaultVal = "false")
     private BooleanType appReserved;
 
 	@Column(name = "DATASOURCE_NM")
