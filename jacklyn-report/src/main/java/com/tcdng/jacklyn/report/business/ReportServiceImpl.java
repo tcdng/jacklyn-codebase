@@ -147,6 +147,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         rb.code(reportOptions.getReportName());
         rb.title(reportOptions.getTitle());
         rb.dataSource(reportOptions.getDataSource());
+        rb.pageWidth(reportOptions.getPageWidth());
+        rb.pageHeight(reportOptions.getPageHeight());
         rb.dynamicDataSource(reportOptions.isDynamicDataSource());
         rb.printColumnNames(reportOptions.isPrintColumnNames());
         rb.underlineRows(reportOptions.isUnderlineRows());

@@ -58,6 +58,10 @@ public class ReportOptions {
 
     private List<Input> systemInputList;
 
+    private int pageWidth;
+
+    private int pageHeight;
+
     private boolean dynamicDataSource;
 
     private boolean printColumnNames;
@@ -226,6 +230,22 @@ public class ReportOptions {
 
     public void setQuery(String query) {
         this.query = query;
+    }
+
+    public int getPageWidth() {
+        return pageWidth;
+    }
+
+    public void setPageWidth(int pageWidth) {
+        this.pageWidth = pageWidth;
+    }
+
+    public int getPageHeight() {
+        return pageHeight;
+    }
+
+    public void setPageHeight(int pageHeight) {
+        this.pageHeight = pageHeight;
     }
 
     public boolean isDynamicDataSource() {
