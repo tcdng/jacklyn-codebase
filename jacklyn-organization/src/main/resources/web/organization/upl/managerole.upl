@@ -37,7 +37,7 @@
 //Form components   
 !ui-select:frmDepartment caption:$m{organization.role.department} binding:data.departmentId list:departmentlist blankOption:$s{} required:true
 !ui-name:frmName caption:$m{organization.role.name} binding:data.name focus:true dollar:true underscore:true minLen:3 maxLen:32 required:true
-!ui-text:frmDescription caption:$m{organization.role.description} binding:data.description maxLen:48 required:true
+!ui-text:frmDescription caption:$m{organization.role.description} binding:data.description maxLen:48 size:32 required:true
 !ui-text:frmEmail caption:$m{organization.role.email} binding:data.email maxLen:64 size:40
 !ui-time:frmActiveAfter caption:$m{organization.role.activeafter} binding:data.activeAfter clearable:true
 !ui-time:frmActiveBefore caption:$m{organization.role.activebefore} binding:data.activeBefore clearable:true
@@ -64,6 +64,7 @@
     unassignCaption:$m{organization.role.maintain.available.step}
     filterList1:$s{wfcategorylist} filterList2:$s{wftemplatelist}
     assignList:$s{wfstepinlist} unassignList:$s{wfstepnotinlist}
+    assignListDesc:$s{extDescription} unassignListDesc:$s{extDescription}
     
 //More action components
 

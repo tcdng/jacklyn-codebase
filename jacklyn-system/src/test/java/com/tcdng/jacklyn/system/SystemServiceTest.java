@@ -170,7 +170,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
         query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
         List<ApplicationMenu> menuList = systemService.findMenus(query);
         assertNotNull(menuList);
-        assertEquals(3, menuList.size());
+        assertEquals(2, menuList.size());
     }
 
     @Test

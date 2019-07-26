@@ -27,18 +27,6 @@
 			image="$t{images/manageschdtasks.png}" path="/system/scheduledtask/openPage" />
 	</shortcut-tiles>
 	<menus>
-        <menu name="sys-mainresources" caption="$m{system.resources.menu.title}"
-            description="$m{system.resources.menu.main}">
-            <menuitem name="sys-managedatasourcedrivers" caption="$m{system.datasourcedriver.menu.title}"
-                description="$m{system.menuitem.datasourcedriver}" pageCaption="$m{system.datasourcedriver.manage}"
-                path="/system/datasourcedriver/openPage" remotePath="/system/datasourcedriver/getRemoteDoc" />
-            <menuitem name="sys-managedatasources" caption="$m{system.datasource.menu.title}"
-                description="$m{system.menuitem.datasource}" pageCaption="$m{system.datasource.manage}"
-                path="/system/datasource/openPage" remotePath="/system/datasource/getRemoteDoc" />
-            <menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
-                pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
-                path="/system/authentication/openPage" remotePath="/system/authentication/getRemoteDoc" />
-        </menu>
         <menu name="sys-mainuserint" caption="$m{system.userinterface.menu.title}"
             description="$m{system.userinterface.menu.main}">
             <menuitem name="sys-managetheme" description="$m{system.menuitem.theme}"
@@ -77,6 +65,15 @@
 			<menuitem name="sys-systemcontrol" description="$m{system.menuitem.syscontrol}"
 				caption="$m{system.systemcontrol.menu.title}" path="/system/systemcontrol/openPage"
 				pageCaption="$m{system.systemcontrol.menu.title}" remotePath="/system/systemcontrol/getRemoteDoc" />
+            <menuitem name="sys-managedatasourcedrivers" caption="$m{system.datasourcedriver.menu.title}"
+                description="$m{system.menuitem.datasourcedriver}" pageCaption="$m{system.datasourcedriver.manage}"
+                path="/system/datasourcedriver/openPage" remotePath="/system/datasourcedriver/getRemoteDoc" />
+            <menuitem name="sys-managedatasources" caption="$m{system.datasource.menu.title}"
+                description="$m{system.menuitem.datasource}" pageCaption="$m{system.datasource.manage}"
+                path="/system/datasource/openPage" remotePath="/system/datasource/getRemoteDoc" />
+            <menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
+                pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
+                path="/system/authentication/openPage" remotePath="/system/authentication/getRemoteDoc" />
 		</menu>
 	</menus>
 	<input-controls>
