@@ -30,7 +30,7 @@
     components:$c{wfStepSelect refreshSummaryBtn}
 !ui-select:wfStepSelect caption:$m{workflow.userworkflowitems.step} list:userwfitemsummarylist blankOption:$s{} binding:wfStepName
     eventHandler:$d{!ui-event event:onchange action:$c{refreshWfItemsAct}} style:$s{width:280px;}
-!ui-button:refreshSummaryBtn styleClass:$e{ui-tablecrudpanel-abutton} caption:$m{button.refresh}
+!ui-button:refreshSummaryBtn styleClass:$s{ui-tablecrudpanel-abutton} caption:$m{button.refresh}
     eventHandler:$d{!ui-event event:onclick action:$c{refreshSummaryAct}}
 
 // Workflow items

@@ -35,8 +35,9 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "JKWFSTEP", uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
-        @UniqueConstraint({ "wfTemplateId", "description" }) })
+@Table(
+        name = "JKWFSTEP", uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
+                @UniqueConstraint({ "wfTemplateId", "description" }) })
 public class WfStep extends BaseEntity {
 
     @ForeignKey(WfTemplate.class)
@@ -126,6 +127,12 @@ public class WfStep extends BaseEntity {
     @Override
     public String getDescription() {
         return description;
+    }
+
+    public String getExtDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(wfTemplateName).append("::").append(description);
+        return sb.toString();
     }
 
     public Long getWfTemplateId() {
