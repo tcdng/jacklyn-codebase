@@ -465,8 +465,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public Long createScheduledTask(ScheduledTaskLargeData scheduledTaskFormData) throws UnifyException {
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
         Long scheduledTaskId = (Long) db().create(scheduledTask);
-        getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId,
-                scheduledTaskFormData.getScheduledTaskParams());
+        Inputs inputs = scheduledTaskFormData.getScheduledTaskParams();
+        if (inputs.size() > 0) {
+            getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId,
+                    inputs);
+        }
+
         return scheduledTaskId;
     }
 
@@ -497,8 +501,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public int updateScheduledTask(ScheduledTaskLargeData scheduledTaskFormData) throws UnifyException {
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
         int updateCount = db().updateByIdVersion(scheduledTask);
-        getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTask.getId(),
-                scheduledTaskFormData.getScheduledTaskParams());
+        Inputs inputs = scheduledTaskFormData.getScheduledTaskParams();
+        if (inputs.size() > 0) {
+            getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK,
+                    scheduledTask.getId(), inputs);
+        }
+
         return updateCount;
     }
 
@@ -1201,9 +1209,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setDescription(description);
                         String defaultVal = sysParamConfig.getDefaultValue();
                         if (SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL.equals(sysParamConfig.getName())) {
-                            defaultVal = getContainerSetting(String.class, JacklynContainerPropertyConstants.SYSTEM_DEFAULT_EMAIL, defaultVal);
+                            defaultVal =
+                                    getContainerSetting(String.class,
+                                            JacklynContainerPropertyConstants.SYSTEM_DEFAULT_EMAIL, defaultVal);
                         }
-                       
+
                         sysParameter.setValue(defaultVal);
                         sysParameter.setEditor(sysParamConfig.getEditor());
                         sysParameter.setType(sysParamConfig.getType());
@@ -1453,14 +1463,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ListOnly.class)) {
             fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
         }
-        
+
         String entityToolingName = AnnotationUtils.getAnnotationString(ta.name());
         if (StringUtils.isBlank(entityToolingName)) {
             throw new UnifyException(SystemModuleErrorConstants.TOOLING_ENTITY_NAME_REQUIRED, entityClass);
         }
-        
-        return new ToolingEntityItem(entityToolingName, resolveApplicationMessage(ta.description()), entityClass.getName(), id,
-                ta.guarded(), fieldList);
+
+        return new ToolingEntityItem(entityToolingName, resolveApplicationMessage(ta.description()),
+                entityClass.getName(), id, ta.guarded(), fieldList);
     }
 
     private AuthenticationLargeData internalFindAuthentication(Authentication authentication) throws UnifyException {
