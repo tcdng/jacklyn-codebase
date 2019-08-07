@@ -21,25 +21,24 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.web.ui.container.Form;
 
 /**
- * Convenient abstract base class for page controllers that manage CRUD actions
- * on records using a form.
+ * Convenient abstract base class for page controllers that manage prefetched records using a form.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@UplBinding("web/common/upl/managerecordformviewer.upl")
-public abstract class BaseFormCrudController<T extends Entity, U> extends BaseCrudController<T, U> {
+@UplBinding("web/common/upl/manageprefetchformviewer.upl")
+public abstract class BaseFormPrefetchController<T extends Entity, U> extends BasePrefetchController<T, U> {
 
-    public BaseFormCrudController(Class<T> entityClass, String hint, int modifier) {
-        super(entityClass, hint, modifier);
+    public BaseFormPrefetchController(Class<T> entityClass, String hint, boolean secure) {
+        super(entityClass, hint, secure);
     }
 
     @Override
-    protected void setCrudViewerEditable(boolean editable) throws UnifyException {
-        setEditable("crudViewPanel.mainBodyPanel", editable);
+    protected void setItemViewerEditable(boolean editable) throws UnifyException {
+        setEditable("prefetchItemViewPanel.mainBodyPanel", editable);
     }
 
     protected Form getForm() throws UnifyException {
-        return getPageWidgetByShortName(Form.class, "crudViewPanel.form");
+        return getPageWidgetByShortName(Form.class, "prefetchItemViewPanel.form");
     }
 }

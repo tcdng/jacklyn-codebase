@@ -1,0 +1,12 @@
+// UPL generic base template for managing prefetched records
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$s{}
+    formColumns:2 formBinding:record
+
+// Form viewer Panel
+!ui-formpanel:prefetchItemViewPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
+    formBinding:$f{formBinding} formAttachment:$f{formAttachment}
+    formColumns:$f{formColumns} formSection:$f{formSection}
+    formSection:$d{!ui-section components:$c{frmId} hidden:true}

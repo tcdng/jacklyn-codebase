@@ -1,0 +1,114 @@
+// UPL generic base template for managing prefetchedrecords
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$s{} components:$c{manageRecordPanel}
+    tableSerialNumbers:true
+    tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
+
+!ui-panel:manageRecordPanel style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{height:100%;margin-bottom:-2px;} heights:$l{100%}}
+    components:$c{manageBodyPanel}
+
+!ui-switchpanel:manageBodyPanel style:$s{height:100%;} components:$c{searchBodyPanel prefetchItemPanel}
+
+// Search Panel
+!ui-panel:searchBodyPanel style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
+    components:$c{detailsPanel searchResultPanel}
+
+!ui-panel:detailsPanel layout:$d{!ui-shadedlist} components:$g{detailsList}
+    style:$s{margin-top:4px; margin-left:4px; display:block;}
+
+!ui-panel:searchResultPanel style:$s{height:100%;}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
+    components:$c{tablePanel actionsGrpPanel}
+
+!ui-tablepanel:tablePanel style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}  heights:$l{100%}}
+    tableSerialNumbers:$f{tableSerialNumbers} tableBinding:recordList tableColumnList:$g{tableColumnList}
+    tableRowSelectable:true tableRowEventHandler:$f{tableRowEventHandler}
+    tableSelDependentList:$c{viewTblBtn}
+    tableWindowed:true tablePagination:true
+    tableMultiSelect:$f{tableMultiSelect} tableMultiSelDependentList:$f{tableMultiSelDependentList}
+    tableSortable:true
+    tableHeaderEllipsis:$f{tableHeaderEllipsis}
+    tableContentEllipsis:$f{tableContentEllipsis}
+    tableSelDependentList:$f{moreTableSelDependentList}
+   
+!ui-panel:actionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
+    components:$c{actionPanel reportPanel}
+!ui-panel:actionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
+    components:$c{viewTblBtn}
+    components:$f{moreTableActionComponentList}
+    components:$c{doneTblBtn}
+!ui-panel:reportPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{reportType reportBtn}
+
+// Maintain Panel
+!ui-panel:prefetchItemPanel style:$s{height:100%;}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
+    components:$c{prefetchItemBasePanel prefetchActionsGrpPanel}
+
+!ui-panel:prefetchItemBasePanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
+    components:$c{maintainTypeLabel prefetchItemViewPanel}
+
+!ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} binding:modeDescription styleClassBinding:modeStyle
+
+!ui-panel:prefetchActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
+    components:$c{topActionPanel bottomActionPanel}
+!ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
+    components:$c{itemOfLabel firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn}
+    components:$f{moreCrudHeaderComponentList}
+!ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{doneFrmBtn}
+    components:$f{moreCrudFooterComponentList}
+
+//Common components
+!ui-hidden:frmId binding:id
+
+//Labels
+!ui-label:itemOfLabel styleClass:$e{jk-mildlabel} binding:itemCountLabel
+
+//Action buttons    
+!ui-button:viewTblBtn styleClass:$e{jk-button} privilege:$f{viewPrivilege} caption:$m{button.view}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareViewAct}}
+!ui-button:doneTblBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
+    eventHandler:$d{!ui-event event:onclick action:$c{manageDoneAct}}
+
+//Report buttons
+!ui-hidden:reportType binding:reportType
+!ui-button:reportBtn styleClass:$e{jk-button} caption:$m{button.report}
+    eventHandler:$d{!ui-event event:onclick action:$c{preparePdfRpt}} hint:$m{hint.report}
+
+!ui-button:firstFrmBtn styleClass:$e{jk-button} caption:$m{button.first}
+    eventHandler:$d{!ui-event event:onclick action:$c{firstAct}}
+!ui-button:prevFrmBtn styleClass:$e{jk-button} caption:$m{button.prev}
+    eventHandler:$d{!ui-event event:onclick action:$c{prevAct}}
+!ui-button:nextFrmBtn styleClass:$e{jk-button} caption:$m{button.next}
+    eventHandler:$d{!ui-event event:onclick action:$c{nextAct}}
+!ui-button:lastFrmBtn styleClass:$e{jk-button} caption:$m{button.last}
+    eventHandler:$d{!ui-event event:onclick action:$c{lastAct}}
+        
+!ui-button:doneFrmBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
+    eventHandler:$d{!ui-event event:onclick action:$c{doneAct}}
+   
+//CRUD actions
+!ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel}
+!ui-post:firstAct path:$n{/firstRecord}
+!ui-post:prevAct path:$n{/previousRecord}
+!ui-post:nextAct path:$n{/nextRecord}
+!ui-post:lastAct path:$n{/lastRecord}
+!ui-post:doneAct path:$n{/done}
+
+// Validations
+!ui-validation:prefetchItemViewerVal components:$c{prefetchItemViewPanel}
+
+//Other actions
+!ui-post:searchAct path:$n{/findRecords} components:$g{searchByList}
+!ui-post:refreshSearchAct path:$n{/refreshSearch} components:$c{detailsPanel}
+!ui-post:refreshCrudViewerAct path:$n{/refreshCrudViewer} components:$c{prefetchItemPanel}
+!ui-post:manageDoneAct path:$n{/closePage}
+
+//Report actions 
+!ui-post:preparePdfRpt path:$n{/prepareGenerateReport} components:$c{reportType} valueList:$l{PDF}
