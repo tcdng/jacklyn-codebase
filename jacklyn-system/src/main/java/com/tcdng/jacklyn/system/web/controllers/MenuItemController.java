@@ -119,17 +119,17 @@ public class MenuItemController extends AbstractSystemCrudController<Application
     }
 
     @Override
-    protected Object create(ApplicationMenuItem menuItemData) throws UnifyException {
+    protected Object create(ApplicationMenuItem menuItem) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(ApplicationMenuItem menuItemData) throws UnifyException {
+    protected int update(ApplicationMenuItem menuItem) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected int delete(ApplicationMenuItem menuItemData) throws UnifyException {
+    protected int delete(ApplicationMenuItem menuItem) throws UnifyException {
         return 0;
     }
 }

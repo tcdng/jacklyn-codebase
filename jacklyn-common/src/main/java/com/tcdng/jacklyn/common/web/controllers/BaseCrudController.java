@@ -43,6 +43,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
 import com.tcdng.unify.web.ui.panel.SearchCriteriaPanel;
+import com.tcdng.unify.web.ui.panel.SwitchPanel;
 
 /**
  * Convenient abstract base class for page controllers that manage CRUD actions
@@ -430,6 +431,16 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         oldRecord = null;
         record = null;
         clipRecord = null;
+    }
+
+    protected void switchToTableContentPanel() throws UnifyException {
+        SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
+        switchPanel.switchContent("searchBodyPanel");
+    }
+
+    protected void switchToCrudViewerPanel() throws UnifyException {
+        SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
+        switchPanel.switchContent("crudPanel");
     }
 
     protected void showSearchActionButtons() throws UnifyException {
