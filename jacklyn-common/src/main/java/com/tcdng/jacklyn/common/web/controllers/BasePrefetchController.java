@@ -105,6 +105,13 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     @Action
+    public String openPrefetchPage() throws UnifyException {
+        findRecords();
+        switchToTableContentPanel();
+        return openPage();
+    }
+
+    @Action
     public String prepareViewRecord() throws UnifyException {
         prepareView();
         logUserEvent(EventType.VIEW, record, false);
@@ -239,13 +246,6 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     @Override
     protected void onIndexPage() throws UnifyException {
         super.onIndexPage();
-        updateSearch();
-    }
-
-    @Override
-    protected void onOpenPage() throws UnifyException {
-        super.onOpenPage();
-        findRecords();
         updateSearch();
     }
 
