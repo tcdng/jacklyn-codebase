@@ -1,4 +1,4 @@
-// UPL generic base template for managing prefetched records (Default)
+// UPL generic base template for managing prefetched records (Europa)
 // Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
 
 // Search Panel
 !ui-panel:searchBodyPanel style:$s{height:100%;}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
+    components:$c{searchResultPanel actionsGrpPanel}
+
+!ui-panel:searchResultPanel style:$s{height:100%;}
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
-    components:$c{detailsPanel searchResultPanel}
+    components:$c{detailsPanel tablePanel}
 
 !ui-shadedlistpanel:detailsPanel shadedDetailsList:$g{shadedDetailsList}
     style:$s{margin-top:4px; margin-left:4px; display:block;}
-
-!ui-panel:searchResultPanel style:$s{height:100%;}
-    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
-    components:$c{tablePanel actionsGrpPanel}
 
 !ui-tablepanel:tablePanel style:$s{height:100%;}
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}  heights:$l{100%}}

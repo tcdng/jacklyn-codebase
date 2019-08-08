@@ -40,9 +40,11 @@ import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
+import com.tcdng.unify.web.ui.panel.SwitchPanel;
 
 /**
- * Convenient abstract base class for page controllers that manage prefetched records.
+ * Convenient abstract base class for page controllers that manage prefetched
+ * records.
  * 
  * @author Lateef Ojulari
  * @since 1.0
@@ -258,6 +260,16 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         onloadSessionOnLoseView();
     }
 
+    protected void switchToTableContentPanel() throws UnifyException {
+        SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
+        switchPanel.switchContent("searchBodyPanel");
+    }
+
+    protected void switchToItemViewerPanel() throws UnifyException {
+        SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
+        switchPanel.switchContent("prefetchItemPanel");
+    }
+
     protected PageControllerSessionUtils getPageControllerSessionUtils() throws UnifyException {
         return (PageControllerSessionUtils) getComponent(CommonModuleNameConstants.PAGECONTROLLERSESSIONUTILS);
     }
@@ -392,7 +404,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         // Update mode description
         modeDescription = getSessionMessage("managerecord.mode.view", recordHintName);
         modeStyle = EventType.VIEW.colorMode();
-        
+
         // Set view mode
         setItemViewerEditable(false);
     }

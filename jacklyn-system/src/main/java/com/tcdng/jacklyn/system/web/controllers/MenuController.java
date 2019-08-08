@@ -54,7 +54,7 @@ public class MenuController extends AbstractSystemCrudController<ApplicationMenu
 
     @Action
     public String prepareMenuItems() throws UnifyException {
-        populate("/system/menuitem", "searchMenuId", getSelectedRecord().getId());
+        writeControllerProperty("/system/menuitem", "searchMenuId", getSelectedRecord().getId());
         return "managemenuitems";
     }
 
