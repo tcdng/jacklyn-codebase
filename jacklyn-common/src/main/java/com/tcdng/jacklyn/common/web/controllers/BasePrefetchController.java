@@ -114,28 +114,28 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     public String firstRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(0);
-        return "switchitemview";
+        return prepareViewRecord();
     }
 
     @Action
     public String previousRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(table.getViewIndex() - 1);
-        return "switchitemview";
+        return prepareViewRecord();
     }
 
     @Action
     public String nextRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(table.getViewIndex() + 1);
-        return "switchitemview";
+        return prepareViewRecord();
     }
 
     @Action
     public String lastRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(recordList.size() - 1);
-        return "switchitemview";
+        return prepareViewRecord();
     }
 
     @Action

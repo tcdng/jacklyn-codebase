@@ -1,4 +1,4 @@
-// UPL generic base template for managing prefetchedrecords
+// UPL generic base template for managing prefetched records
 // Copyright 2018-2019 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
     components:$c{detailsPanel searchResultPanel}
 
-!ui-panel:detailsPanel layout:$d{!ui-shadedlist} components:$g{detailsList}
+!ui-shadedlistpanel:detailsPanel shadedDetailsList:$g{shadedDetailsList}
     style:$s{margin-top:4px; margin-left:4px; display:block;}
 
 !ui-panel:searchResultPanel style:$s{height:100%;}
@@ -105,9 +105,6 @@
 !ui-validation:prefetchItemViewerVal components:$c{prefetchItemViewPanel}
 
 //Other actions
-!ui-post:searchAct path:$n{/findRecords} components:$g{searchByList}
-!ui-post:refreshSearchAct path:$n{/refreshSearch} components:$c{detailsPanel}
-!ui-post:refreshCrudViewerAct path:$n{/refreshCrudViewer} components:$c{prefetchItemPanel}
 !ui-post:manageDoneAct path:$n{/closePage}
 
 //Report actions 
