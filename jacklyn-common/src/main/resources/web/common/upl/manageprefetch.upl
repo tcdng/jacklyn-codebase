@@ -11,6 +11,7 @@
     components:$c{manageBodyPanel}
 
 !ui-switchpanel:manageBodyPanel style:$s{height:100%;} components:$c{searchBodyPanel prefetchItemPanel}
+    components:$f{moreSwitchBodyPanels}
 
 // Search Panel
 !ui-panel:searchBodyPanel style:$s{height:100%;}
