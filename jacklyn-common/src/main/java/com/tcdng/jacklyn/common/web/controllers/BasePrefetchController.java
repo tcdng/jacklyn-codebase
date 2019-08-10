@@ -115,7 +115,6 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     public String prepareViewRecord() throws UnifyException {
         prepareView();
         logUserEvent(EventType.VIEW, record, false);
-        updateItemViewer();
         return "switchitemview";
     }
 
@@ -385,10 +384,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         recordList.set(index, record);
         onPrepareView(record);
         loadSessionOnRefresh();
-        updateItemViewer();
-    }
-
-    private void updateItemViewer() throws UnifyException {
+        
         // Navigation buttons
         int viewIndex = table.getViewIndex();
         setDisabled("firstFrmBtn", recordList == null || viewIndex <= 0);
@@ -407,5 +403,8 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
         // Set view mode
         setItemViewerEditable(false);
+        
+        // Call on update item viewer
+        onPrepareItemViewer(record);
     }
 }
