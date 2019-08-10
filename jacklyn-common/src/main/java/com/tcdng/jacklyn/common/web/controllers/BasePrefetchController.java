@@ -52,7 +52,7 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
 @UplBinding("web/common/upl/manageprefetch.upl")
 @ResultMappings({
         @ResultMapping(
-                name = BaseCrudController.HIDEPOPUP_REFERESHMAIN,
+                name = BasePrefetchController.HIDEPOPUP_REFERESHMAIN,
                 response = { "!hidepopupresponse", "!refreshpanelresponse panels:$l{manageRecordPanel}" }),
         @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{manageRecordPanel}" }),
         @ResultMapping(
