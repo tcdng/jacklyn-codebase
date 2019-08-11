@@ -18,7 +18,7 @@
 
 // Main result panel
 !ui-switchpanel:mainResultPanel style:$s{height:100%;} components:$c{searchResultPanel crudPanel}
-    components:$f{moreSwitchBodyPanels}
+   components:$f{moreSwitchBodyPanels}
 
 !ui-panel:searchResultPanel style:$s{height:100%;}
     layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
@@ -127,16 +127,16 @@
 !ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel}
 !ui-post:prepareEditAct path:$n{/prepareUpdateRecord} components:$c{tablePanel}
 !ui-post:prepareDeleteAct path:$n{/prepareDeleteRecord} components:$c{tablePanel}
-!ui-post:firstAct path:$n{/firstRecord}
-!ui-post:prevAct path:$n{/previousRecord}
-!ui-post:nextAct path:$n{/nextRecord}
-!ui-post:lastAct path:$n{/lastRecord}
+!ui-post:firstAct path:$n{/firstRecord} components:$f{moreNavigationPushComponents}
+!ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents}
+!ui-post:nextAct path:$n{/nextRecord} components:$f{moreNavigationPushComponents}
+!ui-post:lastAct path:$n{/lastRecord} components:$f{moreNavigationPushComponents}
 !ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{addValidations}
 !ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{addValidations}
 !ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
 !ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
 !ui-post:deleteAct path:$n{/deleteRecord} confirm:$f{deleteConfirm}
-!ui-post:doneAct path:$n{/done}
+!ui-post:doneAct path:$n{/done} components:$f{moreNavigationPushComponents}
 !ui-post:cancelAct path:$n{/cancel}
 !ui-post:activateAct path:$n{/activateRecord} components:$c{crudPanel} validations:$f{activateValidations}
 !ui-post:deactivateAct path:$n{/deactivateRecord} components:$c{crudPanel} validations:$f{deactivateValidations}

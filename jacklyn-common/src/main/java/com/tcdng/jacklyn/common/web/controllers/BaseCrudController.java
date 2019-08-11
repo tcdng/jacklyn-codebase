@@ -37,6 +37,7 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -84,6 +85,8 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
 public abstract class BaseCrudController<T extends Entity, U> extends BasePageController {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
+
+    private static final String SWITCH_MAPPING = "switch-mapping";
 
     @Configurable("$m{common.report.norecordintable}")
     private String noRecordMessage;
@@ -145,7 +148,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         record = prepareCreate();
         loadSessionOnCreate();
         updateCrudViewer(ManageRecordModifier.ADD);
-        return "switchcrud";
+        return getSwitchCrudMapping();
     }
 
     @Action
@@ -168,7 +171,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
             oldRecord = ReflectUtils.shallowBeanCopy(record);
         }
         updateCrudViewer(ManageRecordModifier.VIEW);
-        return "switchcrud";
+        return getSwitchCrudMapping();
     }
 
     @Action
@@ -176,7 +179,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         prepareView();
         oldRecord = ReflectUtils.shallowBeanCopy(record);
         updateCrudViewer(ManageRecordModifier.MODIFY);
-        return "switchcrud";
+        return getSwitchCrudMapping();
     }
 
     @SuppressWarnings("unchecked")
@@ -204,7 +207,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     public String prepareDeleteRecord() throws UnifyException {
         prepareView();
         updateCrudViewer(ManageRecordModifier.DELETE);
-        return "switchcrud";
+        return getSwitchCrudMapping();
     }
 
     @Action
@@ -259,7 +262,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
         onPrepareView(record, true);
         loadSessionOnRefresh();
-        return "switchcrud";
+        return getSwitchCrudMapping();
     }
 
     @Action
@@ -433,6 +436,10 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         clipRecord = null;
     }
 
+    protected void setSwitchCrudMapping(String mapping) throws UnifyException {
+        setRequestAttribute(SWITCH_MAPPING, mapping);
+    }
+
     protected void switchToTableContentPanel() throws UnifyException {
         SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
         switchPanel.switchContent("searchBodyPanel");
@@ -589,6 +596,15 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         return mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
     }
 
+    protected String getSwitchCrudMapping() throws UnifyException {
+        String mapping = (String) getRequestAttribute(SWITCH_MAPPING);
+        if (!StringUtils.isBlank(mapping)) {
+            return mapping;
+        }
+        
+        return "switchcrud";
+    }
+    
     @SuppressWarnings("unchecked")
     private void manageReportable() throws UnifyException {
         boolean isReportable =

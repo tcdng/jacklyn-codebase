@@ -35,6 +35,7 @@ import com.tcdng.unify.core.data.Describable;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -73,6 +74,8 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
 public abstract class BasePrefetchController<T extends Entity, U> extends BasePageController {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
+
+    private static final String SWITCH_MAPPING = "switch-mapping";
 
     @Configurable("$m{common.report.norecordintable}")
     private String noRecordMessage;
@@ -115,7 +118,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     public String prepareViewRecord() throws UnifyException {
         prepareView();
         logUserEvent(EventType.VIEW, record, false);
-        return "switchitemview";
+        return getSwitchItemViewMapping();
     }
 
     @Action
@@ -255,6 +258,10 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         record = null;
     }
 
+    protected void setSwitchItemViewMapping(String mapping) throws UnifyException {
+        setRequestAttribute(SWITCH_MAPPING, mapping);
+    }
+
     protected void onLoseView(T record) throws UnifyException {
         onloadSessionOnLoseView();
     }
@@ -338,6 +345,15 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     protected Table getTable() {
         return table;
+    }
+
+    protected String getSwitchItemViewMapping() throws UnifyException {
+        String mapping = (String) getRequestAttribute(SWITCH_MAPPING);
+        if (!StringUtils.isBlank(mapping)) {
+            return mapping;
+        }
+        
+        return "switchitemview";
     }
 
     private String findRecords() throws UnifyException {
