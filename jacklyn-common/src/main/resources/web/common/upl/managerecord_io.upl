@@ -18,6 +18,7 @@
 
 // Main result panel
 !ui-switchpanel:mainResultPanel style:$s{height:100%;} components:$c{searchResultPanel crudPanel}
+    components:$f{moreSwitchBodyPanels}
 
 !ui-panel:searchResultPanel style:$s{height:100%;}
     layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}

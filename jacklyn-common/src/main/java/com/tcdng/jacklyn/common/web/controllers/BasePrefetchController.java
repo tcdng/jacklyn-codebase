@@ -269,6 +269,11 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         switchPanel.switchContent("prefetchItemPanel");
     }
 
+    protected String getCurrentSwitchShortName() throws UnifyException {
+        SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
+        return switchPanel.getCurrentWidgetShortName();
+    }
+    
     protected PageControllerSessionUtils getPageControllerSessionUtils() throws UnifyException {
         return (PageControllerSessionUtils) getComponent(CommonModuleNameConstants.PAGECONTROLLERSESSIONUTILS);
     }

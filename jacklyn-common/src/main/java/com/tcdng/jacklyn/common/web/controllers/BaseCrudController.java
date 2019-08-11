@@ -443,6 +443,11 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
         switchPanel.switchContent("crudPanel");
     }
 
+    protected String getCurrentSwitchShortName() throws UnifyException {
+        SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
+        return switchPanel.getCurrentWidgetShortName();
+    }
+
     protected void showSearchActionButtons() throws UnifyException {
         getPageWidgetByShortName(SearchCriteriaPanel.class, "searchPanel").showActionButtons();
     }
