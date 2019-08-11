@@ -96,11 +96,11 @@
    
 //CRUD actions
 !ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel}
-!ui-post:firstAct path:$n{/firstRecord}
-!ui-post:prevAct path:$n{/previousRecord}
-!ui-post:nextAct path:$n{/nextRecord}
-!ui-post:lastAct path:$n{/lastRecord}
-!ui-post:doneAct path:$n{/done}
+!ui-post:firstAct path:$n{/firstRecord} components:$f{moreNavigationPushComponents}
+!ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents}
+!ui-post:nextAct path:$n{/nextRecord} components:$f{moreNavigationPushComponents}
+!ui-post:lastAct path:$n{/lastRecord} components:$f{moreNavigationPushComponents}
+!ui-post:doneAct path:$n{/done} components:$f{moreNavigationPushComponents}
 
 // Validations
 !ui-validation:prefetchItemViewerVal components:$c{prefetchItemViewPanel}
