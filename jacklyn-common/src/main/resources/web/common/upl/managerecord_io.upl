@@ -15,6 +15,8 @@
     layout:$d{!ui-vertical style:$s{padding-left: 8px;}}
     searchLayout:$d{!ui-vertical showCaption:true captionSuffix:$s{:}}
     searchClearList:$f{searchClearList} searchByList:$g{searchByList} searchPath:$n{/findRecords}
+// Dummy control for compatibility with Default and Europa search grid layout
+!ui-hidden:searchColComp binding:$f{searchColumns}
 
 // Main result panel
 !ui-switchpanel:mainResultPanel style:$s{height:100%;} components:$c{searchResultPanel crudPanel}
