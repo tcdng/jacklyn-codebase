@@ -202,6 +202,17 @@ public interface OrganizationService extends JacklynBusinessService {
     Hub findHub(Long hubId) throws UnifyException;
 
     /**
+     * Finds hub by query.
+     * 
+     * @param query
+     *            the hub query
+     * @return the hub record if found otherwise null
+     * @throws UnifyException
+     *             if hub multiple records are found. If an error occurs
+     */
+    Hub findHub(HubQuery query) throws UnifyException;
+
+    /**
      * Finds hubs by query.
      * 
      * @param query
