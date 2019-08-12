@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$s{} components:$c{manageRecordPanel}
-    tableSerialNumbers:true
+    tableSerialNumbers:true searchColumns:6
     tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
 
 !ui-panel:manageRecordPanel style:$s{height:100%;}
@@ -20,7 +20,7 @@
 
 !ui-searchcriteriapanel:searchPanel style:$s{margin-top:4px; margin-left:4px; display:block;}
     layout:$d{!ui-vertical style:$s{padding-left: 8px;}}
-    searchLayout:$d{!ui-grid styleClass:$e{jk-searchgrid} columns:6 showCaption:true captionSuffix:$s{:}}
+    searchLayout:$d{!ui-grid styleClass:$e{jk-searchgrid} columns:$f{searchColumns} showCaption:true captionSuffix:$s{:}}
     searchClearList:$f{searchClearList} searchByList:$g{searchByList} searchPath:$n{/findRecords}
 
 !ui-panel:searchResultPanel style:$s{height:100%;}
