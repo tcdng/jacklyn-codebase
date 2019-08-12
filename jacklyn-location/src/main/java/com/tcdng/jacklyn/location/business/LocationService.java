@@ -57,6 +57,17 @@ public interface LocationService extends JacklynBusinessService {
     Zone findZone(Long zoneId) throws UnifyException;
 
     /**
+     * Finds zone by code.
+     * 
+     * @param zoneCode
+     *            the zone code
+     * @return the zone data if found otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Zone findZone(String zoneCode) throws UnifyException;
+
+    /**
      * Finds zones by query.
      * 
      * @param query

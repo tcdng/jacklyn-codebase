@@ -53,6 +53,11 @@ public class LocationServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public Zone findZone(String zoneCode) throws UnifyException {
+        return db().find(new ZoneQuery().name(zoneCode));
+    }
+
+    @Override
     public List<Zone> findZones(ZoneQuery query) throws UnifyException {
         return db().listAll(query);
     }
