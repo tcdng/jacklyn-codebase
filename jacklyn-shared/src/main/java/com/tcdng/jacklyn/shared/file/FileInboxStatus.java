@@ -40,6 +40,11 @@ public enum FileInboxStatus implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NOT_RECEIVED.code;
+    }
+
     public static FileInboxStatus fromCode(String code) {
         return EnumUtils.fromCode(FileInboxStatus.class, code);
     }

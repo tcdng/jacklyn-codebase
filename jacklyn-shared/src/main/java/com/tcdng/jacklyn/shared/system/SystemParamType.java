@@ -41,6 +41,11 @@ public enum SystemParamType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return STRING.code;
+    }
+
     public static SystemParamType fromCode(String code) {
         return EnumUtils.fromCode(SystemParamType.class, code);
     }

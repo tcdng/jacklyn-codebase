@@ -35,7 +35,7 @@ public class CommonRemoteCallGateImpl extends AbstractRemoteCallGate {
 
     @Override
     protected void doGrantPass(String clientAppCode, String methodCode) throws UnifyException {
-        if (!getRemoteCallSystemAssetProvider().accessSystemAsset(clientAppCode, SystemAssetType.REMOTECALLMETHOD,
+        if (!getRemoteCallSystemAssetProvider().accessSystemAsset(clientAppCode, SystemAssetType.REMOTECALL_METHOD,
                 methodCode)) {
             throw new UnifyException(CommonModuleErrorConstants.APPLICATION_SERVICE_ACCESSDENIED, clientAppCode,
                     methodCode);

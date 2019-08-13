@@ -44,6 +44,11 @@ public enum NotificationType implements EnumConst {
         return code;
     }
 
+    @Override
+    public String defaultCode() {
+        return SYSTEM.code;
+    }
+
     public boolean internal() {
         return internal;
     }

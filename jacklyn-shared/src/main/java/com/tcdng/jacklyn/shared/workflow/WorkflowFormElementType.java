@@ -42,6 +42,11 @@ public enum WorkflowFormElementType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return FIELD.code;
+    }
+
     public static WorkflowFormElementType fromCode(String code) {
         return EnumUtils.fromCode(WorkflowFormElementType.class, code);
     }

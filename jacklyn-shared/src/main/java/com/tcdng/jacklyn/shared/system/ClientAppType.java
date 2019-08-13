@@ -41,6 +41,11 @@ public enum ClientAppType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return STANDARD.code;
+    }
+
     public static ClientAppType fromCode(String code) {
         return EnumUtils.fromCode(ClientAppType.class, code);
     }

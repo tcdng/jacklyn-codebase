@@ -41,6 +41,11 @@ public enum AssignmentStatus implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return ASSIGNED.code;
+    }
+
     public static AssignmentStatus fromCode(String code) {
         return EnumUtils.fromCode(AssignmentStatus.class, code);
     }

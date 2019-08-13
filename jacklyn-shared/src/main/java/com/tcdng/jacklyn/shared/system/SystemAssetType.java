@@ -29,7 +29,7 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("systemassettypelist")
 public enum SystemAssetType implements EnumConst {
 
-    REMOTECALLMETHOD("RCM");
+    REMOTECALL_METHOD("RCM");
 
     private final String code;
 
@@ -40,6 +40,11 @@ public enum SystemAssetType implements EnumConst {
     @Override
     public String code() {
         return this.code;
+    }
+
+    @Override
+    public String defaultCode() {
+        return REMOTECALL_METHOD.code;
     }
 
     public static SystemAssetType fromCode(String code) {

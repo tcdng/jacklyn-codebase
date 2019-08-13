@@ -223,7 +223,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         // Grant OS access to all remote calls.
         List<Long> systemAssetIdList =
                 systemService.findSystemAssetIds((SystemAssetQuery) new SystemAssetQuery()
-                        .type(SystemAssetType.REMOTECALLMETHOD).installed(Boolean.TRUE));
+                        .type(SystemAssetType.REMOTECALL_METHOD).installed(Boolean.TRUE));
         updateClientAppAssets(clientAppId, systemAssetIdList);
 
         // Return result

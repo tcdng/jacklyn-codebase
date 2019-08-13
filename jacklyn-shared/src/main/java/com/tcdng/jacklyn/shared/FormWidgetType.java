@@ -61,6 +61,11 @@ public enum FormWidgetType implements EnumConst {
         return code;
     }
 
+    @Override
+    public String defaultCode() {
+        return TEXT.code;
+    }
+
     public String uplType() {
         return uplType;
     }

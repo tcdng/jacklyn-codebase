@@ -41,6 +41,11 @@ public enum FileOutboxStatus implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NOT_SENT.code;
+    }
+
     public static FileOutboxStatus fromCode(String code) {
         return EnumUtils.fromCode(FileOutboxStatus.class, code);
     }

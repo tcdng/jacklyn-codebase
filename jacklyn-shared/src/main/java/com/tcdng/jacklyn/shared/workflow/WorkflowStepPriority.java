@@ -41,6 +41,11 @@ public enum WorkflowStepPriority implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NORMAL.code;
+    }
+
     public static WorkflowStepPriority fromCode(String code) {
         return EnumUtils.fromCode(WorkflowStepPriority.class, code);
     }

@@ -47,6 +47,11 @@ public enum MessageType implements EnumConst {
         return code;
     }
 
+    @Override
+    public String defaultCode() {
+        return INFORMATION.code;
+    }
+
     public String icon() {
         return icon;
     }

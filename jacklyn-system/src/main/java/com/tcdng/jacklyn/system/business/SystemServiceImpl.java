@@ -1414,13 +1414,13 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 if (goa != null) {
                     sysAssetQuery.clear();
                     SystemAsset oldSystemAsset =
-                            db().find(sysAssetQuery.type(SystemAssetType.REMOTECALLMETHOD).name(goa.name()));
+                            db().find(sysAssetQuery.type(SystemAssetType.REMOTECALL_METHOD).name(goa.name()));
                     String description = resolveApplicationMessage(goa.description());
                     if (oldSystemAsset == null) {
                         systemAsset.setModuleId(moduleId);
                         systemAsset.setName(goa.name());
                         systemAsset.setDescription(description);
-                        systemAsset.setType(SystemAssetType.REMOTECALLMETHOD);
+                        systemAsset.setType(SystemAssetType.REMOTECALL_METHOD);
                         db().create(systemAsset);
                     } else {
                         oldSystemAsset.setModuleId(moduleId);

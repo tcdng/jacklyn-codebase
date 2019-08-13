@@ -43,6 +43,11 @@ public enum RecordStatus implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return INACTIVE.code;
+    }
+
     public static RecordStatus fromCode(String code) {
         return EnumUtils.fromCode(RecordStatus.class, code);
     }

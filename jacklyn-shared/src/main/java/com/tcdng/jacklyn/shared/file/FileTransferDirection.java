@@ -41,6 +41,11 @@ public enum FileTransferDirection implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return DOWNLOAD.code;
+    }
+
     public static FileTransferDirection fromCode(String code) {
         return EnumUtils.fromCode(FileTransferDirection.class, code);
     }

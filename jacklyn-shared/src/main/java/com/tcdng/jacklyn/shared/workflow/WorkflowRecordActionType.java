@@ -42,6 +42,11 @@ public enum WorkflowRecordActionType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return READ.code;
+    }
+
     public boolean isUpdate() {
         return CREATE.equals(this) || UPDATE.equals(this);
     }

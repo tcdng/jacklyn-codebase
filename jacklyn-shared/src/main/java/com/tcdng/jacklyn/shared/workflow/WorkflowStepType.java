@@ -41,6 +41,11 @@ public enum WorkflowStepType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return START.code;
+    }
+
     public boolean isStart() {
         return START.equals(this);
     }

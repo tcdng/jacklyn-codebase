@@ -41,6 +41,11 @@ public enum NotificationStatus implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NOT_SENT.code;
+    }
+
     public static NotificationStatus fromCode(String code) {
         return EnumUtils.fromCode(NotificationStatus.class, code);
     }

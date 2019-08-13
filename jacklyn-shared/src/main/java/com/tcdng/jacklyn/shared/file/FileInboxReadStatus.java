@@ -41,6 +41,11 @@ public enum FileInboxReadStatus implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NOT_READ.code;
+    }
+
     public static FileInboxReadStatus fromCode(String code) {
         return EnumUtils.fromCode(FileInboxReadStatus.class, code);
     }

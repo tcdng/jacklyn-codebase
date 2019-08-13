@@ -42,6 +42,11 @@ public enum NotificationInboxReadStatus implements EnumConst  {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NOT_READ.code;
+    }
+
     public static NotificationStatus fromCode(String code) {
         return EnumUtils.fromCode(NotificationStatus.class, code);
     }

@@ -45,6 +45,11 @@ public enum DimensionType implements EnumConst {
         return code;
     }
 
+    @Override
+    public String defaultCode() {
+        return PERCENTAGE.code;
+    }
+
     public String symbol() {
         return symbol;
     }

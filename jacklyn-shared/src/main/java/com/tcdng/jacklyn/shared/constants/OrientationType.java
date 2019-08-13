@@ -42,6 +42,11 @@ public enum OrientationType  implements EnumConst {
         return code;
     }
 
+    @Override
+    public String defaultCode() {
+        return HORIZONTAL.code;
+    }
+
     public static OrientationType fromCode(String code) {
         return EnumUtils.fromCode(OrientationType.class, code);
     }

@@ -41,6 +41,11 @@ public enum BiometricType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return PHOTOGRAPH.code;
+    }
+
     public static BiometricType fromCode(String code) {
         return EnumUtils.fromCode(BiometricType.class, code);
     }

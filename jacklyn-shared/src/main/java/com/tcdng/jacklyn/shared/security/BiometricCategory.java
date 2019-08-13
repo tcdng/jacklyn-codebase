@@ -41,6 +41,11 @@ public enum BiometricCategory implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return USERS.code;
+    }
+
     public static BiometricCategory fromCode(String code) {
         return EnumUtils.fromCode(BiometricCategory.class, code);
     }

@@ -60,6 +60,11 @@ public enum ArchivingFieldType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return BLOB.code;
+    }
+
     public static ArchivingFieldType fromCode(String code) {
         return EnumUtils.fromCode(ArchivingFieldType.class, code);
     }
