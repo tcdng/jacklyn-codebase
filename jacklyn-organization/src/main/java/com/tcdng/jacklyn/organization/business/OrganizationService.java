@@ -76,7 +76,7 @@ public interface OrganizationService extends JacklynBusinessService {
      *            the criteria to use
      * @return the branch data if found otherwise null
      * @throws UnifyException
-     *             if an error occurs
+     *             if multiple records found. if an error occurs
      */
     Branch findBranch(BranchQuery query) throws UnifyException;
 
@@ -145,6 +145,17 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if department with ID is not found
      */
     Department findDepartment(Long departmentId) throws UnifyException;
+
+    /**
+     * Finds department by criteria.
+     * 
+     * @param query
+     *            the criteria to use
+     * @return the department data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. if an error occurs
+     */
+    Department findDepartment(DepartmentQuery query) throws UnifyException;
 
     /**
      * Finds departments by query.
@@ -277,6 +288,17 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if role with ID is not found
      */
     Role findRole(Long roleId) throws UnifyException;
+
+    /**
+     * Finds role by criteria.
+     * 
+     * @param query
+     *            the criteria to use
+     * @return the role data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. if an error occurs
+     */
+    Role findRole(RoleQuery query) throws UnifyException;
 
     /**
      * Gets document for specified role.

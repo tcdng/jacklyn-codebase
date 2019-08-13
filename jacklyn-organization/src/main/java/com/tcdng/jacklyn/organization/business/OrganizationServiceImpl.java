@@ -134,6 +134,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public Department findDepartment(DepartmentQuery query) throws UnifyException {
+        return db().find(query);
+    }
+
+    @Override
     public List<Department> findDepartments(DepartmentQuery query) throws UnifyException {
         return db().listAll(query);
     }
@@ -194,6 +199,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     @Override
     public Role findRole(Long roleId) throws UnifyException {
         return db().list(Role.class, roleId);
+    }
+
+    @Override
+    public Role findRole(RoleQuery query) throws UnifyException {
+        return db().find(query);
     }
 
     @Override

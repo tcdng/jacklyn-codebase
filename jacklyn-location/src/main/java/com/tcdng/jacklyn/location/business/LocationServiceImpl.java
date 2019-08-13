@@ -53,8 +53,8 @@ public class LocationServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public Zone findZone(String zoneCode) throws UnifyException {
-        return db().find(new ZoneQuery().name(zoneCode));
+    public Zone findZone(ZoneQuery query) throws UnifyException {
+        return db().find(query);
     }
 
     @Override
@@ -83,6 +83,11 @@ public class LocationServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public Country findCountry(CountryQuery query) throws UnifyException {
+        return db().find(query);
+    }
+
+    @Override
     public List<Country> findCountries(CountryQuery query) throws UnifyException {
         return db().listAll(query);
     }
@@ -105,6 +110,11 @@ public class LocationServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public State findState(Long stateId) throws UnifyException {
         return db().find(State.class, stateId);
+    }
+
+    @Override
+    public State findState(StateQuery query) throws UnifyException {
+        return db().find(query);
     }
 
     @Override

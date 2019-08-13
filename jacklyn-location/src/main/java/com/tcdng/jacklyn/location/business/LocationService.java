@@ -57,15 +57,15 @@ public interface LocationService extends JacklynBusinessService {
     Zone findZone(Long zoneId) throws UnifyException;
 
     /**
-     * Finds zone by code.
+     * Finds zone by query.
      * 
-     * @param zoneCode
-     *            the zone code
+     * @param query
+     *            the zone query
      * @return the zone data if found otherwise null
      * @throws UnifyException
-     *             if an error occurs
+     *             if multiple records matched by query. if an error occurs
      */
-    Zone findZone(String zoneCode) throws UnifyException;
+    Zone findZone(ZoneQuery query) throws UnifyException;
 
     /**
      * Finds zones by query.
@@ -123,6 +123,17 @@ public interface LocationService extends JacklynBusinessService {
     Country findCountry(Long countryId) throws UnifyException;
 
     /**
+     * Finds country by query.
+     * 
+     * @param query
+     *            the country query
+     * @return the country record if found otherwise null
+     * @throws UnifyException
+     *             if multiple records matched by query. if an error occurs
+     */
+    Country findCountry(CountryQuery query) throws UnifyException;
+
+    /**
      * Finds countries by query.
      * 
      * @param query
@@ -176,6 +187,17 @@ public interface LocationService extends JacklynBusinessService {
      *             if state with ID is not found
      */
     State findState(Long stateId) throws UnifyException;
+
+    /**
+     * Finds state by query.
+     * 
+     * @param query
+     *            the state query
+     * @return the state record if found otherwise null
+     * @throws UnifyException
+     *             if multiple records matched by query. if an error occurs
+     */
+    State findState(StateQuery query) throws UnifyException;
 
     /**
      * Finds states by query.
