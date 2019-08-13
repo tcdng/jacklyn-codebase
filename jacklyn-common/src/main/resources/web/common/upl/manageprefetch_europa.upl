@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$s{} components:$c{manageRecordPanel}
-    tableSerialNumbers:true
+    tableSerialNumbers:true tablePagination:true
     tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
 
 !ui-panel:manageRecordPanel style:$s{height:100%;}
@@ -30,7 +30,7 @@
     tableSerialNumbers:$f{tableSerialNumbers} tableBinding:recordList tableColumnList:$g{tableColumnList}
     tableRowSelectable:true tableRowEventHandler:$f{tableRowEventHandler}
     tableSelDependentList:$c{viewTblBtn}
-    tableWindowed:true tablePagination:true
+    tableWindowed:true tablePagination:$f{tablePagination}
     tableMultiSelect:$f{tableMultiSelect} tableMultiSelDependentList:$f{tableMultiSelDependentList}
     tableSortable:true
     tableHeaderEllipsis:$f{tableHeaderEllipsis}
