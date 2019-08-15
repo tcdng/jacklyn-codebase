@@ -64,6 +64,7 @@ import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.application.AbstractBootService;
 import com.tcdng.unify.core.application.BootInstallationInfo;
 import com.tcdng.unify.core.application.StartupShutdownHook;
+import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.report.ReportServer;
@@ -306,6 +307,10 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                     fc.setList(fa.list());
                     fc.setMask(fa.mask());
                     fc.setWidth(fa.widthRatio());
+                } else {
+                    if (Number.class.isAssignableFrom(field.getType())) {
+                        fc.sethAlign(HAlignType.RIGHT.name());
+                    }
                 }
 
                 if (description == null) {
