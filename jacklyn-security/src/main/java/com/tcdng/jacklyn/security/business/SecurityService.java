@@ -343,6 +343,17 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     byte[] findUserPhotograph(String userLoginId) throws UnifyException;
 
     /**
+     * Gets department ID list for specified user.
+     * 
+     * @param userLoginId
+     *            the user login ID
+     * @return the department ID list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException;
+
+    /**
      * Gets role ID list for specified user.
      * 
      * @param userId

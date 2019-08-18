@@ -86,6 +86,7 @@ import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.OneWayStringCryptograph;
 import com.tcdng.unify.core.security.PasswordGenerator;
 import com.tcdng.unify.core.system.UserSessionManager;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -405,6 +406,16 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException {
+        Set<Long> idSet = db().valueSet(Long.class, "departmentId", new UserRoleQuery().userLoginId(userLoginId));
+        if (!DataUtils.isBlank(idSet)) {
+            return new ArrayList<Long>(idSet);
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
     public List<Long> findUserRoleIds(Long userId) throws UnifyException {
         return db().valueList(Long.class, "roleId", new UserRoleQuery().userId(userId).orderById());
     }
@@ -616,8 +627,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             createUser(new User(SystemReservedUserConstants.ANONYMOUS_ID, "Anonymous",
                     SystemReservedUserConstants.ANONYMOUS_LOGINID, sysEmail, Boolean.FALSE));
         } else {
-            db().updateById(User.class, SystemReservedUserConstants.ANONYMOUS_ID,
-                    new Update().add("email", sysEmail));
+            db().updateById(User.class, SystemReservedUserConstants.ANONYMOUS_ID, new Update().add("email", sysEmail));
         }
 
         String adminEmail =
