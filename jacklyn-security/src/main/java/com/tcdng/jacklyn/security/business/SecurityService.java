@@ -35,7 +35,7 @@ import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.application.StartupShutdownHook;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 
 /**
  * Security business service.

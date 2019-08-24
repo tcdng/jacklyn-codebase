@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.tcdng.unify.core.operation.FilterConditionType;
+import com.tcdng.unify.core.criterion.FilterConditionType;
 import com.tcdng.unify.core.util.xml.adapter.FilterConditionTypeXmlAdapter;
 
 /**

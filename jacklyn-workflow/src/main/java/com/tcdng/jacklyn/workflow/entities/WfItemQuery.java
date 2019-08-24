@@ -19,10 +19,10 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
-import com.tcdng.unify.core.operation.Equal;
-import com.tcdng.unify.core.operation.IsNull;
-import com.tcdng.unify.core.operation.NotEqual;
-import com.tcdng.unify.core.operation.Or;
+import com.tcdng.unify.core.criterion.Equal;
+import com.tcdng.unify.core.criterion.IsNull;
+import com.tcdng.unify.core.criterion.NotEqual;
+import com.tcdng.unify.core.criterion.Or;
 
 /**
  * Workflow item query.
@@ -69,16 +69,15 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     }
 
     public WfItemQuery isUnheldOrHeldBy(String heldBy) {
-        return (WfItemQuery) add(new Or(new IsNull("heldBy"), new Equal("heldBy", heldBy)));
+        return (WfItemQuery) add(new Or().add(new IsNull("heldBy")).add(new Equal("heldBy", heldBy)));
     }
 
     public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
-        return (WfItemQuery) add(new Or(new Equal("participantType", WorkflowParticipantType.ALL),
+        return (WfItemQuery) add(new Or().add(new Equal("participantType", WorkflowParticipantType.ALL)).add(
                 new Equal("participantType", participantType)));
     }
 
     public WfItemQuery notForwardedBy(String userId) {
-        Or or = new Or(new NotEqual("forwardedBy", userId), new IsNull("forwardedBy"));
-        return (WfItemQuery) add(or);
+        return (WfItemQuery) add(new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
     }
 }

@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.organization.entities;
 import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
-import com.tcdng.unify.core.operation.OrBuilder;
+import com.tcdng.unify.core.criterion.OrBuilder;
 
 /**
  * Query class for roles.
@@ -59,10 +59,10 @@ public class RoleQuery extends BaseVersionedStatusEntityQuery<Role> {
     }
 
     public RoleQuery activeBefore(Date activeBefore) {
-        return (RoleQuery) add(new OrBuilder().lessEqual("activeBefore", activeBefore).isNull("activeBefore"));
+        return (RoleQuery) add(new OrBuilder().lessEqual("activeBefore", activeBefore).isNull("activeBefore").build());
     }
 
     public RoleQuery activeAfter(Date activeAfter) {
-        return (RoleQuery) add(new OrBuilder().greaterEqual("activeAfter", activeAfter).isNull("activeAfter"));
+        return (RoleQuery) add(new OrBuilder().greaterEqual("activeAfter", activeAfter).isNull("activeAfter").build());
     }
 }

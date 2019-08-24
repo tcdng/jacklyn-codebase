@@ -20,7 +20,7 @@ import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
-import com.tcdng.unify.core.operation.FilterConditionType;
+import com.tcdng.unify.core.criterion.FilterConditionType;
 
 /**
  * Workflow document classifier filter definition entity.

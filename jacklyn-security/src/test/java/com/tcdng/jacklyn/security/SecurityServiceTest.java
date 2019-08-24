@@ -52,7 +52,7 @@ import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 
 /**
  * Security business service tests.

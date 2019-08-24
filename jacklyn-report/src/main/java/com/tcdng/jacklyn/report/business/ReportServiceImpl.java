@@ -47,7 +47,7 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.constant.OrderType;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.report.Report;
 import com.tcdng.unify.core.report.ReportColumn;
 import com.tcdng.unify.core.report.ReportFormat;

@@ -65,7 +65,7 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Synchronized;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.TriState;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.util.DataUtils;
 
 /**
