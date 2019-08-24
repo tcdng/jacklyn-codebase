@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.common.data;
 
-import com.tcdng.unify.core.operation.Operator;
+import com.tcdng.unify.core.criterion.RestrictionType;
 
 /**
  * Report filter option.
@@ -25,7 +25,7 @@ import com.tcdng.unify.core.operation.Operator;
  */
 public class ReportFilterOptions {
 
-    private Operator op;
+    private RestrictionType op;
 
     private String tableName;
 
@@ -35,7 +35,7 @@ public class ReportFilterOptions {
 
     private Object param2;
 
-    public ReportFilterOptions(Operator op, String tableName, String columnName, Object param1, Object param2) {
+    public ReportFilterOptions(RestrictionType op, String tableName, String columnName, Object param1, Object param2) {
         this.op = op;
         this.tableName = tableName;
         this.columnName = columnName;
@@ -43,7 +43,7 @@ public class ReportFilterOptions {
         this.param2 = param2;
     }
 
-    public Operator getOp() {
+    public RestrictionType getOp() {
         return op;
     }
 

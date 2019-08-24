@@ -114,6 +114,8 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.criterion.Restriction;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.data.AggregateType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
@@ -126,8 +128,6 @@ import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
 import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceManager;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
-import com.tcdng.unify.core.operation.Criteria;
-import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.TwoWayStringCryptograph;
 import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
 import com.tcdng.unify.core.system.entities.ParameterDef;
@@ -429,7 +429,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public List<SystemControlState> findSystemControlStates(SystemParameterQuery query) throws UnifyException {
         List<SystemControlState> systemControlStateList = new ArrayList<SystemControlState>();
-        Criteria criteria = query.getCriteria();
+        Restriction criteria = query.getRestrictions();
         Query<SystemParameter> innerQuery =
                 query.copyNoCriteria().add(criteria).equals("control", Boolean.TRUE).order("name");
         int index = 0;

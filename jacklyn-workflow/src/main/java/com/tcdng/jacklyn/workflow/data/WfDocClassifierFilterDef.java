@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.workflow.data;
 
 import java.io.Serializable;
 
-import com.tcdng.unify.core.operation.FilterConditionType;
+import com.tcdng.unify.core.criterion.FilterConditionType;
 
 /**
  * Workflow document classifier filter definition.

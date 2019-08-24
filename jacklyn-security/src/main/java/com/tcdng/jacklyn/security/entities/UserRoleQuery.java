@@ -21,7 +21,7 @@ import java.util.Date;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.operation.OrBuilder;
+import com.tcdng.unify.core.criterion.OrBuilder;
 import com.tcdng.unify.core.util.CalendarUtils;
 
 /**
@@ -74,7 +74,7 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
 
     public UserRoleQuery roleActiveTime(Date date) throws UnifyException {
         date = CalendarUtils.getTimeOfDay(date);
-        return (UserRoleQuery) add(new OrBuilder().less("activeBefore", date).isNull("activeBefore"))
-                .add(new OrBuilder().greater("activeAfter", date).isNull("activeAfter"));
+        return (UserRoleQuery) add(new OrBuilder().less("activeBefore", date).isNull("activeBefore").build())
+                .add(new OrBuilder().greater("activeAfter", date).isNull("activeAfter").build());
     }
 }
