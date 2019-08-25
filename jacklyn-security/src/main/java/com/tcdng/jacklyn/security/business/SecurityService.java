@@ -128,6 +128,19 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     Long createBiometric(BiometricCategory category, BiometricType type, byte[] biometric) throws UnifyException;
 
     /**
+     * Validates user credentials.
+     * 
+     * @param loginId
+     *            the login ID
+     * @param password
+     *            the password
+     * @return the user record
+     * @throws UnifyException
+     *             if login ID or password is invalid
+     */
+    User validateCredentials(String loginId, String password) throws UnifyException;
+
+    /**
      * Login to application with login ID and password.
      * 
      * @param loginId

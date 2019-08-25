@@ -426,6 +426,21 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public User validateCredentials(String loginId, String password) throws UnifyException {
+        User user = db().list(new UserQuery().loginId(loginId));
+        if (user == null) {
+            throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
+        }
+
+        password = passwordCryptograph.encrypt(password);
+        if (!user.getPassword().equals(password)) {
+            throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
+        }
+
+        return user;
+    }
+
+    @Override
     public User login(String loginId, String password, Locale loginLocale) throws UnifyException {
         User user = db().list(new UserQuery().loginId(loginId));
         if (user == null) {
