@@ -285,7 +285,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         return (PageControllerSessionUtils) getComponent(CommonModuleNameConstants.PAGECONTROLLERSESSIONUTILS);
     }
 
-    protected abstract void prepareFetch() throws UnifyException;
+    protected abstract void prepareForPrefetch() throws UnifyException;
 
     protected abstract List<T> find() throws UnifyException;
 
@@ -357,7 +357,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     private String findRecords() throws UnifyException {
-        prepareFetch();
+        prepareForPrefetch();
         record = null;
         recordList = find();
         table.reset();
