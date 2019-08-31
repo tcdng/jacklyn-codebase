@@ -674,7 +674,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return Integer.valueOf((String) db()
                 .aggregate(AggregateType.COUNT,
                         new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
-                .get(0).getValue());
+                .getValue());
     }
 
     @Override
