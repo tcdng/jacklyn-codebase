@@ -43,7 +43,7 @@ public class SystemControlController extends AbstractSystemController {
     private List<SystemControlState> systemControlStateList;
 
     public SystemControlController() {
-        super(true, true); // Secured and read-only
+        super(true, false); // Secured and not read-only
     }
 
     @Action
