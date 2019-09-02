@@ -4,19 +4,20 @@
 // you may not use this file except in compliance with the License.
 
 !ui-systemcontrolpanel layout:$d{!ui-vertical} components:$c{systemControlTbl}
-    descriptionCaptionStyle:$s{width:200px;}
+    descriptionCaptionStyle:$s{width:320px;}
 
-!ui-table:systemControlTbl serialNumbers:false
-    rowSelectable:false windowed:false pagination:false multiSelect:false sortable:false
+!ui-table:systemControlTbl
+    rowSelectable:false windowed:false pagination:false multiSelect:false serialNumbers:true
     binding:$g{systemControlBinding} components:$c{controlDesc statusIndicator controlBtn}
 
 !ui-toggleimage:statusIndicator caption:$m{system.systemcontrol.status} binding:enabled
-    columnStyle:$s{width:48px;}
+    columnStyle:$s{width:80px;text-align:center;}
 !ui-label:controlDesc caption:$m{system.systemcontrol.control} binding:description
-    columnStyle:$f{descriptionCaptionStyle}
-!ui-togglebutton:controlBtn caption:$m{system.systemcontrol.action}
+    columnStyle:$f{descriptionCaptionStyle} sortable:true
+!ui-togglebutton:controlBtn styleClass:$s{ui-minitogglebutton} caption:$m{system.systemcontrol.action}
     onMessageKey:$m{button.disable} offMessageKey:$m{button.enable}
-    toggleBinding:enabled binding:index
+    toggleBinding:enabled
+    //binding:index
     eventHandler:$d{!ui-event event:onclick action:$c{toggleSystemControlAct}}
     columnStyle:$s{width:100px;text-align:center;}
      
