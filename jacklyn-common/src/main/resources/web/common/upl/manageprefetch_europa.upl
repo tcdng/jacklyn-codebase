@@ -62,7 +62,8 @@
     components:$c{itemOfLabel firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn}
     components:$f{moreCrudHeaderComponentList}
 !ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
-    components:$c{doneFrmBtn}
+    components:$c{saveNextFrmBtn saveCloseFrmBtn}
+    components:$c{cancelFrmBtn doneFrmBtn}
     components:$f{moreCrudFooterComponentList}
 
 //Common components
@@ -93,6 +94,12 @@
 !ui-button:lastFrmBtn styleClass:$e{jk-button} caption:$m{button.last}
     eventHandler:$d{!ui-event event:onclick action:$c{lastAct}}
         
+!ui-button:saveCloseFrmBtn styleClass:$e{jk-button} caption:$m{button.saveandclose}
+    eventHandler:$d{!ui-event event:onclick action:$c{saveCloseAct}}
+!ui-button:saveNextFrmBtn styleClass:$e{jk-button} caption:$m{button.saveandnext}
+    eventHandler:$d{!ui-event event:onclick action:$c{saveNextAct}}
+!ui-button:cancelFrmBtn styleClass:$e{jk-button-alert} caption:$m{button.cancel}
+    eventHandler:$d{!ui-event event:onclick action:$c{cancelAct}}
 !ui-button:doneFrmBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
     eventHandler:$d{!ui-event event:onclick action:$c{doneAct}}
    
@@ -103,7 +110,10 @@
 !ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents}
 !ui-post:nextAct path:$n{/nextRecord} components:$f{moreNavigationPushComponents}
 !ui-post:lastAct path:$n{/lastRecord} components:$f{moreNavigationPushComponents}
+!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{prefetchItemPanel} validations:$c{prefetchItemViewerVal} validations:$f{saveValidations}
+!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{prefetchItemPanel} validations:$c{prefetchItemViewerVal} validations:$f{saveValidations}
 !ui-post:doneAct path:$n{/done} components:$f{moreNavigationPushComponents}
+!ui-post:cancelAct path:$n{/cancel}
 
 // Validations
 !ui-validation:prefetchItemViewerVal components:$c{prefetchItemViewPanel}
