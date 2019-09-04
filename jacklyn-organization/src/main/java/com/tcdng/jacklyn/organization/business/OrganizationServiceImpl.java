@@ -184,6 +184,34 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public List<Branch> findHubBranchesByHub(Long hubId) throws UnifyException {
+        return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByBranch(Long branchId) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().id(branchId));
+        return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByHub(String hubCode) throws UnifyException {
+        return db().listAll(new BranchQuery().hubName(hubCode));
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByBranch(String branchCode) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().code(branchCode));
+        return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public Hub findHubByBranch(String branchCode) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().code(branchCode));
+        return db().list(Hub.class, hubId);
+    }
+
+    @Override
     public Long createRole(Role role) throws UnifyException {
         return (Long) db().create(role);
     }

@@ -33,6 +33,10 @@ public class BranchQuery extends BaseVersionedStatusEntityQuery<Branch> {
         return (BranchQuery) equals("hubId", hubId);
     }
 
+    public BranchQuery hubName(String hubName) {
+        return (BranchQuery) equals("hubName", hubName);
+    }
+
     public BranchQuery zoneId(Long zoneId) {
         return (BranchQuery) equals("zoneId", zoneId);
     }

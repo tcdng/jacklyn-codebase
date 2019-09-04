@@ -494,7 +494,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         sessionCtx.setUseDaylightSavings(sessionCtx.getTimeZone().inDaylightTime(now));
 
         // Login to session and set session attributes
-        userSessionManager.logIn(createUserToken(user));
+        userSessionManager.login(createUserToken(user));
         setSessionAttribute(JacklynSessionAttributeConstants.USERNAME, user.getFullName());
         String branchDesc = user.getBranchDesc();
         if (StringUtils.isBlank(branchDesc)) {
@@ -528,7 +528,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public void logout(boolean complete) throws UnifyException {
-        userSessionManager.logOut(complete);
+        userSessionManager.logout(complete);
     }
 
     @Override

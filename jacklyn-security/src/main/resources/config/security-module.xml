@@ -43,7 +43,8 @@
 	</notification-templates>
 	<privileges>
 		<privilege-group>
-			<privilege name="sec-appadmin" description="$m{security.privilege.appadmin}" />
+            <privilege name="sec-appadmin" description="$m{security.privilege.appadmin}" />
+            <privilege name="sec-hubadmin" description="$m{security.privilege.hubadmin}" />
 			<privilege name="sec-user-add" description="$m{security.privilege.user.add}" />
 			<privilege name="sec-user-view" description="$m{security.privilege.user.view}" />
 			<privilege name="sec-user-edit" description="$m{security.privilege.user.edit}" />
