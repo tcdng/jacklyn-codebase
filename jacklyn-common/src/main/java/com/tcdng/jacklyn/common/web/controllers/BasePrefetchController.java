@@ -478,8 +478,6 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         setVisible("doneFrmBtn", false);
         setPageValidationEnabled(false);
 
-        setDisabled("searchPanel", true);
-
         switch (this.mode) {
             case ManageRecordModifier.MODIFY:
                 setVisible("saveNextFrmBtn", true);
