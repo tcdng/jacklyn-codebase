@@ -29,8 +29,8 @@ import com.tcdng.unify.web.ui.container.Form;
 @UplBinding("web/common/upl/manageprefetchformviewer.upl")
 public abstract class BaseFormPrefetchController<T extends Entity, U> extends BasePrefetchController<T, U> {
 
-    public BaseFormPrefetchController(Class<T> entityClass, String hint, boolean secure) {
-        super(entityClass, hint, secure);
+    public BaseFormPrefetchController(Class<T> entityClass, String hint, int modifier) {
+        super(entityClass, hint, modifier);
     }
 
     @Override

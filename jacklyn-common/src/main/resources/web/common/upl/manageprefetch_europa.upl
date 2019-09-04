@@ -29,7 +29,7 @@
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}  heights:$l{100%}}
     tableSerialNumbers:$f{tableSerialNumbers} tableBinding:recordList tableColumnList:$g{tableColumnList}
     tableRowSelectable:true tableRowEventHandler:$f{tableRowEventHandler}
-    tableSelDependentList:$c{viewTblBtn}
+    tableSelDependentList:$c{editTblBtn viewTblBtn}
     tableWindowed:true tablePagination:$f{tablePagination}
     tableMultiSelect:$f{tableMultiSelect} tableMultiSelDependentList:$f{tableMultiSelDependentList}
     tableSortable:true
@@ -40,7 +40,7 @@
 !ui-panel:actionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
     components:$c{actionPanel reportPanel}
 !ui-panel:actionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
-    components:$c{viewTblBtn}
+    components:$c{viewTblBtn editTblBtn}
     components:$f{moreTableActionComponentList}
     components:$c{doneTblBtn}
 !ui-panel:reportPanel layout:$d{!ui-vertical style:$s{width:100%;}}
@@ -72,6 +72,8 @@
 !ui-label:itemOfLabel styleClass:$e{jk-mildlabel} binding:itemCountLabel
 
 //Action buttons    
+!ui-button:editTblBtn styleClass:$e{jk-button} privilege:$f{editPrivilege} caption:$m{button.edit}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareEditAct}}
 !ui-button:viewTblBtn styleClass:$e{jk-button} privilege:$f{viewPrivilege} caption:$m{button.view}
     eventHandler:$d{!ui-event event:onclick action:$c{prepareViewAct}}
 !ui-button:doneTblBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
@@ -95,6 +97,7 @@
     eventHandler:$d{!ui-event event:onclick action:$c{doneAct}}
    
 //CRUD actions
+!ui-post:prepareEditAct path:$n{/prepareUpdateRecord} components:$c{tablePanel}
 !ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel}
 !ui-post:firstAct path:$n{/firstRecord} components:$f{moreNavigationPushComponents}
 !ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents}

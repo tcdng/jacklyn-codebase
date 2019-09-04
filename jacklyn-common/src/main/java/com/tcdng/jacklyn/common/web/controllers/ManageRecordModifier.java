@@ -35,6 +35,8 @@ public final class ManageRecordModifier {
     public static final int REPORTABLE = 0x00000400;
     public static final int SEARCH_ON_OPEN = 0x00000800;
     public static final int ALTERNATE_SAVE = 0x00001000;
+    public static final int INIT_DATE_RANGE = 0x00002000;
+    public static final int LIMIT_DATE_RANGE = 0x00003000;
 
     public static final int CRUD = ADD | VIEW | MODIFY | DELETE;
     public static final int CLIPBOARD = COPY | PASTE;
@@ -85,5 +87,13 @@ public final class ManageRecordModifier {
 
     public static boolean isAlternateSave(int modifier) {
         return (ALTERNATE_SAVE & modifier) != 0;
+    }
+
+    public static boolean isInitDateRange(int modifier) {
+        return (INIT_DATE_RANGE & modifier) != 0;
+    }
+
+    public static boolean isLimitDateRange(int modifier) {
+        return (LIMIT_DATE_RANGE & modifier) != 0;
     }
 }

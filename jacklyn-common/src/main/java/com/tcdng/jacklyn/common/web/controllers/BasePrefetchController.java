@@ -35,6 +35,7 @@ import com.tcdng.unify.core.data.Describable;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
@@ -82,6 +83,10 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     private Class<T> entityClass;
 
+    private int modifier;
+    
+    private int mode;
+
     private String itemCountLabel;
 
     private String modeDescription;
@@ -94,15 +99,18 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     private T record;
 
+    private T oldRecord;
+
     private Table table;
 
     private String recordHintName;
 
     private boolean describable;
 
-    public BasePrefetchController(Class<T> entityClass, String hint, boolean secure) {
-        super(secure, false);
+    public BasePrefetchController(Class<T> entityClass, String hint, int modifier) {
+        super(ManageRecordModifier.isSecure(modifier), false);
         this.entityClass = entityClass;
+        this.modifier = modifier;
         recordHintName = hint;
         describable = Describable.class.isAssignableFrom(entityClass);
     }
@@ -116,37 +124,65 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     @Action
     public String prepareViewRecord() throws UnifyException {
-        prepareView();
+        prepareView(ManageRecordModifier.VIEW);
         logUserEvent(EventType.VIEW, record, false);
         return getSwitchItemViewMapping();
+    }
+
+    @Action
+    public String prepareUpdateRecord() throws UnifyException {
+        prepareView(ManageRecordModifier.MODIFY);
+        oldRecord = ReflectUtils.shallowBeanCopy(record);
+        return getSwitchItemViewMapping();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Action
+    public String updateAndNextRecord() throws UnifyException {
+        doUpdate();
+
+        record = find((U) record.getId());
+        recordList.set(table.getViewIndex(), record);
+
+        if (table.isViewIndexAtLast()) {
+            return done();
+        }
+
+        return nextRecord();
+    }
+
+    @Action
+    public String updateAndCloseRecord() throws UnifyException {
+        doUpdate();
+        return done();
     }
 
     @Action
     public String firstRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(0);
-        return prepareViewRecord();
+        return performModeAction();
     }
 
     @Action
     public String previousRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(table.getViewIndex() - 1);
-        return prepareViewRecord();
+        return performModeAction();
     }
 
     @Action
     public String nextRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(table.getViewIndex() + 1);
-        return prepareViewRecord();
+        return performModeAction();
     }
 
     @Action
     public String lastRecord() throws UnifyException {
         onLoseView(record);
         table.setViewIndex(recordList.size() - 1);
-        return prepareViewRecord();
+        return performModeAction();
     }
 
     @Action
@@ -255,6 +291,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     protected void onClosePage() throws UnifyException {
         table = null;
         recordList = null;
+        oldRecord = null;
         record = null;
     }
 
@@ -291,6 +328,8 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     protected abstract T find(U id) throws UnifyException;
 
+    protected abstract int update(T record) throws UnifyException;
+
     protected abstract void setItemViewerEditable(boolean editable) throws UnifyException;
 
     protected T getSelectedRecord() throws UnifyException {
@@ -324,6 +363,9 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     protected void updateSearch() throws UnifyException {
+        setVisible("editTblBtn", ManageRecordModifier.isEditable(modifier));
+        setVisible("viewTblBtn", ManageRecordModifier.isViewable(modifier));
+
         manageReportable();
     }
 
@@ -372,6 +414,16 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         return "refreshtable";
     }
 
+    private void doUpdate() throws UnifyException {
+        int result = update(record);
+        if (result > 0) {
+            logUserEvent(EventType.UPDATE, oldRecord, record);
+            hintUser("$m{hint.record.update.success}", recordHintName);
+        } else {
+            hintUser("$m{hint.record.updatetoworkflow.success}", recordHintName);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private void manageReportable() throws UnifyException {
         boolean isReportable = !getCommonReportProvider().isReportable(entityClass.getName());
@@ -399,7 +451,8 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     @SuppressWarnings("unchecked")
-    private void prepareView() throws UnifyException {
+    private void prepareView(int mode) throws UnifyException {
+        this.mode = mode;
         int index = table.getViewIndex();
         record = find((U) recordList.get(index).getId());
         recordList.set(index, record);
@@ -418,14 +471,54 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
             itemCountLabel = getSessionMessage("label.itemcount", viewIndex + 1, recordList.size());
         }
 
-        // Update mode description
-        modeDescription = getSessionMessage("managerecord.mode.view", recordHintName);
-        modeStyle = EventType.VIEW.colorMode();
+        // Action buttons
+        setVisible("saveNextFrmBtn", false);
+        setVisible("saveCloseFrmBtn", false);
+        setVisible("cancelFrmBtn", false);
+        setVisible("doneFrmBtn", false);
+        setPageValidationEnabled(false);
 
-        // Set view mode
-        setItemViewerEditable(false);
+        setDisabled("searchPanel", true);
+
+        switch (this.mode) {
+            case ManageRecordModifier.MODIFY:
+                setVisible("saveNextFrmBtn", true);
+                setVisible("saveCloseFrmBtn", true);
+                setItemViewerEditable(true);
+                setPageValidationEnabled(true);
+                setVisible("cancelFrmBtn", true);
+                
+                modeDescription = getSessionMessage("managerecord.mode.modify", recordHintName);
+                modeStyle = EventType.UPDATE.colorMode();
+                break;
+            case ManageRecordModifier.VIEW:
+                setItemViewerEditable(false);
+                setVisible("doneFrmBtn", true);
+                
+                modeDescription = getSessionMessage("managerecord.mode.view", recordHintName);
+                modeStyle = EventType.VIEW.colorMode();
+               break;
+            default:
+                break;
+        }
         
         // Call on update item viewer
         onPrepareItemViewer(record);
     }
+    
+
+    private String performModeAction() throws UnifyException {
+        String result = null;
+        switch (this.mode) {
+            case ManageRecordModifier.MODIFY:
+                return prepareUpdateRecord();
+            case ManageRecordModifier.VIEW:
+                return prepareViewRecord();
+            default:
+                break;
+        }
+        return result;
+    }
+
+    
 }
