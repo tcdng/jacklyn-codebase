@@ -365,7 +365,6 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      *             if an error occurs
      */
     List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException;
-
     /**
      * Gets role ID list for specified user.
      * 

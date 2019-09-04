@@ -85,7 +85,7 @@ public interface OrganizationService extends JacklynBusinessService {
      * 
      * @param query
      *            the branch query
-     * @return the list of branchs found
+     * @return the list of branches found
      * @throws UnifyException
      *             if an error occurs
      */
@@ -255,6 +255,61 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteHub(Long id) throws UnifyException;
+
+    /**
+     * Finds hub branches by hub ID.
+     * 
+     * @param hubId
+     *            the hub ID
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByHub(Long hubId) throws UnifyException;
+
+    /**
+     * Finds hub branches by branch ID.
+     * 
+     * @param branchId
+     *            the branch ID
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByBranch(Long branchId) throws UnifyException;
+
+    /**
+     * Finds hub branches by hub code.
+     * 
+     * @param hubCode
+     *            the hub code
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByHub(String hubCode) throws UnifyException;
+
+    /**
+     * Finds hub branches by branch code.
+     * 
+     * @param branchCode
+     *            the branch code
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByBranch(String branchCode) throws UnifyException;
+
+    /**
+     * Finds hub by branch code.
+     * 
+     * @param branchCode
+     *            the branch code
+     * @return the hub
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Hub findHubByBranch(String branchCode) throws UnifyException;
 
     /**
      * Creates a new role.

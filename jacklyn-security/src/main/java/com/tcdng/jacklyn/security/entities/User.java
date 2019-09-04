@@ -103,6 +103,15 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ListOnly(key = "branchId", property = "timeZone")
     private String branchTimeZone;
 
+    @ListOnly(key = "branchId", property = "zoneId")
+    private Long zoneId;
+
+    @ListOnly(key = "branchId", property = "stateId")
+    private Long stateId;
+
+    @ListOnly(key = "branchId", property = "hubId")
+    private Long hubId;
+
     @ListOnly(key = "themeId", property = "description")
     private String themeDesc;
 
@@ -294,5 +303,29 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setSupervisor(Boolean supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public Long getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
+    }
+
+    public Long getHubId() {
+        return hubId;
+    }
+
+    public void setHubId(Long hubId) {
+        this.hubId = hubId;
     }
 }
