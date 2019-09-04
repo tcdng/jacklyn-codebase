@@ -27,11 +27,11 @@
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:zoneDesc caption:$m{organization.branch.zone} binding:zoneDesc columnStyle:$s{width:180px;} sortable:true
+!ui-label:zoneDesc caption:$m{organization.branch.zone} binding:zoneDesc columnStyle:$s{width:120px;} sortable:true
 !ui-label:code caption:$m{organization.branch.code} binding:code columnStyle:$s{width:120px;} sortable:true
 !ui-label:sortCode caption:$m{organization.branch.sortcode} binding:sortCode columnStyle:$s{width:120px;} sortable:true
-!ui-label:description caption:$m{organization.branch.description} binding:description  columnStyle:$s{width:250px;} sortable:true
-!ui-label:timeZone caption:$m{organization.branch.timezone} binding:timeZone  columnStyle:$s{width:180px;} sortable:true
+!ui-label:description caption:$m{organization.branch.description} binding:description  columnStyle:$s{width:220px;} sortable:true
+!ui-label:timeZone caption:$m{organization.branch.timezone} binding:timeZone  columnStyle:$s{width:140px;} sortable:true
 !ui-label:stateDesc caption:$m{organization.branch.state} binding:stateDesc columnStyle:$s{width:100px;} sortable:true
 !ui-label:hubDesc caption:$m{organization.branch.hub} binding:hubDesc columnStyle:$s{width:100px;} sortable:true
 !ui-label:statusDesc caption:$m{organization.branch.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
