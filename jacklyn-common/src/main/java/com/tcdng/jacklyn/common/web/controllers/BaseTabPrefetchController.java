@@ -30,8 +30,8 @@ import com.tcdng.unify.core.database.Entity;
 @UplBinding("web/common/upl/manageprefetchtabviewer.upl")
 public abstract class BaseTabPrefetchController<T extends Entity, U> extends BasePrefetchController<T, U> {
 
-    public BaseTabPrefetchController(Class<T> entityClass, String hint, boolean secure) {
-        super(entityClass, hint, secure);
+    public BaseTabPrefetchController(Class<T> entityClass, String hint, int modifier) {
+        super(entityClass, hint, modifier);
     }
 
     @Override
