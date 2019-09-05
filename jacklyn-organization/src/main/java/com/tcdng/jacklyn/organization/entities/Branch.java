@@ -35,9 +35,12 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @version 1.0
  */
 @Tooling(name = "branch", description = "Branch")
-@Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
+@Managed(
+        module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
         auditable = true)
-@Table(name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }) })
+@Table(
+        name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }),
+                @UniqueConstraint({ "sortCode" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
     @ForeignKey(State.class)
@@ -58,7 +61,7 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
     @Column(name = "SORT_CD", length = 32)
     private String sortCode;
 
-    @Column(name="HEAD_OFFICE_FG")
+    @Column(name = "HEAD_OFFICE_FG")
     private Boolean headOffice;
 
     @ListOnly(key = "stateId", property = "code")
@@ -84,7 +87,7 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     @ListOnly(key = "hubId", property = "description")
     private String hubDesc;
-   
+
     @Override
     public Object getBatchId() {
         return null;
