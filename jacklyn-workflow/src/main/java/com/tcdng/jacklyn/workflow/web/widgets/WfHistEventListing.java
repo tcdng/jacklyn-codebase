@@ -33,7 +33,7 @@ import com.tcdng.unify.web.ui.AbstractWidget;
  */
 @Component("ui-wfhisteventlisting")
 @UplAttributes({ @UplAttribute(name = "timeFormatter", type = Formatter.class,
-        defaultValue = "$d{!datetimeformat style:long}") })
+        defaultVal = "$d{!datetimeformat style:long}") })
 public class WfHistEventListing extends AbstractWidget {
 
     @SuppressWarnings("unchecked")

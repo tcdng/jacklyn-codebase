@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @Component(name = "ui-memoryutilizationportlet", description = "$m{system.memoryutilization.portlet}")
 @UplBinding("web/system/upl/memoryutilizationportletpanel.upl")
 @UplAttributes({
-        @UplAttribute(name = "provider", type = String.class, defaultValue = "memoryutilization-portletprovider") })
+        @UplAttribute(name = "provider", type = String.class, defaultVal = "memoryutilization-portletprovider") })
 public class MemoryUtilizationPortletPanel extends AbstractSimpleDialPortletPanel {
 
 }
