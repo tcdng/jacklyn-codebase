@@ -31,7 +31,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @Component(name = "ui-usersonlineportlet", description = "$m{security.usersonline.portlet}")
 @UplBinding("web/security/upl/usersonlineportletpanel.upl")
 @UplAttributes({
-        @UplAttribute(name = "provider", type = String.class, defaultValue = "usersonline-portletprovider") })
+        @UplAttribute(name = "provider", type = String.class, defaultVal = "usersonline-portletprovider") })
 public class UsersOnlinePortletPanel extends AbstractQuickPercentagePortletPanel {
 
 }
