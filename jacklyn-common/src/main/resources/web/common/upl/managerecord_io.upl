@@ -53,14 +53,18 @@
     components:$c{crudBasePanel crudActionsGrpPanel}
 
 !ui-panel:crudBasePanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
-    components:$c{maintainTypeLabel crudViewPanel}
+    components:$c{maintainTypeLabelPanel crudViewPanel}
 
+// Top Label Panel
+!ui-panel:maintainTypeLabelPanel layout:$d{!ui-horizontal style:$s{width:100%;}} components:$c{maintainTypeLabel itemOfLabel}
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} binding:modeDescription styleClassBinding:modeStyle
+!ui-label:itemOfLabel styleClass:$e{jk-countlabel} binding:itemCountLabel
 
+// Crud Action Panel
 !ui-panel:crudActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
     components:$c{topActionPanel bottomActionPanel}
 !ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
-    components:$c{itemOfLabel pasteFrmBtn firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn copyFrmBtn}
+    components:$c{pasteFrmBtn firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn copyFrmBtn}
     components:$f{moreCrudHeaderComponentList}
 !ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{createNextFrmBtn createCloseFrmBtn saveNextFrmBtn saveCloseFrmBtn deleteFrmBtn}
@@ -69,9 +73,6 @@
 
 //Common components
 !ui-hidden:frmId binding:id
-
-//Labels
-!ui-label:itemOfLabel styleClass:$e{jk-mildlabel} binding:itemCountLabel
 
 //Action buttons    
 !ui-button:addTblBtn styleClass:$e{jk-button} privilege:$f{addPrivilege} caption:$m{button.add}
