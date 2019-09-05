@@ -12,7 +12,7 @@
     viewPrivilege:$s{sys-menuitemview}
 
 //Search
-!ui-select:searchMenuId caption:$m{system.menuitem.menucaption} binding:searchMenuId list:menulist
+!ui-select:searchMenuId caption:$m{system.menuitem.menucaption} binding:searchMenuId list:menulist formatter:$d{!messageformat}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.menuitem.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
