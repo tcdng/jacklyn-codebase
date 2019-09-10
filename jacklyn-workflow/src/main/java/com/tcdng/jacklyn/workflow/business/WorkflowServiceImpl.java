@@ -83,7 +83,6 @@ import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.jacklyn.workflow.data.WfAttachmentCheckDef;
 import com.tcdng.jacklyn.workflow.data.WfDocAttachmentDef;
-import com.tcdng.jacklyn.workflow.data.WfDocBeanMappingDef;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierDef;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierFilterDef;
 import com.tcdng.jacklyn.workflow.data.WfDocDef;
@@ -157,16 +156,15 @@ import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericService;
-import com.tcdng.unify.core.constant.DataType;
 import com.tcdng.unify.core.constant.FrequencyUnit;
 import com.tcdng.unify.core.constant.RequirementType;
 import com.tcdng.unify.core.criterion.Update;
+import com.tcdng.unify.core.data.BeanMappingConfig;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.data.PackableDocConfig;
-import com.tcdng.unify.core.data.PackableDocConfig.FieldConfig;
-import com.tcdng.unify.core.data.PackableDocRWConfig;
+import com.tcdng.unify.core.data.PackableDocConfig.Builder;
 import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskSetup;
@@ -240,15 +238,20 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             docGlobalName);
                 }
 
+                // Construct packable document configuration
                 Long wfDocId = wfDoc.getId();
+                PackableDocConfig.Builder pdcb = PackableDocConfig.newBuilder(docGlobalName);
+                Map<String, ComplexFieldConfigBuilderInfo> complexFieldConfigBuilders =
+                        new HashMap<String, ComplexFieldConfigBuilderInfo>();
+
                 // Fields
-                List<FieldConfig> fieldConfigList = new ArrayList<FieldConfig>();
                 int size = wfDoc.getFieldList().size();
                 for (int i = 0; i < size; i++) {
                     WfDocField wfDocField = wfDoc.getFieldList().get(i);
-                    DataType dataType = wfDocField.getDataType();
-                    if (dataType == null) {
-                        List<FieldConfig> subFieldConfigList = new ArrayList<FieldConfig>();
+                    if (wfDocField.getDataType() == null) { // Complex
+                        String complexFieldName = wfDocField.getName();
+                        PackableDocConfig.Builder cfpdcb =
+                                PackableDocConfig.newBuilder(StringUtils.dotify(docGlobalName, complexFieldName));
                         for (i++; i < size; i++) {
                             WfDocField subWfDocField = wfDoc.getFieldList().get(i);
                             if (subWfDocField.getParentName() == null) {
@@ -256,33 +259,43 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                 break;
                             }
 
-                            subFieldConfigList
-                                    .add(new FieldConfig(subWfDocField.getName(), subWfDocField.getDataType()));
+                            cfpdcb.addFieldConfig(subWfDocField.getName(), subWfDocField.getDataType(),
+                                    subWfDocField.getList());
                         }
 
-                        fieldConfigList.add(new FieldConfig(wfDocField.getName(), subFieldConfigList));
+                        complexFieldConfigBuilders.put(complexFieldName,
+                                new ComplexFieldConfigBuilderInfo(cfpdcb, wfDocField.getList()));
                     } else {
-                        fieldConfigList.add(new FieldConfig(wfDocField.getName(), dataType));
+                        pdcb.addFieldConfig(wfDocField.getName(), wfDocField.getDataType(), wfDocField.getList());
                     }
                 }
 
                 // Bean mappings
-                List<WfDocBeanMappingDef> beanMappingList = new ArrayList<WfDocBeanMappingDef>();
+                Map<String, Class<? extends Document>> beanClassByMapping =
+                        new HashMap<String, Class<? extends Document>>();
                 for (WfDocBeanMapping wfDocBeanMapping : wfDoc.getBeanMappingList()) {
-                    PackableDocRWConfig.FieldMapping[] fieldMappings =
-                            new PackableDocRWConfig.FieldMapping[wfDocBeanMapping.getFieldMappingList().size()];
-                    for (int i = 0; i < fieldMappings.length; i++) {
-                        WfDocFieldMapping wfDocFieldMapping = wfDocBeanMapping.getFieldMappingList().get(i);
-                        fieldMappings[i] =
-                                new PackableDocRWConfig.FieldMapping(wfDocFieldMapping.getDocFieldName(),
-                                        wfDocFieldMapping.getBeanFieldName());
+                    Class<? extends Document> beanClass =
+                            (Class<? extends Document>) ReflectUtils.getClassForName(wfDocBeanMapping.getBeanType());
+                    BeanMappingConfig.Builder bcmb = BeanMappingConfig.newBuilder(beanClass);
+                    for (WfDocFieldMapping wfDocFieldMapping : wfDocBeanMapping.getFieldMappingList()) {
+                        bcmb.addMapping(wfDocFieldMapping.getDocFieldName(), wfDocFieldMapping.getBeanFieldName());
                     }
 
-                    Class<? extends Document> beanType =
-                            (Class<? extends Document>) ReflectUtils.getClassForName(wfDocBeanMapping.getBeanType());
-                    beanMappingList.add(new WfDocBeanMappingDef(wfDocBeanMapping.getName(),
-                            wfDocBeanMapping.getDescription(), new PackableDocRWConfig(beanType, fieldMappings),
-                            wfDocBeanMapping.getReceptacleMapping(), wfDocBeanMapping.getPrimaryMapping()));
+                    PackableDocConfig.Builder targetcb = null;
+                    if (!StringUtils.isBlank(wfDocBeanMapping.getComplexFieldName())) {
+                        targetcb = complexFieldConfigBuilders.get(wfDocBeanMapping.getComplexFieldName()).getCpdcb();
+                    } else {
+                        targetcb = pdcb;
+                        beanClassByMapping.put(wfDocBeanMapping.getName(), beanClass);
+                    }
+
+                    targetcb.addBeanConfig(bcmb.build());
+                }
+
+                // End construct packable document configuration
+                for (Map.Entry<String, ComplexFieldConfigBuilderInfo> entry : complexFieldConfigBuilders.entrySet()) {
+                    ComplexFieldConfigBuilderInfo ccb = entry.getValue();
+                    pdcb.addComplexFieldConfig(entry.getKey(), ccb.getCpdcb().build(), ccb.isList());
                 }
 
                 // Attachments
@@ -367,9 +380,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                 List<StringToken> itemDescFormat = StringUtils.breakdownParameterizedString(wfDoc.getItemDescFormat());
                 return new WfDocDef(wfDocId, docNames.getCategoryName(), docGlobalName, wfDoc.getName(),
-                        wfDoc.getDescription(), new PackableDocConfig(docGlobalName, fieldConfigList),
-                        resolveUTC(wfDoc.getWfCategoryUpdateDt()), wfFormDef, itemDescFormat, beanMappingList,
-                        attachmentList, classifierList);
+                        wfDoc.getDescription(), pdcb.build(), resolveUTC(wfDoc.getWfCategoryUpdateDt()), wfFormDef,
+                        itemDescFormat, beanClassByMapping, attachmentList, classifierList);
             }
 
         };
@@ -455,7 +467,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             recordActionList.add(new WfRecordActionDef(wfRecordAction.getName(),
                                     wfRecordAction.getDescription(), wfRecordAction.getDocName(),
                                     wfRecordAction.getActionType(), wfTemplateDocDefs.get(wfRecordAction.getDocName())
-                                            .getWfDocDef().getWfDocBeanMappingDef(wfRecordAction.getDocMappingName())));
+                                            .getWfDocDef().getMappingBeanClass(wfRecordAction.getDocMappingName())));
                         }
                     }
 
@@ -785,7 +797,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         UserToken userToken = getUserToken();
         return new ManualWfItem(manualInitDef.getWfStepDef(), wfProcessDef.getWfTemplateDocDef(), processGlobalName,
                 userToken.getBranchCode(), userToken.getDepartmentCode(),
-                new PackableDoc(wfProcessDef.getWfDocDef().getDocConfig()).preset());
+                new PackableDoc(wfProcessDef.getWfDocDef().getDocConfig()));
     }
 
     @Override
@@ -821,7 +833,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Create and populate packable document
         PackableDoc pDoc = new PackableDoc(wfDocDef.getDocConfig(), wfStepDef.isAudit());
         pDoc.setId(document.getId());
-        pDoc.readFrom(wfDocDef.getReceptacleWfDocBeanMappingDef(document.getClass()).getRwConfig(), document);
+        pDoc.readFrom(document);
 
         // Submit to workflow
         return submitToReceptacle(wfProcessDef, wfStepDef, document.getBranchCode(), document.getDepartmentCode(),
@@ -840,7 +852,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Create and populate packable document
             PackableDoc pDoc = new PackableDoc(wfDocDef.getDocConfig(), wfStepDef.isAudit());
             pDoc.setId(document.getId());
-            pDoc.readFrom(wfDocDef.getReceptacleWfDocBeanMappingDef(document.getClass()).getRwConfig(), document);
+            pDoc.readFrom(document);
 
             // Submit to workflow
             Long wfItemId =
@@ -973,7 +985,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         InteractWfItem workflowItem =
                 new InteractWfItem(wfStepDef, wfTemplateDocDef, wfItem.getProcessGlobalName(), wfItem.getBranchCode(),
                         wfItem.getDepartmentCode(), wfItemId, wfItem.getWfItemHistId(), wfItem.getWfHistEventId(),
-                        wfItem.getDescription(), title, wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
+                        wfItem.getDescription(), title, wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(),
+                        pd);
 
         return workflowItem;
     }
@@ -1376,6 +1389,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfDocField.setName(wfDocFieldConfig.getName());
                 wfDocField.setDescription(resolveApplicationMessage(wfDocFieldConfig.getDescription()));
                 wfDocField.setDataType(wfDocFieldConfig.getDataType());
+                wfDocField.setList(wfDocFieldConfig.isList());
                 fieldList.add(wfDocField);
             }
         }
@@ -1388,6 +1402,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfDocField.setName(wfDocComplexFieldConfig.getName());
                 wfDocField.setDescription(resolveApplicationMessage(wfDocComplexFieldConfig.getDescription()));
                 wfDocField.setDataType(wfDocComplexFieldConfig.getDataType());
+                wfDocField.setList(wfDocComplexFieldConfig.isList());
                 fieldList.add(wfDocField);
 
                 for (WfFieldConfig wfDocFieldConfig : wfDocComplexFieldConfig.getWfFieldConfigList()) {
@@ -1396,6 +1411,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfDocField.setName(wfDocFieldConfig.getName());
                     wfDocField.setDescription(resolveApplicationMessage(wfDocFieldConfig.getDescription()));
                     wfDocField.setDataType(wfDocFieldConfig.getDataType());
+                    wfDocField.setList(wfDocFieldConfig.isList());
                     fieldList.add(wfDocField);
                 }
             }
@@ -1464,10 +1480,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     .getBeanMappingList()) {
                 WfDocBeanMapping wfDocBeanMapping = new WfDocBeanMapping();
                 wfDocBeanMapping.setName(wfDocBeanMappingConfig.getName());
+                wfDocBeanMapping.setComplexFieldName(wfDocBeanMappingConfig.getComplexFieldName());
                 wfDocBeanMapping.setDescription(resolveApplicationMessage(wfDocBeanMappingConfig.getDescription()));
                 wfDocBeanMapping.setBeanType(wfDocBeanMappingConfig.getBeanType());
-                wfDocBeanMapping.setReceptacleMapping(wfDocBeanMappingConfig.getReceptacleMapping());
-                wfDocBeanMapping.setPrimaryMapping(wfDocBeanMappingConfig.getPrimaryMapping());
 
                 List<WfDocFieldMapping> fieldMappingList = new ArrayList<WfDocFieldMapping>();
                 for (WfFieldMappingConfig wfDocFieldMappingConfig : wfDocBeanMappingConfig.getFieldMappingList()) {
@@ -1768,11 +1783,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Push to step
         WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
-        String description = packableDoc.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat());
+        String description = WfNameUtils.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat(), packableDoc);
         InteractWfItem intWfItem =
                 new InteractWfItem(trgWfStepDef, wfTemplateDocDef, wfProcessDef.getGlobalName(), branchCode,
-                        departmentCode, wfItemId, null, null, description, null, wfItem.getCreateDt(), wfItem.getStepDt(),
-                        wfItem.getHeldBy(), packableDoc);
+                        departmentCode, wfItemId, null, null, description, null, wfItem.getCreateDt(),
+                        wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
 
         WfStepDef settleStep = pushIntoStep(trgWfStepDef, intWfItem);
 
@@ -1875,39 +1890,31 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         if (!DataUtils.isBlank(wfStepDef.getRecordActionList())) {
             for (WfRecordActionDef wfRecordActionDef : wfStepDef.getRecordActionList()) {
                 if (wfRecordActionDef.getDocName().equals(docName)) {
-                    WfDocBeanMappingDef wfDocBeanMappingDef = wfRecordActionDef.getBeanMapping();
-                    PackableDocRWConfig rwConfig = wfDocBeanMappingDef.getRwConfig();
                     switch (wfRecordActionDef.getActionType()) {
                         case CREATE: {
-                            Document document = ReflectUtils.newInstance(wfDocBeanMappingDef.getBeanType());
-                            packableDoc.writeTo(rwConfig, document);
+                            Document document = ReflectUtils.newInstance(wfRecordActionDef.getBeanClass());
+                            packableDoc.writeTo(document);
                             Object id = genericService.create(document);
                             packableDoc.setId(id);
-                            if (wfDocBeanMappingDef.isPrimaryMapping()) {
-                                // Update document id in item history
-                                db().updateById(WfItemHist.class, wfItemHistId, new Update().add("docId", id));
-                            }
+                            // Update document id in item history
+                            db().updateById(WfItemHist.class, wfItemHistId, new Update().add("docId", id));
                         }
                             break;
                         case DELETE: {
-                            genericService.delete(wfDocBeanMappingDef.getBeanType(), packableDoc.getId());
+                            genericService.delete(wfRecordActionDef.getBeanClass(), packableDoc.getId());
                         }
                             break;
                         case READ: {
                             Document document =
-                                    genericService.find(wfDocBeanMappingDef.getBeanType(), packableDoc.getId());
-                            packableDoc.readFrom(wfDocBeanMappingDef.getRwConfig(), document);
+                                    genericService.find(wfRecordActionDef.getBeanClass(), packableDoc.getId());
+                            packableDoc.readFrom(document);
                         }
                             break;
                         case UPDATE: {
-                            Update update = new Update();
-                            for (PackableDocRWConfig.FieldMapping fieldMapping : wfDocBeanMappingDef.getRwConfig()
-                                    .getFieldMappings()) {
-                                update.add(fieldMapping.getBeanFieldName(),
-                                        packableDoc.readFieldValue(fieldMapping.getDocFieldName()));
-                            }
-
-                            genericService.updateById(wfDocBeanMappingDef.getBeanType(), packableDoc.getId(), update);
+                            Document document =
+                                    genericService.find(wfRecordActionDef.getBeanClass(), packableDoc.getId());
+                            packableDoc.writeTo(document);
+                            genericService.update(document);
                         }
                             break;
                     }
@@ -2013,5 +2020,25 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         db().deleteAll(new WfItemPackedDocQuery().wfItemId(wfItemId));
         db().deleteAll(new WfItemAttachmentQuery().wfItemId(wfItemId));
         db().delete(WfItem.class, wfItemId);
+    }
+
+    private class ComplexFieldConfigBuilderInfo {
+
+        private PackableDocConfig.Builder cpdcb;
+
+        private boolean list;
+
+        public ComplexFieldConfigBuilderInfo(Builder cpdcb, boolean list) {
+            this.cpdcb = cpdcb;
+            this.list = list;
+        }
+
+        public PackableDocConfig.Builder getCpdcb() {
+            return cpdcb;
+        }
+
+        public boolean isList() {
+            return list;
+        }
     }
 }

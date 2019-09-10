@@ -15,9 +15,14 @@
  */
 package com.tcdng.jacklyn.shared.xml.util;
 
+import java.util.List;
+
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.FactoryMap;
+import com.tcdng.unify.core.data.PackableDoc;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
  * Workflow name utilities.
@@ -120,6 +125,23 @@ public final class WfNameUtils {
 
     public static StepNameParts getStepNameParts(String globalName) throws UnifyException {
         return stepNames.get(globalName);
+    }
+
+    public static String describe(List<StringToken> itemDescFormat, PackableDoc packableDoc) throws UnifyException {
+        if (itemDescFormat.isEmpty()) {
+            return DataUtils.EMPTY_STRING;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (StringToken stringToken : itemDescFormat) {
+            if (stringToken.isParam()) {
+                sb.append(packableDoc.read(String.class, stringToken.getToken()));
+            } else {
+                sb.append(stringToken.getToken());
+            }
+        }
+
+        return sb.toString();
     }
 
     public static class DocNameParts {

@@ -85,7 +85,7 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
             for (StringToken token : notificationTemplateDef.getTokenList()) {
                 if (token.isParam()) {
                     String tokenName = token.getToken();
-                    msgBuilder.usingDictionaryEntry(tokenName, wfItemReader.readFieldValue(tokenName));
+                    msgBuilder.usingDictionaryEntry(tokenName, wfItemReader.readField(tokenName));
                 }
             }
 

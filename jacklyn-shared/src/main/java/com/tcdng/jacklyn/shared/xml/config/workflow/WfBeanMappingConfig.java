@@ -31,17 +31,19 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfBeanMappingConfig extends BaseConfig {
 
+    private String complexFieldName;
+
     private String beanType;
-
-    private Boolean receptacleMapping;
-
-    private Boolean primaryMapping;
 
     private List<WfFieldMappingConfig> fieldMappingList;
 
-    public WfBeanMappingConfig() {
-        this.receptacleMapping = Boolean.FALSE;
-        this.primaryMapping = Boolean.FALSE;
+    public String getComplexFieldName() {
+        return complexFieldName;
+    }
+
+    @XmlAttribute(name = "complex-field")
+    public void setComplexFieldName(String complexFieldName) {
+        this.complexFieldName = complexFieldName;
     }
 
     public String getBeanType() {
@@ -53,26 +55,8 @@ public class WfBeanMappingConfig extends BaseConfig {
         this.beanType = beanType;
     }
 
-    public Boolean getReceptacleMapping() {
-        return receptacleMapping;
-    }
-
-    @XmlAttribute(name = "receptacle")
-    public void setReceptacleMapping(Boolean receptacleMapping) {
-        this.receptacleMapping = receptacleMapping;
-    }
-
     public List<WfFieldMappingConfig> getFieldMappingList() {
         return fieldMappingList;
-    }
-
-    public Boolean getPrimaryMapping() {
-        return primaryMapping;
-    }
-
-    @XmlAttribute(name = "primary")
-    public void setPrimaryMapping(Boolean primaryMapping) {
-        this.primaryMapping = primaryMapping;
     }
 
     @XmlElement(name = "field-mapping", required = true)

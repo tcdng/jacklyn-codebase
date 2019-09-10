@@ -49,6 +49,9 @@ public class WfDocField extends BaseEntity {
     @Column(name = "FIELD_DESC", length = 64)
     private String description;
 
+    @Column(name = "LIST_FG")
+    private Boolean list;
+    
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
 
@@ -97,6 +100,14 @@ public class WfDocField extends BaseEntity {
 
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
+    }
+
+    public Boolean getList() {
+        return list;
+    }
+
+    public void setList(Boolean list) {
+        this.list = list;
     }
 
     public String getWfDocName() {

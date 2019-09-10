@@ -181,7 +181,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(wfDocField.getParentName());
         assertEquals("driversLicense", wfDocField.getName());
         assertEquals("Driver's License", wfDocField.getDescription());
-        assertEquals(DataType.COMPLEX, wfDocField.getDataType());
+        assertNull(wfDocField.getDataType());
 
         wfDocField = docFieldList.get(7);
         assertNotNull(wfDocField);
@@ -244,8 +244,6 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("custBeanMapping", wfDocBeanMapping.getName());
         assertEquals("Customer Bean Mapping", wfDocBeanMapping.getDescription());
         assertEquals("com.tcdng.jacklyn.common.TestCustomer", wfDocBeanMapping.getBeanType());
-        assertEquals(Boolean.TRUE, wfDocBeanMapping.getPrimaryMapping());
-        assertEquals(Boolean.TRUE, wfDocBeanMapping.getReceptacleMapping());
         List<WfDocFieldMapping> fieldMappingList = wfDocBeanMapping.getFieldMappingList();
         assertNotNull(fieldMappingList);
         assertEquals(4, fieldMappingList.size());
@@ -891,8 +889,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         InteractWfItem workflowItem = wfService.findWorkflowItem(gWfItemId);
         PackableDoc pd = workflowItem.getPd();
-        assertEquals("Tom Jones", pd.readFieldValue(String.class, "fullName"));
-        assertEquals("0123456789", pd.readFieldValue(String.class, "accountNo"));
+        assertEquals("Tom Jones", pd.read(String.class, "fullName"));
+        assertEquals("0123456789", pd.read(String.class, "accountNo"));
     }
 
     @Test
@@ -969,10 +967,10 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         //  Read should have updated packable document fields with details from database
         InteractWfItem workflowItem = wfService.findWorkflowItem(wfItemId);
         PackableDoc pd = workflowItem.getPd();
-        assertEquals("Tom", pd.readFieldValue("firstName"));
-        assertEquals("Jones", pd.readFieldValue("lastName"));
-        assertEquals(Integer.valueOf(24), pd.readFieldValue("age"));
-        assertEquals(Double.valueOf(1.82), pd.readFieldValue("height"));
+        assertEquals("Tom", pd.read("firstName"));
+        assertEquals("Jones", pd.read("lastName"));
+        assertEquals(Integer.valueOf(24), pd.read("age"));
+        assertEquals(Double.valueOf(1.82), pd.read("height"));
     }
 
     @Test
