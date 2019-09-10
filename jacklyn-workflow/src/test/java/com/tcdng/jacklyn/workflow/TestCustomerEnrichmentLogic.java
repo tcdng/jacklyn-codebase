@@ -33,10 +33,10 @@ public class TestCustomerEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
     @Override
     public void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException {
         // Enrich workflow item
-        String firstName = wfItemReaderWriter.readFieldValue(String.class, "firstName");
-        String lastName = wfItemReaderWriter.readFieldValue(String.class, "lastName");
-        wfItemReaderWriter.writeFieldValue("fullName", firstName + " " + lastName);
-        wfItemReaderWriter.writeFieldValue("accountNo", "0123456789");
+        String firstName = wfItemReaderWriter.readField(String.class, "firstName");
+        String lastName = wfItemReaderWriter.readField(String.class, "lastName");
+        wfItemReaderWriter.writeField("fullName", firstName + " " + lastName);
+        wfItemReaderWriter.writeField("accountNo", "0123456789");
     }
 
 }

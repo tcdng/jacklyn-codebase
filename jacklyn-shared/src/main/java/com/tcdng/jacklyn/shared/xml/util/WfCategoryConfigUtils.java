@@ -52,7 +52,6 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfTemplateDocConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfUserActionConfig;
 import com.tcdng.unify.core.UnifyError;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.constant.DataType;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
@@ -504,8 +503,6 @@ public final class WfCategoryConfigUtils {
             }
 
             if (wfFieldConfig.getDataType() == null) {
-                addError(WfDocumentErrorConstants.WFDOCUMENT_FIELD_NO_TYPE, fieldCounter, name);
-            } else if (DataType.COMPLEX.equals(wfFieldConfig.getDataType())) {
                 if (!(wfFieldConfig instanceof WfComplexFieldConfig)) {
                     addError(WfDocumentErrorConstants.WFDOCUMENT_FIELD_INVALID_DATATYPE, fieldCounter, name,
                             wfFieldConfig.getDataType());
@@ -751,7 +748,7 @@ public final class WfCategoryConfigUtils {
             WfFieldConfigInfo wfFieldConfigInfo = wfFieldConfigs.get(fieldName);
             if (wfFieldConfigInfo == null) {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_CLASSIFIERFILTER_UNKNOWN_FIELD, index, name, fieldName);
-            } else if (DataType.COMPLEX.equals(wfFieldConfigInfo.getWfFieldConfig().getDataType())) {
+            } else if (wfFieldConfigInfo.getWfFieldConfig().getDataType() == null) {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_CLASSIFIERFILTER_COMPLEX_FIELD, index, name, fieldName);
             }
         }
@@ -1419,7 +1416,7 @@ public final class WfCategoryConfigUtils {
         }
 
         public boolean isComplex() {
-            return DataType.COMPLEX.equals(wfFieldConfig.getDataType());
+            return wfFieldConfig.getDataType() == null;
         }
     }
 }

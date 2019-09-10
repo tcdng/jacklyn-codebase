@@ -29,7 +29,7 @@
 			</attachments>
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
-					primary="true" receptacle="true" bean-type="com.tcdng.jacklyn.common.TestCustomer">
+					bean-type="com.tcdng.jacklyn.common.TestCustomer">
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />
 					<field-mapping doc-field="age" bean-field="age" />

@@ -40,6 +40,9 @@ public class WfDocBeanMapping extends BaseEntity {
     @ForeignKey(WfDoc.class)
     private Long wfDocId;
 
+    @Column(name = "COMPLEX_FIELD_NM", length = 32, nullable = true)
+    private String complexFieldName;
+
     @Column(name = "BEANMAPPING_NM", length = 32)
     private String name;
 
@@ -48,12 +51,6 @@ public class WfDocBeanMapping extends BaseEntity {
 
     @Column(name = "BEAN_TY", length = 128)
     private String beanType;
-
-    @Column(name = "RECEPTACLE_MAPPING_FG")
-    private Boolean receptacleMapping;
-
-    @Column(name = "PRIMARY_MAPPING_FG")
-    private Boolean primaryMapping;
     
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
@@ -87,6 +84,14 @@ public class WfDocBeanMapping extends BaseEntity {
         this.wfDocId = wfDocId;
     }
 
+    public String getComplexFieldName() {
+        return complexFieldName;
+    }
+
+    public void setComplexFieldName(String complexFieldName) {
+        this.complexFieldName = complexFieldName;
+    }
+
     public String getName() {
         return name;
     }
@@ -101,22 +106,6 @@ public class WfDocBeanMapping extends BaseEntity {
 
     public void setBeanType(String beanType) {
         this.beanType = beanType;
-    }
-
-    public Boolean getReceptacleMapping() {
-        return receptacleMapping;
-    }
-
-    public void setReceptacleMapping(Boolean receptacleMapping) {
-        this.receptacleMapping = receptacleMapping;
-    }
-
-    public Boolean getPrimaryMapping() {
-        return primaryMapping;
-    }
-
-    public void setPrimaryMapping(Boolean primaryMapping) {
-        this.primaryMapping = primaryMapping;
     }
 
     public String getWfDocName() {

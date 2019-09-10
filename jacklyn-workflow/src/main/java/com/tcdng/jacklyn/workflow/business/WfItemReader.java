@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import java.util.List;
 import java.util.Set;
 
 import com.tcdng.unify.core.UnifyException;
@@ -36,19 +37,31 @@ public class WfItemReader {
     }
 
     public Set<String> getFieldNames() {
-        return pd.getFieldNames();
+        return pd.getConfig().getFieldNames();
     }
 
-    public Class<?> getFieldType(String name) throws UnifyException {
-        return pd.getFieldType(name);
+    public Class<?> getFieldType(String fieldName) throws UnifyException {
+        return pd.getConfig().getFieldConfig(fieldName).getDataType();
     }
 
-    public Object readFieldValue(String name) throws UnifyException {
-        return pd.readFieldValue(name);
+    public boolean isList(String fieldName) throws UnifyException {
+        return pd.getConfig().getFieldConfig(fieldName).isList();
     }
 
-    public <T> T readFieldValue(Class<T> type, String name) throws UnifyException {
-        return pd.readFieldValue(type, name);
+    public boolean isComplex(String fieldName) throws UnifyException {
+        return pd.getConfig().getFieldConfig(fieldName).isComplex();
+    }
+    
+    public Object readField(String fieldName) throws UnifyException {
+        return pd.read(fieldName);
+    }
+
+    public <T> T readField(Class<T> type, String fieldName) throws UnifyException {
+        return pd.read(type, fieldName);
+    }
+
+    public <T> List<T> readListField(Class<T> type, String fieldName) throws UnifyException {
+        return pd.readList(type, fieldName);
     }
 
     protected PackableDoc getPd() {

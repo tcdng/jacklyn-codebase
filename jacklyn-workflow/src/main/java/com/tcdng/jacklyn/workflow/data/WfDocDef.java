@@ -17,14 +17,12 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
-import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.PackableDocConfig;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
 
@@ -50,17 +48,16 @@ public class WfDocDef extends BaseWfDef {
 
     private List<StringToken> itemDescFormat;
 
-    private Map<Class<?>, WfDocBeanMappingDef> receptacleBeanMappings;
-
-    private Map<String, WfDocBeanMappingDef> beanMappings;
-
+    private Map<String, Class<? extends Document>> beanClassByMapping;
+    
     private Map<String, WfDocAttachmentDef> attachments;
 
     private Map<String, WfDocClassifierDef> classifiers;
 
     public WfDocDef(Long wfDocId, String wfCategoryName, String globalName, String name, String description,
             PackableDocConfig docConfig, long versionTimestamp, WfFormDef wfFormDef, List<StringToken> itemDescFormat,
-            List<WfDocBeanMappingDef> beanMappingList, List<WfDocAttachmentDef> attachmentList,
+            Map<String, Class<? extends Document>> beanClassByMapping,
+            List<WfDocAttachmentDef> attachmentList,
             List<WfDocClassifierDef> classifierList) {
         super(name, description);
         this.wfDocId = wfDocId;
@@ -70,22 +67,8 @@ public class WfDocDef extends BaseWfDef {
         this.versionTimestamp = versionTimestamp;
         this.wfFormDef = wfFormDef;
         this.itemDescFormat = itemDescFormat;
-
-        if (beanMappingList != null) {
-            receptacleBeanMappings = new HashMap<Class<?>, WfDocBeanMappingDef>();
-            beanMappings = new HashMap<String, WfDocBeanMappingDef>();
-            for (WfDocBeanMappingDef wfDocBeanMappingDef : beanMappingList) {
-                if (wfDocBeanMappingDef.isReceptacleMapping()) {
-                    receptacleBeanMappings.put(wfDocBeanMappingDef.getBeanType(), wfDocBeanMappingDef);
-                }
-
-                beanMappings.put(wfDocBeanMappingDef.getName(), wfDocBeanMappingDef);
-            }
-        } else {
-            beanMappings = Collections.emptyMap();
-            receptacleBeanMappings = Collections.emptyMap();
-        }
-
+        this.beanClassByMapping = Collections.unmodifiableMap(beanClassByMapping);
+        
         if (attachmentList != null) {
             attachments = new LinkedHashMap<String, WfDocAttachmentDef>();
             for (WfDocAttachmentDef wfDocAttachmentDef : attachmentList) {
@@ -137,30 +120,16 @@ public class WfDocDef extends BaseWfDef {
         return itemDescFormat;
     }
 
+    public Class<? extends Document> getMappingBeanClass(String beanMappingName) {
+        return beanClassByMapping.get(beanMappingName);
+    }
+    
     public Map<String, WfDocAttachmentDef> getAttachments() {
         return attachments;
     }
 
     public Map<String, WfDocClassifierDef> getClassifiers() {
         return classifiers;
-    }
-
-    public Set<String> getWfDocBeanMappingNames() {
-        return beanMappings.keySet();
-    }
-
-    public WfDocBeanMappingDef getWfDocBeanMappingDef(String name) {
-        return beanMappings.get(name);
-    }
-
-    public WfDocBeanMappingDef getReceptacleWfDocBeanMappingDef(Class<?> beanType) throws UnifyException {
-        WfDocBeanMappingDef wfDocBeanMappingDef = receptacleBeanMappings.get(beanType);
-        if (wfDocBeanMappingDef == null) {
-            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_DOCUMENT_ENTRY_BEANMAPPING_FOR_TYPE_UNKNOWN,
-                    getDescription(), beanType);
-        }
-
-        return wfDocBeanMappingDef;
     }
 
     public Set<String> getWfDocAttachmentNames() {

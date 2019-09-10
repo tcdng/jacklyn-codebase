@@ -32,12 +32,23 @@ public class WfFieldConfig extends BaseConfig {
 
     private DataType dataType;
 
+    private boolean list;
+    
     public WfFieldConfig(DataType dataType) {
         this.dataType = dataType;
     }
 
     public WfFieldConfig() {
 
+    }
+
+    public boolean isList() {
+        return list;
+    }
+
+    @XmlAttribute(name = "list")
+    public void setList(boolean list) {
+        this.list = list;
     }
 
     public DataType getDataType() {

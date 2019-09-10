@@ -19,8 +19,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import com.tcdng.unify.core.constant.DataType;
-
 /**
  * Document complex field configuration.
  * 
@@ -30,9 +28,9 @@ import com.tcdng.unify.core.constant.DataType;
 public class WfComplexFieldConfig extends WfFieldConfig {
 
     private List<WfFieldConfig> wfFieldConfigList;
-    
+
     public WfComplexFieldConfig() {
-        super(DataType.COMPLEX);
+        super(null);
     }
 
     public List<WfFieldConfig> getWfFieldConfigList() {

@@ -34,8 +34,8 @@ public class TestOpenAccountPolicyLogic extends AbstractWfItemPolicyLogic {
 
     @Override
     public void executePolicy(WfItemReader wfItemReader) throws UnifyException {
-        openAccountDetails = new OpenAccountDetails(wfItemReader.readFieldValue(String.class, "fullName"),
-                wfItemReader.readFieldValue(String.class, "accountNo"));
+        openAccountDetails = new OpenAccountDetails(wfItemReader.readField(String.class, "fullName"),
+                wfItemReader.readField(String.class, "accountNo"));
     }
 
     public OpenAccountDetails getOpenAccountDetails() {
