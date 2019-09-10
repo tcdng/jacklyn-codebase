@@ -37,7 +37,7 @@ public class WfDocField extends BaseEntity {
     @ForeignKey(WfDoc.class)
     private Long wfDocId;
 
-    @ForeignKey
+    @ForeignKey(nullable = true)
     private DataType dataType;
 
     @Column(name = "PARENT_FIELD_NM", length = 32, nullable = true)

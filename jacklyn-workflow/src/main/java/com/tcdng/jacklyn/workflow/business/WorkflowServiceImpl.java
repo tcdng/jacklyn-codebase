@@ -247,7 +247,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 for (int i = 0; i < size; i++) {
                     WfDocField wfDocField = wfDoc.getFieldList().get(i);
                     DataType dataType = wfDocField.getDataType();
-                    if (DataType.COMPLEX.equals(dataType)) {
+                    if (dataType == null) {
                         List<FieldConfig> subFieldConfigList = new ArrayList<FieldConfig>();
                         for (i++; i < size; i++) {
                             WfDocField subWfDocField = wfDoc.getFieldList().get(i);

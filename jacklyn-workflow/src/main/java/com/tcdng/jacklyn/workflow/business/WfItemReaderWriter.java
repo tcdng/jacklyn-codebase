@@ -32,12 +32,12 @@ public class WfItemReaderWriter extends WfItemReader {
         super(pd);
     }
 
-    public void writeFieldValue(String name, Object value) throws UnifyException {
-        getPd().writeFieldValue(name, value);
+    public void writeFieldValue(String fieldName, Object value) throws UnifyException {
+        getPd().write(fieldName, value);
     }
 
-    public void writeFieldValue(String name, Object value, Formatter<?> formatter) throws UnifyException {
-        getPd().writeFieldValue(name, value, formatter);
+    public void writeFieldValue(String fieldName, Object value, Formatter<?> formatter) throws UnifyException {
+        getPd().write(fieldName, value, formatter);
     }
 
 }
