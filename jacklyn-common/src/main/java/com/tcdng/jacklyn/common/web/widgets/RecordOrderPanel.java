@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.common.web.widgets;
 
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 
 /**
  * PanelImpl used for manually ordering records.
@@ -27,6 +26,6 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
  */
 @Component("ui-recordorderpanel")
 @UplBinding("web/common/upl/recordorderpanel.upl")
-public class RecordOrderPanel extends AbstractDialogPanel {
+public class RecordOrderPanel extends AbstractJacklynDialogPanel {
 
 }

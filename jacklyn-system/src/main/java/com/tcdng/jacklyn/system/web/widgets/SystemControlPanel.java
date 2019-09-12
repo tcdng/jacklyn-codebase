@@ -15,9 +15,9 @@
  */
 package com.tcdng.jacklyn.system.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynPanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.AbstractPanel;
 
 /**
  * System control panel
@@ -27,6 +27,6 @@ import com.tcdng.unify.web.ui.AbstractPanel;
  */
 @Component("ui-systemcontrolpanel")
 @UplBinding("web/system/upl/systemcontrolpanel.upl")
-public class SystemControlPanel extends AbstractPanel {
+public class SystemControlPanel extends AbstractJacklynPanel {
 
 }

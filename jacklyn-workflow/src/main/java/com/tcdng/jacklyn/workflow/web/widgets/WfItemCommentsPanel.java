@@ -15,11 +15,11 @@
  */
 package com.tcdng.jacklyn.workflow.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.annotation.Action;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 
 /**
  * Workflow item comments panel.
@@ -29,7 +29,7 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
  */
 @Component("ui-wfitemcommentspanel")
 @UplBinding("web/workflow/upl/wfitemcommentspanel.upl")
-public class WfItemCommentsPanel extends AbstractDialogPanel {
+public class WfItemCommentsPanel extends AbstractJacklynDialogPanel {
 
     private boolean addComments;
 

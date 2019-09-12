@@ -16,8 +16,8 @@
 
 package com.tcdng.jacklyn.system.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynPanel;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.AbstractPanel;
 
 /**
  * Abstract base class for dashboard portlet panels.
@@ -26,6 +26,6 @@ import com.tcdng.unify.web.ui.AbstractPanel;
  * @since 1.0
  */
 @UplBinding("web/system/upl/dashboardportletpanel.upl")
-public abstract class AbstractDashboardPortletPanel extends AbstractPanel implements DashboardPortletPanel {
+public abstract class AbstractDashboardPortletPanel extends AbstractJacklynPanel implements DashboardPortletPanel {
 
 }

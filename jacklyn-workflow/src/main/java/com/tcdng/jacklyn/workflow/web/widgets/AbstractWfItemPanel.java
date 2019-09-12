@@ -16,10 +16,10 @@
 
 package com.tcdng.jacklyn.workflow.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynPanel;
 import com.tcdng.jacklyn.workflow.data.ViewableWfItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.AbstractPanel;
 import com.tcdng.unify.web.ui.panel.DynamicPanel;
 
 /**
@@ -29,7 +29,7 @@ import com.tcdng.unify.web.ui.panel.DynamicPanel;
  * @since 1.0
  */
 @UplBinding("web/workflow/upl/wfitempanel.upl")
-public abstract class AbstractWfItemPanel extends AbstractPanel {
+public abstract class AbstractWfItemPanel extends AbstractJacklynPanel {
 
     @Override
     public void switchState() throws UnifyException {

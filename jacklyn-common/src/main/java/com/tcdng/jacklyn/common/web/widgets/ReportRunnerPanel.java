@@ -20,7 +20,6 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.annotation.Action;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 
 /**
  * Basic panel for presenting and capturing report options.
@@ -30,7 +29,7 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
  */
 @Component("ui-reportrunnerpanel")
 @UplBinding("web/common/upl/reportrunnerpanel.upl")
-public class ReportRunnerPanel extends AbstractDialogPanel {
+public class ReportRunnerPanel extends AbstractJacklynDialogPanel {
 
     @Action
     @Override

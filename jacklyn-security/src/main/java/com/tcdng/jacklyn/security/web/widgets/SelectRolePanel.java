@@ -15,9 +15,9 @@
  */
 package com.tcdng.jacklyn.security.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 
 /**
  * Panel for presenting and selecting user role.
@@ -27,6 +27,6 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
  */
 @Component("ui-selectrolepanel")
 @UplBinding("web/security/upl/selectrolepanel.upl")
-public class SelectRolePanel extends AbstractDialogPanel {
+public class SelectRolePanel extends AbstractJacklynDialogPanel {
 
 }
