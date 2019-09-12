@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.system.web.controllers;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -89,14 +90,18 @@ public class ScheduledTaskHistController extends BaseFormCrudController<Schedule
     @Override
     protected List<ScheduledTaskHist> find() throws UnifyException {
         ScheduledTaskHistQuery query = new ScheduledTaskHistQuery();
-        if (QueryUtils.isValidLongCriteria(searchScheduledTaskId)) {
+        if (searchExecutionDt != null && QueryUtils.isValidLongCriteria(searchScheduledTaskId)) {
             query.scheduledTaskId(searchScheduledTaskId);
+            
+            if (getSearchStatus() != null) {
+                query.taskStatus(getSearchStatus());
+            }
+
+            query.startedOn(searchExecutionDt);
+            return systemService.findScheduledTaskHistory(query);
         }
-        if (getSearchStatus() != null) {
-            query.taskStatus(getSearchStatus());
-        }
-        query.startedOn(searchExecutionDt);
-        return systemService.findScheduledTaskHistory(query);
+
+        return Collections.emptyList();
     }
 
     @Override
