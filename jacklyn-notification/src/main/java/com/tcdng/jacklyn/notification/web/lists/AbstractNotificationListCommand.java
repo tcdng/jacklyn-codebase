@@ -15,9 +15,9 @@
  */
 package com.tcdng.jacklyn.notification.web.lists;
 
+import com.tcdng.jacklyn.common.web.lists.AbstractJacklynListCommand;
 import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
  * Abstract base class for notification module list commands.
@@ -25,7 +25,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractNotificationListCommand<T> extends AbstractListCommand<T> {
+public abstract class AbstractNotificationListCommand<T> extends AbstractJacklynListCommand<T> {
 
     @Configurable
     private NotificationService notificationService;

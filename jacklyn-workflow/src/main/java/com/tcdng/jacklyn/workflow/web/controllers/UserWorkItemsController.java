@@ -22,14 +22,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
+import com.tcdng.jacklyn.workflow.data.InteractWfItem;
+import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.web.widgets.CommentsInfo;
 import com.tcdng.jacklyn.workflow.web.widgets.UserWorkItemsPage;
 import com.tcdng.jacklyn.workflow.web.widgets.WfItemCommentsPanel;
-import com.tcdng.jacklyn.workflow.data.InteractWfItem;
-import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;

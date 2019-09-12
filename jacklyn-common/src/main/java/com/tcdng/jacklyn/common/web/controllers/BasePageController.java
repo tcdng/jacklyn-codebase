@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.business.ReportProvider;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.data.ReportOptions;
+import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
@@ -58,7 +59,7 @@ public abstract class BasePageController extends AbstractPageController implemen
     public Panel getDocViewPanel() throws UnifyException {
         return getPanelByShortName(getDocViewPanelName());
     }
-    
+
     /**
      * Shows a search box.
      * 
@@ -227,6 +228,28 @@ public abstract class BasePageController extends AbstractPageController implemen
      */
     protected ReportProvider getCommonReportProvider() throws UnifyException {
         return (ReportProvider) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_PROVIDER);
+    }
+
+    /**
+     * Checks if current user has application administrator view.
+     * 
+     * @return a true value if current user has such privilege
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected boolean isAppAdminView() throws UnifyException {
+        return getPrivilegeSettings(SecurityPrivilegeConstants.APPLICATION_ADMIN).isVisible();
+    }
+
+    /**
+     * Checks if current user has hub administrator view.
+     * 
+     * @return a true value if current user has such privilege
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected boolean isHubAdminView() throws UnifyException {
+        return getPrivilegeSettings(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
     }
 
     protected abstract String getDocViewPanelName();

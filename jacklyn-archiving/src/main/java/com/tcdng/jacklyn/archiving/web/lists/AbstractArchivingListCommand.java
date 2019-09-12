@@ -16,8 +16,8 @@
 package com.tcdng.jacklyn.archiving.web.lists;
 
 import com.tcdng.jacklyn.archiving.business.ArchivingService;
+import com.tcdng.jacklyn.common.web.lists.AbstractJacklynListCommand;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
  * Abstract base class for archiving service list commands.
@@ -25,7 +25,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractArchivingListCommand<T> extends AbstractListCommand<T> {
+public abstract class AbstractArchivingListCommand<T> extends AbstractJacklynListCommand<T> {
 
     @Configurable
     private ArchivingService archivingService;

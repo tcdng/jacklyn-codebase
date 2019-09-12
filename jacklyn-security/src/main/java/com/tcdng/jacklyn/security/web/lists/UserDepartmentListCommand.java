@@ -44,7 +44,7 @@ public class UserDepartmentListCommand extends AbstractZeroParamsSecurityListCom
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         UserToken userToken = getUserToken();
-        if (!userToken.isReservedUser()) {
+        if (!userToken.isReservedUser() && !isAppAdminView()) {
             List<Long> departmentIdList = getSecurityService().findUserDepartmentIds(userToken.getUserLoginId());
             if (!DataUtils.isBlank(departmentIdList)) {
                 return organizationService.findDepartments(

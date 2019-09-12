@@ -15,9 +15,9 @@
  */
 package com.tcdng.jacklyn.notification.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
 
 /**
  * Panel for user notifications.
@@ -27,6 +27,6 @@ import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
  */
 @Component("ui-usernotificationspanel")
 @UplBinding("web/notification/upl/usernotificationspanel.upl")
-public class UserNotificationsPanel extends AbstractDialogPanel {
+public class UserNotificationsPanel extends AbstractJacklynDialogPanel {
 
 }

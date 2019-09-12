@@ -14,20 +14,17 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.file.web.widgets;
-
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
-import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
+package com.tcdng.jacklyn.shared.security;
 
 /**
- * Select mapped bean panel.
+ * Security privilege constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-selectmappedbeanpanel")
-@UplBinding("web/file/upl/selectmappedbeanpanel.upl")
-public class SelectMappedBeanPanel extends AbstractJacklynDialogPanel {
-
+public interface SecurityPrivilegeConstants {
+    
+    String APPLICATION_ADMIN = "sec-appadmin";
+    
+    String HUB_ADMIN = "sec-hubadmin";
 }
