@@ -40,7 +40,7 @@ public class WfItemHist extends BaseTimestampedEntity {
     @Column(name= "DEPARTMENT_CD", nullable = true)
     private String departmentCode;
 
-    @Column(name = "ITEM_DESC", length = 64)
+    @Column(name = "ITEM_DESC", length = 196)
     private String description;
 
     public String getProcessGlobalName() {
