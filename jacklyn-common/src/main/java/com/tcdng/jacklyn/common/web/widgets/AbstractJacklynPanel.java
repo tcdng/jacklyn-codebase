@@ -36,7 +36,7 @@ public class AbstractJacklynPanel extends AbstractPanel {
      *             if an error occurs
      */
     protected boolean isAppAdminView() throws UnifyException {
-        return getPrivilegeSettings(SecurityPrivilegeConstants.APPLICATION_ADMIN).isVisible();
+        return getViewDirective(SecurityPrivilegeConstants.APPLICATION_ADMIN).isVisible();
     }
 
     /**
@@ -47,7 +47,7 @@ public class AbstractJacklynPanel extends AbstractPanel {
      *             if an error occurs
      */
     protected boolean isHubAdminView() throws UnifyException {
-        return getPrivilegeSettings(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
+        return getViewDirective(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
     }
 
 }
