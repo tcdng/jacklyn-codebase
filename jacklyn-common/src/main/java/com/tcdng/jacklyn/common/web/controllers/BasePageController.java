@@ -238,7 +238,7 @@ public abstract class BasePageController extends AbstractPageController implemen
      *             if an error occurs
      */
     protected boolean isAppAdminView() throws UnifyException {
-        return getPrivilegeSettings(SecurityPrivilegeConstants.APPLICATION_ADMIN).isVisible();
+        return getViewDirective(SecurityPrivilegeConstants.APPLICATION_ADMIN).isVisible();
     }
 
     /**
@@ -249,7 +249,7 @@ public abstract class BasePageController extends AbstractPageController implemen
      *             if an error occurs
      */
     protected boolean isHubAdminView() throws UnifyException {
-        return getPrivilegeSettings(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
+        return getViewDirective(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
     }
 
     protected abstract String getDocViewPanelName();

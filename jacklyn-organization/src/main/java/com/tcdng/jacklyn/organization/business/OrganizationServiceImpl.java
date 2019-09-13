@@ -56,9 +56,9 @@ import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
-import com.tcdng.unify.core.PrivilegeSettings;
 import com.tcdng.unify.core.RoleAttributes;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.ViewDirective;
 import com.tcdng.unify.core.annotation.Broadcast;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -483,8 +483,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     public synchronized void loadRoleAttributesToApplication(String... roleNames) throws UnifyException {
         if (roleNames.length > 0) {
             for (String roleName : roleNames) {
-                // Do document privileges
-                Map<String, PrivilegeSettings> docPrivilegeSettings = new HashMap<String, PrivilegeSettings>();
+                // Do dynamic view directive privileges
+                Map<String, ViewDirective> dynamicViewDirectives = new HashMap<String, ViewDirective>();
                 List<Long> rolePrivilegeIdList =
                         db().valueList(Long.class, "id", new RolePrivilegeQuery().roleName(roleName)
                                 .categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL));
@@ -492,45 +492,46 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
                     List<RolePrivilegeWidget> rolePrivilegeWidgetList =
                             db().listAll(new RolePrivilegeWidgetQuery().rolePrivilegeIdIn(rolePrivilegeIdList));
                     for (RolePrivilegeWidget rolePrivilegeWidget : rolePrivilegeWidgetList) {
-                        docPrivilegeSettings.put(rolePrivilegeWidget.getPrivilegeName(),
-                                new PrivilegeSettings(rolePrivilegeWidget.isVisible(), rolePrivilegeWidget.isEditable(),
+                        dynamicViewDirectives.put(rolePrivilegeWidget.getPrivilegeName(),
+                                new ViewDirective(rolePrivilegeWidget.isVisible(), rolePrivilegeWidget.isEditable(),
                                         rolePrivilegeWidget.isDisabled(),
                                         TriState.getTriState(rolePrivilegeWidget.isRequired())));
                     }
                 }
 
-                // Do non-document privileges
+                // Do non-dynamic privileges
                 List<RolePrivilege> rolePrivilegeList =
                         db().listAll(new RolePrivilegeQuery().roleName(roleName)
                                 .categoryNameNot(PrivilegeCategoryConstants.DOCUMENTCONTROL));
-                Map<String, Set<String>> nonWidgetPrivilegeNames = new HashMap<String, Set<String>>();
-                Set<String> allAccessWidgetPrivileges = new HashSet<String>();
+                Map<String, Set<String>> nonViewDirectivePrivilegeCodes = new HashMap<String, Set<String>>();
+                Set<String> staticViewDirectivePrivilegeCodes = new HashSet<String>();
                 for (RolePrivilege rpd : rolePrivilegeList) {
                     String categoryName = rpd.getCategoryName();
                     if (PrivilegeCategoryConstants.APPLICATIONUI.equals(categoryName)) {
-                        allAccessWidgetPrivileges.add(rpd.getPrivilegeName());
+                        // View directive privileges
+                        staticViewDirectivePrivilegeCodes.add(rpd.getPrivilegeName());
                     } else {
-                        Set<String> privilegeNameList = nonWidgetPrivilegeNames.get(categoryName);
-                        if (privilegeNameList == null) {
-                            privilegeNameList = new HashSet<String>();
-                            nonWidgetPrivilegeNames.put(categoryName, privilegeNameList);
+                        Set<String> privilegeCodes = nonViewDirectivePrivilegeCodes.get(categoryName);
+                        if (privilegeCodes == null) {
+                            privilegeCodes = new HashSet<String>();
+                            nonViewDirectivePrivilegeCodes.put(categoryName, privilegeCodes);
                         }
-                        privilegeNameList.add(rpd.getPrivilegeName());
+                        privilegeCodes.add(rpd.getPrivilegeName());
                     }
                 }
 
                 // Workflow steps
-                Set<String> wfStepNames = new HashSet<String>();
+                Set<String> wfStepCodes = new HashSet<String>();
                 List<RoleWfStep> roleWfStepList = db().listAll(new RoleWfStepQuery().roleName(roleName));
                 for (RoleWfStep roleWfStep : roleWfStepList) {
-                    wfStepNames.add(WfNameUtils.getStepGlobalName(roleWfStep.getWfCategoryName(),
+                    wfStepCodes.add(WfNameUtils.getStepGlobalName(roleWfStep.getWfCategoryName(),
                             roleWfStep.getWfTemplateName(), roleWfStep.getStepName()));
                 }
 
                 // Create and set role attributes
                 Role role = db().find(new RoleQuery().name(roleName));
                 setRoleAttributes(role.getName(), new RoleAttributes(role.getName(), role.getDescription(),
-                        docPrivilegeSettings, allAccessWidgetPrivileges, nonWidgetPrivilegeNames, wfStepNames));
+                        dynamicViewDirectives, staticViewDirectivePrivilegeCodes, nonViewDirectivePrivilegeCodes, wfStepCodes));
             }
 
             broadcastRefreshMenu();

@@ -44,7 +44,7 @@ public class UserBranchListCommand extends AbstractZeroParamsSecurityListCommand
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         UserToken userToken = getUserToken();
         if (!userToken.isReservedUser() && !isAppAdminView()) {
-            if(getPrivilegeSettings("sec-hubadmin").isVisible()) {
+            if(getViewDirective("sec-hubadmin").isVisible()) {
                 return organizationService.findHubBranchesByBranch(userToken.getBranchCode());
             }
 
