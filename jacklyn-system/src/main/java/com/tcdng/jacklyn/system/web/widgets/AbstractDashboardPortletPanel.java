@@ -28,4 +28,8 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/system/upl/dashboardportletpanel.upl")
 public abstract class AbstractDashboardPortletPanel extends BasePanel implements DashboardPortletPanel {
 
+    public AbstractDashboardPortletPanel() {
+        setConforming(false);
+    }
+
 }

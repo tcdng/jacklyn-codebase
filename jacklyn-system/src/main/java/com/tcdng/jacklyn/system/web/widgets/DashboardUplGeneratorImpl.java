@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.system.data.DashboardLayerDef;
 import com.tcdng.jacklyn.system.data.DashboardPortletDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
  * Default implementation of dashboard UPL generator.
@@ -43,8 +44,24 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
 
     private void appendHorizontalStructure(StringBuilder sb, DashboardDef dashboardDef) throws UnifyException {
         // Main panel
-        sb.append("!ui-panel:dashboardPanel style:$s{width:100%;height:100%;} layout:$d{!ui-vertical style:$s{width:100%;}}");
+        sb.append("!ui-panel:dashboardPanel style:$s{width:100%;height:100%;} layout:$d{!ui-vertical style:$s{width:100%;height:100%;} heights:$l{");
         boolean appendSym = false;
+        if (!DataUtils.isBlank(dashboardDef.getLayerList()) && dashboardDef.getLayerList().size() > 1) {
+            int len = dashboardDef.getLayerList().size();
+            int layerPercentage = 100 / len;
+            if (appendSym) {
+                sb.append(' ');
+            } else {
+                appendSym = true;
+            }
+            
+            sb.append(layerPercentage).append('%');
+        } else {
+            sb.append("100%");
+        }
+        sb.append("}}");
+        
+        appendSym = false;
         StringBuilder layerNameSb = new StringBuilder();
         for (DashboardLayerDef dashboardLayerDef : dashboardDef.getLayerList()) {
             if (appendSym) {
@@ -61,8 +78,8 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
 
         // Layers
         for (DashboardLayerDef dashboardLayerDef : dashboardDef.getLayerList()) {
-            sb.append("!ui-panel:").append(dashboardLayerDef.getName()).append(" layout:$d{");
-            sb.append("!ui-horizontal style:$s{width:100%;} widths:$l{");
+            sb.append("!ui-panel:").append(dashboardLayerDef.getName()).append("  style:$s{width:100%;height:100%;} layout:$d{");
+            sb.append("!ui-horizontal style:$s{width:100%;height:100%;} widths:$l{");
 
             int availableSections = dashboardLayerDef.getNumberOfSections();
             int sectionPercentage = 100 / dashboardLayerDef.getNumberOfSections();
@@ -70,21 +87,24 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
 
             appendSym = false;
             StringBuilder nameSb = new StringBuilder();
-            StringBuilder dimSb = new StringBuilder();
+            StringBuilder wDimSb = new StringBuilder();
+            StringBuilder hDimSb = new StringBuilder();
             StringBuilder structSb = new StringBuilder();
             for (DashboardPortletDef dashboardPortletDef : dashboardLayerDef.getPortletList()) {
                 if (appendSym) {
                     nameSb.append(' ');
-                    dimSb.append(' ');
+                    wDimSb.append(' ');
+                    hDimSb.append(' ');
                 } else {
                     appendSym = true;
                 }
 
+                hDimSb.append("100%");
                 if (dashboardPortletDef.getNumberOfSections() <= availableSections) {
                     availableSections -= dashboardPortletDef.getNumberOfSections();
                     // Append dimension
                     int percentage = dashboardPortletDef.getNumberOfSections() * sectionPercentage;
-                    dimSb.append(percentage).append('%');
+                    wDimSb.append(percentage).append('%');
                     usedPercentage += percentage;
 
                     // Append name
@@ -100,11 +120,11 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
             if (usedPercentage < 100) {
                 if (appendSym) {
                     nameSb.append(' ');
-                    dimSb.append(' ');
+                    wDimSb.append(' ');
                 }
 
                 // Append dimension
-                dimSb.append(100 - usedPercentage).append('%');
+                wDimSb.append(100 - usedPercentage).append('%');
 
                 // Append name
                 String emptyPortletName = dashboardLayerDef.getName() + "Empty";
@@ -114,7 +134,8 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
                 appendEmptyPortlet(structSb, emptyPortletName);
             }
 
-            sb.append(dimSb).append("}} components:$c{").append(nameSb).append("}");
+            sb.append(wDimSb).append("} heights:$l{").append(hDimSb);
+            sb.append("}} components:$c{").append(nameSb).append("}");
             appendNewline(sb);
 
             // Portlets
