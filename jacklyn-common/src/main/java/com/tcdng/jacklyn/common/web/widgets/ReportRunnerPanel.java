@@ -29,7 +29,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("ui-reportrunnerpanel")
 @UplBinding("web/common/upl/reportrunnerpanel.upl")
-public class ReportRunnerPanel extends AbstractJacklynDialogPanel {
+public class ReportRunnerPanel extends BaseDialogPanel {
 
     @Action
     @Override

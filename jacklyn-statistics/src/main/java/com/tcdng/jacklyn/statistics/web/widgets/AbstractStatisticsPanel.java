@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.statistics.web.widgets;
 
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynPanel;
+import com.tcdng.jacklyn.common.web.widgets.BasePanel;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
@@ -26,6 +26,6 @@ import com.tcdng.unify.core.annotation.UplBinding;
  * @since 1.0
  */
 @UplBinding("web/statistics/upl/statisticspanel.upl")
-public abstract class AbstractStatisticsPanel extends AbstractJacklynPanel {
+public abstract class AbstractStatisticsPanel extends BasePanel {
 
 }

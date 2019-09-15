@@ -26,6 +26,6 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("ui-recordorderpanel")
 @UplBinding("web/common/upl/recordorderpanel.upl")
-public class RecordOrderPanel extends AbstractJacklynDialogPanel {
+public class RecordOrderPanel extends BaseDialogPanel {
 
 }

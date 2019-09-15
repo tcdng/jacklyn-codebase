@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.file.web.widgets;
 
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
+import com.tcdng.jacklyn.common.web.widgets.BaseDialogPanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -28,6 +28,6 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("ui-selectmappedbeanpanel")
 @UplBinding("web/file/upl/selectmappedbeanpanel.upl")
-public class SelectMappedBeanPanel extends AbstractJacklynDialogPanel {
+public class SelectMappedBeanPanel extends BaseDialogPanel {
 
 }

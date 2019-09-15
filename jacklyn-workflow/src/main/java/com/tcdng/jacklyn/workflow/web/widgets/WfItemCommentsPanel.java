@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.web.widgets;
 
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
+import com.tcdng.jacklyn.common.web.widgets.BaseDialogPanel;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -29,7 +29,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("ui-wfitemcommentspanel")
 @UplBinding("web/workflow/upl/wfitemcommentspanel.upl")
-public class WfItemCommentsPanel extends AbstractJacklynDialogPanel {
+public class WfItemCommentsPanel extends BaseDialogPanel {
 
     private boolean addComments;
 

@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.web.widgets;
 
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
+import com.tcdng.jacklyn.common.web.widgets.BaseDialogPanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -27,6 +27,6 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("ui-wfitemattachmentspanel")
 @UplBinding("web/workflow/upl/wfitemattachmentspanel.upl")
-public class WfItemAttachmentsPanel extends AbstractJacklynDialogPanel {
+public class WfItemAttachmentsPanel extends BaseDialogPanel {
 
 }

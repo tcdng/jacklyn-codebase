@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.location.web.lists;
 
-import com.tcdng.jacklyn.common.web.lists.AbstractJacklynListCommand;
+import com.tcdng.jacklyn.common.web.lists.BaseListCommand;
 import com.tcdng.jacklyn.location.business.LocationService;
 import com.tcdng.unify.core.annotation.Configurable;
 
@@ -25,7 +25,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractLocationListCommand<T> extends AbstractJacklynListCommand<T> {
+public abstract class AbstractLocationListCommand<T> extends BaseListCommand<T> {
 
     @Configurable
     private LocationService locationService;

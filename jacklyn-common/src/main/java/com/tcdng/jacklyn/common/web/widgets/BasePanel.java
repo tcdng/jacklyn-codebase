@@ -26,7 +26,7 @@ import com.tcdng.unify.web.ui.AbstractPanel;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class AbstractJacklynPanel extends AbstractPanel {
+public class BasePanel extends AbstractPanel {
 
     /**
      * Checks if current user has application administrator view.

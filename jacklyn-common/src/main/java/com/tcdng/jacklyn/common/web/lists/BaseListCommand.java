@@ -14,19 +14,23 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.common.web.widgets;
+package com.tcdng.jacklyn.common.web.lists;
 
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
+import com.tcdng.unify.core.list.AbstractListCommand;
 
 /**
- * Convenient base class for dialog panels in Jacklyn context.
+ * Convenient base class for list command in Jacklyn context.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class AbstractJacklynDialogPanel extends AbstractDialogPanel {
+public abstract class BaseListCommand<T> extends AbstractListCommand<T> {
+
+    public BaseListCommand(Class<T> paramType) {
+        super(paramType);
+    }
 
     /**
      * Checks if current user has application administrator view.

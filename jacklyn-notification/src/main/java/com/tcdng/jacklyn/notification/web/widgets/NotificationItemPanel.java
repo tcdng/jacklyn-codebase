@@ -17,7 +17,7 @@
 package com.tcdng.jacklyn.notification.web.widgets;
 
 import com.tcdng.jacklyn.common.data.SystemNotification;
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynPanel;
+import com.tcdng.jacklyn.common.web.widgets.BasePanel;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -31,7 +31,7 @@ import com.tcdng.unify.core.util.StringUtils;
  */
 @Component("ui-notificationitempanel")
 @UplBinding("web/notification/upl/notificationitempanel.upl")
-public class NotificationItemPanel extends AbstractJacklynPanel {
+public class NotificationItemPanel extends BasePanel {
 
     @Override
     public void switchState() throws UnifyException {

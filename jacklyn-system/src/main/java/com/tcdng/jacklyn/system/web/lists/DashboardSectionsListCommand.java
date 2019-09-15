@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.tcdng.jacklyn.common.web.lists.AbstractJacklynListCommand;
+import com.tcdng.jacklyn.common.web.lists.BaseListCommand;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.ListNumberData;
@@ -34,7 +34,7 @@ import com.tcdng.unify.core.list.ZeroParams;
  * @since 1.0
  */
 @Component("dashboardsectionslist")
-public class DashboardSectionsListCommand extends AbstractJacklynListCommand<ZeroParams> {
+public class DashboardSectionsListCommand extends BaseListCommand<ZeroParams> {
 
     private static final int MAX_AVAILABLE_SECTIONS = 10;
 

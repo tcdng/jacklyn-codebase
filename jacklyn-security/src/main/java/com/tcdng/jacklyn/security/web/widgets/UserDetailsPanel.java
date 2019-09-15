@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.security.web.widgets;
 
-import com.tcdng.jacklyn.common.web.widgets.AbstractJacklynDialogPanel;
+import com.tcdng.jacklyn.common.web.widgets.BaseDialogPanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -27,6 +27,6 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("ui-userdetailspanel")
 @UplBinding("web/security/upl/userdetailspanel.upl")
-public class UserDetailsPanel extends AbstractJacklynDialogPanel {
+public class UserDetailsPanel extends BaseDialogPanel {
 
 }
