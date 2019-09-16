@@ -16,27 +16,27 @@
 
 package com.tcdng.jacklyn.statistics.business;
 
-import com.tcdng.jacklyn.statistics.data.QuickPercentage;
-import com.tcdng.jacklyn.statistics.data.QuickUtilization;
+import com.tcdng.jacklyn.statistics.data.QuickRatio;
+import com.tcdng.jacklyn.statistics.data.QuickRatioVisual;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Abstract base class for quick utilization providers.
+ * Abstract base class for visual quick ratio providers.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractQuickUtilizationProvider
-        extends AbstractStatisticsProvider<QuickUtilization> {
+public abstract class AbstractQuickRatioVisualProvider extends AbstractStatisticsProvider<QuickRatioVisual>
+        implements QuickRatioVisualProvider {
 
     @Override
-    public QuickUtilization provide(Object... params) throws UnifyException {
-        QuickPercentage quickPercentage = doProvidePercentage(params);
-        return new QuickUtilization(quickPercentage, doProvidePresentation(quickPercentage));
+    public QuickRatioVisual provide(Object... params) throws UnifyException {
+        QuickRatio quickRatio = doProvideRatio(params);
+        return new QuickRatioVisual(quickRatio, doProvidePresentation(quickRatio));
     }
 
-    protected abstract QuickPercentage doProvidePercentage(Object... params) throws UnifyException;
+    protected abstract QuickRatio doProvideRatio(Object... params) throws UnifyException;
 
-    protected abstract byte[] doProvidePresentation(QuickPercentage quickPercentage) throws UnifyException;
+    protected abstract byte[] doProvidePresentation(QuickRatio quickRatio) throws UnifyException;
 
 }

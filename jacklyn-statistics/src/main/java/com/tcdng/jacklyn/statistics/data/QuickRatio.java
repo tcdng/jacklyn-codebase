@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,27 +14,28 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
+package com.tcdng.jacklyn.statistics.data;
 
-import com.tcdng.unify.core.UnifyComponent;
-import com.tcdng.unify.core.UnifyException;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
- * Statistics provider component.
+ * Quick ratios data object.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface StatisticsProvider<T> extends UnifyComponent {
+public class QuickRatio {
 
-    /**
-     * Provides statistical data.
-     * 
-     * @param params
-     *            the parameter list.
-     * @return the statistical data
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    T provide(Object... params) throws UnifyException;
+    private Map<String, Double> ratios;
+
+    public QuickRatio(LinkedHashMap<String, Double> ratios) {
+        this.ratios = Collections.unmodifiableMap(ratios);
+    }
+
+    public Map<String, Double> getRatios() {
+        return ratios;
+    }
+
 }
