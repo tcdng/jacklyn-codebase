@@ -50,7 +50,7 @@ public abstract class AbstractSimpleDialUtilizationProvider extends AbstractQuic
         SimpleDialChart simpleDialChart =
                 SimpleDialChart.newBuilder(width, height).seriesName(seriesName)
                         .value(quickPercentage.getFraction()).build();
-        return chartGenerator.generateBitmap(simpleDialChart);
+        return chartGenerator.generateImage(simpleDialChart);
     }
 
 }
