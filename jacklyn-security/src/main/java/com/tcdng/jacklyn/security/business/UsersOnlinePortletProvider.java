@@ -41,7 +41,7 @@ public class UsersOnlinePortletProvider extends AbstractQuickPercentageProvider 
     private SecurityService securityService;
 
     @Override
-    protected QuickPercentage doProvide() throws UnifyException {
+    protected QuickPercentage doProvide(Object... params) throws UnifyException {
         return new QuickPercentage(systemService.getUniqueActiveUserSessions(),
                 securityService.countUsers((UserQuery) new UserQuery().status(RecordStatus.ACTIVE)));
     }

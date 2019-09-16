@@ -25,14 +25,13 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractQuickPercentageProvider
-        extends AbstractStatisticsProvider<QuickPercentage> {
+public abstract class AbstractQuickPercentageProvider extends AbstractStatisticsProvider<QuickPercentage> {
 
     @Override
-    public QuickPercentage provide() throws UnifyException {
-        return doProvide();
+    public QuickPercentage provide(Object... params) throws UnifyException {
+        return doProvide(params);
     }
 
-    protected abstract QuickPercentage doProvide() throws UnifyException;
+    protected abstract QuickPercentage doProvide(Object... params) throws UnifyException;
 
 }

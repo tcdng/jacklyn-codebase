@@ -38,7 +38,7 @@ public class MemoryUtilizationPortletProvider extends AbstractSimpleDialUtilizat
     }
 
     @Override
-    protected QuickPercentage doProvidePercentage() throws UnifyException {
+    protected QuickPercentage doProvidePercentage(Object... params) throws UnifyException {
         Runtime runtime = Runtime.getRuntime();
         long totalMemory = runtime.totalMemory();
         long usedMemory = totalMemory - runtime.freeMemory();

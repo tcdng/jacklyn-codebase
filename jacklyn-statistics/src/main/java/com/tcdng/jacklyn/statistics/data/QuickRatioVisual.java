@@ -14,27 +14,30 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
-
-import com.tcdng.unify.core.UnifyComponent;
-import com.tcdng.unify.core.UnifyException;
+package com.tcdng.jacklyn.statistics.data;
 
 /**
- * Statistics provider component.
+ * Object with quick ration visualization.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface StatisticsProvider<T> extends UnifyComponent {
+public class QuickRatioVisual {
 
-    /**
-     * Provides statistical data.
-     * 
-     * @param params
-     *            the parameter list.
-     * @return the statistical data
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    T provide(Object... params) throws UnifyException;
+    private QuickRatio quickRatio;
+
+    private byte[] presentation;
+
+    public QuickRatioVisual(QuickRatio quickRatio, byte[] presentation) {
+        this.quickRatio = quickRatio;
+        this.presentation = presentation;
+    }
+
+    public QuickRatio getQuickRatio() {
+        return quickRatio;
+    }
+
+    public byte[] getPresentation() {
+        return presentation;
+    }
 }
