@@ -32,7 +32,7 @@ public class DashboardController extends AbstractSecurityController {
     private String dashboardViewer;
 
     public DashboardController() {
-        super(true, true);// Secure and read/write
+        super(true, false);// Secure and not-readonly
     }
 
     public String getDashboardViewer() {
