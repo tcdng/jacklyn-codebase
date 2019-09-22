@@ -36,8 +36,6 @@ public class ReportConfig extends BaseConfig {
 
     private String template;
 
-    private boolean dynamic;
-
     private boolean managed;
 
     private ParametersConfig parameters;
@@ -85,15 +83,6 @@ public class ReportConfig extends BaseConfig {
     @XmlAttribute
     public void setTemplate(String template) {
         this.template = template;
-    }
-
-    public boolean isDynamic() {
-        return dynamic;
-    }
-
-    @XmlAttribute
-    public void setDynamic(boolean dynamic) {
-        this.dynamic = dynamic;
     }
 
     public boolean isManaged() {

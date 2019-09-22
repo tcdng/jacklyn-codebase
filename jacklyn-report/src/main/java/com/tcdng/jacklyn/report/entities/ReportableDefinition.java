@@ -51,24 +51,6 @@ public class ReportableDefinition extends BaseInstallEntity {
     @Column(name = "RECORD_NM", length = 256, nullable = true)
     private String recordName;
 
-    @Column(length = 64, nullable = true)
-    private String template;
-
-    @Column(length = 64, nullable = true)
-    private String processor;
-
-    @Column
-    private boolean landscape;
-
-    @Column
-    private boolean underlineRows;
-
-    @Column
-    private boolean shadeOddRows;
-
-    @Column
-    private boolean dynamic;
-
     @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
     private String moduleName;
 
@@ -113,54 +95,6 @@ public class ReportableDefinition extends BaseInstallEntity {
 
     public void setRecordName(String recordName) {
         this.recordName = recordName;
-    }
-
-    public String getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    public String getProcessor() {
-        return processor;
-    }
-
-    public void setProcessor(String processor) {
-        this.processor = processor;
-    }
-
-    public boolean isLandscape() {
-        return landscape;
-    }
-
-    public void setLandscape(boolean landscape) {
-        this.landscape = landscape;
-    }
-
-    public boolean isUnderlineRows() {
-        return underlineRows;
-    }
-
-    public void setUnderlineRows(boolean underlineRows) {
-        this.underlineRows = underlineRows;
-    }
-
-    public boolean isShadeOddRows() {
-        return shadeOddRows;
-    }
-
-    public void setShadeOddRows(boolean shadeOddRows) {
-        this.shadeOddRows = shadeOddRows;
-    }
-
-    public boolean isDynamic() {
-        return dynamic;
-    }
-
-    public void setDynamic(boolean dynamic) {
-        this.dynamic = dynamic;
     }
 
     public String getModuleName() {

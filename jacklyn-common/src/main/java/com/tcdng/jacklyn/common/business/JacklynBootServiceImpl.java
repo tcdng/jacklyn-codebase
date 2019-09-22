@@ -386,7 +386,6 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                 ReportConfig rc = new ReportConfig();
                 rc.setName(name);
                 rc.setDescription(description);
-                rc.setDynamic(true);
                 rc.setParameters(null);
                 rc.setProcessor(null);
                 rc.setReportable(type);

@@ -50,8 +50,4 @@ public class ReportableDefinitionQuery extends BaseInstallEntityQuery<Reportable
     public ReportableDefinitionQuery moduleActivityIdIn(Collection<Long> moduleActivityId) {
         return (ReportableDefinitionQuery) amongst("moduleActivityId", moduleActivityId);
     }
-
-    public ReportableDefinitionQuery dynamic(boolean dynamic) {
-        return (ReportableDefinitionQuery) equals("dynamic", dynamic);
-    }
 }

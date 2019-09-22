@@ -37,7 +37,6 @@ import com.tcdng.jacklyn.shared.report.ReportParameterConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.FieldConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ManagedConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
-import com.tcdng.jacklyn.shared.xml.config.module.ParameterConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ReportConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
@@ -53,7 +52,6 @@ import com.tcdng.unify.core.report.ReportColumn;
 import com.tcdng.unify.core.report.ReportFormat;
 import com.tcdng.unify.core.report.ReportLayout;
 import com.tcdng.unify.core.report.ReportServer;
-import com.tcdng.unify.core.system.entities.ParameterDef;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
@@ -112,7 +110,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     public ReportOptions getDynamicReportOptions(String recordName, List<String> priorityPropertyList)
             throws UnifyException {
         ReportableDefinition reportableDefinition =
-                db().find(new ReportableDefinitionQuery().recordName(recordName).dynamic(true));
+                db().find(new ReportableDefinitionQuery().recordName(recordName));
         ReportOptions reportOptions = new ReportOptions();
         reportOptions.setReportName(reportableDefinition.getName());
         reportOptions.setTitle(reportableDefinition.getTitle());
@@ -228,48 +226,43 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             if (moduleConfig.getReports() != null && !DataUtils.isBlank(moduleConfig.getReports().getReportList())) {
                 logDebug("Installing report definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
+                // Handle managed reportables first
                 ReportableDefinitionQuery rdQuery = new ReportableDefinitionQuery();
                 for (ReportConfig reportConfig : moduleConfig.getReports().getReportList()) {
-                    rdQuery.clear();
-                    String reportName = reportConfig.getName();
-                    String description = resolveApplicationMessage(reportConfig.getDescription());
-                    String title = reportConfig.getTitle();
-                    if (title == null) {
-                        title = description;
-                    }
-
-                    ReportableDefinition oldReportableDefinition = db().find(rdQuery.name(reportName));
-                    Long reportableId = null;
-                    if (oldReportableDefinition == null) {
-                        reportableDefinition = new ReportableDefinition();
-                        reportableDefinition.setModuleId(moduleId);
-                        reportableDefinition.setName(reportName);
-                        reportableDefinition.setRecordName(reportConfig.getReportable());
-                        reportableDefinition.setTitle(title);
-                        reportableDefinition.setDescription(description);
-                        reportableDefinition.setTemplate(reportConfig.getTemplate());
-                        reportableDefinition.setProcessor(reportConfig.getProcessor());
-                        reportableDefinition.setDynamic(reportConfig.isDynamic());
-                        reportableDefinition.setInstalled(Boolean.TRUE);
-                        reportableId = (Long) db().create(reportableDefinition);
-                    } else {
-                        // Update old definition
-                        oldReportableDefinition.setRecordName(reportConfig.getReportable());
-                        oldReportableDefinition.setTitle(title);
-                        oldReportableDefinition.setDescription(description);
-                        oldReportableDefinition.setTemplate(reportConfig.getTemplate());
-                        oldReportableDefinition.setProcessor(reportConfig.getProcessor());
-                        oldReportableDefinition.setDynamic(reportConfig.isDynamic());
-                        oldReportableDefinition.setInstalled(Boolean.TRUE);
-                        db().updateByIdVersion(oldReportableDefinition);
-                        reportableId = oldReportableDefinition.getId();
-
-                        // Delete old fields
-                        db().deleteAll(new ReportableFieldQuery().reportableId(reportableId));
-                    }
-
-                    // Re-create/Create report fields
                     if (reportConfig.isManaged()) {
+                        rdQuery.clear();
+                        String reportName = reportConfig.getName();
+                        String description = resolveApplicationMessage(reportConfig.getDescription());
+                        String title = reportConfig.getTitle();
+                        if (title == null) {
+                            title = description;
+                        }
+
+                        ReportableDefinition oldReportableDefinition = db().find(rdQuery.name(reportName));
+                        Long reportableId = null;
+                        if (oldReportableDefinition == null) {
+                            reportableDefinition = new ReportableDefinition();
+                            reportableDefinition.setModuleId(moduleId);
+                            reportableDefinition.setName(reportName);
+                            reportableDefinition.setRecordName(reportConfig.getReportable());
+                            reportableDefinition.setTitle(title);
+                            reportableDefinition.setDescription(description);
+                            reportableDefinition.setInstalled(Boolean.TRUE);
+                            reportableId = (Long) db().create(reportableDefinition);
+                        } else {
+                            // Update old definition
+                            oldReportableDefinition.setRecordName(reportConfig.getReportable());
+                            oldReportableDefinition.setTitle(title);
+                            oldReportableDefinition.setDescription(description);
+                            oldReportableDefinition.setInstalled(Boolean.TRUE);
+                            db().updateByIdVersion(oldReportableDefinition);
+                            reportableId = oldReportableDefinition.getId();
+
+                            // Delete old fields
+                            db().deleteAll(new ReportableFieldQuery().reportableId(reportableId));
+                        }
+
+                        // Re-create/Create report fields
                         ManagedConfig managedConfig =
                                 JacklynUtils.getManagedConfig(moduleConfig, reportConfig.getReportable());
                         ReportableField reportableField = new ReportableField();
@@ -287,22 +280,6 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 db().create(reportableField);
                             }
                         }
-                    }
-
-                    // Re-create/Create report parameters
-                    if (reportConfig.getParameters() != null) {
-                        List<ParameterDef> parameterDefinitionList = new ArrayList<ParameterDef>();
-                        for (ParameterConfig rpd : reportConfig.getParameters().getParameterList()) {
-                            ParameterDef parameterDef = new ParameterDef();
-                            parameterDef.setName(rpd.getName());
-                            parameterDef.setDescription(rpd.getDescription());
-                            parameterDef.setEditor(rpd.getEditor());
-                            parameterDef.setType(rpd.getType());
-                            parameterDef.setMandatory(rpd.isMandatory());
-                            parameterDefinitionList.add(parameterDef);
-                        }
-
-                        getParameterService().defineParameters(reportName, parameterDefinitionList);
                     }
                 }
             }
