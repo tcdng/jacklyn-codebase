@@ -36,9 +36,17 @@ public class ReportConfig extends BaseConfig {
 
     private String template;
 
-    private boolean managed;
+    private ColumnsConfig columns;
 
     private ParametersConfig parameters;
+
+    private FilterConfig filter;
+
+    private boolean landscape;
+
+    private boolean underlineRows;
+
+    private boolean shadeOddRows;
 
     public String getTitle() {
         return title;
@@ -67,6 +75,15 @@ public class ReportConfig extends BaseConfig {
         this.reportable = reportable;
     }
 
+    public ColumnsConfig getColumns() {
+        return columns;
+    }
+
+    @XmlElement
+    public void setColumns(ColumnsConfig columns) {
+        this.columns = columns;
+    }
+
     public ParametersConfig getParameters() {
         return parameters;
     }
@@ -74,6 +91,15 @@ public class ReportConfig extends BaseConfig {
     @XmlElement
     public void setParameters(ParametersConfig parameters) {
         this.parameters = parameters;
+    }
+
+    public FilterConfig getFilter() {
+        return filter;
+    }
+
+    @XmlElement(name = "filter")
+    public void setFilter(FilterConfig filter) {
+        this.filter = filter;
     }
 
     public String getTemplate() {
@@ -85,11 +111,30 @@ public class ReportConfig extends BaseConfig {
         this.template = template;
     }
 
-    public boolean isManaged() {
-        return managed;
+    public boolean isLandscape() {
+        return landscape;
     }
 
-    public void setManaged(boolean managed) {
-        this.managed = managed;
+    @XmlAttribute
+    public void setLandscape(boolean landscape) {
+        this.landscape = landscape;
+    }
+
+    public boolean isUnderlineRows() {
+        return underlineRows;
+    }
+
+    @XmlAttribute
+    public void setUnderlineRows(boolean underlineRows) {
+        this.underlineRows = underlineRows;
+    }
+
+    public boolean isShadeOddRows() {
+        return shadeOddRows;
+    }
+
+    @XmlAttribute
+    public void setShadeOddRows(boolean shadeOddRows) {
+        this.shadeOddRows = shadeOddRows;
     }
 }

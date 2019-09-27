@@ -94,12 +94,12 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
                         return ((String) fieldValue).indexOf((String) limVal1) >= 0;
                     }
                     break;
-                case LIKE_BEGIN:
+                case BEGIN_WITH:
                     if (fieldValue != null) {
                         return ((String) fieldValue).startsWith((String) limVal1);
                     }
                     break;
-                case LIKE_END:
+                case END_WITH:
                     if (fieldValue != null) {
                         return ((String) fieldValue).endsWith((String) limVal1);
                     }
@@ -118,12 +118,12 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
                         return ((String) fieldValue).indexOf((String) limVal1) < 0;
                     }
                     break;
-                case NOT_LIKE_BEGIN:
+                case NOT_BEGIN_WITH:
                     if (fieldValue != null) {
                         return !((String) fieldValue).startsWith((String) limVal1);
                     }
                     break;
-                case NOT_LIKE_END:
+                case NOT_END_WITH:
                     if (fieldValue != null) {
                         return !((String) fieldValue).endsWith((String) limVal1);
                     }

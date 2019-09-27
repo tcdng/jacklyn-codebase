@@ -555,6 +555,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         registerPrivilegeCategory(PrivilegeCategoryConstants.DOCUMENTCONTROL,
                 "reserved.privilegecategory.documentcontrol");
         registerPrivilegeCategory(PrivilegeCategoryConstants.REPORTABLE, "reserved.privilegecategory.reportable");
+        registerPrivilegeCategory(PrivilegeCategoryConstants.CONFIGUREDREPORTS, "reserved.privilegecategory.configuredreport");
 
         // Uninstall old
         db().updateAll(new PrivilegeQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));

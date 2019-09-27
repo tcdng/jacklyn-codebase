@@ -20,21 +20,22 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * Reports configuration.
+ * Columns configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class ReportsConfig {
+public class ColumnsConfig {
 
-    private List<ReportGroupConfig> reportGroupList;
+    private List<ColumnConfig> columnList;
 
-    public List<ReportGroupConfig> getReportGroupList() {
-        return reportGroupList;
+    public List<ColumnConfig> getColumnList() {
+        return columnList;
     }
 
-    @XmlElement(name = "report-group", required = true)
-    public void setReportGroupList(List<ReportGroupConfig> reportGroupList) {
-        this.reportGroupList = reportGroupList;
+    @XmlElement(name = "column")
+    public void setColumnList(List<ColumnConfig> columnList) {
+        this.columnList = columnList;
     }
+
 }

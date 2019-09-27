@@ -15,10 +15,13 @@
  */
 package com.tcdng.jacklyn.report.entities;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseInstallEntity;
 import com.tcdng.jacklyn.report.constants.ReportModuleNameConstants;
 import com.tcdng.jacklyn.system.entities.Module;
+import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -51,6 +54,9 @@ public class ReportableDefinition extends BaseInstallEntity {
     @Column(name = "RECORD_NM", length = 256, nullable = true)
     private String recordName;
 
+    @ChildList
+    private List<ReportableField> fieldList;
+    
     @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
     private String moduleName;
 
@@ -95,6 +101,14 @@ public class ReportableDefinition extends BaseInstallEntity {
 
     public void setRecordName(String recordName) {
         this.recordName = recordName;
+    }
+
+    public List<ReportableField> getFieldList() {
+        return fieldList;
+    }
+
+    public void setFieldList(List<ReportableField> fieldList) {
+        this.fieldList = fieldList;
     }
 
     public String getModuleName() {

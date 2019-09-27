@@ -20,7 +20,7 @@ import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
-import com.tcdng.unify.core.criterion.FilterConditionType;
+import com.tcdng.unify.core.criterion.RestrictionType;
 import com.tcdng.unify.core.util.StringUtils;
 
 /**
@@ -35,36 +35,30 @@ public class ReportFilter extends BaseEntity {
 	@ForeignKey(ReportConfiguration.class)
 	private Long reportConfigurationId;
 
-    @ForeignKey(type = ReportableField.class, nullable = true)
-    private Long reportableFieldId;
-
 	@ForeignKey(name = "OPERATION_TY")
-	private FilterConditionType operation;
+	private RestrictionType operation;
+
+    @Column(name = "FIELD_NM")
+    private String fieldName;
+
+    @Column(name = "FILTER_VALUE1", nullable = true, length = 128)
+    private String value1;
+
+    @Column(name = "FILTER_VALUE2", nullable = true, length = 128)
+    private String value2;
 
 	@Column
 	private boolean useParameter;
 
-    @ListOnly(key = "reportableFieldId", property = "name")
-    private String fieldName;
-
-    @ListOnly(key = "reportableFieldId", property = "description")
-    private String fieldDesc;
-
-    @ListOnly(key = "reportableFieldId", property = "type")
-    private String fieldType;
-
-	@Column(name = "FILTER_VALUE1", nullable = true, length = 64)
-	private String value1;
-
-	@Column(name = "FILTER_VALUE2", nullable = true, length = 64)
-	private String value2;
+    @Column
+	private int compoundIndex;
 
 	@ListOnly(key = "operation", property = "description", name = "OPERATION_DESC")
 	private String operationDesc;
 
 	@Override
 	public String getDescription() {
-		return StringUtils.concatenate(operationDesc, "(", fieldDesc, ')');
+		return StringUtils.concatenate(operationDesc, "(", fieldName, ')');
 	}
 
 	public Long getReportConfigurationId() {
@@ -75,11 +69,11 @@ public class ReportFilter extends BaseEntity {
 		this.reportConfigurationId = reportConfigurationId;
 	}
 
-	public FilterConditionType getOperation() {
+	public RestrictionType getOperation() {
 		return operation;
 	}
 
-	public void setOperation(FilterConditionType operation) {
+	public void setOperation(RestrictionType operation) {
 		this.operation = operation;
 	}
 
@@ -107,7 +101,15 @@ public class ReportFilter extends BaseEntity {
 		this.value2 = value2;
 	}
 
-	public String getOperationDesc() {
+	public int getCompoundIndex() {
+        return compoundIndex;
+    }
+
+    public void setCompoundIndex(int compoundIndex) {
+        this.compoundIndex = compoundIndex;
+    }
+
+    public String getOperationDesc() {
 		return operationDesc;
 	}
 
@@ -115,35 +117,11 @@ public class ReportFilter extends BaseEntity {
 		this.operationDesc = operationDesc;
 	}
 
-    public Long getReportableFieldId() {
-        return reportableFieldId;
-    }
-
-    public void setReportableFieldId(Long reportableFieldId) {
-        this.reportableFieldId = reportableFieldId;
-    }
-
     public String getFieldName() {
         return fieldName;
     }
 
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
-    }
-
-    public String getFieldDesc() {
-        return fieldDesc;
-    }
-
-    public void setFieldDesc(String fieldDesc) {
-        this.fieldDesc = fieldDesc;
-    }
-
-    public String getFieldType() {
-        return fieldType;
-    }
-
-    public void setFieldType(String fieldType) {
-        this.fieldType = fieldType;
     }
 }
