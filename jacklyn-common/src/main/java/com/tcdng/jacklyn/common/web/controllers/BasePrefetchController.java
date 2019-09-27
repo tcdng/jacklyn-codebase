@@ -434,7 +434,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
                             JacklynApplicationAttributeConstants.MANAGED_PRIVILEGES)).get(entityClass);
             if (managedPrivilegeNames != null) {
                 isReportable =
-                        isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
+                        isCurrentRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
                                 managedPrivilegeNames.getReportableName());
             }
         }

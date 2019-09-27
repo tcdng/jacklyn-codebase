@@ -63,8 +63,7 @@ import com.tcdng.unify.web.ui.control.Table;
                         "!showpopupresponse popup:$s{userNotificationsPopup}" }),
         @ResultMapping(
                 name = "resolveusernotification",
-                response = { "!hidepopupresponse",
-                        "!postresponse pathBinding:$s{notificationResolutionPath}" }),
+                response = { "!hidepopupresponse", "!postresponse pathBinding:$s{notificationResolutionPath}" }),
         @ResultMapping(
                 name = "refreshusernotifications",
                 response = { "!refreshpanelresponse panels:$l{topAlert userNotificationsPopup}" }),
@@ -195,7 +194,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
             query.ignoreEmptyCriteria(true);
             tileList = systemService.generateTiles(query);
         } else {
-            Set<String> shortcutNames = getPrivilegeCodes(PrivilegeCategoryConstants.SHORTCUT);
+            Set<String> shortcutNames = getCurrentRolePrivilegeCodes(PrivilegeCategoryConstants.SHORTCUT);
             if (!shortcutNames.isEmpty()) {
                 query.nameIn(shortcutNames);
                 tileList = systemService.generateTiles(query);

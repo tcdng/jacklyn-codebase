@@ -6,6 +6,9 @@
 			<menuitem name="rpt-managereportdefinitions" caption="$m{report.reportabledefinition.menu.title}"
 				pageCaption="$m{report.reportabledefinition.manage}" description="$m{report.menuitem.definitions}"
 				path="/report/reportdefinition/openPage" remotePath="/report/reportdefinition/getRemoteDoc" />
+            <menuitem name="rpt-reportlisting" caption="$m{report.reportlisting.menu.title}"
+                description="$m{report.menuitem.reportlisting}" pageCaption="$m{report.reportlisting}"
+                path="/report/reportlisting/openPage" remotePath="/report/reportlisting/getRemoteDoc" />
 		</menu>
 	</menus>
 	<privileges>

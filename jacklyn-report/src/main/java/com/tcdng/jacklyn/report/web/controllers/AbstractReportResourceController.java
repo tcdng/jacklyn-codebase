@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2019 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,24 +16,23 @@
 
 package com.tcdng.jacklyn.report.web.controllers;
 
-import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
 import com.tcdng.jacklyn.report.business.ReportService;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.database.Entity;
+import com.tcdng.unify.web.AbstractResourceController;
 
 /**
- * Abstract base report module record management page controller.
+ * Abstract base class for report module resource controllers
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractReportCrudController<T extends Entity> extends BaseFormCrudController<T, Long> {
+public abstract class AbstractReportResourceController extends AbstractResourceController {
 
     @Configurable
     private ReportService reportService;
 
-    public AbstractReportCrudController(Class<T> entityClass, String hintKey, int modifier) {
-        super(entityClass, hintKey, modifier);
+    public AbstractReportResourceController(boolean secured) {
+        super(secured);
     }
 
     protected final ReportService getReportService() {
