@@ -19,6 +19,8 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.business.ReportProvider;
+import com.tcdng.jacklyn.common.data.ReportOptions;
+import com.tcdng.jacklyn.report.entities.ReportConfiguration;
 import com.tcdng.jacklyn.report.entities.ReportableDefinition;
 import com.tcdng.jacklyn.report.entities.ReportableDefinitionQuery;
 import com.tcdng.unify.core.UnifyException;
@@ -63,4 +65,26 @@ public interface ReportService extends JacklynBusinessService, ReportProvider {
      *             if an error occurs
      */
     List<ReportableDefinition> findRoleReportables(Long moduleId) throws UnifyException;
+
+    /**
+     * Get report options for configured report.
+     * 
+     * @param reportConfigName
+     *            the report configuration name
+     * @return the report options object
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException;
+
+    /**
+     * Gets configured report listing based on user role.
+     * 
+     * @param roleCode
+     *            the role code. Assumes super user if role is null.
+     * @return the report listing
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException;
 }

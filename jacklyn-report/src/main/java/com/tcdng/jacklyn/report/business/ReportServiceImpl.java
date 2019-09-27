@@ -17,12 +17,15 @@ package com.tcdng.jacklyn.report.business;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.data.ReportColumnOptions;
 import com.tcdng.jacklyn.common.data.ReportFilterOptions;
 import com.tcdng.jacklyn.common.data.ReportJoinOptions;
@@ -40,6 +43,7 @@ import com.tcdng.jacklyn.report.entities.ReportableDefinition;
 import com.tcdng.jacklyn.report.entities.ReportableDefinitionQuery;
 import com.tcdng.jacklyn.report.entities.ReportableField;
 import com.tcdng.jacklyn.report.entities.ReportableFieldQuery;
+import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.shared.report.ReportParameterConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ColumnConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.FieldConfig;
@@ -96,6 +100,29 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     public List<ReportableDefinition> findRoleReportables(Long moduleId) throws UnifyException {
         // TODO
         return null;
+    }
+
+    @Override
+    public ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException {
+        ReportConfigurationQuery query = new ReportConfigurationQuery();
+        if (!StringUtils.isBlank(roleCode)) {
+            Set<String> privilegeCodes = getRolePrivilegeCodes(roleCode, PrivilegeCategoryConstants.CONFIGUREDREPORTS);
+            if (!privilegeCodes.isEmpty()) {
+                query.nameIn(privilegeCodes);
+            } else {
+                return Collections.emptyList();
+            }
+        }
+
+        query.status(RecordStatus.ACTIVE);
+        query.order("reportGroupDesc", "description");
+        return db().listAll(query);
     }
 
     @Override

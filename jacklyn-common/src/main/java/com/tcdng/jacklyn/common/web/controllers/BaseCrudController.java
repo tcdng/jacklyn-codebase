@@ -617,7 +617,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
                             JacklynApplicationAttributeConstants.MANAGED_PRIVILEGES)).get(entityClass);
             if (managedPrivilegeNames != null) {
                 isReportable =
-                        isRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
+                        isCurrentRolePrivilege(PrivilegeCategoryConstants.REPORTABLE,
                                 managedPrivilegeNames.getReportableName());
             }
         }
