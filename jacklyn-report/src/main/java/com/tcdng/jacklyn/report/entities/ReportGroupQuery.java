@@ -13,28 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.xml.config.module;
+package com.tcdng.jacklyn.report.entities;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
+import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
 
 /**
- * Reports configuration.
+ * Report group query.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
-public class ReportsConfig {
+public class ReportGroupQuery extends BaseVersionedStatusEntityQuery<ReportGroup> {
 
-    private List<ReportGroupConfig> reportGroupList;
+	public ReportGroupQuery() {
+		super(ReportGroup.class);
+	}
 
-    public List<ReportGroupConfig> getReportGroupList() {
-        return reportGroupList;
-    }
+	public ReportGroupQuery moduleId(Long moduleId) {
+		return (ReportGroupQuery) equals("moduleId", moduleId);
+	}
 
-    @XmlElement(name = "report-group", required = true)
-    public void setReportGroupList(List<ReportGroupConfig> reportGroupList) {
-        this.reportGroupList = reportGroupList;
-    }
+	public ReportGroupQuery name(String name) {
+		return (ReportGroupQuery) equals("name", name);
+	}
+
+	public ReportGroupQuery descriptionLike(String description) {
+		return (ReportGroupQuery) like("description", description);
+	}
 }

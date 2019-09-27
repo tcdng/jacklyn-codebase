@@ -15,10 +15,13 @@
  */
 package com.tcdng.jacklyn.report.entities;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseInstallEntity;
 import com.tcdng.jacklyn.report.constants.ReportModuleNameConstants;
 import com.tcdng.jacklyn.system.entities.Module;
+import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -51,24 +54,9 @@ public class ReportableDefinition extends BaseInstallEntity {
     @Column(name = "RECORD_NM", length = 256, nullable = true)
     private String recordName;
 
-    @Column(length = 64, nullable = true)
-    private String template;
-
-    @Column(length = 64, nullable = true)
-    private String processor;
-
-    @Column
-    private boolean landscape;
-
-    @Column
-    private boolean underlineRows;
-
-    @Column
-    private boolean shadeOddRows;
-
-    @Column
-    private boolean dynamic;
-
+    @ChildList
+    private List<ReportableField> fieldList;
+    
     @ListOnly(name = "MODULE_NM", key = "moduleId", property = "name")
     private String moduleName;
 
@@ -115,52 +103,12 @@ public class ReportableDefinition extends BaseInstallEntity {
         this.recordName = recordName;
     }
 
-    public String getTemplate() {
-        return template;
+    public List<ReportableField> getFieldList() {
+        return fieldList;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    public String getProcessor() {
-        return processor;
-    }
-
-    public void setProcessor(String processor) {
-        this.processor = processor;
-    }
-
-    public boolean isLandscape() {
-        return landscape;
-    }
-
-    public void setLandscape(boolean landscape) {
-        this.landscape = landscape;
-    }
-
-    public boolean isUnderlineRows() {
-        return underlineRows;
-    }
-
-    public void setUnderlineRows(boolean underlineRows) {
-        this.underlineRows = underlineRows;
-    }
-
-    public boolean isShadeOddRows() {
-        return shadeOddRows;
-    }
-
-    public void setShadeOddRows(boolean shadeOddRows) {
-        this.shadeOddRows = shadeOddRows;
-    }
-
-    public boolean isDynamic() {
-        return dynamic;
-    }
-
-    public void setDynamic(boolean dynamic) {
-        this.dynamic = dynamic;
+    public void setFieldList(List<ReportableField> fieldList) {
+        this.fieldList = fieldList;
     }
 
     public String getModuleName() {

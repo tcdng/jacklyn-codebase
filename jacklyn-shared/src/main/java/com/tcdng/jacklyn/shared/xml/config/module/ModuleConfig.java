@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.shared.xml.config.module;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -49,6 +50,8 @@ public class ModuleConfig extends BaseConfig implements FeatureDefinition {
     private MenusConfig menus;
 
     private NotificationTemplatesConfig notificationTemplates;
+
+    private List<ReportConfig> reportableList;
 
     private ReportsConfig reports;
 
@@ -160,6 +163,15 @@ public class ModuleConfig extends BaseConfig implements FeatureDefinition {
     @XmlElement(name = "sys-parameters")
     public void setSysParams(SysParamsConfig sysParams) {
         this.sysParams = sysParams;
+    }
+
+
+    public List<ReportConfig> getReportableList() {
+        return reportableList;
+    }
+
+    public void setReportableList(List<ReportConfig> reportableList) {
+        this.reportableList = reportableList;
     }
 
     public void add(ManagedConfig managedConfig) {

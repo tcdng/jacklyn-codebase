@@ -30,4 +30,6 @@ public interface PrivilegeCategoryConstants {
     String DOCUMENTCONTROL = "DOCCTRL";
 
     String REPORTABLE = "RPT";
+
+    String CONFIGUREDREPORTS = "CFGRPT";
 }

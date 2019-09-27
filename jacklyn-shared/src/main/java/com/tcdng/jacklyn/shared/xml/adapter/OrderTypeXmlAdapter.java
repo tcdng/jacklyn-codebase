@@ -13,28 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.xml.config.module;
+package com.tcdng.jacklyn.shared.xml.adapter;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
+import com.tcdng.unify.core.constant.OrderType;
+import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
 
 /**
- * Reports configuration.
+ * Order type XML adapter.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
-public class ReportsConfig {
+public class OrderTypeXmlAdapter extends AbstractEnumConstXmlAdapter<OrderType> {
 
-    private List<ReportGroupConfig> reportGroupList;
-
-    public List<ReportGroupConfig> getReportGroupList() {
-        return reportGroupList;
-    }
-
-    @XmlElement(name = "report-group", required = true)
-    public void setReportGroupList(List<ReportGroupConfig> reportGroupList) {
-        this.reportGroupList = reportGroupList;
+    public OrderTypeXmlAdapter() {
+        super(OrderType.class);
     }
 }

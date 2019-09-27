@@ -19,22 +19,24 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+
 /**
- * Reports configuration.
+ * Report group configuration.
  * 
  * @author Lateef Ojulari
  * @version 1.0
  */
-public class ReportsConfig {
+public class ReportGroupConfig extends BaseConfig {
 
-    private List<ReportGroupConfig> reportGroupList;
+    private List<ReportConfig> reportList;
 
-    public List<ReportGroupConfig> getReportGroupList() {
-        return reportGroupList;
+    public List<ReportConfig> getReportList() {
+        return reportList;
     }
 
-    @XmlElement(name = "report-group", required = true)
-    public void setReportGroupList(List<ReportGroupConfig> reportGroupList) {
-        this.reportGroupList = reportGroupList;
+    @XmlElement(name = "report", required = true)
+    public void setReportList(List<ReportConfig> reportList) {
+        this.reportList = reportList;
     }
 }
