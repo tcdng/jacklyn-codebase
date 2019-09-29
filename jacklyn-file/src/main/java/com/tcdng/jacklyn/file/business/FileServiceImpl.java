@@ -347,7 +347,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             BatchFileReadInputParameters batchFileReadInputParameters) throws UnifyException {
         BatchFileReadConfig batchFileReadConfig =
                 getBatchFileReadConfig(batchFileReadInputParameters.getName(),
-                        DataUtils.getInputHolderNameValueMap(batchFileReadInputParameters.getInputParameterList()));
+                        Inputs.getTypeValuesByName(batchFileReadInputParameters.getInputParameterList()));
 
         Object file = batchFileReadInputParameters.getFile();
         if (file == null) {

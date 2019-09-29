@@ -46,12 +46,12 @@ public class ScheduledTaskDef {
 
     private String[] months;
 
-    private List<Input> inputList;
+    private List<Input<?>> inputList;
 
     private long timestamp;
 
     public ScheduledTaskDef(String lock, String description, String taskName, long startOffset, long endOffset,
-            long repeatMillSecs, String[] weekdays, String[] days, String[] months, List<Input> inputList,
+            long repeatMillSecs, String[] weekdays, String[] days, String[] months, List<Input<?>> inputList,
             long timestamp) {
         this.lock = lock;
         this.description = description;
@@ -102,7 +102,7 @@ public class ScheduledTaskDef {
         return months;
     }
 
-    public List<Input> getInputList() {
+    public List<Input<?>> getInputList() {
         return inputList;
     }
 

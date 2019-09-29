@@ -13,32 +13,36 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.common.web.widgets;
+package com.tcdng.jacklyn.report.web.controllers;
+
+import java.io.OutputStream;
 
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.annotation.Action;
 
 /**
- * Basic panel for presenting and capturing report options.
+ * Backing resource controller for retrieving a generated report.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("ui-reportrunnerpanel")
-@UplBinding("web/common/upl/reportrunnerpanel.upl")
-public class ReportRunnerPanel extends BaseDialogPanel {
+@Component("/resource/jacklynreport")
+public class JacklynReportResourceController extends AbstractReportResourceController {
 
-    @Action
-    @Override
-    public void switchState() throws UnifyException {
-        super.switchState();
-
-        ReportOptions reportOptions = (ReportOptions) getValue();
-        setVisible("rptColumnOptionsPanel", reportOptions.isWithColumnOptions());
-        setVisible("rptParamsPanel", reportOptions.isWithUserInput());
+    public JacklynReportResourceController() {
+        super(true);
     }
 
+    @Override
+    public void prepareExecution() throws UnifyException {
+        setContentDisposition(getResourceName());
+    }
+
+    @Override
+    public void execute(OutputStream outputStream) throws UnifyException {
+        ReportOptions reportOptions = (ReportOptions) removeSessionAttribute(getResourceName());
+        getReportService().populateExtraConfigurationReportOptions(reportOptions);
+        getReportService().generateDynamicReport(reportOptions, outputStream);
+    }
 }

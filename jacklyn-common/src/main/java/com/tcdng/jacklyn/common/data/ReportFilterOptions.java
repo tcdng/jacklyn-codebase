@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.common.data;
 
+import java.util.List;
+
 import com.tcdng.unify.core.criterion.RestrictionType;
 
 /**
@@ -35,6 +37,8 @@ public class ReportFilterOptions {
 
     private Object param2;
 
+    private List<ReportFilterOptions> subFilterOptionList;
+
     public ReportFilterOptions(RestrictionType op, String tableName, String columnName, Object param1, Object param2) {
         this.op = op;
         this.tableName = tableName;
@@ -43,8 +47,17 @@ public class ReportFilterOptions {
         this.param2 = param2;
     }
 
+    public ReportFilterOptions(RestrictionType op, List<ReportFilterOptions> subFilterOptionList) {
+        this.op = op;
+        this.subFilterOptionList = subFilterOptionList;
+    }
+
     public RestrictionType getOp() {
         return op;
+    }
+
+    public boolean isCompound() {
+        return op.isCompound();
     }
 
     public String getTableName() {
@@ -61,5 +74,9 @@ public class ReportFilterOptions {
 
     public Object getParam2() {
         return param2;
+    }
+
+    public List<ReportFilterOptions> getSubFilterOptionList() {
+        return subFilterOptionList;
     }
 }

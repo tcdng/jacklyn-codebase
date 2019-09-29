@@ -34,7 +34,7 @@ import com.tcdng.unify.web.ui.data.LinkGridInfo;
 @UplBinding("web/report/upl/reportlisting.upl")
 public class ReportListingController extends AbstractReportPageController {
 
-	@Configurable("/common/resource/report")
+	@Configurable("/resource/jacklynreport")
 	private String reportResourcePath;
 
 	private LinkGridInfo linkGridInfo;
@@ -93,7 +93,7 @@ public class ReportListingController extends AbstractReportPageController {
 			}
 
 			String name = rcd.getName();
-			lb.addLink(grpCode, name, name + '-' + rcd.getDescription());
+			lb.addLink(grpCode, name, rcd.getDescription());
 		}
 
 		linkGridInfo = lb.build();

@@ -6,5 +6,5 @@
 !ui-page caption:$m{report.reportlisting} components:$c{listingPanel}
 
 !ui-panel:listingPanel components:$c{listGrid}
-!ui-linkgrid:listGrid path:$n{/prepareGenerateReport} columns:4 binding:linkGridInfo
+!ui-linkgrid:listGrid columns:4 binding:linkGridInfo
 	

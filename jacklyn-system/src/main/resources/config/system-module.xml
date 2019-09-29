@@ -136,8 +136,14 @@
 		<report-group name="systemReports" description="System Reports">
 			<report name="sys-scheduledtaskhistreport" description="$m{system.report.scheduledtaskhist.description}"
 				title="$m{system.report.scheduledtaskhist.title}" processor="scheduledtaskhist-reportprocessor"
-				reportable="com.tcdng.jacklyn.system.entities.ScheduledTaskHist"
-				fields="scheduledTaskDesc,createDt,errorMsg,statusDesc">
+				reportable="com.tcdng.jacklyn.system.entities.ScheduledTaskHist">
+				<columns>
+                    <column field="scheduledTaskDesc" description="Scheduled Task"/>
+                    <column field="taskName" description="Task Name"/>
+                    <column field="startedOn" description="Started On"/>
+                    <column field="finishedOn" description="Finished On"/>
+                    <column field="taskStatusDesc" description="Status"/>
+				</columns>
 				<parameters>
 					<parameter name="executionDt" description="Execution Date"
 						label="$m{system.scheduledtaskhist.executiondt}" editor="!ui-date"
@@ -147,6 +153,11 @@
 					<parameter name="status" description="Status"
 						label="$m{system.scheduledtaskhist.status}" editor="!ui-select list:taskstatuslist blankOption:$s{}" />
 				</parameters>
+				<filter op="and">
+				    <filter field="startedOn" value1="executionDt" value2="executionDt" useParameter="true" op="between"/>
+                    <filter field="scheduledTaskId" value1="scheduledTaskId" useParameter="true" op="equal"/>
+                    <filter field="taskStatus" value1="status" useParameter="true" op="equal"/>
+				</filter>
 			</report>
 		</report-group>
 	</reports>

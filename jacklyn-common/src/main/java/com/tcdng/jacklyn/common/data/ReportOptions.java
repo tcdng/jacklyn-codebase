@@ -50,13 +50,13 @@ public class ReportOptions {
 
     private List<ReportJoinOptions> joinOptionsList;
 
-    private List<ReportFilterOptions> filterOptionsList;
+    private ReportFilterOptions filterOptions;
 
     private List<?> content;
 
-    private List<Input> userInputList;
+    private List<Input<?>> userInputList;
 
-    private List<Input> systemInputList;
+    private List<Input<?>> systemInputList;
 
     private int pageWidth;
 
@@ -79,7 +79,6 @@ public class ReportOptions {
     public ReportOptions() {
         columnOptionsList = new ArrayList<ReportColumnOptions>();
         joinOptionsList = new ArrayList<ReportJoinOptions>();
-        filterOptionsList = new ArrayList<ReportFilterOptions>();
         printColumnNames = true;
         shadeOddRows = true;
     }
@@ -168,44 +167,44 @@ public class ReportOptions {
         return joinOptionsList;
     }
 
-    public void addFilterOptions(ReportFilterOptions reportFilterOptions) {
-        filterOptionsList.add(reportFilterOptions);
+    public ReportFilterOptions getFilterOptions() {
+        return filterOptions;
     }
 
-    public List<ReportFilterOptions> getFilterOptionsList() {
-        return filterOptionsList;
+    public void setFilterOptions(ReportFilterOptions filterOptions) {
+        this.filterOptions = filterOptions;
     }
 
-    public List<Input> getUserInputList() {
+    public List<Input<?>> getUserInputList() {
         return userInputList;
     }
 
-    public void setUserInputList(List<Input> userInputList) {
+    public void setUserInputList(List<Input<?>> userInputList) {
         this.userInputList = userInputList;
     }
 
-    public List<Input> getSystemInputList() {
+    public List<Input<?>> getSystemInputList() {
         return systemInputList;
     }
 
-    public void setSystemInputList(List<Input> systemInputList) {
+    public void setSystemInputList(List<Input<?>> systemInputList) {
         this.systemInputList = systemInputList;
     }
 
-    public boolean isUserInput() {
+    public boolean isWithUserInput() {
         return userInputList != null && !userInputList.isEmpty();
     }
 
-    public boolean isColumnOptions() {
+    public boolean isWithColumnOptions() {
         return columnOptionsList != null && !columnOptionsList.isEmpty();
     }
 
-    public boolean isJoinOptions() {
+    public boolean isWithJoinOptions() {
         return joinOptionsList != null && !joinOptionsList.isEmpty();
     }
 
-    public boolean isFilterOptions() {
-        return filterOptionsList != null && !filterOptionsList.isEmpty();
+    public boolean isWithFilterOptions() {
+        return filterOptions != null;
     }
 
     public String getTitle() {

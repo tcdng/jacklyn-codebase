@@ -310,11 +310,11 @@ public class FileServiceTest extends AbstractJacklynTest {
         assertEquals("BankBatchConfig", buip.getName());
         assertEquals("Bank Batch Config", buip.getDescription());
 
-        List<Input> inputParameterList = buip.getInputParameterList();
+        List<Input<?>> inputParameterList = buip.getInputParameterList();
         assertNotNull(inputParameterList);
         assertEquals(1, inputParameterList.size());
 
-        Input placeHolder = inputParameterList.get(0);
+        Input<?> placeHolder = inputParameterList.get(0);
         assertEquals("country", placeHolder.getName());
         assertEquals("Country", placeHolder.getDescription());
     }

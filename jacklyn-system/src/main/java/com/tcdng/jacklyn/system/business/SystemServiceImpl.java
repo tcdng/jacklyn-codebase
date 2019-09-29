@@ -217,7 +217,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                     scheduledTask.getFrequency());
                 }
 
-                List<Input> inputList =
+                List<Input<?>> inputList =
                         getParameterService()
                                 .fetchNormalizedInputs(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId)
                                 .getInputList();
@@ -909,7 +909,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     if (now.before(expiryOn)) {
                         // Task execution has not expired. Start task
                         // Load settings
-                        for (Input input : scheduledTaskDef.getInputList()) {
+                        for (Input<?> input : scheduledTaskDef.getInputList()) {
                             taskParameters.put(input.getName(), input.getTypeValue());
                         }
 

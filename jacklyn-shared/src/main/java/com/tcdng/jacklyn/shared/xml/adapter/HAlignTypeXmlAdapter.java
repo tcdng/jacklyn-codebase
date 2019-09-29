@@ -13,28 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.shared.xml.config.module;
+package com.tcdng.jacklyn.shared.xml.adapter;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
+import com.tcdng.unify.core.constant.HAlignType;
+import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
 
 /**
- * Columns configuration.
+ * Horizontal alignment type XML adapter.
  * 
  * @author Lateef Ojulari
- * @version 1.0
+ * @since 1.0
  */
-public class ColumnsConfig {
+public class HAlignTypeXmlAdapter extends AbstractEnumConstXmlAdapter<HAlignType> {
 
-    private List<ColumnConfig> columnList;
-
-    public List<ColumnConfig> getColumnList() {
-        return columnList;
-    }
-
-    @XmlElement(name = "column")
-    public void setColumnList(List<ColumnConfig> columnList) {
-        this.columnList = columnList;
+    public HAlignTypeXmlAdapter() {
+        super(HAlignType.class);
     }
 }
