@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.report.business;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,11 +63,17 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.constant.OrderType;
 import com.tcdng.unify.core.criterion.Update;
+import com.tcdng.unify.core.data.Input;
+import com.tcdng.unify.core.data.Inputs;
+import com.tcdng.unify.core.database.sql.SqlDataSourceDialect;
+import com.tcdng.unify.core.database.sql.SqlEntityInfo;
 import com.tcdng.unify.core.report.Report;
+import com.tcdng.unify.core.report.Report.Builder;
 import com.tcdng.unify.core.report.ReportColumn;
 import com.tcdng.unify.core.report.ReportFormat;
 import com.tcdng.unify.core.report.ReportLayout;
 import com.tcdng.unify.core.report.ReportServer;
+import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
@@ -103,12 +110,6 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
-    public ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException {
         ReportConfigurationQuery query = new ReportConfigurationQuery();
         if (!StringUtils.isBlank(roleCode)) {
@@ -123,6 +124,118 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         query.status(RecordStatus.ACTIVE);
         query.order("reportGroupDesc", "description");
         return db().listAll(query);
+    }
+
+    @Override
+    public ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException {
+        ReportConfiguration reportConfiguration = db().list(new ReportConfigurationQuery().name(reportConfigName));
+        ReportOptions reportOptions = new ReportOptions();
+        reportOptions.setReportName(reportConfiguration.getName());
+        reportOptions.setTitle(resolveSessionMessage(reportConfiguration.getTitle()));
+        reportOptions.setLandscape(reportConfiguration.isLandscape());
+        reportOptions.setShadeOddRows(reportConfiguration.isShadeOddRows());
+        reportOptions.setUnderlineRows(reportConfiguration.isUnderlineRows());
+
+        // Report parameters
+        List<Input<?>> userInputList = new ArrayList<Input<?>>();
+        List<Input<?>> systemInputList = new ArrayList<Input<?>>();
+        for (ReportParameter reportParam : reportConfiguration.getParameterList()) {
+            String label = resolveSessionMessage(reportParam.getLabel());
+            Input<?> holder =
+                    DataUtils.newInput(reportParam.getType().javaClass(), reportParam.getName(), label, reportParam.getEditor(),
+                            reportParam.getMandatory());
+            String defaultVal = reportParam.getDefaultVal();
+            if (defaultVal != null) {
+                holder.setStringValue(defaultVal);
+            }
+
+            if (!StringUtils.isBlank(reportParam.getEditor())) {
+                userInputList.add(holder);
+            } else {
+                systemInputList.add(holder);
+            }
+        }
+        reportOptions.setUserInputList(userInputList);
+        reportOptions.setSystemInputList(systemInputList);
+
+        return reportOptions;
+    }
+
+    @Override
+    public void populateExtraConfigurationReportOptions(ReportOptions reportOptions) throws UnifyException {
+        ReportConfiguration reportConfiguration =
+                db().list(new ReportConfigurationQuery().name(reportOptions.getReportName()));
+
+        // Report column options
+        SqlEntityInfo sqlEntityInfo = null;
+        Map<String, ReportableField> fieldMap = Collections.emptyMap();
+        Long reportableDefinitionId = reportConfiguration.getReportableId();
+        boolean isReportable = reportableDefinitionId != null;
+        if (isReportable) {
+            sqlEntityInfo =
+                    ((SqlDataSourceDialect) db().getDataSource().getDialect())
+                            .getSqlEntityInfo(ReflectUtils.getClassForName(reportConfiguration.getRecordName()));
+            fieldMap =
+                    db().listAllMap(String.class, "name",
+                            new ReportableFieldQuery().reportableId(reportableDefinitionId).installed(Boolean.TRUE));
+            reportOptions.setTableName(sqlEntityInfo.getPreferredViewName());
+        }
+
+        for (com.tcdng.jacklyn.report.entities.ReportColumn reportColumn : reportConfiguration.getColumnList()) {
+            ReportColumnOptions reportColumnOptions = new ReportColumnOptions();
+            reportColumnOptions.setDescription(reportColumn.getDescription());
+            reportColumnOptions.setGroup(reportColumn.isGroup());
+            reportColumnOptions.setSum(reportColumn.isSum());
+            reportColumnOptions.setIncluded(true);
+
+            String type = reportColumn.getType();
+            String formatter = reportColumn.getFormatter();
+            HAlignType hAlignType = reportColumn.getHorizAlignType();
+            int width = reportColumn.getWidth();
+            if (isReportable) {
+                reportColumnOptions.setTableName(sqlEntityInfo.getPreferredViewName());
+
+                if (!StringUtils.isBlank(reportColumn.getFieldName())) {
+                    reportColumnOptions.setColumnName(
+                            sqlEntityInfo.getListFieldInfo(reportColumn.getFieldName()).getPreferredColumnName());
+
+                    ReportableField reportableField = fieldMap.get(reportColumn.getFieldName());
+                    if (type == null) {
+                        type = reportableField.getType();
+                    }
+
+                    if (formatter == null) {
+                        formatter = reportableField.getFormatter();
+                    }
+
+                    if (width <= 0 && reportableField.getWidth() != null) {
+                        width = reportableField.getWidth();
+                    }
+
+                    if (hAlignType == null) {
+                        hAlignType = HAlignType.fromName(reportableField.getHorizontalAlign());
+                    }
+                }
+            }
+
+            reportColumnOptions.setType(type);
+            reportColumnOptions.setFormatter(formatter);
+            reportColumnOptions.setHorizontalAlignment(hAlignType);
+            reportColumnOptions.setWidth(width);
+            reportOptions.addColumnOptions(reportColumnOptions);
+        }
+
+        // Filter options
+        List<ReportFilter> reportFilterList = reportConfiguration.getFilterList();
+        if (!DataUtils.isBlank(reportFilterList)) {
+            Map<String, Object> parameters = Inputs.getTypeValuesByName(reportOptions.getSystemInputList());
+            Inputs.getTypeValuesByNameIntoMap(reportOptions.getUserInputList(), parameters);
+            ReportFilterOptions rootFilterOptions =
+                    new ReportFilterOptions(reportFilterList.get(0).getOperation(),
+                            new ArrayList<ReportFilterOptions>());
+            popuplateChildReportFilterOptions(sqlEntityInfo, rootFilterOptions, parameters, reportFilterList, 1, 1);
+            reportOptions.setFilterOptions(rootFilterOptions);
+        }
     }
 
     @Override
@@ -163,15 +276,25 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 if (property != null) {
                     ReportableField reportableField = fieldMap.remove(property);
                     if (reportableField != null) {
-                        reportOptions.addColumnOptions(createReportColumnOptions(reportableField, true));
+                        ReportColumnOptions remoteColumnOptions =
+                                new ReportColumnOptions(reportableField.getName(), reportableField.getDescription(),
+                                        reportableField.getType(), reportableField.getFormatter(),
+                                        HAlignType.fromName(reportableField.getHorizontalAlign()),
+                                        reportableField.getWidth(), true);
+                        reportOptions.addColumnOptions(remoteColumnOptions);
                     }
                 }
             }
         }
 
+        // Add what's left
         for (ReportableField reportableField : fieldMap.values()) {
-            // Add what's left
-            reportOptions.addColumnOptions(createReportColumnOptions(reportableField, isSelectAll));
+            ReportColumnOptions remoteColumnOptions =
+                    new ReportColumnOptions(reportableField.getName(), reportableField.getDescription(),
+                            reportableField.getType(), reportableField.getFormatter(),
+                            HAlignType.fromName(reportableField.getHorizontalAlign()), reportableField.getWidth(),
+                            isSelectAll);
+            reportOptions.addColumnOptions(remoteColumnOptions);
         }
 
         return reportOptions;
@@ -227,17 +350,14 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             rb.query(reportOptions.getQuery());
             rb.table(reportOptions.getTableName());
 
-            if (reportOptions.isJoinOptions()) {
+            if (reportOptions.isWithJoinOptions()) {
                 for (ReportJoinOptions rjo : reportOptions.getJoinOptionsList()) {
                     rb.addJoin(rjo.getTableA(), rjo.getColumnA(), rjo.getTableB(), rjo.getColumnB());
                 }
             }
 
-            if (reportOptions.isFilterOptions()) {
-                for (ReportFilterOptions rfo : reportOptions.getFilterOptionsList()) {
-                    rb.addFilter(rfo.getOp(), rfo.getTableName(), rfo.getColumnName(), rfo.getParam1(),
-                            rfo.getParam2());
-                }
+            if (reportOptions.isWithFilterOptions()) {
+                buildReportFilter(rb, reportOptions.getFilterOptions());
             }
         }
 
@@ -444,12 +564,12 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         // Filters
         if (reportConfig.getFilter() != null) {
             List<ReportFilter> filterList = new ArrayList<ReportFilter>();
-            populateFilterList(reportConfig.getFilter(), filterList, 0);
+            populateChildFilterList(reportConfig.getFilter(), filterList, 0);
             reportConfiguration.setFilterList(filterList);
         }
     }
 
-    private void populateFilterList(FilterConfig filterConfig, List<ReportFilter> filterList, int compoundIndex) {
+    private void populateChildFilterList(FilterConfig filterConfig, List<ReportFilter> filterList, int compoundIndex) {
         ReportFilter reportFilter = new ReportFilter();
         reportFilter.setFieldName(filterConfig.getFieldName());
         reportFilter.setOperation(filterConfig.getOp());
@@ -462,19 +582,85 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         if (filterConfig.getOp().isCompound() && !DataUtils.isBlank(filterConfig.getFilterList())) {
             int subCompoundIndex = compoundIndex + 1;
             for (FilterConfig subFilterConfig : filterConfig.getFilterList()) {
-                populateFilterList(subFilterConfig, filterList, subCompoundIndex);
+                populateChildFilterList(subFilterConfig, filterList, subCompoundIndex);
             }
         }
     }
 
-    private ReportServer getCommonReportServer() throws UnifyException {
-        return (ReportServer) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_SERVER);
+    private void buildReportFilter(Builder rb, ReportFilterOptions filterOptions) {
+        rb.beginCompoundFilter(filterOptions.getOp());
+        for (ReportFilterOptions subFilterOptions : filterOptions.getSubFilterOptionList()) {
+            if (subFilterOptions.isCompound()) {
+                buildReportFilter(rb, subFilterOptions);
+            } else {
+                rb.addSimpleFilter(subFilterOptions.getOp(), subFilterOptions.getTableName(),
+                        subFilterOptions.getColumnName(), subFilterOptions.getParam1(), subFilterOptions.getParam2());
+            }
+        }
+
+        rb.endCompoundFilter();
     }
 
-    private ReportColumnOptions createReportColumnOptions(ReportableField reportableField, boolean included) {
-        return new ReportColumnOptions(reportableField.getName(), reportableField.getDescription(),
-                reportableField.getType(), reportableField.getFormatter(),
-                HAlignType.fromName(reportableField.getHorizontalAlign()), reportableField.getWidth(), included);
+    private int popuplateChildReportFilterOptions(SqlEntityInfo sqlEntityInfo, ReportFilterOptions parentFilterOptions,
+            Map<String, Object> parameters, List<ReportFilter> reportFilterList, int index, int subCompoundIndex)
+            throws UnifyException {
+        while (index < reportFilterList.size()) {
+            ReportFilter reportFilter = reportFilterList.get(index++);
+            if (reportFilter.getCompoundIndex() == subCompoundIndex) {
+                if (reportFilter.getOperation().isCompound()) {
+                    ReportFilterOptions childFilterOptions =
+                            new ReportFilterOptions(reportFilter.getOperation(), new ArrayList<ReportFilterOptions>());
+                    index =
+                            popuplateChildReportFilterOptions(sqlEntityInfo, parentFilterOptions, parameters,
+                                    reportFilterList, index, subCompoundIndex + 1);
+                    parentFilterOptions.getSubFilterOptionList().add(childFilterOptions);
+                } else {
+                    Object param1 = reportFilter.getValue1();
+                    Object param2 = reportFilter.getValue2();
+                    if (reportFilter.isUseParameter()) {
+                        if (reportFilter.getValue1() != null) {
+                            param1 = parameters.get(reportFilter.getValue1());
+                            if (param1 == null) {
+                                continue;
+                            }
+                        }
+
+                        if (reportFilter.getValue2() != null) {
+                            param2 = parameters.get(reportFilter.getValue2());
+                            if (param2 == null) {
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (reportFilter.getOperation().isRange()) {
+                        if (param1 instanceof Date) {
+                            param1 = CalendarUtils.getMidnightDate((Date) param1);
+                        }
+
+                        if (param2 instanceof Date) {
+                            param2 = CalendarUtils.getLastSecondDate((Date) param2);
+                        }
+                    }
+
+                    ReportFilterOptions childFilterOptions =
+                            new ReportFilterOptions(
+                                    reportFilter.getOperation(), sqlEntityInfo.getPreferredViewName(), sqlEntityInfo
+                                            .getListFieldInfo(reportFilter.getFieldName()).getPreferredColumnName(),
+                                    param1, param2);
+                    parentFilterOptions.getSubFilterOptionList().add(childFilterOptions);
+                }
+            } else {
+                index--;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    private ReportServer getCommonReportServer() throws UnifyException {
+        return (ReportServer) getApplicationAttribute(JacklynApplicationAttributeConstants.COMMON_REPORT_SERVER);
     }
 
     private void setCommonReportParameters(Report report) throws UnifyException {

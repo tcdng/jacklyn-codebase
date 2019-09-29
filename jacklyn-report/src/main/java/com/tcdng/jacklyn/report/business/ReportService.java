@@ -67,6 +67,17 @@ public interface ReportService extends JacklynBusinessService, ReportProvider {
     List<ReportableDefinition> findRoleReportables(Long moduleId) throws UnifyException;
 
     /**
+     * Gets configured report listing based on user role.
+     * 
+     * @param roleCode
+     *            the role code. Assumes super user if role is null.
+     * @return the report listing
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException;
+
+    /**
      * Get report options for configured report.
      * 
      * @param reportConfigName
@@ -78,13 +89,12 @@ public interface ReportService extends JacklynBusinessService, ReportProvider {
     ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException;
 
     /**
-     * Gets configured report listing based on user role.
+     * Populates extra report options data that depend on input parameters.
      * 
-     * @param roleCode
-     *            the role code. Assumes super user if role is null.
-     * @return the report listing
+     * @param reportOptions
+     *            the report options to populate
      * @throws UnifyException
      *             if an error occurs
      */
-    List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException;
+    void populateExtraConfigurationReportOptions(ReportOptions reportOptions) throws UnifyException;
 }

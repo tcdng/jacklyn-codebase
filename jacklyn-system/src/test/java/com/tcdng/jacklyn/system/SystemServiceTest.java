@@ -328,14 +328,14 @@ public class SystemServiceTest extends AbstractJacklynTest {
         ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
-        Inputs paramValues = document.getScheduledTaskParams();
-        assertNotNull(paramValues);
-        assertEquals(1, paramValues.size());
-        Input paramValue = paramValues.getInput("batchSize");
-        assertEquals("batchSize", paramValue.getName());
-        assertEquals("Batch Size", paramValue.getDescription());
-        assertEquals("!ui-integer", paramValue.getEditor());
-        assertEquals(Integer.class, paramValue.getType());
+        Inputs inputs = document.getScheduledTaskParams();
+        assertNotNull(inputs);
+        assertEquals(1, inputs.size());
+        Input<?> input = inputs.getInput("batchSize");
+        assertEquals("batchSize", input.getName());
+        assertEquals("Batch Size", input.getDescription());
+        assertEquals("!ui-integer", input.getEditor());
+        assertEquals(Integer.class, input.getType());
     }
 
     @Test
@@ -345,8 +345,8 @@ public class SystemServiceTest extends AbstractJacklynTest {
         ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
-        Inputs paramValues = document.getScheduledTaskParams();
-        paramValues.setInputValue("batchSize", "400");
+        Inputs inputs = document.getScheduledTaskParams();
+        inputs.setInputValue("batchSize", "400");
         Long scheduledTaskId = systemService.createScheduledTask(document);
         assertNotNull(scheduledTaskId);
     }
@@ -368,8 +368,8 @@ public class SystemServiceTest extends AbstractJacklynTest {
         ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
-        Inputs paramValues = document.getScheduledTaskParams();
-        paramValues.setInputValue("batchSize", "400");
+        Inputs inputs = document.getScheduledTaskParams();
+        inputs.setInputValue("batchSize", "400");
         systemService.createScheduledTask(document);
         List<ScheduledTask> scheduledTaskList = systemService
                 .findScheduledTasks(new ScheduledTaskQuery().taskName("testschedulabletask"));
@@ -387,8 +387,8 @@ public class SystemServiceTest extends AbstractJacklynTest {
         ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
-        Inputs paramValues = document.getScheduledTaskParams();
-        paramValues.setInputValue("batchSize", "400");
+        Inputs inputs = document.getScheduledTaskParams();
+        inputs.setInputValue("batchSize", "400");
         Long scheduledTaskId = systemService.createScheduledTask(document);
 
         ScheduledTask fetchedScheduledTask = systemService.findScheduledTask(scheduledTaskId);
@@ -403,8 +403,8 @@ public class SystemServiceTest extends AbstractJacklynTest {
         ScheduledTask scheduledTask = getScheduledTask(systemService.getNow());
         ScheduledTaskLargeData document = systemService
                 .loadScheduledTaskDocumentValues(new ScheduledTaskLargeData(scheduledTask));
-        Inputs paramValues = document.getScheduledTaskParams();
-        paramValues.setInputValue("batchSize", "400");
+        Inputs inputs = document.getScheduledTaskParams();
+        inputs.setInputValue("batchSize", "400");
         Long scheduledTaskId = systemService.createScheduledTask(document);
 
         ScheduledTaskLargeData fetchDocument = systemService.findScheduledTaskDocument(scheduledTaskId);

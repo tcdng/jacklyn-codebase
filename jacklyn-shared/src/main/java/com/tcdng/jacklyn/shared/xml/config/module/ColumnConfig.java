@@ -18,7 +18,9 @@ package com.tcdng.jacklyn.shared.xml.config.module;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.tcdng.jacklyn.shared.xml.adapter.HAlignTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.adapter.OrderTypeXmlAdapter;
+import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.constant.OrderType;
 
 /**
@@ -33,9 +35,13 @@ public class ColumnConfig {
 
     private OrderType columnOrder;
 
+    private HAlignType horizAlignType;
+    
     private String description;
 
     private String type;
+
+    private String formatter;
 
     private int width;
 
@@ -69,6 +75,25 @@ public class ColumnConfig {
     @XmlAttribute(name = "order")
     public void setColumnOrder(OrderType columnOrder) {
         this.columnOrder = columnOrder;
+    }
+
+    public HAlignType getHorizAlignType() {
+        return horizAlignType;
+    }
+
+    @XmlJavaTypeAdapter(HAlignTypeXmlAdapter.class)
+    @XmlAttribute(name = "halign")
+    public void setHorizAlignType(HAlignType horizAlignType) {
+        this.horizAlignType = horizAlignType;
+    }
+
+    public String getFormatter() {
+        return formatter;
+    }
+
+    @XmlAttribute
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
     }
 
     public String getDescription() {

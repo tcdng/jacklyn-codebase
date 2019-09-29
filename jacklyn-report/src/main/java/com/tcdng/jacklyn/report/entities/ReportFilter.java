@@ -38,7 +38,7 @@ public class ReportFilter extends BaseEntity {
 	@ForeignKey(name = "OPERATION_TY")
 	private RestrictionType operation;
 
-    @Column(name = "FIELD_NM")
+    @Column(name = "FIELD_NM", nullable = true)
     private String fieldName;
 
     @Column(name = "FILTER_VALUE1", nullable = true, length = 128)

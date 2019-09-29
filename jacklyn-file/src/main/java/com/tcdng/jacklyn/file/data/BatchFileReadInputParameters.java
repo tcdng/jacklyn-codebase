@@ -34,21 +34,21 @@ public class BatchFileReadInputParameters {
 
     private String description;
 
-    private List<Input> inputParameterList;
+    private List<Input<?>> inputParameterList;
 
     private byte[] fileBlob;
 
     private File file;
 
     public BatchFileReadInputParameters() {
-        this.inputParameterList = new ArrayList<Input>();
+        this.inputParameterList = new ArrayList<Input<?>>();
     }
 
-    public <T> void setParameter(String name, Object value) throws UnifyException {
+    public <T> void setParameter(String name, String value) throws UnifyException {
         if (inputParameterList != null) {
-            for (Input parameter : inputParameterList) {
-                if (name.equals(parameter.getName())) {
-                    parameter.setTypeValue(value);
+            for (Input<?> input : inputParameterList) {
+                if (name.equals(input.getName())) {
+                    input.setStringValue(value);
                     break;
                 }
             }
@@ -71,11 +71,11 @@ public class BatchFileReadInputParameters {
         this.description = description;
     }
 
-    public List<Input> getInputParameterList() {
+    public List<Input<?>> getInputParameterList() {
         return inputParameterList;
     }
 
-    public void addInputParameterList(List<Input> inputParameterList) {
+    public void addInputParameterList(List<Input<?>> inputParameterList) {
         this.inputParameterList.addAll(inputParameterList);
     }
 

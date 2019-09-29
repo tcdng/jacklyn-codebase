@@ -20,6 +20,7 @@ import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.constant.OrderType;
 
 /**
@@ -34,17 +35,23 @@ public class ReportColumn extends BaseEntity {
     @ForeignKey(ReportConfiguration.class)
     private Long reportConfigurationId;
 
-    @Column(name = "FIELD_NM")
-    private String fieldName;
-
     @ForeignKey(nullable = true)
     private OrderType columnOrder;
+
+    @ForeignKey(nullable = true)
+    private HAlignType horizAlignType;
+
+    @Column(name = "FIELD_NM")
+    private String fieldName;
 
     @Column(name = "COLUMN_DESC", length = 48)
     private String description;
 
-    @Column(name = "COLUMN_TY", length = 64, nullable = true)
+    @Column(name = "COLUMN_TY", length = 96, nullable = true)
     private String type;
+
+    @Column(name = "FORMATTER", length = 64, nullable = true)
+    private String formatter;
 
     @Column(name = "WIDTH_RATIO")
     private int width;
@@ -55,9 +62,11 @@ public class ReportColumn extends BaseEntity {
     @Column(name = "SUM_FG")
     private boolean sum;
 
-
     @ListOnly(key = "columnOrder", property = "description")
     private String columnOrderDesc;
+
+    @ListOnly(key = "horizAlignType", property = "description")
+    private String horizAlignTypeDesc;
 
     public Long getReportConfigurationId() {
         return reportConfigurationId;
@@ -82,6 +91,14 @@ public class ReportColumn extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(String formatter) {
+        this.formatter = formatter;
     }
 
     public int getWidth() {
@@ -130,5 +147,21 @@ public class ReportColumn extends BaseEntity {
 
     public void setColumnOrderDesc(String columnOrderDesc) {
         this.columnOrderDesc = columnOrderDesc;
+    }
+
+    public HAlignType getHorizAlignType() {
+        return horizAlignType;
+    }
+
+    public void setHorizAlignType(HAlignType horizAlignType) {
+        this.horizAlignType = horizAlignType;
+    }
+
+    public String getHorizAlignTypeDesc() {
+        return horizAlignTypeDesc;
+    }
+
+    public void setHorizAlignTypeDesc(String horizAlignTypeDesc) {
+        this.horizAlignTypeDesc = horizAlignTypeDesc;
     }
 }
