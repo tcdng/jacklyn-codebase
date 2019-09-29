@@ -142,8 +142,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         for (ReportParameter reportParam : reportConfiguration.getParameterList()) {
             String label = resolveSessionMessage(reportParam.getLabel());
             Input<?> holder =
-                    DataUtils.newInput(reportParam.getType().javaClass(), reportParam.getName(), label, reportParam.getEditor(),
-                            reportParam.getMandatory());
+                    DataUtils.newInput(reportParam.getType().javaClass(), reportParam.getName(), label,
+                            reportParam.getEditor(), reportParam.getMandatory());
             String defaultVal = reportParam.getDefaultVal();
             if (defaultVal != null) {
                 holder.setStringValue(defaultVal);
@@ -181,48 +181,50 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             reportOptions.setTableName(sqlEntityInfo.getPreferredViewName());
         }
 
-        for (com.tcdng.jacklyn.report.entities.ReportColumn reportColumn : reportConfiguration.getColumnList()) {
-            ReportColumnOptions reportColumnOptions = new ReportColumnOptions();
-            reportColumnOptions.setDescription(reportColumn.getDescription());
-            reportColumnOptions.setGroup(reportColumn.isGroup());
-            reportColumnOptions.setSum(reportColumn.isSum());
-            reportColumnOptions.setIncluded(true);
+        if (!reportOptions.isWithColumnOptions()) { // Populate column options only on first run
+            for (com.tcdng.jacklyn.report.entities.ReportColumn reportColumn : reportConfiguration.getColumnList()) {
+                ReportColumnOptions reportColumnOptions = new ReportColumnOptions();
+                reportColumnOptions.setDescription(reportColumn.getDescription());
+                reportColumnOptions.setGroup(reportColumn.isGroup());
+                reportColumnOptions.setSum(reportColumn.isSum());
+                reportColumnOptions.setIncluded(true);
 
-            String type = reportColumn.getType();
-            String formatter = reportColumn.getFormatter();
-            HAlignType hAlignType = reportColumn.getHorizAlignType();
-            int width = reportColumn.getWidth();
-            if (isReportable) {
-                reportColumnOptions.setTableName(sqlEntityInfo.getPreferredViewName());
+                String type = reportColumn.getType();
+                String formatter = reportColumn.getFormatter();
+                HAlignType hAlignType = reportColumn.getHorizAlignType();
+                int width = reportColumn.getWidth();
+                if (isReportable) {
+                    reportColumnOptions.setTableName(sqlEntityInfo.getPreferredViewName());
 
-                if (!StringUtils.isBlank(reportColumn.getFieldName())) {
-                    reportColumnOptions.setColumnName(
-                            sqlEntityInfo.getListFieldInfo(reportColumn.getFieldName()).getPreferredColumnName());
+                    if (!StringUtils.isBlank(reportColumn.getFieldName())) {
+                        reportColumnOptions.setColumnName(
+                                sqlEntityInfo.getListFieldInfo(reportColumn.getFieldName()).getPreferredColumnName());
 
-                    ReportableField reportableField = fieldMap.get(reportColumn.getFieldName());
-                    if (type == null) {
-                        type = reportableField.getType();
-                    }
+                        ReportableField reportableField = fieldMap.get(reportColumn.getFieldName());
+                        if (type == null) {
+                            type = reportableField.getType();
+                        }
 
-                    if (formatter == null) {
-                        formatter = reportableField.getFormatter();
-                    }
+                        if (formatter == null) {
+                            formatter = reportableField.getFormatter();
+                        }
 
-                    if (width <= 0 && reportableField.getWidth() != null) {
-                        width = reportableField.getWidth();
-                    }
+                        if (width <= 0 && reportableField.getWidth() != null) {
+                            width = reportableField.getWidth();
+                        }
 
-                    if (hAlignType == null) {
-                        hAlignType = HAlignType.fromName(reportableField.getHorizontalAlign());
+                        if (hAlignType == null) {
+                            hAlignType = HAlignType.fromName(reportableField.getHorizontalAlign());
+                        }
                     }
                 }
-            }
 
-            reportColumnOptions.setType(type);
-            reportColumnOptions.setFormatter(formatter);
-            reportColumnOptions.setHorizontalAlignment(hAlignType);
-            reportColumnOptions.setWidth(width);
-            reportOptions.addColumnOptions(reportColumnOptions);
+                reportColumnOptions.setType(type);
+                reportColumnOptions.setFormatter(formatter);
+                reportColumnOptions.setHorizontalAlignment(hAlignType);
+                reportColumnOptions.setWidth(width);
+                reportOptions.addColumnOptions(reportColumnOptions);
+            }
         }
 
         // Filter options
@@ -533,6 +535,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 reportColumn.setFieldName(columnConfig.getFieldName());
                 reportColumn.setDescription(columnConfig.getDescription());
                 reportColumn.setType(columnConfig.getType());
+                reportColumn.setFormatter(columnConfig.getFormatter());
+                reportColumn.setHorizAlignType(columnConfig.getHorizAlignType());
                 reportColumn.setWidth(columnConfig.getWidth());
                 reportColumn.setGroup(columnConfig.isGroup());
                 reportColumn.setSum(columnConfig.isSum());
