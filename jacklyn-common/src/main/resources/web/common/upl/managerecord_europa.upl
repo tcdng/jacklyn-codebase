@@ -7,7 +7,7 @@
     tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
 
 !ui-panel:manageRecordPanel style:$s{height:100%;}
-    layout:$d{!ui-vertical style:$s{height:100%;margin-bottom:-2px;} heights:$l{100%}}
+    layout:$d{!ui-vertical style:$s{width:100%;height:100%;margin-bottom:-2px;} heights:$l{100%}}
     components:$c{manageBodyPanel}
 
 !ui-switchpanel:manageBodyPanel style:$s{height:100%;} components:$c{searchBodyPanel crudPanel}

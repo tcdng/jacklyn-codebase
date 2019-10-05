@@ -9,7 +9,7 @@
     components:$c{title basePanel}
 
 !ui-label:title caption:$f{sdTitle} styleClass:$e{sdtitle}
-!ui-panel:basePanel layout:$d{!ui-horizontal style:$s{width:100%;}}
+!ui-panel:basePanel layout:$d{!ui-horizontal style:$s{width:100%;} widths:$l{30% 70%}}
     components:$c{detailsPanel dialImg}
 
 !ui-panel:detailsPanel styleClass:$e{sdfooter} layout:$d{!ui-vertical style:$s{width:100%;}}

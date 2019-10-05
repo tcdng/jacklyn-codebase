@@ -5,13 +5,13 @@
 !ui-page caption:$m{file.batchupload.manage}
     components:$c{manageBatchUploadPanel}
 
-!ui-panel:manageBatchUploadPanel layout:$d{!ui-vertical}
+!ui-panel:manageBatchUploadPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{maintainTypeLabel batchUploadFramePanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
     caption:$m{file.batchupload.performbatchupload}
 
-!ui-panel:batchUploadFramePanel layout:$d{!ui-horizontal}
+!ui-panel:batchUploadFramePanel layout:$d{!ui-horizontal style:$s{width:100%;}}
     components:$c{batchUploadPanel batchParamPanel}
     
 !ui-formpanel:batchUploadPanel
