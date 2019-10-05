@@ -5,7 +5,7 @@
 !ui-page caption:$m{workflow.wfcategory.publish.manage}
     components:$c{managePublishWorkflowPanel}
 
-!ui-panel:managePublishWorkflowPanel layout:$d{!ui-vertical}
+!ui-panel:managePublishWorkflowPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{publishCategoryPanel}
 
 !ui-formpanel:publishCategoryPanel

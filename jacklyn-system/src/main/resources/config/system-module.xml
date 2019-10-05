@@ -135,7 +135,7 @@
 	<reports>
 		<report-group name="systemReports" description="System Reports">
 			<report name="sys-scheduledtaskhistreport" description="$m{system.report.scheduledtaskhist.description}"
-				title="$m{system.report.scheduledtaskhist.title}" processor="scheduledtaskhist-reportprocessor"
+				title="$m{system.report.scheduledtaskhist.title}"
 				reportable="com.tcdng.jacklyn.system.entities.ScheduledTaskHist">
 				<columns>
                     <column field="scheduledTaskDesc" description="Scheduled Task"/>
