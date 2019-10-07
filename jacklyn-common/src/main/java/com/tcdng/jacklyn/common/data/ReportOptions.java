@@ -76,6 +76,8 @@ public class ReportOptions {
 
     private boolean download;
 
+    private boolean userInputOnly;
+    
     public ReportOptions() {
         columnOptionsList = new ArrayList<ReportColumnOptions>();
         joinOptionsList = new ArrayList<ReportJoinOptions>();
@@ -301,5 +303,13 @@ public class ReportOptions {
 
     public void setDownload(boolean download) {
         this.download = download;
+    }
+
+    public boolean isUserInputOnly() {
+        return userInputOnly;
+    }
+
+    public void setUserInputOnly(boolean userInputOnly) {
+        this.userInputOnly = userInputOnly;
     }
 }

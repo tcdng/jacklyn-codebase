@@ -37,7 +37,7 @@ public class ReportRunnerPanel extends BaseDialogPanel {
         super.switchState();
 
         ReportOptions reportOptions = (ReportOptions) getValue();
-        setVisible("rptColumnOptionsPanel", reportOptions.isWithColumnOptions());
+        setVisible("rptColumnOptionsPanel", !reportOptions.isUserInputOnly() && reportOptions.isWithColumnOptions());
         setVisible("rptParamsPanel", reportOptions.isWithUserInput());
     }
 

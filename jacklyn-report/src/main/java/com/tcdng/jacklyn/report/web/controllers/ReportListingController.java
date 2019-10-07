@@ -48,6 +48,7 @@ public class ReportListingController extends AbstractReportPageController {
 		String reportConfigName = getRequestContextUtil().getRequestTargetValue(String.class);
 		ReportOptions reportOptions = getReportService().getReportOptionsForConfiguration(reportConfigName);
 		reportOptions.setReportResourcePath(reportResourcePath);
+		reportOptions.setUserInputOnly(true);
 		return showReportOptionsBox(reportOptions);
 	}
 
