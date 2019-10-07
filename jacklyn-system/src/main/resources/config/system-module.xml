@@ -155,8 +155,8 @@
 				</parameters>
 				<filter op="and">
 				    <filter field="startedOn" value1="executionDt" value2="executionDt" useParameter="true" op="between"/>
-                    <filter field="scheduledTaskId" value1="scheduledTaskId" useParameter="true" op="equal"/>
-                    <filter field="taskStatus" value1="status" useParameter="true" op="equal"/>
+                    <filter field="scheduledTaskId" value1="scheduledTaskId" useParameter="true" op="equals"/>
+                    <filter field="taskStatus" value1="status" useParameter="true" op="equals"/>
 				</filter>
 			</report>
 		</report-group>

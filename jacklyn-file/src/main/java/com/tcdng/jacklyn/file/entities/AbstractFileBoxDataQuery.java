@@ -41,11 +41,11 @@ public abstract class AbstractFileBoxDataQuery<T extends AbstractFileTransferBox
     }
 
     public AbstractFileBoxDataQuery<T> filenameLikeBeginWith(String filename) {
-        return (AbstractFileBoxDataQuery<T>) likeBegin("filename", filename);
+        return (AbstractFileBoxDataQuery<T>) beginsWith("filename", filename);
     }
 
     public AbstractFileBoxDataQuery<T> filenameLikeEndWith(String filename) {
-        return (AbstractFileBoxDataQuery<T>) likeEnd("filename", filename);
+        return (AbstractFileBoxDataQuery<T>) endsWith("filename", filename);
     }
 
     public AbstractFileBoxDataQuery<T> setFilenameIn(Collection<String> filenames) {

@@ -19,7 +19,7 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
-import com.tcdng.unify.core.criterion.Equal;
+import com.tcdng.unify.core.criterion.Equals;
 import com.tcdng.unify.core.criterion.IsNull;
 import com.tcdng.unify.core.criterion.NotEqual;
 import com.tcdng.unify.core.criterion.Or;
@@ -69,12 +69,12 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     }
 
     public WfItemQuery isUnheldOrHeldBy(String heldBy) {
-        return (WfItemQuery) add(new Or().add(new IsNull("heldBy")).add(new Equal("heldBy", heldBy)));
+        return (WfItemQuery) add(new Or().add(new IsNull("heldBy")).add(new Equals("heldBy", heldBy)));
     }
 
     public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
-        return (WfItemQuery) add(new Or().add(new Equal("participantType", WorkflowParticipantType.ALL)).add(
-                new Equal("participantType", participantType)));
+        return (WfItemQuery) add(new Or().add(new Equals("participantType", WorkflowParticipantType.ALL)).add(
+                new Equals("participantType", participantType)));
     }
 
     public WfItemQuery notForwardedBy(String userId) {
