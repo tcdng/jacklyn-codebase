@@ -19,7 +19,7 @@ import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 import com.tcdng.unify.core.batch.BatchItemRecord;
-import com.tcdng.unify.core.database.AbstractTestEntity;
+import com.tcdng.unify.core.database.AbstractTestTableEntity;
 
 /**
  * Test bank record.
@@ -28,7 +28,7 @@ import com.tcdng.unify.core.database.AbstractTestEntity;
  * @since 1.0
  */
 @Table(name = "TEST_BANK", uniqueConstraints = { @UniqueConstraint({ "name" }) })
-public class TestBank extends AbstractTestEntity implements BatchItemRecord {
+public class TestBank extends AbstractTestTableEntity implements BatchItemRecord {
 
     @Column
     private String name;

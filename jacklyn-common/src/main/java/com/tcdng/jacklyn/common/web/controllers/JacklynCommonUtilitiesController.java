@@ -44,7 +44,9 @@ import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
         @ResultMapping(
                 name = "searchdone",
                 response = { "!hidepopupresponse", "!postresponse pathBinding:$s{searchSelectPath}" }),
-        @ResultMapping(name = "viewreport", response = { "!commonreportresponse" }) })
+        @ResultMapping(
+                name = "viewreport",
+                response = { "!refreshpanelresponse panels:$l{reportRunnerPopup}", "!commonreportresponse" }) })
 public class JacklynCommonUtilitiesController extends CommonUtilitiesPageController {
 
     private SearchBoxPanel searchBoxState;
