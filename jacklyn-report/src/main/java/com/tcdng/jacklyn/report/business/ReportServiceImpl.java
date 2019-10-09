@@ -523,7 +523,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         reportableDefinition.setFieldList(fieldList);
     }
 
-    private void populateChildList(ReportConfig reportConfig, ReportConfiguration reportConfiguration) {
+    private void populateChildList(ReportConfig reportConfig, ReportConfiguration reportConfiguration)
+            throws UnifyException {
         // Columns
         if (reportConfig.getColumns() != null && !DataUtils.isBlank(reportConfig.getColumns().getColumnList())) {
             List<com.tcdng.jacklyn.report.entities.ReportColumn> columnList =
@@ -553,7 +554,12 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             for (ParameterConfig parameterConfig : reportConfig.getParameters().getParameterList()) {
                 ReportParameter reportParameter = new ReportParameter();
                 reportParameter.setName(parameterConfig.getName());
-                reportParameter.setDescription(parameterConfig.getDescription());
+                String description = parameterConfig.getDescription();
+                if (StringUtils.isBlank(description)) {
+                    description = resolveApplicationMessage(parameterConfig.getLabel());
+                }
+
+                reportParameter.setDescription(description);
                 reportParameter.setEditor(parameterConfig.getEditor());
                 reportParameter.setLabel(parameterConfig.getLabel());
                 reportParameter.setMandatory(parameterConfig.isMandatory());

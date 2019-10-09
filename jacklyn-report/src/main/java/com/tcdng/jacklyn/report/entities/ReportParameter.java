@@ -44,10 +44,10 @@ public class ReportParameter extends BaseEntity {
 	@Column(name = "PARAMETER_NM")
 	private String name;
 
-    @Column(name = "PARAMETER_DESC", length = 96)
+    @Column(name = "PARAMETER_DESC", length = 128)
     private String description;
 
-    @Column(name = "PARAMETER_LABEL", length = 96)
+    @Column(name = "PARAMETER_LABEL", length = 128)
     private String label;
 
     @Column(name = "MANDATORY_FG")

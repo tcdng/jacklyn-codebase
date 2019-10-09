@@ -60,7 +60,7 @@ public class ParameterConfig {
         return description;
     }
 
-    @XmlAttribute(required = true)
+    @XmlAttribute
     public void setDescription(String description) {
         this.description = description;
     }
