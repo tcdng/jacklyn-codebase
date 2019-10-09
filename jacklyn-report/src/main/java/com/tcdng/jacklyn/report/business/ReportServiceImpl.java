@@ -187,6 +187,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 reportColumnOptions.setDescription(reportColumn.getDescription());
                 reportColumnOptions.setGroup(reportColumn.isGroup());
                 reportColumnOptions.setSum(reportColumn.isSum());
+                reportColumnOptions.setOrderType(reportColumn.getColumnOrder());
                 reportColumnOptions.setIncluded(true);
 
                 String type = reportColumn.getType();
@@ -327,13 +328,13 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         List<ReportColumnOptions> sortReportColumnOptionsList = new ArrayList<ReportColumnOptions>();
         for (ReportColumnOptions reportColumnOptions : reportColumnOptionsList) {
             if (reportColumnOptions.isIncluded()) {
-                if (reportColumnOptions.isGroup() || reportColumnOptions.getOrder() != null) {
+                if (reportColumnOptions.isGroup() || reportColumnOptions.getOrderType() != null) {
                     sortReportColumnOptionsList.add(reportColumnOptions);
                 }
 
                 rb.addColumn(reportColumnOptions.getDescription(), reportColumnOptions.getTableName(),
                         reportColumnOptions.getColumnName(), reportColumnOptions.getType(),
-                        reportColumnOptions.getFormatter(), OrderType.fromName(reportColumnOptions.getOrder()),
+                        reportColumnOptions.getFormatter(), reportColumnOptions.getOrderType(),
                         reportColumnOptions.getHorizontalAlignment(), reportColumnOptions.getWidth(),
                         reportColumnOptions.isGroup(), reportColumnOptions.isSum());
             }
@@ -345,7 +346,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             for (int i = sortReportColumnOptionsList.size() - 1; i >= 0; i--) {
                 ReportColumnOptions reportColumnOptions = sortReportColumnOptionsList.get(i);
                 DataUtils.sort(content, dataClass, reportColumnOptions.getColumnName(),
-                        OrderType.ASCENDING.code().equals(reportColumnOptions.getOrder()));
+                        OrderType.ASCENDING.equals(reportColumnOptions.getOrderType()));
             }
             rb.beanCollection(content);
         } else {

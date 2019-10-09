@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.common.data;
 
 import com.tcdng.unify.core.constant.HAlignType;
+import com.tcdng.unify.core.constant.OrderType;
 
 /**
  * Report column options.
@@ -41,7 +42,7 @@ public class ReportColumnOptions {
 
     private int width;
 
-    private String order;
+    private OrderType orderType;
 
     private boolean group;
 
@@ -127,12 +128,12 @@ public class ReportColumnOptions {
         }
     }
 
-    public String getOrder() {
-        return order;
+    public OrderType getOrderType() {
+        return orderType;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
     }
 
     public boolean isGroup() {

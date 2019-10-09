@@ -49,7 +49,7 @@ public class ReportOptions {
     private List<ReportColumnOptions> columnOptionsList;
 
     private List<ReportJoinOptions> joinOptionsList;
-
+    
     private ReportFilterOptions filterOptions;
 
     private List<?> content;
@@ -65,6 +65,8 @@ public class ReportOptions {
     private boolean dynamicDataSource;
 
     private boolean printColumnNames;
+
+    private boolean printGroupColumnNames;
 
     private boolean shadeOddRows;
 
@@ -82,11 +84,13 @@ public class ReportOptions {
         columnOptionsList = new ArrayList<ReportColumnOptions>();
         joinOptionsList = new ArrayList<ReportJoinOptions>();
         printColumnNames = true;
+        printGroupColumnNames = true;
         shadeOddRows = true;
     }
 
     public void reset() {
         printColumnNames = true;
+        printGroupColumnNames = true;
         shadeOddRows = true;
         underlineRows = false;
         landscape = false;
@@ -263,6 +267,14 @@ public class ReportOptions {
 
     public void setPrintColumnNames(boolean printColumnNames) {
         this.printColumnNames = printColumnNames;
+    }
+
+    public boolean isPrintGroupColumnNames() {
+        return printGroupColumnNames;
+    }
+
+    public void setPrintGroupColumnNames(boolean printGroupColumnNames) {
+        this.printGroupColumnNames = printGroupColumnNames;
     }
 
     public boolean isShadeOddRows() {
