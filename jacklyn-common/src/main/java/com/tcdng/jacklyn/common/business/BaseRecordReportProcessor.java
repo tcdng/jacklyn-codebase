@@ -17,8 +17,6 @@ package com.tcdng.jacklyn.common.business;
 
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.database.Entity;
-import com.tcdng.unify.core.database.Query;
 import com.tcdng.unify.core.report.AbstractRecordReportProcessor;
 import com.tcdng.unify.core.report.ReportColumn;
 
@@ -29,10 +27,6 @@ import com.tcdng.unify.core.report.ReportColumn;
  * @since 1.0
  */
 public abstract class BaseRecordReportProcessor extends AbstractRecordReportProcessor {
-
-    public BaseRecordReportProcessor(Class<? extends Query<? extends Entity>> recordQueryClass) {
-        super(recordQueryClass);
-    }
 
     @Override
     protected ReportColumn[] getReportColumns(String reportName) throws UnifyException {
