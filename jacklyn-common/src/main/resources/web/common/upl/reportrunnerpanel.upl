@@ -18,7 +18,7 @@
     multiSelect:true selectBinding:included multiSelDependentList:$c{genReportBtn}
     windowed:true
 !ui-label:columnDescription caption:$m{common.report.column.description} binding:description columnStyle:$s{width:160px;}
-!ui-select:columnOrder caption:$m{common.report.column.order} binding:order style:$s{width:128px;} columnStyle:$s{width:100px;} list:orderlist blankOption:$s{}
+!ui-select:columnOrder caption:$m{common.report.column.order} binding:orderType style:$s{width:128px;} columnStyle:$s{width:100px;} list:orderlist blankOption:$s{}
 !ui-checkbox:columnGroup caption:$m{common.report.column.group} binding:group columnStyle:$s{width:60px;}
 !ui-checkbox:columnSum caption:$m{common.report.column.sum} binding:sum columnStyle:$s{width:60px;}
 
