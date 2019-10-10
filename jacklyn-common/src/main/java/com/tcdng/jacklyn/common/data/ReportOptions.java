@@ -36,6 +36,8 @@ public class ReportOptions {
 
     private String reportResourcePath;
 
+    private String processor;
+
     private String dataSource;
 
     private String title;
@@ -143,6 +145,14 @@ public class ReportOptions {
 
     public void setDataSource(String dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
     }
 
     public List<?> getContent() {

@@ -75,6 +75,7 @@ import com.tcdng.unify.core.report.ReportLayout;
 import com.tcdng.unify.core.report.ReportServer;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.GetterSetterInfo;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -122,7 +123,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         query.status(RecordStatus.ACTIVE);
-        query.order("reportGroupDesc", "description");
+        query.order("reportGroupDesc", "id");
         return db().listAll(query);
     }
 
@@ -130,6 +131,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     public ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException {
         ReportConfiguration reportConfiguration = db().list(new ReportConfigurationQuery().name(reportConfigName));
         ReportOptions reportOptions = new ReportOptions();
+        reportOptions.setProcessor(reportConfiguration.getProcessor());
         reportOptions.setReportName(reportConfiguration.getName());
         reportOptions.setTitle(resolveSessionMessage(reportConfiguration.getTitle()));
         reportOptions.setLandscape(reportConfiguration.isLandscape());
@@ -170,8 +172,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         SqlEntityInfo sqlEntityInfo = null;
         Map<String, ReportableField> fieldMap = Collections.emptyMap();
         Long reportableDefinitionId = reportConfiguration.getReportableId();
-        boolean isReportable = reportableDefinitionId != null;
-        if (isReportable) {
+        boolean isWithReportableDefinition = reportableDefinitionId != null;
+        if (isWithReportableDefinition) {
             sqlEntityInfo =
                     ((SqlDataSourceDialect) db().getDataSource().getDialect())
                             .getSqlEntityInfo(ReflectUtils.getClassForName(reportConfiguration.getRecordName()));
@@ -182,6 +184,11 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         if (!reportOptions.isWithColumnOptions()) { // Populate column options only on first run
+            Class<?> beanClass = null;
+            if (!isWithReportableDefinition) {
+                beanClass = ReflectUtils.getClassForName(reportConfiguration.getBeanType());
+            }
+
             for (com.tcdng.jacklyn.report.entities.ReportColumn reportColumn : reportConfiguration.getColumnList()) {
                 ReportColumnOptions reportColumnOptions = new ReportColumnOptions();
                 reportColumnOptions.setDescription(reportColumn.getDescription());
@@ -195,7 +202,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 String formatter = reportColumn.getFormatter();
                 HAlignType hAlignType = reportColumn.getHorizAlignType();
                 int width = reportColumn.getWidth();
-                if (isReportable) {
+                if (isWithReportableDefinition) {
                     reportColumnOptions.setTableName(sqlEntityInfo.getPreferredViewName());
 
                     if (!StringUtils.isBlank(reportColumn.getFieldName())) {
@@ -219,6 +226,11 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                             hAlignType = HAlignType.fromName(reportableField.getHorizontalAlign());
                         }
                     }
+                } else {
+                    reportColumnOptions.setColumnName(reportColumn.getFieldName());
+                    GetterSetterInfo getterSetterInfo =
+                            ReflectUtils.getGetterInfo(beanClass, reportColumn.getFieldName());
+                    type = DataUtils.getWrapperClassName(getterSetterInfo.getType());
                 }
 
                 reportColumnOptions.setType(type);
@@ -310,6 +322,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         rb.code(reportOptions.getReportName());
         rb.title(reportOptions.getTitle());
         rb.dataSource(reportOptions.getDataSource());
+        rb.processor(reportOptions.getProcessor());
         rb.pageWidth(reportOptions.getPageWidth());
         rb.pageHeight(reportOptions.getPageHeight());
         rb.dynamicDataSource(reportOptions.isDynamicDataSource());
@@ -321,6 +334,9 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         if (reportOptions.isColumnarLayout()) {
             rb.layout(ReportLayout.COLUMNAR);
         }
+        Map<String, Object> parameters = Inputs.getTypeValuesByName(reportOptions.getSystemInputList());
+        Inputs.getTypeValuesByNameIntoMap(reportOptions.getUserInputList(), parameters);
+        rb.setParameters(parameters);
 
         List<ReportColumnOptions> reportColumnOptionsList =
                 new ArrayList<ReportColumnOptions>(reportOptions.getColumnOptionsList());
@@ -337,7 +353,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                         reportColumnOptions.getColumnName(), reportColumnOptions.getType(),
                         reportColumnOptions.getFormatter(), reportColumnOptions.getOrderType(),
                         reportColumnOptions.getHorizontalAlignment(), reportColumnOptions.getWidth(),
-                        reportColumnOptions.isGroup(), reportColumnOptions.isGroupOnNewPage(), reportColumnOptions.isSum());
+                        reportColumnOptions.isGroup(), reportColumnOptions.isGroupOnNewPage(),
+                        reportColumnOptions.isSum());
             }
         }
 
@@ -471,6 +488,10 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 ReportConfiguration reportConfiguration = new ReportConfiguration();
                                 reportConfiguration.setReportGroupId(reportGroupId);
                                 reportConfiguration.setReportableId(reportableId);
+                                if (reportableId == null) {
+                                    reportConfiguration.setBeanType(reportConfig.getReportable());
+                                }
+
                                 reportConfiguration.setName(reportConfig.getName());
                                 reportConfiguration.setDescription(description);
                                 reportConfiguration.setTitle(title);
@@ -483,6 +504,10 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 db().create(reportConfiguration);
                             } else {
                                 oldReportConfiguration.setReportableId(reportableId);
+                                if (reportableId == null) {
+                                    oldReportConfiguration.setBeanType(reportConfig.getReportable());
+                                }
+
                                 oldReportConfiguration.setDescription(description);
                                 oldReportConfiguration.setTitle(title);
                                 oldReportConfiguration.setTemplate(reportConfig.getTemplate());

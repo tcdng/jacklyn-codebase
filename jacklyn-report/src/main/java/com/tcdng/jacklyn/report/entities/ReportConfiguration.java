@@ -43,6 +43,9 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
 
 	@ForeignKey(type = ReportableDefinition.class, nullable = true)
 	private Long reportableId;
+    
+    @Column(name = "BEAN_TY", length = 96, nullable =  true)
+    private String beanType;
 	
 	@Column(name = "REPORTCONFIG_NM")
 	private String name;
@@ -111,6 +114,14 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
 
     public void setReportableId(Long reportableId) {
         this.reportableId = reportableId;
+    }
+
+    public String getBeanType() {
+        return beanType;
+    }
+
+    public void setBeanType(String beanType) {
+        this.beanType = beanType;
     }
 
     public String getName() {
