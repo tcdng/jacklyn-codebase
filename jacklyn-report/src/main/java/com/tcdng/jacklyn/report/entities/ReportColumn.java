@@ -59,6 +59,9 @@ public class ReportColumn extends BaseEntity {
     @Column(name = "GROUP_FG")
     private boolean group;
 
+    @Column(name = "GROUP_ON_NEW_PAGE_FG")
+    private boolean groupOnNewPage;
+
     @Column(name = "SUM_FG")
     private boolean sum;
 
@@ -115,6 +118,14 @@ public class ReportColumn extends BaseEntity {
 
     public void setGroup(boolean group) {
         this.group = group;
+    }
+
+    public boolean isGroupOnNewPage() {
+        return groupOnNewPage;
+    }
+
+    public void setGroupOnNewPage(boolean groupOnNewPage) {
+        this.groupOnNewPage = groupOnNewPage;
     }
 
     public boolean isSum() {

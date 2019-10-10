@@ -186,6 +186,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 ReportColumnOptions reportColumnOptions = new ReportColumnOptions();
                 reportColumnOptions.setDescription(reportColumn.getDescription());
                 reportColumnOptions.setGroup(reportColumn.isGroup());
+                reportColumnOptions.setGroupOnNewPage(reportColumn.isGroupOnNewPage());
                 reportColumnOptions.setSum(reportColumn.isSum());
                 reportColumnOptions.setOrderType(reportColumn.getColumnOrder());
                 reportColumnOptions.setIncluded(true);
@@ -336,7 +337,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                         reportColumnOptions.getColumnName(), reportColumnOptions.getType(),
                         reportColumnOptions.getFormatter(), reportColumnOptions.getOrderType(),
                         reportColumnOptions.getHorizontalAlignment(), reportColumnOptions.getWidth(),
-                        reportColumnOptions.isGroup(), reportColumnOptions.isSum());
+                        reportColumnOptions.isGroup(), reportColumnOptions.isGroupOnNewPage(), reportColumnOptions.isSum());
             }
         }
 
@@ -541,6 +542,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 reportColumn.setHorizAlignType(columnConfig.getHorizAlignType());
                 reportColumn.setWidth(columnConfig.getWidth());
                 reportColumn.setGroup(columnConfig.isGroup());
+                reportColumn.setGroupOnNewPage(columnConfig.isGroupOnNewPage());
                 reportColumn.setSum(columnConfig.isSum());
                 columnList.add(reportColumn);
             }

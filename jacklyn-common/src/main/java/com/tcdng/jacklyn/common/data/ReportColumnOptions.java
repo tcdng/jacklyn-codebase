@@ -46,6 +46,8 @@ public class ReportColumnOptions {
 
     private boolean group;
 
+    private boolean groupOnNewPage;
+
     private boolean sum;
 
     private boolean included;
@@ -142,6 +144,14 @@ public class ReportColumnOptions {
 
     public void setGroup(boolean group) {
         this.group = group;
+    }
+
+    public boolean isGroupOnNewPage() {
+        return groupOnNewPage;
+    }
+
+    public void setGroupOnNewPage(boolean groupOnNewPage) {
+        this.groupOnNewPage = groupOnNewPage;
     }
 
     public boolean isSum() {

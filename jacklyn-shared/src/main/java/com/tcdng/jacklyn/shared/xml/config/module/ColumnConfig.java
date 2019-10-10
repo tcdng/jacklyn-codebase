@@ -47,6 +47,8 @@ public class ColumnConfig {
 
     private boolean group;
 
+    private boolean groupOnNewPage;
+
     private boolean sum;
 
     public String getFieldName() {
@@ -121,6 +123,15 @@ public class ColumnConfig {
     @XmlAttribute
     public void setGroup(boolean group) {
         this.group = group;
+    }
+
+    public boolean isGroupOnNewPage() {
+        return groupOnNewPage;
+    }
+
+    @XmlAttribute
+    public void setGroupOnNewPage(boolean groupOnNewPage) {
+        this.groupOnNewPage = groupOnNewPage;
     }
 
     public boolean isSum() {
