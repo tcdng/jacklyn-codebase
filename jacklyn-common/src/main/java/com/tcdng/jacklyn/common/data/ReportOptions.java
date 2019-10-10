@@ -34,6 +34,8 @@ public class ReportOptions {
 
     private String reportFormat;
 
+    private String reportLayout;
+
     private String reportResourcePath;
 
     private String processor;
@@ -70,11 +72,11 @@ public class ReportOptions {
 
     private boolean printGroupColumnNames;
 
+    private boolean invertGroupColors;
+
     private boolean shadeOddRows;
 
     private boolean underlineRows;
-
-    private boolean columnarLayout;
 
     private boolean landscape;
 
@@ -129,6 +131,14 @@ public class ReportOptions {
 
     public void setReportFormat(String reportFormat) {
         this.reportFormat = reportFormat;
+    }
+
+    public String getReportLayout() {
+        return reportLayout;
+    }
+
+    public void setReportLayout(String reportLayout) {
+        this.reportLayout = reportLayout;
     }
 
     public String getReportResourcePath() {
@@ -287,6 +297,14 @@ public class ReportOptions {
         this.printGroupColumnNames = printGroupColumnNames;
     }
 
+    public boolean isInvertGroupColors() {
+        return invertGroupColors;
+    }
+
+    public void setInvertGroupColors(boolean invertGroupColors) {
+        this.invertGroupColors = invertGroupColors;
+    }
+
     public boolean isShadeOddRows() {
         return shadeOddRows;
     }
@@ -301,14 +319,6 @@ public class ReportOptions {
 
     public void setUnderlineRows(boolean underlineRows) {
         this.underlineRows = underlineRows;
-    }
-
-    public boolean isColumnarLayout() {
-        return columnarLayout;
-    }
-
-    public void setColumnarLayout(boolean columnarLayout) {
-        this.columnarLayout = columnarLayout;
     }
 
     public boolean isLandscape() {

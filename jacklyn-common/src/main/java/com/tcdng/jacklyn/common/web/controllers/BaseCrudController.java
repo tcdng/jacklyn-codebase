@@ -338,7 +338,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
                 getCommonReportProvider().getDynamicReportOptions(entityClass.getName(), table.getColumnPropertyList());
         reportOptions.setReportResourcePath("/common/resource/report");
         reportOptions.setReportFormat(reportType);
-        reportOptions.setColumnarLayout(mode != ManageRecordModifier.SEARCH);
+        // TODO Set report layout based on mode
         reportOptions.setContent(contentList);
         return showReportOptionsBox(reportOptions);
     }

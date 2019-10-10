@@ -60,7 +60,13 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
     private String template;
 
     @Column(length = 64, nullable = true)
+    private String layout;
+
+    @Column(length = 64, nullable = true)
     private String processor;
+
+    @Column
+    private boolean invertGroupColors;
 
     @Column
     private boolean landscape;
@@ -152,12 +158,28 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
 		this.template = template;
 	}
 
-	public String getProcessor() {
+	public String getLayout() {
+        return layout;
+    }
+
+    public void setLayout(String layout) {
+        this.layout = layout;
+    }
+
+    public String getProcessor() {
         return processor;
     }
 
     public void setProcessor(String processor) {
         this.processor = processor;
+    }
+
+    public boolean isInvertGroupColors() {
+        return invertGroupColors;
+    }
+
+    public void setInvertGroupColors(boolean invertGroupColors) {
+        this.invertGroupColors = invertGroupColors;
     }
 
     public boolean isLandscape() {

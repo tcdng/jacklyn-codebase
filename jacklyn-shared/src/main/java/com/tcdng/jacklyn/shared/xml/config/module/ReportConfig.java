@@ -36,11 +36,15 @@ public class ReportConfig extends BaseConfig {
 
     private String template;
 
+    private String layout;
+
     private ColumnsConfig columns;
 
     private ParametersConfig parameters;
 
     private FilterConfig filter;
+
+    private boolean invertGroupColors;
 
     private boolean landscape;
 
@@ -109,6 +113,24 @@ public class ReportConfig extends BaseConfig {
     @XmlAttribute
     public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public String getLayout() {
+        return layout;
+    }
+
+    @XmlAttribute
+    public void setLayout(String layout) {
+        this.layout = layout;
+    }
+
+    public boolean isInvertGroupColors() {
+        return invertGroupColors;
+    }
+
+    @XmlAttribute
+    public void setInvertGroupColors(boolean invertGroupColors) {
+        this.invertGroupColors = invertGroupColors;
     }
 
     public boolean isLandscape() {

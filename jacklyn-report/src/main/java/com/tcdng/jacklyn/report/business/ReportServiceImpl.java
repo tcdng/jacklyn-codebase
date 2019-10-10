@@ -71,7 +71,6 @@ import com.tcdng.unify.core.report.Report;
 import com.tcdng.unify.core.report.Report.Builder;
 import com.tcdng.unify.core.report.ReportColumn;
 import com.tcdng.unify.core.report.ReportFormat;
-import com.tcdng.unify.core.report.ReportLayout;
 import com.tcdng.unify.core.report.ReportServer;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
@@ -131,9 +130,11 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     public ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException {
         ReportConfiguration reportConfiguration = db().list(new ReportConfigurationQuery().name(reportConfigName));
         ReportOptions reportOptions = new ReportOptions();
+        reportOptions.setReportLayout(reportConfiguration.getLayout());
         reportOptions.setProcessor(reportConfiguration.getProcessor());
         reportOptions.setReportName(reportConfiguration.getName());
         reportOptions.setTitle(resolveSessionMessage(reportConfiguration.getTitle()));
+        reportOptions.setInvertGroupColors(reportConfiguration.isInvertGroupColors());
         reportOptions.setLandscape(reportConfiguration.isLandscape());
         reportOptions.setShadeOddRows(reportConfiguration.isShadeOddRows());
         reportOptions.setUnderlineRows(reportConfiguration.isUnderlineRows());
@@ -327,13 +328,16 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         rb.pageHeight(reportOptions.getPageHeight());
         rb.dynamicDataSource(reportOptions.isDynamicDataSource());
         rb.printColumnNames(reportOptions.isPrintColumnNames());
+        rb.printGroupColumnNames(reportOptions.isPrintGroupColumnNames());
+        rb.invertGroupColors(reportOptions.isInvertGroupColors());
         rb.underlineRows(reportOptions.isUnderlineRows());
         rb.shadeOddRows(reportOptions.isShadeOddRows());
         rb.landscape(reportOptions.isLandscape());
         rb.format(ReportFormat.fromName(reportOptions.getReportFormat()));
-        if (reportOptions.isColumnarLayout()) {
-            rb.layout(ReportLayout.COLUMNAR);
+        if (!StringUtils.isBlank(reportOptions.getReportLayout())) {
+            rb.layout(reportOptions.getReportLayout());
         }
+
         Map<String, Object> parameters = Inputs.getTypeValuesByName(reportOptions.getSystemInputList());
         Inputs.getTypeValuesByNameIntoMap(reportOptions.getUserInputList(), parameters);
         rb.setParameters(parameters);
@@ -496,7 +500,9 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 reportConfiguration.setDescription(description);
                                 reportConfiguration.setTitle(title);
                                 reportConfiguration.setTemplate(reportConfig.getTemplate());
+                                reportConfiguration.setLayout(reportConfig.getLayout());
                                 reportConfiguration.setProcessor(reportConfig.getProcessor());
+                                reportConfiguration.setInvertGroupColors(reportConfig.isInvertGroupColors());
                                 reportConfiguration.setLandscape(reportConfig.isLandscape());
                                 reportConfiguration.setShadeOddRows(reportConfig.isShadeOddRows());
                                 reportConfiguration.setUnderlineRows(reportConfig.isUnderlineRows());
@@ -511,7 +517,9 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 oldReportConfiguration.setDescription(description);
                                 oldReportConfiguration.setTitle(title);
                                 oldReportConfiguration.setTemplate(reportConfig.getTemplate());
+                                oldReportConfiguration.setLayout(reportConfig.getLayout());
                                 oldReportConfiguration.setProcessor(reportConfig.getProcessor());
+                                oldReportConfiguration.setInvertGroupColors(reportConfig.isInvertGroupColors());
                                 oldReportConfiguration.setLandscape(reportConfig.isLandscape());
                                 oldReportConfiguration.setShadeOddRows(reportConfig.isShadeOddRows());
                                 oldReportConfiguration.setUnderlineRows(reportConfig.isUnderlineRows());
