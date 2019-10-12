@@ -65,6 +65,7 @@ import com.tcdng.unify.core.constant.OrderType;
 import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
+import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.sql.SqlDataSourceDialect;
 import com.tcdng.unify.core.database.sql.SqlEntityInfo;
 import com.tcdng.unify.core.report.Report;
@@ -171,13 +172,25 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
         // Report column options
         SqlEntityInfo sqlEntityInfo = null;
+        String className = reportConfiguration.getRecordName();
+        if (StringUtils.isBlank(className)) {
+            className = reportConfiguration.getBeanType();
+        }
+        
+        Class<?> targetReportClass = null;
+        if (StringUtils.isNotBlank(className)) {
+            targetReportClass = ReflectUtils.getClassForName(className);
+            if (Entity.class.isAssignableFrom(targetReportClass)) {
+                sqlEntityInfo =
+                        ((SqlDataSourceDialect) db().getDataSource().getDialect())
+                                .getSqlEntityInfo(targetReportClass);
+            }
+        }
+        
         Map<String, ReportableField> fieldMap = Collections.emptyMap();
         Long reportableDefinitionId = reportConfiguration.getReportableId();
         boolean isWithReportableDefinition = reportableDefinitionId != null;
-        if (isWithReportableDefinition) {
-            sqlEntityInfo =
-                    ((SqlDataSourceDialect) db().getDataSource().getDialect())
-                            .getSqlEntityInfo(ReflectUtils.getClassForName(reportConfiguration.getRecordName()));
+        if (sqlEntityInfo != null) {
             fieldMap =
                     db().listAllMap(String.class, "name",
                             new ReportableFieldQuery().reportableId(reportableDefinitionId).installed(Boolean.TRUE));
@@ -185,11 +198,6 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         if (!reportOptions.isWithColumnOptions()) { // Populate column options only on first run
-            Class<?> beanClass = null;
-            if (!isWithReportableDefinition) {
-                beanClass = ReflectUtils.getClassForName(reportConfiguration.getBeanType());
-            }
-
             for (com.tcdng.jacklyn.report.entities.ReportColumn reportColumn : reportConfiguration.getColumnList()) {
                 ReportColumnOptions reportColumnOptions = new ReportColumnOptions();
                 reportColumnOptions.setDescription(reportColumn.getDescription());
@@ -203,34 +211,39 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 String formatter = reportColumn.getFormatter();
                 HAlignType hAlignType = reportColumn.getHorizAlignType();
                 int width = reportColumn.getWidth();
-                if (isWithReportableDefinition) {
+                if (sqlEntityInfo != null) {
                     reportColumnOptions.setTableName(sqlEntityInfo.getPreferredViewName());
 
                     if (StringUtils.isNotBlank(reportColumn.getFieldName())) {
                         reportColumnOptions.setColumnName(
                                 sqlEntityInfo.getListFieldInfo(reportColumn.getFieldName()).getPreferredColumnName());
 
-                        ReportableField reportableField = fieldMap.get(reportColumn.getFieldName());
-                        if (type == null) {
-                            type = reportableField.getType();
-                        }
+                        if (isWithReportableDefinition) {
+                            ReportableField reportableField = fieldMap.get(reportColumn.getFieldName());
+                            if (type == null) {
+                                type = reportableField.getType();
+                            }
 
-                        if (formatter == null) {
-                            formatter = reportableField.getFormatter();
-                        }
+                            if (formatter == null) {
+                                formatter = reportableField.getFormatter();
+                            }
 
-                        if (width <= 0 && reportableField.getWidth() != null) {
-                            width = reportableField.getWidth();
-                        }
+                            if (width <= 0 && reportableField.getWidth() != null) {
+                                width = reportableField.getWidth();
+                            }
 
-                        if (hAlignType == null) {
-                            hAlignType = HAlignType.fromName(reportableField.getHorizontalAlign());
+                            if (hAlignType == null) {
+                                hAlignType = HAlignType.fromName(reportableField.getHorizontalAlign());
+                            }
                         }
                     }
                 } else {
                     reportColumnOptions.setColumnName(reportColumn.getFieldName());
+                }
+
+                if (type == null) {
                     GetterSetterInfo getterSetterInfo =
-                            ReflectUtils.getGetterInfo(beanClass, reportColumn.getFieldName());
+                            ReflectUtils.getGetterInfo(targetReportClass, reportColumn.getFieldName());
                     type = DataUtils.getWrapperClassName(getterSetterInfo.getType());
                 }
 
@@ -355,6 +368,8 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         DataUtils.sort(reportColumnOptionsList, ReportColumnOptions.class, "group", false);
 
         List<ReportColumnOptions> sortReportColumnOptionsList = new ArrayList<ReportColumnOptions>();
+        // TODO Get from report data source. For now just get from application data source
+        String sqlBlobTypeName = ((SqlDataSourceDialect) db().getDataSource().getDialect()).getSqlBlobType();
         for (ReportColumnOptions reportColumnOptions : reportColumnOptionsList) {
             if (reportColumnOptions.isIncluded()) {
                 if (reportColumnOptions.isGroup() || reportColumnOptions.getOrderType() != null) {
@@ -362,7 +377,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 }
 
                 rb.addColumn(reportColumnOptions.getDescription(), reportColumnOptions.getTableName(),
-                        reportColumnOptions.getColumnName(), reportColumnOptions.getType(),
+                        reportColumnOptions.getColumnName(), reportColumnOptions.getType(),sqlBlobTypeName,
                         reportColumnOptions.getFormatter(), reportColumnOptions.getOrderType(),
                         reportColumnOptions.getHorizontalAlignment(), reportColumnOptions.getWidth(),
                         reportColumnOptions.isGroup(), reportColumnOptions.isGroupOnNewPage(),

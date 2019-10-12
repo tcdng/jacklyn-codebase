@@ -30,13 +30,15 @@ public class ReportOptions {
 
     private String reportName;
 
-    private String recordName;
+    private String reportDescription;
 
     private String reportFormat;
 
     private String reportLayout;
 
     private String reportResourcePath;
+
+    private String recordName;
 
     private String processor;
 
@@ -109,12 +111,12 @@ public class ReportOptions {
         this.reportName = reportName;
     }
 
-    public String getRecordName() {
-        return recordName;
+    public String getReportDescription() {
+        return reportDescription;
     }
 
-    public void setRecordName(String recordName) {
-        this.recordName = recordName;
+    public void setReportDescription(String reportDescription) {
+        this.reportDescription = reportDescription;
     }
 
     public String getTableName() {
@@ -139,6 +141,14 @@ public class ReportOptions {
 
     public void setReportLayout(String reportLayout) {
         this.reportLayout = reportLayout;
+    }
+
+    public String getRecordName() {
+        return recordName;
+    }
+
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
     }
 
     public String getReportResourcePath() {
