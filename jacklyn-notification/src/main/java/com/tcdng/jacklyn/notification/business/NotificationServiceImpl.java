@@ -421,7 +421,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
             if (moduleConfig.getNotificationTemplates() != null
-                    && !DataUtils.isBlank(moduleConfig.getNotificationTemplates().getNotificationTemplateList())) {
+                    && DataUtils.isNotBlank(moduleConfig.getNotificationTemplates().getNotificationTemplateList())) {
                 logDebug("Installing message type definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 NotificationTemplateQuery mtQuery = new NotificationTemplateQuery();
@@ -496,7 +496,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             List<FileAttachment> fileAttachmentList = Collections.emptyList();
             boolean isAttachment = false;
             String attachmentGenerator = notification.getAttachmentGenerator();
-            if (!StringUtils.isBlank(attachmentGenerator)) {
+            if (StringUtils.isNotBlank(attachmentGenerator)) {
                 // Generated attachments
                 fileAttachmentList = new ArrayList<FileAttachment>();
                 MessageAttachmentGenerator notificationAttachmentGenerator =

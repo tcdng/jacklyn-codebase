@@ -408,7 +408,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException {
         Set<Long> idSet = db().valueSet(Long.class, "departmentId", new UserRoleQuery().userLoginId(userLoginId));
-        if (!DataUtils.isBlank(idSet)) {
+        if (DataUtils.isNotBlank(idSet)) {
             return new ArrayList<Long>(idSet);
         }
 
@@ -482,12 +482,12 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         SessionContext sessionCtx = getSessionContext();
         if (loginLocale != null) {
             sessionCtx.setLocale(loginLocale);
-        } else if (!StringUtils.isBlank(user.getBranchLanguageTag())) {
+        } else if (StringUtils.isNotBlank(user.getBranchLanguageTag())) {
             sessionCtx.setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
         }
 
         // Set session time zone
-        if (!StringUtils.isBlank(user.getBranchTimeZone())) {
+        if (StringUtils.isNotBlank(user.getBranchTimeZone())) {
             sessionCtx.setTimeZone(TimeZone.getTimeZone(user.getBranchTimeZone()));
         }
 

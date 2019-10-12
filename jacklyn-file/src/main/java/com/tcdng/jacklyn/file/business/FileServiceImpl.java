@@ -205,7 +205,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 String semaphoreSuffix = fileTransferPolicy.getSourceSemaphoreSuffix();
                 for (FileInfo fileInfo : fileInfoList) {
                     if (fileInfo.isFile() && !fileInfo.isHidden() && !oldFilenameSet.contains(fileInfo.getFilename())) {
-                        if (!StringUtils.isBlank(semaphoreSuffix)) {
+                        if (StringUtils.isNotBlank(semaphoreSuffix)) {
                             File semaphoreFile = new File(fileInfo.getAbsolutePath() + semaphoreSuffix);
                             if (!semaphoreFile.isFile()) {
                                 // No semaphore file. File not ready for upload
@@ -239,7 +239,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 String semaphoreSuffix = fileTransferPolicy.getSourceSemaphoreSuffix();
                 for (FileInfo fileInfo : fileInfoList) {
                     if (fileInfo.isFile() && !fileInfo.isHidden() && !oldFilenameSet.contains(fileInfo.getFilename())) {
-                        if (!StringUtils.isBlank(semaphoreSuffix)) {
+                        if (StringUtils.isNotBlank(semaphoreSuffix)) {
                             if (!fileTransferServer.remoteFileExists(fileTransferInfo,
                                     fileInfo.getFilename() + semaphoreSuffix)) {
                                 // No semaphore file. File not ready for
@@ -370,7 +370,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             addTaskMessage(taskMonitor, "$m{file.taskmonitor.uploading}", filename);
             fileServer.uploadFile(fileTransferInfo, filename, filename);
 
-            if (!StringUtils.isBlank(semaphoreSuffix)) {
+            if (StringUtils.isNotBlank(semaphoreSuffix)) {
                 fileServer.createRemoteFile(fileTransferInfo, filename + semaphoreSuffix);
             }
 
@@ -399,7 +399,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             addTaskMessage(taskMonitor, "$m{file.taskmonitor.downloading}", filename);
             fileServer.downloadFile(fileTransferInfo, filename, filename);
 
-            if (!StringUtils.isBlank(semaphoreSuffix)) {
+            if (StringUtils.isNotBlank(semaphoreSuffix)) {
                 fileServer.createLocalFile(fileTransferInfo, filename + semaphoreSuffix);
             }
 
@@ -583,7 +583,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             List<BatchFileFieldDefinition> baseFieldDefList) throws UnifyException {
         List<BatchFileFieldDefinition> result = new ArrayList<BatchFileFieldDefinition>();
         Set<String> beanFieldNames = new HashSet<String>();
-        if (!DataUtils.isBlank(baseFieldDefList)) {
+        if (DataUtils.isNotBlank(baseFieldDefList)) {
             for (BatchFileFieldDefinition baseFieldDefinition : baseFieldDefList) {
                 beanFieldNames.add(baseFieldDefinition.getBeanFieldName());
                 result.add(baseFieldDefinition);

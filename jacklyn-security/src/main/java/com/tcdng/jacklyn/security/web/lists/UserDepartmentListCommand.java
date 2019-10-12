@@ -46,7 +46,7 @@ public class UserDepartmentListCommand extends AbstractZeroParamsSecurityListCom
         UserToken userToken = getUserToken();
         if (!userToken.isReservedUser() && !isAppAdminView()) {
             List<Long> departmentIdList = getSecurityService().findUserDepartmentIds(userToken.getUserLoginId());
-            if (!DataUtils.isBlank(departmentIdList)) {
+            if (DataUtils.isNotBlank(departmentIdList)) {
                 return organizationService.findDepartments(
                         (DepartmentQuery) new DepartmentQuery().idIn(departmentIdList).order("description"));
             }

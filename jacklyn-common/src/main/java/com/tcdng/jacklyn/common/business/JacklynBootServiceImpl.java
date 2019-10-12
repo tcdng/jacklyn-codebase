@@ -96,7 +96,7 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
             if (unifyStaticSettings instanceof JacklynModuleStaticSettings) {
                 JacklynModuleStaticSettings jacklynModuleStaticSettings =
                         (JacklynModuleStaticSettings) unifyStaticSettings;
-                if (!StringUtils.isBlank(jacklynModuleStaticSettings.getModuleComponent())) {
+                if (StringUtils.isNotBlank(jacklynModuleStaticSettings.getModuleComponent())) {
                     String componentName = jacklynModuleStaticSettings.getModuleComponent();
                     Class<? extends UnifyComponent> type = getComponentType(componentName);
                     if (StartupShutdownHook.class.isAssignableFrom(type)) {
@@ -121,12 +121,12 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                 JacklynModuleStaticSettings jacklynModuleStaticSettings =
                         (JacklynModuleStaticSettings) unifyStaticSettings;
                 String componentName = jacklynModuleStaticSettings.getModuleComponent();
-                if (!StringUtils.isBlank(componentName)) {
+                if (StringUtils.isNotBlank(componentName)) {
                     logDebug("Identified feature installer [{0}]...", componentName);
                     installerList.add(componentName);
                 }
 
-                if (!StringUtils.isBlank(jacklynModuleStaticSettings.getModuleConfig())) {
+                if (StringUtils.isNotBlank(jacklynModuleStaticSettings.getModuleConfig())) {
                     moduleXmlList.add(jacklynModuleStaticSettings.getModuleConfig());
                 }
             }
@@ -197,7 +197,7 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                     providerName, configID);
         }
 
-        if (!StringUtils.isBlank(providerName)) {
+        if (StringUtils.isNotBlank(providerName)) {
             setApplicationAttribute(contextID, (T) getComponent(providerName));
         } else {
             logWarn("Could not find provider component with context ID [{0}] and config ID [{1}].", contextID,
@@ -219,7 +219,7 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
 
             // Reportable privileges
             List<ReportConfig> reportableList = mc.getReportableList();
-            if (!DataUtils.isBlank(reportableList)) {
+            if (DataUtils.isNotBlank(reportableList)) {
                 PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.REPORTABLE);
                 for (ReportConfig rci : reportableList) {
                     PrivilegeConfig pc = new PrivilegeConfig(rci.getName(), rci.getDescription());
@@ -229,10 +229,10 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
 
             // Configured reports
             ReportsConfig rc = mc.getReports();
-            if (rc != null && !DataUtils.isBlank(rc.getReportGroupList())) {
+            if (rc != null && DataUtils.isNotBlank(rc.getReportGroupList())) {
                 PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.CONFIGUREDREPORTS);
                 for (ReportGroupConfig rgConfig : rc.getReportGroupList()) {
-                    if (!DataUtils.isBlank(rgConfig.getReportList())) {
+                    if (DataUtils.isNotBlank(rgConfig.getReportList())) {
                         for (ReportConfig rci : rgConfig.getReportList()) {
                             PrivilegeConfig pc = new PrivilegeConfig(rci.getName(), rci.getDescription());
                             pgc.addPrivilegeConfig(pc);

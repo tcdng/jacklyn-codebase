@@ -112,7 +112,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException {
         ReportConfigurationQuery query = new ReportConfigurationQuery();
-        if (!StringUtils.isBlank(roleCode)) {
+        if (StringUtils.isNotBlank(roleCode)) {
             Set<String> privilegeCodes = getRolePrivilegeCodes(roleCode, PrivilegeCategoryConstants.CONFIGUREDREPORTS);
             if (!privilegeCodes.isEmpty()) {
                 query.nameIn(privilegeCodes);
@@ -152,7 +152,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 holder.setStringValue(defaultVal);
             }
 
-            if (!StringUtils.isBlank(reportParam.getEditor())) {
+            if (StringUtils.isNotBlank(reportParam.getEditor())) {
                 userInputList.add(holder);
             } else {
                 systemInputList.add(holder);
@@ -206,7 +206,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 if (isWithReportableDefinition) {
                     reportColumnOptions.setTableName(sqlEntityInfo.getPreferredViewName());
 
-                    if (!StringUtils.isBlank(reportColumn.getFieldName())) {
+                    if (StringUtils.isNotBlank(reportColumn.getFieldName())) {
                         reportColumnOptions.setColumnName(
                                 sqlEntityInfo.getListFieldInfo(reportColumn.getFieldName()).getPreferredColumnName());
 
@@ -244,7 +244,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
         // Filter options
         List<ReportFilter> reportFilterList = reportConfiguration.getFilterList();
-        if (!DataUtils.isBlank(reportFilterList)) {
+        if (DataUtils.isNotBlank(reportFilterList)) {
             Map<String, Object> parameters = Inputs.getTypeValuesByName(reportOptions.getSystemInputList());
             Inputs.getTypeValuesByNameIntoMap(reportOptions.getUserInputList(), parameters);
             ReportFilterOptions rootFilterOptions =
@@ -334,13 +334,21 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         rb.shadeOddRows(reportOptions.isShadeOddRows());
         rb.landscape(reportOptions.isLandscape());
         rb.format(ReportFormat.fromName(reportOptions.getReportFormat()));
-        if (!StringUtils.isBlank(reportOptions.getReportLayout())) {
+        if (StringUtils.isNotBlank(reportOptions.getReportLayout())) {
             rb.layout(reportOptions.getReportLayout());
         }
 
-        Map<String, Object> parameters = Inputs.getTypeValuesByName(reportOptions.getSystemInputList());
-        Inputs.getTypeValuesByNameIntoMap(reportOptions.getUserInputList(), parameters);
-        rb.setParameters(parameters);
+        if (DataUtils.isNotBlank(reportOptions.getSystemInputList())) {
+            for (Input<?> input : reportOptions.getSystemInputList()) {
+                rb.addReportParameter(input.getName(), input.getDescription(), input.getTypeValue());
+            }
+        }
+
+        if (DataUtils.isNotBlank(reportOptions.getUserInputList())) {
+            for (Input<?> input : reportOptions.getUserInputList()) {
+                rb.addReportParameter(input.getName(), input.getDescription(), input.getTypeValue());
+            }
+        }
 
         List<ReportColumnOptions> reportColumnOptionsList =
                 new ArrayList<ReportColumnOptions>(reportOptions.getColumnOptionsList());
@@ -409,7 +417,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
             // Handle reportables first
             Map<String, Long> reportableIds = new HashMap<String, Long>();
-            if (!DataUtils.isBlank(moduleConfig.getReportableList())) {
+            if (DataUtils.isNotBlank(moduleConfig.getReportableList())) {
                 logDebug("Installing reportable definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 ReportableDefinitionQuery rdQuery = new ReportableDefinitionQuery();
@@ -451,7 +459,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
             // Handle configured reports
             if (moduleConfig.getReports() != null
-                    && !DataUtils.isBlank(moduleConfig.getReports().getReportGroupList())) {
+                    && DataUtils.isNotBlank(moduleConfig.getReports().getReportGroupList())) {
                 logDebug("Installing configured report definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 for (ReportGroupConfig reportGroupConfig : moduleConfig.getReports().getReportGroupList()) {
@@ -472,7 +480,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                     }
 
                     ReportConfigurationQuery rcQuery = new ReportConfigurationQuery();
-                    if (!DataUtils.isBlank(reportGroupConfig.getReportList())) {
+                    if (DataUtils.isNotBlank(reportGroupConfig.getReportList())) {
                         for (ReportConfig reportConfig : reportGroupConfig.getReportList()) {
                             rcQuery.clear();
                             String description = resolveApplicationMessage(reportConfig.getDescription());
@@ -484,7 +492,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                             ReportConfiguration oldReportConfiguration =
                                     db().findLean(rcQuery.reportGroupId(reportGroupId).name(reportConfig.getName()));
                             Long reportableId = null;
-                            if (!StringUtils.isBlank(reportConfig.getReportable())) {
+                            if (StringUtils.isNotBlank(reportConfig.getReportable())) {
                                 reportableId = reportableIds.get(reportConfig.getReportable());
                             }
 
@@ -561,7 +569,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     private void populateChildList(ReportConfig reportConfig, ReportConfiguration reportConfiguration)
             throws UnifyException {
         // Columns
-        if (reportConfig.getColumns() != null && !DataUtils.isBlank(reportConfig.getColumns().getColumnList())) {
+        if (reportConfig.getColumns() != null && DataUtils.isNotBlank(reportConfig.getColumns().getColumnList())) {
             List<com.tcdng.jacklyn.report.entities.ReportColumn> columnList =
                     new ArrayList<com.tcdng.jacklyn.report.entities.ReportColumn>();
             for (ColumnConfig columnConfig : reportConfig.getColumns().getColumnList()) {
@@ -585,7 +593,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
         // Parameters
         if (reportConfig.getParameters() != null
-                && !DataUtils.isBlank(reportConfig.getParameters().getParameterList())) {
+                && DataUtils.isNotBlank(reportConfig.getParameters().getParameterList())) {
             List<ReportParameter> parameterList = new ArrayList<ReportParameter>();
             for (ParameterConfig parameterConfig : reportConfig.getParameters().getParameterList()) {
                 ReportParameter reportParameter = new ReportParameter();
@@ -625,7 +633,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         reportFilter.setCompoundIndex(compoundIndex);
         filterList.add(reportFilter);
 
-        if (filterConfig.getOp().isCompound() && !DataUtils.isBlank(filterConfig.getFilterList())) {
+        if (filterConfig.getOp().isCompound() && DataUtils.isNotBlank(filterConfig.getFilterList())) {
             int subCompoundIndex = compoundIndex + 1;
             for (FilterConfig subFilterConfig : filterConfig.getFilterList()) {
                 populateChildFilterList(subFilterConfig, filterList, subCompoundIndex);
@@ -710,16 +718,17 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     private void setCommonReportParameters(Report report) throws UnifyException {
-        report.setParameter(ReportParameterConstants.APPLICATION_TITLE, getUnifyComponentContext().getInstanceName());
-        report.setParameter(ReportParameterConstants.CLIENT_TITLE,
+        report.setParameter(ReportParameterConstants.APPLICATION_TITLE, "Application Title",
+                getUnifyComponentContext().getInstanceName());
+        report.setParameter(ReportParameterConstants.CLIENT_TITLE, "Client Title",
                 systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
-        report.setParameter(ReportParameterConstants.REPORT_TITLE, report.getTitle());
+        report.setParameter(ReportParameterConstants.REPORT_TITLE, "Report Title", report.getTitle());
 
         String imagePath =
                 WebUtils.expandThemeTag(systemService.getSysParameterValue(String.class,
                         ReportModuleSysParamConstants.REPORT_CLIENT_LOGO));
         byte[] clientLogo = IOUtils.readFileResourceInputStream(imagePath, getUnifyComponentContext().getWorkingPath());
-        report.setParameter(ReportParameterConstants.CLIENT_LOGO, clientLogo);
+        report.setParameter(ReportParameterConstants.CLIENT_LOGO, "Client Logo", clientLogo);
 
         String templatePath =
                 systemService.getSysParameterValue(String.class, ReportModuleSysParamConstants.REPORT_TEMPLATE_PATH);

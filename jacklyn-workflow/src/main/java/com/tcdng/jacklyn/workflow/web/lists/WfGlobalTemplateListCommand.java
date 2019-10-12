@@ -45,7 +45,7 @@ public class WfGlobalTemplateListCommand extends AbstractZeroParamsWorkflowListC
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         List<WfTemplate> templateList =
                 getWorkflowModule().findWfTemplates(new WfTemplateQuery().wfCategoryStatus(RecordStatus.ACTIVE));
-        if (!DataUtils.isBlank(templateList)) {
+        if (DataUtils.isNotBlank(templateList)) {
             List<ListData> list = new ArrayList<ListData>();
             for (WfTemplate wfTemplate : templateList) {
                 list.add(new ListData(

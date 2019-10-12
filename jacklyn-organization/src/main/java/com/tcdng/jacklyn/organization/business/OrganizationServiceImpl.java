@@ -451,7 +451,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         // Delete old step privileges.
         updateCount = db().deleteAll(new RoleWfStepQuery().roleId(roleId));
 
-        if (!DataUtils.isBlank(wfStepIdList)) {
+        if (DataUtils.isNotBlank(wfStepIdList)) {
             // Create new privileges
             RoleWfStep roleWfStep = new RoleWfStep();
             roleWfStep.setRoleId(roleId);
@@ -569,7 +569,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         privilege.setInstalled(Boolean.TRUE);
         for (ModuleConfig moduleConfig : moduleConfigList) {
             if (moduleConfig.getPrivileges() != null
-                    && !DataUtils.isBlank(moduleConfig.getPrivileges().getPrivilegeGroupList())) {
+                    && DataUtils.isNotBlank(moduleConfig.getPrivileges().getPrivilegeGroupList())) {
                 logDebug("Installing role privilege definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 PrivilegeQuery pQuery = new PrivilegeQuery();

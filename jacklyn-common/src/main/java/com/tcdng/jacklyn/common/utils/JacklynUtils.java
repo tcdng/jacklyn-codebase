@@ -45,7 +45,7 @@ public final class JacklynUtils {
             throws UnifyException {
         StringBuilder sb = new StringBuilder();
         sb.append(path);
-        if (!StringUtils.isBlank(workingDtFormat) && workingDt != null) {
+        if (StringUtils.isNotBlank(workingDtFormat) && workingDt != null) {
             if (!path.endsWith("/") && !path.endsWith("\\")) {
                 sb.append(File.separator);
             }

@@ -46,7 +46,7 @@ public class DashboardUplGeneratorImpl extends AbstractDashboardUplGenerator {
         // Main panel
         sb.append("!ui-panel:dashboardPanel style:$s{width:100%;height:100%;} layout:$d{!ui-vertical style:$s{width:100%;height:100%;} heights:$l{");
         boolean appendSym = false;
-        if (!DataUtils.isBlank(dashboardDef.getLayerList()) && dashboardDef.getLayerList().size() > 1) {
+        if (DataUtils.isNotBlank(dashboardDef.getLayerList()) && dashboardDef.getLayerList().size() > 1) {
             int len = dashboardDef.getLayerList().size();
             int layerPercentage = 100 / len;
             if (appendSym) {

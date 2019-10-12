@@ -282,7 +282,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     }
 
                     PackableDocConfig.Builder targetcb = null;
-                    if (!StringUtils.isBlank(wfDocBeanMapping.getComplexFieldName())) {
+                    if (StringUtils.isNotBlank(wfDocBeanMapping.getComplexFieldName())) {
                         targetcb = complexFieldConfigBuilders.get(wfDocBeanMapping.getComplexFieldName()).getCpdcb();
                     } else {
                         targetcb = pdcb;
@@ -300,7 +300,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                 // Attachments
                 List<WfDocAttachmentDef> attachmentList = null;
-                if (!DataUtils.isBlank(wfDoc.getAttachmentList())) {
+                if (DataUtils.isNotBlank(wfDoc.getAttachmentList())) {
                     attachmentList = new ArrayList<WfDocAttachmentDef>();
                     for (WfDocAttachment wfDocAttachment : wfDoc.getAttachmentList()) {
                         String label = wfDocAttachment.getLabel();
@@ -314,11 +314,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                 // Classifiers
                 List<WfDocClassifierDef> classifierList = null;
-                if (!DataUtils.isBlank(wfDoc.getClassifierList())) {
+                if (DataUtils.isNotBlank(wfDoc.getClassifierList())) {
                     classifierList = new ArrayList<WfDocClassifierDef>();
                     for (WfDocClassifier wfDocClassifier : wfDoc.getClassifierList()) {
                         List<WfDocClassifierFilterDef> filterList = null;
-                        if (!DataUtils.isBlank(wfDocClassifier.getFilterList())) {
+                        if (DataUtils.isNotBlank(wfDocClassifier.getFilterList())) {
                             filterList = new ArrayList<WfDocClassifierFilterDef>();
                             for (WfDocClassifierFilter wfDocClassifierFilter : wfDocClassifier.getFilterList()) {
                                 filterList.add(new WfDocClassifierFilterDef(wfDocClassifierFilter.getOp(),
@@ -431,7 +431,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Enrichment information
                     List<WfEnrichmentDef> enrichmentList = null;
-                    if (!DataUtils.isBlank(wfStep.getEnrichmentList())) {
+                    if (DataUtils.isNotBlank(wfStep.getEnrichmentList())) {
                         enrichmentList = new ArrayList<WfEnrichmentDef>();
                         for (WfEnrichment wfEnrichment : wfStep.getEnrichmentList()) {
                             enrichmentList.add(new WfEnrichmentDef(wfEnrichment.getName(),
@@ -441,7 +441,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Routing information
                     List<WfRoutingDef> routingList = null;
-                    if (!DataUtils.isBlank(wfStep.getRoutingList())) {
+                    if (DataUtils.isNotBlank(wfStep.getRoutingList())) {
                         routingList = new ArrayList<WfRoutingDef>();
                         for (WfRouting wfRouting : wfStep.getRoutingList()) {
                             WfDocClassifierDef wfDocClassifierDef = null;
@@ -461,7 +461,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Entity action information
                     List<WfRecordActionDef> recordActionList = null;
-                    if (!DataUtils.isBlank(wfStep.getRecordActionList())) {
+                    if (DataUtils.isNotBlank(wfStep.getRecordActionList())) {
                         recordActionList = new ArrayList<WfRecordActionDef>();
                         for (WfRecordAction wfRecordAction : wfStep.getRecordActionList()) {
                             recordActionList.add(new WfRecordActionDef(wfRecordAction.getName(),
@@ -473,11 +473,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // User action information
                     List<WfUserActionDef> userActionList = null;
-                    if (!DataUtils.isBlank(wfStep.getUserActionList())) {
+                    if (DataUtils.isNotBlank(wfStep.getUserActionList())) {
                         userActionList = new ArrayList<WfUserActionDef>();
                         for (WfUserAction wfUserAction : wfStep.getUserActionList()) {
                             List<WfAttachmentCheckDef> attachmentCheckList = null;
-                            if (!DataUtils.isBlank(wfUserAction.getAttachmentCheckList())) {
+                            if (DataUtils.isNotBlank(wfUserAction.getAttachmentCheckList())) {
                                 attachmentCheckList = new ArrayList<WfAttachmentCheckDef>();
                                 for (WfAttachmentCheck wfAttachmentCheck : wfUserAction.getAttachmentCheckList()) {
                                     String docName = wfAttachmentCheck.getDocName();
@@ -499,7 +499,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Form privilege information
                     List<WfFormPrivilegeDef> formPrivilegeList = null;
-                    if (!DataUtils.isBlank(wfStep.getFormPrivilegeList())) {
+                    if (DataUtils.isNotBlank(wfStep.getFormPrivilegeList())) {
                         formPrivilegeList = new ArrayList<WfFormPrivilegeDef>();
                         for (WfFormPrivilege wfFormPrivilege : wfStep.getFormPrivilegeList()) {
                             formPrivilegeList.add(new WfFormPrivilegeDef(wfFormPrivilege.getType(),
@@ -511,7 +511,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Alert information
                     List<WfAlertDef> alertList = null;
-                    if (!DataUtils.isBlank(wfStep.getAlertList())) {
+                    if (DataUtils.isNotBlank(wfStep.getAlertList())) {
                         alertList = new ArrayList<WfAlertDef>();
                         for (WfAlert wfAlert : wfStep.getAlertList()) {
                             String notifTemplateGlobalName =
@@ -525,7 +525,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Policy information
                     List<WfPolicyDef> policyList = null;
-                    if (!DataUtils.isBlank(wfStep.getPolicyList())) {
+                    if (DataUtils.isNotBlank(wfStep.getPolicyList())) {
                         policyList = new ArrayList<WfPolicyDef>();
                         for (WfPolicy wfPolicy : wfStep.getPolicyList()) {
                             policyList.add(new WfPolicyDef(wfPolicy.getName(), wfPolicy.getDescription(),
@@ -1252,7 +1252,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         addTaskMessage(taskMonitor, "Publishing workflow category messages...");
         if (wfCategoryConfig.getWfMessagesConfig() != null
-                && !DataUtils.isBlank(wfCategoryConfig.getWfMessagesConfig().getWfMessageConfigList())) {
+                && DataUtils.isNotBlank(wfCategoryConfig.getWfMessagesConfig().getWfMessageConfigList())) {
             WfMessageQuery wmQuery = new WfMessageQuery();
             WfMessage wfMessage = new WfMessage();
             wfMessage.setWfCategoryId(wfCategoryId);
@@ -1383,7 +1383,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     private void populateChildList(WfDoc wfDoc, WfDocumentConfig wfDocConfig) throws UnifyException {
         // Fields
         List<WfDocField> fieldList = new ArrayList<WfDocField>();
-        if (!DataUtils.isBlank(wfDocConfig.getWfFieldsConfig().getWfFieldConfigList())) {
+        if (DataUtils.isNotBlank(wfDocConfig.getWfFieldsConfig().getWfFieldConfigList())) {
             for (WfFieldConfig wfDocFieldConfig : wfDocConfig.getWfFieldsConfig().getWfFieldConfigList()) {
                 WfDocField wfDocField = new WfDocField();
                 wfDocField.setName(wfDocFieldConfig.getName());
@@ -1395,7 +1395,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         // Complex fields
-        if (!DataUtils.isBlank(wfDocConfig.getWfFieldsConfig().getWfComplexFieldConfigList())) {
+        if (DataUtils.isNotBlank(wfDocConfig.getWfFieldsConfig().getWfComplexFieldConfigList())) {
             for (WfComplexFieldConfig wfDocComplexFieldConfig : wfDocConfig.getWfFieldsConfig()
                     .getWfComplexFieldConfigList()) {
                 WfDocField wfDocField = new WfDocField();
@@ -1422,7 +1422,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Classifiers
         List<WfDocClassifier> classifierList = null;
         if (wfDocConfig.getWfClassifiersConfig() != null
-                && !DataUtils.isBlank(wfDocConfig.getWfClassifiersConfig().getWfClassifierConfigList())) {
+                && DataUtils.isNotBlank(wfDocConfig.getWfClassifiersConfig().getWfClassifierConfigList())) {
             classifierList = new ArrayList<WfDocClassifier>();
             for (WfClassifierConfig wfDocClassifierConfig : wfDocConfig.getWfClassifiersConfig()
                     .getWfClassifierConfigList()) {
@@ -1432,7 +1432,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 wfDocClassifier.setFilterLogic(wfDocClassifierConfig.getFilterLogic());
                 wfDocClassifier.setLogic(wfDocClassifierConfig.getLogic());
 
-                if (!DataUtils.isBlank(wfDocClassifierConfig.getWfClassifierFilterConfigList())) {
+                if (DataUtils.isNotBlank(wfDocClassifierConfig.getWfClassifierFilterConfigList())) {
                     // Classifier filters
                     List<WfDocClassifierFilter> filterList = new ArrayList<WfDocClassifierFilter>();
                     for (WfClassifierFilterConfig wfDocClassifierFilterConfig : wfDocClassifierConfig
@@ -1457,7 +1457,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Attachments
         List<WfDocAttachment> attachmentList = null;
         if (wfDocConfig.getWfAttachmentsConfig() != null
-                && !DataUtils.isBlank(wfDocConfig.getWfAttachmentsConfig().getWfAttachmentConfigList())) {
+                && DataUtils.isNotBlank(wfDocConfig.getWfAttachmentsConfig().getWfAttachmentConfigList())) {
             attachmentList = new ArrayList<WfDocAttachment>();
             for (WfAttachmentConfig wfDocAttachmentConfig : wfDocConfig.getWfAttachmentsConfig()
                     .getWfAttachmentConfigList()) {
@@ -1474,7 +1474,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Bean mappings
         List<WfDocBeanMapping> recordMappingList = null;
         if (wfDocConfig.getWfBeanMappingsConfig() != null
-                && !DataUtils.isBlank(wfDocConfig.getWfBeanMappingsConfig().getBeanMappingList())) {
+                && DataUtils.isNotBlank(wfDocConfig.getWfBeanMappingsConfig().getBeanMappingList())) {
             recordMappingList = new ArrayList<WfDocBeanMapping>();
             for (WfBeanMappingConfig wfDocBeanMappingConfig : wfDocConfig.getWfBeanMappingsConfig()
                     .getBeanMappingList()) {
@@ -1592,7 +1592,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Enrichments
             List<WfEnrichment> enrichmentList = null;
             if (wfStepConfig.getWfEnrichmentsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
                 enrichmentList = new ArrayList<WfEnrichment>();
                 for (WfEnrichmentConfig wfEnrichmentConfig : wfStepConfig.getWfEnrichmentsConfig()
                         .getWfEnrichmentConfigList()) {
@@ -1609,7 +1609,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Entity actions
             List<WfRecordAction> recordActionList = null;
             if (wfStepConfig.getWfRecordActionsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
                 recordActionList = new ArrayList<WfRecordAction>();
                 for (WfRecordActionConfig wfRecordActionConfig : wfStepConfig.getWfRecordActionsConfig()
                         .getWfRecordActionConfigList()) {
@@ -1627,7 +1627,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Routings
             List<WfRouting> routingList = null;
             if (wfStepConfig.getWfRoutingsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList())) {
                 routingList = new ArrayList<WfRouting>();
                 for (WfRoutingConfig wfRoutingConfig : wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList()) {
                     WfRouting wfRouting = new WfRouting();
@@ -1644,7 +1644,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // User actions
             List<WfUserAction> userActionList = null;
             if (wfStepConfig.getWfUserActionsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfUserActionsConfig().getWfUserActionConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfUserActionsConfig().getWfUserActionConfigList())) {
                 userActionList = new ArrayList<WfUserAction>();
                 for (WfUserActionConfig wfUserActionConfig : wfStepConfig.getWfUserActionsConfig()
                         .getWfUserActionConfigList()) {
@@ -1656,7 +1656,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfUserAction.setTargetWfStepName(wfUserActionConfig.getTargetStepName());
                     wfUserAction.setValidatePage(wfUserActionConfig.getValidatePage());
 
-                    if (!DataUtils.isBlank(wfUserActionConfig.getAttachmentCheckConfigList())) {
+                    if (DataUtils.isNotBlank(wfUserActionConfig.getAttachmentCheckConfigList())) {
                         List<WfAttachmentCheck> attachmentCheckList = new ArrayList<WfAttachmentCheck>();
                         for (WfAttachmentCheckConfig wfAttachmentCheckConfig : wfUserActionConfig
                                 .getAttachmentCheckConfigList()) {
@@ -1678,7 +1678,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Form privileges
             List<WfFormPrivilege> formPrivilegeList = null;
             if (wfStepConfig.getWfFormPrivilegesConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
                 formPrivilegeList = new ArrayList<WfFormPrivilege>();
                 for (WfFormPrivilegeConfig wfFormPrivilegeConfig : wfStepConfig.getWfFormPrivilegesConfig()
                         .getWfFormPrivilegesConfigList()) {
@@ -1698,7 +1698,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Policies
             List<WfPolicy> policyList = null;
             if (wfStepConfig.getWfPoliciesConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
                 policyList = new ArrayList<WfPolicy>();
                 for (WfPolicyConfig wfPolicyConfig : wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList()) {
                     WfPolicy wfPolicy = new WfPolicy();
@@ -1713,7 +1713,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Alerts
             List<WfAlert> alertList = null;
             if (wfStepConfig.getWfAlertsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {
                 alertList = new ArrayList<WfAlert>();
                 for (WfAlertConfig wfAlertConfig : wfStepConfig.getWfAlertsConfig().getWfAlertConfigList()) {
                     WfAlert wfAlert = new WfAlert();
@@ -1887,7 +1887,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         // Perform record actions if any
-        if (!DataUtils.isBlank(wfStepDef.getRecordActionList())) {
+        if (DataUtils.isNotBlank(wfStepDef.getRecordActionList())) {
             for (WfRecordActionDef wfRecordActionDef : wfStepDef.getRecordActionList()) {
                 if (wfRecordActionDef.getDocName().equals(docName)) {
                     switch (wfRecordActionDef.getActionType()) {
@@ -1948,7 +1948,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             deleteWorkflowItem(wfItemId);
         } else {
             // Route item if necessary
-            if (!DataUtils.isBlank(wfStepDef.getRoutingList())) {
+            if (DataUtils.isNotBlank(wfStepDef.getRoutingList())) {
                 for (WfRoutingDef wfRoutingDef : wfStepDef.getRoutingList()) {
                     if (!wfRoutingDef.isDoc() || wfRoutingDef.getDocName().equals(docName)) {
                         if (tryRoute(wfItemReader, wfRoutingDef)) {

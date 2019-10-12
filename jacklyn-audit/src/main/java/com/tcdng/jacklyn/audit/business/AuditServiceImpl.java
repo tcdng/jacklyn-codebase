@@ -165,7 +165,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
 
-            if (moduleConfig.getAudits() != null && !DataUtils.isBlank(moduleConfig.getAudits().getAuditList())) {
+            if (moduleConfig.getAudits() != null && DataUtils.isNotBlank(moduleConfig.getAudits().getAuditList())) {
                 logDebug("Installing audit definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 AuditDefinitionQuery adQuery = new AuditDefinitionQuery();

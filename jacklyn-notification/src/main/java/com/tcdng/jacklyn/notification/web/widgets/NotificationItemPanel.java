@@ -37,7 +37,7 @@ public class NotificationItemPanel extends BasePanel {
     public void switchState() throws UnifyException {
         SystemNotification systemNotification = (SystemNotification) getValueStore().getValueObject();
         if (systemNotification != null) {
-            setVisible("nResolveLink", !StringUtils.isBlank(systemNotification.getActionLink()));
+            setVisible("nResolveLink", StringUtils.isNotBlank(systemNotification.getActionLink()));
         }
     }
 

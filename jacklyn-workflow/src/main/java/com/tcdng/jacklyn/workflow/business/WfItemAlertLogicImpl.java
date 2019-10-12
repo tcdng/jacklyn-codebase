@@ -68,7 +68,7 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
                 break;
         }
 
-        if (channelName != null && !DataUtils.isBlank(contactList)) {
+        if (channelName != null && DataUtils.isNotBlank(contactList)) {
             String templateGlobalName = wfAlertDef.getNotificationTemplateCode();
             NotificationTemplateDef notificationTemplateDef =
                     getNotificationService().getRuntimeNotificationTemplateDef(templateGlobalName);

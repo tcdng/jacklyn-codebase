@@ -133,7 +133,7 @@ public final class WfCategoryConfigUtils {
         } else {
             for (WfDocumentConfig wfDocumentConfig : wfCategoryConfig.getWfDocumentsConfig()
                     .getWfDocumentConfigList()) {
-                if (!StringUtils.isBlank(wfDocumentConfig.getName()) && ctx.isDocument(wfDocumentConfig.getName())) {
+                if (StringUtils.isNotBlank(wfDocumentConfig.getName()) && ctx.isDocument(wfDocumentConfig.getName())) {
                     ctx.addError(WfCategoryErrorConstants.WFCATEGORY_DOCUMENT_EXISTS, wfDocumentConfig.getName());
                 }
 
@@ -149,7 +149,7 @@ public final class WfCategoryConfigUtils {
 
         // Messages
         if (wfCategoryConfig.getWfMessagesConfig() != null
-                && !DataUtils.isBlank(wfCategoryConfig.getWfMessagesConfig().getWfMessageConfigList())) {
+                && DataUtils.isNotBlank(wfCategoryConfig.getWfMessagesConfig().getWfMessageConfigList())) {
             for (WfMessageConfig wfMessageConfig : wfCategoryConfig.getWfMessagesConfig().getWfMessageConfigList()) {
                 ctx.addMessage(wfMessageConfig);
             }
@@ -193,13 +193,13 @@ public final class WfCategoryConfigUtils {
                         && DataUtils.isBlank(wfDocumentConfig.getWfFieldsConfig().getWfComplexFieldConfigList()))) {
             ctx.addError(WfDocumentErrorConstants.WFDOCUMENT_NO_FIELDS);
         } else {
-            if (!DataUtils.isBlank(wfDocumentConfig.getWfFieldsConfig().getWfFieldConfigList())) {
+            if (DataUtils.isNotBlank(wfDocumentConfig.getWfFieldsConfig().getWfFieldConfigList())) {
                 for (WfFieldConfig wfFieldConfig : wfDocumentConfig.getWfFieldsConfig().getWfFieldConfigList()) {
                     ctx.addField(wfFieldConfig, null);
                 }
             }
 
-            if (!DataUtils.isBlank(wfDocumentConfig.getWfFieldsConfig().getWfComplexFieldConfigList())) {
+            if (DataUtils.isNotBlank(wfDocumentConfig.getWfFieldsConfig().getWfComplexFieldConfigList())) {
                 for (WfComplexFieldConfig wfComplexFieldConfig : wfDocumentConfig.getWfFieldsConfig()
                         .getWfComplexFieldConfigList()) {
                     ctx.addField(wfComplexFieldConfig, null);
@@ -217,7 +217,7 @@ public final class WfCategoryConfigUtils {
 
         // Classifiers
         if (wfDocumentConfig.getWfClassifiersConfig() != null
-                && !DataUtils.isBlank(wfDocumentConfig.getWfClassifiersConfig().getWfClassifierConfigList())) {
+                && DataUtils.isNotBlank(wfDocumentConfig.getWfClassifiersConfig().getWfClassifierConfigList())) {
             for (WfClassifierConfig wfClassifierConfig : wfDocumentConfig.getWfClassifiersConfig()
                     .getWfClassifierConfigList()) {
                 ctx.addClassifier(wfClassifierConfig);
@@ -226,7 +226,7 @@ public final class WfCategoryConfigUtils {
 
         // Attachments
         if (wfDocumentConfig.getWfAttachmentsConfig() != null
-                && !DataUtils.isBlank(wfDocumentConfig.getWfAttachmentsConfig().getWfAttachmentConfigList())) {
+                && DataUtils.isNotBlank(wfDocumentConfig.getWfAttachmentsConfig().getWfAttachmentConfigList())) {
             for (WfAttachmentConfig wfAttachmentConfig : wfDocumentConfig.getWfAttachmentsConfig()
                     .getWfAttachmentConfigList()) {
                 ctx.addAttachment(wfAttachmentConfig);
@@ -235,7 +235,7 @@ public final class WfCategoryConfigUtils {
 
         // Bean mappings
         if (wfDocumentConfig.getWfBeanMappingsConfig() != null
-                && !DataUtils.isBlank(wfDocumentConfig.getWfBeanMappingsConfig().getBeanMappingList())) {
+                && DataUtils.isNotBlank(wfDocumentConfig.getWfBeanMappingsConfig().getBeanMappingList())) {
             for (WfBeanMappingConfig wfBeanMappingConfig : wfDocumentConfig.getWfBeanMappingsConfig()
                     .getBeanMappingList()) {
                 ctx.addBeanMapping(wfBeanMappingConfig);
@@ -340,7 +340,7 @@ public final class WfCategoryConfigUtils {
 
         public void addDocument(WfDocumentValidationContext wfDocCtx) {
             String docName = wfDocCtx.getDocName();
-            if (!StringUtils.isBlank(docName)) {
+            if (StringUtils.isNotBlank(docName)) {
                 if (!wfDocumentConfigs.containsKey(docName)) {
                     wfDocumentConfigs.put(docName, wfDocCtx);
                 }
@@ -350,7 +350,7 @@ public final class WfCategoryConfigUtils {
 
         public void addMessage(WfMessageConfig wfMessageConfig) {
             String name = wfMessageConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfCategoryErrorConstants.WFCATEGORY_MESSAGE_INVALID_NAME, messageCounter, name);
                 }
@@ -385,7 +385,7 @@ public final class WfCategoryConfigUtils {
 
         public void addTemplate(WfTemplateConfig wfTemplateConfig) {
             String name = wfTemplateConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (wfTemplateConfigs.contains(name)) {
                     addError(WfCategoryErrorConstants.WFCATEGORY_TEMPLATE_EXISTS, name);
                 } else {
@@ -484,7 +484,7 @@ public final class WfCategoryConfigUtils {
 
         public void addField(WfFieldConfig wfFieldConfig, String parentName) {
             String name = wfFieldConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfDocumentErrorConstants.WFDOCUMENT_FIELD_INVALID_NAME, fieldCounter, name);
                 }
@@ -514,7 +514,7 @@ public final class WfCategoryConfigUtils {
 
         public void addClassifier(WfClassifierConfig wfClassifierConfig) {
             String name = wfClassifierConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfDocumentErrorConstants.WFDOCUMENT_CLASSIFIER_INVALID_NAME, classifierCounter, name);
                 }
@@ -537,12 +537,12 @@ public final class WfCategoryConfigUtils {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_CLASSIFIER_NO_FILTER_LOGIC, classifierCounter, name);
             }
 
-            if (!StringUtils.isBlank(wfClassifierConfig.getLogic())
-                    && !DataUtils.isBlank(wfClassifierConfig.getWfClassifierFilterConfigList())) {
+            if (StringUtils.isNotBlank(wfClassifierConfig.getLogic())
+                    && DataUtils.isNotBlank(wfClassifierConfig.getWfClassifierFilterConfigList())) {
                 addError(WfDocumentErrorConstants.WFDOCUMENT_CLASSIFIER_HAS_FILTER_LOGIC, classifierCounter, name);
             }
 
-            if (!DataUtils.isBlank(wfClassifierConfig.getWfClassifierFilterConfigList())) {
+            if (DataUtils.isNotBlank(wfClassifierConfig.getWfClassifierFilterConfigList())) {
                 int index = 0;
                 for (WfClassifierFilterConfig wfClassifierFilterConfig : wfClassifierConfig
                         .getWfClassifierFilterConfigList()) {
@@ -568,7 +568,7 @@ public final class WfCategoryConfigUtils {
 
         public void addAttachment(WfAttachmentConfig wfAttachmentConfig) {
             String name = wfAttachmentConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfDocumentErrorConstants.WFDOCUMENT_ATTACHMENT_INVALID_NAME, attachmentCounter, name);
                 }
@@ -595,7 +595,7 @@ public final class WfCategoryConfigUtils {
 
         public void addBeanMapping(WfBeanMappingConfig wfBeanMappingConfig) {
             String name = wfBeanMappingConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfDocumentErrorConstants.WFDOCUMENT_BEANMAPPING_INVALID_NAME, beanMappingCounter, name);
                 }
@@ -648,7 +648,7 @@ public final class WfCategoryConfigUtils {
 
         public void addTab(WfFormTabConfig wfFormTabConfig) {
             String name = wfFormTabConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfDocumentErrorConstants.WFDOCUMENT_TAB_INVALID_NAME, tabCounter, name);
                 }
@@ -671,7 +671,7 @@ public final class WfCategoryConfigUtils {
             } else {
                 for (WfFormSectionConfig wfFormSectionConfig : wfFormTabConfig.getWfFormSectionConfigList()) {
                     String sectionName = wfFormSectionConfig.getName();
-                    if (!StringUtils.isBlank(sectionName)) {
+                    if (StringUtils.isNotBlank(sectionName)) {
                         if (!WfNameUtils.isValidName(sectionName)) {
                             addError(WfDocumentErrorConstants.WFDOCUMENT_SECTION_INVALID_NAME, sectionCounter,
                                     sectionName);
@@ -690,7 +690,7 @@ public final class WfCategoryConfigUtils {
                         addError(WfDocumentErrorConstants.WFDOCUMENT_SECTION_NO_DESC, sectionCounter);
                     }
 
-                    boolean isComplexBinding = !StringUtils.isBlank(wfFormSectionConfig.getBinding());
+                    boolean isComplexBinding = StringUtils.isNotBlank(wfFormSectionConfig.getBinding());
                     if (isComplexBinding) {
                         WfFieldConfigInfo wfFieldConfigInfo = wfFieldConfigs.get(wfFormSectionConfig.getBinding());
                         if (wfFieldConfigInfo == null || !wfFieldConfigInfo.isComplex()) {
@@ -807,7 +807,7 @@ public final class WfCategoryConfigUtils {
 
         public boolean addTemplateDoc(WfTemplateDocConfig wfTemplateDocConfig) {
             String docName = wfTemplateDocConfig.getName();
-            if (!StringUtils.isBlank(docName)) {
+            if (StringUtils.isNotBlank(docName)) {
                 if (wfTemplateDocConfigs.containsKey(docName)) {
                     addError(WfTemplateErrorConstants.WFTEMPLATE_DOC_EXIST, templateDocCounter, docName);
                 } else {
@@ -824,7 +824,7 @@ public final class WfCategoryConfigUtils {
 
         public void addStepFirstPass(WfStepConfig wfStepConfig) {
             String name = wfStepConfig.getName();
-            if (!StringUtils.isBlank(name)) {
+            if (StringUtils.isNotBlank(name)) {
                 if (!WfNameUtils.isValidName(name)) {
                     addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_INVALID_NAME, stepCounter, name);
                 }
@@ -967,7 +967,7 @@ public final class WfCategoryConfigUtils {
                 int index = 0;
                 for (WfRoutingConfig wfRoutingConfig : wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList()) {
                     String routingName = wfRoutingConfig.getName();
-                    if (!StringUtils.isBlank(routingName)) {
+                    if (StringUtils.isNotBlank(routingName)) {
                         if (!WfNameUtils.isValidName(routingName)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_INVALID_NAME, index,
                                     wfStepConfig.getName(), routingName);
@@ -987,7 +987,7 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_NO_DESC, index, wfStepConfig.getName());
                     }
 
-                    if (!StringUtils.isBlank(wfRoutingConfig.getClassifierName())) {
+                    if (StringUtils.isNotBlank(wfRoutingConfig.getClassifierName())) {
                         if (StringUtils.isBlank(wfRoutingConfig.getDocument())) {//
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_WITH_CLASSIFIER_NO_DOC, index,
                                     wfStepConfig.getName(), wfRoutingConfig.getClassifierName());
@@ -1038,7 +1038,7 @@ public final class WfCategoryConfigUtils {
 
         private void invalidateRoutings(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfRoutingsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfRoutingsConfig().getWfRoutingConfigList())) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_ROUTINGS_EXIST, stepCounter, wfStepConfig.getName(),
                         wfStepConfig.getType());
             }
@@ -1055,7 +1055,7 @@ public final class WfCategoryConfigUtils {
                 for (WfUserActionConfig wfUserActionConfig : wfStepConfig.getWfUserActionsConfig()
                         .getWfUserActionConfigList()) {
                     String name = wfUserActionConfig.getName();
-                    if (!StringUtils.isBlank(name)) {
+                    if (StringUtils.isNotBlank(name)) {
                         if (!WfNameUtils.isValidName(name)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_USERACTION_INVALID_NAME, index,
                                     wfStepConfig.getName(), name);
@@ -1109,7 +1109,7 @@ public final class WfCategoryConfigUtils {
 
         private void invalidateUserActions(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfUserActionsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfUserActionsConfig().getWfUserActionConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfUserActionsConfig().getWfUserActionConfigList())) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_USERACTIONS_EXIST, stepCounter,
                         wfStepConfig.getName(), wfStepConfig.getType());
             }
@@ -1117,13 +1117,13 @@ public final class WfCategoryConfigUtils {
 
         private void validateRecordActions(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfRecordActionsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
                 Set<String> names = new HashSet<String>();
                 int index = 0;
                 for (WfRecordActionConfig wfRecordActionConfig : wfStepConfig.getWfRecordActionsConfig()
                         .getWfRecordActionConfigList()) {
                     String recordActionName = wfRecordActionConfig.getName();
-                    if (!StringUtils.isBlank(recordActionName)) {
+                    if (StringUtils.isNotBlank(recordActionName)) {
                         if (!WfNameUtils.isValidName(recordActionName)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_INVALID_NAME, index,
                                     wfStepConfig.getName(), recordActionName);
@@ -1183,7 +1183,7 @@ public final class WfCategoryConfigUtils {
 
         private void invalidateRecordActions(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfRecordActionsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfRecordActionsConfig().getWfRecordActionConfigList())) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_RECORDACTIONS_EXIST, stepCounter,
                         wfStepConfig.getName(), wfStepConfig.getType());
             }
@@ -1191,7 +1191,7 @@ public final class WfCategoryConfigUtils {
 
         private void validateFormPrivileges(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfFormPrivilegesConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
                 int index = 0;
                 for (WfFormPrivilegeConfig wfFormPrivilegeConfig : wfStepConfig.getWfFormPrivilegesConfig()
                         .getWfFormPrivilegesConfigList()) {
@@ -1223,7 +1223,7 @@ public final class WfCategoryConfigUtils {
 
         private void invalidateFormPrivileges(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfFormPrivilegesConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfFormPrivilegesConfig().getWfFormPrivilegesConfigList())) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_FORMPRIVILEGES_EXIST, stepCounter,
                         wfStepConfig.getName(), wfStepConfig.getType());
             }
@@ -1231,13 +1231,13 @@ public final class WfCategoryConfigUtils {
 
         private void validateEnrichments(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfEnrichmentsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
                 Set<String> names = new HashSet<String>();
                 int index = 0;
                 for (WfEnrichmentConfig wfEnrichmentConfig : wfStepConfig.getWfEnrichmentsConfig()
                         .getWfEnrichmentConfigList()) {
                     String name = wfEnrichmentConfig.getName();
-                    if (!StringUtils.isBlank(name)) {
+                    if (StringUtils.isNotBlank(name)) {
                         if (!WfNameUtils.isValidName(name)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ENRICHMENT_INVALID_NAME, index,
                                     wfStepConfig.getName(), name);
@@ -1257,7 +1257,7 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ENRICHMENT_NO_DESC, index, wfStepConfig.getName());
                     }
 
-                    if (!StringUtils.isBlank(wfEnrichmentConfig.getDocument())
+                    if (StringUtils.isNotBlank(wfEnrichmentConfig.getDocument())
                             && !wfTemplateDocConfigs.containsKey(wfEnrichmentConfig.getDocument())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ENRICHMENT_UNKNOWN_TEMPLATE_DOC, index,
                                 wfStepConfig.getName(), wfEnrichmentConfig.getName(), wfEnrichmentConfig.getDocument());
@@ -1275,7 +1275,7 @@ public final class WfCategoryConfigUtils {
 
         private void invalidateEnrichments(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfEnrichmentsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_ENRICHMENTS_EXIST, stepCounter,
                         wfStepConfig.getName(), wfStepConfig.getType());
             }
@@ -1283,12 +1283,12 @@ public final class WfCategoryConfigUtils {
 
         private void validatePolicies(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfPoliciesConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
                 Set<String> names = new HashSet<String>();
                 int index = 0;
                 for (WfPolicyConfig wfPolicyConfig : wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList()) {
                     String name = wfPolicyConfig.getName();
-                    if (!StringUtils.isBlank(name)) {
+                    if (StringUtils.isNotBlank(name)) {
                         if (!WfNameUtils.isValidName(name)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_POLICY_INVALID_NAME, index,
                                     wfStepConfig.getName(), name);
@@ -1308,7 +1308,7 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_POLICY_NO_DESC, index, wfStepConfig.getName());
                     }
 
-                    if (!StringUtils.isBlank(wfPolicyConfig.getDocument())
+                    if (StringUtils.isNotBlank(wfPolicyConfig.getDocument())
                             && !wfTemplateDocConfigs.containsKey(wfPolicyConfig.getDocument())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_POLICY_UNKNOWN_TEMPLATE_DOC, index,
                                 wfStepConfig.getName(), wfPolicyConfig.getName(), wfPolicyConfig.getDocument());
@@ -1326,7 +1326,7 @@ public final class WfCategoryConfigUtils {
 
         private void invalidatePolicies(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfPoliciesConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfPoliciesConfig().getWfPolicyConfigList())) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_POLICIES_EXIST, stepCounter, wfStepConfig.getName(),
                         wfStepConfig.getType());
             }
@@ -1334,12 +1334,12 @@ public final class WfCategoryConfigUtils {
 
         private void validateAlerts(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfAlertsConfig() != null
-                    && !DataUtils.isBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {
+                    && DataUtils.isNotBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {
                 Set<String> names = new HashSet<String>();
                 int index = 0;
                 for (WfAlertConfig wfAlertConfig : wfStepConfig.getWfAlertsConfig().getWfAlertConfigList()) {
                     String name = wfAlertConfig.getName();
-                    if (!StringUtils.isBlank(name)) {
+                    if (StringUtils.isNotBlank(name)) {
                         if (!WfNameUtils.isValidName(name)) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_INVALID_NAME, index,
                                     wfStepConfig.getName(), name);

@@ -1195,7 +1195,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
             Long moduleId = module.getId();
             if (moduleConfig.getSysParams() != null
-                    && !DataUtils.isBlank(moduleConfig.getSysParams().getSysParamList())) {
+                    && DataUtils.isNotBlank(moduleConfig.getSysParams().getSysParamList())) {
                 logDebug("Updating system parameter definitions for module [{0}]...", module.getDescription());
                 boolean updateVersion = true;
                 for (SysParamConfig sysParamConfig : moduleConfig.getSysParams().getSysParamList()) {
@@ -1239,7 +1239,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getMenus() != null && !DataUtils.isBlank(moduleConfig.getMenus().getMenuList())) {
+            if (moduleConfig.getMenus() != null && DataUtils.isNotBlank(moduleConfig.getMenus().getMenuList())) {
                 logDebug("Updating menu definitions for module [{0}]...", module.getDescription());
                 List<MenuConfig> menuConfigList = moduleConfig.getMenus().getMenuList();
 
@@ -1307,7 +1307,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             }
 
             if (moduleConfig.getShortcutTiles() != null
-                    && !DataUtils.isBlank(moduleConfig.getShortcutTiles().getShortcutTileList())) {
+                    && DataUtils.isNotBlank(moduleConfig.getShortcutTiles().getShortcutTileList())) {
                 logDebug("Reading shortcut tile definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
@@ -1343,7 +1343,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             }
 
             if (moduleConfig.getInputControls() != null
-                    && !DataUtils.isBlank(moduleConfig.getInputControls().getInputControlList())) {
+                    && DataUtils.isNotBlank(moduleConfig.getInputControls().getInputControlList())) {
                 logDebug("Reading input control defintions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 

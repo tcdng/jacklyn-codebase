@@ -103,7 +103,7 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
                             .menuId(menuData.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
             for (ApplicationMenuItem menuItemData : menuItemList) {
                 String remotePath = menuItemData.getRemotePath();
-                if (!StringUtils.isBlank(remotePath)) {
+                if (StringUtils.isNotBlank(remotePath)) {
                     appMenuItemList.add(new AppMenuItem(menuItemData.getName(),
                             resolveApplicationMessage(menuItemData.getDescription()),
                             resolveApplicationMessage(menuItemData.getPageCaption()),
@@ -112,7 +112,7 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
             }
 
             String remotePath = menuData.getRemotePath();
-            if (!StringUtils.isBlank(remotePath) || !appMenuItemList.isEmpty()) {
+            if (StringUtils.isNotBlank(remotePath) || !appMenuItemList.isEmpty()) {
                 appMenuItemGroupList.add(
                         new AppMenuItemGroup(menuData.getName(), resolveApplicationMessage(menuData.getDescription()),
                                 resolveApplicationMessage(menuData.getPageCaption()),

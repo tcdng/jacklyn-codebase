@@ -45,6 +45,6 @@ public class WfPolicyDef extends BaseWfDef {
     }
     
     public boolean isDoc() {
-        return !StringUtils.isBlank(docName);
+        return StringUtils.isNotBlank(docName);
     }
 }

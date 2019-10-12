@@ -598,7 +598,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
     protected String getSwitchCrudMapping() throws UnifyException {
         String mapping = (String) getRequestAttribute(SWITCH_MAPPING);
-        if (!StringUtils.isBlank(mapping)) {
+        if (StringUtils.isNotBlank(mapping)) {
             return mapping;
         }
         

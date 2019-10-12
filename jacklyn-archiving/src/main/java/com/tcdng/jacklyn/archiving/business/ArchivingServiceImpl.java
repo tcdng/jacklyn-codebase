@@ -302,7 +302,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
 
             ArchivesConfig archivesConfig = moduleConfig.getArchives();
-            if (archivesConfig != null && !DataUtils.isBlank(archivesConfig.getArchiveList())) {
+            if (archivesConfig != null && DataUtils.isNotBlank(archivesConfig.getArchiveList())) {
                 logDebug("Installing archiving definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 ArchivableDefinitionQuery adQuery = new ArchivableDefinitionQuery();

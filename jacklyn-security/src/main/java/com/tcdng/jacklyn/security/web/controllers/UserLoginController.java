@@ -94,7 +94,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
     public String login() throws UnifyException {
         try {
             Locale loginLocale = null;
-            if (isLanguage && !StringUtils.isBlank(languageTag)) {
+            if (isLanguage && StringUtils.isNotBlank(languageTag)) {
                 loginLocale = Locale.forLanguageTag(languageTag);
             }
 
@@ -169,7 +169,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 
     @Action
     public String changeLanguage() throws UnifyException {
-        if (!StringUtils.isBlank(languageTag)) {
+        if (StringUtils.isNotBlank(languageTag)) {
             getSessionContext().setLocale(Locale.forLanguageTag(languageTag));
         } else {
             getSessionContext().setLocale(origLocale);

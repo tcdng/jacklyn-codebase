@@ -391,7 +391,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     protected String getSwitchItemViewMapping() throws UnifyException {
         String mapping = (String) getRequestAttribute(SWITCH_MAPPING);
-        if (!StringUtils.isBlank(mapping)) {
+        if (StringUtils.isNotBlank(mapping)) {
             return mapping;
         }
         

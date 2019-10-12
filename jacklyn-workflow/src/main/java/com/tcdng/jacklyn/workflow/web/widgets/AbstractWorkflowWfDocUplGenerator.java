@@ -57,7 +57,7 @@ public abstract class AbstractWorkflowWfDocUplGenerator extends AbstractWfDocUpl
 
     protected void appendLabel(StringBuilder sb, BaseLabelWfDef baseWfDef) throws UnifyException {
         String label = baseWfDef.getDescription();
-        if (!StringUtils.isBlank(baseWfDef.getLabel())) {
+        if (StringUtils.isNotBlank(baseWfDef.getLabel())) {
             label = resolveSessionMessage(baseWfDef.getLabel());
         }
 
