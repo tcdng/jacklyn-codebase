@@ -28,9 +28,11 @@ import com.tcdng.unify.core.annotation.AutoDetect;
 @AutoDetect
 public class LocationModuleStaticSettings extends AbstractJacklynModuleStaticSettings {
 
+    public static final int INSTALLATION_INDEX = 4;
+
     public LocationModuleStaticSettings() {
         super(LocationModuleNameConstants.LOCATIONSERVICE, "config/location-module.xml",
-                "com.tcdng.jacklyn.resources.location-messages");
+                "com.tcdng.jacklyn.resources.location-messages", INSTALLATION_INDEX);
     }
 
 }
