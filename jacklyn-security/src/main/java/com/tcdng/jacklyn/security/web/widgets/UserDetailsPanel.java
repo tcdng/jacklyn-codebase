@@ -20,7 +20,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Panel for presenting and selecting user role.
+ * Panel for showing user details.
  * 
  * @author Lateef Ojulari
  * @since 1.0
