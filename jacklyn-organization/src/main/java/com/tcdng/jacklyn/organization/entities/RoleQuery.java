@@ -54,6 +54,10 @@ public class RoleQuery extends BaseVersionedStatusEntityQuery<Role> {
         return (RoleQuery) like("name", name);
     }
 
+    public RoleQuery description(String description) {
+        return (RoleQuery) equals("description", description);
+    }
+
     public RoleQuery descriptionLike(String description) {
         return (RoleQuery) like("description", description);
     }

@@ -40,6 +40,10 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
         return (UserRoleQuery) equals("userId", userId);
     }
 
+    public UserRoleQuery userIdIn(Collection<Long> userId) {
+        return (UserRoleQuery) amongst("userId", userId);
+    }
+
     public UserRoleQuery userLoginId(String userLoginId) {
         return (UserRoleQuery) equals("userLoginId", userLoginId);
     }
