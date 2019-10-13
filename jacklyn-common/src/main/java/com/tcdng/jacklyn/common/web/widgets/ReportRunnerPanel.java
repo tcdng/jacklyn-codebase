@@ -19,6 +19,7 @@ import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 
 /**
@@ -35,8 +36,8 @@ public class ReportRunnerPanel extends BaseDialogPanel {
     @Override
     public void switchState() throws UnifyException {
         super.switchState();
-
         ReportOptions reportOptions = (ReportOptions) getValue();
+        setVisible("runnerTitlePanel", StringUtils.isNotBlank(reportOptions.getReportDescription()));
         setVisible("rptColumnOptionsPanel", !reportOptions.isUserInputOnly() && reportOptions.isWithColumnOptions());
         setVisible("rptParamsPanel", reportOptions.isWithUserInput());
     }

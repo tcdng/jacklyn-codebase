@@ -132,9 +132,10 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         ReportConfiguration reportConfiguration = db().list(new ReportConfigurationQuery().name(reportConfigName));
         ReportOptions reportOptions = new ReportOptions();
         reportOptions.setReportLayout(reportConfiguration.getLayout());
-        reportOptions.setProcessor(reportConfiguration.getProcessor());
         reportOptions.setReportName(reportConfiguration.getName());
+        reportOptions.setReportDescription(reportConfiguration.getDescription().toUpperCase());
         reportOptions.setTitle(resolveSessionMessage(reportConfiguration.getTitle()));
+        reportOptions.setProcessor(reportConfiguration.getProcessor());
         reportOptions.setInvertGroupColors(reportConfiguration.isInvertGroupColors());
         reportOptions.setLandscape(reportConfiguration.isLandscape());
         reportOptions.setShadeOddRows(reportConfiguration.isShadeOddRows());

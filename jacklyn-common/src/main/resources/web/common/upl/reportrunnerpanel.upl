@@ -3,10 +3,16 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-reportrunnerpanel dialogCaption:$m{common.report.reportrunner}
-    dialogBodyComponents:$c{rptParamsPanel rptColumnOptionsPanel}
+    dialogBodyComponents:$c{runnerTitlePanel runnerBaseBodyPanel}
     dialogActionLayout:$d{!ui-vertical style:$s{width:100%;}}
     dialogActionComponents:$c{reportOptionsPanel reportActionPanel}
 
+!ui-panel:runnerTitlePanel style:$s{width:100%;} components:$c{reportTitle}
+!ui-label:reportTitle styleClass:$s{title} binding:reportDescription
+
+!ui-panel:runnerBaseBodyPanel layout:$d{!ui-horizontal style:$s{width:100%;}}
+    components:$c{rptParamsPanel rptColumnOptionsPanel}
+    
 // Report parameters
 !ui-panel:rptParamsPanel layout:$d{!ui-vertical} components:$c{inputParameters}
 !ui-multidynamic:inputParameters binding:userInputList
