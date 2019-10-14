@@ -54,7 +54,7 @@ public class WfItemEvent extends BaseEntity {
     @Column(length = 32, nullable = true)
     private String wfAction;
 
-    @Column(length = 512, nullable = true)
+    @Column(name = "ACTOR_COMMENT", length = 512, nullable = true)
     private String comment;
 
     @ListOnly(key = "wfItemHistId", property = "processGlobalName")
