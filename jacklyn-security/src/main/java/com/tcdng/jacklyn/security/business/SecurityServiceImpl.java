@@ -284,12 +284,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         Long userId = (Long) db().create(user);
 
         // Create biometric record
-        UserBiometric userBiometric = new UserBiometric();
-        Long biometricId =
-                createBiometric(BiometricCategory.USERS, BiometricType.PHOTOGRAPH, userDocument.getPhotograph());
-        userBiometric.setUserId(userId);
-        userBiometric.setBiometricId(biometricId);
-        db().create(userBiometric);
+        createUserBiometric(BiometricType.PHOTOGRAPH, userId, userDocument.getPhotograph());
 
         // Create roles
         updateUserRoles(userId, userDocument.getRoleIdList());
@@ -328,10 +323,14 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public int updateUserPhotograph(Long userId, byte[] photograph) throws UnifyException {
-        Long biometricId =
-                db().value(Long.class, "biometricId",
-                        new UserBiometricQuery().typeName(BiometricType.PHOTOGRAPH).userId(userId));
-        return db().updateAll(new BiometricQuery().id(biometricId), new Update().add("biometric", photograph));
+        UserBiometric userBiometric =
+                db().find(new UserBiometricQuery().typeName(BiometricType.PHOTOGRAPH).userId(userId));
+        if (userBiometric == null) {
+            return createUserBiometric(BiometricType.PHOTOGRAPH, userId, photograph);
+        }
+
+        return db().updateAll(new BiometricQuery().id(userBiometric.getBiometricId()),
+                new Update().add("biometric", photograph));
     }
 
     @Override
@@ -703,6 +702,15 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public void onApplicationShutdown() throws UnifyException {
 
+    }
+
+    private int createUserBiometric(BiometricType type, Long userId, byte[] biometricImage) throws UnifyException {
+        UserBiometric userBiometric = new UserBiometric();
+        Long biometricId = createBiometric(BiometricCategory.USERS, type, biometricImage);
+        userBiometric.setUserId(userId);
+        userBiometric.setBiometricId(biometricId);
+        db().create(userBiometric);
+        return 1;
     }
 
     private UserToken createUserToken(User user) throws UnifyException {
