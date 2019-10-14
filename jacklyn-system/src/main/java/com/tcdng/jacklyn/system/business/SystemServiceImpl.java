@@ -126,6 +126,7 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
 import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
 import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceManager;
+import com.tcdng.unify.core.database.sql.SqlDialectNameConstants;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
 import com.tcdng.unify.core.security.TwoWayStringCryptograph;
@@ -671,10 +672,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public int getUniqueActiveUserSessions() throws UnifyException {
-        return Integer.valueOf((String) db()
-                .aggregate(AggregateType.COUNT,
-                        new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
-                .getValue());
+        return Integer
+                .valueOf((String) db()
+                        .aggregate(AggregateType.COUNT,
+                                new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
+                        .getValue());
     }
 
     @Override
@@ -1433,6 +1435,21 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         }
 
+        // Configure default data source drivers
+        ensureDataSourceDriver("HSQLDB_DRV", "Hyper SQL JDBC Driver", SqlDialectNameConstants.HSQLDB,
+                "org.hsqldb.jdbcDriver");
+        ensureDataSourceDriver("MSSQL_DRV", "Microsoft SQL JDBC Driver", SqlDialectNameConstants.MSSQL,
+                "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        ensureDataSourceDriver("MSSQL_2012_DRV", "Microsoft SQL 2012 JDBC Driver", SqlDialectNameConstants.MSSQL_2012,
+                "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        ensureDataSourceDriver("MYSQL_DRV", "MySQL JDBC Driver", SqlDialectNameConstants.MYSQL,
+                "com.mysql.jdbc.Driver");
+        ensureDataSourceDriver("ORACLE_DRV", "Oracle JDBC Driver", SqlDialectNameConstants.ORACLE,
+                "oracle.jdbc.OracleDriver");
+        ensureDataSourceDriver("ORACLE12C_DRV", "Oracle (12c) JDBC Driver", SqlDialectNameConstants.ORACLE_12C,
+                "oracle.jdbc.OracleDriver");
+        ensureDataSourceDriver("POSTGRESQL_DRV", "PostgreSQL JDBC Driver", SqlDialectNameConstants.POSTGRESQL,
+                "org.postgresql.Driver");
     }
 
     private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
@@ -1501,5 +1518,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
                 dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(),
                 dataSource.getMaxConnections(), false);
+    }
+
+    private void ensureDataSourceDriver(String name, String description, String dialect, String driverType)
+            throws UnifyException {
+        if (db().countAll(new DataSourceDriverQuery().name(name)) == 0) {
+            db().create(new DataSourceDriver(name, description, dialect, driverType));
+        }
     }
 }

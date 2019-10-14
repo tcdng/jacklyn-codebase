@@ -45,7 +45,18 @@ public class DataSourceDriver extends BaseVersionedStatusEntity {
 	@Column(length = 128)
 	private String driverType;
 
-	@Override
+    public DataSourceDriver() {
+
+    }
+
+    public DataSourceDriver(String name, String description, String dialect, String driverType) {
+        this.name = name;
+        this.description = description;
+        this.dialect = dialect;
+        this.driverType = driverType;
+    }
+
+    @Override
 	public String getDescription() {
 		return this.description;
 	}
