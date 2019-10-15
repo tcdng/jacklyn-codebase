@@ -646,7 +646,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                 systemService.getSysParameterValue(String.class, SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
         if (StringUtils.isBlank(adminEmail)) {
             systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL,
-                    getContainerSetting(String.class, JacklynContainerPropertyConstants.ADMINISTRATOR_DEFAULT_EMAIL));
+                    getContainerSetting(String.class, JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL));
         }
 
         // Check for default dashboard and create if necessary

@@ -23,7 +23,9 @@ package com.tcdng.jacklyn.common.constants;
  */
 public interface JacklynContainerPropertyConstants {
 
-    String SYSTEM_DEFAULT_EMAIL = "jacklyn.system.default.email";
+    String JACKLYN_SYSTEM_DEFAULT_EMAIL = "jacklyn.system.default.email";
 
-    String ADMINISTRATOR_DEFAULT_EMAIL = "jacklyn.administrator.default.email";
+    String JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL = "jacklyn.administrator.default.email";
+
+    String JACKLYN_COUNTRY_LOCALE = "jacklyn.country.locale";
 }

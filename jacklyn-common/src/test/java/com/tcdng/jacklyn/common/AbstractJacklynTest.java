@@ -35,8 +35,8 @@ public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_BOOT, CommonModuleNameConstants.JACKLYNBOOTSERVICE);
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_MESSAGES_BASE,
                 new String[] { "com.tcdng.unify.core.resources.test" });
-        addContainerSetting(JacklynContainerPropertyConstants.SYSTEM_DEFAULT_EMAIL, "info@tcdng.com");
-        addContainerSetting(JacklynContainerPropertyConstants.ADMINISTRATOR_DEFAULT_EMAIL, "info@tcdng.com");
+        addContainerSetting(JacklynContainerPropertyConstants.JACKLYN_SYSTEM_DEFAULT_EMAIL, "info@tcdng.com");
+        addContainerSetting(JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL, "info@tcdng.com");
     }
 
     protected void swapApplicationSystemAnonymousUserTokens() throws Exception {
