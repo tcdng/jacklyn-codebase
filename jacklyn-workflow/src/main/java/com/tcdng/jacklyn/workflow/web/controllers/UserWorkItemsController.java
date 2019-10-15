@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
-import com.tcdng.jacklyn.workflow.data.InteractWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
@@ -77,7 +77,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     private InteractWfItems csWorkItems;
 
-    private InteractWfItem workflowItem;
+    private FlowingWfItem workflowItem;
 
     private Table table;
 
@@ -91,7 +91,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     private CommentsInfo commentsInfo;
 
-    private Map<Long, InteractWfItem> workingCache;
+    private Map<Long, FlowingWfItem> workingCache;
 
     private WfItemCommentsPanel wfItemCommentsPanel;
 
@@ -254,7 +254,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         this.csWorkItems = csWorkItems;
     }
 
-    public InteractWfItem getWorkflowItem() {
+    public FlowingWfItem getWorkflowItem() {
         return workflowItem;
     }
 
@@ -311,7 +311,7 @@ public class UserWorkItemsController extends AbstractWorkflowController {
             workflowItem.setActionList(csWorkItems.getActionList());
 
             if (workingCache == null) {
-                workingCache = new HashMap<Long, InteractWfItem>();
+                workingCache = new HashMap<Long, FlowingWfItem>();
             }
 
             workingCache.put(wfItemId, workflowItem);

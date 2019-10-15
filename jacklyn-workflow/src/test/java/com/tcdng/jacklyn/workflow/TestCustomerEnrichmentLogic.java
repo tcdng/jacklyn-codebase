@@ -17,7 +17,7 @@
 package com.tcdng.jacklyn.workflow;
 
 import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentLogic;
-import com.tcdng.jacklyn.workflow.business.WfItemReaderWriter;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
@@ -31,12 +31,12 @@ import com.tcdng.unify.core.annotation.Component;
 public class TestCustomerEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
 
     @Override
-    public void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException {
+    public void enrich(FlowingWfItem.ReaderWriter flowingWfItemReaderWriter) throws UnifyException {
         // Enrich workflow item
-        String firstName = wfItemReaderWriter.readField(String.class, "firstName");
-        String lastName = wfItemReaderWriter.readField(String.class, "lastName");
-        wfItemReaderWriter.writeField("fullName", firstName + " " + lastName);
-        wfItemReaderWriter.writeField("accountNo", "0123456789");
+        String firstName = flowingWfItemReaderWriter.readField(String.class, "firstName");
+        String lastName = flowingWfItemReaderWriter.readField(String.class, "lastName");
+        flowingWfItemReaderWriter.writeField("fullName", firstName + " " + lastName);
+        flowingWfItemReaderWriter.writeField("accountNo", "0123456789");
     }
 
 }

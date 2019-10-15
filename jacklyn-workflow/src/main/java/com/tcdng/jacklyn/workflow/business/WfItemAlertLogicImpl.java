@@ -23,6 +23,7 @@ import com.tcdng.jacklyn.notification.data.NotificationContact;
 import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -41,7 +42,7 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
 public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
 
     @Override
-    public void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
+    public void sendAlert(FlowingWfItem.Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
         logDebug("Sending alert...");
         String senderName = null;
         String senderContact = null;
@@ -85,7 +86,7 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
             for (StringToken token : notificationTemplateDef.getTokenList()) {
                 if (token.isParam()) {
                     String tokenName = token.getToken();
-                    msgBuilder.usingDictionaryEntry(tokenName, wfItemReader.readField(tokenName));
+                    msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.readField(tokenName));
                 }
             }
 

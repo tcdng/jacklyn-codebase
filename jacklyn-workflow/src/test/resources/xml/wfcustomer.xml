@@ -99,7 +99,7 @@
 					</routings>
 					<policies>
 						<policy name="testOpenAccount" description="Open Account"
-							logic="testopenaccount-policylogic" />
+							logic="testopenaccount-processpolicy" />
 					</policies>
 				</step>
 				<step name="custApproval" description="Customer Approval"

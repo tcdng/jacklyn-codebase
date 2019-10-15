@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.workflow.business;
 
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierDef;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierFilterDef;
 import com.tcdng.unify.core.UnifyException;
@@ -34,10 +35,10 @@ import com.tcdng.unify.core.constant.BinaryLogicType;
 public class WfItemClassifierLogicImpl extends AbstractWfItemClassifierLogic {
 
     @Override
-    public boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException {
+    public boolean match(FlowingWfItem.Reader flowingWfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException {
         if (BinaryLogicType.AND.equals(wfDocClassifierDef.getFilterLogic())) {
             for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
-                if (!applyFilter(wfItemReader, filter)) {
+                if (!applyFilter(flowingWfItemReader, filter)) {
                     return false;
                 }
             }
@@ -45,7 +46,7 @@ public class WfItemClassifierLogicImpl extends AbstractWfItemClassifierLogic {
             return true;
         } else if (BinaryLogicType.OR.equals(wfDocClassifierDef.getFilterLogic())) {
             for (WfDocClassifierFilterDef filter : wfDocClassifierDef.getFilterList()) {
-                if (applyFilter(wfItemReader, filter)) {
+                if (applyFilter(flowingWfItemReader, filter)) {
                     return true;
                 }
             }

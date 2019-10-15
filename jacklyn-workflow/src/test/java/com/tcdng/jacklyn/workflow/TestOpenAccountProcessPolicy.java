@@ -16,26 +16,26 @@
 
 package com.tcdng.jacklyn.workflow;
 
-import com.tcdng.jacklyn.workflow.business.AbstractWfItemPolicyLogic;
-import com.tcdng.jacklyn.workflow.business.WfItemReader;
+import com.tcdng.jacklyn.workflow.business.AbstractWfItemProcessPolicy;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Test open account policy logic.
+ * Test open account process policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("testopenaccount-policylogic")
-public class TestOpenAccountPolicyLogic extends AbstractWfItemPolicyLogic {
+@Component("testopenaccount-processpolicy")
+public class TestOpenAccountProcessPolicy extends AbstractWfItemProcessPolicy {
 
     private OpenAccountDetails openAccountDetails;
 
     @Override
-    public void executePolicy(WfItemReader wfItemReader) throws UnifyException {
-        openAccountDetails = new OpenAccountDetails(wfItemReader.readField(String.class, "fullName"),
-                wfItemReader.readField(String.class, "accountNo"));
+    public void execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
+        openAccountDetails = new OpenAccountDetails(flowingWfItemReader.readField(String.class, "fullName"),
+                flowingWfItemReader.readField(String.class, "accountNo"));
     }
 
     public OpenAccountDetails getOpenAccountDetails() {

@@ -16,28 +16,25 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.data.PackableDoc;
-import com.tcdng.unify.core.format.Formatter;
 
 /**
- * Workflow item reader writer.
+ * Workflow item process policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfItemReaderWriter extends WfItemReader {
+public interface WfItemProcessPolicy extends UnifyComponent {
 
-    public WfItemReaderWriter(PackableDoc pd) {
-        super(pd);
-    }
-
-    public void writeField(String fieldName, Object value) throws UnifyException {
-        getPd().write(fieldName, value);
-    }
-
-    public void writeField(String fieldName, Object value, Formatter<?> formatter) throws UnifyException {
-        getPd().write(fieldName, value, formatter);
-    }
-
+    /**
+     * Executes workflow item process policy using data from workflow item.
+     * 
+     * @param flowingWfItemReader
+     *            the workflow item reader
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException;
 }
