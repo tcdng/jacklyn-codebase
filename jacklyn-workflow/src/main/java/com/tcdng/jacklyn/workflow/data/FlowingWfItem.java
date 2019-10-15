@@ -17,18 +17,19 @@ package com.tcdng.jacklyn.workflow.data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-import com.tcdng.jacklyn.workflow.business.WfItemReader;
-import com.tcdng.jacklyn.workflow.business.WfItemReaderWriter;
+import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.PackableDoc;
+import com.tcdng.unify.core.format.Formatter;
 
 /**
- * Interact workflow item.
+ * Flowing workflow item.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class InteractWfItem implements ViewableWfItem {
+public class FlowingWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
@@ -56,9 +57,9 @@ public class InteractWfItem implements ViewableWfItem {
 
     private PackableDoc pd;
 
-    private WfItemReader reader;
+    private Reader reader;
 
-    private WfItemReaderWriter readerWriter;
+    private ReaderWriter readerWriter;
 
     private Date createDt;
 
@@ -68,7 +69,7 @@ public class InteractWfItem implements ViewableWfItem {
 
     private List<WfAction> actionList;
 
-    public InteractWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
+    public FlowingWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
             String branchCode, String departmentCode, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
             String description, String title, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
@@ -112,17 +113,17 @@ public class InteractWfItem implements ViewableWfItem {
         return wfTemplateDocDef;
     }
 
-    public WfItemReader getReader() {
+    public Reader getReader() {
         if (reader == null) {
-            reader = new WfItemReader(pd);
+            reader = new Reader();
         }
 
         return reader;
     }
 
-    public WfItemReaderWriter getReaderWriter() {
+    public ReaderWriter getReaderWriter() {
         if (readerWriter == null) {
-            readerWriter = new WfItemReaderWriter(pd);
+            readerWriter = new ReaderWriter();
         }
 
         return readerWriter;
@@ -219,4 +220,64 @@ public class InteractWfItem implements ViewableWfItem {
     public List<WfFormPrivilegeDef> getFormPrivilegeList() {
         return wfStepDef.getFormPrivilegeList();
     }
+    
+    public class Reader {
+
+        private Reader() {
+            
+        }
+
+        public String getBranchCode() {
+            return branchCode;
+        }
+
+        public String getDepartmentCode() {
+            return departmentCode;
+        }
+
+        public Set<String> getFieldNames() {
+            return pd.getConfig().getFieldNames();
+        }
+
+        public Class<?> getFieldType(String fieldName) throws UnifyException {
+            return pd.getConfig().getFieldConfig(fieldName).getDataType();
+        }
+
+        public boolean isList(String fieldName) throws UnifyException {
+            return pd.getConfig().getFieldConfig(fieldName).isList();
+        }
+
+        public boolean isComplex(String fieldName) throws UnifyException {
+            return pd.getConfig().getFieldConfig(fieldName).isComplex();
+        }
+        
+        public Object readField(String fieldName) throws UnifyException {
+            return pd.read(fieldName);
+        }
+
+        public <T> T readField(Class<T> type, String fieldName) throws UnifyException {
+            return pd.read(type, fieldName);
+        }
+
+        public <T> List<T> readListField(Class<T> type, String fieldName) throws UnifyException {
+            return pd.readList(type, fieldName);
+        }
+    }
+    
+    public class ReaderWriter extends Reader {
+
+        private ReaderWriter() {
+
+        }
+
+        public void writeField(String fieldName, Object value) throws UnifyException {
+            pd.write(fieldName, value);
+        }
+
+        public void writeField(String fieldName, Object value, Formatter<?> formatter) throws UnifyException {
+            pd.write(fieldName, value, formatter);
+        }
+
+    }
+    
 }

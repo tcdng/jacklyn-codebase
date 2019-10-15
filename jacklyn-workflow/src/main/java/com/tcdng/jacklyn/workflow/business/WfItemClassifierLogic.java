@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierDef;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -30,13 +31,13 @@ public interface WfItemClassifierLogic extends UnifyComponent {
     /**
      * Tests if workflow item matches classification.
      * 
-     * @param wfItemReader
-     *            the workflow item reader
+     * @param flowingWfItemReader
+     *            the flowing workflow item reader
      * @param wfDocClassifierDef
      *            classifier definition
      * @return a true value if matched otherwise false
      * @throws UnifyException
      *             if an error occurs
      */
-    boolean match(WfItemReader wfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException;
+    boolean match(FlowingWfItem.Reader flowingWfItemReader, WfDocClassifierDef wfDocClassifierDef) throws UnifyException;
 }

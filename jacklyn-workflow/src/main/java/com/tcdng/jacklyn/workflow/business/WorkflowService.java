@@ -24,7 +24,7 @@ import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
-import com.tcdng.jacklyn.workflow.data.InteractWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
@@ -453,9 +453,9 @@ public interface WorkflowService extends JacklynBusinessService {
     List<WfItemSummary> getCurrentUserWorkItemSummary() throws UnifyException;
 
     /**
-     * Applies workflow action and releases workflow item.
+     * Applies workflow action and releases flowing workflow item.
      * 
-     * @param workflowItem
+     * @param flowingWfItem
      *            the workflow item
      * @param actionName
      *            the action name
@@ -463,7 +463,7 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if item is not held by current user. If action is unknown for
      *             current step.
      */
-    void applyWorkflowAction(InteractWfItem workflowItem, String actionName) throws UnifyException;
+    void applyWorkflowAction(FlowingWfItem flowingWfItem, String actionName) throws UnifyException;
 
     /**
      * Finds workflow item.
@@ -474,7 +474,7 @@ public interface WorkflowService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    InteractWfItem findWorkflowItem(Long wfItemId) throws UnifyException;
+    FlowingWfItem findWorkflowItem(Long wfItemId) throws UnifyException;
 
     /**
      * Finds workflow TrailItem history.

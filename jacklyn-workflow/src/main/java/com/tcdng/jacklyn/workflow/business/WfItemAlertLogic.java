@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -31,12 +32,12 @@ public interface WfItemAlertLogic extends UnifyComponent {
     /**
      * Sends an alert based on workflow item.
      * 
-     * @param wfItemReader
+     * @param flowingWfItemReader
      *            the workflow item reader.
      * @param wfAlertDef
      *            the alert definition
      * @throws UnifyException
      *             if an error occurs
      */
-    void sendAlert(WfItemReader wfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
+    void sendAlert(FlowingWfItem.Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
 }

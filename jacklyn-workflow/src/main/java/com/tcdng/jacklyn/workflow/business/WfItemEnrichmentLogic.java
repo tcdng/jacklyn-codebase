@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 
@@ -30,10 +31,10 @@ public interface WfItemEnrichmentLogic extends UnifyComponent {
     /**
      * Enriches workflow item using supplied reader-writer.
      * 
-     * @param wfItemReaderWriter
+     * @param flowingWfItemReaderWriter
      *            the reader-writer to use
      * @throws UnifyException
      *             if an error occurs
      */
-    void enrich(WfItemReaderWriter wfItemReaderWriter) throws UnifyException;
+    void enrich(FlowingWfItem.ReaderWriter flowingWfItemReaderWriter) throws UnifyException;
 }
