@@ -5,7 +5,7 @@
 !ui-page caption:$m{system.scheduledtaskhist.manage}
     searchByList:$c{searchExecutionDt searchScheduledTaskId searchStatus}
     searchClearList:$c{searchScheduledTaskId searchStatus}
-    tableColumnList:$c{scheduledTaskDesc startedOn finishedOn statusDesc}
+    tableColumnList:$c{taskName scheduledTaskDesc startedOn finishedOn statusDesc}
     formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
     formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.timestamp} components:$c{frmStartedOn frmFinishedOn}}
     formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.exception} components:$c{frmErrorMsg}}
@@ -20,9 +20,10 @@
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:scheduledTaskDesc caption:$m{system.scheduledtaskhist.taskname} binding:scheduledTaskDesc  columnStyle:$s{width:300px;} sortable:true
-!ui-label:startedOn caption:$m{system.scheduledtaskhist.startedon} binding:startedOn style:$s{text-align:center;} formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
-!ui-label:finishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn style:$s{text-align:center;} formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
+!ui-label:taskName caption:$m{system.scheduledtaskhist.taskname} binding:taskName  columnStyle:$s{width:180px;} sortable:true
+!ui-label:scheduledTaskDesc caption:$m{system.scheduledtaskhist.description} binding:scheduledTaskDesc  columnStyle:$s{width:180px;} sortable:true
+!ui-label:startedOn caption:$m{system.scheduledtaskhist.startedon} binding:startedOn formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
+!ui-label:finishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
 !ui-label:statusDesc caption:$m{system.scheduledtaskhist.status} binding:taskStatusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
