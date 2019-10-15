@@ -209,6 +209,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 long endTimeOffset = 0;
                 if (scheduledTask.getEndTime() != null) {
                     endTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getEndTime());
+                } else {
+                    endTimeOffset = CalendarUtils.getTimeOfDayOffset(CalendarUtils.getLastSecondDate(getNow()));
                 }
 
                 long repeatMillSecs = 0;
@@ -711,12 +713,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public DataSource findDataSource(Long dataSourceId) throws UnifyException {
-        return db().find(DataSource.class, dataSourceId);
+        return db().list(DataSource.class, dataSourceId);
     }
 
     @Override
     public DataSource findDataSource(String dataSourceName) throws UnifyException {
-        return db().find(new DataSourceQuery().name(dataSourceName));
+        return db().list(new DataSourceQuery().name(dataSourceName));
     }
 
     @Override
@@ -870,8 +872,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         // Working dates
         Date now = db().getNow();
-        Date workingDt = CalendarUtils.getMidnightDate(now);
-        Date lastMinDt = CalendarUtils.getLastSecondDate(now);
+        final Date workingDt = CalendarUtils.getMidnightDate(now);
 
         // Expiration allowance
         int expirationAllowanceMins =
@@ -936,15 +937,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     Date calcNextExecutionOn = null;
                     long repeatMillSecs = scheduledTaskDef.getRepeatMillSecs();
                     if (repeatMillSecs > 0) {
-                        Date limit = lastMinDt;
-                        if (scheduledTaskDef.getEndOffset() > 0) {
-                            limit = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getEndOffset());
-                        }
-
+                        Date limit = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getEndOffset());
                         long factor = ((now.getTime() - nextExecutionOn.getTime()) / repeatMillSecs) + 1;
                         long actNextOffsetMillSecs = factor * repeatMillSecs;
                         calcNextExecutionOn = CalendarUtils.getDateWithOffset(nextExecutionOn, actNextOffsetMillSecs);
-                        if (calcNextExecutionOn.after(limit)) {
+                        if (calcNextExecutionOn.compareTo(limit) >= 0) {
                             calcNextExecutionOn = null;
                         }
                     }
@@ -960,7 +957,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                     db().updateById(ScheduledTask.class, scheduledTaskId,
                             new Update().add("nextExecutionOn", calcNextExecutionOn).add("lastExecutionOn", now));
-                    logDebug("Task [{0}] is scheduled to run next on [{1}]...", scheduledTaskDef.getDescription(),
+                    logDebug("Task [{0}] is scheduled to run next on [{1,date,dd/MM/yy HH:mm:ss}]...", scheduledTaskDef.getDescription(),
                             calcNextExecutionOn);
 
                 } catch (UnifyException e) {

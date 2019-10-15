@@ -120,22 +120,28 @@ public class ScheduledTaskController extends AbstractSystemCrudController<Schedu
     }
 
     @Override
-    protected Object create(ScheduledTask scheduledTaskData) throws UnifyException {
+    protected Object create(ScheduledTask scheduledTask) throws UnifyException {
         return getSystemService().createScheduledTask(largeData);
     }
 
     @Override
-    protected int update(ScheduledTask scheduledTaskData) throws UnifyException {
+    protected int update(ScheduledTask scheduledTask) throws UnifyException {
         return getSystemService().updateScheduledTask(largeData);
     }
 
     @Override
-    protected int delete(ScheduledTask scheduledTaskData) throws UnifyException {
+    protected int delete(ScheduledTask scheduledTask) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected void onPrepareView(ScheduledTask scheduledTaskData, boolean onPaste) throws UnifyException {
+    protected void onCopy(ScheduledTask scheduledTaskCopy) throws UnifyException {
+        scheduledTaskCopy.setNextExecutionOn(null);
+        scheduledTaskCopy.setLastExecutionOn(null);
+    }
+
+    @Override
+    protected void onPrepareView(ScheduledTask scheduledTask, boolean onPaste) throws UnifyException {
         if (onPaste) {
             largeData.setScheduledTaskParams(clipboardLargeData.getScheduledTaskParams());
         } else {
@@ -147,7 +153,7 @@ public class ScheduledTaskController extends AbstractSystemCrudController<Schedu
     }
 
     @Override
-    protected void onLoseView(ScheduledTask scheduledTaskData) throws UnifyException {
+    protected void onLoseView(ScheduledTask scheduledTask) throws UnifyException {
         largeData = new ScheduledTaskLargeData();
         clipboardLargeData = null;
     }

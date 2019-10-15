@@ -245,6 +245,7 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
     @Action
     public String copyRecord() throws UnifyException {
         clipRecord = ReflectUtils.shallowBeanCopy(record);
+        onCopy(clipRecord);
         if (ManageRecordModifier.isCopyToAdd(modifier)) {
             return prepareCreateRecord();
         }
@@ -566,6 +567,10 @@ public abstract class BaseCrudController<T extends Entity, U> extends BasePageCo
 
         setDisabled("searchPanel", false);
         updateModeDescription();
+    }
+
+    protected void onCopy(T recordCopy) throws UnifyException {
+
     }
 
     protected void onPrepareView(T record, boolean onPaste) throws UnifyException {
