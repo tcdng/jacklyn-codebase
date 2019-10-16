@@ -20,19 +20,19 @@ import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
 /**
- * Workflow participant type constants.
+ * Workflow alert type constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfparticipanttypelist")
-public enum WorkflowParticipantType implements EnumConst {
+@StaticList("wfalerttypelist")
+public enum WorkflowAlertType implements EnumConst {
 
-    NONE("NON"), ALL("ALL"), PERSONNEL("PER"), SUPERVISOR("SUP");
+    PASS_THROUGH("P"), USER_INTERACT("U");
 
     private final String code;
 
-    private WorkflowParticipantType(String code) {
+    private WorkflowAlertType(String code) {
         this.code = code;
     }
 
@@ -43,30 +43,22 @@ public enum WorkflowParticipantType implements EnumConst {
 
     @Override
     public String defaultCode() {
-        return NONE.code;
+        return USER_INTERACT.code;
     }
 
-    public boolean isParticipant() {
-        return !NONE.equals(this);
+    public boolean isPassThrough() {
+        return PASS_THROUGH.equals(this);
     }
 
-    public boolean isSupervisor() {
-        return SUPERVISOR.equals(this);
+    public boolean isUserInteract() {
+        return USER_INTERACT.equals(this);
     }
 
-    public boolean isPersonnel() {
-        return PERSONNEL.equals(this);
+    public static WorkflowStepType fromCode(String code) {
+        return EnumUtils.fromCode(WorkflowStepType.class, code);
     }
 
-    public boolean isAllParticipants() {
-        return ALL.equals(this);
-    }
-    
-    public static WorkflowParticipantType fromCode(String code) {
-        return EnumUtils.fromCode(WorkflowParticipantType.class, code);
-    }
-
-    public static WorkflowParticipantType fromName(String name) {
-        return EnumUtils.fromName(WorkflowParticipantType.class, name);
+    public static WorkflowStepType fromName(String name) {
+        return EnumUtils.fromName(WorkflowStepType.class, name);
     }
 }

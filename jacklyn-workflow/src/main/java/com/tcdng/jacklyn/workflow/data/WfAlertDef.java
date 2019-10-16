@@ -17,6 +17,8 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 
 /**
  * Workflow document alert definition.
@@ -26,20 +28,26 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
  */
 public class WfAlertDef extends BaseWfDef {
 
+    private WorkflowAlertType type;
+    
+    private WorkflowParticipantType participant;
+
+    private NotificationType channel;
+
     private String docName;
 
     private String stepGlobalName;
 
-    private NotificationType type;
-
     private String notificationTemplateCode;
 
-    public WfAlertDef(String docName, String stepGlobalName, String name, String description, NotificationType type,
-            String notificationTemplateCode) {
+    public WfAlertDef(String docName, String stepGlobalName, String name, String description, WorkflowAlertType type,
+            WorkflowParticipantType participant, NotificationType channel, String notificationTemplateCode) {
         super(name, description);
         this.docName = docName;
         this.stepGlobalName = stepGlobalName;
         this.type = type;
+        this.participant = participant;
+        this.channel = channel;
         this.notificationTemplateCode = notificationTemplateCode;
     }
 
@@ -47,8 +55,16 @@ public class WfAlertDef extends BaseWfDef {
         return stepGlobalName;
     }
 
-    public NotificationType getType() {
+    public WorkflowAlertType getType() {
         return type;
+    }
+
+    public WorkflowParticipantType getParticipant() {
+        return participant;
+    }
+
+    public NotificationType getChannel() {
+        return channel;
     }
 
     public String getNotificationTemplateCode() {
@@ -57,5 +73,13 @@ public class WfAlertDef extends BaseWfDef {
 
     public String getDocName() {
         return docName;
+    }
+
+    public boolean isPassThrough() {
+        return type.isPassThrough();
+    }
+
+    public boolean isUserInteract() {
+        return type.isUserInteract();
     }
 }

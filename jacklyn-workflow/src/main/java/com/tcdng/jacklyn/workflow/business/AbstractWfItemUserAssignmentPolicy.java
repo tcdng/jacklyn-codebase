@@ -16,26 +16,13 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.unify.core.AbstractUnifyComponent;
-import com.tcdng.unify.core.UnifyException;
-
 /**
- * Convenient abstract base class for workflow step email contact provider.
+ * Convenient abstract base class for workflow item user assignment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfStepEmailContactProvider extends AbstractUnifyComponent
-        implements WfStepEmailContactProvider {
-
-    @Override
-    protected void onInitialize() throws UnifyException {
-
-    }
-
-    @Override
-    protected void onTerminate() throws UnifyException {
-
-    }
+public abstract class AbstractWfItemUserAssignmentPolicy extends AbstractWfItemPolicy
+        implements WfItemUserAssignmentPolicy {
 
 }

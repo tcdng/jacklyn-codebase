@@ -13,25 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.constants;
+package com.tcdng.jacklyn.shared.xml.adapter;
+
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
+import com.tcdng.unify.core.util.xml.AbstractEnumConstXmlAdapter;
 
 /**
- * Workflow module name constants.
+ * Workflow alert type XML adapter.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WorkflowModuleNameConstants {
+public class WorkflowAlertTypeXmlAdapter extends AbstractEnumConstXmlAdapter<WorkflowAlertType> {
 
-    String WORKFLOW_MODULE = "workflow";
+    public WorkflowAlertTypeXmlAdapter() {
+        super(WorkflowAlertType.class);
+    }
 
-    String WORKFLOWSERVICE = "jacklyn-workflowservice";
-
-    String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
-
-    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-workflowitemclassifierlogic";
-
-    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
-
-    String DEFAULTWORKFLOWUSERASSIGNMENTPOLICY = "default-workflowitemuserassignpolicy";
 }

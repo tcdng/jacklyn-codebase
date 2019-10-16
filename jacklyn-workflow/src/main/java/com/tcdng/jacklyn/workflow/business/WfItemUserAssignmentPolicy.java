@@ -33,13 +33,9 @@ public interface WfItemUserAssignmentPolicy extends UnifyComponent {
      * 
      * @param flowingWfItemReader
      *            the workflow item reader
-     * @param branchOnly
-     *            the branch only indicator
-     * @param departmentOnly
-     *            the department only indicator
-     * @return the ID of user to assign workflow item to
+     * @return the ID of user to assign workflow item to otherwise null
      * @throws UnifyException
      *             if an error occurs
      */
-    String execute(FlowingWfItem.Reader flowingWfItemReader, boolean branchOnly, boolean departmentOnly) throws UnifyException;
+    String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException;
 }

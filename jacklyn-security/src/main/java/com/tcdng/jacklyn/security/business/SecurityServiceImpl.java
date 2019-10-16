@@ -425,6 +425,11 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public Set<String> findUsers(UserRoleQuery query) throws UnifyException {
+        return db().valueSet(String.class, "userLoginId", query);
+    }
+
+    @Override
     public User findUserByCredentials(String loginId, String password) throws UnifyException {
         User user = db().list(new UserQuery().loginId(loginId));
         if (user != null) {

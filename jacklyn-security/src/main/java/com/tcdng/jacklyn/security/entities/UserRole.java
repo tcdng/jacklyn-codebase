@@ -51,8 +51,17 @@ public class UserRole extends BaseEntity implements Describable {
     @ListOnly(key = "userId", property = "email")
     private String userEmail;
 
+    @ListOnly(key = "userId", property = "mobileNo")
+    private String userMobileNo;
+
     @ListOnly(key = "userId", property = "themeId")
     private Long userThemeId;
+
+    @ListOnly(name = "BRANCH_CD", key = "userId", property = "branchCode")
+    private String branchCode;
+
+    @ListOnly(name = "SUPERVISOR_FG", key = "userId", property = "supervisor")
+    private Boolean supervisor;
 
     @ListOnly(key = "roleId", property = "name")
     private String roleName;
@@ -129,6 +138,14 @@ public class UserRole extends BaseEntity implements Describable {
         this.userEmail = userEmail;
     }
 
+    public String getUserMobileNo() {
+        return userMobileNo;
+    }
+
+    public void setUserMobileNo(String userMobileNo) {
+        this.userMobileNo = userMobileNo;
+    }
+
     public String getRoleName() {
         return roleName;
     }
@@ -139,6 +156,22 @@ public class UserRole extends BaseEntity implements Describable {
 
     public void setUserThemeId(Long userThemeId) {
         this.userThemeId = userThemeId;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public Boolean getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Boolean supervisor) {
+        this.supervisor = supervisor;
     }
 
     public void setRoleName(String roleName) {

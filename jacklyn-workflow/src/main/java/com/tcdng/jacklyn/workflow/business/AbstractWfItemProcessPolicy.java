@@ -16,25 +16,12 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.unify.core.AbstractUnifyComponent;
-import com.tcdng.unify.core.UnifyException;
-
 /**
  * Convenient abstract base class for workflow item process policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemProcessPolicy extends AbstractUnifyComponent implements WfItemProcessPolicy {
-
-    @Override
-    protected void onInitialize() throws UnifyException {
-
-    }
-
-    @Override
-    protected void onTerminate() throws UnifyException {
-
-    }
+public abstract class AbstractWfItemProcessPolicy extends AbstractWfItemPolicy implements WfItemProcessPolicy {
 
 }

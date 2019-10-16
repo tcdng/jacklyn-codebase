@@ -18,6 +18,8 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -37,8 +39,14 @@ public class WfAlert extends BaseEntity {
     @ForeignKey(WfStep.class)
     private Long wfStepId;
 
-    @ForeignKey(name = "NOTIFICATION_TY")
-    private NotificationType type;
+    @ForeignKey(name = "NOTIFICATION_CHANNEL")
+    private NotificationType channel;
+    
+    @ForeignKey(name = "PARTICIPANT_TY")
+    private WorkflowParticipantType participant;
+
+    @ForeignKey(name = "ALERT_TY")
+    private WorkflowAlertType type;
 
     @Column(name = "ALERT_NM", length = 32)
     private String name;
@@ -61,6 +69,12 @@ public class WfAlert extends BaseEntity {
     @ListOnly(key = "type", property = "description")
     private String wfTypeDesc;
 
+    @ListOnly(key = "channel", property = "description")
+    private String notificationChannelDesc;
+
+    @ListOnly(key = "participant", property = "description")
+    private String participantDesc;
+
     @Override
     public String getDescription() {
         return description;
@@ -74,11 +88,27 @@ public class WfAlert extends BaseEntity {
         this.wfStepId = wfStepId;
     }
 
-    public NotificationType getType() {
+    public NotificationType getChannel() {
+        return channel;
+    }
+
+    public void setChannel(NotificationType channel) {
+        this.channel = channel;
+    }
+
+    public WorkflowParticipantType getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(WorkflowParticipantType participant) {
+        this.participant = participant;
+    }
+
+    public WorkflowAlertType getType() {
         return type;
     }
 
-    public void setType(NotificationType type) {
+    public void setType(WorkflowAlertType type) {
         this.type = type;
     }
 
@@ -132,6 +162,22 @@ public class WfAlert extends BaseEntity {
 
     public void setWfTypeDesc(String wfTypeDesc) {
         this.wfTypeDesc = wfTypeDesc;
+    }
+
+    public String getNotificationChannelDesc() {
+        return notificationChannelDesc;
+    }
+
+    public void setNotificationChannelDesc(String notificationChannelDesc) {
+        this.notificationChannelDesc = notificationChannelDesc;
+    }
+
+    public String getParticipantDesc() {
+        return participantDesc;
+    }
+
+    public void setParticipantDesc(String participantDesc) {
+        this.participantDesc = participantDesc;
     }
 
 }

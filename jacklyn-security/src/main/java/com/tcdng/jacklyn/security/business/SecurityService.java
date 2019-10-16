@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.security.business;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.business.RemoteCallSystemAssetProvider;
@@ -237,9 +238,9 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      * 
      * @param userLoginId
      *            the user Id
-     * @return the user record
+     * @return the user record if found otherwise null
      * @throws UnifyException
-     *             if user with id not found
+     *             if an error occurs
      */
     User findUser(String userLoginId) throws UnifyException;
 
@@ -365,6 +366,7 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      *             if an error occurs
      */
     List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException;
+
     /**
      * Gets role ID list for specified user.
      * 
@@ -386,6 +388,17 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      *             if an error occurs
      */
     List<UserRole> findUserRoles(UserRoleQuery query) throws UnifyException;
+
+    /**
+     * Finds users matched by supplied user role query.
+     * 
+     * @param query
+     *            the query to use
+     * @return a set of user login IDs
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Set<String> findUsers(UserRoleQuery query) throws UnifyException;
 
     /**
      * Returns the user token for current user session.

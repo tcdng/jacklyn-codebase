@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.tcdng.jacklyn.notification.data.Message;
 import com.tcdng.jacklyn.notification.data.NotificationContact;
@@ -47,9 +47,9 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
         String senderName = null;
         String senderContact = null;
         String channelName = null;
-        List<NotificationContact> contactList = null;
+        Collection<NotificationContact> contactList = null;
 
-        switch (wfAlertDef.getType()) {
+        switch (wfAlertDef.getChannel()) {
             case EMAIL:
                 senderName =
                         getSystemService().getSysParameterValue(String.class,
@@ -60,7 +60,13 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
                 channelName =
                         getSystemService().getSysParameterValue(String.class,
                                 SystemModuleSysParamConstants.SYSPARAM_EMAIL_CHANNEL);
-                contactList = getWfStepEmailContactProvider().getEmailContacts(wfAlertDef.getStepGlobalName());
+                if (wfAlertDef.isPassThrough()) {
+                    // Alert all contacts in step
+                    contactList = getEligibleEmailContacts(flowingWfItemReader, wfAlertDef.getParticipant(),
+                                    wfAlertDef.getStepGlobalName());
+                } else if (wfAlertDef.isUserInteract()) {
+                    contactList = getUserEmailContacts(flowingWfItemReader.getItemHeldBy());
+                }
                 break;
             case SMS:
                 break;
