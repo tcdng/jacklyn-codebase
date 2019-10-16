@@ -895,7 +895,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     break;
                 }
             }
-            
+
             if (present) {
                 ThreadUtils.sleep(250);
             }
@@ -976,7 +976,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public void applyWorkflowAction(FlowingWfItem flowingWfItem, String actionName) throws UnifyException {
+    public Long applyWorkflowAction(FlowingWfItem flowingWfItem, String actionName) throws UnifyException {
         WfUserActionDef wfUserActionDef = flowingWfItem.getWfStepDef().getWfUserActionDef(actionName);
         WfStepDef trgWfStep = wfSteps.get(wfUserActionDef.getTargetGlobalName());
 
@@ -989,12 +989,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             db().updateById(WfItemEvent.class, flowingWfItem.getWfHistEventId(), new Update().add("actionDt", actionDt)
                     .add("actor", userLoginId).add("wfAction", actionName).add("comment", flowingWfItem.getComment()));
 
-            // Push to target step
-            pushIntoStep(trgWfStep, flowingWfItem);
-        } else {
-            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_APPLY_ACTION_UNHELD, actionName,
-                    flowingWfItem.getDescription());
+            // Push to transition queue
+            Long submissionId = sequenceNumberService.getCachedBlockNextSequenceNumber(WORKFLOW_SUBMISSION_ID_SEQUENCE);
+            pushIntoWfItemTransitionQueue(submissionId, trgWfStep, flowingWfItem);
+            return submissionId;
         }
+
+        throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_APPLY_ACTION_UNHELD, actionName,
+                flowingWfItem.getDescription());
     }
 
     @Override
@@ -1419,7 +1421,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
     public void performFlowingWfItemtransition(FlowingWfItemTransition wfItemTransition) throws UnifyException {
-        pushIntoStep(wfItemTransition.getTargetWfStepDef(), wfItemTransition.getFlowingWfItem());
+        doActualTransition(wfItemTransition.getTargetWfStepDef(), wfItemTransition.getFlowingWfItem());
     }
 
     private void populateChildList(WfDoc wfDoc, WfDocumentConfig wfDocConfig) throws UnifyException {
@@ -1860,12 +1862,17 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
 
         // Asynchronous processing. Push transition to queue.
-        pendingSubmissionIds.add(submissionId);
-        pendingWfItemTransitionQueue.offer(new FlowingWfItemTransition(submissionId, trgWfStepDef, flowingWfItem));
+        pushIntoWfItemTransitionQueue(submissionId, trgWfStepDef, flowingWfItem);
         return submissionId;
     }
 
-    private void pushIntoStep(final WfStepDef targetWfStepDef, final FlowingWfItem flowingWfItem)
+    private void pushIntoWfItemTransitionQueue(Long submissionId, WfStepDef targetWfStepDef,
+            FlowingWfItem flowingWfItem) throws UnifyException {
+        pendingSubmissionIds.add(submissionId);
+        pendingWfItemTransitionQueue.offer(new FlowingWfItemTransition(submissionId, targetWfStepDef, flowingWfItem));
+    }
+
+    private void doActualTransition(final WfStepDef targetWfStepDef, final FlowingWfItem flowingWfItem)
             throws UnifyException {
         // Flow workflow item into target step
         flowingWfItem.setWfStepDef(targetWfStepDef);
@@ -1987,7 +1994,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                         targetWfStepDef.getDescription());
                             }
 
-                            pushIntoStep(trgStep, flowingWfItem);
+                            doActualTransition(trgStep, flowingWfItem);
                             return;
                         }
                     }

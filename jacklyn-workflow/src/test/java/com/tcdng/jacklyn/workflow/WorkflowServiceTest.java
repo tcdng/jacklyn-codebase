@@ -795,7 +795,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
         Long wfItemHistId = flowingWfItem.getWfItemHistId();
         flowingWfItem.setComment("Goody!");
-        wfService.applyWorkflowAction(flowingWfItem, "approveCust");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "approveCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         WfItemHistory workflowItemHist = wfService.findWorkflowItemHistory(wfItemHistId, false);
         assertNotNull(workflowItemHist);
@@ -853,7 +854,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
         flowingWfItem.setComment("Goody!");
-        wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         String errorName = null;
         try {
@@ -875,7 +877,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
         FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
-        wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         String errorName = null;
         try {
@@ -934,7 +937,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
         flowingWfItem.setComment("Goody!");
-        wfService.applyWorkflowAction(flowingWfItem, "approveCust");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "approveCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         createdCustomer = tcbm.findCustomer("Tom");
         assertNotNull(createdCustomer);
