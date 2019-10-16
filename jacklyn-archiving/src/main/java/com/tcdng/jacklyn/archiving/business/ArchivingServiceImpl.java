@@ -188,7 +188,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                     fileArchiveEntry.setFileArchiveId(fileArchiveId);
                     for (Long archivedItemId : targetIdList) {
                         if (taskMonitor.isCanceled()) {
-                            setRollback();
+                            setRollbackTransactions();
                             break;
                         }
 

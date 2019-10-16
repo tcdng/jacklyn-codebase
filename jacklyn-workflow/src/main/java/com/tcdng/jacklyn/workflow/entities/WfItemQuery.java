@@ -35,6 +35,10 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     public WfItemQuery() {
         super(WfItem.class);
     }
+    
+    public WfItemQuery submissionId(Long submissionId) {
+        return (WfItemQuery) equals("submissionId", submissionId);
+    }
 
     public WfItemQuery branchCode(String branchCode) {
         return (WfItemQuery) equals("branchCode", branchCode);
