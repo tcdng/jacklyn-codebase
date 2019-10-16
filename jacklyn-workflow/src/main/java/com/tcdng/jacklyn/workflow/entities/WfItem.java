@@ -25,6 +25,7 @@ import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.Index;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
  * Represents a workflow item.
@@ -32,19 +33,24 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table(name = "JKWFITEM", indexes = { @Index("branchCode"), @Index("departmentCode"), @Index("stepGlobalName") })
+@Table(
+        name = "JKWFITEM", uniqueConstraints = { @UniqueConstraint({ "submissionId" }) },
+        indexes = { @Index("branchCode"), @Index("departmentCode"), @Index("stepGlobalName") })
 public class WfItem extends BaseTimestampedEntity {
 
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
 
-    @Column(name= "BRANCH_CD", nullable = true)
+    @Column(name = "SUBMISSION_ID", nullable = true)
+    private Long submissionId;
+
+    @Column(name = "BRANCH_CD", nullable = true)
     private String branchCode;
 
-    @Column(name= "DEPARTMENT_CD", nullable = true)
+    @Column(name = "DEPARTMENT_CD", nullable = true)
     private String departmentCode;
 
-    @Column(name = "GLOBAL_STEP_NM", length = 96)
+    @Column(name = "GLOBAL_STEP_NM", length = 128)
     private String stepGlobalName;
 
     @Column(nullable = true)
@@ -56,13 +62,13 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date expectedDt;
 
-    @Column(length = 64)
+    @Column(length = 96)
     private String initiatedBy;
 
-    @Column(length = 64, nullable = true)
+    @Column(length = 96, nullable = true)
     private String heldBy;
 
-    @Column(length = 64, nullable = true)
+    @Column(length = 96, nullable = true)
     private String forwardedBy;
 
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
@@ -96,6 +102,14 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setWfHistEventId(Long wfHistEventId) {
         this.wfHistEventId = wfHistEventId;
+    }
+
+    public Long getSubmissionId() {
+        return submissionId;
+    }
+
+    public void setSubmissionId(Long submissionId) {
+        this.submissionId = submissionId;
     }
 
     @Override

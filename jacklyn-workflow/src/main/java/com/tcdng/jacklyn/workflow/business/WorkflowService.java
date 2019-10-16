@@ -356,10 +356,11 @@ public interface WorkflowService extends JacklynBusinessService {
      * 
      * @param manualInitItem
      *            the item to submit
+     * @return the submission ID
      * @throws UnifyException
      *             if an error occurs
      */
-    void submitManualInitItem(ManualWfItem manualInitItem) throws UnifyException;
+    Long submitManualInitItem(ManualWfItem manualInitItem) throws UnifyException;
 
     /**
      * Submits a packable document to workflow.
@@ -372,7 +373,7 @@ public interface WorkflowService extends JacklynBusinessService {
      *            optional item department code
      * @param packableDoc
      *            the packable document to push into workflow
-     * @return the workflow item ID
+     * @return the submission ID
      * @throws UnifyException
      *             if packable document doesn't match template. if template is
      *             unknown. if an error occurs
@@ -387,7 +388,7 @@ public interface WorkflowService extends JacklynBusinessService {
      *            the workflow global process name
      * @param document
      *            the document to submit
-     * @return the workflow item ID
+     * @return the submission ID
      * @throws UnifyException
      *             if an error occurs
      */
@@ -400,12 +401,20 @@ public interface WorkflowService extends JacklynBusinessService {
      *            the workflow global process name
      * @param documents
      *            the documents to submit
-     * @return list of workflow item IDs
+     * @return the submission ID list
      * @throws UnifyException
      *             if an error occurs
      */
     List<Long> submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException;
 
+    /**
+     * Ensures workflow service has processed submissions. Blocks until submissions have been processed.
+     * 
+     * @param submissionId the submission IDs
+     * @throws UnifyException if an error occurs
+     */
+    void ensureSubmissionsProcessed(Long... submissionId) throws UnifyException;
+    
     /**
      * Grabs work items for current user from specified step. Items grabbed include
      * old grabbed items and unheld items. Total number of items grabbed is limited
@@ -475,6 +484,17 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     FlowingWfItem findWorkflowItem(Long wfItemId) throws UnifyException;
+
+    /**
+     * Finds workflow item by submission ID.
+     * 
+     * @param submissionId
+     *            the workflow item submission ID
+     * @return the workflow item if found otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    FlowingWfItem findWorkflowItemBySubmission(Long submissionId) throws UnifyException;
 
     /**
      * Finds workflow TrailItem history.

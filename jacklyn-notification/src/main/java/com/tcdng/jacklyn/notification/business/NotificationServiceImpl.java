@@ -363,7 +363,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     @SuppressWarnings("unchecked")
     @Periodic(PeriodicType.SLOWER)
     public void sendNotifications(TaskMonitor taskMonitor) throws UnifyException {
-        if (grabClusterMasterLock()) { // Puts burden on node until it dies
+        if (grabClusterMasterLock()) { // Puts burden on current node until it dies
             if (systemService.getSysParameterValue(boolean.class,
                     NotificationModuleSysParamConstants.NOTIFICATION_ENABLED)) {
                 int maxBatchSize =
@@ -408,7 +408,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                     }
 
                     db().updateById(notification);
-                    commit();
+                    commitTransactions();
                 }
             }
         }
