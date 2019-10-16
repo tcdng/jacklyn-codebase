@@ -907,6 +907,35 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public String findLeastEngagedUserForWorkflowStep(String stepGlobalName, Collection<String> eligibleUsers)
+            throws UnifyException {
+        if (!DataUtils.isBlank(eligibleUsers)) {
+            if (eligibleUsers.size() == 1) {
+                return eligibleUsers.toArray(new String[1])[0];
+            }
+
+            String nominated = null;
+            int least = Integer.MAX_VALUE;
+            for (String userLoginId : eligibleUsers) {
+                int pending = db().countAll(new WfItemQuery().stepGlobalName(stepGlobalName).heldBy(userLoginId));
+                if (pending == 0) {
+                    // User has no item in this step. Free to be nominated.
+                    return userLoginId;
+                }
+
+                if (pending < least) {
+                    nominated = userLoginId;
+                    least = pending;
+                }
+            }
+
+            return nominated;
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Long> grabCurrentUserWorkItems(String stepGlobalName) throws UnifyException {
         WfStepDef wfStepDef = accessCurrentUserStep(stepGlobalName);
         WfItemQuery wfItemQuery = getCurrentUserParticipationWfItemQuery(wfStepDef);

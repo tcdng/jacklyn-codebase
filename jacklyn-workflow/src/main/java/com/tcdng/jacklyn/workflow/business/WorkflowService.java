@@ -408,13 +408,30 @@ public interface WorkflowService extends JacklynBusinessService {
     List<Long> submitToWorkflow(String processGlobalName, Document... documents) throws UnifyException;
 
     /**
-     * Ensures workflow service has processed submissions. Blocks until submissions have been processed.
+     * Ensures workflow service has processed submissions. Blocks until submissions
+     * have been processed.
      * 
-     * @param submissionId the submission IDs
-     * @throws UnifyException if an error occurs
+     * @param submissionId
+     *            the submission IDs
+     * @throws UnifyException
+     *             if an error occurs
      */
     void ensureSubmissionsProcessed(Long... submissionId) throws UnifyException;
-    
+
+    /**
+     * Finds least engaged user for workflow step.
+     * 
+     * @param stepGlobalName
+     *            the workflow step global name
+     * @param eligibleUsers
+     *            eligible user login IDs
+     * @return the nominated user login ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String findLeastEngagedUserForWorkflowStep(String stepGlobalName, Collection<String> eligibleUsers)
+            throws UnifyException;
+
     /**
      * Grabs work items for current user from specified step. Items grabbed include
      * old grabbed items and unheld items. Total number of items grabbed is limited
