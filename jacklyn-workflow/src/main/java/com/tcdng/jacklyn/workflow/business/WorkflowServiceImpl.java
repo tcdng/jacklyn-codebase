@@ -209,7 +209,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     private SequenceNumberService sequenceNumberService;
 
     @Configurable(WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC)
-    private WfItemAlertLogic wfItemAlertLogic;
+    private WfItemAlertLogic defWfItemAlertLogic;
+
+    @Configurable(WorkflowModuleNameConstants.DEFAULTWORKFLOWUSERASSIGNMENTPOLICY)
+    private WfItemUserAssignmentPolicy defWfItemUserAssignmentPolicy;
 
     private FactoryMap<String, WfDocDef> wfDocs;
 
@@ -439,7 +442,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     WfDocUplGenerator wfDocUplGenerator = (WfDocUplGenerator) getComponent(viewerGenerator);
                     wfTemplateDocDefs.put(docName, new WfTemplateDocDef(wfDocs.get(docGlobalName), wfDocUplGenerator,
-                            wfTemplateDoc.getManual()));
+                            wfTemplateDoc.getAssignmentPolicy(), wfTemplateDoc.getManual()));
                 }
 
                 // Steps
@@ -539,7 +542,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                             WfNameUtils.getMessageGlobalName(templateNames.getCategoryName(),
                                                     wfAlert.getNotificationTemplateCode()));
                             alertList.add(new WfAlertDef(wfAlert.getDocName(), stepGlobalName, wfAlert.getName(),
-                                    wfAlert.getDescription(), wfAlert.getType(), notifTemplateGlobalName));
+                                    wfAlert.getDescription(), wfAlert.getType(), wfAlert.getParticipant(),
+                                    wfAlert.getChannel(), notifTemplateGlobalName));
                         }
                     }
 
@@ -1603,6 +1607,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             WfTemplateDoc wfTemplateDoc = new WfTemplateDoc();
             wfTemplateDoc.setWfDocName(wfTemplateDocConfig.getName());
             wfTemplateDoc.setWfDocViewer(wfTemplateDocConfig.getViewer());
+            wfTemplateDoc.setAssignmentPolicy(wfTemplateDocConfig.getAssigner());
             wfTemplateDoc.setManual(wfTemplateDocConfig.isManual());
             templateDocList.add(wfTemplateDoc);
         }
@@ -1765,6 +1770,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfAlert.setDescription(resolveApplicationMessage(wfAlertConfig.getDescription()));
                     wfAlert.setDocName(wfAlertConfig.getDocument());
                     wfAlert.setType(wfAlertConfig.getType());
+                    wfAlert.setParticipant(wfAlertConfig.getParticipant());
+                    wfAlert.setChannel(wfAlertConfig.getChannel());
                     wfAlert.setNotificationTemplateCode(wfAlertConfig.getMessage());
                     alertList.add(wfAlert);
                 }
@@ -1908,7 +1915,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         PackableDoc packableDoc = flowingWfItem.getPd();
-        Long wfItemId = flowingWfItem.getWfItemId();
+        final Long wfItemId = flowingWfItem.getWfItemId();
         flowingWfItem.setWfItemHistId(wfItemHistId);
         flowingWfItem.setWfHistEventId(wfHistEventId);
         db().updateById(WfItem.class, wfItemId,
@@ -1971,16 +1978,19 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             }
         }
 
-        // Send alerts
+        // Send pass-through alerts
         for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
-            if (wfAlertDef.getDocName().equals(docName)) {
-                wfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
+            if (wfAlertDef.isPassThrough() && wfAlertDef.getDocName().equals(docName)) {
+                defWfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
             }
         }
 
         // Check for termination
         if (targetWfStepDef.isEnd()) {
-            deleteWorkflowItem(wfItemId);
+            // Delete workflow item
+            db().deleteAll(new WfItemPackedDocQuery().wfItemId(wfItemId));
+            db().deleteAll(new WfItemAttachmentQuery().wfItemId(wfItemId));
+            db().deleteAll(new WfItemQuery().id(wfItemId));
         } else {
             // Route item if necessary
             if (DataUtils.isNotBlank(targetWfStepDef.getRoutingList())) {
@@ -2009,12 +2019,26 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 packableDoc.clearUpdated();
             }
 
-            // Attempt to assign to human agent if user actions are associated with current
-            // step
-            String assignedToUser = null;
-            // TODO Fetch user agent ID based on assignment policy associated current step
-            // TODO reassign policy.
-            db().updateAll(new WfItemQuery().id(wfItemId), new Update().add("heldBy", assignedToUser));
+            // Assign to human agent if user actions are associated with current step
+            if (targetWfStepDef.isUserInteractive()) {
+                WfItemUserAssignmentPolicy wfItemUserAssignmentPolicy = defWfItemUserAssignmentPolicy;
+                if (flowingWfItem.getWfTemplateDocDef().isWithAssignmentPolicy()) {
+                    wfItemUserAssignmentPolicy =
+                            (WfItemUserAssignmentPolicy) getComponent(
+                                    flowingWfItem.getWfTemplateDocDef().getAssignmentPolicyName());
+                }
+
+                String heldBy = wfItemUserAssignmentPolicy.execute(flowingWfItemReader);
+                db().updateAll(new WfItemQuery().id(wfItemId), new Update().add("heldBy", heldBy));
+
+                // Alert user
+                flowingWfItem.setHeldBy(heldBy);
+                for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
+                    if (wfAlertDef.isUserInteract() && wfAlertDef.getDocName().equals(docName)) {
+                        defWfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
+                    }
+                }
+            }
 
         }
     }
@@ -2087,12 +2111,6 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         String processGlobalName = db().value(String.class, "processGlobalName", new WfItemQuery().id(wfItemId));
         ProcessNameParts processNameParts = WfNameUtils.getProcessNameParts(processGlobalName);
         return wfDocs.get(processNameParts.getDocGlobalName());
-    }
-
-    private void deleteWorkflowItem(Long wfItemId) throws UnifyException {
-        db().deleteAll(new WfItemPackedDocQuery().wfItemId(wfItemId));
-        db().deleteAll(new WfItemAttachmentQuery().wfItemId(wfItemId));
-        db().delete(WfItem.class, wfItemId);
     }
 
     private class ComplexFieldConfigBuilderInfo {

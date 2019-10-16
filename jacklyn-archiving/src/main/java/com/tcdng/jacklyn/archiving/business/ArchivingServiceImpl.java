@@ -133,8 +133,10 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
     @Synchronized("filearchiveprocesslock")
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Taskable(name = FileArchiveTaskConstants.BUILDLOBFILEARCHIVETASK, description = "Build LOB File Archive Taskable",
-            parameters = { @Parameter(name = FileArchiveTaskParamConstants.FILEARCHIVECONFIGNAME,
+    @Taskable(
+            name = FileArchiveTaskConstants.BUILDLOBFILEARCHIVETASK, description = "Build LOB File Archive Taskable",
+            parameters = { @Parameter(
+                    name = FileArchiveTaskParamConstants.FILEARCHIVECONFIGNAME,
                     description = "$m{archiving.filearchiveconfig.parameter.archiveconfig}",
                     editor = "!ui-select list:filearchiveconfiglist listKey:name blankOption:$s{}", mandatory = true),
                     @Parameter(name = FileArchiveTaskParamConstants.WORKINGDT, type = Date.class) },
@@ -142,101 +144,96 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
     public Long executeBuildLobFileArchiveTask(TaskMonitor taskMonitor, String fileArchiveConfigName, Date workingDt)
             throws UnifyException {
         Long fileArchiveId = null;
-        try {
-            FileArchiveConfig fileArchiveConfig = db().list(new FileArchiveConfigQuery().name(fileArchiveConfigName));
-            if (fileArchiveConfig == null) {
-                throw new UnifyException(ArchivingModuleErrorConstants.FILEARCHIVECONFIG_NAME_UNKNOWN,
-                        fileArchiveConfigName);
-            }
+        FileArchiveConfig fileArchiveConfig = db().list(new FileArchiveConfigQuery().name(fileArchiveConfigName));
+        if (fileArchiveConfig == null) {
+            throw new UnifyException(ArchivingModuleErrorConstants.FILEARCHIVECONFIG_NAME_UNKNOWN,
+                    fileArchiveConfigName);
+        }
 
-            if (RecordStatus.INACTIVE.equals(fileArchiveConfig.getStatus())) {
-                throw new UnifyException(ArchivingModuleErrorConstants.FILEARCHIVECONFIG_INACTIVE,
-                        fileArchiveConfigName);
-            }
+        if (RecordStatus.INACTIVE.equals(fileArchiveConfig.getStatus())) {
+            throw new UnifyException(ArchivingModuleErrorConstants.FILEARCHIVECONFIG_INACTIVE, fileArchiveConfigName);
+        }
 
-            // Fetch ID's of records to backup. (Involves generic persistence
-            // operations)
-            String lobFieldName = fileArchiveConfig.getFieldName();
-            Class<? extends Entity> recordClazz = (Class<? extends Entity>) ReflectUtils
-                    .getClassForName(fileArchiveConfig.getRecordName());
-            Query<? extends Entity> query = new Query(recordClazz);
-            query.between(fileArchiveConfig.getDateFieldName(), CalendarUtils.getMidnightDate(workingDt),
-                    CalendarUtils.getLastSecondDate(workingDt));
-            query.isNotNull(lobFieldName);
-            query.order("id").limit(fileArchiveConfig.getMaxItemsPerFile());
-            List<Long> targetIdList = db().valueList(Long.class, "id", query);
+        // Fetch ID's of records to backup. (Involves generic persistence
+        // operations)
+        String lobFieldName = fileArchiveConfig.getFieldName();
+        Class<? extends Entity> recordClazz =
+                (Class<? extends Entity>) ReflectUtils.getClassForName(fileArchiveConfig.getRecordName());
+        Query<? extends Entity> query = new Query(recordClazz);
+        query.between(fileArchiveConfig.getDateFieldName(), CalendarUtils.getMidnightDate(workingDt),
+                CalendarUtils.getLastSecondDate(workingDt));
+        query.isNotNull(lobFieldName);
+        query.order("id").limit(fileArchiveConfig.getMaxItemsPerFile());
+        List<Long> targetIdList = db().valueList(Long.class, "id", query);
 
-            if (!targetIdList.isEmpty()) {
-                FileArchiveNameGenerator fileArchiveNameGenerator = (FileArchiveNameGenerator) this
-                        .getComponent(fileArchiveConfig.getFilenameGenerator());
-                String filename = fileArchiveNameGenerator.generateFileArchiveName(FileArchiveType.LOB_FILE_ARCHIVE,
-                        fileArchiveConfigName, workingDt);
-                FileArchive fileArchive = new FileArchive();
-                fileArchive.setFileArchiveConfigId(fileArchiveConfig.getId());
-                fileArchive.setFilename(filename);
-                fileArchive.setArchiveDt(CalendarUtils.getMidnightDate(workingDt));
-                fileArchiveId = (Long) db().create(fileArchive);
+        if (!targetIdList.isEmpty()) {
+            FileArchiveNameGenerator fileArchiveNameGenerator =
+                    (FileArchiveNameGenerator) this.getComponent(fileArchiveConfig.getFilenameGenerator());
+            String filename =
+                    fileArchiveNameGenerator.generateFileArchiveName(FileArchiveType.LOB_FILE_ARCHIVE,
+                            fileArchiveConfigName, workingDt);
+            FileArchive fileArchive = new FileArchive();
+            fileArchive.setFileArchiveConfigId(fileArchiveConfig.getId());
+            fileArchive.setFilename(filename);
+            fileArchive.setArchiveDt(CalendarUtils.getMidnightDate(workingDt));
+            fileArchiveId = (Long) db().create(fileArchive);
 
-                long fileIndex = 0;
-                OutputStream outputStream = null;
-                try {
-                    String localArchivePath = JacklynUtils.getExtendedFilePath(fileArchiveConfig.getLocalArchivePath(),
-                            fileArchiveConfig.getLocalArchiveDateFormat(), workingDt);
-                    String absoluteFilename = fileSystemIO.buildFilename(localArchivePath, filename);
-                    outputStream = fileSystemIO.openFileOutputStream(absoluteFilename);
-                    FileArchiveEntry fileArchiveEntry = new FileArchiveEntry();
-                    fileArchiveEntry.setFileArchiveId(fileArchiveId);
-                    for (Long archivedItemId : targetIdList) {
-                        if (taskMonitor.isCanceled()) {
-                            setRollbackTransactions();
-                            break;
-                        }
-
-                        // Read LOB to archive
-                        query.clear();
-                        query.equals("id", archivedItemId);
-                        byte[] lobToArchive = null;
-                        if (ArchivingFieldType.BLOB.equals(fileArchiveConfig.getFieldType())) {
-                            lobToArchive = db().value(byte[].class, lobFieldName, query);
-                        } else {
-                            String clobToArchive = db().value(String.class, lobFieldName, query);
-                            lobToArchive = clobToArchive.getBytes("UTF-8");
-                        }
-
-                        // Append LOB to file with a write
-                        fileSystemIO.writeAll(outputStream, lobToArchive);
-
-                        // Create file archive entry record
-                        fileArchiveEntry.setArchivedItemId(archivedItemId);
-                        fileArchiveEntry.setFileIndex(fileIndex);
-                        fileArchiveEntry.setArchivedItemLength(lobToArchive.length);
-                        db().create(fileArchiveEntry);
-
-                        // Next index
-                        fileIndex += lobToArchive.length;
+            long fileIndex = 0;
+            OutputStream outputStream = null;
+            try {
+                String localArchivePath =
+                        JacklynUtils.getExtendedFilePath(fileArchiveConfig.getLocalArchivePath(),
+                                fileArchiveConfig.getLocalArchiveDateFormat(), workingDt);
+                String absoluteFilename = fileSystemIO.buildFilename(localArchivePath, filename);
+                outputStream = fileSystemIO.openFileOutputStream(absoluteFilename);
+                FileArchiveEntry fileArchiveEntry = new FileArchiveEntry();
+                fileArchiveEntry.setFileArchiveId(fileArchiveId);
+                for (Long archivedItemId : targetIdList) {
+                    if (taskMonitor.isCanceled()) {
+                        setRollbackTransactions();
+                        break;
                     }
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    throwOperationErrorException(e);
-                } finally {
-                    fileSystemIO.close(outputStream);
-                }
 
-                // Delete archived
-                boolean deleteRowOnArchive = fileArchiveConfig.getDeleteRowOnArchive();
-                query.clear();
-                query.amongst("id", targetIdList);
-                if (deleteRowOnArchive) {
-                    // Delete entire rows
-                    db().deleteAll(query);
-                } else {
-                    // Delete LOB column by updating to NULL
-                    db().updateAll(query, new Update().add(lobFieldName, null));
+                    // Read LOB to archive
+                    query.clear();
+                    query.equals("id", archivedItemId);
+                    byte[] lobToArchive = null;
+                    if (ArchivingFieldType.BLOB.equals(fileArchiveConfig.getFieldType())) {
+                        lobToArchive = db().value(byte[].class, lobFieldName, query);
+                    } else {
+                        String clobToArchive = db().value(String.class, lobFieldName, query);
+                        lobToArchive = clobToArchive.getBytes("UTF-8");
+                    }
+
+                    // Append LOB to file with a write
+                    fileSystemIO.writeAll(outputStream, lobToArchive);
+
+                    // Create file archive entry record
+                    fileArchiveEntry.setArchivedItemId(archivedItemId);
+                    fileArchiveEntry.setFileIndex(fileIndex);
+                    fileArchiveEntry.setArchivedItemLength(lobToArchive.length);
+                    db().create(fileArchiveEntry);
+
+                    // Next index
+                    fileIndex += lobToArchive.length;
                 }
+            } catch (UnsupportedEncodingException e) {
+                throwOperationErrorException(e);
+            } finally {
+                fileSystemIO.close(outputStream);
             }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+            // Delete archived
+            boolean deleteRowOnArchive = fileArchiveConfig.getDeleteRowOnArchive();
+            query.clear();
+            query.amongst("id", targetIdList);
+            if (deleteRowOnArchive) {
+                // Delete entire rows
+                db().deleteAll(query);
+            } else {
+                // Delete LOB column by updating to NULL
+                db().updateAll(query, new Update().add(lobFieldName, null));
+            }
         }
 
         return fileArchiveId;
@@ -244,11 +241,13 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
     @Override
     public byte[] retriveArchivedBlob(String recordName, String fieldName, Long archivedItemId) throws UnifyException {
-        FileArchiveEntry fileArchiveEntry = db().list(
-                new FileArchiveEntryQuery().recordName(recordName).fieldName(fieldName).archivedItemId(archivedItemId));
+        FileArchiveEntry fileArchiveEntry =
+                db().list(new FileArchiveEntryQuery().recordName(recordName).fieldName(fieldName)
+                        .archivedItemId(archivedItemId));
         if (fileArchiveEntry != null) {
-            String localArchivePath = JacklynUtils.getExtendedFilePath(fileArchiveEntry.getLocalArchivePath(),
-                    fileArchiveEntry.getLocalArchiveDateFormat(), fileArchiveEntry.getArchiveDt());
+            String localArchivePath =
+                    JacklynUtils.getExtendedFilePath(fileArchiveEntry.getLocalArchivePath(),
+                            fileArchiveEntry.getLocalArchiveDateFormat(), fileArchiveEntry.getArchiveDt());
             String absoluteFilename = fileSystemIO.buildFilename(localArchivePath, fileArchiveEntry.getFilename());
             if (fileSystemIO.isFile(absoluteFilename)) {
                 // Read from local
@@ -307,8 +306,8 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 ArchivableDefinitionQuery adQuery = new ArchivableDefinitionQuery();
                 for (ArchiveConfig archiveConfig : moduleConfig.getArchives().getArchiveList()) {
-                    ManagedConfig managedConfig = JacklynUtils.getManagedConfig(moduleConfig,
-                            archiveConfig.getArchivable());
+                    ManagedConfig managedConfig =
+                            JacklynUtils.getManagedConfig(moduleConfig, archiveConfig.getArchivable());
                     adQuery.clear();
                     adQuery.name(archiveConfig.getName());
                     ArchivableDefinition oldArchiveDefinition = db().find(adQuery);

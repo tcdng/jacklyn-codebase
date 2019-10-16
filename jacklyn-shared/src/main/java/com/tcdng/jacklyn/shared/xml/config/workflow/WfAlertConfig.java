@@ -20,7 +20,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.xml.adapter.NotificationTypeXmlAdapter;
+import com.tcdng.jacklyn.shared.xml.adapter.WorkflowAlertTypeXmlAdapter;
+import com.tcdng.jacklyn.shared.xml.adapter.WorkflowParticipantTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -31,12 +35,22 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfAlertConfig extends BaseConfig {
 
+    private WorkflowAlertType type;
+    
+    private WorkflowParticipantType participant;
+    
+    private NotificationType channel;
+
     private String document;
     
-    private NotificationType type;
-
     private String message;
 
+    public WfAlertConfig() {
+        type = WorkflowAlertType.USER_INTERACT;
+        participant = WorkflowParticipantType.ALL;
+        channel = NotificationType.SYSTEM;
+    }
+    
     public String getDocument() {
         return document;
     }
@@ -46,14 +60,40 @@ public class WfAlertConfig extends BaseConfig {
         this.document = document;
     }
 
-    public NotificationType getType() {
+    public WorkflowAlertType getType() {
         return type;
     }
 
+    @XmlJavaTypeAdapter(WorkflowAlertTypeXmlAdapter.class)
+    @XmlAttribute(name = "type")
+    public void setType(WorkflowAlertType type) {
+        if (type != null) {
+            this.type = type;
+        }        
+    }
+
+    public WorkflowParticipantType getParticipant() {
+        return participant;
+    }
+
+    @XmlJavaTypeAdapter(WorkflowParticipantTypeXmlAdapter.class)
+    @XmlAttribute(name = "participant")
+    public void setParticipant(WorkflowParticipantType participant) {
+        if (participant != null) {
+            this.participant = participant;
+        }
+    }
+
+    public NotificationType getChannel() {
+        return channel;
+    }
+
     @XmlJavaTypeAdapter(NotificationTypeXmlAdapter.class)
-    @XmlAttribute(name = "type", required = true)
-    public void setType(NotificationType type) {
-        this.type = type;
+    @XmlAttribute(name = "channel")
+    public void setChannel(NotificationType channel) {
+        if (channel != null) {
+            this.channel = channel;
+        }
     }
 
     public String getMessage() {

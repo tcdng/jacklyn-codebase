@@ -18,8 +18,6 @@ package com.tcdng.jacklyn.workflow.business;
 
 import com.tcdng.jacklyn.notification.business.NotificationService;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.unify.core.AbstractUnifyComponent;
-import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
@@ -28,7 +26,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAlertLogic extends AbstractUnifyComponent implements WfItemAlertLogic {
+public abstract class AbstractWfItemAlertLogic extends AbstractWfItemPolicy implements WfItemAlertLogic {
 
     @Configurable
     private SystemService systemService;
@@ -36,28 +34,11 @@ public abstract class AbstractWfItemAlertLogic extends AbstractUnifyComponent im
     @Configurable
     private NotificationService notificationService;
 
-    @Configurable
-    private WfStepEmailContactProvider wfStepEmailContactProvider;
-    
-    @Override
-    protected void onInitialize() throws UnifyException {
-
-    }
-
-    @Override
-    protected void onTerminate() throws UnifyException {
-
-    }
-
     protected SystemService getSystemService() {
         return systemService;
     }
 
     protected NotificationService getNotificationService() {
         return notificationService;
-    }
-
-    protected WfStepEmailContactProvider getWfStepEmailContactProvider() {
-        return wfStepEmailContactProvider;
     }
 }

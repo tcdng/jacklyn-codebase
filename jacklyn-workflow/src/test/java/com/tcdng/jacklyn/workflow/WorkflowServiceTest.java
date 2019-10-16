@@ -32,6 +32,7 @@ import com.tcdng.jacklyn.common.TestCustomer;
 import com.tcdng.jacklyn.common.TestCustomerService;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepPriority;
@@ -590,7 +591,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("awaitApproval", wfAlert.getName());
         assertEquals("Awaiting Approval", wfAlert.getDescription());
         assertEquals("awaitCustApproval", wfAlert.getNotificationTemplateCode());
-        assertEquals(NotificationType.SYSTEM, wfAlert.getType());
+        assertEquals(WorkflowAlertType.USER_INTERACT, wfAlert.getType());
+        assertEquals(NotificationType.SYSTEM, wfAlert.getChannel());
 
         userActionList = wfStep.getUserActionList();
         assertNotNull(userActionList);
@@ -647,7 +649,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     }
 
     @Test
-    public void testFindWorkflowItem() throws Exception {
+    public void testFindWorkflowItemBySubmission() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
         Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);

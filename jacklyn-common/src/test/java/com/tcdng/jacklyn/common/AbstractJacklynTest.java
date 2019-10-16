@@ -30,7 +30,7 @@ public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
 
     @Override
     protected void doAddSettingsAndDependencies() throws Exception {
-        super.doAddSettingsAndDependencies();//JacklynContainerPropertyConstants
+        super.doAddSettingsAndDependencies();
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_NAME, "jacklyn-codebase");
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_BOOT, CommonModuleNameConstants.JACKLYNBOOTSERVICE);
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_MESSAGES_BASE,

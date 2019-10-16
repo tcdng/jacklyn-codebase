@@ -48,6 +48,18 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
         return (UserRoleQuery) equals("userLoginId", userLoginId);
     }
 
+    public UserRoleQuery branchCode(String branchCode) {
+        return (UserRoleQuery) equals("branchCode", branchCode);
+    }
+
+    public UserRoleQuery isSupervisor() {
+        return (UserRoleQuery) equals("supervisor", Boolean.TRUE);
+    }
+
+    public UserRoleQuery isNotSupervisor() {
+        return (UserRoleQuery) equals("supervisor", Boolean.FALSE);
+    }
+
     public UserRoleQuery roleId(Long roleId) {
         return (UserRoleQuery) equals("roleId", roleId);
     }
@@ -74,6 +86,10 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
 
     public UserRoleQuery roleStatus(RecordStatus roleStatus) {
         return (UserRoleQuery) equals("roleStatus", roleStatus);
+    }
+
+    public UserRoleQuery departmentName(String departmentName) {
+        return (UserRoleQuery) equals("departmentName", departmentName);
     }
 
     public UserRoleQuery roleActiveTime(Date date) throws UnifyException {

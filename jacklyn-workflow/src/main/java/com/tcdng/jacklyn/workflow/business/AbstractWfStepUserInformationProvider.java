@@ -16,26 +16,26 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import java.util.List;
-
-import com.tcdng.jacklyn.notification.data.NotificationContact;
-import com.tcdng.unify.core.UnifyComponent;
+import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Workflow step email contact provider.
+ * Convenient abstract base class for workflow step user information provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfStepEmailContactProvider extends UnifyComponent {
+public abstract class AbstractWfStepUserInformationProvider extends AbstractUnifyComponent
+        implements WfStepUserInformationProvider {
 
-    /**
-     * Returns a list of notification email contacts for a workflow step.
-     * 
-     * @param stepGlobalName the workflow step
-     * @return the list of contact information
-     * @throws UnifyException if an error occurs
-     */
-    List<NotificationContact> getEmailContacts(String stepGlobalName) throws UnifyException;
+    @Override
+    protected void onInitialize() throws UnifyException {
+
+    }
+
+    @Override
+    protected void onTerminate() throws UnifyException {
+
+    }
+
 }

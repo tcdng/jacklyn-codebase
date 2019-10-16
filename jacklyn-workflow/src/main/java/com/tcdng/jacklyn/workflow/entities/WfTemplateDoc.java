@@ -39,6 +39,9 @@ public class WfTemplateDoc extends BaseEntity {
     @Column(name = "DOCUMENT_VIEWER", length = 64, nullable = true)
     private String wfDocViewer;
 
+    @Column(name = "ASSIGN_POLICY", length = 64, nullable = true)
+    private String assignmentPolicy;
+
     @Column(name = "MANUAL_FG")
     private Boolean manual;
 
@@ -69,6 +72,14 @@ public class WfTemplateDoc extends BaseEntity {
 
     public void setWfDocViewer(String wfDocViewer) {
         this.wfDocViewer = wfDocViewer;
+    }
+
+    public String getAssignmentPolicy() {
+        return assignmentPolicy;
+    }
+
+    public void setAssignmentPolicy(String assignmentPolicy) {
+        this.assignmentPolicy = assignmentPolicy;
     }
 
     public Boolean getManual() {

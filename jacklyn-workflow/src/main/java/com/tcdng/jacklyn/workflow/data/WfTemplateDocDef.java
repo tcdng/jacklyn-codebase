@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.workflow.web.widgets.WfDocUplGenerator;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow template document definition.
@@ -30,11 +31,15 @@ public class WfTemplateDocDef {
 
     private WfDocUplGenerator wfDocUplGenerator;
 
+    private String assignmentPolicyName;
+
     private boolean manual;
 
-    public WfTemplateDocDef(WfDocDef wfDocDef, WfDocUplGenerator wfDocUplGenerator, boolean manual) {
+    public WfTemplateDocDef(WfDocDef wfDocDef, WfDocUplGenerator wfDocUplGenerator, String assignmentPolicyName,
+            boolean manual) {
         this.wfDocDef = wfDocDef;
         this.wfDocUplGenerator = wfDocUplGenerator;
+        this.assignmentPolicyName = assignmentPolicyName;
         this.manual = manual;
     }
 
@@ -50,8 +55,15 @@ public class WfTemplateDocDef {
         return wfDocUplGenerator;
     }
 
+    public String getAssignmentPolicyName() {
+        return assignmentPolicyName;
+    }
+
     public boolean isManual() {
         return manual;
     }
 
+    public boolean isWithAssignmentPolicy() {
+        return !StringUtils.isBlank(assignmentPolicyName);
+    }
 }
