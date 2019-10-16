@@ -22,7 +22,6 @@ import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.util.DataUtils;
 
 /**
  * Default workflow item user assignment logic implementation.
@@ -38,11 +37,8 @@ public class WfItemUserAssignmentPolicyImpl extends AbstractWfItemUserAssignment
     @Override
     public String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
         Collection<String> eligibleUsers = getEligibleUsers(flowingWfItemReader);
-        if (!DataUtils.isBlank(eligibleUsers)) {
-            // TODO
-        }
-
-        return null;
+        return getWorkflowService().findLeastEngagedUserForWorkflowStep(flowingWfItemReader.getStepGlobalName(),
+                eligibleUsers);
     }
 
 }
