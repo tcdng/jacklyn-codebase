@@ -468,11 +468,12 @@ public interface WorkflowService extends JacklynBusinessService {
      *            the workflow item
      * @param actionName
      *            the action name
+     * @return the submission ID
      * @throws UnifyException
      *             if item is not held by current user. If action is unknown for
      *             current step.
      */
-    void applyWorkflowAction(FlowingWfItem flowingWfItem, String actionName) throws UnifyException;
+    Long applyWorkflowAction(FlowingWfItem flowingWfItem, String actionName) throws UnifyException;
 
     /**
      * Finds workflow item.
