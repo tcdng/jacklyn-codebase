@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("JKWFITEMHISTORY")
 public class WfItemHist extends BaseTimestampedEntity {
 
-    @Column(name="GLOBAL_ITEM_TYPE_NM", length = 96)
+    @Column(name="GLOBAL_ITEM_TYPE_NM", length = 128)
     private String processGlobalName;
 
     @Column(nullable = true)

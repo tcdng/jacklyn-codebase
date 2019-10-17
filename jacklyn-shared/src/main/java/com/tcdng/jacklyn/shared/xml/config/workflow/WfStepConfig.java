@@ -88,7 +88,9 @@ public class WfStepConfig extends BaseConfig {
     @XmlJavaTypeAdapter(WorkflowStepTypeXmlAdapter.class)
     @XmlAttribute(required = true)
     public void setType(WorkflowStepType type) {
-        this.type = type;
+        if (type != null) {
+            this.type = type;
+        }
     }
 
     public WorkflowParticipantType getParticipant() {
@@ -98,7 +100,9 @@ public class WfStepConfig extends BaseConfig {
     @XmlJavaTypeAdapter(WorkflowParticipantTypeXmlAdapter.class)
     @XmlAttribute(required = true)
     public void setParticipant(WorkflowParticipantType participant) {
-        this.participant = participant;
+        if (participant != null) {
+            this.participant = participant;
+        }
     }
 
     public WorkflowStepPriority getPriority() {
@@ -108,7 +112,9 @@ public class WfStepConfig extends BaseConfig {
     @XmlJavaTypeAdapter(WorkflowStepPriorityXmlAdapter.class)
     @XmlAttribute(required = true)
     public void setPriority(WorkflowStepPriority priority) {
-        this.priority = priority;
+        if (priority != null) {
+            this.priority = priority;
+        }
     }
 
     public String getLabel() {
