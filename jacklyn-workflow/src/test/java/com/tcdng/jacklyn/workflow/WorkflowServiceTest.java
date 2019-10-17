@@ -371,7 +371,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         /* Messages */
         List<WfMessage> messageList = wfService.findWfMessages(wfCategoryId);
         assertNotNull(messageList);
-        assertEquals(1, messageList.size());
+        assertEquals(2, messageList.size());
 
         WfMessage wfMessage = messageList.get(0);
         assertNotNull(wfMessage);
@@ -379,7 +379,18 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Awaiting Customer Approval", wfMessage.getDescription());
         assertEquals("Awaiting Customer Approval", wfMessage.getSubject());
         assertEquals("Awaiting approval for {firstName} {lastName}", wfMessage.getTemplate());
+        assertEquals("custDoc", wfMessage.getWfDocName());
         assertEquals("default-attachmentgenerator", wfMessage.getAttachmentGenerator());
+        assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
+        
+        wfMessage = messageList.get(1);
+        assertNotNull(wfMessage);
+        assertEquals("custFlowError", wfMessage.getName());
+        assertEquals("Customer Document Flow Error", wfMessage.getDescription());
+        assertEquals("Customer Document Flow Error", wfMessage.getSubject());
+        assertEquals("Workflow error while processing customer document. Document Details: {firstName} {lastName}", wfMessage.getTemplate());
+        assertEquals("custDoc", wfMessage.getWfDocName());
+        assertNull(wfMessage.getAttachmentGenerator());
         assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
         
         /* Templates */
@@ -413,7 +424,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         /* Steps */
         List<WfStep> stepList = wfTemplate.getStepList();
         assertNotNull(stepList);
-        assertEquals(5, stepList.size());
+        assertEquals(6, stepList.size());
         // 0
         WfStep wfStep = stepList.get(0);
         assertNotNull(wfStep);
@@ -638,6 +649,38 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
         assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
         assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
+        
+        // 5
+        wfStep = stepList.get(5);
+        assertNotNull(wfStep);
+        assertEquals("error", wfStep.getName());
+        assertEquals("Error Step", wfStep.getDescription());
+        assertNull(wfStep.getLabel());
+        assertEquals(WorkflowStepType.ERROR, wfStep.getStepType());
+        assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
+        assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
+        assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertFalse(wfStep.getAudit());
+        assertFalse(wfStep.getBranchOnly());
+        assertFalse(wfStep.getIncludeForwarder());
+        assertTrue(DataUtils.isBlank(wfStep.getRoutingList()));
+        assertTrue(DataUtils.isBlank(wfStep.getFormPrivilegeList()));
+        assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+        assertTrue(DataUtils.isBlank(wfStep.getUserActionList()));
+        assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
+
+        alertList = wfStep.getAlertList();
+        assertNotNull(alertList);
+        assertEquals(1, alertList.size());
+
+        wfAlert = alertList.get(0);
+        assertNotNull(wfAlert);
+        assertEquals("flowError", wfAlert.getName());
+        assertEquals("Flow Error Alert", wfAlert.getDescription());
+        assertEquals("custFlowError", wfAlert.getNotificationTemplateCode());
+        assertEquals(WorkflowAlertType.PASS_THROUGH, wfAlert.getType());
+        assertEquals(NotificationType.SYSTEM, wfAlert.getChannel());
     }
 
     @Test

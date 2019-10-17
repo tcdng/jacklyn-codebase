@@ -119,7 +119,8 @@
 							editable="false" />
 					</form-privileges>
 				</step>
-				<step name="end" description="End Step" type="end" />
+                <step name="end" description="End Step" type="end" />
+                <step name="error" description="Error Step" type="error" />
 			</steps>
 		</template>
 	</templates>

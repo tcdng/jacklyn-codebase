@@ -53,7 +53,7 @@ public class ScheduledTaskHist extends BaseEntity {
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date finishedOn;
 
-    @Column(length = 1024, nullable = true)
+    @Column(length = 512, nullable = true)
     private String errorMsg;
 
     @Format(description = "$m{system.scheduledtaskhist.scheduledtask}")

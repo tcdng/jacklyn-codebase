@@ -548,11 +548,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
         scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
         scheduledTaskHist.setStartedOn(db().getNow());
-        if (errorMessages != null) {
-            if (errorMessages.length() > 250) {
-                errorMessages = errorMessages.substring(0, 250);
-            }
-        }
         scheduledTaskHist.setErrorMsg(errorMessages);
         scheduledTaskHist.setTaskStatus(taskStatus);
         return (Long) db().create(scheduledTaskHist);

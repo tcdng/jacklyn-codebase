@@ -49,6 +49,7 @@ public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
                     StringBuilder sb = new StringBuilder();
                     for (Exception exception : exceptions) {
                         sb.append(getExceptionMessage(LocaleType.APPLICATION, exception));
+                        sb.append(getLineSeparator());
                     }
                     errorMsgs = sb.toString();
                 }

@@ -93,7 +93,9 @@ public class WfMessageConfig extends BaseConfig {
 
     @XmlAttribute(required = true)
     public void setHtml(Boolean html) {
-        this.html = html;
+        if (html != null) {
+            this.html = html;
+        }
     }
 
     public MessageType getMessageType() {
@@ -103,7 +105,9 @@ public class WfMessageConfig extends BaseConfig {
     @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
     @XmlAttribute(name="message-type")
     public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
+        if (messageType != null) {
+            this.messageType = messageType;
+        }
     }
 
     public String getActionLink() {

@@ -52,7 +52,9 @@ public class SysParamConfig extends BaseConfig {
     @XmlJavaTypeAdapter(SystemParamTypeXmlAdapter.class)
     @XmlAttribute(required = true)
     public void setType(SystemParamType type) {
-        this.type = type;
+        if (type != null) {
+            this.type = type;
+        }
     }
 
     public String getEditor() {

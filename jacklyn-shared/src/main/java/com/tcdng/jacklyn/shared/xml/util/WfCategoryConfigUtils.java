@@ -786,6 +786,8 @@ public final class WfCategoryConfigUtils {
 
         private int endCount;
 
+        private int errorCount;
+
         private int templateDocCounter;
 
         private int stepCounter;
@@ -873,6 +875,10 @@ public final class WfCategoryConfigUtils {
                 endCount++;
             }
 
+            if (WorkflowStepType.ERROR.equals(wfStepConfig.getType())) {
+                errorCount++;
+            }
+
             stepCounter++;
         }
 
@@ -925,6 +931,15 @@ public final class WfCategoryConfigUtils {
                         invalidateUserActions(wfStepConfig);
                         invalidateFormPrivileges(wfStepConfig);
                         break;
+                    case ERROR:
+                        validateAlerts(wfStepConfig);
+                        validatePolicies(wfStepConfig);
+                        invalidateEnrichments(wfStepConfig);
+                        invalidateRoutings(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        invalidateFormPrivileges(wfStepConfig);
+                        break;
                     default:
                         break;
                 }
@@ -952,6 +967,12 @@ public final class WfCategoryConfigUtils {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_END);
             } else if (endCount > 1) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_MULTIPLE_END);
+            }
+
+            if (errorCount == 0) {
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_ERROR);
+            } else if (errorCount > 1) {
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_MULTIPLE_ERROR);
             }
 
             stepCounter = 0;
@@ -1024,6 +1045,11 @@ public final class WfCategoryConfigUtils {
                                         wfStepConfig.getName(), routingName, target);
                             }
 
+                            if (WorkflowStepType.ERROR.equals(targetWfStepConfig.getType())) {
+                                addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_ERROR, index,
+                                        wfStepConfig.getName(), routingName, target);
+                            }
+
                             if (target.equals(wfStepConfig.getName())) {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_SELF, index,
                                         wfStepConfig.getName(), routingName, target);
@@ -1092,6 +1118,11 @@ public final class WfCategoryConfigUtils {
                         } else {
                             if (WorkflowStepType.START.equals(targetWfStepConfig.getType())) {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_USERACTION_TARGET_START, index,
+                                        wfStepConfig.getName(), name, target);
+                            }
+
+                            if (WorkflowStepType.ERROR.equals(targetWfStepConfig.getType())) {
+                                addError(WfTemplateErrorConstants.WFTEMPLATE_USERACTION_TARGET_ERROR, index,
                                         wfStepConfig.getName(), name, target);
                             }
 
@@ -1374,6 +1405,16 @@ public final class WfCategoryConfigUtils {
                                 name);
                     }
 
+                    if (wfAlertConfig.getParticipant() == null) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_PARICIPANT, index, wfStepConfig.getName(),
+                                name);
+                    }
+                    
+                    if (wfAlertConfig.getChannel() == null) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_CHANNEL, index, wfStepConfig.getName(),
+                                name);
+                    }
+                    
                     if (StringUtils.isBlank(wfAlertConfig.getMessage())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_MESSAGE, index, wfStepConfig.getName(),
                                 name);
