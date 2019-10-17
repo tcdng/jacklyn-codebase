@@ -26,6 +26,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow step definition.
@@ -40,6 +41,8 @@ public class WfStepDef extends BaseLabelWfDef {
     private String templateGlobalName;
 
     private String globalName;
+
+    private String workAssignerName;
 
     private WorkflowStepType stepType;
 
@@ -76,7 +79,7 @@ public class WfStepDef extends BaseLabelWfDef {
     private long versionTimestamp;
 
     public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName, String name, String description,
-            String label, WorkflowStepType stepType, WorkflowParticipantType participantType,
+            String label, String workAssignerName, WorkflowStepType stepType, WorkflowParticipantType participantType,
             List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
             List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
@@ -86,6 +89,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.wfTemplateId = wfTemplateId;
         this.templateGlobalName = templateGlobalName;
         this.globalName = globalName;
+        this.workAssignerName = workAssignerName;
         this.stepType = stepType;
         this.participantType = participantType;
         this.itemsPerSession = itemsPerSession;
@@ -124,6 +128,10 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public String getGlobalName() {
         return globalName;
+    }
+
+    public String getWorkAssignerName() {
+        return workAssignerName;
     }
 
     public WorkflowStepType getStepType() {
@@ -222,6 +230,10 @@ public class WfStepDef extends BaseLabelWfDef {
         return stepType.isEnd();
     }
 
+    public boolean isWithWorkAssigner() {
+        return !StringUtils.isBlank(workAssignerName);
+    }
+    
     public Set<String> getWfActionNames() {
         return userActions.keySet();
     }

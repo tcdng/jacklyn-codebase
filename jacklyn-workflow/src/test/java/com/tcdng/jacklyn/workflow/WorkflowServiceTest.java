@@ -382,17 +382,18 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("custDoc", wfMessage.getWfDocName());
         assertEquals("default-attachmentgenerator", wfMessage.getAttachmentGenerator());
         assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
-        
+
         wfMessage = messageList.get(1);
         assertNotNull(wfMessage);
         assertEquals("custFlowError", wfMessage.getName());
         assertEquals("Customer Document Flow Error", wfMessage.getDescription());
         assertEquals("Customer Document Flow Error", wfMessage.getSubject());
-        assertEquals("Workflow error while processing customer document. Document Details: {firstName} {lastName}", wfMessage.getTemplate());
+        assertEquals("Workflow error while processing customer document. Document Details: {firstName} {lastName}",
+                wfMessage.getTemplate());
         assertEquals("custDoc", wfMessage.getWfDocName());
         assertNull(wfMessage.getAttachmentGenerator());
         assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
-        
+
         /* Templates */
         List<WfTemplate> wfTemplateList = wfService.findWfTemplates(wfCategoryId);
         assertNotNull(wfTemplateList);
@@ -414,7 +415,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         List<WfTemplateDoc> templateDocList = wfTemplate.getTemplateDocList();
         assertNotNull(templateDocList);
         assertEquals(1, templateDocList.size());
-       
+
         WfTemplateDoc wfTemplateDoc = templateDocList.get(0);
         assertNotNull(wfTemplateDoc);
         assertEquals("custDoc", wfTemplateDoc.getWfDocName());
@@ -445,7 +446,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
         assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
         assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
-        
+
         // Implicit user actions for manual step
         List<WfUserAction> userActionList = wfStep.getUserActionList();
         assertNotNull(userActionList);
@@ -468,7 +469,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("end", wfUserAction.getTargetWfStepName());
         assertEquals(RequirementType.NONE, wfUserAction.getCommentReqType());
         assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
-        
+
         // 1
         wfStep = stepList.get(1);
         assertNotNull(wfStep);
@@ -649,7 +650,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
         assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
         assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
-        
+
         // 5
         wfStep = stepList.get(5);
         assertNotNull(wfStep);
@@ -697,7 +698,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
         Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
         wfService.ensureSubmissionsProcessed(submissionId);
-        
+
         FlowingWfItem flowingWfItem = wfService.findWorkflowItemBySubmission(submissionId);
         assertNotNull(flowingWfItem);
         assertNotNull(flowingWfItem.getWfStepDef());
@@ -952,15 +953,15 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
     @Test
     public void testApplyExtensionPolicy() throws Exception {
-        TestOpenAccountProcessPolicy testOpenAccountPolicyLogic = (TestOpenAccountProcessPolicy) getComponent(
-                "testopenaccount-processpolicy");
+        TestOpenAccountProcessPolicy testOpenAccountPolicyLogic =
+                (TestOpenAccountProcessPolicy) getComponent("testopenaccount-processpolicy");
         testOpenAccountPolicyLogic.clear();
 
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 20, 1.82); // Valid age
         Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
         wfService.ensureSubmissionsProcessed(submissionId);
-        
+
         OpenAccountDetails openAccountDetails = testOpenAccountPolicyLogic.getOpenAccountDetails();
         assertNotNull(openAccountDetails);
         assertEquals("Tom Jones", openAccountDetails.getFullName());
@@ -1004,7 +1005,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         testCustomer.setHeight(2.86);
         Long submissionId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", testCustomer);
         wfService.ensureSubmissionsProcessed(submissionId);
-        
+
         testCustomer = tcbm.findCustomer(custId);
         assertEquals("Tom", testCustomer.getFirstName());
         assertEquals("Doe", testCustomer.getLastName());
@@ -1025,8 +1026,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         mockCustomer.setAge(45); // Class 2
         Long submissionId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", mockCustomer);
         wfService.ensureSubmissionsProcessed(submissionId);
-        
-        //  Read should have updated packable document fields with details from database
+
+        // Read should have updated packable document fields with details from database
         FlowingWfItem flowingWfItem = wfService.findWorkflowItemBySubmission(submissionId);
         PackableDoc pd = flowingWfItem.getPd();
         assertEquals("Tom", pd.read("firstName"));
@@ -1047,7 +1048,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         WorkflowService wfService = getWorkflowService();
         Long submissionId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", testCustomer);
         wfService.ensureSubmissionsProcessed(submissionId);
-        
+
         foundCustomer = tcbm.findCustomer("Tom");
         assertNull(foundCustomer);
     }

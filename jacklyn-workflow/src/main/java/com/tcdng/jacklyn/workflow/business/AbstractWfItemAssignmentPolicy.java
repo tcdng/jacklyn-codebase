@@ -19,13 +19,13 @@ package com.tcdng.jacklyn.workflow.business;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Convenient abstract base class for workflow item user assignment policy.
+ * Convenient abstract base class for workflow item assignment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemUserAssignmentPolicy extends AbstractWfItemPolicy
-        implements WfItemUserAssignmentPolicy {
+public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy
+        implements WfItemAssignmentPolicy {
 
     @Configurable
     private WorkflowService workflowService;

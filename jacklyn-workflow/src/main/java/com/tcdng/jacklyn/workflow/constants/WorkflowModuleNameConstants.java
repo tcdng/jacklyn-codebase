@@ -33,5 +33,5 @@ public interface WorkflowModuleNameConstants {
 
     String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
 
-    String DEFAULTWORKFLOWUSERASSIGNMENTPOLICY = "default-workflowitemuserassignpolicy";
+    String DEFAULTWORKFLOWITEMASSIGNMENTPOLICY = "default-workflowitemassignpolicy";
 }

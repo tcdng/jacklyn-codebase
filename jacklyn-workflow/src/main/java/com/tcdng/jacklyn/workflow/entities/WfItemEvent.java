@@ -36,7 +36,7 @@ public class WfItemEvent extends BaseEntity {
     @ForeignKey(WfItemHist.class)
     private Long wfItemHistId;
 
-    @Column
+    @Column(length = 64)
     private String wfStepName;
 
     @Column(type = ColumnType.TIMESTAMP_UTC)
@@ -56,6 +56,12 @@ public class WfItemEvent extends BaseEntity {
 
     @Column(name = "ACTOR_COMMENT", length = 512, nullable = true)
     private String comment;
+
+    @Column(length = 64, nullable = true)
+    private String srcWfStepName;
+
+    @Column(name = "ERROR_MSG", length = 512, nullable = true)
+    private String errorMsg;
 
     @ListOnly(key = "wfItemHistId", property = "processGlobalName")
     private String processGlobalName;
@@ -133,6 +139,22 @@ public class WfItemEvent extends BaseEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getSrcWfStepName() {
+        return srcWfStepName;
+    }
+
+    public void setSrcWfStepName(String srcWfStepName) {
+        this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public String getProcessGlobalName() {

@@ -209,11 +209,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Configurable
     private SequenceNumberService sequenceNumberService;
 
-    @Configurable(WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC)
-    private WfItemAlertLogic defWfItemAlertLogic;
-
-    @Configurable(WorkflowModuleNameConstants.DEFAULTWORKFLOWUSERASSIGNMENTPOLICY)
-    private WfItemUserAssignmentPolicy defWfItemUserAssignmentPolicy;
+    @Configurable
+    private WfItemAlertLogic wfItemAlertLogic;
 
     private FactoryMap<String, WfDocDef> wfDocs;
 
@@ -443,7 +440,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     WfDocUplGenerator wfDocUplGenerator = (WfDocUplGenerator) getComponent(viewerGenerator);
                     wfTemplateDocDefs.put(docName, new WfTemplateDocDef(wfDocs.get(docGlobalName), wfDocUplGenerator,
-                            wfTemplateDoc.getAssignmentPolicy(), wfTemplateDoc.getManual()));
+                            wfTemplateDoc.getManual()));
                 }
 
                 // Steps
@@ -562,7 +559,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     long expiryMilliSec =
                             CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, stepGlobalName, wfStep.getName(),
-                            wfStep.getDescription(), wfStep.getLabel(), wfStep.getStepType(),
+                            wfStep.getDescription(), wfStep.getLabel(), wfStep.getWorkAssigner(), wfStep.getStepType(),
                             wfStep.getParticipantType(), enrichmentList, routingList, recordActionList, userActionList,
                             formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(), expiryMilliSec,
                             wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
@@ -1647,7 +1644,6 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             WfTemplateDoc wfTemplateDoc = new WfTemplateDoc();
             wfTemplateDoc.setWfDocName(wfTemplateDocConfig.getName());
             wfTemplateDoc.setWfDocViewer(wfTemplateDocConfig.getViewer());
-            wfTemplateDoc.setAssignmentPolicy(wfTemplateDocConfig.getAssigner());
             wfTemplateDoc.setManual(wfTemplateDocConfig.isManual());
             templateDocList.add(wfTemplateDoc);
         }
@@ -1660,6 +1656,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfStep.setName(wfStepConfig.getName());
             wfStep.setDescription(resolveApplicationMessage(wfStepConfig.getDescription()));
             wfStep.setLabel(wfStepConfig.getLabel());
+            wfStep.setWorkAssigner(wfStepConfig.getWorkAssigner());
             wfStep.setStepType(wfStepConfig.getType());
             wfStep.setPriorityLevel(wfStepConfig.getPriority());
             wfStep.setParticipantType(wfStepConfig.getParticipant());
@@ -1945,6 +1942,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfHistEvent.setWfStepName(targetWfStepDef.getName());
         wfHistEvent.setStepDt(stepDt);
         wfHistEvent.setExpectedDt(expectedDt);
+        if (targetWfStepDef.isError()) {
+            wfHistEvent.setSrcWfStepName(flowingWfItem.getSourceWfStepDef().getName());
+            wfHistEvent.setErrorMsg(flowingWfItem.getErrorMsg());
+        }
+
         Long wfHistEventId = (Long) db().create(wfHistEvent);
 
         // Update workflow item information.
@@ -2021,7 +2023,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Send pass-through alerts
         for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
             if (wfAlertDef.isPassThrough() && wfAlertDef.getDocName().equals(docName)) {
-                defWfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
+                wfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
             }
         }
 
@@ -2044,6 +2046,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                         targetWfStepDef.getDescription());
                             }
 
+                            commitTransactions();
                             doActualTransition(trgStep, flowingWfItem);
                             return;
                         }
@@ -2061,25 +2064,23 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             // Assign to human agent if user actions are associated with current step
             if (targetWfStepDef.isUserInteractive()) {
-                WfItemUserAssignmentPolicy wfItemUserAssignmentPolicy = defWfItemUserAssignmentPolicy;
-                if (flowingWfItem.getWfTemplateDocDef().isWithAssignmentPolicy()) {
-                    wfItemUserAssignmentPolicy =
-                            (WfItemUserAssignmentPolicy) getComponent(
-                                    flowingWfItem.getWfTemplateDocDef().getAssignmentPolicyName());
+                String heldBy = null;
+                if (targetWfStepDef.isWithWorkAssigner()) {
+                    WfItemAssignmentPolicy wfItemAssignmentPolicy =
+                            (WfItemAssignmentPolicy) getComponent(targetWfStepDef.getWorkAssignerName());
+                    heldBy = wfItemAssignmentPolicy.execute(flowingWfItemReader);
                 }
 
-                String heldBy = wfItemUserAssignmentPolicy.execute(flowingWfItemReader);
                 db().updateAll(new WfItemQuery().id(wfItemId), new Update().add("heldBy", heldBy));
 
                 // Alert user
                 flowingWfItem.setHeldBy(heldBy);
                 for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
                     if (wfAlertDef.isUserInteract() && wfAlertDef.getDocName().equals(docName)) {
-                        defWfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
+                        wfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
                     }
                 }
             }
-
         }
     }
 
