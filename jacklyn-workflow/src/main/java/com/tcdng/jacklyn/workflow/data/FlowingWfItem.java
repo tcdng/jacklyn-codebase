@@ -34,6 +34,10 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
+    private WfStepDef errorWfStepDef;
+
+    private WfStepDef sourceWfStepDef;
+
     private WfTemplateDocDef wfTemplateDocDef;
 
     private String processGlobalName;
@@ -56,6 +60,8 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private String comment;
 
+    private String errorMsg;
+    
     private PackableDoc pd;
 
     private Reader reader;
@@ -70,10 +76,11 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private List<WfAction> actionList;
 
-    public FlowingWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
+    public FlowingWfItem(WfStepDef wfStepDef, WfStepDef errorWfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
             String wfItemBranchCode, String wfItemDepartmentCode, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
             String description, String title, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
+        this.errorWfStepDef = errorWfStepDef;
         this.wfTemplateDocDef = wfTemplateDocDef;
         this.processGlobalName = processGlobalName;
         this.wfItemBranchCode = wfItemBranchCode;
@@ -132,6 +139,26 @@ public class FlowingWfItem implements ViewableWfItem {
 
     public void setWfStepDef(WfStepDef wfStepDef) {
         this.wfStepDef = wfStepDef;
+    }
+
+    public WfStepDef getErrorWfStepDef() {
+        return errorWfStepDef;
+    }
+
+    public WfStepDef getSourceWfStepDef() {
+        return sourceWfStepDef;
+    }
+
+    public void setSourceWfStepDef(WfStepDef sourceWfStepDef) {
+        this.sourceWfStepDef = sourceWfStepDef;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public String getDescription() {

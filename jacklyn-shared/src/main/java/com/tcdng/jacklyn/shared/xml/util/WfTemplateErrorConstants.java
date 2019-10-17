@@ -173,13 +173,13 @@ public interface WfTemplateErrorConstants {
     String WFTEMPLATE_ROUTING_TARGET_UNKNOWN = "WFTMPL_001D";
 
     /**
-     * Workflow template routing target refers to start step. Index = {0}, step =
+     * Workflow template routing target reference to start step not allowed. Index = {0}, step =
      * {1}, name = {2}, target = {3}.
      */
     String WFTEMPLATE_ROUTING_TARGET_START = "WFTMPL_001E";
 
     /**
-     * Workflow template routing target refers to self step. Index = {0}, step =
+     * Workflow template routing target reference to self step not allowed. Index = {0}, step =
      * {1}, name = {2}, target = {3}.
      */
     String WFTEMPLATE_ROUTING_TARGET_SELF = "WFTMPL_001F";
@@ -508,4 +508,36 @@ public interface WfTemplateErrorConstants {
      * Workflow template alert has no document reference. Index = {0}, step = {1}.
      */
     String WFTEMPLATE_ALERT_WITH_NO_DOC = "WFTMPL_005B";
+
+    /**
+     * Workflow template alert has no participant. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_ALERT_NO_PARICIPANT = "WFTMPL_005C";
+
+    /**
+     * Workflow template alert has no notification channel. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_ALERT_NO_CHANNEL = "WFTMPL_005D";
+
+    /**
+     * Workflow template has multiple error steps.
+     */
+    String WFTEMPLATE_STEP_MULTIPLE_ERROR = "WFTMPL_005E";
+
+    /**
+     * Workflow template has no error step.
+     */
+    String WFTEMPLATE_STEP_NO_ERROR = "WFTMPL_005F";
+
+    /**
+     * Workflow template routing target reference to error step not allowed. Index = {0}, step =
+     * {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_ROUTING_TARGET_ERROR = "WFTMPL_0060";
+
+    /**
+     * Workflow template user action target reference to error step not allowed. Index = {0}, step
+     * = {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_USERACTION_TARGET_ERROR = "WFTMPL_0061";
 }

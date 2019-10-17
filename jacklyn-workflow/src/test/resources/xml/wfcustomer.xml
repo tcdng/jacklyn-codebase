@@ -67,6 +67,11 @@
             <subject>Awaiting Customer Approval</subject>
             <body>Awaiting approval for {firstName} {lastName}</body>
         </message>
+        <message name="custFlowError" description="Customer Document Flow Error"
+            html="false" document="custDoc">
+            <subject>Customer Document Flow Error</subject>
+            <body>Workflow error while processing customer document. Document Details: {firstName} {lastName}</body>
+        </message>
     </messages>
 	<templates>
 		<template name="custOnboarding" description="Customer Onboarding">
@@ -116,6 +121,13 @@
 					</user-actions>
 				</step>
 				<step name="end" description="End Step" type="end" />
+                <step name="error" description="Error Step"
+                    participant="all" priority="high" type="error">
+                    <alerts>
+                        <alert name="flowError" description="Flow Error Alert"
+                            document="custDoc" message="custFlowError" type="pass_through"/>
+                    </alerts>
+                </step>
 			</steps>
 		</template>
 	</templates>

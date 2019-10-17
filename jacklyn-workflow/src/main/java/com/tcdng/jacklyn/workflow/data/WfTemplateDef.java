@@ -42,6 +42,8 @@ public class WfTemplateDef extends BaseWfDef {
 
     private WfStepDef startStep;
 
+    private WfStepDef errorStep;
+
     private Map<String, WfTemplateDocDef> templateDocDefs;
 
     private Map<String, WfManualInitDef> manualInitDefs;
@@ -62,6 +64,8 @@ public class WfTemplateDef extends BaseWfDef {
             for (WfStepDef wfStepDef : wfStepDefList) {
                 if (wfStepDef.isStart()) {
                     startStep = wfStepDef;
+                } else if (wfStepDef.isError()) {
+                    errorStep = wfStepDef;
                 } else if (wfStepDef.isManual()) {
                     for (WfTemplateDocDef wfTemplateDocDef : this.templateDocDefs.values()) {
                         if (wfTemplateDocDef.isManual()) {
@@ -100,6 +104,10 @@ public class WfTemplateDef extends BaseWfDef {
 
     public WfStepDef getStartStep() {
         return startStep;
+    }
+
+    public WfStepDef getErrorStep() {
+        return errorStep;
     }
 
     public Set<String> getWfStepNames() {

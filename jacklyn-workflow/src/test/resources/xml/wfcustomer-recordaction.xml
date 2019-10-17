@@ -85,6 +85,8 @@
 					</routings>
 				</step>
 				<step name="end" description="End Step" type="end" />
+                <step name="error" description="Error Step"
+                    participant="all" priority="high" type="error"/>
 			</steps>
 		</template>
 	</templates>

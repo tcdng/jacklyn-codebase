@@ -198,6 +198,10 @@ public class WfStepDef extends BaseLabelWfDef {
         return stepType.isStart();
     }
 
+    public boolean isError() {
+        return stepType.isError();
+    }
+
     public boolean isManual() {
         return stepType.isManual();
     }

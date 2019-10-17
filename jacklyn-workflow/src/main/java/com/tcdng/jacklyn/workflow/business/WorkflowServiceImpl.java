@@ -163,6 +163,7 @@ import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericService;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.constant.LocaleType;
 import com.tcdng.unify.core.constant.RequirementType;
 import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.data.BeanMappingConfig;
@@ -1438,14 +1439,23 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Periodic(PeriodicType.EXTREME)
-    public void performFlowingWfItemtransitions(TaskMonitor taskMonitor) throws UnifyException {
+    public void performFlowingWfItemTransitions(TaskMonitor taskMonitor) throws UnifyException {
         FlowingWfItemTransition wfItemTransition = null;
         while ((wfItemTransition = pendingWfItemTransitionQueue.poll()) != null) {
+            FlowingWfItem flowingWfItem = wfItemTransition.getFlowingWfItem();
+            WfStepDef targetWfStepDef = wfItemTransition.getTargetWfStepDef();
             try {
-                performFlowingWfItemtransition(wfItemTransition);
+                performFlowingWfItemTransition(targetWfStepDef, flowingWfItem);
             } catch (Exception e) {
-                // TODO Move item to error step
-                // Do not re-throw exception
+                try {
+                    // Push workflow item to error step
+                    String errorMsg = getExceptionMessage(LocaleType.APPLICATION, e);
+                    flowingWfItem.setSourceWfStepDef(targetWfStepDef);
+                    flowingWfItem.setErrorMsg(errorMsg);
+                    performFlowingWfItemTransition(flowingWfItem.getErrorWfStepDef(), flowingWfItem);
+                } catch (Exception e1) {
+                    logError(e1);
+                }
             } finally {
                 pendingSubmissionIds.remove(wfItemTransition.getSubmissionId());
             }
@@ -1453,8 +1463,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
-    public void performFlowingWfItemtransition(FlowingWfItemTransition wfItemTransition) throws UnifyException {
-        doActualTransition(wfItemTransition.getTargetWfStepDef(), wfItemTransition.getFlowingWfItem());
+    public void performFlowingWfItemTransition(WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem)
+            throws UnifyException {
+        doActualTransition(targetWfStepDef, flowingWfItem);
     }
 
     private void populateChildList(WfDoc wfDoc, WfDocumentConfig wfDocConfig) throws UnifyException {
@@ -1857,10 +1868,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Create work item
         FlowingWfItem flowingWfItem =
-                new FlowingWfItem(wfStepDef, wfTemplateDocDef, wfItem.getProcessGlobalName(), wfItem.getBranchCode(),
-                        wfItem.getDepartmentCode(), wfItemId, wfItem.getWfItemHistId(), wfItem.getWfHistEventId(),
-                        wfItem.getDescription(), title, wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(),
-                        pd);
+                new FlowingWfItem(wfStepDef, wfTemplateDef.getErrorStep(), wfTemplateDocDef,
+                        wfItem.getProcessGlobalName(), wfItem.getBranchCode(), wfItem.getDepartmentCode(), wfItemId,
+                        wfItem.getWfItemHistId(), wfItem.getWfHistEventId(), wfItem.getDescription(), title,
+                        wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
 
         return flowingWfItem;
     }
@@ -1893,9 +1904,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
         String description = WfNameUtils.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat(), packableDoc);
         FlowingWfItem flowingWfItem =
-                new FlowingWfItem(trgWfStepDef, wfTemplateDocDef, wfProcessDef.getGlobalName(), branchCode,
-                        departmentCode, wfItemId, null, null, description, null, wfItem.getCreateDt(),
-                        wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
+                new FlowingWfItem(trgWfStepDef, wfProcessDef.getWfTemplateDef().getErrorStep(), wfTemplateDocDef,
+                        wfProcessDef.getGlobalName(), branchCode, departmentCode, wfItemId, null, null, description,
+                        null, wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), packableDoc);
 
         // Asynchronous processing. Push transition to queue.
         pushIntoWfItemTransitionQueue(submissionId, trgWfStepDef, flowingWfItem);
