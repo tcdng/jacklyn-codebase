@@ -61,6 +61,9 @@ public class WfStep extends BaseEntity {
     @Column(name = "STEP_LABEL", length = 64, nullable = true)
     private String label;
 
+    @Column(length = 64, nullable = true)
+    private String workAssigner;
+
     @Column
     private Integer itemsPerSession;
 
@@ -181,6 +184,14 @@ public class WfStep extends BaseEntity {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getWorkAssigner() {
+        return workAssigner;
+    }
+
+    public void setWorkAssigner(String workAssigner) {
+        this.workAssigner = workAssigner;
     }
 
     public Integer getItemsPerSession() {

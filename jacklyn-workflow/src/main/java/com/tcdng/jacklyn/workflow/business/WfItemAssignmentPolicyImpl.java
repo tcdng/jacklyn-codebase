@@ -24,15 +24,15 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Default workflow item user assignment logic implementation.
+ * Default workflow item assignment policy implementation.
  * 
  * @author Lateef
  * @since 1.0
  */
 @Component(
-        name = WorkflowModuleNameConstants.DEFAULTWORKFLOWUSERASSIGNMENTPOLICY,
-        description = "Default Workflow Item User Assignment Logic")
-public class WfItemUserAssignmentPolicyImpl extends AbstractWfItemUserAssignmentPolicy {
+        name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMASSIGNMENTPOLICY,
+        description = "Default Workflow Item Assignment Policy")
+public class WfItemAssignmentPolicyImpl extends AbstractWfItemAssignmentPolicy {
 
     @Override
     public String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {

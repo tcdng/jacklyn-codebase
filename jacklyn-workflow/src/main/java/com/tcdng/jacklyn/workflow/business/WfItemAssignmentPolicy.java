@@ -21,12 +21,12 @@ import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Workflow item user assignment policy.
+ * Workflow item assignment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfItemUserAssignmentPolicy extends UnifyComponent {
+public interface WfItemAssignmentPolicy extends UnifyComponent {
 
     /**
      * Executes workflow item user assignment policy using data from workflow item.

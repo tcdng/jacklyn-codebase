@@ -30,8 +30,6 @@ public class WfTemplateDocConfig {
     
     private String viewer;
     
-    private String assigner;
-    
     private boolean manual;
 
     public String getName() {
@@ -50,15 +48,6 @@ public class WfTemplateDocConfig {
     @XmlAttribute
     public void setViewer(String viewer) {
         this.viewer = viewer;
-    }
-
-    public String getAssigner() {
-        return assigner;
-    }
-
-    @XmlAttribute
-    public void setAssigner(String assigner) {
-        this.assigner = assigner;
     }
 
     public boolean isManual() {

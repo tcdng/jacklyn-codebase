@@ -42,6 +42,8 @@ public class WfStepConfig extends BaseConfig {
     private WorkflowStepPriority priority;
 
     private String label;
+    
+    private String workAssigner;
 
     private Integer itemsPerSession;
 
@@ -124,6 +126,15 @@ public class WfStepConfig extends BaseConfig {
     @XmlAttribute
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getWorkAssigner() {
+        return workAssigner;
+    }
+
+    @XmlAttribute(name = "assigner")
+    public void setWorkAssigner(String workAssigner) {
+        this.workAssigner = workAssigner;
     }
 
     public Integer getItemsPerSession() {
