@@ -45,7 +45,7 @@ public class FlowingWfItem implements ViewableWfItem {
     private String wfItemBranchCode;
 
     private String wfItemDepartmentCode;
-
+    
     private Long wfItemId;
 
     private Long wfItemHistId;
@@ -59,6 +59,8 @@ public class FlowingWfItem implements ViewableWfItem {
     private String label;
 
     private String comment;
+
+    private String errorSource;
 
     private String errorMsg;
     
@@ -159,6 +161,14 @@ public class FlowingWfItem implements ViewableWfItem {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public String getErrorSource() {
+        return errorSource;
+    }
+
+    public void setErrorSource(String errorSource) {
+        this.errorSource = errorSource;
     }
 
     public String getDescription() {

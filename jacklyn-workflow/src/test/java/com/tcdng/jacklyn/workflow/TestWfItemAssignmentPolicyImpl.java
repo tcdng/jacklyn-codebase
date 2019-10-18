@@ -32,6 +32,10 @@ public class TestWfItemAssignmentPolicyImpl extends AbstractWfItemAssignmentPoli
 
     @Override
     public String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
+        if ("BadFox".equals(flowingWfItemReader.readField(String.class, "firstName"))) {
+            throw new RuntimeException("Bad customer detected!");
+        }
+        
         return "terry5432";
     }
 

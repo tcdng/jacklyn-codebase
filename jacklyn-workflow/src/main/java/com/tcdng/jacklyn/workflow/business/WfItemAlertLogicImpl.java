@@ -28,6 +28,7 @@ import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
@@ -65,7 +66,15 @@ public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
                     contactList = getEligibleEmailContacts(flowingWfItemReader, wfAlertDef.getParticipant(),
                                     wfAlertDef.getStepGlobalName());
                 } else if (wfAlertDef.isUserInteract()) {
-                    contactList = getUserEmailContacts(flowingWfItemReader.getItemHeldBy());
+                    String heldBy = flowingWfItemReader.getItemHeldBy();
+                    if(!StringUtils.isBlank(heldBy)) {
+                        // Alert specific user
+                        contactList = getUserEmailContacts(heldBy);
+                    } else {
+                        // Alert all contacts in step
+                        contactList = getEligibleEmailContacts(flowingWfItemReader, wfAlertDef.getParticipant(),
+                                        wfAlertDef.getStepGlobalName());
+                    }
                 }
                 break;
             case SMS:

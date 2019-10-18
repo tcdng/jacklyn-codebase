@@ -44,8 +44,12 @@ public class WfItemHistEvent implements Serializable {
 
     private String comments;
 
+    private String errorSource;
+
+    private String errorMsg;
+
     public WfItemHistEvent(Long id, String wfStep, Date stepDt, Date actionDt, String actor, String wfAction,
-            String wfActionDesc, String comments) {
+            String wfActionDesc, String comments, String errorSource, String errorMsg) {
         this.id = id;
         this.wfStep = wfStep;
         this.stepDt = stepDt;
@@ -54,6 +58,8 @@ public class WfItemHistEvent implements Serializable {
         this.wfAction = wfAction;
         this.wfActionDesc = wfActionDesc;
         this.comments = comments;
+        this.errorSource = errorSource;
+        this.errorMsg = errorMsg;
     }
 
     public Long getId() {
@@ -86,6 +92,14 @@ public class WfItemHistEvent implements Serializable {
 
     public String getComments() {
         return comments;
+    }
+
+    public String getErrorSource() {
+        return errorSource;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
 }
