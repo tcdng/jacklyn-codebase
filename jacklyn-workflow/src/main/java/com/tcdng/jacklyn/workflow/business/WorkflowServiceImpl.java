@@ -1020,6 +1020,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             db().updateById(WfItemEvent.class, flowingWfItem.getWfHistEventId(), new Update().add("actionDt", actionDt)
                     .add("actor", userLoginId).add("wfAction", actionName).add("comment", flowingWfItem.getComment()));
 
+            // Release workflow item
+            db().updateById(WfItem.class, wfItemId, new Update().add("heldBy", null));
+
             // Push to transition queue
             Long submissionId = sequenceNumberService.getCachedBlockNextSequenceNumber(WORKFLOW_SUBMISSION_ID_SEQUENCE);
             pushIntoWfItemTransitionQueue(submissionId, trgWfStep, flowingWfItem);
@@ -1070,7 +1073,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             eventList.add(new WfItemHistEvent(wfHistEvent.getId(), wfHistEvent.getWfStepName(), wfHistEvent.getStepDt(),
                     wfHistEvent.getActionDt(), wfHistEvent.getActor(), wfHistEvent.getWfAction(), actionDesc,
-                    wfHistEvent.getComment()));
+                    wfHistEvent.getComment(), wfHistEvent.getSrcWfStepName(), wfHistEvent.getErrorMsg()));
         }
 
         return new WfItemHistory(wfHist.getId(), wfHist.getDocId(), processNameParts.getDocGlobalName(),
@@ -1869,7 +1872,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         wfItem.getProcessGlobalName(), wfItem.getBranchCode(), wfItem.getDepartmentCode(), wfItemId,
                         wfItem.getWfItemHistId(), wfItem.getWfHistEventId(), wfItem.getDescription(), title,
                         wfItem.getCreateDt(), wfItem.getStepDt(), wfItem.getHeldBy(), pd);
-
+        flowingWfItem.setErrorSource(wfItem.getSrcWfStepName());
+        flowingWfItem.setErrorMsg(wfItem.getErrorMsg());
         return flowingWfItem;
     }
 
