@@ -540,4 +540,89 @@ public interface WfTemplateErrorConstants {
      * = {1}, name = {2}, target = {3}.
      */
     String WFTEMPLATE_USERACTION_TARGET_ERROR = "WFTMPL_0061";
+
+    /**
+     * Workflow template step branch has no name. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_NO_NAME = "WFTMPL_0062";
+
+    /**
+     * Workflow template step branch has no description. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_NO_DESC = "WFTMPL_0063";
+
+    /**
+     * Workflow template step branch has no target. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_NO_TARGET = "WFTMPL_0064";
+
+    /**
+     * Workflow template step branch with name already exists. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_EXIST = "WFTMPL_0065";
+
+    /**
+     * Workflow template step branch with invalid name. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_BRANCH_INVALID_NAME = "WFTMPL_0066";
+
+    /**
+     * Workflow template step must have at least one branch. Index = {0}, step = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_BRANCHES_NOT_EXIST = "WFTMPL_0067";
+
+    /**
+     * Workflow template step branches not allowed for type. Index = {0}, step = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_BRANCHES_EXIST = "WFTMPL_0068";
+
+    /**
+     * Workflow template step has alerts. Index = {0}, step = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_ALERTS_EXIST = "WFTMPL_0069";
+
+    /**
+     * Workflow template routing targets step in different branch. Index = {0}, step = {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_ROUTING_TARGET_NOT_SAME_BRANCH = "WFTMPL_006A";
+
+    /**
+     * Workflow template branch with name already exists. Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_BRANCH_EXIST = "WFTMPL_006B";
+
+    /**
+     * Workflow template branch references an unknown target. Branch = {0}, target = {1}.
+     */
+    String WFTEMPLATE_BRANCH_UNKNOWN_TARGET = "WFTMPL_006C";
+
+    /**
+     * Workflow template branch references target in different branch. Branch = {0}, target = {1}, target branch = {2}.
+     */
+    String WFTEMPLATE_BRANCH_TARGET_DIFFERENT_BRANCH = "WFTMPL_006C";
+
+    /**
+     * Workflow template step has no origin. Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_STEP_NO_ORIGIN = "WFTMPL_006E";
+
+    /**
+     * Workflow template merge step origin not referring to a split step . Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_STEP_INVALID_ORIGIN = "WFTMPL_006F";
+
+    /**
+     * Workflow template multiple merge steps referring to the same origin split step. Index = {0}, step name = {1}, origin name = {2}.
+     */
+    String WFTEMPLATE_STEP_SAME_ORIGIN = "WFTMPL_0070";
+
+    /**
+     * Workflow template split step has no corresponding merge step. Split name = {0}.
+     */
+    String WFTEMPLATE_STEP_SPLIT_NO_MERGE = "WFTMPL_0071";
+
+    /**
+     * Workflow template routing targets step in different origin. Index = {0}, step = {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_ROUTING_TARGET_NOT_SAME_ORIGIN = "WFTMPL_0072";
 }

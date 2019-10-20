@@ -30,6 +30,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAlertConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAttachmentConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfBeanMappingConfig;
+import com.tcdng.jacklyn.shared.xml.config.workflow.WfBranchConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfClassifierConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfClassifierFilterConfig;
@@ -55,6 +56,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
+import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.XMLConfigUtils;
 
@@ -298,6 +300,12 @@ public final class WfCategoryConfigUtils {
             for (WfStepConfig wfStepConfig : wfTemplateConfig.getWfStepsConfig().getWfStepConfigList()) {
                 ctx.addStepSecondPass(wfStepConfig);
             }
+            ctx.evaluateSecondPass();
+
+            for (WfStepConfig wfStepConfig : wfTemplateConfig.getWfStepsConfig().getWfStepConfigList()) {
+                ctx.addStepThirdPass(wfStepConfig);
+            }
+            ctx.evaluateThirdPass();
         }
 
         return ctx.getErrorList();
@@ -780,6 +788,8 @@ public final class WfCategoryConfigUtils {
 
         private Map<String, WfStepConfig> wfStepConfigs;
 
+        private Map<String, String> splitToMergeBindings;
+
         private int startCount;
 
         private int manualCount;
@@ -797,6 +807,7 @@ public final class WfCategoryConfigUtils {
             errorList = new ArrayList<UnifyError>();
             wfStepConfigs = new HashMap<String, WfStepConfig>();
             wfTemplateDocConfigs = new HashMap<String, WfTemplateDocConfig>();
+            splitToMergeBindings = new HashMap<String, String>();
         }
 
         public void addError(String errorCode, Object... params) {
@@ -846,6 +857,10 @@ public final class WfCategoryConfigUtils {
 
             if (wfStepConfig.getType() == null) {
                 addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_TYPE, stepCounter, name);
+            } else {
+                if (wfStepConfig.getType().isMerge() && StringUtils.isBlank(wfStepConfig.getOrigin())) {
+                    addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_NO_ORIGIN, stepCounter);
+                }
             }
 
             if (wfStepConfig.getParticipant() == null) {
@@ -894,6 +909,7 @@ public final class WfCategoryConfigUtils {
                         validateRoutings(wfStepConfig);
                         invalidateUserActions(wfStepConfig);
                         invalidateFormPrivileges(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
                         break;
                     case END:
                         validateAlerts(wfStepConfig);
@@ -903,6 +919,7 @@ public final class WfCategoryConfigUtils {
                         invalidateRecordActions(wfStepConfig);
                         invalidateUserActions(wfStepConfig);
                         invalidateFormPrivileges(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
                         break;
                     case INTERACTIVE:
                         validateAlerts(wfStepConfig);
@@ -912,6 +929,7 @@ public final class WfCategoryConfigUtils {
                         invalidatePolicies(wfStepConfig);
                         invalidateRoutings(wfStepConfig);
                         invalidateRecordActions(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
                         break;
                     case MANUAL:
                         validateAlerts(wfStepConfig);
@@ -921,6 +939,7 @@ public final class WfCategoryConfigUtils {
                         invalidatePolicies(wfStepConfig);
                         invalidateRecordActions(wfStepConfig);
                         invalidateUserActions(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
                         break;
                     case START:
                         validateEnrichments(wfStepConfig);
@@ -930,6 +949,7 @@ public final class WfCategoryConfigUtils {
                         invalidateRecordActions(wfStepConfig);
                         invalidateUserActions(wfStepConfig);
                         invalidateFormPrivileges(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
                         break;
                     case ERROR:
                         validateAlerts(wfStepConfig);
@@ -939,6 +959,56 @@ public final class WfCategoryConfigUtils {
                         invalidateRecordActions(wfStepConfig);
                         invalidateUserActions(wfStepConfig);
                         invalidateFormPrivileges(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
+                        break;
+                    case SPLIT:
+                        ensureAndValidateBranches(wfStepConfig);
+                        invalidateAlerts(wfStepConfig);
+                        invalidatePolicies(wfStepConfig);
+                        invalidateEnrichments(wfStepConfig);
+                        invalidateRoutings(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        invalidateFormPrivileges(wfStepConfig);
+                        break;
+                    case MERGE:
+                        validateRoutings(wfStepConfig);
+                        invalidateAlerts(wfStepConfig);
+                        invalidatePolicies(wfStepConfig);
+                        invalidateEnrichments(wfStepConfig);
+                        invalidateRecordActions(wfStepConfig);
+                        invalidateUserActions(wfStepConfig);
+                        invalidateFormPrivileges(wfStepConfig);
+                        invalidateBranches(wfStepConfig);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            stepCounter++;
+        }
+
+        public void addStepThirdPass(WfStepConfig wfStepConfig) {
+            WorkflowStepType type = wfStepConfig.getType();
+            if (type != null) {
+                switch (type) {
+                    case AUTOMATIC:
+                        break;
+                    case END:
+                        break;
+                    case INTERACTIVE:
+                        break;
+                    case MANUAL:
+                        break;
+                    case START:
+                        break;
+                    case ERROR:
+                        break;
+                    case SPLIT:
+                        break;
+                    case MERGE:
+                        ensureMergeOrigin(wfStepConfig);
                         break;
                     default:
                         break;
@@ -976,6 +1046,36 @@ public final class WfCategoryConfigUtils {
             }
 
             stepCounter = 0;
+        }
+
+        public void evaluateSecondPass() {
+
+        }
+
+        public void evaluateThirdPass() {
+            // Make sure all splits have a merge
+            for (Map.Entry<String, String> entry : splitToMergeBindings.entrySet()) {
+                if (StringUtils.isBlank(entry.getValue())) {
+                    addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_SPLIT_NO_MERGE, entry.getKey());
+                }
+            }
+        }
+
+        private void ensureMergeOrigin(WfStepConfig wfStepConfig) {
+            if (!StringUtils.isBlank(wfStepConfig.getOrigin())) {
+                if (!splitToMergeBindings.containsKey(wfStepConfig.getOrigin())) {
+                    // Merge step origin must refer to a split step
+                    addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_INVALID_ORIGIN, wfStepConfig.getName());
+                } else {
+                    if (!StringUtils.isBlank(splitToMergeBindings.get(wfStepConfig.getOrigin()))) {
+                        // Multiple merge steps can't have the same origin
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_SAME_ORIGIN, wfStepConfig.getName(),
+                                wfStepConfig.getOrigin());
+                    } else {
+                        splitToMergeBindings.put(wfStepConfig.getOrigin(), wfStepConfig.getName());
+                    }
+                }
+            }
         }
 
         private void validateRoutings(WfStepConfig wfStepConfig) {
@@ -1040,6 +1140,18 @@ public final class WfCategoryConfigUtils {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_UNKNOWN, index,
                                     wfStepConfig.getName(), routingName, target);
                         } else {
+                            if (!WorkflowStepType.MERGE.equals(targetWfStepConfig.getType())) {
+                                if (!ReflectUtils.equals(wfStepConfig.getBranch(), targetWfStepConfig.getBranch())) {
+                                    addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_NOT_SAME_BRANCH, index,
+                                            wfStepConfig.getName(), routingName, target);
+                                }
+                            }
+
+                            if (!ReflectUtils.equals(wfStepConfig.getOrigin(), targetWfStepConfig.getOrigin())) {
+                                addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_NOT_SAME_ORIGIN, index,
+                                        wfStepConfig.getName(), routingName, target);
+                            }
+
                             if (WorkflowStepType.START.equals(targetWfStepConfig.getType())) {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_START, index,
                                         wfStepConfig.getName(), routingName, target);
@@ -1260,6 +1372,72 @@ public final class WfCategoryConfigUtils {
             }
         }
 
+        private void ensureAndValidateBranches(WfStepConfig wfStepConfig) {
+            splitToMergeBindings.put(wfStepConfig.getName(), null);
+            if (wfStepConfig.getWfBranchesConfig() != null
+                    && DataUtils.isNotBlank(wfStepConfig.getWfBranchesConfig().getWfBranchConfigList())) {
+                Set<String> names = new HashSet<String>();
+                int index = 0;
+                for (WfBranchConfig wfBranchConfig : wfStepConfig.getWfBranchesConfig().getWfBranchConfigList()) {
+                    String name = wfBranchConfig.getName();
+                    if (StringUtils.isNotBlank(name)) {
+                        if (!WfNameUtils.isValidName(name)) {
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_BRANCH_INVALID_NAME, index,
+                                    wfStepConfig.getName(), name);
+                        }
+
+                        if (names.contains(name)) {
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_BRANCH_EXIST, index,
+                                    wfStepConfig.getName(), name);
+                        } else {
+                            names.add(name);
+                        }
+                    } else {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_BRANCH_NO_NAME, index,
+                                wfStepConfig.getName());
+                    }
+
+                    if (StringUtils.isBlank(wfBranchConfig.getDescription())) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_BRANCH_NO_DESC, index,
+                                wfStepConfig.getName());
+                    }
+
+                    if (StringUtils.isBlank(wfBranchConfig.getTarget())) {
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_BRANCH_NO_TARGET, index,
+                                wfStepConfig.getName());
+                    } else {
+                        WfStepConfig trgWfStepConfig = wfStepConfigs.get(wfBranchConfig.getTarget());
+                        if (trgWfStepConfig == null) {
+                            // Branch must target an existing step
+                            addError(WfTemplateErrorConstants.WFTEMPLATE_BRANCH_UNKNOWN_TARGET,
+                                    wfBranchConfig.getName(), wfBranchConfig.getTarget());
+                        } else {
+                            if (StringUtils.isBlank(trgWfStepConfig.getBranch())
+                                    || !trgWfStepConfig.getBranch().equals(wfBranchConfig.getName())) {
+                                // Branch must target a step on itself
+                                addError(WfTemplateErrorConstants.WFTEMPLATE_BRANCH_TARGET_DIFFERENT_BRANCH,
+                                        wfBranchConfig.getName(), wfBranchConfig.getTarget(),
+                                        trgWfStepConfig.getBranch());
+                            }
+                        }
+                    }
+
+                    index++;
+                }
+            } else {
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_BRANCHES_NOT_EXIST, stepCounter,
+                        wfStepConfig.getName(), wfStepConfig.getType());
+            }
+        }
+
+        private void invalidateBranches(WfStepConfig wfStepConfig) {
+            if (wfStepConfig.getWfBranchesConfig() != null
+                    && DataUtils.isNotBlank(wfStepConfig.getWfBranchesConfig().getWfBranchConfigList())) {
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_BRANCHES_EXIST, stepCounter, wfStepConfig.getName(),
+                        wfStepConfig.getType());
+            }
+        }
+
         private void validateEnrichments(WfStepConfig wfStepConfig) {
             if (wfStepConfig.getWfEnrichmentsConfig() != null
                     && DataUtils.isNotBlank(wfStepConfig.getWfEnrichmentsConfig().getWfEnrichmentConfigList())) {
@@ -1387,8 +1565,7 @@ public final class WfCategoryConfigUtils {
                     }
 
                     if (StringUtils.isBlank(wfAlertConfig.getDocument())) {
-                        addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_WITH_NO_DOC, index,
-                                wfStepConfig.getName());
+                        addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_WITH_NO_DOC, index, wfStepConfig.getName());
                     } else {
                         if (!wfTemplateDocConfigs.containsKey(wfAlertConfig.getDocument())) {
                             addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_UNKNOWN_TEMPLATE_DOC, index,
@@ -1409,12 +1586,12 @@ public final class WfCategoryConfigUtils {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_PARICIPANT, index, wfStepConfig.getName(),
                                 name);
                     }
-                    
+
                     if (wfAlertConfig.getChannel() == null) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_CHANNEL, index, wfStepConfig.getName(),
                                 name);
                     }
-                    
+
                     if (StringUtils.isBlank(wfAlertConfig.getMessage())) {
                         addError(WfTemplateErrorConstants.WFTEMPLATE_ALERT_NO_MESSAGE, index, wfStepConfig.getName(),
                                 name);
@@ -1432,6 +1609,14 @@ public final class WfCategoryConfigUtils {
 
                     index++;
                 }
+            }
+        }
+
+        private void invalidateAlerts(WfStepConfig wfStepConfig) {
+            if (wfStepConfig.getWfAlertsConfig() != null
+                    && DataUtils.isNotBlank(wfStepConfig.getWfAlertsConfig().getWfAlertConfigList())) {
+                addError(WfTemplateErrorConstants.WFTEMPLATE_STEP_POLICIES_EXIST, stepCounter, wfStepConfig.getName(),
+                        wfStepConfig.getType());
             }
         }
 

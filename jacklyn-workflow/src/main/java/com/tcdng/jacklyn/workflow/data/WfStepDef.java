@@ -48,6 +48,8 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private WorkflowParticipantType participantType;
 
+    private List<WfBranchDef> branchList;
+
     private List<WfEnrichmentDef> enrichmentList;
 
     private List<WfRoutingDef> routingList;
@@ -80,7 +82,7 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName, String name, String description,
             String label, String workAssignerName, WorkflowStepType stepType, WorkflowParticipantType participantType,
-            List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
+            List<WfBranchDef> branchList, List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
             List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
             int itemsPerSession, long expiryMilliSec, boolean audit, boolean branchOnly, boolean departmentOnly,
@@ -100,6 +102,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.includeForwarder = includeForwarder;
         this.versionTimestamp = versionTimestamp;
 
+        this.branchList = DataUtils.unmodifiableList(branchList);
         this.enrichmentList = DataUtils.unmodifiableList(enrichmentList);
         this.routingList = DataUtils.unmodifiableList(routingList);
         this.recordActionList = DataUtils.unmodifiableList(recordActionList);
@@ -140,6 +143,10 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public WorkflowParticipantType getParticipantType() {
         return participantType;
+    }
+
+    public List<WfBranchDef> getBranchList() {
+        return branchList;
     }
 
     public List<WfEnrichmentDef> getEnrichmentList() {
@@ -212,6 +219,14 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public boolean isManual() {
         return stepType.isManual();
+    }
+
+    public boolean isSplit() {
+        return stepType.isSplit();
+    }
+
+    public boolean isMerge() {
+        return stepType.isMerge();
     }
 
     public boolean isAutomatic() {

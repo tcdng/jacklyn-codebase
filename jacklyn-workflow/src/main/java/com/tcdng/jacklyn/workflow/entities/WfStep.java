@@ -63,6 +63,12 @@ public class WfStep extends BaseEntity {
 
     @Column(length = 64, nullable = true)
     private String workAssigner;
+    
+    @Column(length = 64, nullable = true)
+    private String branch;
+    
+    @Column(length = 64, nullable = true)
+    private String origin;
 
     @Column
     private Integer itemsPerSession;
@@ -81,6 +87,9 @@ public class WfStep extends BaseEntity {
 
     @Column(name = "INCLUDE_FORWARDER_FG")
     private Boolean includeForwarder;
+
+    @ChildList
+    private List<WfBranch> branchList;
 
     @ChildList
     private List<WfEnrichment> enrichmentList;
@@ -194,6 +203,22 @@ public class WfStep extends BaseEntity {
         this.workAssigner = workAssigner;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
     public Integer getItemsPerSession() {
         return itemsPerSession;
     }
@@ -240,6 +265,14 @@ public class WfStep extends BaseEntity {
 
     public void setIncludeForwarder(Boolean includeForwarder) {
         this.includeForwarder = includeForwarder;
+    }
+
+    public List<WfBranch> getBranchList() {
+        return branchList;
+    }
+
+    public void setBranchList(List<WfBranch> branchList) {
+        this.branchList = branchList;
     }
 
     public List<WfEnrichment> getEnrichmentList() {

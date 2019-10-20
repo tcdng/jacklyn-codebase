@@ -43,7 +43,11 @@ public class WfStepConfig extends BaseConfig {
 
     private String label;
     
-    private String workAssigner;
+    private String assigner;
+    
+    private String branch;
+    
+    private String origin;
 
     private Integer itemsPerSession;
 
@@ -56,6 +60,8 @@ public class WfStepConfig extends BaseConfig {
     private Boolean departmentOnly;
 
     private Boolean includeForwarder;
+
+    private WfBranchesConfig wfBranchesConfig;
 
     private WfEnrichmentsConfig wfEnrichmentsConfig;
 
@@ -128,13 +134,31 @@ public class WfStepConfig extends BaseConfig {
         this.label = label;
     }
 
-    public String getWorkAssigner() {
-        return workAssigner;
+    public String getAssigner() {
+        return assigner;
     }
 
-    @XmlAttribute(name = "assigner")
-    public void setWorkAssigner(String workAssigner) {
-        this.workAssigner = workAssigner;
+    @XmlAttribute
+    public void setAssigner(String assigner) {
+        this.assigner = assigner;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    @XmlAttribute
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    @XmlAttribute
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
     public Integer getItemsPerSession() {
@@ -191,11 +215,20 @@ public class WfStepConfig extends BaseConfig {
         this.includeForwarder = includeForwarder;
     }
 
+    public WfBranchesConfig getWfBranchesConfig() {
+        return wfBranchesConfig;
+    }
+
+    @XmlElement(name = "branches")
+    public void setWfBranchesConfig(WfBranchesConfig wfBranchesConfig) {
+        this.wfBranchesConfig = wfBranchesConfig;
+    }
+
     public WfEnrichmentsConfig getWfEnrichmentsConfig() {
         return wfEnrichmentsConfig;
     }
 
-    @XmlElement(name = "enrichments", required = true)
+    @XmlElement(name = "enrichments")
     public void setWfEnrichmentsConfig(WfEnrichmentsConfig wfEnrichmentsConfig) {
         this.wfEnrichmentsConfig = wfEnrichmentsConfig;
     }
@@ -204,7 +237,7 @@ public class WfStepConfig extends BaseConfig {
         return wfPoliciesConfig;
     }
 
-    @XmlElement(name = "policies", required = true)
+    @XmlElement(name = "policies")
     public void setWfPoliciesConfig(WfPoliciesConfig wfPoliciesConfig) {
         this.wfPoliciesConfig = wfPoliciesConfig;
     }
@@ -213,7 +246,7 @@ public class WfStepConfig extends BaseConfig {
         return wfAlertsConfig;
     }
 
-    @XmlElement(name = "alerts", required = true)
+    @XmlElement(name = "alerts")
     public void setWfAlertsConfig(WfAlertsConfig wfAlertsConfig) {
         this.wfAlertsConfig = wfAlertsConfig;
     }
@@ -222,7 +255,7 @@ public class WfStepConfig extends BaseConfig {
         return wfRoutingsConfig;
     }
 
-    @XmlElement(name = "routings", required = true)
+    @XmlElement(name = "routings")
     public void setWfRoutingsConfig(WfRoutingsConfig wfRoutingsConfig) {
         this.wfRoutingsConfig = wfRoutingsConfig;
     }
@@ -231,7 +264,7 @@ public class WfStepConfig extends BaseConfig {
         return wfRecordActionsConfig;
     }
 
-    @XmlElement(name = "record-actions", required = true)
+    @XmlElement(name = "record-actions")
     public void setWfRecordActionsConfig(WfRecordActionsConfig wfRecordActionsConfig) {
         this.wfRecordActionsConfig = wfRecordActionsConfig;
     }
@@ -240,7 +273,7 @@ public class WfStepConfig extends BaseConfig {
         return wfUserActionsConfig;
     }
 
-    @XmlElement(name = "user-actions", required = true)
+    @XmlElement(name = "user-actions")
     public void setWfUserActionsConfig(WfUserActionsConfig wfUserActionsConfig) {
         this.wfUserActionsConfig = wfUserActionsConfig;
     }

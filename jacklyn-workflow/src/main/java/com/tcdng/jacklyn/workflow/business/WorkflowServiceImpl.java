@@ -48,6 +48,7 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfAlertConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAttachmentCheckConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAttachmentConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfBeanMappingConfig;
+import com.tcdng.jacklyn.shared.xml.config.workflow.WfBranchConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfClassifierConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfClassifierFilterConfig;
@@ -85,6 +86,7 @@ import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.jacklyn.workflow.data.WfAttachmentCheckDef;
+import com.tcdng.jacklyn.workflow.data.WfBranchDef;
 import com.tcdng.jacklyn.workflow.data.WfDocAttachmentDef;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierDef;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierFilterDef;
@@ -111,6 +113,7 @@ import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.data.WfUserActionDef;
 import com.tcdng.jacklyn.workflow.entities.WfAlert;
 import com.tcdng.jacklyn.workflow.entities.WfAttachmentCheck;
+import com.tcdng.jacklyn.workflow.entities.WfBranch;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
@@ -450,6 +453,16 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             WfNameUtils.getStepGlobalName(templateNames.getCategoryName(),
                                     templateNames.getTemplateName(), wfStep.getName());
 
+                    // Branch information
+                    List<WfBranchDef> branchList = null;
+                    if (DataUtils.isNotBlank(wfStep.getBranchList())) {
+                        branchList = new ArrayList<WfBranchDef>();
+                        for (WfBranch wfBranch : wfStep.getBranchList()) {
+                            branchList.add(new WfBranchDef(wfBranch.getName(), wfBranch.getDescription(),
+                                    wfBranch.getTarget()));
+                        }
+                    }
+
                     // Enrichment information
                     List<WfEnrichmentDef> enrichmentList = null;
                     if (DataUtils.isNotBlank(wfStep.getEnrichmentList())) {
@@ -560,9 +573,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, stepGlobalName, wfStep.getName(),
                             wfStep.getDescription(), wfStep.getLabel(), wfStep.getWorkAssigner(), wfStep.getStepType(),
-                            wfStep.getParticipantType(), enrichmentList, routingList, recordActionList, userActionList,
-                            formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(), expiryMilliSec,
-                            wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
+                            wfStep.getParticipantType(), branchList, enrichmentList, routingList, recordActionList,
+                            userActionList, formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
+                            expiryMilliSec, wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
                             wfStep.getIncludeForwarder(), templateTimestamp));
                 }
 
@@ -735,6 +748,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         List<WfStep> stepList = wfTemplate.getStepList();
         wfTemplate.setStepList(null);
 
+        List<WfBranch> branchList = new ArrayList<WfBranch>();
         List<WfEnrichment> enrichmentList = new ArrayList<WfEnrichment>();
         List<WfRouting> routingList = new ArrayList<WfRouting>();
         List<WfRecordAction> recordActionList = new ArrayList<WfRecordAction>();
@@ -743,6 +757,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         List<WfPolicy> policyList = new ArrayList<WfPolicy>();
         List<WfAlert> alertList = new ArrayList<WfAlert>();
         for (WfStep wfStep : stepList) {
+            branchList.addAll(wfStep.getBranchList());
+            wfStep.setBranchList(null);
+
             enrichmentList.addAll(wfStep.getEnrichmentList());
             wfStep.setEnrichmentList(null);
 
@@ -765,7 +782,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfStep.setAlertList(null);
         }
 
-        return new WfTemplateLargeData(wfTemplate, stepList, enrichmentList, routingList, recordActionList,
+        return new WfTemplateLargeData(wfTemplate, stepList, branchList, enrichmentList, routingList, recordActionList,
                 userActionList, formPrivilegeList, policyList, alertList);
     }
 
@@ -1659,7 +1676,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfStep.setName(wfStepConfig.getName());
             wfStep.setDescription(resolveApplicationMessage(wfStepConfig.getDescription()));
             wfStep.setLabel(wfStepConfig.getLabel());
-            wfStep.setWorkAssigner(wfStepConfig.getWorkAssigner());
+            wfStep.setWorkAssigner(wfStepConfig.getAssigner());
+            wfStep.setBranch(wfStepConfig.getBranch());
+            wfStep.setOrigin(wfStepConfig.getOrigin());
             wfStep.setStepType(wfStepConfig.getType());
             wfStep.setPriorityLevel(wfStepConfig.getPriority());
             wfStep.setParticipantType(wfStepConfig.getParticipant());
@@ -1677,6 +1696,21 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             } else if (wfStepConfig.getType().isManual()) {
                 manualWfStep = wfStep;
             }
+
+            // Branches
+            List<WfBranch> branchList = null;
+            if (wfStepConfig.getWfBranchesConfig() != null
+                    && DataUtils.isNotBlank(wfStepConfig.getWfBranchesConfig().getWfBranchConfigList())) {
+                branchList = new ArrayList<WfBranch>();
+                for (WfBranchConfig wfBranchConfig : wfStepConfig.getWfBranchesConfig().getWfBranchConfigList()) {
+                    WfBranch wfBranch = new WfBranch();
+                    wfBranch.setName(wfBranchConfig.getName());
+                    wfBranch.setDescription(resolveApplicationMessage(wfBranchConfig.getDescription()));
+                    wfBranch.setTarget(wfBranchConfig.getTarget());
+                    branchList.add(wfBranch);
+                }
+            }
+            wfStep.setBranchList(branchList);
 
             // Enrichments
             List<WfEnrichment> enrichmentList = null;
