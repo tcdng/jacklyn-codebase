@@ -33,6 +33,8 @@ public enum WorkflowStepType implements EnumConst {
     AUTOMATIC("A"),
     INTERACTIVE("I"),
     ERROR("X"),
+    SPLIT("T"),
+    MERGE("G"),
     END("E");
 
     private final String code;
@@ -61,6 +63,14 @@ public enum WorkflowStepType implements EnumConst {
 
     public boolean isError() {
         return ERROR.equals(this);
+    }
+
+    public boolean isSplit() {
+        return SPLIT.equals(this);
+    }
+
+    public boolean isMerge() {
+        return MERGE.equals(this);
     }
 
     public boolean isEnd() {
