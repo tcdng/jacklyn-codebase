@@ -62,6 +62,7 @@ import com.tcdng.jacklyn.shared.xml.config.workflow.WfFormFieldConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfFormPrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfFormSectionConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfFormTabConfig;
+import com.tcdng.jacklyn.shared.xml.config.workflow.WfMergeConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfMessageConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfPolicyConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfRecordActionConfig;
@@ -141,6 +142,7 @@ import com.tcdng.jacklyn.workflow.entities.WfItemPackedDoc;
 import com.tcdng.jacklyn.workflow.entities.WfItemPackedDocQuery;
 import com.tcdng.jacklyn.workflow.entities.WfItemQuery;
 import com.tcdng.jacklyn.workflow.entities.WfItemSplitEvent;
+import com.tcdng.jacklyn.workflow.entities.WfMergeField;
 import com.tcdng.jacklyn.workflow.entities.WfMessage;
 import com.tcdng.jacklyn.workflow.entities.WfMessageQuery;
 import com.tcdng.jacklyn.workflow.entities.WfPolicy;
@@ -459,8 +461,16 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     if (DataUtils.isNotBlank(wfStep.getBranchList())) {
                         branchList = new ArrayList<WfBranchDef>();
                         for (WfBranch wfBranch : wfStep.getBranchList()) {
+                            Set<String> mergeFieldNames = null;
+                            if (!DataUtils.isBlank(wfBranch.getMergeFieldList())) {
+                                mergeFieldNames = new HashSet<String>();
+                                for(WfMergeField wfMergeField: wfBranch.getMergeFieldList()) {
+                                    mergeFieldNames.add(wfMergeField.getFieldName());
+                                }
+                            }
+                            
                             branchList.add(new WfBranchDef(wfBranch.getName(), wfBranch.getDescription(),
-                                    wfBranch.getTarget()));
+                                    wfBranch.getTarget(), mergeFieldNames));
                         }
                     }
 
@@ -1714,6 +1724,18 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfBranch.setName(wfBranchConfig.getName());
                     wfBranch.setDescription(resolveApplicationMessage(wfBranchConfig.getDescription()));
                     wfBranch.setTarget(wfBranchConfig.getTarget());
+                    List<WfMergeField> mergeFieldList = null;
+                    if (wfBranchConfig.getWfMergesConfig() != null
+                            && DataUtils.isNotBlank(wfBranchConfig.getWfMergesConfig().getWfMergeConfigList())) {
+                        mergeFieldList = new ArrayList<WfMergeField>();
+                        for (WfMergeConfig wfMergeConfig : wfBranchConfig.getWfMergesConfig().getWfMergeConfigList()) {
+                            WfMergeField wfMergeField = new WfMergeField();
+                            wfMergeField.setFieldName(wfMergeConfig.getFieldName());
+                            mergeFieldList.add(wfMergeField);
+                        }
+                    }
+                    wfBranch.setMergeFieldList(mergeFieldList);
+
                     branchList.add(wfBranch);
                 }
             }
@@ -2126,7 +2148,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     if (mergedPd == null) {
                         mergedPd = pd;
                     } else {
-                        // TODO merge packable document
+                        WfBranchDef wfBranchDef = targetWfStepDef.getWfBranchDef(wfItem.getSplitBranchName());
+                        if (wfBranchDef.isWithMergeFields()) {
+                            // Merge packable document
+                            mergedPd.merge(pd, wfBranchDef.getMergeFields());
+                        }
                     }
                     wfItemIdList.add(wfItem.getId());
                 }
@@ -2145,7 +2171,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 // Route merged item
                 createWfItemAndSubmitToStep(mergedWfItem, evalMergeFlowingWfItem.getWfProcessDef(), routeToWfStep,
                         evalMergeFlowingWfItem.getBranchCode(), evalMergeFlowingWfItem.getDepartmentCode(), mergedPd);
-                
+
                 // Delete pre-merge data
                 db().deleteAll(new WfItemPackedDocQuery().wfItemIdIn(wfItemIdList));
                 db().deleteAll(new WfItemQuery().idIn(wfItemIdList));

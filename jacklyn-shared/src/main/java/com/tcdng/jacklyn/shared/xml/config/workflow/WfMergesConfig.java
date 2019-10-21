@@ -16,39 +16,26 @@
 
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlElement;
 
-import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
-
 /**
- * Workflow branch configuration.
+ * Workflow merges configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfBranchConfig extends BaseConfig {
-    
-    private String target;
+public class WfMergesConfig {
 
-    private WfMergesConfig wfMergesConfig;
+    private List<WfMergeConfig> wfMergeConfigList;
 
-    public String getTarget() {
-        return target;
+    public List<WfMergeConfig> getWfMergeConfigList() {
+        return wfMergeConfigList;
     }
 
-    @XmlAttribute(required = true)
-    public void setTarget(String target) {
-        this.target = target;
+    @XmlElement(name = "merge", required = true)
+    public void setWfMergeConfigList(List<WfMergeConfig> wfMergeConfigList) {
+        this.wfMergeConfigList = wfMergeConfigList;
     }
-
-    public WfMergesConfig getWfMergesConfig() {
-        return wfMergesConfig;
-    }
-
-    @XmlElement(name = "merges")
-    public void setWfMergesConfig(WfMergesConfig wfMergesConfig) {
-        this.wfMergesConfig = wfMergesConfig;
-    }
-    
 }

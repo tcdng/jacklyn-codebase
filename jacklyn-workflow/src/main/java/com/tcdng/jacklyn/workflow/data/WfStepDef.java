@@ -15,8 +15,10 @@
  */
 package com.tcdng.jacklyn.workflow.data;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,7 +50,7 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private WorkflowParticipantType participantType;
 
-    private List<WfBranchDef> branchList;
+    private Map<String, WfBranchDef> splitBranches;
 
     private List<WfEnrichmentDef> enrichmentList;
 
@@ -102,7 +104,17 @@ public class WfStepDef extends BaseLabelWfDef {
         this.includeForwarder = includeForwarder;
         this.versionTimestamp = versionTimestamp;
 
-        this.branchList = DataUtils.unmodifiableList(branchList);
+        if (!DataUtils.isBlank(branchList)) {
+            this.splitBranches = new LinkedHashMap<String, WfBranchDef>();
+            for (WfBranchDef wfBranchDef: branchList) {
+                this.splitBranches.put(wfBranchDef.getName(), wfBranchDef);
+            }
+            
+            this.splitBranches = Collections.unmodifiableMap(this.splitBranches);
+        } else {
+            this.splitBranches = Collections.emptyMap();
+        }
+        
         this.enrichmentList = DataUtils.unmodifiableList(enrichmentList);
         this.routingList = DataUtils.unmodifiableList(routingList);
         this.recordActionList = DataUtils.unmodifiableList(recordActionList);
@@ -145,12 +157,22 @@ public class WfStepDef extends BaseLabelWfDef {
         return participantType;
     }
 
-    public List<WfBranchDef> getBranchList() {
-        return branchList;
+    public WfBranchDef getWfBranchDef(String name) throws UnifyException {
+        WfBranchDef wfBranchDef = splitBranches.get(name);
+        if (wfBranchDef == null) {
+            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_STEP_BRANCH_WITH_NAME_UNKNOWN,
+                    getDescription(), name);
+        }
+        
+        return wfBranchDef;
+    }
+    
+    public Collection<WfBranchDef> getBranchList() {
+        return splitBranches.values();
     }
 
     public int branchCount() {
-        return branchList.size();
+        return splitBranches.size();
     }
     
     public List<WfEnrichmentDef> getEnrichmentList() {

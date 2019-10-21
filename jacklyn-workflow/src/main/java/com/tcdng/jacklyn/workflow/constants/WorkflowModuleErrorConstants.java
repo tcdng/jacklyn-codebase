@@ -144,4 +144,9 @@ public interface WorkflowModuleErrorConstants {
      * Workflow merge step {0} does not resolve to a route.
      */
     String WORKFLOW_MERGE_DOES_NOT_RESOLVE_TO_ROUTE = "WORKFLOW_0018";
+
+    /**
+     * Workflow step {0} branch {1} is unknown.
+     */
+    String WORKFLOW_STEP_BRANCH_WITH_NAME_UNKNOWN = "WORKFLOW_0019";
 }

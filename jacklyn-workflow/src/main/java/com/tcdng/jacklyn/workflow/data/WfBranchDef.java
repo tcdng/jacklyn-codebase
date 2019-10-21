@@ -16,6 +16,9 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import java.util.Set;
+
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
  * Workflow document parallel branch definition.
@@ -27,12 +30,23 @@ public class WfBranchDef extends BaseWfDef {
 
     private String target;
 
-    public WfBranchDef(String name, String description, String target) {
+    private Set<String> mergeFields;
+
+    public WfBranchDef(String name, String description, String target, Set<String> mergeFields) {
         super(name, description);
         this.target = target;
+        this.mergeFields = DataUtils.unmodifiableSet(mergeFields);
     }
 
     public String getTarget() {
         return target;
+    }
+
+    public Set<String> getMergeFields() {
+        return mergeFields;
+    }
+    
+    public boolean isWithMergeFields() {
+        return !mergeFields.isEmpty();
     }
 }
