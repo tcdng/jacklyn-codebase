@@ -15,7 +15,10 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.common.entities.BaseEntity;
+import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
@@ -47,6 +50,9 @@ public class WfBranch extends BaseEntity {
 
     @ListOnly(key = "wfStepId", property = "name")
     private String wfStepName;
+
+    @ChildList
+    private List<WfMergeField> mergeFieldList;
 
     @Override
     public String getDescription() {
@@ -87,6 +93,14 @@ public class WfBranch extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<WfMergeField> getMergeFieldList() {
+        return mergeFieldList;
+    }
+
+    public void setMergeFieldList(List<WfMergeField> mergeFieldList) {
+        this.mergeFieldList = mergeFieldList;
     }
 
 }
