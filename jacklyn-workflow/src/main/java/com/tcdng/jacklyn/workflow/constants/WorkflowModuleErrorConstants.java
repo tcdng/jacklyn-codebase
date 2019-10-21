@@ -139,4 +139,9 @@ public interface WorkflowModuleErrorConstants {
      * Workflow {0} with document {1} is unknown.
      */
     String WORKFLOW_TEMPLATE_DOCUMENT_WITH_NAME_UNKNOWN = "WORKFLOW_0017";
+
+    /**
+     * Workflow merge step {0} does not resolve to a route.
+     */
+    String WORKFLOW_MERGE_DOES_NOT_RESOLVE_TO_ROUTE = "WORKFLOW_0018";
 }

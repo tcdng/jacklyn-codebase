@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
+import java.util.Collection;
+
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 
 /**
@@ -31,6 +33,10 @@ public class WfItemPackedDocQuery extends BaseTimestampedEntityQuery<WfItemPacke
 
     public WfItemPackedDocQuery wfItemId(Long wfItemId) {
         return (WfItemPackedDocQuery) equals("wfItemId", wfItemId);
+    }
+
+    public WfItemPackedDocQuery wfItemIdIn(Collection<Long> wfItemId) {
+        return (WfItemPackedDocQuery) amongst("wfItemId", wfItemId);
     }
 
 }

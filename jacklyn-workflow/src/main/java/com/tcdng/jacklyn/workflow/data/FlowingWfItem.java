@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
+import com.tcdng.jacklyn.workflow.entities.WfItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.format.Formatter;
@@ -32,25 +33,25 @@ import com.tcdng.unify.core.format.Formatter;
  */
 public class FlowingWfItem implements ViewableWfItem {
 
-    private WfStepDef wfStepDef;
+    private WfProcessDef wfProcessDef;
 
-    private WfStepDef errorWfStepDef;
+    private WfStepDef wfStepDef;
 
     private WfStepDef sourceWfStepDef;
 
-    private WfTemplateDocDef wfTemplateDocDef;
-
-    private String processGlobalName;
-
-    private String wfItemBranchCode;
-
-    private String wfItemDepartmentCode;
-    
     private Long wfItemId;
 
     private Long wfItemHistId;
 
     private Long wfHistEventId;
+
+    private Long wfItemSplitEventId;
+
+    private Long wfItemAttachmentRefId;
+
+    private String wfItemBranchCode;
+
+    private String wfItemDepartmentCode;
 
     private String description;
 
@@ -63,7 +64,9 @@ public class FlowingWfItem implements ViewableWfItem {
     private String errorSource;
 
     private String errorMsg;
-    
+
+    private String splitBranchName;
+
     private PackableDoc pd;
 
     private Reader reader;
@@ -78,23 +81,23 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private List<WfAction> actionList;
 
-    public FlowingWfItem(WfStepDef wfStepDef, WfStepDef errorWfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
-            String wfItemBranchCode, String wfItemDepartmentCode, Long wfItemId, Long wfItemHistId, Long wfHistEventId,
-            String description, String title, Date createDt, Date stepDt, String heldBy, PackableDoc pd) {
+    public FlowingWfItem(WfProcessDef wfProcessDef, WfStepDef wfStepDef, WfItem wfItem, Long wfItemId, String title,
+            PackableDoc pd) {
         this.wfStepDef = wfStepDef;
-        this.errorWfStepDef = errorWfStepDef;
-        this.wfTemplateDocDef = wfTemplateDocDef;
-        this.processGlobalName = processGlobalName;
-        this.wfItemBranchCode = wfItemBranchCode;
-        this.wfItemDepartmentCode = wfItemDepartmentCode;
+        this.wfProcessDef = wfProcessDef;
+        this.wfItemBranchCode = wfItem.getBranchCode();
+        this.wfItemDepartmentCode = wfItem.getDepartmentCode();
         this.wfItemId = wfItemId;
-        this.wfItemHistId = wfItemHistId;
-        this.wfHistEventId = wfHistEventId;
-        this.description = description;
+        this.wfItemHistId = wfItem.getWfItemHistId();
+        this.wfHistEventId = wfItem.getWfHistEventId();
+        this.wfItemSplitEventId = wfItem.getWfItemSplitEventId();
+        this.wfItemAttachmentRefId = wfItem.getWfItemAttachmentRefId();
+        this.splitBranchName = wfItem.getSplitBranchName();
+        this.description = wfItem.getDescription();
         this.title = title;
-        this.createDt = createDt;
-        this.stepDt = stepDt;
-        this.heldBy = heldBy;
+        this.createDt = wfItem.getCreateDt();
+        this.stepDt = wfItem.getStepDt();
+        this.heldBy = wfItem.getHeldBy();
         this.pd = pd;
     }
 
@@ -105,7 +108,27 @@ public class FlowingWfItem implements ViewableWfItem {
 
     @Override
     public String getDocViewer() {
-        return wfTemplateDocDef.getWfDocUplGenerator().getDocViewer(pd);
+        return wfProcessDef.getWfTemplateDocDef().getWfDocUplGenerator().getDocViewer(pd);
+    }
+
+    @Override
+    public String getBranchCode() {
+        return wfItemBranchCode;
+    }
+
+    @Override
+    public String getDepartmentCode() {
+        return wfItemDepartmentCode;
+    }
+
+    @Override
+    public String getProcessGlobalName() {
+        return wfProcessDef.getGlobalName();
+    }
+
+    @Override
+    public String getDocName() {
+        return wfProcessDef.getWfTemplateDocDef().getDocName();
     }
 
     @Override
@@ -120,7 +143,15 @@ public class FlowingWfItem implements ViewableWfItem {
 
     @Override
     public WfTemplateDocDef getWfTemplateDocDef() {
-        return wfTemplateDocDef;
+        return wfProcessDef.getWfTemplateDocDef();
+    }
+
+    public WfTemplateDef getWfTemplateDef() {
+        return wfProcessDef.getWfTemplateDef();
+    }
+
+    public WfProcessDef getWfProcessDef() {
+        return wfProcessDef;
     }
 
     public Reader getReader() {
@@ -144,7 +175,7 @@ public class FlowingWfItem implements ViewableWfItem {
     }
 
     public WfStepDef getErrorWfStepDef() {
-        return errorWfStepDef;
+        return wfProcessDef.getWfTemplateDef().getErrorStep();
     }
 
     public WfStepDef getSourceWfStepDef() {
@@ -175,24 +206,8 @@ public class FlowingWfItem implements ViewableWfItem {
         return description;
     }
 
-    @Override
-    public String getBranchCode() {
-        return wfItemBranchCode;
-    }
-
-    @Override
-    public String getDepartmentCode() {
-        return wfItemDepartmentCode;
-    }
-
-    @Override
-    public String getProcessGlobalName() {
-        return processGlobalName;
-    }
-
-    @Override
-    public String getDocName() {
-        return wfTemplateDocDef.getDocName();
+    public String getSplitBranchName() {
+        return splitBranchName;
     }
 
     public Long getWfItemId() {
@@ -259,14 +274,22 @@ public class FlowingWfItem implements ViewableWfItem {
         this.actionList = actionList;
     }
 
+    public Long getWfItemSplitEventId() {
+        return wfItemSplitEventId;
+    }
+
+    public Long getWfItemAttachmentRefId() {
+        return wfItemAttachmentRefId;
+    }
+
     public List<WfFormPrivilegeDef> getFormPrivilegeList() {
         return wfStepDef.getFormPrivilegeList();
     }
-    
+
     public class Reader {
 
         private Restrictions restrictions;
-        
+
         private Reader() {
             String branchCode = null;
             if (wfStepDef.isBranchOnly()) {
@@ -277,7 +300,7 @@ public class FlowingWfItem implements ViewableWfItem {
             if (wfStepDef.isDepartmentOnly()) {
                 departmentCode = wfItemDepartmentCode;
             }
-            
+
             restrictions = new Restrictions(branchCode, departmentCode);
         }
 
@@ -288,11 +311,11 @@ public class FlowingWfItem implements ViewableWfItem {
         public WorkflowParticipantType getStepParticipant() {
             return wfStepDef.getParticipantType();
         }
-        
+
         public String getStepGlobalName() {
             return wfStepDef.getGlobalName();
         }
-       
+
         public String getItemBranchCode() {
             return wfItemBranchCode;
         }
@@ -332,7 +355,7 @@ public class FlowingWfItem implements ViewableWfItem {
         public boolean isLimitItemToDepartment() {
             return wfStepDef.isDepartmentOnly();
         }
-       
+
         public Object readField(String fieldName) throws UnifyException {
             return pd.read(fieldName);
         }
@@ -345,7 +368,7 @@ public class FlowingWfItem implements ViewableWfItem {
             return pd.readList(type, fieldName);
         }
     }
-    
+
     public class ReaderWriter extends Reader {
 
         private ReaderWriter() {
@@ -363,9 +386,9 @@ public class FlowingWfItem implements ViewableWfItem {
     }
 
     public class Restrictions {
-        
+
         String branchCode;
-        
+
         String departmentCode;
 
         public Restrictions(String branchCode, String departmentCode) {
@@ -379,6 +402,6 @@ public class FlowingWfItem implements ViewableWfItem {
 
         public String getDepartmentCode() {
             return departmentCode;
-        }        
+        }
     }
 }

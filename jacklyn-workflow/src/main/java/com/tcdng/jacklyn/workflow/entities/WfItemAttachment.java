@@ -17,7 +17,6 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntity;
 import com.tcdng.unify.core.annotation.Column;
-import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
@@ -27,11 +26,11 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "JKWFITEMATTACHMENT", uniqueConstraints = { @UniqueConstraint({ "wfItemId", "name" }) })
+@Table(name = "JKWFITEMATTACHMENT", uniqueConstraints = { @UniqueConstraint({ "wfItemAttachmentRefId", "name" }) })
 public class WfItemAttachment extends BaseTimestampedEntity {
 
-    @ForeignKey(WfItem.class)
-    private Long wfItemId;
+    @Column
+    private Long wfItemAttachmentRefId;
 
     @Column(name = "ATTACHMENTDEF_NM", length = 32)
     private String name;
@@ -47,12 +46,12 @@ public class WfItemAttachment extends BaseTimestampedEntity {
         return this.name;
     }
 
-    public Long getWfItemId() {
-        return wfItemId;
+    public Long getWfItemAttachmentRefId() {
+        return wfItemAttachmentRefId;
     }
 
-    public void setWfItemId(Long wfItemId) {
-        this.wfItemId = wfItemId;
+    public void setWfItemAttachmentRefId(Long wfItemAttachmentRefId) {
+        this.wfItemAttachmentRefId = wfItemAttachmentRefId;
     }
 
     public String getName() {

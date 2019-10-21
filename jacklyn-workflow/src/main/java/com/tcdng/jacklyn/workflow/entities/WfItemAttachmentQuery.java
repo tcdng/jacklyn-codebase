@@ -29,12 +29,8 @@ public class WfItemAttachmentQuery extends BaseTimestampedEntityQuery<WfItemAtta
         super(WfItemAttachment.class);
     }
 
-    public WfItemAttachmentQuery wfItemId(Long wfItemId) {
-        return (WfItemAttachmentQuery) equals("wfItemId", wfItemId);
-    }
-
-    public WfItemAttachmentQuery wfItemAttachmentDefId(Long wfItemAttachmentDefId) {
-        return (WfItemAttachmentQuery) equals("wfItemAttachmentDefId", wfItemAttachmentDefId);
+    public WfItemAttachmentQuery wfItemAttachmentRefId(Long wfItemAttachmentRefId) {
+        return (WfItemAttachmentQuery) equals("wfItemAttachmentRefId", wfItemAttachmentRefId);
     }
 
     public WfItemAttachmentQuery name(String name) {

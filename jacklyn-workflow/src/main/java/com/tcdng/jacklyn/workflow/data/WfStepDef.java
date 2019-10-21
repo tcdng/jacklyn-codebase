@@ -149,6 +149,10 @@ public class WfStepDef extends BaseLabelWfDef {
         return branchList;
     }
 
+    public int branchCount() {
+        return branchList.size();
+    }
+    
     public List<WfEnrichmentDef> getEnrichmentList() {
         return enrichmentList;
     }
