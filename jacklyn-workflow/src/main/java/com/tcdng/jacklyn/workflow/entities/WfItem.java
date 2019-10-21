@@ -24,6 +24,7 @@ import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.Index;
 import com.tcdng.unify.core.annotation.ListOnly;
+import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
@@ -33,13 +34,18 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @version 1.0
  */
+@Policy("wfitem-entitypolicy")
 @Table(
         name = "JKWFITEM", uniqueConstraints = { @UniqueConstraint({ "submissionId" }) },
-        indexes = { @Index("branchCode"), @Index("departmentCode"), @Index("stepGlobalName") })
+        indexes = { @Index("wfItemSplitEventId"), @Index("branchCode"), @Index("departmentCode"),
+                @Index("stepGlobalName") })
 public class WfItem extends BaseTimestampedEntity {
 
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
+
+    @ForeignKey(type = WfItemSplitEvent.class, nullable = true)
+    private Long wfItemSplitEventId;
 
     @Column(name = "SUBMISSION_ID", nullable = true)
     private Long submissionId;
@@ -52,6 +58,12 @@ public class WfItem extends BaseTimestampedEntity {
 
     @Column(name = "GLOBAL_STEP_NM", length = 128)
     private String stepGlobalName;
+
+    @Column(name = "SPLIT_BRANCH_NM", nullable = true)
+    private String splitBranchName;
+
+    @Column
+    private Long wfItemAttachmentRefId;
 
     @Column(nullable = true)
     private WorkflowParticipantType participantType;
@@ -110,6 +122,14 @@ public class WfItem extends BaseTimestampedEntity {
         this.wfHistEventId = wfHistEventId;
     }
 
+    public Long getWfItemSplitEventId() {
+        return wfItemSplitEventId;
+    }
+
+    public void setWfItemSplitEventId(Long wfItemSplitEventId) {
+        this.wfItemSplitEventId = wfItemSplitEventId;
+    }
+
     public Long getSubmissionId() {
         return submissionId;
     }
@@ -142,6 +162,22 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setStepGlobalName(String stepGlobalName) {
         this.stepGlobalName = stepGlobalName;
+    }
+
+    public String getSplitBranchName() {
+        return splitBranchName;
+    }
+
+    public void setSplitBranchName(String splitBranchName) {
+        this.splitBranchName = splitBranchName;
+    }
+
+    public Long getWfItemAttachmentRefId() {
+        return wfItemAttachmentRefId;
+    }
+
+    public void setWfItemAttachmentRefId(Long wfItemAttachmentRefId) {
+        this.wfItemAttachmentRefId = wfItemAttachmentRefId;
     }
 
     public WorkflowParticipantType getParticipantType() {

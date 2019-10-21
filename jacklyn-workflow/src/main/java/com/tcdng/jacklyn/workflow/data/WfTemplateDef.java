@@ -143,7 +143,7 @@ public class WfTemplateDef extends BaseWfDef {
     }
 
     public WfStepDef getWfStepDef(String stepName) throws UnifyException {
-        WfStepDef wfStepDef = this.steps.get(stepName);
+        WfStepDef wfStepDef = steps.get(stepName);
         if (wfStepDef == null) {
             throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_STEP_WITH_NAME_UNKNOWN,
                     this.getDescription(), stepName);

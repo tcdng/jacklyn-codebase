@@ -36,6 +36,10 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
         super(WfItem.class);
     }
     
+    public WfItemQuery wfItemSplitEventId(Long wfItemSplitEventId) {
+        return (WfItemQuery) equals("wfItemSplitEventId", wfItemSplitEventId);
+    }
+    
     public WfItemQuery submissionId(Long submissionId) {
         return (WfItemQuery) equals("submissionId", submissionId);
     }
