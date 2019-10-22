@@ -88,8 +88,8 @@ public interface WfStepUserInformationProvider extends UnifyComponent {
      * 
      * @param participant
      *            the participant type
-     * @param stepGlobalName
-     *            the workflow step
+     * @param globalStepName
+     *            the workflow step global name
      * @param branchCode
      *            restrict to branch code
      * @param departmentCode
