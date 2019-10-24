@@ -599,7 +599,7 @@ public interface WfTemplateErrorConstants {
     /**
      * Workflow template branch references target in different branch. Branch = {0}, target = {1}, target branch = {2}.
      */
-    String WFTEMPLATE_BRANCH_TARGET_DIFFERENT_BRANCH = "WFTMPL_006C";
+    String WFTEMPLATE_BRANCH_TARGET_DIFFERENT_BRANCH = "WFTMPL_006D";
 
     /**
      * Workflow template step has no origin. Index = {0}, name = {1}.

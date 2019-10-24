@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -44,6 +45,7 @@ import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.entities.WfAlert;
@@ -1176,6 +1178,24 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(foundCustomer);
     }
 
+    @Test
+    public void testSimpleSplitMerge() throws Exception {
+        WorkflowService wfService = getWorkflowService();
+        Order order = new Order("book", "Book Order", 10, BigDecimal.valueOf(120));
+        Long submissionId = wfService.submitToWorkflow("orderCategory.simpleOrder.orderDoc", order);
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        Long wfItemId = wfService.grabCurrentUserWorkItems("orderCategory.simpleOrder.finalApproval").get(0);
+
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(wfItemId);
+        Reader reader = flowingWfItem.getReader();
+        assertEquals(BigDecimal.valueOf(1200.00).setScale(2), reader.read(BigDecimal.class, "amount"));
+        assertEquals(BigDecimal.valueOf(60.00).setScale(2), reader.read(BigDecimal.class, "vat"));
+        assertEquals(BigDecimal.valueOf(1260.00).setScale(2), reader.read(BigDecimal.class, "totalAmount"));
+        assertEquals("24 Parklane", reader.read(String.class, "address"));
+        assertEquals("Delivery Pending", reader.read(String.class, "status"));
+    }
+
     @Override
     protected void onSetup() throws Exception {
         if (!published) {
@@ -1184,6 +1204,9 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
             WfCategoryConfig custRecActionWfCategoryConfig = readWfCategoryConfig("xml/wfcustomer-recordaction.xml");
             publish(custRecActionWfCategoryConfig);
+
+            WfCategoryConfig orderWfCategoryConfig = readWfCategoryConfig("xml/wforder.xml");
+            publish(orderWfCategoryConfig);
             published = true;
         }
     }
@@ -1218,7 +1241,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         while (!taskMonitor.isDone()) {
             ThreadUtils.yield();
         }
-
+        
         if (taskMonitor.getExceptions() != null && taskMonitor.getExceptions().length > 0) {
             throw taskMonitor.getExceptions()[0];
         }

@@ -241,10 +241,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 boolean stale = false;
                 try {
                     DocNameParts docNames = WfNameUtils.getDocNameParts(globalName);
-                    Date updateDt =
-                            db().value(Date.class, "wfCategoryUpdateDt",
-                                    new WfDocQuery().wfCategoryName(docNames.getCategoryName())
-                                            .name(docNames.getDocName()).wfCategoryStatus(RecordStatus.ACTIVE));
+                    Date updateDt = db().value(Date.class, "wfCategoryUpdateDt",
+                            new WfDocQuery().wfCategoryName(docNames.getCategoryName()).name(docNames.getDocName())
+                                    .wfCategoryStatus(RecordStatus.ACTIVE));
                     stale = resolveUTC(updateDt) != wfDocDef.getVersionTimestamp();
                 } catch (Exception e) {
                     logError(e);
@@ -257,9 +256,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             @Override
             protected WfDocDef create(String docGlobalName, Object... params) throws Exception {
                 DocNameParts docNames = WfNameUtils.getDocNameParts(docGlobalName);
-                WfDoc wfDoc =
-                        db().list(new WfDocQuery().wfCategoryName(docNames.getCategoryName())
-                                .name(docNames.getDocName()).wfCategoryStatus(RecordStatus.ACTIVE));
+                WfDoc wfDoc = db().list(new WfDocQuery().wfCategoryName(docNames.getCategoryName())
+                        .name(docNames.getDocName()).wfCategoryStatus(RecordStatus.ACTIVE));
                 if (wfDoc == null) {
                     throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_DOCUMENT_WITH_NAME_UNKNOWN,
                             docGlobalName);
@@ -268,8 +266,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 // Construct packable document configuration
                 Long wfDocId = wfDoc.getId();
                 PackableDocConfig.Builder pdcb = PackableDocConfig.newBuilder(docGlobalName);
-                Map<String, ComplexFieldConfigBuilderInfo> complexFieldConfigBuilders =
-                        new HashMap<String, ComplexFieldConfigBuilderInfo>();
+                Map<String, ComplexFieldConfigBuilderInfo> complexFieldConfigBuilders = new HashMap<String, ComplexFieldConfigBuilderInfo>();
 
                 // Fields
                 int size = wfDoc.getFieldList().size();
@@ -277,8 +274,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     WfDocField wfDocField = wfDoc.getFieldList().get(i);
                     if (wfDocField.getDataType() == null) { // Complex
                         String complexFieldName = wfDocField.getName();
-                        PackableDocConfig.Builder cfpdcb =
-                                PackableDocConfig.newBuilder(StringUtils.dotify(docGlobalName, complexFieldName));
+                        PackableDocConfig.Builder cfpdcb = PackableDocConfig
+                                .newBuilder(StringUtils.dotify(docGlobalName, complexFieldName));
                         for (i++; i < size; i++) {
                             WfDocField subWfDocField = wfDoc.getFieldList().get(i);
                             if (subWfDocField.getParentName() == null) {
@@ -298,11 +295,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 }
 
                 // Bean mappings
-                Map<String, Class<? extends Document>> beanClassByMapping =
-                        new HashMap<String, Class<? extends Document>>();
+                Map<String, Class<? extends Document>> beanClassByMapping = new HashMap<String, Class<? extends Document>>();
                 for (WfDocBeanMapping wfDocBeanMapping : wfDoc.getBeanMappingList()) {
-                    Class<? extends Document> beanClass =
-                            (Class<? extends Document>) ReflectUtils.getClassForName(wfDocBeanMapping.getBeanType());
+                    Class<? extends Document> beanClass = (Class<? extends Document>) ReflectUtils
+                            .getClassForName(wfDocBeanMapping.getBeanType());
                     BeanMappingConfig.Builder bcmb = BeanMappingConfig.newBuilder(beanClass);
                     for (WfDocFieldMapping wfDocFieldMapping : wfDocBeanMapping.getFieldMappingList()) {
                         bcmb.addMapping(wfDocFieldMapping.getDocFieldName(), wfDocFieldMapping.getBeanFieldName());
@@ -423,9 +419,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             @Override
             protected WfTemplateDef create(String templateGlobalName, Object... params) throws Exception {
                 TemplateNameParts templateNames = WfNameUtils.getTemplateNameParts(templateGlobalName);
-                WfTemplate wfTemplate =
-                        db().list(new WfTemplateQuery().wfCategoryName(templateNames.getCategoryName())
-                                .name(templateNames.getTemplateName()).wfCategoryStatus(RecordStatus.ACTIVE));
+                WfTemplate wfTemplate = db().list(new WfTemplateQuery().wfCategoryName(templateNames.getCategoryName())
+                        .name(templateNames.getTemplateName()).wfCategoryStatus(RecordStatus.ACTIVE));
                 if (wfTemplate == null) {
                     throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_TEMPLATE_WITH_NAME_UNKNOWN,
                             templateGlobalName);
@@ -452,9 +447,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 // Steps
                 List<WfStepDef> stepList = new ArrayList<WfStepDef>();
                 for (WfStep wfStep : wfTemplate.getStepList()) {
-                    String stepGlobalName =
-                            WfNameUtils.getStepGlobalName(templateNames.getCategoryName(),
-                                    templateNames.getTemplateName(), wfStep.getName());
+                    String stepGlobalName = WfNameUtils.getStepGlobalName(templateNames.getCategoryName(),
+                            templateNames.getTemplateName(), wfStep.getName());
 
                     // Branch information
                     List<WfBranchDef> branchList = null;
@@ -464,11 +458,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             Set<String> mergeFieldNames = null;
                             if (!DataUtils.isBlank(wfBranch.getMergeFieldList())) {
                                 mergeFieldNames = new HashSet<String>();
-                                for(WfMergeField wfMergeField: wfBranch.getMergeFieldList()) {
+                                for (WfMergeField wfMergeField : wfBranch.getMergeFieldList()) {
                                     mergeFieldNames.add(wfMergeField.getFieldName());
                                 }
                             }
-                            
+
                             branchList.add(new WfBranchDef(wfBranch.getName(), wfBranch.getDescription(),
                                     wfBranch.getTarget(), mergeFieldNames));
                         }
@@ -491,9 +485,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         for (WfRouting wfRouting : wfStep.getRoutingList()) {
                             WfDocClassifierDef wfDocClassifierDef = null;
                             if (wfRouting.getClassifierName() != null) {
-                                wfDocClassifierDef =
-                                        wfTemplateDocDefs.get(wfRouting.getDocName()).getWfDocDef()
-                                                .getWfDocClassifierDef(wfRouting.getClassifierName());
+                                wfDocClassifierDef = wfTemplateDocDefs.get(wfRouting.getDocName()).getWfDocDef()
+                                        .getWfDocClassifierDef(wfRouting.getClassifierName());
                             }
 
                             routingList.add(new WfRoutingDef(wfRouting.getName(), wfRouting.getDescription(),
@@ -559,10 +552,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     if (DataUtils.isNotBlank(wfStep.getAlertList())) {
                         alertList = new ArrayList<WfAlertDef>();
                         for (WfAlert wfAlert : wfStep.getAlertList()) {
-                            String notifTemplateGlobalName =
-                                    NotificationUtils.getTemplateGlobalName(WorkflowModuleNameConstants.WORKFLOW_MODULE,
-                                            WfNameUtils.getMessageGlobalName(templateNames.getCategoryName(),
-                                                    wfAlert.getNotificationTemplateCode()));
+                            String notifTemplateGlobalName = NotificationUtils.getTemplateGlobalName(
+                                    WorkflowModuleNameConstants.WORKFLOW_MODULE, WfNameUtils.getMessageGlobalName(
+                                            templateNames.getCategoryName(), wfAlert.getNotificationTemplateCode()));
                             alertList.add(new WfAlertDef(wfAlert.getDocName(), stepGlobalName, wfAlert.getName(),
                                     wfAlert.getDescription(), wfAlert.getType(), wfAlert.getParticipant(),
                                     wfAlert.getChannel(), notifTemplateGlobalName));
@@ -580,9 +572,15 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     }
 
                     // Step
-                    long expiryMilliSec =
-                            CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
-                    stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, stepGlobalName, wfStep.getName(),
+                    String originGlobalName = null;
+                    if(!StringUtils.isBlank(wfStep.getOrigin())) {
+                        originGlobalName = WfNameUtils.getStepGlobalName(templateNames.getCategoryName(),
+                                templateNames.getTemplateName(), wfStep.getOrigin());
+                    }
+                    
+                    long expiryMilliSec = CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR,
+                            wfStep.getExpiryHours());
+                    stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, stepGlobalName, originGlobalName, wfStep.getName(),
                             wfStep.getDescription(), wfStep.getLabel(), wfStep.getWorkAssigner(), wfStep.getStepType(),
                             wfStep.getParticipantType(), branchList, enrichmentList, routingList, recordActionList,
                             userActionList, formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
@@ -633,20 +631,18 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public TaskMonitor startWorkflowCategoryPublication(byte[] wfCategoryConfigBin, boolean activate)
             throws UnifyException {
-        TaskSetup taskSetup =
-                TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
-                        .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryConfigBin)
-                        .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).build();
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryConfigBin)
+                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).build();
         return launchTask(taskSetup);
     }
 
     @Override
     public TaskMonitor startWorkflowCategoryPublication(WfCategoryConfig wfCategoryConfig, boolean activate)
             throws UnifyException {
-        TaskSetup taskSetup =
-                TaskSetup.newBuilder().addTask(WorkflowCategoryPublicationTaskConstants.TASK_NAME)
-                        .setParam(WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG, wfCategoryConfig)
-                        .setParam(WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).build();
+        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowCategoryPublicationTaskConstants.TASK_NAME)
+                .setParam(WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG, wfCategoryConfig)
+                .setParam(WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).build();
         return launchTask(taskSetup);
     }
 
@@ -732,11 +728,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             for (WfTemplate wfTemplate : templateList) {
                 for (WfTemplateDoc wfTemplateDoc : db()
                         .findAll(new WfTemplateDocQuery().wfTemplateId(wfTemplate.getId()).manual(Boolean.TRUE))) {
-                    String processGlobalName =
-                            WfNameUtils.getProcessGlobalName(wfTemplate.getWfCategoryName(), wfTemplate.getName(),
-                                    wfTemplateDoc.getWfDocName());
-                    String processDesc =
-                            String.format("%s::%s", wfTemplate.getDescription(), wfTemplateDoc.getWfDocName());
+                    String processGlobalName = WfNameUtils.getProcessGlobalName(wfTemplate.getWfCategoryName(),
+                            wfTemplate.getName(), wfTemplateDoc.getWfDocName());
+                    String processDesc = String.format("%s::%s", wfTemplate.getDescription(),
+                            wfTemplateDoc.getWfDocName());
                     resultList.add(new ManualInitInfo(wfTemplate.getWfCategoryName(), wfTemplate.getWfCategoryDesc(),
                             processGlobalName, processDesc));
                 }
@@ -800,14 +795,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public String autoDetectTemplate(String categoryName, Class<? extends Document> documentType)
             throws UnifyException {
-        String wfDocName =
-                db().value(String.class, "wfDocName",
-                        new WfDocBeanMappingQuery().beanType(documentType.getName()).wfCategoryName(categoryName)
-                                .wfCategoryStatus(RecordStatus.ACTIVE).primaryMapping(Boolean.TRUE));
+        String wfDocName = db().value(String.class, "wfDocName",
+                new WfDocBeanMappingQuery().beanType(documentType.getName()).wfCategoryName(categoryName)
+                        .wfCategoryStatus(RecordStatus.ACTIVE).primaryMapping(Boolean.TRUE));
 
-        String wfTemplateName =
-                db().value(String.class, "name",
-                        new WfTemplateQuery().wfCategoryName(categoryName).wfDocName(wfDocName));
+        String wfTemplateName = db().value(String.class, "name",
+                new WfTemplateQuery().wfCategoryName(categoryName).wfDocName(wfDocName));
         return WfNameUtils.getTemplateGlobalName(categoryName, wfTemplateName);
     }
 
@@ -905,9 +898,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             pDoc.readFrom(document);
 
             // Submit to workflow
-            Long submissionId =
-                    submitToReceptacle(wfProcessDef, wfStepDef, document.getBranchCode(), document.getDepartmentCode(),
-                            pDoc);
+            Long submissionId = submitToReceptacle(wfProcessDef, wfStepDef, document.getBranchCode(),
+                    document.getDepartmentCode(), pDoc);
             submissionIdList.add(submissionId);
         }
 
@@ -996,8 +988,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     public InteractWfItems getCurrentUserWorkItems(String stepGlobalName) throws UnifyException {
         WfStepDef wfStepDef = accessCurrentUserStep(stepGlobalName);
         String useLoginID = getUserToken().getUserLoginId();
-        List<WfItem> wfItemList =
-                db().listAll(new WfItemQuery().stepGlobalName(wfStepDef.getGlobalName()).heldBy(useLoginID));
+        List<WfItem> wfItemList = db()
+                .listAll(new WfItemQuery().stepGlobalName(wfStepDef.getGlobalName()).heldBy(useLoginID));
 
         List<WfAction> actions = new ArrayList<WfAction>();
         for (WfUserActionDef wfUserActionDef : wfStepDef.getUserActionList()) {
@@ -1101,7 +1093,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             eventList.add(new WfItemHistEvent(wfHistEvent.getId(), wfHistEvent.getWfStepName(), wfHistEvent.getStepDt(),
                     wfHistEvent.getActionDt(), wfHistEvent.getActor(), wfHistEvent.getWfAction(), actionDesc,
-                    wfHistEvent.getComment(), wfHistEvent.getSrcWfStepName(), wfHistEvent.getErrorMsg()));
+                    wfHistEvent.getComment(), wfHistEvent.getSrcWfStepName(), wfHistEvent.getErrorCode(),
+                    wfHistEvent.getErrorMsg()));
         }
 
         return new WfItemHistory(wfHist.getId(), wfHist.getDocId(), processNameParts.getDocGlobalName(),
@@ -1119,8 +1112,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         Long wfItemAttachmentRefId = db().value(Long.class, "wfItemAttachmentRefId", new WfItemQuery().id(wfItemId));
-        WfItemAttachment wfItemAttachment =
-                db().find(new WfItemAttachmentQuery().wfItemAttachmentRefId(wfItemAttachmentRefId)
+        WfItemAttachment wfItemAttachment = db()
+                .find(new WfItemAttachmentQuery().wfItemAttachmentRefId(wfItemAttachmentRefId)
                         .name(attachment.getName()).select("wfItemAttachmentRefId", "name"));
         if (wfItemAttachment == null) {
             wfItemAttachment = new WfItemAttachment();
@@ -1143,8 +1136,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         List<WfItemAttachmentInfo> resultList = new ArrayList<WfItemAttachmentInfo>();
         Set<String> attachmentNames = wfDocDef.getWfDocAttachmentNames();
         if (!attachmentNames.isEmpty()) {
-            Long wfItemAttachmentRefId =
-                    db().value(Long.class, "wfItemAttachmentRefId", new WfItemQuery().id(wfItemId));
+            Long wfItemAttachmentRefId = db().value(Long.class, "wfItemAttachmentRefId",
+                    new WfItemQuery().id(wfItemId));
             WfItemAttachmentQuery query = new WfItemAttachmentQuery();
             query.wfItemAttachmentRefId(wfItemAttachmentRefId);
             if (attributesOnly) {
@@ -1179,17 +1172,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         WfItemAttachmentInfo result = null;
         Long wfItemAttachmentRefId = db().value(Long.class, "wfItemAttachmentRefId", new WfItemQuery().id(wfItemId));
-        WfItemAttachment wfItemAttachment =
-                db().find(new WfItemAttachmentQuery().wfItemAttachmentRefId(wfItemAttachmentRefId).name(name));
+        WfItemAttachment wfItemAttachment = db()
+                .find(new WfItemAttachmentQuery().wfItemAttachmentRefId(wfItemAttachmentRefId).name(name));
         if (wfItemAttachment == null) {
-            result =
-                    new WfItemAttachmentInfo(wfDocAttachmentDef.getName(), wfDocAttachmentDef.getLabel(), null,
-                            wfDocAttachmentDef.getAttachmentType());
+            result = new WfItemAttachmentInfo(wfDocAttachmentDef.getName(), wfDocAttachmentDef.getLabel(), null,
+                    wfDocAttachmentDef.getAttachmentType());
         } else {
-            result =
-                    new WfItemAttachmentInfo(wfItemAttachment.getName(), wfDocAttachmentDef.getLabel(),
-                            wfItemAttachment.getFileName(), wfDocAttachmentDef.getAttachmentType(),
-                            wfItemAttachment.getData());
+            result = new WfItemAttachmentInfo(wfItemAttachment.getName(), wfDocAttachmentDef.getLabel(),
+                    wfItemAttachment.getFileName(), wfDocAttachmentDef.getAttachmentType(), wfItemAttachment.getData());
         }
 
         return result;
@@ -1221,13 +1211,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         return getToolingTypes(ToolingWfDocUplGeneratorItem.class, WfDocUplGenerator.class);
     }
 
-    @Taskable(
-            name = WorkflowApplyActionTaskConstants.TASK_NAME,
-            description = "Apply Action to Multiple Workflow Items Task",
-            parameters = { @Parameter(name = WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, type = List.class),
-                    @Parameter(WorkflowApplyActionTaskConstants.WFACTION_NAME),
-                    @Parameter(WorkflowApplyActionTaskConstants.COMMENT) },
-            limit = TaskExecLimit.ALLOW_MULTIPLE)
+    @Taskable(name = WorkflowApplyActionTaskConstants.TASK_NAME, description = "Apply Action to Multiple Workflow Items Task", parameters = {
+            @Parameter(name = WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, type = List.class),
+            @Parameter(WorkflowApplyActionTaskConstants.WFACTION_NAME),
+            @Parameter(WorkflowApplyActionTaskConstants.COMMENT) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
     public int executeApplyActionToMultipleWorkflowItems(TaskMonitor taskMonitor, List<Long> wfItemIdList,
             String actionName, String comment) throws UnifyException {
         for (Long wfItemId : wfItemIdList) {
@@ -1252,34 +1239,21 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    @Taskable(
-            name = WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME,
-            description = "Workflow Category Binary Publication Task",
-            parameters = {
-                    @Parameter(
-                            name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, type = byte[].class),
-                    @Parameter(
-                            name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
-                            type = boolean.class) },
-            limit = TaskExecLimit.ALLOW_MULTIPLE)
+    @Taskable(name = WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME, description = "Workflow Category Binary Publication Task", parameters = {
+            @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, type = byte[].class),
+            @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, type = boolean.class) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, byte[] wfCategoryConfigBin,
             boolean activate) throws UnifyException {
         addTaskMessage(taskMonitor, "Extracting category configuration from binary...");
-        WfCategoryConfig wfCategoryConfig =
-                WfCategoryConfigUtils.readWfCategoryConfig(new ByteArrayInputStream(wfCategoryConfigBin));
+        WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils
+                .readWfCategoryConfig(new ByteArrayInputStream(wfCategoryConfigBin));
         return executeWorkflowCategoryPublicationTask(taskMonitor, wfCategoryConfig, activate);
     }
 
     @Override
-    @Taskable(
-            name = WorkflowCategoryPublicationTaskConstants.TASK_NAME,
-            description = "Workflow Category Publication Task",
-            parameters = { @Parameter(
-                    name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG, type = WfCategoryConfig.class),
-                    @Parameter(
-                            name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
-                            type = boolean.class) },
-            limit = TaskExecLimit.ALLOW_MULTIPLE)
+    @Taskable(name = WorkflowCategoryPublicationTaskConstants.TASK_NAME, description = "Workflow Category Publication Task", parameters = {
+            @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG, type = WfCategoryConfig.class),
+            @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE, type = boolean.class) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, WfCategoryConfig wfCategoryConfig,
             boolean activate) throws UnifyException {
         addTaskMessage(taskMonitor, "Starting workflow category publication...");
@@ -1294,9 +1268,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         addTaskMessage(taskMonitor, "Validation completed.");
 
         Long wfCategoryId = null;
-        WfCategory oldWfCategory =
-                db().find(
-                        new WfCategoryQuery().name(wfCategoryConfig.getName()).version(wfCategoryConfig.getVersion()));
+        WfCategory oldWfCategory = db()
+                .find(new WfCategoryQuery().name(wfCategoryConfig.getName()).version(wfCategoryConfig.getVersion()));
         String description = resolveApplicationMessage(wfCategoryConfig.getDescription());
         if (oldWfCategory == null) {
             addTaskMessage(taskMonitor, "Creating new category...");
@@ -1431,17 +1404,16 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         db().updateAll(new WfCategoryQuery().name(wfCategoryName), new Update().add("status", RecordStatus.INACTIVE));
 
         // Update notification messages (must always do this during activation)
-        List<WfMessage> wfMessageList =
-                db().listAll(new WfMessageQuery().wfCategoryName(wfCategoryName).wfCategoryVersion(wfCategoryVersion));
+        List<WfMessage> wfMessageList = db()
+                .listAll(new WfMessageQuery().wfCategoryName(wfCategoryName).wfCategoryVersion(wfCategoryVersion));
         if (!wfMessageList.isEmpty()) {
             Long wfModuleId = systemService.getModuleId(WorkflowModuleNameConstants.WORKFLOW_MODULE);
             NotificationTemplate notificationTemplate = new NotificationTemplate();
             for (WfMessage wfMessage : wfMessageList) {
-                String messageName =
-                        WfNameUtils.getMessageGlobalName(wfMessage.getWfCategoryName(), wfMessage.getName());
-                NotificationTemplate oldNotificationTemplate =
-                        notificationService.findNotificationTemplate(WorkflowModuleNameConstants.WORKFLOW_MODULE,
-                                messageName);
+                String messageName = WfNameUtils.getMessageGlobalName(wfMessage.getWfCategoryName(),
+                        wfMessage.getName());
+                NotificationTemplate oldNotificationTemplate = notificationService
+                        .findNotificationTemplate(WorkflowModuleNameConstants.WORKFLOW_MODULE, messageName);
                 String description = resolveApplicationMessage(wfMessage.getDescription());
                 if (oldNotificationTemplate == null) {
                     notificationTemplate.setModuleId(wfModuleId);
@@ -1483,9 +1455,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             } catch (Exception e) {
                 try {
                     // Push workflow item to error step
-                    String errorMsg = getExceptionMessage(LocaleType.APPLICATION, e);
                     flowingWfItem.setSourceWfStepDef(targetWfStepDef);
-                    flowingWfItem.setErrorMsg(errorMsg);
+                    if (e instanceof UnifyException) {
+                        flowingWfItem.setErrorCode(((UnifyException) e).getErrorCode());
+                    }
+
+                    flowingWfItem.setErrorMsg(getExceptionMessage(LocaleType.APPLICATION, e));
                     performFlowingWfItemTransition(flowingWfItem.getErrorWfStepDef(), flowingWfItem);
                 } catch (Exception e1) {
                     logError(e1);
@@ -1920,18 +1895,17 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         WfProcessDef wfProcessDef = wfProcesses.get(wfItem.getProcessGlobalName());
         WfTemplateDef wfTemplateDef = wfProcessDef.getWfTemplateDef();
         WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
-        PackableDoc pd =
-                PackableDoc.unpack(wfTemplateDocDef.getWfDocDef().getDocConfig(), wfItemPackedDoc.getPackedDoc(),
-                        wfStepDef.isAudit());
+        PackableDoc pd = PackableDoc.unpack(wfTemplateDocDef.getWfDocDef().getDocConfig(),
+                wfItemPackedDoc.getPackedDoc(), wfStepDef.isAudit());
 
         // Construct title
-        String title =
-                getSessionMessage("workflowitem.title.struct", wfTemplateDef.getName(), wfStepDef.getName(),
-                        wfTemplateDocDef.getWfDocDef().getName(), wfItem.getDescription());
+        String title = getSessionMessage("workflowitem.title.struct", wfTemplateDef.getName(), wfStepDef.getName(),
+                wfTemplateDocDef.getWfDocDef().getName(), wfItem.getDescription());
 
         // Create work item
         FlowingWfItem flowingWfItem = new FlowingWfItem(wfProcessDef, wfStepDef, wfItem, wfItemId, title, pd);
         flowingWfItem.setErrorSource(wfItem.getSrcWfStepName());
+        flowingWfItem.setErrorCode(wfItem.getErrorCode());
         flowingWfItem.setErrorMsg(wfItem.getErrorMsg());
         return flowingWfItem;
     }
@@ -1944,9 +1918,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         // Create workflow item and submit to step
-        WfItem wfItem = new WfItem();
-        wfItem.setInitiatedBy(getUserToken().getUserLoginId());
-        return createWfItemAndSubmitToStep(wfItem, wfProcessDef, trgWfStepDef, branchCode, departmentCode, packableDoc);
+        return createWfItemAndSubmitToStep(new WfItem(), wfProcessDef, trgWfStepDef, branchCode, departmentCode,
+                packableDoc);
     }
 
     private Long createWfItemAndSubmitToStep(WfItem wfItem, WfProcessDef wfProcessDef, WfStepDef trgWfStepDef,
@@ -1969,8 +1942,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Asynchronous processing. Push transition to queue.
         WfTemplateDocDef wfTemplateDocDef = wfProcessDef.getWfTemplateDocDef();
         wfItem.setWfItemDesc(WfNameUtils.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat(), packableDoc));
-        FlowingWfItem flowingWfItem =
-                new FlowingWfItem(wfProcessDef, trgWfStepDef, wfItem, wfItemId, null, packableDoc);
+        FlowingWfItem flowingWfItem = new FlowingWfItem(wfProcessDef, trgWfStepDef, wfItem, wfItemId, null,
+                packableDoc);
         pushIntoWfItemTransitionQueue(submissionId, trgWfStepDef, flowingWfItem);
         return submissionId;
     }
@@ -1994,6 +1967,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfHist.setProcessGlobalName(flowingWfItem.getProcessGlobalName());
             wfHist.setDescription(flowingWfItem.getDescription());
             wfHist.setDocId(flowingWfItem.getDocId());
+            wfHist.setInitiatedBy(getUserToken().getUserLoginId());
             wfItemHistId = (Long) db().create(wfHist);
         }
 
@@ -2009,6 +1983,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfHistEvent.setExpectedDt(expectedDt);
         if (targetWfStepDef.isError()) {
             wfHistEvent.setSrcWfStepName(flowingWfItem.getSourceWfStepDef().getName());
+            wfHistEvent.setErrorCode(flowingWfItem.getErrorCode());
             wfHistEvent.setErrorMsg(flowingWfItem.getErrorMsg());
         }
 
@@ -2033,8 +2008,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Perform enrichment if any
         String docName = flowingWfItem.getDocName();
         for (WfEnrichmentDef wfEnrichmentDef : targetWfStepDef.getEnrichmentList()) {
-            WfItemEnrichmentLogic wfItemEnrichmentLogic =
-                    (WfItemEnrichmentLogic) getComponent(wfEnrichmentDef.getLogic());
+            WfItemEnrichmentLogic wfItemEnrichmentLogic = (WfItemEnrichmentLogic) getComponent(
+                    wfEnrichmentDef.getLogic());
             if (!wfEnrichmentDef.isDoc() || wfEnrichmentDef.getDocName().equals(docName)) {
                 wfItemEnrichmentLogic.enrich(flowingWfItem.getReaderWriter());
             }
@@ -2045,32 +2020,30 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             for (WfRecordActionDef wfRecordActionDef : targetWfStepDef.getRecordActionList()) {
                 if (wfRecordActionDef.getDocName().equals(docName)) {
                     switch (wfRecordActionDef.getActionType()) {
-                        case CREATE: {
-                            Document document = ReflectUtils.newInstance(wfRecordActionDef.getBeanClass());
-                            packableDoc.writeTo(document);
-                            Object id = genericService.create(document);
-                            packableDoc.setId(id);
-                            // Update document id in item history
-                            db().updateById(WfItemHist.class, wfItemHistId, new Update().add("docId", id));
-                        }
-                            break;
-                        case DELETE: {
-                            genericService.delete(wfRecordActionDef.getBeanClass(), packableDoc.getId());
-                        }
-                            break;
-                        case READ: {
-                            Document document =
-                                    genericService.find(wfRecordActionDef.getBeanClass(), packableDoc.getId());
-                            packableDoc.readFrom(document);
-                        }
-                            break;
-                        case UPDATE: {
-                            Document document =
-                                    genericService.find(wfRecordActionDef.getBeanClass(), packableDoc.getId());
-                            packableDoc.writeTo(document);
-                            genericService.update(document);
-                        }
-                            break;
+                    case CREATE: {
+                        Document document = ReflectUtils.newInstance(wfRecordActionDef.getBeanClass());
+                        packableDoc.writeTo(document);
+                        Object id = genericService.create(document);
+                        packableDoc.setId(id);
+                        // Update document id in item history
+                        db().updateById(WfItemHist.class, wfItemHistId, new Update().add("docId", id));
+                    }
+                        break;
+                    case DELETE: {
+                        genericService.delete(wfRecordActionDef.getBeanClass(), packableDoc.getId());
+                    }
+                        break;
+                    case READ: {
+                        Document document = genericService.find(wfRecordActionDef.getBeanClass(), packableDoc.getId());
+                        packableDoc.readFrom(document);
+                    }
+                        break;
+                    case UPDATE: {
+                        Document document = genericService.find(wfRecordActionDef.getBeanClass(), packableDoc.getId());
+                        packableDoc.writeTo(document);
+                        genericService.update(document);
+                    }
+                        break;
                     }
                 }
             }
@@ -2094,8 +2067,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         if (targetWfStepDef.isEnd()) {
             // Termination. Delete workflow item.
-            Long wfItemAttachmentRefId =
-                    db().value(Long.class, "wfItemAttachmentRefId", new WfItemQuery().id(wfItemId));
+            Long wfItemAttachmentRefId = db().value(Long.class, "wfItemAttachmentRefId",
+                    new WfItemQuery().id(wfItemId));
             db().deleteAll(new WfItemAttachmentQuery().wfItemAttachmentRefId(wfItemAttachmentRefId));
             db().deleteAll(new WfItemPackedDocQuery().wfItemId(wfItemId));
             db().delete(WfItem.class, wfItemId);
@@ -2140,15 +2113,16 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 mergedWfItem.setBranchCode(flowingWfItem.getBranchCode());
                 mergedWfItem.setDepartmentCode(flowingWfItem.getDepartmentCode());
                 PackableDoc mergedPd = null;
+                WfStepDef originWfStepDef = wfSteps.get(targetWfStepDef.getOriginGlobalName());
                 for (WfItem wfItem : db().findAll(new WfItemQuery().wfItemSplitEventId(wfItemSplitEventId))) {
                     WfItemPackedDoc wfItemPackedDoc = db().find(WfItemPackedDoc.class, wfItemId);
-                    PackableDoc pd =
-                            PackableDoc.unpack(flowingWfItem.getWfTemplateDocDef().getWfDocDef().getDocConfig(),
-                                    wfItemPackedDoc.getPackedDoc(), false);
+                    PackableDoc pd = PackableDoc.unpack(
+                            flowingWfItem.getWfTemplateDocDef().getWfDocDef().getDocConfig(),
+                            wfItemPackedDoc.getPackedDoc(), false);
                     if (mergedPd == null) {
                         mergedPd = pd;
                     } else {
-                        WfBranchDef wfBranchDef = targetWfStepDef.getWfBranchDef(wfItem.getSplitBranchName());
+                        WfBranchDef wfBranchDef = originWfStepDef.getWfBranchDef(wfItem.getSplitBranchName());
                         if (wfBranchDef.isWithMergeFields()) {
                             // Merge packable document
                             mergedPd.merge(pd, wfBranchDef.getMergeFields());
@@ -2158,9 +2132,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 }
 
                 // Get routing for merged item
-                FlowingWfItem evalMergeFlowingWfItem =
-                        new FlowingWfItem(flowingWfItem.getWfProcessDef(), targetWfStepDef, mergedWfItem, null, null,
-                                mergedPd);
+                FlowingWfItem evalMergeFlowingWfItem = new FlowingWfItem(flowingWfItem.getWfProcessDef(),
+                        targetWfStepDef, mergedWfItem, null, null, mergedPd);
                 WfStepDef routeToWfStep = resolveWorkflowRouting(targetWfStepDef, evalMergeFlowingWfItem);
                 if (routeToWfStep == null) {
                     // Workflow item must be routed on merge
@@ -2181,6 +2154,13 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 db().updateById(wfItemSplitEvent);
             }
         } else {
+            // Update packable document if changed
+            if (packableDoc.isUpdated()) {
+                db().updateAll(new WfItemPackedDocQuery().wfItemId(wfItemId),
+                        new Update().add("packedDoc", packableDoc.pack()).add("updateDt", db().getNow()));
+                packableDoc.clearUpdated();
+            }
+            
             // Route item if necessary
             WfStepDef routeToWfStep = resolveWorkflowRouting(targetWfStepDef, flowingWfItem);
             if (routeToWfStep != null) {
@@ -2190,19 +2170,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             }
 
             // Workflow item has settled in current step
-            // Commit if packable document has changed
-            if (packableDoc.isUpdated()) {
-                db().updateAll(new WfItemPackedDocQuery().wfItemId(wfItemId),
-                        new Update().add("packedDoc", packableDoc.pack()).add("updateDt", db().getNow()));
-                packableDoc.clearUpdated();
-            }
-
             // Assign to human agent if user actions are associated with current step
             if (targetWfStepDef.isUserInteractive()) {
                 String heldBy = null;
                 if (targetWfStepDef.isWithWorkAssigner()) {
-                    WfItemAssignmentPolicy wfItemAssignmentPolicy =
-                            (WfItemAssignmentPolicy) getComponent(targetWfStepDef.getWorkAssignerName());
+                    WfItemAssignmentPolicy wfItemAssignmentPolicy = (WfItemAssignmentPolicy) getComponent(
+                            targetWfStepDef.getWorkAssignerName());
                     heldBy = wfItemAssignmentPolicy.execute(flowingWfItemReader);
                 }
 
@@ -2243,8 +2216,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             throws UnifyException {
         WfDocClassifierDef wfDocClassifierDef = wfRoutingDef.getClassifier();
         if (wfDocClassifierDef != null) {
-            WfItemClassifierLogic workflowDocClassifierLogic =
-                    (WfItemClassifierLogic) getComponent(wfDocClassifierDef.getLogic());
+            WfItemClassifierLogic workflowDocClassifierLogic = (WfItemClassifierLogic) getComponent(
+                    wfDocClassifierDef.getLogic());
             return workflowDocClassifierLogic.match(flowingWfItemReader, wfDocClassifierDef);
         }
 
@@ -2291,10 +2264,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         boolean stale = false;
         try {
             TemplateNameParts templateNames = WfNameUtils.getTemplateNameParts(templateGlobalName);
-            Date updateDt =
-                    db().value(Date.class, "wfCategoryUpdateDt",
-                            new WfTemplateQuery().wfCategoryName(templateNames.getCategoryName())
-                                    .name(templateNames.getTemplateName()).wfCategoryStatus(RecordStatus.ACTIVE));
+            Date updateDt = db().value(Date.class, "wfCategoryUpdateDt",
+                    new WfTemplateQuery().wfCategoryName(templateNames.getCategoryName())
+                            .name(templateNames.getTemplateName()).wfCategoryStatus(RecordStatus.ACTIVE));
             stale = resolveUTC(updateDt) != currentTimeStamp;
         } catch (Exception e) {
             logError(e);

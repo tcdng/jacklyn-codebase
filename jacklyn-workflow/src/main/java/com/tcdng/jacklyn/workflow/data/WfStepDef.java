@@ -44,6 +44,8 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private String globalName;
 
+    private String originGlobalName;
+    
     private String workAssignerName;
 
     private WorkflowStepType stepType;
@@ -82,7 +84,7 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private long versionTimestamp;
 
-    public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName, String name, String description,
+    public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName, String originGlobalName, String name, String description,
             String label, String workAssignerName, WorkflowStepType stepType, WorkflowParticipantType participantType,
             List<WfBranchDef> branchList, List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
@@ -93,6 +95,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.wfTemplateId = wfTemplateId;
         this.templateGlobalName = templateGlobalName;
         this.globalName = globalName;
+        this.originGlobalName = originGlobalName;
         this.workAssignerName = workAssignerName;
         this.stepType = stepType;
         this.participantType = participantType;
@@ -143,6 +146,10 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public String getGlobalName() {
         return globalName;
+    }
+
+    public String getOriginGlobalName() {
+        return originGlobalName;
     }
 
     public String getWorkAssignerName() {

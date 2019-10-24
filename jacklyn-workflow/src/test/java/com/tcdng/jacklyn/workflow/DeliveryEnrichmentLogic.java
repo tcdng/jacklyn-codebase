@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department
+ * Copyright 2018-2019 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,27 +16,24 @@
 
 package com.tcdng.jacklyn.workflow;
 
-import com.tcdng.jacklyn.workflow.business.AbstractWfItemAssignmentPolicy;
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentLogic;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.ReaderWriter;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Test workflow item assignment policy implementation.
+ * Test delivery enrichment logic.
  * 
- * @author Lateef
+ * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("test-wfitemassignmentpolicy")
-public class TestWfItemAssignmentPolicyImpl extends AbstractWfItemAssignmentPolicy {
+@Component("delivery-enrichmentlogic")
+public class DeliveryEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
 
     @Override
-    public String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
-        if ("BadFox".equals(flowingWfItemReader.read(String.class, "firstName"))) {
-            throw new RuntimeException("Bad customer detected!");
-        }
-        
-        return "terry5432";
+    public void enrich(ReaderWriter rw) throws UnifyException {
+        rw.write("address", "24 Parklane");
+        rw.write("status", "Delivery Pending");
     }
 
 }

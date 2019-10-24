@@ -63,6 +63,8 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private String errorSource;
 
+    private String errorCode;
+
     private String errorMsg;
 
     private String splitBranchName;
@@ -184,6 +186,14 @@ public class FlowingWfItem implements ViewableWfItem {
 
     public void setSourceWfStepDef(WfStepDef sourceWfStepDef) {
         this.sourceWfStepDef = sourceWfStepDef;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     public String getErrorMsg() {
@@ -356,15 +366,15 @@ public class FlowingWfItem implements ViewableWfItem {
             return wfStepDef.isDepartmentOnly();
         }
 
-        public Object readField(String fieldName) throws UnifyException {
+        public Object read(String fieldName) throws UnifyException {
             return pd.read(fieldName);
         }
 
-        public <T> T readField(Class<T> type, String fieldName) throws UnifyException {
+        public <T> T read(Class<T> type, String fieldName) throws UnifyException {
             return pd.read(type, fieldName);
         }
 
-        public <T> List<T> readListField(Class<T> type, String fieldName) throws UnifyException {
+        public <T> List<T> readList(Class<T> type, String fieldName) throws UnifyException {
             return pd.readList(type, fieldName);
         }
     }
@@ -375,11 +385,11 @@ public class FlowingWfItem implements ViewableWfItem {
 
         }
 
-        public void writeField(String fieldName, Object value) throws UnifyException {
+        public void write(String fieldName, Object value) throws UnifyException {
             pd.write(fieldName, value);
         }
 
-        public void writeField(String fieldName, Object value, Formatter<?> formatter) throws UnifyException {
+        public void write(String fieldName, Object value, Formatter<?> formatter) throws UnifyException {
             pd.write(fieldName, value, formatter);
         }
 

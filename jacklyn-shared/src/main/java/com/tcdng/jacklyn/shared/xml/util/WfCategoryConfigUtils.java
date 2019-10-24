@@ -901,88 +901,88 @@ public final class WfCategoryConfigUtils {
             WorkflowStepType type = wfStepConfig.getType();
             if (type != null) {
                 switch (type) {
-                    case AUTOMATIC:
-                        validateEnrichments(wfStepConfig);
-                        validatePolicies(wfStepConfig);
-                        validateRecordActions(wfStepConfig);
-                        validateAlerts(wfStepConfig);
-                        validateRoutings(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateFormPrivileges(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    case END:
-                        validateAlerts(wfStepConfig);
-                        invalidateEnrichments(wfStepConfig);
-                        invalidateRoutings(wfStepConfig);
-                        invalidatePolicies(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateFormPrivileges(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    case INTERACTIVE:
-                        validateAlerts(wfStepConfig);
-                        validateUserActions(wfStepConfig);
-                        validateFormPrivileges(wfStepConfig);
-                        invalidateEnrichments(wfStepConfig);
-                        invalidatePolicies(wfStepConfig);
-                        invalidateRoutings(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    case MANUAL:
-                        validateAlerts(wfStepConfig);
-                        validateFormPrivileges(wfStepConfig);
-                        invalidateEnrichments(wfStepConfig);
-                        invalidateRoutings(wfStepConfig);
-                        invalidatePolicies(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    case START:
-                        validateEnrichments(wfStepConfig);
-                        validateAlerts(wfStepConfig);
-                        validateRoutings(wfStepConfig);
-                        invalidatePolicies(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateFormPrivileges(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    case ERROR:
-                        validateAlerts(wfStepConfig);
-                        validatePolicies(wfStepConfig);
-                        invalidateEnrichments(wfStepConfig);
-                        invalidateRoutings(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateFormPrivileges(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    case SPLIT:
-                        ensureAndValidateBranches(wfStepConfig);
-                        invalidateAlerts(wfStepConfig);
-                        invalidatePolicies(wfStepConfig);
-                        invalidateEnrichments(wfStepConfig);
-                        invalidateRoutings(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateFormPrivileges(wfStepConfig);
-                        break;
-                    case MERGE:
-                        validateRoutings(wfStepConfig);
-                        invalidateAlerts(wfStepConfig);
-                        invalidatePolicies(wfStepConfig);
-                        invalidateEnrichments(wfStepConfig);
-                        invalidateRecordActions(wfStepConfig);
-                        invalidateUserActions(wfStepConfig);
-                        invalidateFormPrivileges(wfStepConfig);
-                        invalidateBranches(wfStepConfig);
-                        break;
-                    default:
-                        break;
+                case AUTOMATIC:
+                    validateEnrichments(wfStepConfig);
+                    validatePolicies(wfStepConfig);
+                    validateRecordActions(wfStepConfig);
+                    validateAlerts(wfStepConfig);
+                    validateRoutings(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateFormPrivileges(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                case END:
+                    validateAlerts(wfStepConfig);
+                    invalidateEnrichments(wfStepConfig);
+                    invalidateRoutings(wfStepConfig);
+                    invalidatePolicies(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateFormPrivileges(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                case INTERACTIVE:
+                    validateAlerts(wfStepConfig);
+                    validateUserActions(wfStepConfig);
+                    validateFormPrivileges(wfStepConfig);
+                    invalidateEnrichments(wfStepConfig);
+                    invalidatePolicies(wfStepConfig);
+                    invalidateRoutings(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                case MANUAL:
+                    validateAlerts(wfStepConfig);
+                    validateFormPrivileges(wfStepConfig);
+                    invalidateEnrichments(wfStepConfig);
+                    invalidateRoutings(wfStepConfig);
+                    invalidatePolicies(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                case START:
+                    validateEnrichments(wfStepConfig);
+                    validateAlerts(wfStepConfig);
+                    validateRoutings(wfStepConfig);
+                    invalidatePolicies(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateFormPrivileges(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                case ERROR:
+                    validateAlerts(wfStepConfig);
+                    validatePolicies(wfStepConfig);
+                    invalidateEnrichments(wfStepConfig);
+                    invalidateRoutings(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateFormPrivileges(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                case SPLIT:
+                    ensureAndValidateBranches(wfStepConfig);
+                    invalidateAlerts(wfStepConfig);
+                    invalidatePolicies(wfStepConfig);
+                    invalidateEnrichments(wfStepConfig);
+                    invalidateRoutings(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateFormPrivileges(wfStepConfig);
+                    break;
+                case MERGE:
+                    validateRoutings(wfStepConfig);
+                    invalidateAlerts(wfStepConfig);
+                    invalidatePolicies(wfStepConfig);
+                    invalidateEnrichments(wfStepConfig);
+                    invalidateRecordActions(wfStepConfig);
+                    invalidateUserActions(wfStepConfig);
+                    invalidateFormPrivileges(wfStepConfig);
+                    invalidateBranches(wfStepConfig);
+                    break;
+                default:
+                    break;
                 }
             }
 
@@ -993,25 +993,25 @@ public final class WfCategoryConfigUtils {
             WorkflowStepType type = wfStepConfig.getType();
             if (type != null) {
                 switch (type) {
-                    case AUTOMATIC:
-                        break;
-                    case END:
-                        break;
-                    case INTERACTIVE:
-                        break;
-                    case MANUAL:
-                        break;
-                    case START:
-                        break;
-                    case ERROR:
-                        break;
-                    case SPLIT:
-                        break;
-                    case MERGE:
-                        ensureMergeOrigin(wfStepConfig);
-                        break;
-                    default:
-                        break;
+                case AUTOMATIC:
+                    break;
+                case END:
+                    break;
+                case INTERACTIVE:
+                    break;
+                case MANUAL:
+                    break;
+                case START:
+                    break;
+                case ERROR:
+                    break;
+                case SPLIT:
+                    break;
+                case MERGE:
+                    ensureMergeOrigin(wfStepConfig);
+                    break;
+                default:
+                    break;
                 }
             }
 
@@ -1117,8 +1117,8 @@ public final class WfCategoryConfigUtils {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_UNKNOWN_TEMPLATE_DOC, index,
                                         wfStepConfig.getName(), routingName, wfRoutingConfig.getDocument());
                             } else {
-                                WfDocumentValidationContext wfDocCtx =
-                                        wfCatCtx.getDocument(wfRoutingConfig.getDocument());
+                                WfDocumentValidationContext wfDocCtx = wfCatCtx
+                                        .getDocument(wfRoutingConfig.getDocument());
                                 if (wfDocCtx != null && !wfDocCtx.isClassifier(wfRoutingConfig.getClassifierName())) {
                                     addError(
                                             WfTemplateErrorConstants.WFTEMPLATE_ROUTING_UNKNOWN_CATEGORY_DOC_CLASSIFIER,
@@ -1141,15 +1141,20 @@ public final class WfCategoryConfigUtils {
                                     wfStepConfig.getName(), routingName, target);
                         } else {
                             if (!WorkflowStepType.MERGE.equals(targetWfStepConfig.getType())) {
-                                if (!ReflectUtils.equals(wfStepConfig.getBranch(), targetWfStepConfig.getBranch())) {
+                                if (!ReflectUtils.objectEquals(wfStepConfig.getBranch(),
+                                        targetWfStepConfig.getBranch())) {
                                     addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_NOT_SAME_BRANCH, index,
                                             wfStepConfig.getName(), routingName, target);
                                 }
                             }
 
-                            if (!ReflectUtils.equals(wfStepConfig.getOrigin(), targetWfStepConfig.getOrigin())) {
-                                addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_NOT_SAME_ORIGIN, index,
-                                        wfStepConfig.getName(), routingName, target);
+                            if (!WorkflowStepType.MERGE.equals(wfStepConfig.getType())) {
+                                if (!ReflectUtils.objectEquals(wfStepConfig.getOrigin(),
+                                        targetWfStepConfig.getOrigin())) {
+                                    addError(WfTemplateErrorConstants.WFTEMPLATE_ROUTING_TARGET_NOT_SAME_ORIGIN, index,
+                                            wfStepConfig.getName(), routingName, wfStepConfig.getOrigin(), target,
+                                            targetWfStepConfig.getOrigin());
+                                }
                             }
 
                             if (WorkflowStepType.START.equals(targetWfStepConfig.getType())) {
@@ -1305,8 +1310,8 @@ public final class WfCategoryConfigUtils {
                                 addError(WfTemplateErrorConstants.WFTEMPLATE_RECORDACTION_UNKNOWN_TEMPLATE_DOC, index,
                                         wfStepConfig.getName(), recordActionName, wfRecordActionConfig.getDocument());
                             } else {
-                                WfDocumentValidationContext wfDocCtx =
-                                        wfCatCtx.getDocument(wfRecordActionConfig.getDocument());
+                                WfDocumentValidationContext wfDocCtx = wfCatCtx
+                                        .getDocument(wfRecordActionConfig.getDocument());
                                 if (wfDocCtx != null
                                         && !wfDocCtx.isBeanMapping(wfRecordActionConfig.getDocMappingName())) {
                                     addError(

@@ -34,7 +34,7 @@ public class WfItemSplitEvent extends BaseEntity {
     @Column(name = "SPLIT_ORIGIN_NM", length = 64)
     private String splitOriginName;
 
-    @Column(name = "SPLIT_BRANCH_NM", length = 64)
+    @Column(name = "SPLIT_BRANCH_NM", length = 64, nullable = true)
     private String splitBranchName;
 
     @Column
