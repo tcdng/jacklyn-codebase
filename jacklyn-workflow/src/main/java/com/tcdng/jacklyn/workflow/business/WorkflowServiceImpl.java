@@ -24,10 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
@@ -38,6 +35,7 @@ import com.tcdng.jacklyn.notification.utils.NotificationUtils;
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
 import com.tcdng.jacklyn.shared.workflow.WorkflowCategoryBinaryPublicationTaskConstants;
 import com.tcdng.jacklyn.shared.workflow.WorkflowCategoryPublicationTaskConstants;
+import com.tcdng.jacklyn.shared.workflow.WorkflowExecuteTransitionTaskConstants;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
@@ -81,6 +79,7 @@ import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItemTransition;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
@@ -162,8 +161,6 @@ import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Parameter;
-import com.tcdng.unify.core.annotation.Periodic;
-import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
@@ -187,7 +184,6 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
-import com.tcdng.unify.core.util.ThreadUtils;
 
 /**
  * Default workflow business service implementation.
@@ -216,6 +212,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     private SequenceNumberService sequenceNumberService;
 
     @Configurable
+    private WfTransitionQueueManager wfTransitionQueueManager;
+
+    @Configurable
     private WfItemAlertLogic wfItemAlertLogic;
 
     private FactoryMap<String, WfDocDef> wfDocs;
@@ -226,14 +225,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     private FactoryMap<String, WfProcessDef> wfProcesses;
 
-    private Queue<FlowingWfItemTransition> pendingWfItemTransitionQueue;
-
-    private Set<Long> pendingSubmissionIds;
-
     public WorkflowServiceImpl() {
-        pendingWfItemTransitionQueue = new ConcurrentLinkedQueue<FlowingWfItemTransition>();
-        pendingSubmissionIds = ConcurrentHashMap.newKeySet();
-
         wfDocs = new FactoryMap<String, WfDocDef>(true) {
 
             @Override
@@ -426,6 +418,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             templateGlobalName);
                 }
 
+                String templateGlobalLockName = "wflock::" + templateGlobalName;
                 Long wfTemplateId = wfTemplate.getId();
                 long templateTimestamp = resolveUTC(wfTemplate.getWfCategoryUpdateDt());
 
@@ -573,19 +566,20 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     // Step
                     String originGlobalName = null;
-                    if(!StringUtils.isBlank(wfStep.getOrigin())) {
+                    if (!StringUtils.isBlank(wfStep.getOrigin())) {
                         originGlobalName = WfNameUtils.getStepGlobalName(templateNames.getCategoryName(),
                                 templateNames.getTemplateName(), wfStep.getOrigin());
                     }
-                    
+
                     long expiryMilliSec = CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR,
                             wfStep.getExpiryHours());
-                    stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, stepGlobalName, originGlobalName, wfStep.getName(),
-                            wfStep.getDescription(), wfStep.getLabel(), wfStep.getWorkAssigner(), wfStep.getStepType(),
-                            wfStep.getParticipantType(), branchList, enrichmentList, routingList, recordActionList,
-                            userActionList, formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
-                            expiryMilliSec, wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
-                            wfStep.getIncludeForwarder(), templateTimestamp));
+                    stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, templateGlobalLockName, stepGlobalName,
+                            originGlobalName, wfStep.getName(), wfStep.getDescription(), wfStep.getLabel(),
+                            wfStep.getWorkAssigner(), wfStep.getStepType(), wfStep.getParticipantType(), branchList,
+                            enrichmentList, routingList, recordActionList, userActionList, formPrivilegeList, alertList,
+                            policyList, wfStep.getItemsPerSession(), expiryMilliSec, wfStep.getAudit(),
+                            wfStep.getBranchOnly(), wfStep.getDepartmentOnly(), wfStep.getIncludeForwarder(),
+                            templateTimestamp));
                 }
 
                 return new WfTemplateDef(wfTemplateId, templateNames.getCategoryName(), templateGlobalName,
@@ -908,20 +902,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public void ensureSubmissionsProcessed(Long... submissionId) throws UnifyException {
-        boolean present;
-        do {
-            present = false;
-            for (Long id : submissionId) {
-                present = pendingSubmissionIds.contains(id);
-                if (present) {
-                    break;
-                }
-            }
-
-            if (present) {
-                ThreadUtils.sleep(250);
-            }
-        } while (present);
+        wfTransitionQueueManager.ensureSubmissionsProcessed(submissionId);
     }
 
     @Override
@@ -1045,7 +1026,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             // Push to transition queue
             Long submissionId = sequenceNumberService.getCachedBlockNextSequenceNumber(WORKFLOW_SUBMISSION_ID_SEQUENCE);
-            pushIntoWfItemTransitionQueue(submissionId, trgWfStep, flowingWfItem);
+            wfTransitionQueueManager.pushWfItemToTransitionQueue(submissionId, trgWfStep, flowingWfItem);
             return submissionId;
         }
 
@@ -1211,10 +1192,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         return getToolingTypes(ToolingWfDocUplGeneratorItem.class, WfDocUplGenerator.class);
     }
 
-    @Taskable(name = WorkflowApplyActionTaskConstants.TASK_NAME, description = "Apply Action to Multiple Workflow Items Task", parameters = {
-            @Parameter(name = WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, type = List.class),
-            @Parameter(WorkflowApplyActionTaskConstants.WFACTION_NAME),
-            @Parameter(WorkflowApplyActionTaskConstants.COMMENT) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
+    @Taskable(name = WorkflowApplyActionTaskConstants.TASK_NAME,
+            description = "Apply Action to Multiple Workflow Items Task",
+            parameters = { @Parameter(name = WorkflowApplyActionTaskConstants.WFITEMS_IDLIST, type = List.class),
+                    @Parameter(WorkflowApplyActionTaskConstants.WFACTION_NAME),
+                    @Parameter(WorkflowApplyActionTaskConstants.COMMENT) },
+            limit = TaskExecLimit.ALLOW_MULTIPLE)
     public int executeApplyActionToMultipleWorkflowItems(TaskMonitor taskMonitor, List<Long> wfItemIdList,
             String actionName, String comment) throws UnifyException {
         for (Long wfItemId : wfItemIdList) {
@@ -1239,9 +1222,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    @Taskable(name = WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME, description = "Workflow Category Binary Publication Task", parameters = {
-            @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, type = byte[].class),
-            @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, type = boolean.class) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
+    @Taskable(name = WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME,
+            description = "Workflow Category Binary Publication Task",
+            parameters = {
+                    @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN,
+                            type = byte[].class),
+                    @Parameter(name = WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
+                            type = boolean.class) },
+            limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, byte[] wfCategoryConfigBin,
             boolean activate) throws UnifyException {
         addTaskMessage(taskMonitor, "Extracting category configuration from binary...");
@@ -1251,9 +1239,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    @Taskable(name = WorkflowCategoryPublicationTaskConstants.TASK_NAME, description = "Workflow Category Publication Task", parameters = {
-            @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG, type = WfCategoryConfig.class),
-            @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE, type = boolean.class) }, limit = TaskExecLimit.ALLOW_MULTIPLE)
+    @Taskable(name = WorkflowCategoryPublicationTaskConstants.TASK_NAME,
+            description = "Workflow Category Publication Task",
+            parameters = {
+                    @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_CONFIG,
+                            type = WfCategoryConfig.class),
+                    @Parameter(name = WorkflowCategoryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
+                            type = boolean.class) },
+            limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeWorkflowCategoryPublicationTask(TaskMonitor taskMonitor, WfCategoryConfig wfCategoryConfig,
             boolean activate) throws UnifyException {
         addTaskMessage(taskMonitor, "Starting workflow category publication...");
@@ -1444,12 +1437,17 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 new Update().add("updateDt", db().getNow()).add("status", RecordStatus.ACTIVE));
     }
 
-    @Periodic(PeriodicType.EXTREME)
-    public void performFlowingWfItemTransitions(TaskMonitor taskMonitor) throws UnifyException {
-        FlowingWfItemTransition wfItemTransition = null;
-        while ((wfItemTransition = pendingWfItemTransitionQueue.poll()) != null) {
-            FlowingWfItem flowingWfItem = wfItemTransition.getFlowingWfItem();
-            WfStepDef targetWfStepDef = wfItemTransition.getTargetWfStepDef();
+    @Taskable(name = WorkflowExecuteTransitionTaskConstants.TASK_NAME, description = "Workflow Item Transition Task",
+            parameters = {
+                    @Parameter(name = WorkflowExecuteTransitionTaskConstants.TRANSITIONUNIT_INDEX, type = int.class) },
+            limit = TaskExecLimit.ALLOW_MULTIPLE)
+    public int executeWorkflowItemTransition(TaskMonitor taskMonitor, int transitionUnitIndex) throws UnifyException {
+        FlowingWfItemTransition flowingWfItemTransition = null;
+        while ((flowingWfItemTransition = wfTransitionQueueManager
+                .getNextFlowingWfItemTransition(transitionUnitIndex)) != null) {
+            FlowingWfItem flowingWfItem = flowingWfItemTransition.getFlowingWfItem();
+            WfStepDef targetWfStepDef = flowingWfItemTransition.getTargetWfStepDef();
+            beginClusterLock(targetWfStepDef.getTemplateGlobalLockName());
             try {
                 performFlowingWfItemTransition(targetWfStepDef, flowingWfItem);
             } catch (Exception e) {
@@ -1466,9 +1464,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     logError(e1);
                 }
             } finally {
-                pendingSubmissionIds.remove(wfItemTransition.getSubmissionId());
+                wfTransitionQueueManager.acknowledgeTransition(flowingWfItemTransition);
+                endClusterLock(targetWfStepDef.getTemplateGlobalLockName());
             }
         }
+
+        return 0;
     }
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
@@ -1944,14 +1945,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfItem.setWfItemDesc(WfNameUtils.describe(wfTemplateDocDef.getWfDocDef().getItemDescFormat(), packableDoc));
         FlowingWfItem flowingWfItem = new FlowingWfItem(wfProcessDef, trgWfStepDef, wfItem, wfItemId, null,
                 packableDoc);
-        pushIntoWfItemTransitionQueue(submissionId, trgWfStepDef, flowingWfItem);
+        wfTransitionQueueManager.pushWfItemToTransitionQueue(submissionId, trgWfStepDef, flowingWfItem);
         return submissionId;
-    }
-
-    private void pushIntoWfItemTransitionQueue(Long submissionId, WfStepDef targetWfStepDef,
-            FlowingWfItem flowingWfItem) throws UnifyException {
-        pendingSubmissionIds.add(submissionId);
-        pendingWfItemTransitionQueue.offer(new FlowingWfItemTransition(submissionId, targetWfStepDef, flowingWfItem));
     }
 
     private void doActualTransition(final WfStepDef targetWfStepDef, final FlowingWfItem flowingWfItem)
@@ -2160,7 +2155,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         new Update().add("packedDoc", packableDoc.pack()).add("updateDt", db().getNow()));
                 packableDoc.clearUpdated();
             }
-            
+
             // Route item if necessary
             WfStepDef routeToWfStep = resolveWorkflowRouting(targetWfStepDef, flowingWfItem);
             if (routeToWfStep != null) {
@@ -2298,33 +2293,6 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         public boolean isList() {
             return list;
-        }
-    }
-
-    private class FlowingWfItemTransition {
-
-        private Long submissionId;
-
-        private WfStepDef targetWfStepDef;
-
-        private FlowingWfItem flowingWfItem;
-
-        public FlowingWfItemTransition(Long submissionId, WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem) {
-            this.submissionId = submissionId;
-            this.targetWfStepDef = targetWfStepDef;
-            this.flowingWfItem = flowingWfItem;
-        }
-
-        public Long getSubmissionId() {
-            return submissionId;
-        }
-
-        public WfStepDef getTargetWfStepDef() {
-            return targetWfStepDef;
-        }
-
-        public FlowingWfItem getFlowingWfItem() {
-            return flowingWfItem;
         }
     }
 }

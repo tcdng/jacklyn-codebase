@@ -98,7 +98,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     private static boolean published = false;
 
     @Test
-    public void testPublishedWorkflowCategory() throws Exception {
+    public void testPublishWorkflowCategory() throws Exception {
         WorkflowService wfService = getWorkflowService();
         /* Categories */
         List<WfCategory> wfCategoryList = wfService.findWfCategories(new WfCategoryQuery().name("customerCategory"));

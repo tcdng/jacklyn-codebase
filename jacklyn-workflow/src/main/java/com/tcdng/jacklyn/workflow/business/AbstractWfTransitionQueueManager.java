@@ -13,27 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.constants;
+
+package com.tcdng.jacklyn.workflow.business;
+
+import com.tcdng.unify.core.AbstractUnifyComponent;
+import com.tcdng.unify.core.UnifyException;
 
 /**
- * Workflow module name constants.
+ * Convenient abstract base class for workflow transition queue managers.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WorkflowModuleNameConstants {
+public abstract class AbstractWfTransitionQueueManager extends AbstractUnifyComponent
+        implements WfTransitionQueueManager {
 
-    String WORKFLOW_MODULE = "workflow";
+    @Override
+    protected void onInitialize() throws UnifyException {
 
-    String WORKFLOWSERVICE = "jacklyn-workflowservice";
+    }
 
-    String DEFAULTWORKFLOWITEMALERTLOGIC = "default-wftemalertlogic";
+    @Override
+    protected void onTerminate() throws UnifyException {
 
-    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-wfitemclassifierlogic";
+    }
 
-    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-wfitemattachmenthandler";
-
-    String DEFAULTWORKFLOWITEMASSIGNMENTPOLICY = "default-wfitemassignpolicy";
-
-    String DEFAULTTRANSITIONQUEUEMANAGER = "default-wftransitionqueuemanager";
 }

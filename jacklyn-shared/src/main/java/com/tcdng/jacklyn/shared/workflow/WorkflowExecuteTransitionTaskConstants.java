@@ -13,27 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.constants;
+package com.tcdng.jacklyn.shared.workflow;
 
 /**
- * Workflow module name constants.
+ * Workflow execute transition task constants.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WorkflowModuleNameConstants {
+public interface WorkflowExecuteTransitionTaskConstants {
 
-    String WORKFLOW_MODULE = "workflow";
+    String TASK_NAME = "wfexecutetransitiontask";
 
-    String WORKFLOWSERVICE = "jacklyn-workflowservice";
-
-    String DEFAULTWORKFLOWITEMALERTLOGIC = "default-wftemalertlogic";
-
-    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-wfitemclassifierlogic";
-
-    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-wfitemattachmenthandler";
-
-    String DEFAULTWORKFLOWITEMASSIGNMENTPOLICY = "default-wfitemassignpolicy";
-
-    String DEFAULTTRANSITIONQUEUEMANAGER = "default-wftransitionqueuemanager";
+    String TRANSITIONUNIT_INDEX = "wfTransitionUnitIndex";
 }
