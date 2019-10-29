@@ -139,6 +139,11 @@ public class WfStepDef extends BaseLabelWfDef {
         this.policyList = DataUtils.unmodifiableList(policyList);
     }
 
+    public WfStepDef(String templateGlobalName) {
+        super(null, null, null);
+        this.templateGlobalName = templateGlobalName;
+    }
+    
     public Long getWfTemplateId() {
         return wfTemplateId;
     }

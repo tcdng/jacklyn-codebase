@@ -102,6 +102,10 @@ public class FlowingWfItem implements ViewableWfItem {
         this.heldBy = wfItem.getHeldBy();
         this.pd = pd;
     }
+    
+    public FlowingWfItem() {
+        
+    }
 
     @Override
     public String getTitle() {

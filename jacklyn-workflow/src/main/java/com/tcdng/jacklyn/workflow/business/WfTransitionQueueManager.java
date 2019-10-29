@@ -39,30 +39,44 @@ public interface WfTransitionQueueManager extends UnifyComponent {
      *            the target workflow step
      * @param flowingWfItem
      *            the workflow item
+     * @return the transition queue index
      * @throws UnifyException
      *             if an error occurs
      */
-    void pushWfItemToTransitionQueue(Long submissionId, WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem)
+    int pushWfItemToTransitionQueue(Long submissionId, WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem)
             throws UnifyException;
 
     /**
-     * Gets the next available transition item for supplied transition unit index.
+     * Gets the number of transition queues managed by this component.
      * 
-     * @param transitionUnitIndex
-     *            the transition unit index
+     * @return the transition queue manager capacity
+     */
+    int capacity();
+
+    /**
+     * Resets the transition queues managed by this component.
+     */
+    void reset();
+
+    /**
+     * Gets the next available transition item for supplied transition queue index.
+     * 
+     * @param transitionQueueIndex
+     *            the transition queue index
      * @return the next transition item otherwise null
      * @throws UnifyException
      *             if an error occurs
      */
-    FlowingWfItemTransition getNextFlowingWfItemTransition(int transitionUnitIndex) throws UnifyException;
+    FlowingWfItemTransition getNextFlowingWfItemTransition(int transitionQueueIndex) throws UnifyException;
 
     /**
      * Acknowledges workflow item transition.
      * 
      * @param flowingWfItemTransition
      *            the transition item
+     * @return true if transition is acknowledged
      */
-    void acknowledgeTransition(FlowingWfItemTransition flowingWfItemTransition);
+    boolean acknowledgeTransition(FlowingWfItemTransition flowingWfItemTransition);
 
     /**
      * Blocks until all transition items with supplied submission IDs are processed.

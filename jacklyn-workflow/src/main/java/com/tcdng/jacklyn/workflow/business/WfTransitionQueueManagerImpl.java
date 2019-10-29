@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowExecuteTransitionTaskConstants;
+import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItemTransition;
@@ -35,7 +36,9 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.task.TaskExecType;
 import com.tcdng.unify.core.task.TaskLauncher;
+import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskSetup;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.ThreadUtils;
 
 /**
@@ -44,50 +47,82 @@ import com.tcdng.unify.core.util.ThreadUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(name = WorkflowModuleNameConstants.DEFAULTTRANSITIONQUEUEMANAGER,
+@Component(name = WorkflowModuleNameConstants.DEFAULTWORKFLOWTRANSITIONQUEUEMANAGER,
         description = "Default Workflow Transition Queue Manager")
 public class WfTransitionQueueManagerImpl extends AbstractWfTransitionQueueManager {
 
     @Configurable
     private TaskLauncher taskLauncher;
 
-    @Configurable("16")
-    private int maxTransitionUnits;
+    @Configurable(WorkflowExecuteTransitionTaskConstants.TASK_NAME)
+    private String transitionExecTask;
+    
+    @Configurable("32")
+    private int maxTransitionQueues;
 
     private Set<Long> pendingSubmissionIds;
 
-    private List<Queue<FlowingWfItemTransition>> transitionQueueList;
+    private List<TransitionQueue> transitionQueueList;
+
+    private List<TaskMonitor> taskMonitorList;
 
     private Map<String, Integer> transitionAllocs;
 
     private int transitionUnitAllocCounter;
 
     public WfTransitionQueueManagerImpl() {
-        this.transitionQueueList = new ArrayList<Queue<FlowingWfItemTransition>>();
+        this.transitionQueueList = new ArrayList<TransitionQueue>();
+        this.taskMonitorList = new ArrayList<TaskMonitor>();
         this.transitionAllocs = new ConcurrentHashMap<String, Integer>();
         this.pendingSubmissionIds = ConcurrentHashMap.newKeySet();
     }
 
     @Override
-    public void pushWfItemToTransitionQueue(Long submissionId, WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem)
+    public int pushWfItemToTransitionQueue(Long submissionId, WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem)
             throws UnifyException {
-        pendingSubmissionIds.add(submissionId);
-        getTransitionQueue(targetWfStepDef)
-                .offer(new FlowingWfItemTransition(submissionId, targetWfStepDef, flowingWfItem));
-    }
-
-    @Override
-    public FlowingWfItemTransition getNextFlowingWfItemTransition(int transitionUnitIndex) throws UnifyException {
-        if (transitionUnitIndex >= transitionQueueList.size()) {
-            // TODO Throw exception
+        if (pendingSubmissionIds.contains(submissionId)) {
+            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_QUEUEMANAGER_SUBMISSION_ID_PENDING,
+                    submissionId);
         }
 
-        return transitionQueueList.get(transitionUnitIndex).poll();
+        pendingSubmissionIds.add(submissionId);
+        TransitionQueue transitionQueue = getTransitionQueue(targetWfStepDef);
+        transitionQueue.getQueue().offer(new FlowingWfItemTransition(submissionId, targetWfStepDef, flowingWfItem));
+        return transitionQueue.getIndex();
     }
 
     @Override
-    public void acknowledgeTransition(FlowingWfItemTransition flowingWfItemTransition) {
-        pendingSubmissionIds.remove(flowingWfItemTransition.getSubmissionId());
+    public int capacity() {
+        return maxTransitionQueues;
+    }
+
+    @Override
+    public void reset() {
+        transitionAllocs.clear();
+        pendingSubmissionIds.clear();
+        transitionUnitAllocCounter = 0;
+        transitionQueueList.clear();
+        for (int transitionQueueIndex = 0; transitionQueueIndex < maxTransitionQueues; transitionQueueIndex++) {
+            transitionQueueList.add(new TransitionQueue(transitionQueueIndex));
+        }
+
+        cancelTasks();
+    }
+    
+    @Override
+    public FlowingWfItemTransition getNextFlowingWfItemTransition(int transitionQueueIndex) throws UnifyException {
+        if (transitionQueueIndex < 0 || transitionQueueIndex >= transitionQueueList.size()) {
+            throw new UnifyException(
+                    WorkflowModuleErrorConstants.WORKFLOW_QUEUEMANAGER_TRANSITION_QUEUE_INDEX_OUT_BOUNDS,
+                    transitionQueueIndex);
+        }
+
+        return transitionQueueList.get(transitionQueueIndex).getQueue().poll();
+    }
+
+    @Override
+    public boolean acknowledgeTransition(FlowingWfItemTransition flowingWfItemTransition) {
+        return pendingSubmissionIds.remove(flowingWfItemTransition.getSubmissionId());
     }
 
     @Override
@@ -108,37 +143,88 @@ public class WfTransitionQueueManagerImpl extends AbstractWfTransitionQueueManag
         } while (present);
     }
 
-    private Queue<FlowingWfItemTransition> getTransitionQueue(WfStepDef wfStepDef) throws UnifyException {
+    @Override
+    protected void onInitialize() throws UnifyException {
+        super.onInitialize();
+        reset();
+    }
+
+    @Override
+    protected void onTerminate() throws UnifyException {
+        cancelTasks();
+        super.onTerminate();
+    }
+
+    private TransitionQueue getTransitionQueue(WfStepDef wfStepDef) throws UnifyException {
         // All workflow steps belonging to the same template should processed with the
         // same transition queue. Forces all such step transitions for a process to be
         // processed in sequence.
-        Integer transitionUnitIndex = transitionAllocs.get(wfStepDef.getTemplateGlobalName());
-        if (transitionUnitIndex == null) {
+        Integer transitionQueueIndex = transitionAllocs.get(wfStepDef.getTemplateGlobalName());
+        if (transitionQueueIndex == null) {
             synchronized (WfTransitionQueueManagerImpl.class) {
-                transitionUnitIndex = transitionAllocs.get(wfStepDef.getTemplateGlobalName());
-                if (transitionUnitIndex == null) {
-                    transitionUnitIndex = transitionUnitAllocCounter;
-                    transitionAllocs.put(wfStepDef.getTemplateGlobalName(), transitionUnitIndex);
-
-                    if (++transitionUnitAllocCounter > transitionQueueList.size()) {
-                        // Create transition unit and launch corresponding periodic transition execution
-                        // task.
-                        transitionQueueList.add(new ConcurrentLinkedQueue<FlowingWfItemTransition>());
-                        TaskSetup taskSetup = TaskSetup.newBuilder(TaskExecType.RUN_PERIODIC)
-                                .addTask(WorkflowExecuteTransitionTaskConstants.TASK_NAME)
-                                .setParam(WorkflowExecuteTransitionTaskConstants.TRANSITIONUNIT_INDEX,
-                                        transitionUnitIndex)
-                                .periodInMillSec(PeriodicType.EXTREME.getPeriodInMillSec()).build();
-                        taskLauncher.launchTask(taskSetup);
-                    }
-
-                    if (transitionUnitAllocCounter >= maxTransitionUnits) {
+                transitionQueueIndex = transitionAllocs.get(wfStepDef.getTemplateGlobalName());
+                if (transitionQueueIndex == null) {
+                    transitionQueueIndex = transitionUnitAllocCounter;
+                    transitionAllocs.put(wfStepDef.getTemplateGlobalName(), transitionQueueIndex);
+                    if (++transitionUnitAllocCounter >= maxTransitionQueues) {
                         transitionUnitAllocCounter = 0;
                     }
                 }
             }
         }
 
-        return transitionQueueList.get(transitionUnitIndex);
+        // Activate transition queue if necessary
+        TransitionQueue transitionQueue = transitionQueueList.get(transitionQueueIndex);
+        if (!transitionQueue.isActive()) {
+            // Launch corresponding periodic transition execution task.
+            if (!StringUtils.isBlank(transitionExecTask)) {
+                TaskSetup taskSetup = TaskSetup.newBuilder(TaskExecType.RUN_PERIODIC)
+                        .addTask(transitionExecTask)
+                        .setParam(WorkflowExecuteTransitionTaskConstants.TRANSITIONUNIT_INDEX, transitionQueueIndex)
+                        .periodInMillSec(PeriodicType.EXTREME.getPeriodInMillSec()).build();
+                TaskMonitor taskMonitor = taskLauncher.launchTask(taskSetup);
+                taskMonitorList.add(taskMonitor);
+            }
+
+            transitionQueue.setActive(true);
+        }
+        return transitionQueue;
+    }
+
+    private void cancelTasks() {
+        for (TaskMonitor taskMonitor : taskMonitorList) {
+            taskMonitor.cancel();
+        }
+        taskMonitorList.clear();
+    }
+
+    private class TransitionQueue {
+
+        private Queue<FlowingWfItemTransition> queue;
+
+        private int index;
+
+        private boolean active;
+
+        public TransitionQueue(int index) {
+            this.index = index;
+            this.queue = new ConcurrentLinkedQueue<FlowingWfItemTransition>();
+        }
+
+        public Queue<FlowingWfItemTransition> getQueue() {
+            return queue;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public boolean isActive() {
+            return active;
+        }
+
+        public void setActive(boolean active) {
+            this.active = active;
+        }
     }
 }

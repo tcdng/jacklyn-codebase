@@ -35,5 +35,5 @@ public interface WorkflowModuleNameConstants {
 
     String DEFAULTWORKFLOWITEMASSIGNMENTPOLICY = "default-wfitemassignpolicy";
 
-    String DEFAULTTRANSITIONQUEUEMANAGER = "default-wftransitionqueuemanager";
+    String DEFAULTWORKFLOWTRANSITIONQUEUEMANAGER = "default-wftransitionqueuemanager";
 }
