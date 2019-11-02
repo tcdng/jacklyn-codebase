@@ -60,6 +60,9 @@ public class WfItemEvent extends BaseEntity {
     @Column(length = 64, nullable = true)
     private String srcWfStepName;
 
+    @Column(name = "ERROR_CD", length = 32, nullable = true)
+    private String errorCode;
+
     @Column(name = "ERROR_MSG", length = 512, nullable = true)
     private String errorMsg;
 
@@ -147,6 +150,14 @@ public class WfItemEvent extends BaseEntity {
 
     public void setSrcWfStepName(String srcWfStepName) {
         this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     public String getErrorMsg() {

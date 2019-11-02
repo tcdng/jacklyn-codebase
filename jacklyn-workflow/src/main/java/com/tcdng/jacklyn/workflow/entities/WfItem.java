@@ -74,9 +74,6 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date expectedDt;
 
-    @Column(length = 96)
-    private String initiatedBy;
-
     @Column(length = 96, nullable = true)
     private String heldBy;
 
@@ -97,6 +94,9 @@ public class WfItem extends BaseTimestampedEntity {
 
     @ListOnly(key = "wfHistEventId", property = "srcWfStepName")
     private String srcWfStepName;
+
+    @ListOnly(key = "wfHistEventId", property = "errorCode")
+    private String errorCode;
 
     @ListOnly(key = "wfHistEventId", property = "errorMsg")
     private String errorMsg;
@@ -204,14 +204,6 @@ public class WfItem extends BaseTimestampedEntity {
         this.expectedDt = expectedDt;
     }
 
-    public String getInitiatedBy() {
-        return initiatedBy;
-    }
-
-    public void setInitiatedBy(String initiatedBy) {
-        this.initiatedBy = initiatedBy;
-    }
-
     public String getHeldBy() {
         return heldBy;
     }
@@ -258,6 +250,14 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setSrcWfStepName(String srcWfStepName) {
         this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     public String getErrorMsg() {

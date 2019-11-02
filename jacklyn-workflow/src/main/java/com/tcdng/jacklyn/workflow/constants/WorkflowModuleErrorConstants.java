@@ -149,4 +149,14 @@ public interface WorkflowModuleErrorConstants {
      * Workflow step {0} branch {1} is unknown.
      */
     String WORKFLOW_STEP_BRANCH_WITH_NAME_UNKNOWN = "WORKFLOW_0019";
+
+    /**
+     * Workflow queue manager transition queue index {0} out of bounds.
+     */
+    String WORKFLOW_QUEUEMANAGER_TRANSITION_QUEUE_INDEX_OUT_BOUNDS = "WORKFLOW_001A";
+    
+    /**
+     * Workflow queue manager submission ID {0} is already pending.
+     */
+    String WORKFLOW_QUEUEMANAGER_SUBMISSION_ID_PENDING = "WORKFLOW_001B";
 }

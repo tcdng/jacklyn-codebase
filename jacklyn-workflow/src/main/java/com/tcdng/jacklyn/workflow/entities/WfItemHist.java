@@ -43,6 +43,9 @@ public class WfItemHist extends BaseTimestampedEntity {
     @Column(name = "ITEM_DESC", length = 196)
     private String description;
 
+    @Column(length = 96)
+    private String initiatedBy;
+
     public String getProcessGlobalName() {
         return processGlobalName;
     }
@@ -82,5 +85,13 @@ public class WfItemHist extends BaseTimestampedEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getInitiatedBy() {
+        return initiatedBy;
+    }
+
+    public void setInitiatedBy(String initiatedBy) {
+        this.initiatedBy = initiatedBy;
     }
 }

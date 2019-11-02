@@ -34,8 +34,8 @@ public class TestOpenAccountProcessPolicy extends AbstractWfItemProcessPolicy {
 
     @Override
     public void execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
-        openAccountDetails = new OpenAccountDetails(flowingWfItemReader.readField(String.class, "fullName"),
-                flowingWfItemReader.readField(String.class, "accountNo"));
+        openAccountDetails = new OpenAccountDetails(flowingWfItemReader.read(String.class, "fullName"),
+                flowingWfItemReader.read(String.class, "accountNo"));
     }
 
     public OpenAccountDetails getOpenAccountDetails() {

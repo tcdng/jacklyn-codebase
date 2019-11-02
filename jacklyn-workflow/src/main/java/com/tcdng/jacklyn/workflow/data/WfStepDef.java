@@ -42,8 +42,12 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private String templateGlobalName;
 
+    private String templateGlobalLockName;
+    
     private String globalName;
 
+    private String originGlobalName;
+    
     private String workAssignerName;
 
     private WorkflowStepType stepType;
@@ -82,7 +86,7 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private long versionTimestamp;
 
-    public WfStepDef(Long wfTemplateId, String templateGlobalName, String globalName, String name, String description,
+    public WfStepDef(Long wfTemplateId, String templateGlobalName, String templateGlobalLockName, String globalName, String originGlobalName, String name, String description,
             String label, String workAssignerName, WorkflowStepType stepType, WorkflowParticipantType participantType,
             List<WfBranchDef> branchList, List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
@@ -92,7 +96,9 @@ public class WfStepDef extends BaseLabelWfDef {
         super(name, description, label);
         this.wfTemplateId = wfTemplateId;
         this.templateGlobalName = templateGlobalName;
+        this.templateGlobalLockName = templateGlobalLockName;
         this.globalName = globalName;
+        this.originGlobalName = originGlobalName;
         this.workAssignerName = workAssignerName;
         this.stepType = stepType;
         this.participantType = participantType;
@@ -133,6 +139,11 @@ public class WfStepDef extends BaseLabelWfDef {
         this.policyList = DataUtils.unmodifiableList(policyList);
     }
 
+    public WfStepDef(String templateGlobalName) {
+        super(null, null, null);
+        this.templateGlobalName = templateGlobalName;
+    }
+    
     public Long getWfTemplateId() {
         return wfTemplateId;
     }
@@ -141,8 +152,16 @@ public class WfStepDef extends BaseLabelWfDef {
         return templateGlobalName;
     }
 
+    public String getTemplateGlobalLockName() {
+        return templateGlobalLockName;
+    }
+
     public String getGlobalName() {
         return globalName;
+    }
+
+    public String getOriginGlobalName() {
+        return originGlobalName;
     }
 
     public String getWorkAssignerName() {

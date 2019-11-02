@@ -16,27 +16,34 @@
 
 package com.tcdng.jacklyn.workflow;
 
+import java.math.BigDecimal;
+
 import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentLogic;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.ReaderWriter;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Test customer enrichment logic.
+ * Test VAT enrichment logic.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("testcustomer-enrichmentlogic")
-public class TestCustomerEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
+@Component("vat-enrichmentlogic")
+public class VatEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
 
     @Override
-    public void enrich(ReaderWriter readerWriter) throws UnifyException {
-        // Enrich workflow item
-        String firstName = readerWriter.read(String.class, "firstName");
-        String lastName = readerWriter.read(String.class, "lastName");
-        readerWriter.write("fullName", firstName + " " + lastName);
-        readerWriter.write("accountNo", "0123456789");
+    public void enrich(ReaderWriter rw) throws UnifyException {
+    	BigDecimal unitPrice = rw.read(BigDecimal.class, "unitPrice");
+    	Integer quantity =  rw.read(Integer.class, "quantity");
+    	
+    	BigDecimal amount = unitPrice.multiply(BigDecimal.valueOf(quantity.longValue()).setScale(2));
+    	BigDecimal vat = amount.multiply(BigDecimal.valueOf(0.05)).setScale(2);
+    	BigDecimal totalAmount = amount.add(vat).setScale(2);
+    	
+        rw.write("amount", amount);
+        rw.write("vat", vat);
+        rw.write("totalAmount", totalAmount);
     }
 
 }

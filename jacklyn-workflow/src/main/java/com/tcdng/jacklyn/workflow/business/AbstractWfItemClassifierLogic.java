@@ -54,7 +54,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
      */
     protected boolean applyFilter(FlowingWfItem.Reader flowingWfItemReader, WfDocClassifierFilterDef filter) throws UnifyException {
         if (flowingWfItemReader != null) {
-            Object fieldValue = flowingWfItemReader.readField(filter.getFieldName());
+            Object fieldValue = flowingWfItemReader.read(filter.getFieldName());
             Object limVal1 = resolveValue(flowingWfItemReader, filter, filter.getValue1());
             switch (filter.getOp()) {
                 case BETWEEN:
@@ -141,7 +141,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
             throws UnifyException {
         Object val = null;
         if (filter.isFieldOnly()) {
-            val = flowingWfItemReader.readField(value);
+            val = flowingWfItemReader.read(value);
         } else {
             Class<?> fieldType = flowingWfItemReader.getFieldType(filter.getFieldName());
             val = DataUtils.convert(fieldType, value, null);
