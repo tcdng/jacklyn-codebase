@@ -72,6 +72,8 @@ import com.tcdng.unify.core.util.ReflectUtils;
 @Component(ArchivingModuleNameConstants.ARCHIVINGSERVICE)
 public class ArchivingServiceImpl extends AbstractJacklynBusinessService implements ArchivingService {
 
+    private static final String FILE_ARCHIVE_PROCESS_LOCK = "arch::filearchiveprocess-lock";
+            
     @Configurable
     private SystemService systemService;
 
@@ -131,7 +133,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
         return db().delete(FileArchiveConfig.class, id);
     }
 
-    @Synchronized("filearchiveprocesslock")
+    @Synchronized(FILE_ARCHIVE_PROCESS_LOCK)
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Taskable(
             name = FileArchiveTaskConstants.BUILDLOBFILEARCHIVETASK, description = "Build LOB File Archive Taskable",

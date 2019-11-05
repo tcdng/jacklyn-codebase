@@ -78,6 +78,14 @@ import com.tcdng.unify.core.util.DataUtils;
 @Component(OrganizationModuleNameConstants.ORGANIZATIONSERVICE)
 public class OrganizationServiceImpl extends AbstractJacklynBusinessService implements OrganizationService {
 
+    private static final String REGISTER_PRIVILEGE_CATEGORY_LOCK = "org::registerprivilegecat-lock";
+
+    private static final String REGISTER_PRIVILEGE_LOCK = "org::registerprivilege-lock";
+
+    private static final String UPDATE_PRIVILEGE_LOCK = "org::updateprivilege-lock";
+
+    private static final String UNREGISTER_PRIVILEGE_LOCK = "org::unregisterprivilege-lock";
+
     @Configurable
     private SystemService systemService;
 
@@ -275,7 +283,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return db().value(String.class, "dashboardName", new RoleQuery().name(roleName));
     }
 
-    @Synchronized("register-privilege-category")
+    @Synchronized(REGISTER_PRIVILEGE_CATEGORY_LOCK)
     @Override
     public Long registerPrivilegeCategory(String categoryName, String descriptionKey) throws UnifyException {
         PrivilegeCategory privilegeCategory = findPrivilegeCategory(categoryName);
@@ -294,7 +302,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return privilegeCategory.getId();
     }
 
-    @Synchronized("register-privilege")
+    @Synchronized(REGISTER_PRIVILEGE_LOCK)
     @Override
     public Long registerPrivilege(String categoryName, String moduleName, String privilegeName, String privilegeDesc)
             throws UnifyException {
@@ -323,7 +331,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return privilege.getId();
     }
 
-    @Synchronized("update-privilege")
+    @Synchronized(UPDATE_PRIVILEGE_LOCK)
     @Override
     public boolean updateRegisteredPrivilege(String categoryName, String moduleName, String privilegeName,
             String privilegeDesc) throws UnifyException {
@@ -337,7 +345,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return false;
     }
 
-    @Synchronized("unregister-privilege")
+    @Synchronized(UNREGISTER_PRIVILEGE_LOCK)
     @Override
     public void unregisterPrivilege(String categoryName, String moduleName, String... privilegeName)
             throws UnifyException {
@@ -530,8 +538,9 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
                 // Create and set role attributes
                 Role role = db().find(new RoleQuery().name(roleName));
-                setRoleAttributes(role.getName(), new RoleAttributes(role.getName(), role.getDescription(),
-                        dynamicViewDirectives, staticViewDirectivePrivilegeCodes, nonViewDirectivePrivilegeCodes, wfStepCodes));
+                setRoleAttributes(role.getName(),
+                        new RoleAttributes(role.getName(), role.getDescription(), dynamicViewDirectives,
+                                staticViewDirectivePrivilegeCodes, nonViewDirectivePrivilegeCodes, wfStepCodes));
             }
 
             broadcastRefreshMenu();
@@ -555,7 +564,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         registerPrivilegeCategory(PrivilegeCategoryConstants.DOCUMENTCONTROL,
                 "reserved.privilegecategory.documentcontrol");
         registerPrivilegeCategory(PrivilegeCategoryConstants.REPORTABLE, "reserved.privilegecategory.reportable");
-        registerPrivilegeCategory(PrivilegeCategoryConstants.CONFIGUREDREPORTS, "reserved.privilegecategory.configuredreport");
+        registerPrivilegeCategory(PrivilegeCategoryConstants.CONFIGUREDREPORTS,
+                "reserved.privilegecategory.configuredreport");
 
         // Uninstall old
         db().updateAll(new PrivilegeQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));

@@ -80,6 +80,10 @@ import com.tcdng.unify.core.util.StringUtils;
 @Component(FileModuleNameConstants.FILESERVICE)
 public class FileServiceImpl extends AbstractJacklynBusinessService implements FileService {
 
+    private static final String UPDATE_FILE_TRANSFER_LIST_LOCK = "fil::updatefiletransferlist-lock";
+
+    private static final String EXECUTE_FILE_TRANSFER_LOCK = "fil::executefiletransfer-lock";
+
     private static final String BATCHFILE_READ_DEFINITION = "batchFileReadDef";
 
     @Override
@@ -168,7 +172,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
     }
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
-    @Synchronized("updatefiletransferlist-lock")
+    @Synchronized(UPDATE_FILE_TRANSFER_LIST_LOCK)
     @Taskable(
             name = FileTransferTaskConstants.FILETRANSFERLISTUPDATETASK,
             description = "File DataTransfer List Update Task",
@@ -258,7 +262,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         return updatedCount;
     }
 
-    @Synchronized("executefiletransfer-lock")
+    @Synchronized(EXECUTE_FILE_TRANSFER_LOCK)
     @Taskable(
             name = FileTransferTaskConstants.FILETRANSFERTASK, description = "File DataTransfer Task",
             parameters = { @Parameter(
