@@ -23,7 +23,7 @@ import com.tcdng.jacklyn.notification.data.NotificationContact;
 import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -32,18 +32,18 @@ import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
- * Default workflow item alert logic implementation.
+ * Default workflow item alert policy implementation.
  * 
  * @author Lateef
  * @since 1.0
  */
 @Component(
-        name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTLOGIC,
-        description = "Default Workflow Item Alert Logic")
-public class WfItemAlertLogicImpl extends AbstractWfItemAlertLogic {
+        name = WorkflowModuleNameConstants.DEFAULTWORKFLOWITEMALERTPOLICY,
+        description = "Default Workflow Item Alert Policy")
+public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
 
     @Override
-    public void sendAlert(FlowingWfItem.Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
+    public void sendAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
         logDebug("Sending alert...");
         String senderName = null;
         String senderContact = null;

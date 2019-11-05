@@ -502,7 +502,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("testEnrichment", wfEnrichment.getName());
         assertEquals("Test Enrichment", wfEnrichment.getDescription());
         assertNull(wfEnrichment.getDocName());
-        assertEquals("testcustomer-enrichmentlogic", wfEnrichment.getLogic());
+        assertEquals("testcustomer-enrichmentpolicy", wfEnrichment.getLogic());
 
         List<WfRouting> routingList = wfStep.getRoutingList();
         assertNotNull(routingList);

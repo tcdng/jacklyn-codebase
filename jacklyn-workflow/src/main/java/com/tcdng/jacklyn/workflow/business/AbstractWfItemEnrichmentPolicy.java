@@ -16,25 +16,25 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
-import com.tcdng.unify.core.UnifyComponent;
+import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Workflow item enrichment logic.
+ * Convenient abstract base class for workflow item enrichment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfItemEnrichmentLogic extends UnifyComponent {
+public abstract class AbstractWfItemEnrichmentPolicy extends AbstractUnifyComponent implements WfItemEnrichmentPolicy {
 
-    /**
-     * Enriches workflow item using supplied reader-writer.
-     * 
-     * @param flowingWfItemReaderWriter
-     *            the reader-writer to use
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    void enrich(FlowingWfItem.ReaderWriter flowingWfItemReaderWriter) throws UnifyException;
+    @Override
+    protected void onInitialize() throws UnifyException {
+
+    }
+
+    @Override
+    protected void onTerminate() throws UnifyException {
+
+    }
+
 }

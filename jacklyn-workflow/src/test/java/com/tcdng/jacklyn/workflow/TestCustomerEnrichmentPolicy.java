@@ -16,24 +16,27 @@
 
 package com.tcdng.jacklyn.workflow;
 
-import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentLogic;
+import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentPolicy;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.ReaderWriter;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Test delivery enrichment logic.
+ * Test customer enrichment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("delivery-enrichmentlogic")
-public class DeliveryEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
+@Component("testcustomer-enrichmentpolicy")
+public class TestCustomerEnrichmentPolicy extends AbstractWfItemEnrichmentPolicy {
 
     @Override
-    public void enrich(ReaderWriter rw) throws UnifyException {
-        rw.write("address", "24 Parklane");
-        rw.write("status", "Delivery Pending");
+    public void enrich(ReaderWriter readerWriter) throws UnifyException {
+        // Enrich workflow item
+        String firstName = readerWriter.read(String.class, "firstName");
+        String lastName = readerWriter.read(String.class, "lastName");
+        readerWriter.write("fullName", firstName + " " + lastName);
+        readerWriter.write("accountNo", "0123456789");
     }
 
 }

@@ -63,7 +63,7 @@
 				<step name="vatStep" description="VAT and Totals" type="automatic" origin="splitStep" branch="splitToVat">
 					<enrichments>
 						<enrichment name="vatEnrichment" description="VAT Enrichment"
-							logic="vat-enrichmentlogic" />
+							logic="vat-enrichmentpolicy" />
 					</enrichments>
 					<routings>
 						<routing name="routToMerge" description="Route to Merge"
@@ -73,7 +73,7 @@
 				<step name="deliveryStep" description="Delivery" type="automatic" origin="splitStep" branch="splitToDelivery">
 					<enrichments>
 						<enrichment name="deliveryEnrichment" description="Delivery Enrichment"
-							logic="delivery-enrichmentlogic" />
+							logic="delivery-enrichmentpolicy" />
 					</enrichments>
 					<routings>
 						<routing name="routToMerge" description="Route to Merge"

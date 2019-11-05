@@ -16,28 +16,14 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
-import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyComponent;
-import com.tcdng.unify.core.UnifyException;
 
 /**
- * Workflow item alert logic.
+ * Workflow item  policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfItemAlertLogic extends UnifyComponent {
+public interface WfItemPolicy extends UnifyComponent {
 
-    /**
-     * Sends an alert based on workflow item.
-     * 
-     * @param flowingWfItemReader
-     *            the workflow item reader.
-     * @param wfAlertDef
-     *            the alert definition
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    void sendAlert(FlowingWfItem.Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
 }

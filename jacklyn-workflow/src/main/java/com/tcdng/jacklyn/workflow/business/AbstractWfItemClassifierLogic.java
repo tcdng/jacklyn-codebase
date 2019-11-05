@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.workflow.business;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierFilterDef;
 import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -52,7 +52,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
      * @throws UnifyException
      *             if an error occurs
      */
-    protected boolean applyFilter(FlowingWfItem.Reader flowingWfItemReader, WfDocClassifierFilterDef filter) throws UnifyException {
+    protected boolean applyFilter(Reader flowingWfItemReader, WfDocClassifierFilterDef filter) throws UnifyException {
         if (flowingWfItemReader != null) {
             Object fieldValue = flowingWfItemReader.read(filter.getFieldName());
             Object limVal1 = resolveValue(flowingWfItemReader, filter, filter.getValue1());
@@ -137,7 +137,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
         return false;
     }
 
-    private Object resolveValue(FlowingWfItem.Reader flowingWfItemReader, WfDocClassifierFilterDef filter, String value)
+    private Object resolveValue(Reader flowingWfItemReader, WfDocClassifierFilterDef filter, String value)
             throws UnifyException {
         Object val = null;
         if (filter.isFieldOnly()) {

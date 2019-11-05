@@ -21,6 +21,7 @@ import java.util.Collection;
 import com.tcdng.jacklyn.notification.data.NotificationContact;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -31,7 +32,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemPolicy extends AbstractUnifyComponent {
+public abstract class AbstractWfItemPolicy extends AbstractUnifyComponent implements WfItemPolicy {
 
     @Configurable
     private WfStepUserInformationProvider wfStepUserInformationProvider;
@@ -50,21 +51,21 @@ public abstract class AbstractWfItemPolicy extends AbstractUnifyComponent {
         return wfStepUserInformationProvider;
     }
 
-    protected Collection<String> getEligibleUsers(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
+    protected Collection<String> getEligibleUsers(Reader flowingWfItemReader) throws UnifyException {
         FlowingWfItem.Restrictions restrictions = flowingWfItemReader.getRestrictions();
         return wfStepUserInformationProvider.getEligibleUsersForWorkflowStep(flowingWfItemReader.getStepParticipant(),
                 flowingWfItemReader.getStepGlobalName(), restrictions.getBranchCode(),
                 restrictions.getDepartmentCode());
     }
 
-    protected Collection<NotificationContact> getEligibleEmailContacts(FlowingWfItem.Reader flowingWfItemReader,
+    protected Collection<NotificationContact> getEligibleEmailContacts(Reader flowingWfItemReader,
             WorkflowParticipantType participant, String globalStepName) throws UnifyException {
         FlowingWfItem.Restrictions restrictions = flowingWfItemReader.getRestrictions();
         return wfStepUserInformationProvider.getEligibleEmailContactsForWorkflowStep(participant, globalStepName,
                 restrictions.getBranchCode(), restrictions.getDepartmentCode());
     }
 
-    protected Collection<NotificationContact> getEligibleMobilePhoneContacts(FlowingWfItem.Reader flowingWfItemReader,
+    protected Collection<NotificationContact> getEligibleMobilePhoneContacts(Reader flowingWfItemReader,
             WorkflowParticipantType participant, String globalStepName) throws UnifyException {
         FlowingWfItem.Restrictions restrictions = flowingWfItemReader.getRestrictions();
         return wfStepUserInformationProvider.getEligibleMobilePhoneContactsForWorkflowStep(participant, globalStepName,

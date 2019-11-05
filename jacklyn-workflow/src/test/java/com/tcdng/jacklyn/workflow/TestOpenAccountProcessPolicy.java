@@ -17,7 +17,7 @@
 package com.tcdng.jacklyn.workflow;
 
 import com.tcdng.jacklyn.workflow.business.AbstractWfItemProcessPolicy;
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
@@ -33,7 +33,7 @@ public class TestOpenAccountProcessPolicy extends AbstractWfItemProcessPolicy {
     private OpenAccountDetails openAccountDetails;
 
     @Override
-    public void execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
+    public void execute(Reader flowingWfItemReader) throws UnifyException {
         openAccountDetails = new OpenAccountDetails(flowingWfItemReader.read(String.class, "fullName"),
                 flowingWfItemReader.read(String.class, "accountNo"));
     }

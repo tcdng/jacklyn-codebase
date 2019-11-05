@@ -16,29 +16,27 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.notification.business.NotificationService;
-import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
+import com.tcdng.jacklyn.workflow.data.WfAlertDef;
+import com.tcdng.unify.core.UnifyException;
 
 /**
- * Convenient abstract base class for workflow item alert logic.
+ * Workflow item alert policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAlertLogic extends AbstractWfItemPolicy implements WfItemAlertLogic {
+public interface WfItemAlertPolicy extends WfItemPolicy {
 
-    @Configurable
-    private SystemService systemService;
-
-    @Configurable
-    private NotificationService notificationService;
-
-    protected SystemService getSystemService() {
-        return systemService;
-    }
-
-    protected NotificationService getNotificationService() {
-        return notificationService;
-    }
+    /**
+     * Sends an alert based on workflow item.
+     * 
+     * @param flowingWfItemReader
+     *            the workflow item reader.
+     * @param wfAlertDef
+     *            the alert definition
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void sendAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
 }

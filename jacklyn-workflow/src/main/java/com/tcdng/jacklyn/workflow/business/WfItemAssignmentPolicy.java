@@ -16,8 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
-import com.tcdng.unify.core.UnifyComponent;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.unify.core.UnifyException;
 
 /**
@@ -26,7 +25,7 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfItemAssignmentPolicy extends UnifyComponent {
+public interface WfItemAssignmentPolicy extends WfItemPolicy {
 
     /**
      * Executes workflow item user assignment policy using data from workflow item.
@@ -37,5 +36,5 @@ public interface WfItemAssignmentPolicy extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException;
+    String execute(Reader flowingWfItemReader) throws UnifyException;
 }

@@ -18,19 +18,19 @@ package com.tcdng.jacklyn.workflow;
 
 import java.math.BigDecimal;
 
-import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentLogic;
+import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentPolicy;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.ReaderWriter;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Test VAT enrichment logic.
+ * Test VAT enrichment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("vat-enrichmentlogic")
-public class VatEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
+@Component("vat-enrichmentpolicy")
+public class VatEnrichmentPolicy extends AbstractWfItemEnrichmentPolicy {
 
     @Override
     public void enrich(ReaderWriter rw) throws UnifyException {

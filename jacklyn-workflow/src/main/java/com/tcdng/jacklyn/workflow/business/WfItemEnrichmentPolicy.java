@@ -14,29 +14,27 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow;
+package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.workflow.business.AbstractWfItemEnrichmentLogic;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.ReaderWriter;
+import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.annotation.Component;
 
 /**
- * Test customer enrichment logic.
+ * Workflow item enrichment policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component("testcustomer-enrichmentlogic")
-public class TestCustomerEnrichmentLogic extends AbstractWfItemEnrichmentLogic {
+public interface WfItemEnrichmentPolicy extends UnifyComponent {
 
-    @Override
-    public void enrich(ReaderWriter readerWriter) throws UnifyException {
-        // Enrich workflow item
-        String firstName = readerWriter.read(String.class, "firstName");
-        String lastName = readerWriter.read(String.class, "lastName");
-        readerWriter.write("fullName", firstName + " " + lastName);
-        readerWriter.write("accountNo", "0123456789");
-    }
-
+    /**
+     * Enriches workflow item using supplied reader-writer.
+     * 
+     * @param flowingWfItemReaderWriter
+     *            the reader-writer to use
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void enrich(ReaderWriter flowingWfItemReaderWriter) throws UnifyException;
 }

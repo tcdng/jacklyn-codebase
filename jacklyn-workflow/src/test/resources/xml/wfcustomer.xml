@@ -91,7 +91,7 @@
 					</routings>
 					<enrichments>
 						<enrichment name="testEnrichment" description="Test Enrichment"
-							logic="testcustomer-enrichmentlogic" />
+							logic="testcustomer-enrichmentpolicy" />
 					</enrichments>
 				</step>
 				<step name="createCust" description="Create Customer" type="automatic">

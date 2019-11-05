@@ -16,8 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
-import com.tcdng.unify.core.UnifyComponent;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.unify.core.UnifyException;
 
 /**
@@ -26,7 +25,7 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface WfItemProcessPolicy extends UnifyComponent {
+public interface WfItemProcessPolicy extends WfItemPolicy {
 
     /**
      * Executes workflow item process policy using data from workflow item.
@@ -36,5 +35,5 @@ public interface WfItemProcessPolicy extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    void execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException;
+    void execute(Reader flowingWfItemReader) throws UnifyException;
 }

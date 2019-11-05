@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.workflow.business;
 import java.util.Collection;
 
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
@@ -35,7 +35,7 @@ import com.tcdng.unify.core.annotation.Component;
 public class WfItemAssignmentPolicyImpl extends AbstractWfItemAssignmentPolicy {
 
     @Override
-    public String execute(FlowingWfItem.Reader flowingWfItemReader) throws UnifyException {
+    public String execute(Reader flowingWfItemReader) throws UnifyException {
         Collection<String> eligibleUsers = getEligibleUsers(flowingWfItemReader);
         return getWorkflowService().findLeastEngagedUserForWorkflowStep(flowingWfItemReader.getStepGlobalName(),
                 eligibleUsers);

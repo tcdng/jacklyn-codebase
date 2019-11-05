@@ -16,25 +16,29 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
-import com.tcdng.unify.core.AbstractUnifyComponent;
-import com.tcdng.unify.core.UnifyException;
+import com.tcdng.jacklyn.notification.business.NotificationService;
+import com.tcdng.jacklyn.system.business.SystemService;
+import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Convenient abstract base class for workflow item enrichment logic.
+ * Convenient abstract base class for workflow item alert policy.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemEnrichmentLogic extends AbstractUnifyComponent implements WfItemEnrichmentLogic {
+public abstract class AbstractWfItemAlertPolicy extends AbstractWfItemPolicy implements WfItemAlertPolicy {
 
-    @Override
-    protected void onInitialize() throws UnifyException {
+    @Configurable
+    private SystemService systemService;
 
+    @Configurable
+    private NotificationService notificationService;
+
+    protected SystemService getSystemService() {
+        return systemService;
     }
 
-    @Override
-    protected void onTerminate() throws UnifyException {
-
+    protected NotificationService getNotificationService() {
+        return notificationService;
     }
-
 }

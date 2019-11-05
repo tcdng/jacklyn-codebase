@@ -215,7 +215,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     private WfTransitionQueueManager wfTransitionQueueManager;
 
     @Configurable
-    private WfItemAlertLogic wfItemAlertLogic;
+    private WfItemAlertPolicy wfItemAlertLogic;
 
     private FactoryMap<String, WfDocDef> wfDocs;
 
@@ -1179,7 +1179,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public List<ToolingEnrichmentLogicItem> findToolingEnrichmentLogicTypes() throws UnifyException {
-        return getToolingTypes(ToolingEnrichmentLogicItem.class, WfItemEnrichmentLogic.class);
+        return getToolingTypes(ToolingEnrichmentLogicItem.class, WfItemEnrichmentPolicy.class);
     }
 
     @Override
@@ -2003,7 +2003,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         // Perform enrichment if any
         String docName = flowingWfItem.getDocName();
         for (WfEnrichmentDef wfEnrichmentDef : targetWfStepDef.getEnrichmentList()) {
-            WfItemEnrichmentLogic wfItemEnrichmentLogic = (WfItemEnrichmentLogic) getComponent(
+            WfItemEnrichmentPolicy wfItemEnrichmentLogic = (WfItemEnrichmentPolicy) getComponent(
                     wfEnrichmentDef.getLogic());
             if (!wfEnrichmentDef.isDoc() || wfEnrichmentDef.getDocName().equals(docName)) {
                 wfItemEnrichmentLogic.enrich(flowingWfItem.getReaderWriter());
