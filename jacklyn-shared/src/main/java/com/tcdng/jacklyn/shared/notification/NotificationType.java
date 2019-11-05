@@ -28,15 +28,12 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("notificationtypelist")
 public enum NotificationType implements EnumConst {
 
-    SYSTEM("X", true), EMAIL("E", false), SMS("S", false);
+    SYSTEM("X"), EMAIL("E"), SMS("S");
 
     private final String code;
-
-    private final boolean internal;
     
-    private NotificationType(String code, boolean internal) {
+    private NotificationType(String code) {
         this.code = code;
-        this.internal = internal;
     }
 
     @Override
@@ -50,7 +47,11 @@ public enum NotificationType implements EnumConst {
     }
 
     public boolean internal() {
-        return internal;
+        return this.equals(SYSTEM);
+    }
+
+    public boolean attachment() {
+        return this.equals(EMAIL);
     }
 
     public static NotificationType fromCode(String code) {

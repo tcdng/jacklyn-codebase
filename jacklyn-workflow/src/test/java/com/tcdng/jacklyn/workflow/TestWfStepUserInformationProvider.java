@@ -59,4 +59,9 @@ public class TestWfStepUserInformationProvider extends AbstractWfStepUserInforma
             String... preferredRoles) throws UnifyException {
         return Collections.emptyList();
     }
+
+    @Override
+    public Collection<NotificationContact> getMobilePhoneContactsForUser(String userLoginId) throws UnifyException {
+        return Collections.emptyList();
+    }
 }

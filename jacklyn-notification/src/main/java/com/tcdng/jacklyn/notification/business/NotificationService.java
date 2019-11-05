@@ -239,7 +239,7 @@ public interface NotificationService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    void createUserSystemNotifications(MessageType messageType, String subject, String message, String link,
+    void createSystemNotifications(MessageType messageType, String subject, String message, String link,
             String reference, List<String> userIdList) throws UnifyException;
 
     /**

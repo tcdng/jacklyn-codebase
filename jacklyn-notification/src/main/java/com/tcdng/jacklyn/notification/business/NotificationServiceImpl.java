@@ -254,7 +254,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                 userIdList.add(recipient.getName());
             }
 
-            createUserSystemNotifications(notificationTemplateDef.getMessageType(),
+            createSystemNotifications(notificationTemplateDef.getMessageType(),
                     notificationTemplateDef.getSubject(), messageBody, notificationTemplateDef.getActionLink(),
                     message.getReference(), userIdList);
         } else {
@@ -341,7 +341,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
-    public void createUserSystemNotifications(MessageType messageType, String subject, String message,
+    public void createSystemNotifications(MessageType messageType, String subject, String message,
             String actionLink, String reference, List<String> userIdList) throws UnifyException {
         NotificationInbox notificationInbox = new NotificationInbox();
         notificationInbox.setSubject(subject);
@@ -467,14 +467,14 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                     templates.get(NotificationUtils.getTemplateGlobalName(notification.getModuleName(),
                             notification.getNotificationTemplateName()));
             NotificationChannelDef notificationChannelDef = channels.get(notification.getNotificationChannelName());
-            MessagingChannel notificationChannel = null;
+            MessagingChannel messageChannel = null;
             switch (notificationChannelDef.getNotificationType()) {
                 case SMS:
-                    notificationChannel = smsNotificationChannel;
+                    messageChannel = smsNotificationChannel;
                     break;
                 case EMAIL:
                 default:
-                    notificationChannel = emailNotificationChannel;
+                    messageChannel = emailNotificationChannel;
                     break;
             }
 
@@ -520,7 +520,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
             }
 
             // Send
-            return notificationChannel.sendMessage(notificationChannelDef, subject, senderContact, recipientContactList,
+            return messageChannel.sendMessage(notificationChannelDef, subject, senderContact, recipientContactList,
                     messageBody, notificationTemplateDef.isHtml(), fileAttachmentList);
         } catch (UnifyException e) {
             logError(e);

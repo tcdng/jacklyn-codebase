@@ -103,4 +103,15 @@ public interface WfStepUserInformationProvider extends UnifyComponent {
     Collection<NotificationContact> getEligibleMobilePhoneContactsForWorkflowStep(WorkflowParticipantType participant,
             String globalStepName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException;
+
+    /**
+     * Gets the list of notification mobile phone contacts for a user.
+     * 
+     * @param userLoginId
+     *            the user login ID
+     * @return the list of contact information
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Collection<NotificationContact> getMobilePhoneContactsForUser(String userLoginId) throws UnifyException;
 }

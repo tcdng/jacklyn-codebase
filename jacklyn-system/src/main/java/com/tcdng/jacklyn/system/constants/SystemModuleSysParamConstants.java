@@ -39,7 +39,13 @@ public interface SystemModuleSysParamConstants {
 
     String SYSPARAM_EMAIL_CHANNEL = "SYS-0008";
 
-    String SYSPARAM_SYSTEM_EMAIL = "SYS-0009";
+    String SYSPARAM_SMS_CHANNEL = "SYS-0009";
 
-    String SYSPARAM_SYSTEM_NAME = "SYS-000A";
+    String SYSPARAM_SYSTEM_CHANNEL = "SYS-000A";
+
+    String SYSPARAM_SYSTEM_EMAIL = "SYS-000B";
+
+    String SYSPARAM_SYSTEM_SMS_MOBILENO = "SYS-000C";
+
+    String SYSPARAM_SYSTEM_NAME = "SYS-000D";
 }

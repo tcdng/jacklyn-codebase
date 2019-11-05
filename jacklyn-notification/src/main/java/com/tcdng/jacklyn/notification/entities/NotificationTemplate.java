@@ -56,13 +56,13 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
     @Column(length = 2048)
     private String template;
 
-    @Column(length = 64, nullable = true)
+    @Column(length = 96, nullable = true)
     private String actionLink;
 
     @Column(name = "HTML_FG")
     private Boolean htmlFlag;
 
-    @Column(length = 32, nullable = true)
+    @Column(length = 64, nullable = true)
     private String attachmentGenerator;
 
     @Column(name="TARGET_LINK", length = 64, nullable = true)
