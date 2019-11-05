@@ -224,6 +224,11 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
+    public NotificationChannel findNotificationChannel(NotificationChannelQuery query) throws UnifyException {
+        return db().find(query);
+    }
+
+    @Override
     public List<NotificationChannel> findNotificationChannels(NotificationChannelQuery query) throws UnifyException {
         return db().listAll(query);
     }

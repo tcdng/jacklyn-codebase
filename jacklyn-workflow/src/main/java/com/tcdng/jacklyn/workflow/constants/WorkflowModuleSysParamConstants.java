@@ -23,4 +23,9 @@ package com.tcdng.jacklyn.workflow.constants;
  */
 public interface WorkflowModuleSysParamConstants {
 
+    String SYSPARAM_WORKFLOW_EMAIL_CHANNEL = "WFL-0001";
+
+    String SYSPARAM_WORKFLOW_SMS_CHANNEL = "WFL-0002";
+
+    String SYSPARAM_WORKFLOW_SYSTEM_CHANNEL = "WFL-0003";
 }

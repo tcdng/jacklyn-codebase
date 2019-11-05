@@ -43,4 +43,15 @@
 				description="$m{workflow.privilege.wftemplate.delete}" />
 		</privilege-group>
 	</privileges>
+    <sys-parameters>
+        <sys-parameter name="WFL-0001" defaultValue=""
+            description="$m{workflow.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name"
+            type="string" />
+        <sys-parameter name="WFL-0002" defaultValue=""
+            description="$m{workflow.sysparam.smsnotificationchannel}" editor="!ui-select list:smsnotificationchannellist listKey:name"
+            type="string" />
+        <sys-parameter name="WFL-0003" defaultValue="defWfSysNotifChannel"
+            description="$m{workflow.sysparam.systemnotificationchannel}" editor="!ui-select list:systemnotificationchannellist listKey:name"
+            type="string" />
+    </sys-parameters>
 </module>
