@@ -120,6 +120,18 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
         return Collections.emptyList();
     }
 
+    @Override
+    public Collection<NotificationContact> getMobilePhoneContactsForUser(String userLoginId) throws UnifyException {
+        if (!StringUtils.isBlank(userLoginId)) {
+            User user = securityService.findUser(userLoginId);
+            if (user != null) {
+                return Arrays.asList(new NotificationContact(userLoginId, user.getMobileNo()));
+            }
+        }
+
+        return Collections.emptyList();
+    }
+
     private UserRoleQuery getUserRoleQueryForEligibleUsers(WorkflowParticipantType participant, String stepGlobalName,
             String branchCode, String departmentCode, String... preferredRoles) throws UnifyException {
         if (participant.isParticipant()) {

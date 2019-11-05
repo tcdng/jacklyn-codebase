@@ -183,11 +183,19 @@
 			defaultValue="false" editor="!ui-select list:booleanlist" type="boolean"
 			editable="true" />
 		<sys-parameter name="SYS-0008" defaultValue=""
-			description="$m{system.sysparam.emailnotificationchannel}" editor="!ui-select list:notificationchannellist listKey:name"
+			description="$m{system.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name"
 			type="string" />
-		<sys-parameter name="SYS-0009" description="$m{system.sysparam.systememail}"
-			editor="!ui-text size:40" />
-		<sys-parameter name="SYS-000A" defaultValue="System"
+        <sys-parameter name="SYS-0009" defaultValue=""
+            description="$m{system.sysparam.smsnotificationchannel}" editor="!ui-select list:smsnotificationchannellist listKey:name"
+            type="string" />
+        <sys-parameter name="SYS-000A" defaultValue=""
+            description="$m{system.sysparam.systemnotificationchannel}" editor="!ui-select list:systemnotificationchannellist listKey:name"
+            type="string" />
+        <sys-parameter name="SYS-000B" description="$m{system.sysparam.systememail}"
+            editor="!ui-text size:40" />
+        <sys-parameter name="SYS-000C" description="$m{system.sysparam.systemsmsmobileno}"
+            editor="!ui-text size:40" />
+		<sys-parameter name="SYS-000D" defaultValue="System"
 			description="$m{system.sysparam.systemname}" editor="!ui-text size:24" />
 	</sys-parameters>
 </module>
