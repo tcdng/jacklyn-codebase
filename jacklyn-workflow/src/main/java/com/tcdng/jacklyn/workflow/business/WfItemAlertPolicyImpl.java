@@ -24,6 +24,7 @@ import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.constants.WorkflowModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfAlertDef;
 import com.tcdng.unify.core.UnifyException;
@@ -61,7 +62,7 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
                                 SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL);
                 channelName =
                         getSystemService().getSysParameterValue(String.class,
-                                SystemModuleSysParamConstants.SYSPARAM_EMAIL_CHANNEL);
+                                WorkflowModuleSysParamConstants.SYSPARAM_WORKFLOW_EMAIL_CHANNEL);
                 break;
             case SMS:
                 senderContact =
@@ -69,24 +70,24 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
                                 SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SMS_MOBILENO);
                 channelName =
                         getSystemService().getSysParameterValue(String.class,
-                                SystemModuleSysParamConstants.SYSPARAM_SMS_CHANNEL);
+                                WorkflowModuleSysParamConstants.SYSPARAM_WORKFLOW_SMS_CHANNEL);
                 break;
             case SYSTEM:
                 senderContact = senderName;
                 channelName =
                         getSystemService().getSysParameterValue(String.class,
-                                SystemModuleSysParamConstants.SYSPARAM_SYSTEM_CHANNEL);
+                                WorkflowModuleSysParamConstants.SYSPARAM_WORKFLOW_SYSTEM_CHANNEL);
             default:
                 break;
         }
 
         // Attempt to send only on valid channel name
-        if(!StringUtils.isBlank(channelName)) {
+        if (!StringUtils.isBlank(channelName)) {
             // Get contact list
             if (wfAlertDef.isPassThrough()) {
                 // Alert all contacts in step
                 contactList =
-                        getEligibleContacts(channel,flowingWfItemReader, wfAlertDef.getParticipant(),
+                        getEligibleContacts(channel, flowingWfItemReader, wfAlertDef.getParticipant(),
                                 wfAlertDef.getStepGlobalName());
             } else if (wfAlertDef.isUserInteract()) {
                 String heldBy = flowingWfItemReader.getItemHeldBy();
@@ -100,7 +101,7 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
                                     wfAlertDef.getStepGlobalName());
                 }
             }
-            
+
             // Send only if there's at least one contact
             if (!DataUtils.isBlank(contactList)) {
                 String templateGlobalName = wfAlertDef.getNotificationTemplateCode();
@@ -108,7 +109,8 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
                         getNotificationService().getRuntimeNotificationTemplateDef(templateGlobalName);
 
                 // Build message
-                Message.Builder msgBuilder = Message.newBuilder(templateGlobalName).fromSender(senderName, senderContact);
+                Message.Builder msgBuilder =
+                        Message.newBuilder(templateGlobalName).fromSender(senderName, senderContact);
 
                 // Populate contacts
                 for (NotificationContact contact : contactList) {

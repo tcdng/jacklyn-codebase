@@ -62,6 +62,17 @@ public interface NotificationService extends JacklynBusinessService {
     NotificationChannel findNotificationChannel(Long notificationChannelId) throws UnifyException;
 
     /**
+     * Finds notification channel by query.
+     * 
+     * @param query
+     *            the notification channel query
+     * @return the notification channel if found otherwise null
+     * @throws UnifyException
+     *             if multiple records are found
+     */
+    NotificationChannel findNotificationChannel(NotificationChannelQuery query) throws UnifyException;
+
+    /**
      * Finds notification channels by query.
      * 
      * @param query
