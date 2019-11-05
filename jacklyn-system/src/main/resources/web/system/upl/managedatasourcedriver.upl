@@ -23,7 +23,7 @@
 //Table columns
 !ui-label:name caption:$m{system.datasourcedriver.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{system.datasourcedriver.description} binding:description  columnStyle:$s{width:250px;} sortable:true
-!ui-label:dialect caption:$m{system.datasourcedriver.dialect} binding:dialect style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:dialect caption:$m{system.datasourcedriver.dialect} binding:dialect columnStyle:$s{width:100px;} sortable:true
 !ui-label:statusDesc caption:$m{system.datasourcedriver.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
