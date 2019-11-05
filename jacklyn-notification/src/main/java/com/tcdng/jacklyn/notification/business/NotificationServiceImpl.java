@@ -81,6 +81,8 @@ import com.tcdng.unify.core.util.StringUtils;
 public class NotificationServiceImpl extends AbstractJacklynBusinessService
         implements NotificationService, SystemNotificationProvider {
 
+    private static final String SEND_NOTIFICATION_LOCK = "notif::sendnotification-lock";
+
     @Configurable
     private SystemService systemService;
 
@@ -254,9 +256,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                 userIdList.add(recipient.getName());
             }
 
-            createSystemNotifications(notificationTemplateDef.getMessageType(),
-                    notificationTemplateDef.getSubject(), messageBody, notificationTemplateDef.getActionLink(),
-                    message.getReference(), userIdList);
+            createSystemNotifications(notificationTemplateDef.getMessageType(), notificationTemplateDef.getSubject(),
+                    messageBody, notificationTemplateDef.getActionLink(), message.getReference(), userIdList);
         } else {
             // Put notification in external communication system
             Notification notification = new Notification();
@@ -341,8 +342,8 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     }
 
     @Override
-    public void createSystemNotifications(MessageType messageType, String subject, String message,
-            String actionLink, String reference, List<String> userIdList) throws UnifyException {
+    public void createSystemNotifications(MessageType messageType, String subject, String message, String actionLink,
+            String reference, List<String> userIdList) throws UnifyException {
         NotificationInbox notificationInbox = new NotificationInbox();
         notificationInbox.setSubject(subject);
         notificationInbox.setMessage(message);
@@ -363,53 +364,58 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     @SuppressWarnings("unchecked")
     @Periodic(PeriodicType.SLOWER)
     public void sendNotifications(TaskMonitor taskMonitor) throws UnifyException {
-        if (grabClusterMasterLock()) { // Puts burden on current node until it dies
-            if (systemService.getSysParameterValue(boolean.class,
-                    NotificationModuleSysParamConstants.NOTIFICATION_ENABLED)) {
-                int maxBatchSize =
-                        systemService.getSysParameterValue(int.class,
-                                NotificationModuleSysParamConstants.NOTIFICATION_MAX_BATCH_SIZE);
-                int maxAttempts =
-                        systemService.getSysParameterValue(int.class,
-                                NotificationModuleSysParamConstants.NOTIFICATION_MAXIMUM_TRIES);
-                int retryMinutes =
-                        systemService.getSysParameterValue(int.class,
-                                NotificationModuleSysParamConstants.NOTIFICATION_RETRY_MINUTES);
+        if (grabClusterLock(SEND_NOTIFICATION_LOCK)) {
+            try {
+                if (systemService.getSysParameterValue(boolean.class,
+                        NotificationModuleSysParamConstants.NOTIFICATION_ENABLED)) {
+                    int maxBatchSize =
+                            systemService.getSysParameterValue(int.class,
+                                    NotificationModuleSysParamConstants.NOTIFICATION_MAX_BATCH_SIZE);
+                    int maxAttempts =
+                            systemService.getSysParameterValue(int.class,
+                                    NotificationModuleSysParamConstants.NOTIFICATION_MAXIMUM_TRIES);
+                    int retryMinutes =
+                            systemService.getSysParameterValue(int.class,
+                                    NotificationModuleSysParamConstants.NOTIFICATION_RETRY_MINUTES);
 
-                Date now = db().getNow();
-                List<Notification> notificationList =
-                        db().listAll(new NotificationQuery().due(now).status(NotificationStatus.NOT_SENT).orderById()
-                                .limit(maxBatchSize));
-                for (Notification notification : notificationList) {
-                    int attempts = notification.getAttempts() + 1;
-                    notification.setAttempts(attempts);
-                    MessageDictionary messageDictionary = null;
-                    if (notification.getDictionary() != null) {
-                        messageDictionary =
-                                new MessageDictionary((Map<String, Object>) IOUtils.streamFromBytes(Map.class,
-                                        notification.getDictionary()));
-                    } else {
-                        messageDictionary = new MessageDictionary();
-                    }
-
-                    if (sendNotification(notification, messageDictionary)) {
-                        // Update to SENT status
-                        notification.setSentDt(now);
-                        notification.setStatus(NotificationStatus.SENT);
-                    } else {
-                        if (attempts >= maxAttempts) {
-                            notification.setStatus(NotificationStatus.ABORTED);
+                    Date now = db().getNow();
+                    List<Notification> notificationList =
+                            db().listAll(new NotificationQuery().due(now).status(NotificationStatus.NOT_SENT)
+                                    .orderById().limit(maxBatchSize));
+                    for (Notification notification : notificationList) {
+                        int attempts = notification.getAttempts() + 1;
+                        notification.setAttempts(attempts);
+                        MessageDictionary messageDictionary = null;
+                        if (notification.getDictionary() != null) {
+                            messageDictionary =
+                                    new MessageDictionary((Map<String, Object>) IOUtils.streamFromBytes(Map.class,
+                                            notification.getDictionary()));
                         } else {
-                            // Shift and update due date by retry minutes
-                            Date dueDt =
-                                    CalendarUtils.getNowWithFrequencyOffset(now, FrequencyUnit.MINUTE, retryMinutes);
-                            notification.setDueDt(dueDt);
+                            messageDictionary = new MessageDictionary();
                         }
-                    }
 
-                    db().updateById(notification);
-                    commitTransactions();
+                        Update update = new Update();
+                        if (sendNotification(notification, messageDictionary)) {
+                            // Update to SENT status
+                            update.add("sentDt", now).add("status", NotificationStatus.SENT);
+                        } else {
+                            if (attempts >= maxAttempts) {
+                                update.add("status", NotificationStatus.ABORTED);
+                            } else {
+                                // Shift and update due date by retry minutes
+                                Date dueDt =
+                                        CalendarUtils.getNowWithFrequencyOffset(now, FrequencyUnit.MINUTE,
+                                                retryMinutes);
+                                update.add("dueDt", dueDt);
+                            }
+                        }
+
+                        db().updateById(Notification.class, notification.getId(), update);
+                        commitTransactions();
+                    }
                 }
+            } finally {
+                releaseClusterLock(SEND_NOTIFICATION_LOCK);
             }
         }
     }

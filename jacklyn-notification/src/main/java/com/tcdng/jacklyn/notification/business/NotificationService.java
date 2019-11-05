@@ -32,7 +32,7 @@ import com.tcdng.jacklyn.shared.notification.data.ToolingAttachmentGenItem;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Message business service.
+ * Notification business service.
  * 
  * @author Lateef Ojulari
  * @since 1.0
