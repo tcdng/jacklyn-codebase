@@ -76,7 +76,7 @@ public class NotificationTemplateConfig extends BaseConfig {
     }
 
     @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
-    @XmlAttribute(name="message-type")
+    @XmlAttribute
     public void setMessageType(MessageType messageType) {
         if (messageType != null) {
             this.messageType = messageType;
@@ -87,7 +87,7 @@ public class NotificationTemplateConfig extends BaseConfig {
         return actionLink;
     }
 
-    @XmlAttribute(name="action-link")
+    @XmlAttribute
     public void setActionLink(String actionLink) {
         this.actionLink = actionLink;
     }

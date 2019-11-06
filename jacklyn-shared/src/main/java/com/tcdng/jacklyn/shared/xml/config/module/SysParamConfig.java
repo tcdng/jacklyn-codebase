@@ -34,7 +34,7 @@ public class SysParamConfig extends BaseConfig {
 
     private String editor;
 
-    private String defaultValue;
+    private String defaultVal;
 
     private boolean control;
 
@@ -66,13 +66,13 @@ public class SysParamConfig extends BaseConfig {
         this.editor = editor;
     }
 
-    public String getDefaultValue() {
-        return defaultValue;
+    public String getDefaultVal() {
+        return defaultVal;
     }
 
     @XmlAttribute(required = true)
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
+    public void setDefaultVal(String defaultVal) {
+        this.defaultVal = defaultVal;
     }
 
     public boolean isControl() {

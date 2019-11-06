@@ -58,7 +58,7 @@ public class FilterConfig {
     }
 
     @XmlJavaTypeAdapter(RestrictionTypeXmlAdapter.class)
-    @XmlAttribute
+    @XmlAttribute(required = true)
     public void setOp(RestrictionType op) {
         this.op = op;
     }
