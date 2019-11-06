@@ -1,4 +1,24 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+<!--
+  Copyright 2018-2019 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!-- Jacklyn configuration for system module -->
 <module name="system" description="$m{system.module}">
 	<audits>
 		<audit name="sys-activatemoduleact" description="$m{system.auditsettings.module.privilege.activate}"
@@ -162,31 +182,31 @@
 		</report-group>
 	</reports>
 	<sys-parameters>
-		<sys-parameter name="SYS-0001" defaultValue="1.0.0"
+		<sys-parameter name="SYS-0001" defaultVal="1.0.0"
 			description="$m{system.sysparam.applicationversion}" editor="!ui-text size:24"
 			editable="false" />
-		<sys-parameter name="SYS-0002" defaultValue="Client Title"
+		<sys-parameter name="SYS-0002" defaultVal="Client Title"
 			description="$m{system.sysparam.clienttitle}" editor="!ui-text size:40" />
-		<sys-parameter name="SYS-0003" defaultValue="false"
+		<sys-parameter name="SYS-0003" defaultVal="false"
 			description="$m{system.sysparam.enablesystemscheduler}" editor="!ui-select list:booleanlist"
 			type="boolean" control="true" editable="false" />
-		<sys-parameter name="SYS-0004" defaultValue="8"
+		<sys-parameter name="SYS-0004" defaultVal="8"
 			description="$m{system.sysparam.maxscheduledtasktrigger}" editor="!ui-integer precision:2"
 			type="number" />
-		<sys-parameter name="SYS-0005" defaultValue="5"
+		<sys-parameter name="SYS-0005" defaultVal="5"
 			description="$m{system.sysparam.tasktriggerexpiration}" editor="!ui-integer precision:3"
 			type="number" />
-		<sys-parameter name="SYS-0006" defaultValue="web/images/applicationbanner.png"
+		<sys-parameter name="SYS-0006" defaultVal="web/images/applicationbanner.png"
 			description="$m{system.sysparam.applicationbanner}" editor="!ui-text size:40"
 			editable="true" />
 		<sys-parameter name="SYS-0007" description="$m{system.sysparam.useloginlocale}"
-			defaultValue="false" editor="!ui-select list:booleanlist" type="boolean"
+			defaultVal="false" editor="!ui-select list:booleanlist" type="boolean"
 			editable="true" />
         <sys-parameter name="SYS-0008" description="$m{system.sysparam.systememail}"
             editor="!ui-text size:40" />
         <sys-parameter name="SYS-0009" description="$m{system.sysparam.systemsmsmobileno}"
             editor="!ui-text size:40" />
-		<sys-parameter name="SYS-000A" defaultValue="System"
+		<sys-parameter name="SYS-000A" defaultVal="System"
 			description="$m{system.sysparam.systemname}" editor="!ui-text size:24" />
 	</sys-parameters>
 </module>

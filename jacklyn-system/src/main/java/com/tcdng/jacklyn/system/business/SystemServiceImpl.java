@@ -1201,7 +1201,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setModuleId(module.getId());
                         sysParameter.setName(sysParamConfig.getName());
                         sysParameter.setDescription(description);
-                        String defaultVal = sysParamConfig.getDefaultValue();
+                        String defaultVal = sysParamConfig.getDefaultVal();
                         if (SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL.equals(sysParamConfig.getName())) {
                             defaultVal =
                                     getContainerSetting(String.class,

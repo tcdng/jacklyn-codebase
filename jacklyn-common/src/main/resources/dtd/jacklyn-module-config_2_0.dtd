@@ -1,0 +1,162 @@
+<?xml encoding="UTF-8"?>
+<!--
+  Copyright 2018-2019 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!--
+This is the XML DTD for the Jacklyn module configuration XML file.
+Configuration files should include a DOCTYPE of the following form:
+
+  <!DOCTYPE unify PUBLIC
+	"-//The Code Department//DTD Jacklyn Module 2.0//EN"
+	"https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+-->
+
+
+<!ELEMENT module (audits?,archives?,shortcut-tiles?,menus?,input-controls?,notification-templates?,privileges?,reports?,sys-parameters?)>
+<!ATTLIST module description CDATA #REQUIRED>
+<!ATTLIST module name NMTOKEN #REQUIRED>
+
+<!ELEMENT audits (audit+)>
+
+<!ELEMENT archives (archive+)>
+
+<!ELEMENT shortcut-tiles (shortcut-tile+)>
+
+<!ELEMENT menus (menu+)>
+
+<!ELEMENT input-controls (input-control+)>
+
+<!ELEMENT privileges (privilege-group+)>
+
+<!ELEMENT reports (report-group+)>
+
+<!ELEMENT notification-templates (notification-template+)>
+
+<!ELEMENT sys-parameters (sys-parameter+)>
+
+<!ELEMENT audit EMPTY>
+<!ATTLIST audit action (search|create|view|update|delete|login|logout|generate|upload|download|workflow|miscellaneous|system) #REQUIRED>
+<!ATTLIST audit description CDATA #REQUIRED>
+<!ATTLIST audit name NMTOKEN #REQUIRED>
+
+<!ELEMENT archive EMPTY>
+<!ATTLIST archive archivable CDATA #REQUIRED>
+<!ATTLIST archive description CDATA #REQUIRED>
+<!ATTLIST archive name NMTOKEN #REQUIRED>
+
+<!ELEMENT shortcut-tile EMPTY>
+<!ATTLIST shortcut-tile caption CDATA #REQUIRED>
+<!ATTLIST shortcut-tile description CDATA #REQUIRED>
+<!ATTLIST shortcut-tile image CDATA #IMPLIED>
+<!ATTLIST shortcut-tile generator CDATA #IMPLIED>
+<!ATTLIST shortcut-tile name NMTOKEN #REQUIRED>
+<!ATTLIST shortcut-tile path CDATA #REQUIRED>
+<!ATTLIST shortcut-tile landscape (true|false) "false">
+
+<!ELEMENT menu (menuitem+)>
+<!ATTLIST menu caption CDATA #REQUIRED>
+<!ATTLIST menu description CDATA #REQUIRED>
+<!ATTLIST menu name NMTOKEN #REQUIRED>
+<!ATTLIST menu pageCaption CDATA #IMPLIED>
+<!ATTLIST menu path CDATA #IMPLIED>
+<!ATTLIST menu remotePath CDATA #IMPLIED>
+
+<!ELEMENT input-control EMPTY>
+<!ATTLIST input-control description CDATA #REQUIRED>
+<!ATTLIST input-control editor CDATA #REQUIRED>
+<!ATTLIST input-control name NMTOKEN #REQUIRED>
+
+<!ELEMENT privilege-group (privilege+)>
+<!ATTLIST privilege-group category NMTOKEN #IMPLIED>
+
+<!ELEMENT report-group (report+)>
+<!ATTLIST report-group description CDATA #REQUIRED>
+<!ATTLIST report-group name NMTOKEN #REQUIRED>
+
+<!ELEMENT notification-template EMPTY>
+<!ATTLIST notification-template subject CDATA #REQUIRED>
+<!ATTLIST notification-template template CDATA #REQUIRED>
+<!ATTLIST notification-template actionLink CDATA #IMPLIED>
+<!ATTLIST notification-template messageType (information|warning|action) "information">
+<!ATTLIST notification-template html (true|false) "false">
+<!ATTLIST notification-template name NMTOKEN #REQUIRED>
+<!ATTLIST notification-template description CDATA #REQUIRED>
+
+<!ELEMENT sys-parameter EMPTY>
+<!ATTLIST sys-parameter control (true|false) "false">
+<!ATTLIST sys-parameter defaultVal CDATA #IMPLIED>
+<!ATTLIST sys-parameter description CDATA #REQUIRED>
+<!ATTLIST sys-parameter editable (true|false) "true">
+<!ATTLIST sys-parameter editor CDATA #REQUIRED>
+<!ATTLIST sys-parameter name NMTOKEN #REQUIRED>
+<!ATTLIST sys-parameter type (boolean|number|string) "string">
+
+<!ELEMENT menuitem EMPTY>
+<!ATTLIST menuitem caption CDATA #REQUIRED>
+<!ATTLIST menuitem description CDATA #REQUIRED>
+<!ATTLIST menuitem name NMTOKEN #REQUIRED>
+<!ATTLIST menuitem pageCaption CDATA #REQUIRED>
+<!ATTLIST menuitem path CDATA #REQUIRED>
+<!ATTLIST menuitem remotePath CDATA #IMPLIED>
+
+<!ELEMENT privilege EMPTY>
+<!ATTLIST privilege description CDATA #REQUIRED>
+<!ATTLIST privilege name NMTOKEN #REQUIRED>
+
+<!ELEMENT report (columns?,parameters?,filter?)>
+<!ATTLIST report description CDATA #REQUIRED>
+<!ATTLIST report name NMTOKEN #REQUIRED>
+<!ATTLIST report title CDATA #REQUIRED>
+<!ATTLIST report reportable NMTOKEN #IMPLIED>
+<!ATTLIST report template CDATA #IMPLIED>
+<!ATTLIST report processor NMTOKEN #IMPLIED>
+<!ATTLIST report layout NMTOKEN #IMPLIED>
+<!ATTLIST report invertGroupColors (true|false) "false">
+<!ATTLIST report landscape (true|false) "false">
+<!ATTLIST report underlineRows (true|false) "false">
+<!ATTLIST report shadeOddRows (true|false) "false">
+
+<!ELEMENT columns (column+)>
+
+<!ELEMENT parameters (parameter+)>
+
+<!ELEMENT column EMPTY>
+<!ATTLIST column description CDATA #REQUIRED>
+<!ATTLIST column field NMTOKEN #REQUIRED>
+<!ATTLIST column type CDATA #IMPLIED>
+<!ATTLIST column formatter CDATA #IMPLIED>
+<!ATTLIST column width CDATA #IMPLIED>
+<!ATTLIST column order (ascending|descending) #IMPLIED>
+<!ATTLIST column halign (left|center|right|justified) #IMPLIED>
+<!ATTLIST column group (true|false) "false">
+<!ATTLIST column groupOnNewPage (true|false) "false">
+<!ATTLIST column sum (true|false) "false">
+
+<!ELEMENT parameter EMPTY>
+<!ATTLIST parameter description CDATA #REQUIRED>
+<!ATTLIST parameter editor CDATA #REQUIRED>
+<!ATTLIST parameter label CDATA #REQUIRED>
+<!ATTLIST parameter mandatory (true|false) "false">
+<!ATTLIST parameter defaultVal CDATA #IMPLIED>
+<!ATTLIST parameter name NMTOKEN #REQUIRED>
+<!ATTLIST parameter type (char|boolean|short|integer|long|float|double|decimal|date|string|blob) "string">
+
+<!ELEMENT filter (filter*)>
+<!ATTLIST filter field NMTOKEN #IMPLIED>
+<!ATTLIST filter op (equals|not_equal|less_than|less_or_equal|greater|greater_or_equal|between|not_between|amongst|not_amongst|like|not_like|begins_with|not_begin_with|ends_with|not_end_with|is_null|is_not_null|and|or) #REQUIRED>
+<!ATTLIST filter useParameter (true|false) "false">
+<!ATTLIST filter value1 CDATA #IMPLIED>
+<!ATTLIST filter value2 CDATA #IMPLIED>
