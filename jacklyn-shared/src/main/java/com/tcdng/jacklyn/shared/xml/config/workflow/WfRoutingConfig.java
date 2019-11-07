@@ -55,7 +55,7 @@ public class WfRoutingConfig extends BaseConfig {
         return classifierName;
     }
 
-    @XmlAttribute(name = "classifier", required = true)
+    @XmlAttribute(name = "classifier")
     public void setClassifierName(String classifierName) {
         this.classifierName = classifierName;
     }

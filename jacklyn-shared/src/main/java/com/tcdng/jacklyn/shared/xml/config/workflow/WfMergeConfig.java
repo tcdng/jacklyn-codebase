@@ -18,15 +18,13 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
-
 /**
  * Workflow merge configuration.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfMergeConfig extends BaseConfig {
+public class WfMergeConfig {
 
     private String fieldName;
 

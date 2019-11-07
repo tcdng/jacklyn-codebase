@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
 <category name="customerCategory" description="Customer Workflow Category"
 	version="1.0">
 	<documents>
-		<document name="custDoc" description="Customer Information"
-			version="1.0">
+		<document name="custDoc" description="Customer Information">
 			<fields>
 				<field name="id" description="Customer ID" type="long" />
 				<field name="firstName" description="First Name" type="string" />
@@ -31,7 +33,7 @@
 
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
-					type="primary" bean-type="com.tcdng.jacklyn.test.TestCustomer">
+					bean-type="com.tcdng.jacklyn.test.TestCustomer">
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />
 					<field-mapping doc-field="age" bean-field="age" />
@@ -42,18 +44,18 @@
 			<form>
 				<tab name="main" description="Main Tab" label="Main">
 					<section name="basicDetails" description="Basic Details">
-						<field binding="firstName" editor="!ui-text" required="true" />
-						<field binding="lastName" editor="!ui-text" required="true" />
-						<field binding="age" editor="!ui-integer" required="true" />
-						<field binding="height" editor="!ui-decimal" required="true" />
+						<form-field binding="firstName" editor="!ui-text" required="true" />
+						<form-field binding="lastName" editor="!ui-text" required="true" />
+						<form-field binding="age" editor="!ui-integer" required="true" />
+						<form-field binding="height" editor="!ui-decimal" required="true" />
 					</section>
 					<section name="licenseDetails" description="License Details"
 						binding="driversLicense">
-						<field binding="licenseNo" editor="!ui-text" label="License No."
+						<form-field binding="licenseNo" editor="!ui-text" label="License No."
 							required="true" />
-						<field binding="issueDt" editor="!ui-date" label="Issue Date"
+						<form-field binding="issueDt" editor="!ui-date" label="Issue Date"
 							required="true" />
-						<field binding="expiryDt" editor="!ui-date" label="Expiry Date"
+						<form-field binding="expiryDt" editor="!ui-date" label="Expiry Date"
 							required="true" />
 					</section>
 				</tab>
@@ -68,8 +70,7 @@
         </message>
     </messages>
 	<templates>
-		<template name="custOnboarding" description="Customer Onboarding"
-			document="custDoc" version="1.0">
+		<template name="custOnboarding" description="Customer Onboarding">
 			<documents>
 			 <document name="custDoc" manual="true"/>
 			</documents>
@@ -77,16 +78,16 @@
                 <step name="manual" description="Manual Create Customer" type="manual"
                     participant="personnel" />
 				<step name="start" description="Start Step" type="start">
+                    <enrichments>
+                        <enrichment name="testEnrichment" description="Test Enrichment"
+                            logic="testcustomer-enrichmentpolicy" />
+                    </enrichments>
 					<routings>
 						<routing name="routToCreate" description="Route to Create"
 							target="createCust" document="custDoc" classifier="validAge" />
 						<routing name="routToApproval" description="Route to Approval"
 							target="custApproval" />
 					</routings>
-					<enrichments>
-						<enrichment name="testEnrichment" description="Test Enrichment"
-							logic="testcustomer-enrichmentpolicy" />
-					</enrichments>
 				</step>
 				<step name="createCust" description="Create Customer" type="automatic">
 					<record-actions>
@@ -106,7 +107,7 @@
 					participant="all" priority="high" type="interactive">
 					<alerts>
 						<alert name="awaitApproval" description="Awaiting Approval"
-							document="custDoc" message="awaitCustApproval" type="system" />
+							document="custDoc" message="awaitCustApproval" type="user_interact" />
 					</alerts>
 					<user-actions>
 						<user-action name="approveCust" description="Approve Customer"

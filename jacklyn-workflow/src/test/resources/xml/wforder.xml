@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
 <category name="orderCategory" description="Order Category"
 	version="1.0">
 	<documents>

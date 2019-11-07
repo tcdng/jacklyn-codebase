@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
 <category name="customerRecActionCategory" description="Customer Record Action Category"
 	version="1.0">
 	<documents>
-		<document name="custDoc" description="Customer Information"
-			version="1.0">
+		<document name="custDoc" description="Customer Information">
 			<item-description-format>Customer:{firstName} {lastName}
 			</item-description-format>
 			<fields>
@@ -32,7 +34,7 @@
 		</document>
 	</documents>
 	<templates>
-		<template name="manageCust" description="Manage Customer" version="1.0">
+		<template name="manageCust" description="Manage Customer">
 			<documents>
 			     <document name="custDoc" manual="true"/>
 			</documents>

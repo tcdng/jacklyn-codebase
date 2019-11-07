@@ -90,7 +90,7 @@ public class WfDocumentConfig extends BaseConfig {
         return wfFormConfig;
     }
 
-    @XmlElement(name = "form", required = true)
+    @XmlElement(name = "form")
     public void setWfFormConfig(WfFormConfig wfFormConfig) {
         this.wfFormConfig = wfFormConfig;
     }

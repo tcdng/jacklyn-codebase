@@ -1,0 +1,231 @@
+<?xml encoding="UTF-8"?>
+<!--
+  Copyright 2018-2019 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!--
+This is the XML DTD for the Jacklyn workflow category XML file.
+Configuration files should include a DOCTYPE of the following form:
+
+  <!DOCTYPE unify PUBLIC
+    "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+    "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
+-->
+
+<!ELEMENT category (documents,messages?,templates)>
+<!ATTLIST category description CDATA #REQUIRED>
+<!ATTLIST category name NMTOKEN #REQUIRED>
+<!ATTLIST category version CDATA #REQUIRED>
+
+<!ELEMENT messages (message+)>
+
+<!ELEMENT templates (template+)>
+
+<!ELEMENT message (subject,body)>
+<!ATTLIST message attachment-generator NMTOKEN #IMPLIED>
+<!ATTLIST message message-type (information|warning|action) "information">
+<!ATTLIST message action-link CDATA #IMPLIED>
+<!ATTLIST message description CDATA #REQUIRED>
+<!ATTLIST message document NMTOKEN #REQUIRED>
+<!ATTLIST message html (true|false) "false">
+<!ATTLIST message name NMTOKEN #REQUIRED>
+
+<!ELEMENT template (documents,steps)>
+<!ATTLIST template description CDATA #REQUIRED>
+<!ATTLIST template name NMTOKEN #REQUIRED>
+
+<!ELEMENT subject (#PCDATA)>
+
+<!ELEMENT body (#PCDATA)>
+
+<!ELEMENT steps (step+)>
+
+<!ELEMENT step (enrichments?,alerts?,record-actions?,user-actions?,branches?,routings?,
+                policies?,form-privileges?)>
+<!ATTLIST step type (start|manual|automatic|interactive|error|split|merge|end) "automatic">
+<!ATTLIST step participant (none|all|personnel|supervisor) "none">
+<!ATTLIST step priority (critical|high|normal|low) "normal">
+<!ATTLIST step label CDATA #IMPLIED>
+<!ATTLIST step assigner NMTOKEN #IMPLIED>
+<!ATTLIST step branch NMTOKEN #IMPLIED>
+<!ATTLIST step origin NMTOKEN #IMPLIED>
+<!ATTLIST step max-session-items CDATA #IMPLIED>
+<!ATTLIST step expiry-hours CDATA #IMPLIED>
+<!ATTLIST step description CDATA #REQUIRED>
+<!ATTLIST step name NMTOKEN #REQUIRED>
+<!ATTLIST step branch-only (true|false) "false">
+<!ATTLIST step department-only (true|false) "false">
+<!ATTLIST step include-forwarder (true|false) "false">
+<!ATTLIST step audit (true|false) "false">
+
+<!ELEMENT alerts (alert+)>
+
+<!ELEMENT record-actions (record-action+)>
+
+<!ELEMENT user-actions (user-action+)>
+
+<!ELEMENT branches (branch+)>
+
+<!ELEMENT routings (routing+)>
+
+<!ELEMENT enrichments (enrichment+)>
+
+<!ELEMENT policies (policy+)>
+
+<!ELEMENT form-privileges (form-privilege+)>
+
+<!ELEMENT alert EMPTY>
+<!ATTLIST alert type (pass_through|user_interact) "user_interact">
+<!ATTLIST alert participant (none|all|personnel|supervisor) "none">
+<!ATTLIST alert channel (email|sms|system) "system">
+<!ATTLIST alert description CDATA #REQUIRED>
+<!ATTLIST alert document NMTOKEN #REQUIRED>
+<!ATTLIST alert message NMTOKEN #REQUIRED>
+<!ATTLIST alert name NMTOKEN #REQUIRED>
+
+<!ELEMENT record-action EMPTY>
+<!ATTLIST record-action type (create|read|update|delete) #REQUIRED>
+<!ATTLIST record-action description CDATA #REQUIRED>
+<!ATTLIST record-action document NMTOKEN #REQUIRED>
+<!ATTLIST record-action mapping NMTOKEN #REQUIRED>
+<!ATTLIST record-action name NMTOKEN #REQUIRED>
+
+<!ELEMENT user-action (attachment-check*)>
+<!ATTLIST user-action comment-requirement (mandatory|optional|none) "none">
+<!ATTLIST user-action label CDATA #IMPLIED>
+<!ATTLIST user-action description CDATA #REQUIRED>
+<!ATTLIST user-action name NMTOKEN #REQUIRED>
+<!ATTLIST user-action target NMTOKEN #REQUIRED>
+<!ATTLIST user-action validate-page (true|false) "false">
+
+<!ELEMENT attachment-check EMPTY>
+<!ATTLIST attachment-check requirement-type (mandatory|optional|none) #REQUIRED>
+<!ATTLIST attachment-check document NMTOKEN #REQUIRED>
+<!ATTLIST attachment-check attachment NMTOKEN #REQUIRED>
+
+<!ELEMENT branch (merges)>
+<!ATTLIST branch description CDATA #REQUIRED>
+<!ATTLIST branch name NMTOKEN #REQUIRED>
+<!ATTLIST branch target NMTOKEN #REQUIRED>
+
+<!ELEMENT merges (merge+)>
+
+<!ELEMENT merge EMPTY>
+<!ATTLIST merge field NMTOKEN #REQUIRED>
+
+<!ELEMENT routing EMPTY>
+<!ATTLIST routing classifier NMTOKEN #IMPLIED>
+<!ATTLIST routing description CDATA #REQUIRED>
+<!ATTLIST routing document NMTOKEN #IMPLIED>
+<!ATTLIST routing name NMTOKEN #REQUIRED>
+<!ATTLIST routing target NMTOKEN #REQUIRED>
+
+<!ELEMENT enrichment EMPTY>
+<!ATTLIST enrichment description CDATA #REQUIRED>
+<!ATTLIST enrichment logic NMTOKEN #REQUIRED>
+<!ATTLIST enrichment document NMTOKEN #IMPLIED>
+<!ATTLIST enrichment name NMTOKEN #REQUIRED>
+
+<!ELEMENT policy EMPTY>
+<!ATTLIST policy description CDATA #REQUIRED>
+<!ATTLIST policy logic NMTOKEN #REQUIRED>
+<!ATTLIST policy document NMTOKEN #IMPLIED>
+<!ATTLIST policy name NMTOKEN #REQUIRED>
+
+<!ELEMENT form-privilege EMPTY>
+<!ATTLIST form-privilege type (tab|section|field) #REQUIRED>
+<!ATTLIST form-privilege document NMTOKEN #REQUIRED>
+<!ATTLIST form-privilege name NMTOKEN #REQUIRED>
+<!ATTLIST form-privilege visible (true|false) "true">
+<!ATTLIST form-privilege editable (true|false) "true">
+<!ATTLIST form-privilege disabled (true|false) "false">
+<!ATTLIST form-privilege required (true|false) "true">
+
+<!ELEMENT documents (document+)>
+
+<!ELEMENT document (item-description-format?,fields?,classifiers?,
+                    attachments?,bean-mappings?,form?)>
+<!ATTLIST document description CDATA #IMPLIED>
+<!ATTLIST document manual (true|false) "false">
+<!ATTLIST document name NMTOKEN #REQUIRED>
+
+<!ELEMENT item-description-format (#PCDATA)>
+
+<!ELEMENT fields (field*,complex-field*)>
+
+<!ELEMENT classifiers (classifier+)>
+
+<!ELEMENT attachments (attachment+)>
+
+<!ELEMENT bean-mappings (bean-mapping+)>
+
+<!ELEMENT form (tab+)>
+
+<!ELEMENT complex-field (field+)>
+<!ATTLIST complex-field description CDATA #REQUIRED>
+<!ATTLIST complex-field name NMTOKEN #REQUIRED>
+
+<!ELEMENT field EMPTY>
+<!ATTLIST field type (char|boolean|short|integer|long|float|double|decimal|date|string|blob) #REQUIRED>
+<!ATTLIST field description CDATA #REQUIRED>
+<!ATTLIST field name NMTOKEN #REQUIRED>
+<!ATTLIST field list (true|false) "false">
+
+<!ELEMENT classifier (filter+)>
+<!ATTLIST classifier description CDATA #REQUIRED>
+<!ATTLIST classifier name NMTOKEN #REQUIRED>
+<!ATTLIST classifier logic NMTOKEN #IMPLIED>
+<!ATTLIST classifier filter-logic (and|or) #IMPLIED>
+
+<!ELEMENT attachment EMPTY>
+<!ATTLIST attachment type (audio|csv|excel|image|pdf|text|video|wildcard|word) #REQUIRED>
+<!ATTLIST attachment description CDATA #REQUIRED>
+<!ATTLIST attachment label CDATA #REQUIRED>
+<!ATTLIST attachment name NMTOKEN #REQUIRED>
+
+<!ELEMENT bean-mapping (field-mapping+)>
+<!ATTLIST bean-mapping bean-type CDATA #REQUIRED>
+<!ATTLIST bean-mapping description CDATA #REQUIRED>
+<!ATTLIST bean-mapping name NMTOKEN #REQUIRED>
+<!ATTLIST bean-mapping complex-field NMTOKEN #IMPLIED>
+
+<!ELEMENT tab (section+)>
+<!ATTLIST tab description CDATA #REQUIRED>
+<!ATTLIST tab label CDATA #IMPLIED>
+<!ATTLIST tab name NMTOKEN #REQUIRED>
+<!ATTLIST tab pseudo (true|false) "true">
+
+<!ELEMENT filter EMPTY>
+<!ATTLIST filter field NMTOKEN #REQUIRED>
+<!ATTLIST filter field-only  (true|false) "false">
+<!ATTLIST filter op (equals|not_equal|less_than|less_or_equal|greater|greater_or_equal|between|not_between|like|not_like|begin_with|not_begin_with|end_with|not_end_with|is_null|is_not_null) #REQUIRED>
+<!ATTLIST filter value1 CDATA #IMPLIED>
+<!ATTLIST filter value2 CDATA #IMPLIED>
+
+<!ELEMENT field-mapping EMPTY>
+<!ATTLIST field-mapping bean-field NMTOKEN #REQUIRED>
+<!ATTLIST field-mapping doc-field NMTOKEN #REQUIRED>
+
+<!ELEMENT section (form-field+)>
+<!ATTLIST section label CDATA #IMPLIED>
+<!ATTLIST section binding NMTOKEN #IMPLIED>
+<!ATTLIST section description CDATA #REQUIRED>
+<!ATTLIST section name NMTOKEN #REQUIRED>
+
+<!ELEMENT form-field EMPTY>
+<!ATTLIST form-field binding NMTOKEN #IMPLIED>
+<!ATTLIST form-field editor CDATA #IMPLIED>
+<!ATTLIST form-field label CDATA #IMPLIED>
+<!ATTLIST form-field required (true|false) "true">

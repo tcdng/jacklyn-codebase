@@ -57,7 +57,7 @@ public class WfClassifierConfig extends BaseConfig {
     }
 
     @XmlJavaTypeAdapter(BinaryLogicTypeXmlAdapter.class)
-    @XmlAttribute(name="filterLogic")
+    @XmlAttribute(name="filter-logic")
     public void setFilterLogic(BinaryLogicType filterLogic) {
         if (filterLogic != null) {
             this.filterLogic = filterLogic;

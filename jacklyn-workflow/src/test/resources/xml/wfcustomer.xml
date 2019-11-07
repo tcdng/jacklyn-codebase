@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
 <category name="customerCategory" description="Customer Workflow Category"
 	version="1.0">
 	<documents>
@@ -39,22 +42,22 @@
 			<form>
 				<tab name="main" description="Main Tab" label="Main" pseudo="true">
 					<section name="basicDetails" description="Basic Details">
-						<field binding="firstName" editor="!ui-text" label="First Name"
+						<form-field binding="firstName" editor="!ui-text" label="First Name"
 							required="true" />
-						<field binding="lastName" editor="!ui-text" label="Last Name"
+						<form-field binding="lastName" editor="!ui-text" label="Last Name"
 							required="true" />
-						<field binding="age" editor="!ui-integer" label="Age"
+						<form-field binding="age" editor="!ui-integer" label="Age"
 							required="true" />
-						<field binding="height" editor="!ui-decimal" label="Height"
+						<form-field binding="height" editor="!ui-decimal" label="Height"
 							required="true" />
 					</section>
 					<section name="licenseDetails" description="License Details"
 						binding="driversLicense">
-						<field binding="licenseNo" editor="!ui-text" label="License No."
+						<form-field binding="licenseNo" editor="!ui-text" label="License No."
 							required="true" />
-						<field binding="issueDt" editor="!ui-date" label="Issue Date"
+						<form-field binding="issueDt" editor="!ui-date" label="Issue Date"
 							required="true" />
-						<field binding="expiryDt" editor="!ui-date" label="Expiry Date"
+						<form-field binding="expiryDt" editor="!ui-date" label="Expiry Date"
 							required="true" />
 					</section>
 				</tab>
@@ -83,16 +86,16 @@
 				<step name="manual" description="Manual Create Customer" type="manual"
 					participant="personnel" />
 				<step name="start" description="Start Step" type="start">
+                    <enrichments>
+                        <enrichment name="testEnrichment" description="Test Enrichment"
+                            logic="testcustomer-enrichmentpolicy" />
+                    </enrichments>
 					<routings>
 						<routing name="routToCreate" description="Route to Create"
 							target="createCust" document="custDoc" classifier="validAge" />
 						<routing name="routToApproval" description="Route to Approval"
 							target="custApproval" />
 					</routings>
-					<enrichments>
-						<enrichment name="testEnrichment" description="Test Enrichment"
-							logic="testcustomer-enrichmentpolicy" />
-					</enrichments>
 				</step>
 				<step name="createCust" description="Create Customer" type="automatic">
 					<record-actions>

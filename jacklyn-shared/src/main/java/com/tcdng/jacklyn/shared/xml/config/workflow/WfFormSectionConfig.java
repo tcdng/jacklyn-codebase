@@ -59,7 +59,7 @@ public class WfFormSectionConfig extends BaseConfig {
         return wfFormFieldConfigList;
     }
 
-    @XmlElement(name = "field", required = true)
+    @XmlElement(name = "form-field", required = true)
     public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
         this.wfFormFieldConfigList = wfFormFieldConfigList;
     }
