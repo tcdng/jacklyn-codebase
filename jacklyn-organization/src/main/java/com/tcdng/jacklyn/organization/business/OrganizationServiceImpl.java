@@ -103,6 +103,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public Long findBranchId(String branchCode) throws UnifyException {
+        return db().value(Long.class, "id", new BranchQuery().code(branchCode));
+    }
+
+    @Override
     public Branch findBranch(BranchQuery query) throws UnifyException {
         return db().find(query);
     }
@@ -200,6 +205,12 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     public List<Branch> findHubBranchesByBranch(Long branchId) throws UnifyException {
         Long hubId = db().value(Long.class, "hubId", new BranchQuery().id(branchId));
         return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public List<Long> findHubBranchIdsByBranch(String branchCode) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().code(branchCode));
+        return db().valueList(Long.class, "id", new BranchQuery().hubId(hubId));
     }
 
     @Override

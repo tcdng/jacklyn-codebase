@@ -27,6 +27,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * User branch list command.
@@ -43,12 +44,13 @@ public class UserBranchListCommand extends AbstractZeroParamsSecurityListCommand
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         UserToken userToken = getUserToken();
-        if (!userToken.isReservedUser() && !isAppAdminView()) {
-            if(getViewDirective("sec-hubadmin").isVisible()) {
-                return organizationService.findHubBranchesByBranch(userToken.getBranchCode());
+        String branchCode = userToken.getBranchCode();
+        if (!StringUtils.isBlank(branchCode) && !userToken.isReservedUser() && !isAppAdminView()) {
+            if(isHubAdminView()) {
+                return organizationService.findHubBranchesByBranch(branchCode);
             }
 
-            return Arrays.asList(organizationService.findBranch(new BranchQuery().code(userToken.getBranchCode())));
+            return Arrays.asList(organizationService.findBranch(new BranchQuery().code(branchCode)));
         }
 
         return organizationService.findBranches(

@@ -21,8 +21,10 @@ import com.tcdng.jacklyn.common.business.ReportProvider;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.data.ReportOptions;
+import com.tcdng.jacklyn.common.web.UserSessionViewAccessProvider;
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
@@ -45,6 +47,9 @@ import com.tcdng.unify.web.ui.panel.TableCrudPanel;
 @ResultMappings({ @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
 public abstract class BasePageController extends AbstractPageController implements DocViewController {
 
+    @Configurable
+    private UserSessionViewAccessProvider userSessionViewAccessProvider;
+
     public BasePageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
@@ -58,6 +63,30 @@ public abstract class BasePageController extends AbstractPageController implemen
     @Override
     public Panel getDocViewPanel() throws UnifyException {
         return getPanelByShortName(getDocViewPanelName());
+    }
+
+    /**
+     * Gets current user session branch IDs
+     * 
+     * @return list of branch IDs. Empty list is returned for system or application
+     *         admin users.
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected List<Long> getUserSessionBranchIds() throws UnifyException {
+        return userSessionViewAccessProvider.findUserSessionBranchIds();
+    }
+
+    /**
+     * Gets current user session department IDs
+     * 
+     * @return list of department IDs. Empty list is returned for system or
+     *         application admin users.
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    protected List<Long> getUserSessionDepartmentIds() throws UnifyException {
+        return userSessionViewAccessProvider.findUserSessionDepartmentIds();
     }
 
     /**
