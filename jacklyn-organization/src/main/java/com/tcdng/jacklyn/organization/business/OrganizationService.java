@@ -70,6 +70,17 @@ public interface OrganizationService extends JacklynBusinessService {
     Branch findBranch(Long branchId) throws UnifyException;
 
     /**
+     * Finds branch ID by branch code.
+     * 
+     * @param branchCode
+     *            the branch code to use
+     * @return the branch ID
+     * @throws UnifyException
+     *             if branch identified by supplied code is unknown
+     */
+    Long findBranchId(String branchCode) throws UnifyException;
+
+    /**
      * Finds branch by criteria.
      * 
      * @param query
@@ -299,6 +310,17 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<Branch> findHubBranchesByBranch(String branchCode) throws UnifyException;
+
+    /**
+     * Finds hub branch IDs by branch code.
+     * 
+     * @param branchCode
+     *            the branch code
+     * @return the list of branch IDs found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> findHubBranchIdsByBranch(String branchCode) throws UnifyException;
 
     /**
      * Finds hub by branch code.
