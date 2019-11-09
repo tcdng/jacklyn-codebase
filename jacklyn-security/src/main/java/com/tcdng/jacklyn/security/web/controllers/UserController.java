@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.security.web.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
@@ -26,6 +27,7 @@ import com.tcdng.jacklyn.security.entities.UserQuery;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.web.annotation.Action;
@@ -39,6 +41,8 @@ import com.tcdng.unify.web.annotation.Action;
 @Component("/security/user")
 @UplBinding("web/security/upl/manageuser.upl")
 public class UserController extends AbstractSecurityCrudController<User> {
+
+    private Long searchRoleId;
 
     private String searchLoginId;
 
@@ -70,6 +74,14 @@ public class UserController extends AbstractSecurityCrudController<User> {
         logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, userData.getFullName());
         hintUser("$m{security.user.hint.passwordreset}", userData.getFullName());
         return noResult();
+    }
+
+    public Long getSearchRoleId() {
+        return searchRoleId;
+    }
+
+    public void setSearchRoleId(Long searchRoleId) {
+        this.searchRoleId = searchRoleId;
     }
 
     public String getSearchLoginId() {
@@ -107,15 +119,27 @@ public class UserController extends AbstractSecurityCrudController<User> {
     @Override
     protected List<User> find() throws UnifyException {
         UserQuery query = new UserQuery();
-        if (QueryUtils.isValidStringCriteria(searchLoginId)) {
-            query.loginId(searchLoginId);
+        if (QueryUtils.isValidLongCriteria(searchRoleId)) {
+            List<Long> userIdList = getSecurityService().findRoleUserIds(searchRoleId);
+            if (DataUtils.isBlank(userIdList)) {
+                return Collections.emptyList();
+            }
+            
+            query.idIn(userIdList);
         }
+        
+        if (QueryUtils.isValidStringCriteria(searchLoginId)) {
+            query.loginIdLike(searchLoginId);
+        }
+        
         if (QueryUtils.isValidStringCriteria(searchFullName)) {
             query.fullNameLike(searchFullName);
         }
+        
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        
         query.excludeSysRecords();
         query.order("fullName").ignoreEmptyCriteria(true);
         return getSecurityService().findUsers(query);

@@ -379,6 +379,17 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     List<Long> findUserRoleIds(Long userId) throws UnifyException;
 
     /**
+     * Gets user ID list for specified role.
+     * 
+     * @param roleId
+     *            the role ID
+     * @return the user ID list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> findRoleUserIds(Long roleId) throws UnifyException;
+
+    /**
      * Finds user roles by query.
      * 
      * @param query

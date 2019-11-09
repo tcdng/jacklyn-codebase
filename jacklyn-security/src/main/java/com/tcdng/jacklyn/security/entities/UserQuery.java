@@ -54,6 +54,10 @@ public class UserQuery extends BaseVersionedTimestampedStatusEntityQuery<User> {
         return (UserQuery) equals("loginId", loginId);
     }
 
+    public UserQuery loginIdLike(String loginId) {
+        return (UserQuery) like("loginId", loginId);
+    }
+
     public UserQuery password(String password) {
         return (UserQuery) equals("password", password);
     }
