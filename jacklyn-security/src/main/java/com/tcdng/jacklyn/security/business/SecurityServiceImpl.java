@@ -420,6 +420,11 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public List<Long> findRoleUserIds(Long roleId) throws UnifyException {
+        return db().valueList(Long.class, "userId", new UserRoleQuery().roleId(roleId).orderById());
+    }
+
+    @Override
     public List<UserRole> findUserRoles(UserRoleQuery query) throws UnifyException {
         return db().listAll(query);
     }

@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{security.user.manage}
-    searchByList:$c{searchLoginId searchFullName searchStatus}
-    searchClearList:$c{searchLoginId searchFullName searchStatus}
+    searchByList:$c{searchRoleId searchLoginId searchFullName searchStatus}
+    searchClearList:$c{searchRoleId searchLoginId searchFullName searchStatus}
     tableColumnList:$c{loginId fullName email lastLoginDt statusDesc}
     formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmLoginId frmFullName frmEmail frmMobile frmTheme frmPasswordExpires frmStatus}}
     formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
@@ -18,6 +18,8 @@
     saveValidations:$c{frmLoginIdVal frmEmailVal frmMobileVal}
 
 //Search
+!ui-select:searchRoleId caption:$m{security.user.roleid} binding:searchRoleId list:rolelist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-text:searchLoginId caption:$m{security.user.loginid} binding:searchLoginId case:upper eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchFullName caption:$m{security.user.fullname} binding:searchFullName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{security.user.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
