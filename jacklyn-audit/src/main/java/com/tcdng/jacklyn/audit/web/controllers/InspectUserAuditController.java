@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @Component("/audit/inspectuser")
 @UplBinding("web/audit/upl/inspectuser.upl")
 @ResultMappings({ @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{mainPanel}" }) })
-public class InspectUserAuditController extends AbstractAuditController {
+public class InspectUserAuditController extends AbstractAuditPageController {
 
     private String searchUserLoginId;
 

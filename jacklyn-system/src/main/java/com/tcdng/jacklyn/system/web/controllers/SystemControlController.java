@@ -38,7 +38,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/system/upl/systemcontrol.upl")
 @ResultMappings({
     @ResultMapping(name = "refreshcontrolpanel", response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
-public class SystemControlController extends AbstractSystemController {
+public class SystemControlController extends AbstractSystemPageController {
 
     private List<SystemControlState> systemControlStateList;
 

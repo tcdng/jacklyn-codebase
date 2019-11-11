@@ -36,7 +36,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/filetransfer")
 @UplBinding("web/file/upl/filetransfer.upl")
-public class FileTransferController extends AbstractFileController {
+public class FileTransferController extends AbstractFilePageController {
 
     private Long fileTransferConfigId;
 

@@ -41,7 +41,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/organization/upl/manageroledocumentcontrol.upl")
 @ResultMappings({ @ResultMapping(name = "refreshtable",
         response = { "!refreshpanelresponse panels:$l{tablePanel actionPanel}" }) })
-public class RoleDocumentControlController extends AbstractOrganizationController {
+public class RoleDocumentControlController extends AbstractOrganizationPageController {
 
     private Long searchRoleId;
 

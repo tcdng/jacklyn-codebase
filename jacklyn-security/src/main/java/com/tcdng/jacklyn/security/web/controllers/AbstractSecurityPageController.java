@@ -13,29 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.file.web.controllers;
+package com.tcdng.jacklyn.security.web.controllers;
 
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
-import com.tcdng.jacklyn.file.business.FileService;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Abstract base page controller for file module.
+ * Abstract base page controller for security module.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractFileController extends BasePageController {
+public abstract class AbstractSecurityPageController extends BasePageController {
 
     @Configurable
-    private FileService fileService;
+    private SecurityService securityService;
 
-    public AbstractFileController(boolean secured, boolean readOnly) {
+    public AbstractSecurityPageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
 
-    protected FileService getFileService() throws UnifyException {
-        return fileService;
+    protected SecurityService getSecurityService() throws UnifyException {
+        return securityService;
     }
 }

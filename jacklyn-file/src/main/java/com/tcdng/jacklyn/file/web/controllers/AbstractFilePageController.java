@@ -13,31 +13,29 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-package com.tcdng.jacklyn.location.web.controllers;
+package com.tcdng.jacklyn.file.web.controllers;
 
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
-import com.tcdng.jacklyn.location.business.LocationService;
+import com.tcdng.jacklyn.file.business.FileService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Abstract base page controller for location module.
+ * Abstract base page controller for file module.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractLocationController extends BasePageController {
+public abstract class AbstractFilePageController extends BasePageController {
 
     @Configurable
-    private LocationService locationService;
+    private FileService fileService;
 
-    public AbstractLocationController(boolean secured, boolean readOnly) {
+    public AbstractFilePageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
 
-    protected LocationService getLocationService() throws UnifyException {
-        return locationService;
+    protected FileService getFileService() throws UnifyException {
+        return fileService;
     }
-
 }

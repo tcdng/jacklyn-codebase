@@ -94,6 +94,9 @@
 			<menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
 				pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
 				path="/system/authentication/openPage" remotePath="/system/authentication/getRemoteDoc" />
+            <menuitem name="sys-distributionlisting" caption="$m{system.distributionlisting.menu.title}"
+                description="$m{system.menuitem.distributionlisting}" pageCaption="$m{system.distributionlisting}"
+                path="/system/distributionlisting/openPage" remotePath="/system/distributionlisting/getRemoteDoc" />
 		</menu>
 	</menus>
 	<input-controls>

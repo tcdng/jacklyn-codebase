@@ -32,7 +32,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @ResultMappings({ @ResultMapping(name = "forwardtoapplication",
         response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
-public abstract class AbstractApplicationForwarderController extends AbstractSecurityController {
+public abstract class AbstractApplicationForwarderController extends AbstractSecurityPageController {
 
     private String applicationPath;
 
