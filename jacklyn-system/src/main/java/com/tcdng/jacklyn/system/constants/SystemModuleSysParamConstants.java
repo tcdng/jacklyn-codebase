@@ -37,9 +37,9 @@ public interface SystemModuleSysParamConstants {
 
     String SYSPARAM_USE_LOGIN_LOCALE = "SYS-0007";
 
-    String SYSPARAM_SYSTEM_EMAIL = "SYS-0008";
+    String SYSPARAM_SYSTEM_SMS_MOBILENO = "SYS-0008";
 
-    String SYSPARAM_SYSTEM_SMS_MOBILENO = "SYS-0009";
+    String SYSPARAM_SYSTEM_EMAIL = "SYS-0009";
 
     String SYSPARAM_SYSTEM_NAME = "SYS-000A";
 }

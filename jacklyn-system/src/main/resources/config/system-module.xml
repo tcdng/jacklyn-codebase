@@ -205,9 +205,9 @@
 		<sys-parameter name="SYS-0007" description="$m{system.sysparam.useloginlocale}"
 			defaultVal="false" editor="!ui-select list:booleanlist" type="boolean"
 			editable="true" />
-        <sys-parameter name="SYS-0008" description="$m{system.sysparam.systememail}"
+        <sys-parameter name="SYS-0008" description="$m{system.sysparam.systemsmsmobileno}"
             editor="!ui-text size:40" />
-        <sys-parameter name="SYS-0009" description="$m{system.sysparam.systemsmsmobileno}"
+        <sys-parameter name="SYS-0009" description="$m{system.sysparam.systememail}"
             editor="!ui-text size:40" />
 		<sys-parameter name="SYS-000A" defaultVal="System"
 			description="$m{system.sysparam.systemname}" editor="!ui-text size:24" />
