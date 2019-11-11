@@ -26,12 +26,12 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractAuditController extends BasePageController {
+public abstract class AbstractAuditPageController extends BasePageController {
 
     @Configurable
     private AuditService auditService;
 
-    public AbstractAuditController(boolean secured, boolean readOnly) {
+    public AbstractAuditPageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
 

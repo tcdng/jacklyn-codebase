@@ -27,7 +27,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("/security/landing")
 @UplBinding("web/security/upl/dashboardlanding.upl")
-public class DashboardController extends AbstractSecurityController {
+public class DashboardController extends AbstractSecurityPageController {
 
     private String dashboardViewer;
 

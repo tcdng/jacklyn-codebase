@@ -38,7 +38,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/file/upl/batchupload.upl")
 @ResultMappings({ @ResultMapping(name = "refreshinputparameters",
         response = { "!refreshpanelresponse panels:$l{batchParamPanel}" }) })
-public class BatchFileUploadController extends AbstractFileController {
+public class BatchFileUploadController extends AbstractFilePageController {
 
     private Long batchUploadConfigId;
 

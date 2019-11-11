@@ -35,7 +35,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/security/upl/changeuserpassword.upl")
 @ResultMappings({
         @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{changePasswordPanel}" }) })
-public class ChangeUserPasswordController extends AbstractSecurityController {
+public class ChangeUserPasswordController extends AbstractSecurityPageController {
 
     private String oldPassword;
 

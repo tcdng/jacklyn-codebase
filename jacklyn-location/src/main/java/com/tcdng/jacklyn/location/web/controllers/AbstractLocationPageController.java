@@ -14,30 +14,30 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.organization.web.controllers;
+package com.tcdng.jacklyn.location.web.controllers;
 
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
-import com.tcdng.jacklyn.organization.business.OrganizationService;
+import com.tcdng.jacklyn.location.business.LocationService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 
 /**
- * Abstract base page controller for organization module.
+ * Abstract base page controller for location module.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationController extends BasePageController {
+public abstract class AbstractLocationPageController extends BasePageController {
 
     @Configurable
-    private OrganizationService organizationService;
+    private LocationService locationService;
 
-    public AbstractOrganizationController(boolean secured, boolean readOnly) {
+    public AbstractLocationPageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
     }
 
-    protected OrganizationService getOrganizationService() throws UnifyException {
-        return organizationService;
+    protected LocationService getLocationService() throws UnifyException {
+        return locationService;
     }
 
 }
