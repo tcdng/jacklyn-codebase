@@ -658,6 +658,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
+    public SystemAsset findSystemAsset(String systemAssetName) throws UnifyException {
+        return db().list(new SystemAssetQuery().name(systemAssetName));
+    }
+
+    @Override
     public List<SystemAsset> findSystemAssets(SystemAssetQuery query) throws UnifyException {
         return db().listAll(query);
     }

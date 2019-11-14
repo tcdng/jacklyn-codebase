@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.web;
+package com.tcdng.jacklyn.security.web.controllers;
 
 import java.util.Arrays;
 import java.util.Collections;

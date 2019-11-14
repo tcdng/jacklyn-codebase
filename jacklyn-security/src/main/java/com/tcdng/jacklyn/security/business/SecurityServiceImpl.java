@@ -64,14 +64,15 @@ import com.tcdng.jacklyn.shared.security.data.OSInstallationReqParams;
 import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
 import com.tcdng.jacklyn.shared.system.ClientAppType;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
+import com.tcdng.jacklyn.shared.system.SystemRestrictionType;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.system.business.SystemService;
-import com.tcdng.jacklyn.system.constants.SystemModuleErrorConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemReservedUserConstants;
 import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
+import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.unify.core.SessionContext;
 import com.tcdng.unify.core.UnifyException;
@@ -167,26 +168,49 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             clientAppAccessFlags.put(clientAppName, accessFlags);
         }
 
+        SystemAsset systemAsset = systemService.findSystemAsset(assetName);
+        if (systemAsset == null) {
+            throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_SYSTEM_ASSET_UNKNOWN, clientAppName,
+                    assetName);
+        }
+
+        // Open asset
+        if (SystemRestrictionType.OPEN.equals(systemAsset.getRestriction())) {
+            if (RecordStatus.INACTIVE.equals(systemAsset.getStatus())) {
+                throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
+                        assetName);
+            }
+
+            return true;
+        }
+
+        // Closed asset.
+        if (SystemRestrictionType.CLOSED.equals(systemAsset.getRestriction())) {
+            throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_SYSTEM_ASSET_CLOSED, clientAppName,
+                    assetName);
+        }
+
+        // Restricted asset. Check if application has access.
         String assetCheckKey = StringUtils.dotify(systemAssetType, assetName);
         if (!accessFlags.contains(assetCheckKey)) {
             if (db().countAll(new ClientAppQuery().name(clientAppName)) == 0) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_UNKNOWN, clientAppName);
+                throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_UNKNOWN, clientAppName);
             }
 
             ClientAppAsset clientAppAsset =
                     db().list(new ClientAppAssetQuery().clientAppName(clientAppName).assetType(systemAssetType)
                             .assetName(assetName));
             if (clientAppAsset == null) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_NO_SUCH_ASSET, clientAppName,
+                throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_NO_SUCH_ASSET, clientAppName,
                         assetName);
             }
 
             if (RecordStatus.INACTIVE.equals(clientAppAsset.getClientAppStatus())) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_INACTIVE, clientAppName);
+                throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_INACTIVE, clientAppName);
             }
 
             if (RecordStatus.INACTIVE.equals(clientAppAsset.getAssetStatus())) {
-                throw new UnifyException(SystemModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
+                throw new UnifyException(SecurityModuleErrorConstants.APPLICATION_ASSET_INACTIVE, clientAppName,
                         assetName);
             }
 
@@ -655,8 +679,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         String adminEmail =
                 systemService.getSysParameterValue(String.class, SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
         if (StringUtils.isBlank(adminEmail)) {
-            systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL,
-                    getContainerSetting(String.class, JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL));
+            systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL, getContainerSetting(
+                    String.class, JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL));
         }
 
         // Check for default dashboard and create if necessary

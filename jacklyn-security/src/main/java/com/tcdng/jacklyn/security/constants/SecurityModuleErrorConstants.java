@@ -46,4 +46,22 @@ public interface SecurityModuleErrorConstants {
 
     /** Invalid one-time password */
     String INVALID_ONETIME_PASSWORD = "SECURITY_0008";
+
+    /** Application is unknown. Application name = {0} */
+    String APPLICATION_UNKNOWN = "SECURITY_0009";
+
+    /** Application as no such asset. Application name = {0}, Asset name = {1} */
+    String APPLICATION_NO_SUCH_ASSET = "SECURITY_000A";
+
+    /** Application is inactive. Application name = {0} */
+    String APPLICATION_INACTIVE = "SECURITY_000B";
+
+    /** Application asset is inactive. Application name = {0}, Asset name = {1} */
+    String APPLICATION_ASSET_INACTIVE = "SECURITY_000C";
+
+    /** Application system asset unknown. Application name = {0}, Asset name = {1} */
+    String APPLICATION_SYSTEM_ASSET_UNKNOWN = "SECURITY_000D";
+
+    /** Application system asset closed. Application name = {0}, Asset name = {1} */
+    String APPLICATION_SYSTEM_ASSET_CLOSED = "SECURITY_000E";
 }

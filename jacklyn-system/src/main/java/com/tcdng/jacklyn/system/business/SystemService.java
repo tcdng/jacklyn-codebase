@@ -883,11 +883,22 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      * 
      * @param systemAssetId
      *            the system asset ID
-     * @return the system asset data
+     * @return the system asset
      * @throws UnifyException
      *             if system asset with ID is not found
      */
     SystemAsset findSystemAsset(Long systemAssetId) throws UnifyException;
+
+    /**
+     * Finds system asset by name.
+     * 
+     * @param systemAssetName
+     *            the system asset name
+     * @return the system asset if found otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    SystemAsset findSystemAsset(String systemAssetName) throws UnifyException;
 
     /**
      * Finds system assets by query.

@@ -19,6 +19,7 @@ package com.tcdng.jacklyn.system.entities;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseInstallEntity;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
+import com.tcdng.jacklyn.shared.system.SystemRestrictionType;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -42,6 +43,9 @@ public class SystemAsset extends BaseInstallEntity {
     @ForeignKey(name = "SYSASSET_TYPE")
     private SystemAssetType type;
 
+    @ForeignKey(name = "SYSASSET_RESTRICT")
+    private SystemRestrictionType restriction;
+    
     @Column(name = "SYSASSET_NM", length = 48)
     private String name;
 
@@ -56,6 +60,9 @@ public class SystemAsset extends BaseInstallEntity {
 
     @ListOnly(key = "type", property = "description")
     private String typeDesc;
+
+    @ListOnly(key = "restriction", property = "description")
+    private String restrictionDesc;
 
     @Override
     public String getDescription() {
@@ -76,6 +83,14 @@ public class SystemAsset extends BaseInstallEntity {
 
     public void setType(SystemAssetType type) {
         this.type = type;
+    }
+
+    public SystemRestrictionType getRestriction() {
+        return restriction;
+    }
+
+    public void setRestriction(SystemRestrictionType restriction) {
+        this.restriction = restriction;
     }
 
     public String getName() {
@@ -112,6 +127,14 @@ public class SystemAsset extends BaseInstallEntity {
 
     public void setTypeDesc(String typeDesc) {
         this.typeDesc = typeDesc;
+    }
+
+    public String getRestrictionDesc() {
+        return restrictionDesc;
+    }
+
+    public void setRestrictionDesc(String restrictionDesc) {
+        this.restrictionDesc = restrictionDesc;
     }
 
 }

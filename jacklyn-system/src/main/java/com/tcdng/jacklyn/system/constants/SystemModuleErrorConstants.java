@@ -44,24 +44,12 @@ public interface SystemModuleErrorConstants {
      */
     String MODULE_MULTIPLE_CONFIGURATIONS_WITH_NAME = "SYSTEM_0005";
 
-    /** Application is unknown. Application name = {0} */
-    String APPLICATION_UNKNOWN = "SYSTEM_0006";
-
-    /** Application as no such asset. Application name = {0}, Asset name = {1} */
-    String APPLICATION_NO_SUCH_ASSET = "SYSTEM_0007";
-
-    /** Application is inactive. Application name = {0} */
-    String APPLICATION_INACTIVE = "SYSTEM_0008";
-
-    /** Application asset is inactive. Application name = {0}, Asset name = {1} */
-    String APPLICATION_ASSET_INACTIVE = "SYSTEM_0009";
-
     /** Dashboard with name {0} is unknown*/
-    String DASHBOARD_NAME_UNKNOWN = "SYSTEM_000A";
+    String DASHBOARD_NAME_UNKNOWN = "SYSTEM_0006";
 
     /** Scheduled task with ID {0} is unknown*/
-    String SCHEDULED_TASK_ID_UNKNOWN = "SYSTEM_000B";
+    String SCHEDULED_TASK_ID_UNKNOWN = "SYSTEM_0007";
 
     /** Name attribute is required for tooling annotation of entity {0}.*/
-    String TOOLING_ENTITY_NAME_REQUIRED = "SYSTEM_000C";
+    String TOOLING_ENTITY_NAME_REQUIRED = "SYSTEM_0008";
 }

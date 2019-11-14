@@ -1,0 +1,29 @@
+// UPL template for system asset control
+// Copyright 2018-2019 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.systemassetcontrol.menu.title}
+    components:$c{systemAssetControlBasePanel}
+
+!ui-panel:systemAssetControlBasePanel layout:$d{!ui-vertical}
+    components:$c{maintainTypeLabel controlPanel}
+
+!ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
+    caption:$m{system.systemassetcontrol.performsystemassetcontrol}
+
+!ui-panel:controlPanel 
+
+!ui-table:systemAssetTbl
+    rowSelectable:false windowed:false pagination:false multiSelect:false serialNumbers:true
+    binding:$g{systemControlBinding} components:$c{controlDesc statusIndicator controlBtn}
+
+!ui-label:name caption:$m{system.systemassetcontrol.name} binding:enabled
+    columnStyle:$s{width:80px;text-align:center;}
+!ui-label:description caption:$m{system.systemassetcontrol.description} binding:description
+    columnStyle:$f{descriptionCaptionStyle} sortable:true
+!ui-label:moduleDesc caption:$m{system.systemassetcontrol.module} binding:moduleDesc
+!ui-label:typeDesc caption:$m{system.systemassetcontrol.type} binding:typeDesc
+     
+!ui-post:toggleSystemControlAct path:$g{toggleSystemControlPath} confirm:$m{system.systemassetcontrol.action.confirm} iconIndex:1
+
+    
