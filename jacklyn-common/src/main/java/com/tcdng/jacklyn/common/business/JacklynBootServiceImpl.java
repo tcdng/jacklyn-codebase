@@ -148,6 +148,9 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                 ModuleConfig mc = xmlObjectStreamer.unmarshal(ModuleConfig.class, inputStream, null);
                 list.add(mc);
                 mc.getPrivileges().toMap();
+            } catch (UnifyException ue) {
+                logError(ue);
+                throw ue;
             } finally {
                 IOUtils.close(inputStream);
             }
