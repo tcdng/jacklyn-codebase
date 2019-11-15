@@ -85,6 +85,9 @@
 			<menuitem name="sys-systemcontrol" description="$m{system.menuitem.syscontrol}"
 				caption="$m{system.systemcontrol.menu.title}" path="/system/systemcontrol/openPage"
 				pageCaption="$m{system.systemcontrol.menu.title}" remotePath="/system/systemcontrol/getRemoteDoc" />
+            <menuitem name="sys-systemassetcontrol" description="$m{system.menuitem.sysassetcontrol}"
+                caption="$m{system.systemassetcontrol.menu.title}" path="/system/systemassetcontrol/openPage"
+                pageCaption="$m{system.systemassetcontrol.menu.title}" remotePath="/system/systemassetcontrol/getRemoteDoc" />
 			<menuitem name="sys-managedatasourcedrivers" caption="$m{system.datasourcedriver.menu.title}"
 				description="$m{system.menuitem.datasourcedriver}" pageCaption="$m{system.datasourcedriver.manage}"
 				path="/system/datasourcedriver/openPage" remotePath="/system/datasourcedriver/getRemoteDoc" />

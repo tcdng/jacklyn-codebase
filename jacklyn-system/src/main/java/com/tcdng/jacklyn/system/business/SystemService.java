@@ -923,6 +923,16 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     List<Long> findSystemAssetIds(SystemAssetQuery query) throws UnifyException;
 
     /**
+     * Updates system asset restrictions.
+     * 
+     * @param systemAssetList
+     *            the list of system assets to be updated
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void updateSystemAssetRestrictions(List<SystemAsset> systemAssetList) throws UnifyException;
+
+    /**
      * Gets the number of unique active user sessions.
      * 
      * @return the number of unique sessions

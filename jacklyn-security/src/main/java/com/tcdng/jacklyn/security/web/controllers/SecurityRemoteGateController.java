@@ -42,7 +42,7 @@ public class SecurityRemoteGateController extends BaseRemoteCallController {
 
     @GatewayAction(
             name = SecurityRemoteCallNameConstants.OS_REQUEST_INSTALL,
-            description = "$m{security.gate.remotecall.osrequestinstall}", restricted = false)
+            description = "$m{security.gate.remotecall.osrequestinstall}", restricted = true)
     public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
             throws UnifyException {
         return securityService.processOSInstallationRequest(oSInstallationReqParams);

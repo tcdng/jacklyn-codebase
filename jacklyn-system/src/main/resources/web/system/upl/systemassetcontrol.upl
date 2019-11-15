@@ -6,24 +6,64 @@
     components:$c{systemAssetControlBasePanel}
 
 !ui-panel:systemAssetControlBasePanel layout:$d{!ui-vertical}
-    components:$c{maintainTypeLabel controlPanel}
+    components:$c{maintainTypeLabel searchBasePanel searchResultPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
     caption:$m{system.systemassetcontrol.performsystemassetcontrol}
 
-!ui-panel:controlPanel 
+// Search panel
+!ui-panel:searchBasePanel layout:$d{!ui-vertical} components:$c{criteriaPanel}
+!ui-panel:criteriaPanel layout:$d{!ui-grid showCaption:true captionSuffix:$s{:} columns:2}
+    components:$c{searchModuleId searchAssetType}
+!ui-select:searchModuleId caption:$m{system.systemassetcontrol.module} binding:searchModuleId
+        list:modulelist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchAssetType caption:$m{system.systemassetcontrol.type} binding:searchAssetType
+        list:systemassettypelist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
-!ui-table:systemAssetTbl
-    rowSelectable:false windowed:false pagination:false multiSelect:false serialNumbers:true
-    binding:$g{systemControlBinding} components:$c{controlDesc statusIndicator controlBtn}
+!ui-panel:searchResultPanel style:$s{height:100%;}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
+    components:$c{systemAssetTbl actionsGrpPanel}
 
-!ui-label:name caption:$m{system.systemassetcontrol.name} binding:enabled
-    columnStyle:$s{width:80px;text-align:center;}
+// Asset list panel
+!ui-table:systemAssetTbl style:$s{width:820px;} bodyStyle:$s{height:360px;}
+    rowSelectable:false windowed:true pagination:false multiSelect:false serialNumbers:true
+    binding:systemAssetList components:$c{moduleDesc description typeDesc restriction}
+
 !ui-label:description caption:$m{system.systemassetcontrol.description} binding:description
-    columnStyle:$f{descriptionCaptionStyle} sortable:true
+    columnStyle:$s{width:200px;} sortable:true
 !ui-label:moduleDesc caption:$m{system.systemassetcontrol.module} binding:moduleDesc
+    columnStyle:$s{width:120px;} sortable:true
 !ui-label:typeDesc caption:$m{system.systemassetcontrol.type} binding:typeDesc
-     
-!ui-post:toggleSystemControlAct path:$g{toggleSystemControlPath} confirm:$m{system.systemassetcontrol.action.confirm} iconIndex:1
+    columnStyle:$s{width:140px;} sortable:true
+!ui-select:restriction caption:$m{system.systemassetcontrol.restriction} binding:restriction
+     columnStyle:$s{width:140px;}
+     list:systemrestrictiontypelist blankOption:$s{}
 
-    
+// Action panel
+!ui-panel:actionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
+    components:$c{actionPanel}
+!ui-panel:actionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
+    components:$c{openAllTblBtn restrictAllTblBtn closeAllTblBtn applyTblBtn}
+    components:$c{doneTblBtn}
+
+//Action buttons    
+!ui-button:openAllTblBtn styleClass:$e{jk-button} caption:$m{button.openall}
+    eventHandler:$d{!ui-event event:onclick action:$c{openAllAct}}
+!ui-button:restrictAllTblBtn styleClass:$e{jk-button} caption:$m{button.restrictall}
+    eventHandler:$d{!ui-event event:onclick action:$c{restrictAllAct}}
+!ui-button:closeAllTblBtn styleClass:$e{jk-button} caption:$m{button.closeall}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeAllAct}}
+!ui-button:applyTblBtn styleClass:$e{jk-button} caption:$m{button.apply}
+    eventHandler:$d{!ui-event event:onclick action:$c{applyAct}}
+!ui-button:doneTblBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
+    eventHandler:$d{!ui-event event:onclick action:$c{doneAct}}
+
+!ui-post:searchAct path:$n{/findAll} components:$c{searchBasePanel}
+!ui-post:openAllAct path:$n{/openAll}
+!ui-post:closeAllAct path:$n{/closeAll}
+!ui-post:restrictAllAct path:$n{/restrictAll}
+!ui-post:applyAct path:$n{/applyChanges} components:$c{systemAssetTbl}
+     confirm:$m{system.systemassetcontrol.action.confirm} iconIndex:1
+!ui-post:doneAct path:$n{/done}

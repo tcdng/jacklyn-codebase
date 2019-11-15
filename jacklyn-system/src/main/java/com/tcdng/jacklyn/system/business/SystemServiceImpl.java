@@ -33,6 +33,7 @@ import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
+import com.tcdng.jacklyn.shared.system.SystemRestrictionType;
 import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityFieldItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
@@ -673,6 +674,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
+    public void updateSystemAssetRestrictions(List<SystemAsset> systemAssetList) throws UnifyException {
+        for (SystemAsset systemAsset : systemAssetList) {
+            db().updateById(SystemAsset.class, systemAsset.getId(),
+                    new Update().add("restriction", systemAsset.getRestriction()));
+        }
+    }
+
+    @Override
     public int getUniqueActiveUserSessions() throws UnifyException {
         return Integer
                 .valueOf((String) db()
@@ -957,8 +966,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                     db().updateById(ScheduledTask.class, scheduledTaskId,
                             new Update().add("nextExecutionOn", calcNextExecutionOn).add("lastExecutionOn", now));
-                    logDebug("Task [{0}] is scheduled to run next on [{1,date,dd/MM/yy HH:mm:ss}]...", scheduledTaskDef.getDescription(),
-                            calcNextExecutionOn);
+                    logDebug("Task [{0}] is scheduled to run next on [{1,date,dd/MM/yy HH:mm:ss}]...",
+                            scheduledTaskDef.getDescription(), calcNextExecutionOn);
 
                 } catch (UnifyException e) {
                     try {
@@ -1420,6 +1429,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         systemAsset.setName(goa.name());
                         systemAsset.setDescription(description);
                         systemAsset.setType(SystemAssetType.REMOTECALL_METHOD);
+                        SystemRestrictionType restriction = SystemRestrictionType.OPEN;
+                        if (goa.restricted()) {
+                            restriction = SystemRestrictionType.RESTRICTED;
+                        }
+                        
+                        systemAsset.setRestriction(restriction);
                         db().create(systemAsset);
                     } else {
                         oldSystemAsset.setModuleId(moduleId);
