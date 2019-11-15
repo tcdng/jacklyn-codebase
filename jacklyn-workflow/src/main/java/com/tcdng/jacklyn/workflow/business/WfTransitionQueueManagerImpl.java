@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.workflow.business;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -74,7 +75,7 @@ public class WfTransitionQueueManagerImpl extends AbstractWfTransitionQueueManag
         this.transitionQueueList = new ArrayList<TransitionQueue>();
         this.taskMonitorList = new ArrayList<TaskMonitor>();
         this.transitionAllocs = new ConcurrentHashMap<String, Integer>();
-        this.pendingSubmissionIds = ConcurrentHashMap.newKeySet();
+        this.pendingSubmissionIds = Collections.newSetFromMap(new ConcurrentHashMap<Long, Boolean>());
     }
 
     @Override
