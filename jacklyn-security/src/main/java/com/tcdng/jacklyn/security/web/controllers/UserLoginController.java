@@ -98,7 +98,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
                 loginLocale = Locale.forLanguageTag(languageTag);
             }
 
-            User user = getSecurityService().login(userName, password, loginLocale);
+            User user = getSecurityService().loginUser(userName, password, loginLocale);
             userName = null;
             password = null;
 
@@ -151,7 +151,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         userName = null;
         password = null;
         setDisplayMessage(null);
-        getSecurityService().logout(false);
+        getSecurityService().logoutUser(false);
         return "switchlogin";
     }
 

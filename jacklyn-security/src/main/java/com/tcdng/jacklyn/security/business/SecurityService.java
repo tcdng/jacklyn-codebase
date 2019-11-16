@@ -142,7 +142,7 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     User findUserByCredentials(String loginId, String password) throws UnifyException;
 
     /**
-     * Login to application with login ID and password.
+     * Login user to application with login ID and password.
      * 
      * @param loginId
      *            the login ID
@@ -154,7 +154,7 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      * @throws UnifyException
      *             if login ID or password is invalid
      */
-    User login(String loginId, String password, Locale loginLocale) throws UnifyException;
+    User loginUser(String loginId, String password, Locale loginLocale) throws UnifyException;
 
     /**
      * Logs out current session user.
@@ -164,7 +164,7 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      * @throws UnifyException
      *             if an error occurs
      */
-    void logout(boolean complete) throws UnifyException;
+    void logoutUser(boolean complete) throws UnifyException;
 
     /**
      * Changes a user password for current session user.
