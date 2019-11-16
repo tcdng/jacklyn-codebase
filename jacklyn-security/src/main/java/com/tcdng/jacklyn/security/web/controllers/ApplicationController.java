@@ -137,7 +137,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Action
     public String logOut() throws UnifyException {
         logUserEvent(SecurityModuleAuditConstants.LOGOUT);
-        getSecurityService().logout(true);
+        getSecurityService().logoutUser(true);
         return "forwardtohome";
     }
 

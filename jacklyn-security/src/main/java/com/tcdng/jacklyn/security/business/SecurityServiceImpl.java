@@ -448,7 +448,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public User login(String loginId, String password, Locale loginLocale) throws UnifyException {
+    public User loginUser(String loginId, String password, Locale loginLocale) throws UnifyException {
         User user = db().list(new UserQuery().loginId(loginId));
         if (user == null) {
             throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
@@ -471,7 +471,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         password = passwordCryptograph.encrypt(password);
         if (!user.getPassword().equals(password)) {
-            if (accountLockingEnabled) {
+            if (accountLockingEnabled && !user.isReserved()) { // No locking for reserved users
                 updateLoginAttempts(user);
             }
 
@@ -536,7 +536,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public void logout(boolean complete) throws UnifyException {
+    public void logoutUser(boolean complete) throws UnifyException {
         userSessionManager.logout(complete);
     }
 
