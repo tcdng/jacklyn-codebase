@@ -27,6 +27,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
+import com.tcdng.unify.core.logging.FieldAudit;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.AbstractPageController;
 import com.tcdng.unify.web.DocViewController;
@@ -224,6 +225,25 @@ public abstract class BasePageController extends AbstractPageController implemen
     protected <T extends Entity> void logUserEvent(EventType eventType, T oldRecord, T newRecord)
             throws UnifyException {
         getRequestContextUtil().logUserEvent(eventType, oldRecord, newRecord);
+    }
+
+    /**
+     * Logs a user event using supplied event, record type and audit list.
+     * 
+     * @param eventType
+     *            the event type
+     * @param entityClass
+     *            the record type
+     * @param recordId
+     *            the record ID
+     * @param fieldAuditList
+     *            the field audit list
+     * @throws UnifyException
+     *             If an error occurs.
+     */
+    protected void logUserEvent(EventType eventType, Class<? extends Entity> entityClass, Long recordId,
+            List<FieldAudit> fieldAuditList) throws UnifyException {
+        getRequestContextUtil().logUserEvent(eventType, entityClass, recordId, fieldAuditList);
     }
 
     /**
