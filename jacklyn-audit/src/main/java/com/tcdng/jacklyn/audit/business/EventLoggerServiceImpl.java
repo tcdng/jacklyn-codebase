@@ -35,6 +35,8 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
+import com.tcdng.unify.core.logging.FieldAudit;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 
 /**
@@ -140,6 +142,37 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
 
             return true;
         }
+
+        return false;
+    }
+
+    @Override
+    public boolean logUserEvent(EventType eventType, Class<? extends Entity> recordClass, Object id,
+            List<FieldAudit> fieldAuditList) throws UnifyException {
+        AuditDefinition auditDefinitionData =
+                db().find(new AuditDefinitionQuery().recordName(recordClass.getName()).eventType(eventType)
+                        .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
+        if (auditDefinitionData != null) {
+            List<String> narrationList = new ArrayList<String>();
+            for (FieldAudit fieldAudit : fieldAuditList) {
+                // TODO check field is of record type
+                String name = fieldAudit.getFieldName();
+                Object oldValue = fieldAudit.getOldValue();
+                Object newValue = fieldAudit.getNewValue();
+                if (!DataUtils.equals(oldValue, newValue)) {
+                    String oldAuditValue = convert(String.class, oldValue, null);
+                    String newAuditValue = convert(String.class, newValue, null);
+                    narrationList.add(getApplicationMessage("eventloggerservice.narration.message.difference", name,
+                            oldAuditValue, newAuditValue));
+                }
+            }
+
+            createAuditTrail(auditDefinitionData.getId(), narrationList.toArray(new String[narrationList.size()]),
+                    (Long) id);
+
+            return true;
+        }
+
         return false;
     }
 
@@ -157,16 +190,16 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
             auditTrail.setIpAddress(getSessionContext().getRemoteAddress());
             auditTrail.setRemoteEvent(null);
         }
-        
+
         if (details != null && details.length > 0) {
             List<AuditDetail> auditDetailList = new ArrayList<AuditDetail>(details.length);
-            for(String detail:details) {
+            for (String detail : details) {
                 auditDetailList.add(new AuditDetail(detail));
             }
-            
+
             auditTrail.setAuditDetailList(auditDetailList);
         }
-        
+
         return (Long) db().create(auditTrail);
     }
 }
