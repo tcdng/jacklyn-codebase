@@ -253,20 +253,6 @@ public class UserLoginController extends AbstractApplicationForwarderController 
     @Override
     protected void onSetPage() throws UnifyException {
         selectRoleTable = getPageWidgetByShortName(Table.class, "selectRolePanel.roleTablePanel.contentTbl");
-    }
-
-    @Override
-    protected void onOpenPage() throws UnifyException {
-        userName = null;
-        password = null;
-        token = null;
-        newPassword = null;
-        oldPassword = null;
-        confirmPassword = null;
-        SwitchPanel switchPanel = (SwitchPanel) getPanelByShortName("loginSequencePanel");
-        switchPanel.switchContent("loginBodyPanel");
-        setDisplayMessage(loginMessage);
-
         // Show/hide language field based on system parameter
         isLanguage = getSystemService().getSysParameterValue(boolean.class,
                 SystemModuleSysParamConstants.SYSPARAM_USE_LOGIN_LOCALE);
@@ -282,6 +268,19 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         setVisible("loginPanel.tokenField", is2FA);
     }
 
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        userName = null;
+        password = null;
+        token = null;
+        newPassword = null;
+        oldPassword = null;
+        confirmPassword = null;
+        SwitchPanel switchPanel = (SwitchPanel) getPanelByShortName("loginSequencePanel");
+        switchPanel.switchContent("loginBodyPanel");
+        setDisplayMessage(loginMessage);
+    }
+    
     @Override
     protected String getDocViewPanelName() {
         return null;
