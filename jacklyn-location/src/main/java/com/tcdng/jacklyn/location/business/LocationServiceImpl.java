@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
-import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.location.constants.LocationDefaultConstants;
 import com.tcdng.jacklyn.location.constants.LocationModuleNameConstants;
 import com.tcdng.jacklyn.location.entities.Country;
@@ -32,7 +31,6 @@ import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Transactional;
-import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Default implementation of location business service.
@@ -147,13 +145,7 @@ public class LocationServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         // Ensure default country
-        Locale countryLocale = getApplicationLocale();
-        String countyLanguageTag =  getContainerSetting(String.class,
-                        JacklynContainerPropertyConstants.JACKLYN_COUNTRY_LOCALE, null);
-        if(!StringUtils.isBlank(countyLanguageTag)) {
-            countryLocale = Locale.forLanguageTag(countyLanguageTag);
-        }
-
+        Locale countryLocale = getCountryLocale();
         if (db().countAll(new CountryQuery().iso3Code(countryLocale.getISO3Country())) == 0) {
             db().create(new Country(countryLocale.getISO3Country(),
                     countryLocale.getDisplayCountry()));

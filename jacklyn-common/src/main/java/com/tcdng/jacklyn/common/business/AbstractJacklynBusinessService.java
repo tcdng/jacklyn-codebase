@@ -17,8 +17,10 @@ package com.tcdng.jacklyn.common.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -30,6 +32,7 @@ import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.system.ParameterService;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.UnifyWebSessionAttributeConstants;
 
 /**
@@ -55,10 +58,6 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
 
     }
 
-    protected ParameterService getParameterService() {
-        return parameterService;
-    }
-
     @Override
     protected UserToken getUserToken() throws UnifyException {
         UserToken userToken = super.getUserToken();
@@ -66,6 +65,10 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
             return (UserToken) getApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN);
         }
         return userToken;
+    }
+
+    protected ParameterService getParameterService() {
+        return parameterService;
     }
 
     protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type,
@@ -84,5 +87,16 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
 
     protected void broadcastRefreshMenu() throws UnifyException {
         broadcastToOtherSessions(UnifyWebSessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
+    }
+    
+    protected Locale getCountryLocale() throws UnifyException {
+        Locale countryLocale = getApplicationLocale();
+        String countyLanguageTag =  getContainerSetting(String.class,
+                        JacklynContainerPropertyConstants.JACKLYN_COUNTRY_LOCALE, null);
+        if(!StringUtils.isBlank(countyLanguageTag)) {
+            countryLocale = Locale.forLanguageTag(countyLanguageTag);
+        }
+        
+        return countryLocale;
     }
 }
