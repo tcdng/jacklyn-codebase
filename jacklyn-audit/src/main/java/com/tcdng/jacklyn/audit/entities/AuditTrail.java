@@ -79,6 +79,9 @@ public class AuditTrail extends BaseTimestampedEntity {
     @ListOnly(key = "auditDefinitionId", property = "actionDesc")
     private String actionDesc;
 
+    @ListOnly(key = "auditDefinitionId", property = "recordName")
+    private String recordName;
+
     @Override
     public String getDescription() {
         return this.userLoginId + " - " + this.actionDesc;
@@ -186,5 +189,13 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     public void setActionDesc(String actionDesc) {
         this.actionDesc = actionDesc;
+    }
+
+    public String getRecordName() {
+        return recordName;
+    }
+
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
     }
 }

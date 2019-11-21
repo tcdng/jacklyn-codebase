@@ -46,6 +46,10 @@ public class AuditTrailQuery extends BaseTimestampedEntityQuery<AuditTrail> {
         return (AuditTrailQuery) equals("auditDefinitionName", auditDefinitionName);
     }
 
+    public AuditTrailQuery recordName(String recordName) {
+        return (AuditTrailQuery) equals("recordName", recordName);
+    }
+
     public AuditTrailQuery recordId(Long recordId) {
         return (AuditTrailQuery) equals("recordId", recordId);
     }

@@ -105,6 +105,34 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
     }
 
     @Override
+    public List<InspectUserAuditItem> findInspectUserAuditItems(AuditTrailQuery query) throws UnifyException {
+        List<InspectUserAuditItem> inspectUserAuditItemList = Collections.emptyList();
+        List<AuditTrail> auditTrailList = db().listAll(query);
+        if (!auditTrailList.isEmpty()) {
+            inspectUserAuditItemList = new ArrayList<InspectUserAuditItem>();
+            for (AuditTrail auditTrail : auditTrailList) {
+                List<String> details = Collections.emptyList();
+                List<AuditDetail> auditDetailList =
+                        db().findAll(new AuditDetailQuery().auditTrailId(auditTrail.getId()));
+                if (!auditDetailList.isEmpty()) {
+                    details = new ArrayList<String>();
+                    for (AuditDetail auditDetailData : auditDetailList) {
+                        details.add(auditDetailData.getDetail());
+                    }
+                    details = Collections.unmodifiableList(details);
+                }
+
+                inspectUserAuditItemList.add(new InspectUserAuditItem(auditTrail.getUserLoginId(),
+                        auditTrail.getAuditDesc(), auditTrail.getModuleDesc(), auditTrail.getIpAddress(),
+                        auditTrail.getCreateDt(), auditTrail.getEventType(), auditTrail.getActionDesc(), details));
+            }
+            inspectUserAuditItemList = Collections.unmodifiableList(inspectUserAuditItemList);
+        }
+
+        return inspectUserAuditItemList;
+    }
+
+    @Override
     public InspectUserInfo fetchInspectUserInfo(String userLoginId, Date createDt, Long moduleId, EventType eventType)
             throws UnifyException {
         if (StringUtils.isBlank(userLoginId)) {
@@ -127,30 +155,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         query.createdOn(createDt);
         query.orderById();
 
-        List<InspectUserAuditItem> auditItems = Collections.emptyList();
-        List<AuditTrail> auditTrailList = db().listAll(query);
-        if (!auditTrailList.isEmpty()) {
-            auditItems = new ArrayList<InspectUserAuditItem>();
-            for (AuditTrail auditTrail : auditTrailList) {
-                List<String> details = Collections.emptyList();
-                List<AuditDetail> auditDetailList =
-                        db().findAll(new AuditDetailQuery().auditTrailId(auditTrail.getId()));
-                if (!auditDetailList.isEmpty()) {
-                    details = new ArrayList<String>();
-                    for (AuditDetail auditDetailData : auditDetailList) {
-                        details.add(auditDetailData.getDetail());
-                    }
-                    details = Collections.unmodifiableList(details);
-                }
-
-                auditItems.add(new InspectUserAuditItem(auditTrail.getAuditDesc(), auditTrail.getModuleDesc(),
-                        auditTrail.getIpAddress(), auditTrail.getCreateDt(), auditTrail.getEventType(),
-                        auditTrail.getActionDesc(), details));
-            }
-            auditItems = Collections.unmodifiableList(auditItems);
-        }
-
-        return new InspectUserInfo(user.getFullName(), user.getEmail(), photo, auditItems);
+        return new InspectUserInfo(user.getFullName(), user.getEmail(), photo, findInspectUserAuditItems(query));
     }
 
     @Override

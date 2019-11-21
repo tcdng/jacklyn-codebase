@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.audit.business;
 import java.util.Date;
 import java.util.List;
 
+import com.tcdng.jacklyn.audit.data.InspectUserAuditItem;
 import com.tcdng.jacklyn.audit.data.InspectUserInfo;
 import com.tcdng.jacklyn.audit.entities.AuditDefinition;
 import com.tcdng.jacklyn.audit.entities.AuditDefinitionQuery;
@@ -115,6 +116,17 @@ public interface AuditService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<AuditDetail> findAuditDetails(Long auditTrailId) throws UnifyException;
+
+    /**
+     * Fetches user audit inspection items based on supplied audit trail query.
+     * 
+     * @param query
+     *            the supplied query
+     * @return list of user audit inspection items
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<InspectUserAuditItem> findInspectUserAuditItems(AuditTrailQuery query) throws UnifyException;
 
     /**
      * Fetches inspect user information using supplied parameters.
