@@ -40,17 +40,16 @@
 			description="$m{security.menu.main}">
 			<menuitem name="sec-manageuser" caption="$m{security.user.menu.title}"
 				pageCaption="$m{security.user.manage}" description="$m{security.menuitem.user}"
-				path="/security/user/openPage" remotePath="/security/user/getRemoteDoc" />
+				path="/security/user/openPage" />
 			<menuitem name="sec-manageusersession" caption="$m{security.usersession.menu.title}"
 				pageCaption="$m{security.usersession.manage}" description="$m{security.menuitem.usersession}"
-				path="/security/usersession/openPage" remotePath="/security/usersession/getRemoteDoc" />
+				path="/security/usersession/openPage" />
 			<menuitem name="sec-changepassword" caption="$m{security.changepassword.menu.title}"
 				pageCaption="$m{security.changepassword.menu.title}" description="$m{security.menuitem.changepassword}"
 				path="/security/changepassword/openPage" />
             <menuitem name="sec-manageclientapp" caption="$m{security.clientapp.menu.title}"
                 pageCaption="$m{security.clientapp.manage}"
-                description="$m{security.menuitem.clientapp}" path="/security/clientapp/openPage"
-                remotePath="/security/clientapp/getRemoteDoc" />
+                description="$m{security.menuitem.clientapp}" path="/security/clientapp/openPage" />
 		</menu>
 	</menus>
 	<notification-templates>

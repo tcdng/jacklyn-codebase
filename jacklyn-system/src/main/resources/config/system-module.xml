@@ -51,52 +51,52 @@
 			description="$m{system.userinterface.menu.main}">
 			<menuitem name="sys-managetheme" description="$m{system.menuitem.theme}"
 				caption="$m{system.theme.menu.title}" path="/system/theme/openPage"
-				pageCaption="$m{system.theme.manage}" remotePath="/system/theme/getRemoteDoc" />
+				pageCaption="$m{system.theme.manage}" />
 			<menuitem name="sys-managedashboard" description="$m{system.menuitem.dashboard}"
 				caption="$m{system.dashboard.menu.title}" path="/system/dashboard/openPage"
-				pageCaption="$m{system.dashboard.manage}" remotePath="/system/dashboard/getRemoteDoc" />
+				pageCaption="$m{system.dashboard.manage}" />
 			<menuitem name="sys-manageinputctrldef" description="$m{system.menuitem.inputctrldef}"
 				caption="$m{system.inputctrldef.menu.title}" path="/system/inputctrldef/openPage"
-				pageCaption="$m{system.inputctrldef.manage}" remotePath="/system/inputctrldef/getRemoteDoc" />
+				pageCaption="$m{system.inputctrldef.manage}" />
 			<menuitem name="sys-managemenu" description="$m{system.menuitem.menu}"
 				caption="$m{system.menu.menu.title}" path="/system/menu/openPage"
-				pageCaption="$m{system.menu.manage}" remotePath="/system/menu/getRemoteDoc" />
+				pageCaption="$m{system.menu.manage}" />
 		</menu>
 		<menu name="sys-mainsystem" description="$m{system.menu.main}"
 			caption="$m{system.menu.title}">
 			<menuitem name="sys-managemodule" description="$m{system.menuitem.module}"
 				caption="$m{system.module.menu.title}" path="/system/module/openPage"
-				pageCaption="$m{system.module.manage}" remotePath="/system/module/getRemoteDoc" />
+				pageCaption="$m{system.module.manage}" />
 			<menuitem name="sys-managesupportedlocale" description="$m{system.menuitem.supportedlocale}"
 				caption="$m{system.supportedlocale.menu.title}" path="/system/supportedlocale/openPage"
-				pageCaption="$m{system.supportedlocale.manage}" remotePath="/system/supportedlocale/getRemoteDoc" />
+				pageCaption="$m{system.supportedlocale.manage}" />
 			<menuitem name="sys-managesysparameter" description="$m{system.menuitem.sysparameter}"
 				caption="$m{system.sysparameter.menu.title}" path="/system/sysparameter/openPage"
-				pageCaption="$m{system.sysparameter.manage}" remotePath="/system/sysparameter/getRemoteDoc" />
+				pageCaption="$m{system.sysparameter.manage}" />
 			<menuitem name="sys-manageschdtask" description="$m{system.menuitem.schdtask}"
 				caption="$m{system.scheduledtask.menu.title}" path="/system/scheduledtask/openPage"
-				pageCaption="$m{system.scheduledtask.manage}" remotePath="/system/scheduledtask/getRemoteDoc" />
+				pageCaption="$m{system.scheduledtask.manage}" />
 			<menuitem name="sys-manageschdtaskhist" description="$m{system.menuitem.schdtaskhist}"
 				caption="$m{system.scheduledtaskhist.menu.title}" path="/system/scheduledtaskhist/openPage"
-				pageCaption="$m{system.scheduledtaskhist.manage}" remotePath="/system/scheduledtaskhist/getRemoteDoc" />
+				pageCaption="$m{system.scheduledtaskhist.manage}" />
 			<menuitem name="sys-manageshortcuttile" description="$m{system.menuitem.shortcut}"
 				caption="$m{system.shortcuttile.menu.title}" path="/system/shortcuttile/openPage"
-				pageCaption="$m{system.shortcuttile.manage}" remotePath="/system/shortcuttile/getRemoteDoc" />
+				pageCaption="$m{system.shortcuttile.manage}" />
 			<menuitem name="sys-systemcontrol" description="$m{system.menuitem.syscontrol}"
 				caption="$m{system.systemcontrol.menu.title}" path="/system/systemcontrol/openPage"
-				pageCaption="$m{system.systemcontrol.menu.title}" remotePath="/system/systemcontrol/getRemoteDoc" />
+				pageCaption="$m{system.systemcontrol.menu.title}" />
 			<menuitem name="sys-managedatasourcedrivers" caption="$m{system.datasourcedriver.menu.title}"
 				description="$m{system.menuitem.datasourcedriver}" pageCaption="$m{system.datasourcedriver.manage}"
-				path="/system/datasourcedriver/openPage" remotePath="/system/datasourcedriver/getRemoteDoc" />
+				path="/system/datasourcedriver/openPage" />
 			<menuitem name="sys-managedatasources" caption="$m{system.datasource.menu.title}"
 				description="$m{system.menuitem.datasource}" pageCaption="$m{system.datasource.manage}"
-				path="/system/datasource/openPage" remotePath="/system/datasource/getRemoteDoc" />
+				path="/system/datasource/openPage" />
 			<menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
 				pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
-				path="/system/authentication/openPage" remotePath="/system/authentication/getRemoteDoc" />
+				path="/system/authentication/openPage" />
             <menuitem name="sys-distributionlisting" caption="$m{system.distributionlisting.menu.title}"
                 description="$m{system.menuitem.distributionlisting}" pageCaption="$m{system.distributionlisting}"
-                path="/system/distributionlisting/openPage" remotePath="/system/distributionlisting/getRemoteDoc" />
+                path="/system/distributionlisting/openPage" />
 		</menu>
 	</menus>
 	<input-controls>

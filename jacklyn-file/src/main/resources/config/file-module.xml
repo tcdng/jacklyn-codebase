@@ -24,25 +24,25 @@
 			description="$m{file.menu.main}">
 			<menuitem name="fil-managefiletransferconfig" caption="$m{file.filetransferconfig.menu.title}"
 				pageCaption="$m{file.filetransferconfig.manage}" description="$m{file.menuitem.filetransferconfig}"
-				path="/file/filetransferconfig/openPage" remotePath="/file/filetransferconfig/getRemoteDoc" />
+				path="/file/filetransferconfig/openPage" />
 			<menuitem name="fil-managefiletransfer" caption="$m{file.filetransfer.menu.title}"
 				pageCaption="$m{file.filetransfer.menu.title}" description="$m{file.menuitem.filetransfer}"
-				path="/file/filetransfer/openPage" remotePath="/file/filetransfer/getRemoteDoc" />
+				path="/file/filetransfer/openPage" />
 			<menuitem name="fil-managefileinbox" caption="$m{file.fileinbox.menu.title}"
 				pageCaption="$m{file.fileinbox.manage}" description="$m{file.menuitem.fileinbox}"
-				path="/file/fileinbox/openPage" remotePath="/file/fileinbox/getRemoteDoc" />
+				path="/file/fileinbox/openPage" />
 			<menuitem name="fil-managefileoutbox" caption="$m{file.fileoutbox.menu.title}"
 				pageCaption="$m{file.fileoutbox.manage}" description="$m{file.menuitem.fileoutbox}"
-				path="/file/fileoutbox/openPage" remotePath="/file/fileoutbox/getRemoteDoc" />
+				path="/file/fileoutbox/openPage" />
 			<menuitem name="fil-managebatchfiledefinition" caption="$m{file.batchfiledefinition.menu.title}"
 				pageCaption="$m{file.batchfiledefinition.manage}" description="$m{file.menuitem.batchfiledefinition}"
-				path="/file/batchfiledefinition/openPage" remotePath="/file/batchfiledefinition/getRemoteDoc" />
+				path="/file/batchfiledefinition/openPage" />
 			<menuitem name="fil-managebatchfilereaddefinition" caption="$m{file.batchfilereaddefinition.menu.title}"
 				pageCaption="$m{file.batchfilereaddefinition.manage}" description="$m{file.menuitem.batchfilereaddefinition}"
-				path="/file/batchfilereaddefinition/openPage" remotePath="/file/batchfilereaddefinition/getRemoteDoc" />
+				path="/file/batchfilereaddefinition/openPage" />
 			<menuitem name="fil-managebatchupload" caption="$m{file.batchupload.menu.title}"
 				pageCaption="$m{file.batchupload.manage}" description="$m{file.menuitem.batchupload}"
-				path="/file/batchupload/openPage" remotePath="/file/batchupload/getRemoteDoc" />
+				path="/file/batchupload/openPage" />
 		</menu>
 	</menus>
 	<privileges>

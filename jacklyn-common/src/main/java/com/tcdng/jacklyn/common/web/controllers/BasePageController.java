@@ -31,9 +31,6 @@ import com.tcdng.unify.core.logging.FieldAudit;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.AbstractPageController;
 import com.tcdng.unify.web.DocViewController;
-import com.tcdng.unify.web.annotation.Action;
-import com.tcdng.unify.web.annotation.ResultMapping;
-import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.ui.Panel;
 import com.tcdng.unify.web.ui.data.MessageResult;
 import com.tcdng.unify.web.ui.data.SearchBox;
@@ -45,7 +42,6 @@ import com.tcdng.unify.web.ui.panel.TableCrudPanel;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@ResultMappings({ @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
 public abstract class BasePageController extends AbstractPageController implements DocViewController {
 
     @Configurable
@@ -53,12 +49,6 @@ public abstract class BasePageController extends AbstractPageController implemen
 
     public BasePageController(boolean secured, boolean readOnly) {
         super(secured, readOnly);
-    }
-
-    @Action
-    public String getRemoteDoc() throws UnifyException {
-        openPage();
-        return "documentView";
     }
 
     @Override

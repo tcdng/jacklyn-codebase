@@ -33,8 +33,6 @@ public class MenuItemConfig extends BaseConfig {
 
     private String path;
 
-    private String remotePath;
-
     public String getCaption() {
         return caption;
     }
@@ -60,14 +58,5 @@ public class MenuItemConfig extends BaseConfig {
     @XmlAttribute(required = true)
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getRemotePath() {
-        return remotePath;
-    }
-
-    @XmlAttribute
-    public void setRemotePath(String remotePath) {
-        this.remotePath = remotePath;
     }
 }

@@ -25,7 +25,7 @@
 			caption="$m{integration.menu.title}">
 			<menuitem name="int-manageproducerdefinition" description="$m{integration.menuitem.producerdefinition}"
 				caption="$m{integration.producerdefinition.menu.title}" path="/integration/producerdefinition/openPage"
-				pageCaption="$m{integration.producerdefinition.manage}" remotePath="/integration/producerdefinition/getRemoteDoc" />
+				pageCaption="$m{integration.producerdefinition.manage}" />
 		</menu>
 	</menus>
 	<privileges>

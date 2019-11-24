@@ -25,13 +25,13 @@
 			caption="$m{location.menu.title}">
 			<menuitem name="loc-managezone" description="$m{location.menuitem.zone}"
 				caption="$m{location.zone.menu.title}" pageCaption="$m{location.zone.manage}"
-				path="/location/zone/openPage" remotePath="/location/zone/getRemoteDoc" />
+				path="/location/zone/openPage" />
 			<menuitem name="loc-managecountry" description="$m{location.menuitem.country}"
 				caption="$m{location.country.menu.title}" pageCaption="$m{location.country.manage}"
-				path="/location/country/openPage" remotePath="/location/country/getRemoteDoc" />
+				path="/location/country/openPage" />
 			<menuitem name="loc-managestate" description="$m{location.menuitem.state}"
 				caption="$m{location.state.menu.title}" pageCaption="$m{location.state.manage}"
-				path="/location/state/openPage" remotePath="/location/state/getRemoteDoc" />
+				path="/location/state/openPage" />
 		</menu>
 	</menus>
 	<privileges>
