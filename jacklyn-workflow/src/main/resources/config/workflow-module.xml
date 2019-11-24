@@ -25,22 +25,19 @@
 			description="$m{workflow.menu.main}">
 			<menuitem name="wf-wfcategory-manage" caption="$m{workflow.wfcategory.menu.title}"
 				pageCaption="$m{workflow.wfcategory.manage}"
-				description="$m{workflow.wfcategory.menuitem}" path="/workflow/wfcategory/openPage"
-				remotePath="/workflow/wfcategory/getRemoteDoc" />
+				description="$m{workflow.wfcategory.menuitem}" path="/workflow/wfcategory/openPage" />
 			<menuitem name="wf-publish-manage" caption="$m{workflow.wfcategory.publish.menu.title}"
 				pageCaption="$m{workflow.wfcategory.publish.manage}" description="$m{workflow.wfcategory.publish.menuitem}"
-				path="/workflow/wfpublishcategory/openPage" remotePath="/workflow/wfpublishcategory/getRemoteDoc" />
+				path="/workflow/wfpublishcategory/openPage" />
 			<menuitem name="wf-manual-item" caption="$m{workflow.wfcategory.manualinit.menu.title}"
 				pageCaption="$m{workflow.wfcategory.manualinit.manage}" description="$m{workflow.wfcategory.manualinit.menuitem}"
-				path="/workflow/manualworkiteminitiation/openPage" remotePath="/workflow/manualworkiteminitiation/getRemoteDoc" />
+				path="/workflow/manualworkiteminitiation/openPage" />
 			<menuitem name="wf-wfdoc-manage" caption="$m{workflow.wfdoc.menu.title}"
 				pageCaption="$m{workflow.wfdoc.manage}"
-				description="$m{workflow.wfdoc.menuitem}" path="/workflow/wfdoc/openPage"
-				remotePath="/workflow/wfdoc/getRemoteDoc" />
+				description="$m{workflow.wfdoc.menuitem}" path="/workflow/wfdoc/openPage" />
 			<menuitem name="wf-wftemplate-manage" caption="$m{workflow.wftemplate.menu.title}"
 				pageCaption="$m{workflow.wftemplate.manage}"
-				description="$m{workflow.wftemplate.menuitem}" path="/workflow/wftemplate/openPage"
-				remotePath="/workflow/wftemplate/getRemoteDoc" />
+				description="$m{workflow.wftemplate.menuitem}" path="/workflow/wftemplate/openPage" />
 			<menuitem name="wf-userwfitems-manage" caption="$m{workflow.userworkflowitems.menu.title}"
 				pageCaption="$m{workflow.userworkflowitems.manage}"
 				description="$m{workflow.userworkflowitems.menuitem}" path="/workflow/userworkflowitems/openPage"/>

@@ -96,27 +96,27 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         menuQuery.orderByDisplayOrder();
 
         List<ApplicationMenu> menuList = systemService.findMenus(menuQuery);
-        for (ApplicationMenu menuData : menuList) {
+        for (ApplicationMenu menu : menuList) {
             List<AppMenuItem> appMenuItemList = new ArrayList<AppMenuItem>();
             List<ApplicationMenuItem> menuItemList =
                     systemService.findMenuItems((ApplicationMenuItemQuery) new ApplicationMenuItemQuery()
-                            .menuId(menuData.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
-            for (ApplicationMenuItem menuItemData : menuItemList) {
-                String remotePath = menuItemData.getRemotePath();
-                if (StringUtils.isNotBlank(remotePath)) {
-                    appMenuItemList.add(new AppMenuItem(menuItemData.getName(),
-                            resolveApplicationMessage(menuItemData.getDescription()),
-                            resolveApplicationMessage(menuItemData.getPageCaption()),
-                            resolveApplicationMessage(menuItemData.getCaption()), remotePath));
+                            .menuId(menu.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
+            for (ApplicationMenuItem menuItem : menuItemList) {
+                String path = menuItem.getPath();
+                if (StringUtils.isNotBlank(path)) {
+                    appMenuItemList.add(
+                            new AppMenuItem(menuItem.getName(), resolveApplicationMessage(menuItem.getDescription()),
+                                    resolveApplicationMessage(menuItem.getPageCaption()),
+                                    resolveApplicationMessage(menuItem.getCaption()), path));
                 }
             }
 
-            String remotePath = menuData.getRemotePath();
-            if (StringUtils.isNotBlank(remotePath) || !appMenuItemList.isEmpty()) {
-                appMenuItemGroupList.add(
-                        new AppMenuItemGroup(menuData.getName(), resolveApplicationMessage(menuData.getDescription()),
-                                resolveApplicationMessage(menuData.getPageCaption()),
-                                resolveApplicationMessage(menuData.getCaption()), remotePath, appMenuItemList));
+            String path = menu.getPath();
+            if (StringUtils.isNotBlank(path) || !appMenuItemList.isEmpty()) {
+                appMenuItemGroupList
+                        .add(new AppMenuItemGroup(menu.getName(), resolveApplicationMessage(menu.getDescription()),
+                                resolveApplicationMessage(menu.getPageCaption()),
+                                resolveApplicationMessage(menu.getCaption()), path, appMenuItemList));
             }
         }
 

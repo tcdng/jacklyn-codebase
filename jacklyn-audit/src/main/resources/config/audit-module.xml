@@ -38,13 +38,13 @@
 			caption="$m{audit.menu.title}">
 			<menuitem name="aud-manageauditsettings" caption="$m{audit.auditsettings.menu.title}"
 				pageCaption="$m{audit.auditsettings.manage}" description="$m{audit.menuitem.auditsettings}"
-				path="/audit/auditsettings/openPage" remotePath="/audit/auditsettings/getRemoteDoc" />
+				path="/audit/auditsettings/openPage" />
 			<menuitem name="aud-manageaudittrail" caption="$m{audit.audittrail.menu.title}"
 				pageCaption="$m{audit.audittrail.manage}" description="$m{audit.menuitem.audittrail}"
-				path="/audit/audittrail/openPage" remotePath="/audit/audittrail/getRemoteDoc" />
+				path="/audit/audittrail/openPage" />
 			<menuitem name="aud-inspectuser" caption="$m{audit.inspectuser.menu.title}"
 				pageCaption="$m{audit.inspectuser.manage}" description="$m{audit.menuitem.inspectuser}"
-				path="/audit/inspectuser/openPage" remotePath="/audit/inspectuser/getRemoteDoc" />
+				path="/audit/inspectuser/openPage" />
 		</menu>
 	</menus>
 	<privileges>

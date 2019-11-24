@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
 <module name="report" description="$m{report.module}">
 	<menus>
 		<menu name="rpt-mainreport" caption="$m{report.menu.title}"
 			description="$m{report.menu.main}">
 			<menuitem name="rpt-managereportdefinitions" caption="$m{report.reportabledefinition.menu.title}"
 				pageCaption="$m{report.reportabledefinition.manage}" description="$m{report.menuitem.definitions}"
-				path="/report/reportdefinition/openPage" remotePath="/report/reportdefinition/getRemoteDoc" />
+				path="/report/reportdefinition/openPage" />
             <menuitem name="rpt-reportlisting" caption="$m{report.reportlisting.menu.title}"
                 description="$m{report.menuitem.reportlisting}" pageCaption="$m{report.reportlisting}"
-                path="/report/reportlisting/openPage" remotePath="/report/reportlisting/getRemoteDoc" />
+                path="/report/reportlisting/openPage" />
 		</menu>
 	</menus>
 	<privileges>

@@ -1253,7 +1253,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         applicationMenu.setPageCaption(menuConfig.getPageCaption());
                         applicationMenu.setCaption(menuConfig.getCaption());
                         applicationMenu.setPath(menuConfig.getPath());
-                        applicationMenu.setRemotePath(menuConfig.getRemotePath());
                         applicationMenu.setInstalled(Boolean.TRUE);
                         menuId = (Long) db().create(applicationMenu);
                     } else {
@@ -1262,7 +1261,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         oldApplicationMenu.setPageCaption(menuConfig.getPageCaption());
                         oldApplicationMenu.setCaption(menuConfig.getCaption());
                         oldApplicationMenu.setPath(menuConfig.getPath());
-                        oldApplicationMenu.setRemotePath(menuConfig.getRemotePath());
                         oldApplicationMenu.setInstalled(Boolean.TRUE);
                         db().updateByIdVersion(oldApplicationMenu);
                         menuId = oldApplicationMenu.getId();
@@ -1282,7 +1280,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 applicationMenuItem.setPageCaption(menuItemConfig.getPageCaption());
                                 applicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 applicationMenuItem.setPath(menuItemConfig.getPath());
-                                applicationMenuItem.setRemotePath(menuItemConfig.getRemotePath());
                                 applicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().create(applicationMenuItem);
                             } else {
@@ -1291,7 +1288,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 oldApplicationMenuItem.setPageCaption(menuItemConfig.getPageCaption());
                                 oldApplicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 oldApplicationMenuItem.setPath(menuItemConfig.getPath());
-                                oldApplicationMenuItem.setRemotePath(menuItemConfig.getRemotePath());
                                 oldApplicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().updateByIdVersion(oldApplicationMenuItem);
                             }

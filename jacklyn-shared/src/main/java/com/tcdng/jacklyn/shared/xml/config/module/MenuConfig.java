@@ -36,8 +36,6 @@ public class MenuConfig extends BaseConfig {
 
     private String path;
 
-    private String remotePath;
-
     private List<MenuItemConfig> menuItemList;
 
     public String getPageCaption() {
@@ -65,15 +63,6 @@ public class MenuConfig extends BaseConfig {
     @XmlAttribute
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getRemotePath() {
-        return remotePath;
-    }
-
-    @XmlAttribute
-    public void setRemotePath(String remotePath) {
-        this.remotePath = remotePath;
     }
 
     public List<MenuItemConfig> getMenuItemList() {

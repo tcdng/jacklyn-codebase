@@ -30,19 +30,19 @@
 			caption="$m{organization.menu.title}">
 			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
 				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
-				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
+				path="/organization/branch/openPage" />
             <menuitem name="org-managedepartment" description="$m{organization.menuitem.department}"
                 caption="$m{organization.department.menu.title}" pageCaption="$m{organization.department.manage}"
-                path="/organization/department/openPage" remotePath="/organization/department/getRemoteDoc" />
+                path="/organization/department/openPage" />
             <menuitem name="org-managehub" description="$m{organization.menuitem.hub}"
                 caption="$m{organization.hub.menu.title}" pageCaption="$m{organization.hub.manage}"
-                path="/organization/hub/openPage" remotePath="/organization/hub/getRemoteDoc" />
+                path="/organization/hub/openPage" />
             <menuitem name="org-managerole" caption="$m{organization.role.menu.title}"
                 pageCaption="$m{organization.role.manage}" description="$m{organization.menuitem.role}"
-                path="/organization/role/openPage" remotePath="/organization/role/getRemoteDoc" />
+                path="/organization/role/openPage" />
             <menuitem name="org-manageroledocumentcontrol" caption="$m{organization.roledocumentcontrol.menu.title}"
                 pageCaption="$m{organization.roleprivilege.manage}" description="$m{organization.menuitem.roledocumentcontrol}"
-                path="/organization/roledocumentcontrol/openPage" remotePath="/organization/roledocumentcontrol/getRemoteDoc" />
+                path="/organization/roledocumentcontrol/openPage" />
 		</menu>
 	</menus>
 	<privileges>
