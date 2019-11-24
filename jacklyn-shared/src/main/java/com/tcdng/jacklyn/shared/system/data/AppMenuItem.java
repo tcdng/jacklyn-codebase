@@ -31,13 +31,17 @@ public class AppMenuItem extends BaseToolingItem {
 
     private String caption;
 
-    private String path;
+    private String openPath;
 
-    public AppMenuItem(String name, String description, String pageCaption, String caption, String path) {
+    private boolean hidden;
+
+    public AppMenuItem(String name, String description, String pageCaption, String caption, String openPath,
+            boolean hidden) {
         super(name, description);
         this.pageCaption = pageCaption;
         this.caption = caption;
-        this.path = path;
+        this.openPath = openPath;
+        this.hidden = hidden;
     }
 
     public AppMenuItem() {
@@ -62,12 +66,21 @@ public class AppMenuItem extends BaseToolingItem {
         this.caption = caption;
     }
 
-    public String getPath() {
-        return path;
+    public String getOpenPath() {
+        return openPath;
     }
 
     @XmlElement
-    public void setPath(String path) {
-        this.path = path;
+    public void setOpenPath(String openPath) {
+        this.openPath = openPath;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    @XmlElement
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }

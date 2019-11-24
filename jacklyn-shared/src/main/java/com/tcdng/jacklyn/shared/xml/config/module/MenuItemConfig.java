@@ -33,6 +33,8 @@ public class MenuItemConfig extends BaseConfig {
 
     private String path;
 
+    private boolean hidden;
+    
     public String getCaption() {
         return caption;
     }
@@ -58,5 +60,14 @@ public class MenuItemConfig extends BaseConfig {
     @XmlAttribute(required = true)
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    @XmlAttribute
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }

@@ -33,16 +33,16 @@ public class AppMenuItemGroup extends BaseToolingItem {
 
     private String caption;
 
-    private String path;
+    private String openPath;
 
     private List<AppMenuItem> menuItemList;
 
-    public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String path,
+    public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String openPath,
             List<AppMenuItem> menuItemList) {
         super(name, description);
         this.pageCaption = pageCaption;
         this.caption = caption;
-        this.path = path;
+        this.openPath = openPath;
         this.menuItemList = menuItemList;
     }
 
@@ -68,13 +68,13 @@ public class AppMenuItemGroup extends BaseToolingItem {
         this.caption = caption;
     }
 
-    public String getPath() {
-        return path;
+    public String getOpenPath() {
+        return openPath;
     }
 
     @XmlElement
-    public void setPath(String path) {
-        this.path = path;
+    public void setOpenPath(String openPath) {
+        this.openPath = openPath;
     }
 
     public List<AppMenuItem> getMenuItemList() {

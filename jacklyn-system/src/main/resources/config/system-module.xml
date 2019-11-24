@@ -58,9 +58,12 @@
 			<menuitem name="sys-manageinputctrldef" description="$m{system.menuitem.inputctrldef}"
 				caption="$m{system.inputctrldef.menu.title}" path="/system/inputctrldef/openPage"
 				pageCaption="$m{system.inputctrldef.manage}" />
-			<menuitem name="sys-managemenu" description="$m{system.menuitem.menu}"
+			<menuitem name="sys-managemenu" description="$m{system.menu.menu}"
 				caption="$m{system.menu.menu.title}" path="/system/menu/openPage"
 				pageCaption="$m{system.menu.manage}" />
+            <menuitem name="sys-managemenuitem" description="$m{system.menuitem.menu}"
+                caption="$m{system.menu.menuitem.title}" path="/system/menuitem/openPage"
+                pageCaption="$m{system.menuitem.manage}" hidden="true"/>
 		</menu>
 		<menu name="sys-mainsystem" description="$m{system.menu.main}"
 			caption="$m{system.menu.title}">

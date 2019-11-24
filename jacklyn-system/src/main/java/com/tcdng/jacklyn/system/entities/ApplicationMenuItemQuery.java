@@ -55,6 +55,10 @@ public class ApplicationMenuItemQuery extends BaseInstallEntityQuery<Application
         return (ApplicationMenuItemQuery) notAmongst("name", names);
     }
 
+    public ApplicationMenuItemQuery hidden(Boolean hidden) {
+        return (ApplicationMenuItemQuery) equals("hidden", hidden);
+    }
+
     public ApplicationMenuItemQuery orderByDisplayOrder() {
         return (ApplicationMenuItemQuery) order("displayOrder");
     }

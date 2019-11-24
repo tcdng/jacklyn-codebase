@@ -64,9 +64,11 @@ public class MenuController extends AbstractSystemCrudController<ApplicationMenu
         if (QueryUtils.isValidLongCriteria(searchModuleId)) {
             query.moduleId(searchModuleId);
         }
+        
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
+        
         query.installed(Boolean.TRUE);
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);

@@ -107,19 +107,15 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     private boolean describable;
 
+    private boolean prefetch;
+    
     public BasePrefetchController(Class<T> entityClass, String hint, int modifier) {
         super(ManageRecordModifier.isSecure(modifier), false);
         this.entityClass = entityClass;
         this.modifier = modifier;
         recordHintName = hint;
         describable = Describable.class.isAssignableFrom(entityClass);
-    }
-
-    @Action
-    public String openPrefetchPage() throws UnifyException {
-        findRecords();
-        switchToTableContentPanel();
-        return openPage();
+        prefetch = true;
     }
 
     @Action
@@ -288,6 +284,17 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     @Override
+    protected void onOpenPage() throws UnifyException {
+        if (prefetch) {
+            findRecords();
+            switchToTableContentPanel();
+            prefetch = false;
+        }
+        
+        super.onOpenPage();
+    }
+
+    @Override
     protected void onClosePage() throws UnifyException {
         table = null;
         recordList = null;
@@ -396,6 +403,10 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         }
         
         return "switchitemview";
+    }
+
+    protected void setPrefetchOnly() {
+        this.prefetch = true;
     }
 
     private String findRecords() throws UnifyException {

@@ -62,6 +62,9 @@ public class ApplicationMenuItem extends BaseInstallEntity {
     @Column
     private int displayOrder;
 
+    @Column(name = "HIDDEN_FG")
+    private Boolean hidden;
+    
     @ListOnly(key = "menuId", property = "moduleId")
     private Long moduleId;
 
@@ -142,6 +145,14 @@ public class ApplicationMenuItem extends BaseInstallEntity {
 
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
+    }
+
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
     }
 
     public Long getModuleId() {
