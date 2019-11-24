@@ -107,7 +107,7 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
                     appMenuItemList.add(
                             new AppMenuItem(menuItem.getName(), resolveApplicationMessage(menuItem.getDescription()),
                                     resolveApplicationMessage(menuItem.getPageCaption()),
-                                    resolveApplicationMessage(menuItem.getCaption()), path));
+                                    resolveApplicationMessage(menuItem.getCaption()), path, menuItem.isHidden()));
                 }
             }
 

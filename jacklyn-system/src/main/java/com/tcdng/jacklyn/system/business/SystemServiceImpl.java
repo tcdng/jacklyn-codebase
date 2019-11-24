@@ -952,8 +952,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                     db().updateById(ScheduledTask.class, scheduledTaskId,
                             new Update().add("nextExecutionOn", calcNextExecutionOn).add("lastExecutionOn", now));
-                    logDebug("Task [{0}] is scheduled to run next on [{1,date,dd/MM/yy HH:mm:ss}]...", scheduledTaskDef.getDescription(),
-                            calcNextExecutionOn);
+                    logDebug("Task [{0}] is scheduled to run next on [{1,date,dd/MM/yy HH:mm:ss}]...",
+                            scheduledTaskDef.getDescription(), calcNextExecutionOn);
 
                 } catch (UnifyException e) {
                     try {
@@ -1014,8 +1014,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
         for (ApplicationMenu applicationMenu : applicationMenuList) {
             List<ApplicationMenuItem> applicationMenuItemList =
-                    findMenuItems((ApplicationMenuItemQuery) new ApplicationMenuItemQuery()
-                            .menuId(applicationMenu.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
+                    findMenuItems(
+                            (ApplicationMenuItemQuery) new ApplicationMenuItemQuery().menuId(applicationMenu.getId())
+                                    .orderByDisplayOrder().hidden(Boolean.FALSE).installed(Boolean.TRUE));
             List<MenuItem> menuItemList = new ArrayList<MenuItem>();
             for (ApplicationMenuItem applicationMenuItem : applicationMenuItemList) {
                 MenuItem menuItem =
@@ -1280,6 +1281,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 applicationMenuItem.setPageCaption(menuItemConfig.getPageCaption());
                                 applicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 applicationMenuItem.setPath(menuItemConfig.getPath());
+                                applicationMenuItem.setHidden(menuItemConfig.isHidden());
                                 applicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().create(applicationMenuItem);
                             } else {
@@ -1288,6 +1290,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 oldApplicationMenuItem.setPageCaption(menuItemConfig.getPageCaption());
                                 oldApplicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 oldApplicationMenuItem.setPath(menuItemConfig.getPath());
+                                oldApplicationMenuItem.setHidden(menuItemConfig.isHidden());
                                 oldApplicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().updateByIdVersion(oldApplicationMenuItem);
                             }
