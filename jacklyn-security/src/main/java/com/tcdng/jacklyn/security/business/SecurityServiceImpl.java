@@ -588,6 +588,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         user.setPassword(password);
         user.setChangePassword(Boolean.TRUE);
         user.setLoginLocked(Boolean.FALSE);
+        user.setLoginAttempts(Integer.valueOf(0));
         db().updateByIdVersion(user);
     }
 
