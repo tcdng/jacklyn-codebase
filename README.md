@@ -5,7 +5,7 @@
 <p align="center">
 <img src="https://img.shields.io/github/license/tcdng/jacklyn-codebase" alt="License" title="">
 </p>
-
+[![GitHub license](https://img.shields.io/github/license/tcdng/jacklyn-codebase?logoColor=blue)](https://github.com/tcdng/jacklyn-codebase/blob/master/LICENSE)
 
 Jacklyn Codebase is an open source full stack Java framework for developing business applications. It is a highly customizable and extensible component-based platform, designed and built from the ground up for developing high-performance production-ready enterprise web applications.
 
