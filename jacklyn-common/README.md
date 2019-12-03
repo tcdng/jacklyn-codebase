@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Common Module
+## Jacklyn Codebase - Common
 Module used to provide common base class definitions and components for the codebase.
 
 ### Features

@@ -1,4 +1,4 @@
-## Jacklyn Codebase - File Module
+## Jacklyn Codebase - File
 Module used to manage system-wide file processing and transfer operations locally and to and from external systems.
 
 ### Features

@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Organization Module
+## Jacklyn Codebase - Organization
 This module allows you to define an organizational structure in your application.
 
 ### Features

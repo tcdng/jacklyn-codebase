@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Integration Module
+## Jacklyn Codebase - Integration
 Module for managing integration with external systems by exchanging messages.
 
 ### Features

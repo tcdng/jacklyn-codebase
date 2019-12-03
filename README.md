@@ -1,4 +1,4 @@
-<h1 align="center"><img src="doc/images/jacklyncodebase.png" alt="Jacklyn Codebase" width="600" align="center"></h1>  
+<h1 align="center"><img src="docs/images/jacklyncodebase.png" alt="Jacklyn Codebase" width="600" align="center"></h1>  
 
 <h4 align="center">Java framework for enterprise web applications</h4>
   

@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Audit Module
+## Jacklyn Codebase - Audit
 Module that facilitates audit trail by keeping track of user activites and changes made on database records.
 
 ### Features

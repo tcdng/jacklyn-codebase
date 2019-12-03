@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Workflow Module
+## Jacklyn Codebase - Workflow
 Module used to manage the definition and execution of business process workflows.
 
 ### Features

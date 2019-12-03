@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Statistics Module
+## Jacklyn Codebase - Statistics
 Module for collecting and organizing data for analysis and presentation.
 
 ### Features

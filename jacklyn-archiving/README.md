@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Archiving Module
+## Jacklyn Codebase - Archiving
 Module for managing movement of data out of the application database to external storage and retrieval.
 
 ### Features

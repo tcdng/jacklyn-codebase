@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Location Module
+## Jacklyn Codebase - Location
 Module used to define geographical locations that will be utilizes within the system.
 
 ### Features

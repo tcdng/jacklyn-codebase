@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Security Module
+## Jacklyn Codebase - Security
 Module used to manage application user and remote application access to system features and resources.
 
 ### Features

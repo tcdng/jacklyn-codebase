@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Notification Module
+## Jacklyn Codebase - Notification
 Module used to manage message definition, creation and dispatch within application and to external notification systems.
 
 ### Features

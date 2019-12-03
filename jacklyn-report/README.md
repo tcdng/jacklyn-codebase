@@ -1,4 +1,4 @@
-## Jacklyn Codebase - Report Module
+## Jacklyn Codebase - Report
 Module for managing overall reporting capabilities of the system.
 
 ### Features

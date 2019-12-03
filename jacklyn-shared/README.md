@@ -1,5 +1,5 @@
 ## Jacklyn Codebase - Shared
-Library of Java objects for third-party applications and tools.
+Library of Java classes for third-party applications and tools.
 
 ### Features
 * Shared constants definitions for all modules
