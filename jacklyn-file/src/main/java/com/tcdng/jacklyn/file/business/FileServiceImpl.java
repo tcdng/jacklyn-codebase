@@ -61,8 +61,8 @@ import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.data.Inputs;
 import com.tcdng.unify.core.file.FileFilter;
 import com.tcdng.unify.core.file.FileInfo;
-import com.tcdng.unify.core.file.FileTransferInfo;
 import com.tcdng.unify.core.file.FileTransferServer;
+import com.tcdng.unify.core.file.FileTransferSetup;
 import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
@@ -115,11 +115,11 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
     public byte[] readRemoteBlock(Long fileTransferConfigId, Date workingDt, String filename, long fileIndex,
             int length) throws UnifyException {
         FileTransferConfig fileTransferConfig = db().list(FileTransferConfig.class, fileTransferConfigId);
-        FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, workingDt);
+        FileTransferSetup fileTransferSetup = getFileTransferSetup(fileTransferConfig, workingDt);
         FileTransferServer fileServer =
                 (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
-        if (fileServer.remoteFileExists(fileTransferInfo, filename)) {
-            return fileServer.readRemoteBlock(fileTransferInfo, filename, fileIndex, length);
+        if (fileServer.remoteFileExists(fileTransferSetup, filename)) {
+            return fileServer.readRemoteBlock(fileTransferSetup, filename, fileIndex, length);
         }
         return null;
     }
@@ -158,15 +158,15 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
             limit = TaskExecLimit.ALLOW_MULTIPLE)
     public boolean executeTestFileTransferConfigTask(TaskMonitor taskMonitor, FileTransferConfig fileTransferConfig)
             throws UnifyException {
-        FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, null);
+        FileTransferSetup fileTransferSetup = getFileTransferSetup(fileTransferConfig, null);
         FileTransferServer fileServer =
                 (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
 
         addTaskMessage(taskMonitor, "$m{file.taskmonitor.testinglocalpath}");
-        fileServer.getLocalFileList(fileTransferInfo);
+        fileServer.getLocalFileList(fileTransferSetup);
 
         addTaskMessage(taskMonitor, "$m{file.taskmonitor.testingremotepath}");
-        fileServer.getRemoteFileList(fileTransferInfo);
+        fileServer.getRemoteFileList(fileTransferSetup);
         addTaskMessage(taskMonitor, "$m{file.taskmonitor.testingsuccess}");
         return true;
     }
@@ -190,9 +190,9 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
         FileTransferPolicy fileTransferPolicy =
                 (FileTransferPolicy) this.getComponent(fileTransferConfig.getFileTransferPolicy());
-        FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, workingDt);
+        FileTransferSetup fileTransferSetup = getFileTransferSetup(fileTransferConfig, workingDt);
         if (FileTransferDirection.UPLOAD.equals(fileTransferConfig.getDirection())) {
-            List<FileInfo> fileInfoList = fileTransferServer.getLocalFileList(fileTransferInfo);
+            List<FileInfo> fileInfoList = fileTransferServer.getLocalFileList(fileTransferSetup);
             if (!fileInfoList.isEmpty()) {
                 int size = fileInfoList.size();
                 List<String> filenames = new ArrayList<String>(size);
@@ -224,7 +224,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 }
             }
         } else {
-            List<FileInfo> fileInfoList = fileTransferServer.getRemoteFileList(fileTransferInfo);
+            List<FileInfo> fileInfoList = fileTransferServer.getRemoteFileList(fileTransferSetup);
             if (!fileInfoList.isEmpty()) {
                 int size = fileInfoList.size();
                 List<String> filenames = new ArrayList<String>(size);
@@ -244,7 +244,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 for (FileInfo fileInfo : fileInfoList) {
                     if (fileInfo.isFile() && !fileInfo.isHidden() && !oldFilenameSet.contains(fileInfo.getFilename())) {
                         if (StringUtils.isNotBlank(semaphoreSuffix)) {
-                            if (!fileTransferServer.remoteFileExists(fileTransferInfo,
+                            if (!fileTransferServer.remoteFileExists(fileTransferSetup,
                                     fileInfo.getFilename() + semaphoreSuffix)) {
                                 // No semaphore file. File not ready for
                                 // download
@@ -284,7 +284,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         }
 
         FileTransferConfig fileTransferConfig = getFileTransferConfig(fileTransferConfigName);
-        FileTransferInfo fileTransferInfo = getFileTransferInfo(fileTransferConfig, workingDt);
+        FileTransferSetup fileTransferSetup = getFileTransferSetup(fileTransferConfig, workingDt);
         FileTransferServer fileServer =
                 (FileTransferServer) this.getComponent(fileTransferConfig.getFileTransferServer());
         FileTransferPolicy fileTransferPolicy =
@@ -304,14 +304,14 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 }
             }
 
-            if (!fileServer.remoteDirectoryExists(fileTransferInfo)) {
-                fileServer.createRemoteDirectory(fileTransferInfo);
+            if (!fileServer.remoteDirectoryExists(fileTransferSetup)) {
+                fileServer.createRemoteDirectory(fileTransferSetup);
             }
 
             String semaphoreSuffix = fileTransferPolicy.getTargetSemaphoreSuffix();
             for (FileOutbox fileOutbox : upFileOutboxList) {
                 if (!taskMonitor.isCanceled()
-                        && uploadFile(taskMonitor, fileServer, fileTransferInfo, fileOutbox, semaphoreSuffix)) {
+                        && uploadFile(taskMonitor, fileServer, fileTransferSetup, fileOutbox, semaphoreSuffix)) {
                     transferCount++;
                 }
             }
@@ -328,11 +328,11 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 }
             }
 
-            IOUtils.ensureDirectoryExists(fileTransferInfo.getLocalPath());
+            IOUtils.ensureDirectoryExists(fileTransferSetup.getLocalPath());
             String semaphoreSuffix = fileTransferPolicy.getTargetSemaphoreSuffix();
             for (FileInbox fileInbox : downFileInboxList) {
                 if (!taskMonitor.isCanceled()
-                        && downloadFile(taskMonitor, fileServer, fileTransferInfo, fileInbox, semaphoreSuffix)) {
+                        && downloadFile(taskMonitor, fileServer, fileTransferSetup, fileInbox, semaphoreSuffix)) {
                     transferCount++;
                 }
             }
@@ -366,16 +366,16 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
     }
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
-    public boolean uploadFile(TaskMonitor taskMonitor, FileTransferServer fileServer, FileTransferInfo fileTransferInfo,
+    public boolean uploadFile(TaskMonitor taskMonitor, FileTransferServer fileServer, FileTransferSetup fileTransferSetup,
             FileOutbox fileOutbox, String semaphoreSuffix) throws UnifyException {
         int uploadAttempts = fileOutbox.getUploadAttempts() + 1;
         try {
             String filename = fileOutbox.getFilename();
             addTaskMessage(taskMonitor, "$m{file.taskmonitor.uploading}", filename);
-            fileServer.uploadFile(fileTransferInfo, filename, filename);
+            fileServer.uploadFile(fileTransferSetup, filename, filename);
 
             if (StringUtils.isNotBlank(semaphoreSuffix)) {
-                fileServer.createRemoteFile(fileTransferInfo, filename + semaphoreSuffix);
+                fileServer.createRemoteFile(fileTransferSetup, filename + semaphoreSuffix);
             }
 
             db().updateAll(new FileOutboxQuery().id(fileOutbox.getId()),
@@ -396,15 +396,15 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
 
     @Transactional(TransactionAttribute.REQUIRES_NEW)
     public boolean downloadFile(TaskMonitor taskMonitor, FileTransferServer fileServer,
-            FileTransferInfo fileTransferInfo, FileInbox fileInbox, String semaphoreSuffix) throws UnifyException {
+            FileTransferSetup fileTransferSetup, FileInbox fileInbox, String semaphoreSuffix) throws UnifyException {
         int downloadAttempts = fileInbox.getDownloadAttempts() + 1;
         try {
             String filename = fileInbox.getFilename();
             addTaskMessage(taskMonitor, "$m{file.taskmonitor.downloading}", filename);
-            fileServer.downloadFile(fileTransferInfo, filename, filename);
+            fileServer.downloadFile(fileTransferSetup, filename, filename);
 
             if (StringUtils.isNotBlank(semaphoreSuffix)) {
-                fileServer.createLocalFile(fileTransferInfo, filename + semaphoreSuffix);
+                fileServer.createLocalFile(fileTransferSetup, filename + semaphoreSuffix);
             }
 
             db().updateAll(new FileInboxQuery().id(fileInbox.getId()),
@@ -623,7 +623,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         return fileTransferConfig;
     }
 
-    private FileTransferInfo getFileTransferInfo(FileTransferConfig fileTransferConfig, Date workingDt)
+    private FileTransferSetup getFileTransferSetup(FileTransferConfig fileTransferConfig, Date workingDt)
             throws UnifyException {
         FileTransferPolicy fileTransferPolicy =
                 (FileTransferPolicy) this.getComponent(fileTransferConfig.getFileTransferPolicy());
@@ -634,7 +634,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 fileTransferPolicy.getExtendedLocalPath(fileTransferConfig.getLocalPath(),
                         fileTransferConfig.getLocalDateFormat(), workingDt);
         int remotePort = DataUtils.convert(int.class, fileTransferConfig.getRemotePort(), null);
-        return FileTransferInfo.newBuilder().remoteHost(fileTransferConfig.getRemoteHost()).remotePort(remotePort)
+        return FileTransferSetup.newBuilder().remoteHost(fileTransferConfig.getRemoteHost()).remotePort(remotePort)
                 .useAuthenticationId(fileTransferConfig.getAuthenticationId())
                 .useAuthenticationPassword(fileTransferConfig.getAuthenticationPassword()).remotePath(serverPath)
                 .localPath(localPath).filterByPrefixes(fileTransferPolicy.getFilePrefixes(workingDt))
