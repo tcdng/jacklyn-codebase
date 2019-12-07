@@ -46,15 +46,19 @@ public class EmailMessagingChannel extends AbstractMessagingChannel {
             List<FileAttachment> fileAttachmentList) throws UnifyException {
         String configurationCode = notificationChannelDef.getNotificationChannelName();
         if (!emailServer.isConfigured(configurationCode)) {
-            emailServer.configure(configurationCode,
-                    new EmailServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
-                            notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
-                            notificationChannelDef.getPassword()));
+            EmailServerConfig emailServerConfig =
+                    EmailServerConfig.newBuilder().hostAddress(notificationChannelDef.getHostAddress())
+                            .hostPort(notificationChannelDef.getHostPort())
+                            .useSecurityType(notificationChannelDef.getSecurityType())
+                            .username(notificationChannelDef.getUsername())
+                            .password(notificationChannelDef.getPassword()).build();
+            emailServer.configure(configurationCode, emailServerConfig);
         }
 
-        Email email = Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
-                .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
-                .build();
+        Email email =
+                Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
+                        .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody)
+                        .asHTML(isHtml).build();
         emailServer.sendEmail(configurationCode, email);
         return email.isSent();
     }

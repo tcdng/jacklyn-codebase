@@ -354,13 +354,13 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
         if (DataUtils.isNotBlank(reportOptions.getSystemInputList())) {
             for (Input<?> input : reportOptions.getSystemInputList()) {
-                rb.addReportParameter(input.getName(), input.getDescription(), input.getTypeValue());
+                rb.addParameter(input.getName(), input.getDescription(), input.getTypeValue());
             }
         }
 
         if (DataUtils.isNotBlank(reportOptions.getUserInputList())) {
             for (Input<?> input : reportOptions.getUserInputList()) {
-                rb.addReportParameter(input.getName(), input.getDescription(), input.getTypeValue());
+                rb.addParameter(input.getName(), input.getDescription(), input.getTypeValue());
             }
         }
 

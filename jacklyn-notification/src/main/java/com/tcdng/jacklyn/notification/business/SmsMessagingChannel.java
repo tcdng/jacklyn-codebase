@@ -47,10 +47,13 @@ public class SmsMessagingChannel extends AbstractMessagingChannel {
             List<FileAttachment> fileAttachmentList) throws UnifyException {
         String configurationCode = notificationChannelDef.getNotificationChannelName();
         if (!smsServer.isConfigured(configurationCode)) {
-            smsServer.configure(configurationCode,
-                    new SmsServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
-                            notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
-                            notificationChannelDef.getPassword()));
+            SmsServerConfig smsServerConfig =
+                    SmsServerConfig.newBuilder().hostAddress(notificationChannelDef.getHostAddress())
+                            .hostPort(notificationChannelDef.getHostPort())
+                            .useSecurityType(notificationChannelDef.getSecurityType())
+                            .username(notificationChannelDef.getUsername())
+                            .password(notificationChannelDef.getPassword()).build();
+            smsServer.configure(configurationCode, smsServerConfig);
         }
 
         if (recipientContactList.size() == 1) {
