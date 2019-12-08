@@ -107,7 +107,7 @@ public class WfDocController extends AbstractWorkflowCrudController<WfDoc> {
             query.wfCategoryStatus(searchStatus);
         }
 
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getWorkflowService().findWfDocs(query);
     }
 

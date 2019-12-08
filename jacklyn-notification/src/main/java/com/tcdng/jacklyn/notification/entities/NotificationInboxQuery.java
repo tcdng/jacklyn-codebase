@@ -32,10 +32,10 @@ public class NotificationInboxQuery extends BaseEntityQuery<NotificationInbox> {
     }
 
     public NotificationInboxQuery userId(String userId) {
-        return (NotificationInboxQuery) equals("userId", userId);
+        return (NotificationInboxQuery) addEquals("userId", userId);
     }
 
     public NotificationInboxQuery status(NotificationInboxReadStatus status) {
-        return (NotificationInboxQuery) equals("status", status);
+        return (NotificationInboxQuery) addEquals("status", status);
     }
 }

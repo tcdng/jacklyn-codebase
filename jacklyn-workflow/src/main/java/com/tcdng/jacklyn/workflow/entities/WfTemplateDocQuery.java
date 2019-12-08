@@ -30,10 +30,10 @@ public class WfTemplateDocQuery extends BaseEntityQuery<WfTemplateDoc> {
     }
 
     public WfTemplateDocQuery wfTemplateId(Long wfTemplateId) {
-        return (WfTemplateDocQuery) equals("wfTemplateId", wfTemplateId);
+        return (WfTemplateDocQuery) addEquals("wfTemplateId", wfTemplateId);
     }
 
     public WfTemplateDocQuery manual(Boolean manual) {
-        return (WfTemplateDocQuery) equals("manual", manual);
+        return (WfTemplateDocQuery) addEquals("manual", manual);
     }
 }

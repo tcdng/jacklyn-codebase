@@ -48,7 +48,7 @@ public class PrivilegeInListCommand extends AbstractAssignParamsOrganizationList
 
             query.idIn(params.getAssignedIdList(Long.class));
             query.installed(Boolean.TRUE);
-            query.select("id", "description").order("description");
+            query.addSelect("id", "description").addOrder("description");
             return getOrganizationService().findPrivileges(query);
         }
 

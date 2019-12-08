@@ -32,27 +32,27 @@ public class RolePrivilegeWidgetQuery extends BaseEntityQuery<RolePrivilegeWidge
     }
 
     public RolePrivilegeWidgetQuery rolePrivilegeId(Long rolePrivilegeId) {
-        return (RolePrivilegeWidgetQuery) equals("rolePrivilegeId", rolePrivilegeId);
+        return (RolePrivilegeWidgetQuery) addEquals("rolePrivilegeId", rolePrivilegeId);
     }
 
     public RolePrivilegeWidgetQuery rolePrivilegeIdIn(Collection<Long> rolePrivilegeId) {
-        return (RolePrivilegeWidgetQuery) amongst("rolePrivilegeId", rolePrivilegeId);
+        return (RolePrivilegeWidgetQuery) addAmongst("rolePrivilegeId", rolePrivilegeId);
     }
 
     public RolePrivilegeWidgetQuery roleId(Long roleId) {
-        return (RolePrivilegeWidgetQuery) equals("roleId", roleId);
+        return (RolePrivilegeWidgetQuery) addEquals("roleId", roleId);
     }
 
     public RolePrivilegeWidgetQuery moduleId(Long moduleId) {
-        return (RolePrivilegeWidgetQuery) equals("moduleId", moduleId);
+        return (RolePrivilegeWidgetQuery) addEquals("moduleId", moduleId);
     }
 
     public RolePrivilegeWidgetQuery privilegeCategoryId(Long privilegeCategoryId) {
-        return (RolePrivilegeWidgetQuery) equals("privilegeCategoryId", privilegeCategoryId);
+        return (RolePrivilegeWidgetQuery) addEquals("privilegeCategoryId", privilegeCategoryId);
     }
 
     public RolePrivilegeWidgetQuery categoryName(String categoryName) {
-        return (RolePrivilegeWidgetQuery) equals("categoryName", categoryName);
+        return (RolePrivilegeWidgetQuery) addEquals("categoryName", categoryName);
     }
 
 }

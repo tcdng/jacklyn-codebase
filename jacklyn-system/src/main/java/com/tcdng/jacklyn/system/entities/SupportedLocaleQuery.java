@@ -30,20 +30,20 @@ public class SupportedLocaleQuery extends BaseVersionedStatusEntityQuery<Support
     }
 
     @Override
-    public SupportedLocaleQuery order(String field) {
-        return (SupportedLocaleQuery) super.order(field);
+    public SupportedLocaleQuery addOrder(String field) {
+        return (SupportedLocaleQuery) super.addOrder(field);
     }
 
     @Override
-    public SupportedLocaleQuery select(String field) {
-        return (SupportedLocaleQuery) super.select(field);
+    public SupportedLocaleQuery addSelect(String field) {
+        return (SupportedLocaleQuery) super.addSelect(field);
     }
 
     public SupportedLocaleQuery name(String name) {
-        return (SupportedLocaleQuery) equals("name", name);
+        return (SupportedLocaleQuery) addEquals("name", name);
     }
 
     public SupportedLocaleQuery descriptionLike(String description) {
-        return (SupportedLocaleQuery) like("description", description);
+        return (SupportedLocaleQuery) addLike("description", description);
     }
 }

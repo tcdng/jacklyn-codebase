@@ -46,7 +46,7 @@ public class RoleInListCommand extends AbstractAssignParamsOrganizationListComma
             }
 
             query.idIn(params.getAssignedIdList(Long.class));
-            query.status(RecordStatus.ACTIVE).order("description");
+            query.status(RecordStatus.ACTIVE).addOrder("description");
             return getOrganizationService().findRoles(query);
         }
 

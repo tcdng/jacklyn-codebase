@@ -31,6 +31,6 @@ public class WfFormPrivilegeQuery extends BaseEntityQuery<WfFormPrivilege> {
     }
 
     public WfFormPrivilegeQuery wfStepId(Long wfStepId) {
-        return (WfFormPrivilegeQuery) equals("wfStepId", wfStepId);
+        return (WfFormPrivilegeQuery) addEquals("wfStepId", wfStepId);
     }
 }

@@ -32,18 +32,18 @@ public class ShortcutTileQuery extends BaseInstallEntityQuery<ShortcutTile> {
     }
 
     public ShortcutTileQuery moduleId(Long moduleId) {
-        return (ShortcutTileQuery) equals("moduleId", moduleId);
+        return (ShortcutTileQuery) addEquals("moduleId", moduleId);
     }
 
     public ShortcutTileQuery name(String name) {
-        return (ShortcutTileQuery) equals("name", name);
+        return (ShortcutTileQuery) addEquals("name", name);
     }
 
     public ShortcutTileQuery nameIn(Collection<String> name) {
-        return (ShortcutTileQuery) amongst("name", name);
+        return (ShortcutTileQuery) addAmongst("name", name);
     }
 
     public ShortcutTileQuery orderByDisplayOrder() {
-        return (ShortcutTileQuery) order("displayOrder");
+        return (ShortcutTileQuery) addOrder("displayOrder");
     }
 }

@@ -33,26 +33,26 @@ public class AuditDefinitionQuery extends BaseInstallEntityQuery<AuditDefinition
     }
 
     public AuditDefinitionQuery name(String name) {
-        return (AuditDefinitionQuery) equals("name", name);
+        return (AuditDefinitionQuery) addEquals("name", name);
     }
 
     public AuditDefinitionQuery nameIn(Collection<String> name) {
-        return (AuditDefinitionQuery) amongst("name", name);
+        return (AuditDefinitionQuery) addAmongst("name", name);
     }
 
     public AuditDefinitionQuery recordName(String recordName) {
-        return (AuditDefinitionQuery) equals("recordName", recordName);
+        return (AuditDefinitionQuery) addEquals("recordName", recordName);
     }
 
     public AuditDefinitionQuery moduleId(Long moduleId) {
-        return (AuditDefinitionQuery) equals("moduleId", moduleId);
+        return (AuditDefinitionQuery) addEquals("moduleId", moduleId);
     }
 
     public AuditDefinitionQuery moduleName(String moduleName) {
-        return (AuditDefinitionQuery) equals("moduleName", moduleName);
+        return (AuditDefinitionQuery) addEquals("moduleName", moduleName);
     }
 
     public AuditDefinitionQuery eventType(EventType eventType) {
-        return (AuditDefinitionQuery) equals("eventType", eventType);
+        return (AuditDefinitionQuery) addEquals("eventType", eventType);
     }
 }

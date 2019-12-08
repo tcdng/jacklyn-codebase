@@ -37,55 +37,55 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     }
     
     public WfItemQuery wfItemSplitEventId(Long wfItemSplitEventId) {
-        return (WfItemQuery) equals("wfItemSplitEventId", wfItemSplitEventId);
+        return (WfItemQuery) addEquals("wfItemSplitEventId", wfItemSplitEventId);
     }
     
     public WfItemQuery submissionId(Long submissionId) {
-        return (WfItemQuery) equals("submissionId", submissionId);
+        return (WfItemQuery) addEquals("submissionId", submissionId);
     }
 
     public WfItemQuery branchCode(String branchCode) {
-        return (WfItemQuery) equals("branchCode", branchCode);
+        return (WfItemQuery) addEquals("branchCode", branchCode);
     }
 
     public WfItemQuery departmentCode(String departmentCode) {
-        return (WfItemQuery) equals("departmentCode", departmentCode);
+        return (WfItemQuery) addEquals("departmentCode", departmentCode);
     }
 
     public WfItemQuery stepGlobalName(String stepGlobalName) {
-        return (WfItemQuery) equals("stepGlobalName", stepGlobalName);
+        return (WfItemQuery) addEquals("stepGlobalName", stepGlobalName);
     }
 
     public WfItemQuery descriptionLike(String description) {
-        return (WfItemQuery) like("description", description);
+        return (WfItemQuery) addLike("description", description);
     }
 
     public WfItemQuery heldBy(String heldBy) {
-        return (WfItemQuery) equals("heldBy", heldBy);
+        return (WfItemQuery) addEquals("heldBy", heldBy);
     }
 
     public WfItemQuery isHeld() {
-        return (WfItemQuery) isNotNull("heldBy");
+        return (WfItemQuery) addIsNotNull("heldBy");
     }
 
     public WfItemQuery isUnheld() {
-        return (WfItemQuery) isNull("heldBy");
+        return (WfItemQuery) addIsNull("heldBy");
     }
 
     public WfItemQuery stepDt(Date stepDt) {
-        return (WfItemQuery) equals("stepDt", stepDt);
+        return (WfItemQuery) addEquals("stepDt", stepDt);
     }
 
     public WfItemQuery isUnheldOrHeldBy(String heldBy) {
-        return (WfItemQuery) add(new Or().add(new IsNull("heldBy")).add(new Equals("heldBy", heldBy)));
+        return (WfItemQuery) addRestriction(new Or().add(new IsNull("heldBy")).add(new Equals("heldBy", heldBy)));
     }
 
     public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
-        return (WfItemQuery) add(new Or().add(new Equals("participantType", WorkflowParticipantType.ALL)).add(
+        return (WfItemQuery) addRestriction(new Or().add(new Equals("participantType", WorkflowParticipantType.ALL)).add(
                 new Equals("participantType", participantType)));
     }
 
     public WfItemQuery notForwardedBy(String userId) {
-        return (WfItemQuery) add(new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
+        return (WfItemQuery) addRestriction(new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
     }
 }

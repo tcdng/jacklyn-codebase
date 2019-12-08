@@ -41,7 +41,7 @@ public class SystemNotificationChannelListCommand extends AbstractZeroParamsNoti
     public List<? extends Listable> execute(Locale locale, ZeroParams param) throws UnifyException {
         return getNotificationModule()
                 .findNotificationChannels((NotificationChannelQuery) new NotificationChannelQuery()
-                        .notificationType(NotificationType.SYSTEM).order("description"));
+                        .notificationType(NotificationType.SYSTEM).addOrder("description"));
     }
 
 }

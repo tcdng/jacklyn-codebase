@@ -31,14 +31,14 @@ public class AuthenticationQuery extends BaseStatusEntityQuery<Authentication> {
     }
 
     public AuthenticationQuery name(String name) {
-        return (AuthenticationQuery) equals("name", name);
+        return (AuthenticationQuery) addEquals("name", name);
     }
 
     public AuthenticationQuery nameLike(String name) {
-        return (AuthenticationQuery) like("name", name);
+        return (AuthenticationQuery) addLike("name", name);
     }
 
     public AuthenticationQuery descriptionLike(String description) {
-        return (AuthenticationQuery) like("description", description);
+        return (AuthenticationQuery) addLike("description", description);
     }
 }

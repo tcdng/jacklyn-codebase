@@ -30,10 +30,10 @@ public class BaseStatusEntityQuery<T extends BaseStatusEntity> extends BaseEntit
     }
 
     public BaseStatusEntityQuery<T> status(RecordStatus status) {
-        return (BaseStatusEntityQuery<T>) equals("status", status);
+        return (BaseStatusEntityQuery<T>) addEquals("status", status);
     }
 
     public BaseStatusEntityQuery<T> statusNot(RecordStatus status) {
-        return (BaseStatusEntityQuery<T>) notEqual("status", status);
+        return (BaseStatusEntityQuery<T>) addNotEqual("status", status);
     }
 }

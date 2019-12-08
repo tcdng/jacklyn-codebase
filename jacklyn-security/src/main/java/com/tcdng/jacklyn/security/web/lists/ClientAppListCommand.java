@@ -36,7 +36,7 @@ public class ClientAppListCommand extends AbstractZeroParamsSecurityListCommand 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         return getSecurityService()
-                .findClientApps((ClientAppQuery) new ClientAppQuery().ignoreEmptyCriteria(true).order("description"));
+                .findClientApps((ClientAppQuery) new ClientAppQuery().ignoreEmptyCriteria(true).addOrder("description"));
     }
 
 }

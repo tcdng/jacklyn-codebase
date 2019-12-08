@@ -30,14 +30,14 @@ public class ZoneQuery extends BaseVersionedStatusEntityQuery<Zone> {
     }
 
     public ZoneQuery name(String name) {
-        return (ZoneQuery) equals("name", name);
+        return (ZoneQuery) addEquals("name", name);
     }
 
     public ZoneQuery nameLike(String name) {
-        return (ZoneQuery) like("name", name);
+        return (ZoneQuery) addLike("name", name);
     }
 
     public ZoneQuery descriptionLike(String description) {
-        return (ZoneQuery) like("description", description);
+        return (ZoneQuery) addLike("description", description);
     }
 }

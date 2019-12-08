@@ -7,7 +7,7 @@
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software
+ * UnaddLessThan required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
@@ -32,32 +32,32 @@ public abstract class BaseTimestampedEntityQuery<T extends BaseTimestampedEntity
     }
 
     public BaseTimestampedEntityQuery<T> updateBy(String updateBy) {
-        return (BaseTimestampedEntityQuery<T>) equals("updateBy", updateBy);
+        return (BaseTimestampedEntityQuery<T>) addEquals("updateBy", updateBy);
     }
 
     public BaseTimestampedEntityQuery<T> updatedOn(Date date) {
-        return (BaseTimestampedEntityQuery<T>) between("updateDt", CalendarUtils.getMidnightDate(date),
+        return (BaseTimestampedEntityQuery<T>) addBetween("updateDt", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 
     public BaseTimestampedEntityQuery<T> updatedBetween(Date fromDate, Date toDate) {
-        return (BaseTimestampedEntityQuery<T>) between("updateDt", CalendarUtils.getMidnightDate(fromDate),
+        return (BaseTimestampedEntityQuery<T>) addBetween("updateDt", CalendarUtils.getMidnightDate(fromDate),
                 CalendarUtils.getLastSecondDate(toDate));
     }
 
     public BaseTimestampedEntityQuery<T> updatedBefore(Date date) {
-        return (BaseTimestampedEntityQuery<T>) less("updateDt", date);
+        return (BaseTimestampedEntityQuery<T>) addLessThan("updateDt", date);
     }
 
     public BaseTimestampedEntityQuery<T> updatedOnBefore(Date date) {
-        return (BaseTimestampedEntityQuery<T>) lessEqual("updateDt", date);
+        return (BaseTimestampedEntityQuery<T>) addLessThanEqual("updateDt", date);
     }
 
     public BaseTimestampedEntityQuery<T> updatedAfter(Date date) {
-        return (BaseTimestampedEntityQuery<T>) greater("updateDt", date);
+        return (BaseTimestampedEntityQuery<T>) addGreaterThan("updateDt", date);
     }
 
     public BaseTimestampedEntityQuery<T> updatedOnAfter(Date date) {
-        return (BaseTimestampedEntityQuery<T>) greaterEqual("updateDt", date);
+        return (BaseTimestampedEntityQuery<T>) addGreaterThanEqual("updateDt", date);
     }
 }

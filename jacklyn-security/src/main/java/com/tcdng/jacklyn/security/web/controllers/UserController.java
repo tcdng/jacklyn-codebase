@@ -141,7 +141,7 @@ public class UserController extends AbstractSecurityCrudController<User> {
         }
         
         query.excludeSysRecords();
-        query.order("fullName").ignoreEmptyCriteria(true);
+        query.addOrder("fullName").ignoreEmptyCriteria(true);
         return getSecurityService().findUsers(query);
     }
 

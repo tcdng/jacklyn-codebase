@@ -30,6 +30,6 @@ public class AuditDetailQuery extends BaseEntityQuery<AuditDetail> {
     }
 
     public AuditDetailQuery auditTrailId(Long auditTrailId) {
-        return (AuditDetailQuery) equals("auditTrailId", auditTrailId);
+        return (AuditDetailQuery) addEquals("auditTrailId", auditTrailId);
     }
 }

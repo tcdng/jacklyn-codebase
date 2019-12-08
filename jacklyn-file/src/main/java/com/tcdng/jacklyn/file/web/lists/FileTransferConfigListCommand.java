@@ -37,7 +37,7 @@ public class FileTransferConfigListCommand extends AbstractZeroParamsFileListCom
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         FileTransferConfigQuery query = new FileTransferConfigQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         return this.getFileModule().findFileTransferConfigs(query);
     }
 }

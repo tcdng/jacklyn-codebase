@@ -30,10 +30,10 @@ public class WfItemEventQuery extends BaseEntityQuery<WfItemEvent> {
     }
 
     public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
-        return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
+        return (WfItemEventQuery) addEquals("wfItemHistId", wfItemHistId);
     }
 
     public WfItemEventQuery commentsOnly() {
-        return (WfItemEventQuery) isNotNull("comment");
+        return (WfItemEventQuery) addIsNotNull("comment");
     }
 }

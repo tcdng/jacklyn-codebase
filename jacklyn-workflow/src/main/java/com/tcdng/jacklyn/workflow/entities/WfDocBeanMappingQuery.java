@@ -32,18 +32,18 @@ public class WfDocBeanMappingQuery extends BaseEntityQuery<WfDocBeanMapping> {
     }
 
     public WfDocBeanMappingQuery beanType(String beanType) {
-        return (WfDocBeanMappingQuery) equals("beanType", beanType);
+        return (WfDocBeanMappingQuery) addEquals("beanType", beanType);
     }
 
     public WfDocBeanMappingQuery wfCategoryName(String wfCategoryName) {
-        return (WfDocBeanMappingQuery) equals("wfCategoryName", wfCategoryName);
+        return (WfDocBeanMappingQuery) addEquals("wfCategoryName", wfCategoryName);
     }
 
     public WfDocBeanMappingQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-        return (WfDocBeanMappingQuery) equals("wfCategoryStatus", wfCategoryStatus);
+        return (WfDocBeanMappingQuery) addEquals("wfCategoryStatus", wfCategoryStatus);
     }
 
     public WfDocBeanMappingQuery primaryMapping(Boolean primaryMapping) {
-        return (WfDocBeanMappingQuery) equals("primaryMapping", primaryMapping);
+        return (WfDocBeanMappingQuery) addEquals("primaryMapping", primaryMapping);
     }
 }

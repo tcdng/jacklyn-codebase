@@ -28,6 +28,6 @@ public abstract class BaseInstallEntityQuery<T extends BaseInstallEntity> extend
     }
 
     public BaseInstallEntityQuery<T> installed(Boolean installed) {
-        return (BaseInstallEntityQuery<T>) equals("installed", installed);
+        return (BaseInstallEntityQuery<T>) addEquals("installed", installed);
     }
 }

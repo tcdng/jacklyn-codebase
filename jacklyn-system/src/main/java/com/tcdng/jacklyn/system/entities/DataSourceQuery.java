@@ -31,19 +31,19 @@ public class DataSourceQuery extends BaseVersionedStatusEntityQuery<DataSource> 
 	}
 
 	public DataSourceQuery dataSourceDriverId(Long dataSourceDriverId) {
-		return (DataSourceQuery) equals("dataSourceDriverId", dataSourceDriverId);
+		return (DataSourceQuery) addEquals("dataSourceDriverId", dataSourceDriverId);
 	}
 
 	public DataSourceQuery name(String name) {
-		return (DataSourceQuery) equals("name", name);
+		return (DataSourceQuery) addEquals("name", name);
 	}
 
 	public DataSourceQuery descriptionLike(String description) {
-		return (DataSourceQuery) like("description", description);
+		return (DataSourceQuery) addLike("description", description);
 	}
 
     public DataSourceQuery appReserved(BooleanType appReserved) {
-        return (DataSourceQuery) equals("appReserved", appReserved);
+        return (DataSourceQuery) addEquals("appReserved", appReserved);
     }
 
 }

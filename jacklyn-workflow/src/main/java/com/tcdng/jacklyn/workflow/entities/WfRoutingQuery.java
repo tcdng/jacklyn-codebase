@@ -30,6 +30,6 @@ public class WfRoutingQuery extends BaseEntityQuery<WfRouting> {
     }
 
     public WfRoutingQuery wfStepId(Long wfStepId) {
-        return (WfRoutingQuery) equals("wfStepId", wfStepId);
+        return (WfRoutingQuery) addEquals("wfStepId", wfStepId);
     }
 }

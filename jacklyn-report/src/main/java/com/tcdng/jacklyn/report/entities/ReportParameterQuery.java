@@ -30,6 +30,6 @@ public class ReportParameterQuery extends BaseEntityQuery<ReportParameter> {
 	}
 
 	public ReportParameterQuery reportConfigurationId(Long reportConfigurationId) {
-		return (ReportParameterQuery) equals("reportConfigurationId", reportConfigurationId);
+		return (ReportParameterQuery) addEquals("reportConfigurationId", reportConfigurationId);
 	}
 }

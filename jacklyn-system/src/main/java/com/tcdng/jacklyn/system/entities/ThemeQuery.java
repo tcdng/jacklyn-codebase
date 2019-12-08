@@ -30,20 +30,20 @@ public class ThemeQuery extends BaseVersionedStatusEntityQuery<Theme> {
     }
 
     @Override
-    public ThemeQuery order(String field) {
-        return (ThemeQuery) super.order(field);
+    public ThemeQuery addOrder(String field) {
+        return (ThemeQuery) super.addOrder(field);
     }
 
     @Override
-    public ThemeQuery select(String field) {
-        return (ThemeQuery) super.select(field);
+    public ThemeQuery addSelect(String field) {
+        return (ThemeQuery) super.addSelect(field);
     }
 
     public ThemeQuery name(String name) {
-        return (ThemeQuery) equals("name", name);
+        return (ThemeQuery) addEquals("name", name);
     }
 
     public ThemeQuery descriptionLike(String description) {
-        return (ThemeQuery) like("description", description);
+        return (ThemeQuery) addLike("description", description);
     }
 }

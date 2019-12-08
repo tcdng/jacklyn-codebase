@@ -48,14 +48,14 @@ public class UserDepartmentListCommand extends AbstractZeroParamsSecurityListCom
             List<Long> departmentIdList = getSecurityService().findUserDepartmentIds(userToken.getUserLoginId());
             if (DataUtils.isNotBlank(departmentIdList)) {
                 return organizationService.findDepartments(
-                        (DepartmentQuery) new DepartmentQuery().idIn(departmentIdList).order("description"));
+                        (DepartmentQuery) new DepartmentQuery().idIn(departmentIdList).addOrder("description"));
             }
 
             return Collections.emptyList();
         }
 
         return organizationService.findDepartments(
-                (DepartmentQuery) new DepartmentQuery().ignoreEmptyCriteria(true).order("description"));
+                (DepartmentQuery) new DepartmentQuery().ignoreEmptyCriteria(true).addOrder("description"));
     }
 
 }

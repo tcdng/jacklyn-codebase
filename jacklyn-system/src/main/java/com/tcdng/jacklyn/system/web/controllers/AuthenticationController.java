@@ -97,7 +97,7 @@ public class AuthenticationController extends AbstractSystemCrudController<Authe
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findAuthentications(query);
     }
 

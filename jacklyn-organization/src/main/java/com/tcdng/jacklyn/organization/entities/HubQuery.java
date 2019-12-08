@@ -30,14 +30,14 @@ public class HubQuery extends BaseVersionedStatusEntityQuery<Hub> {
     }
 
     public HubQuery name(String name) {
-        return (HubQuery) equals("name", name);
+        return (HubQuery) addEquals("name", name);
     }
 
     public HubQuery nameLike(String name) {
-        return (HubQuery) like("name", name);
+        return (HubQuery) addLike("name", name);
     }
 
     public HubQuery descriptionLike(String description) {
-        return (HubQuery) like("description", description);
+        return (HubQuery) addLike("description", description);
     }
 }

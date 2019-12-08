@@ -32,32 +32,32 @@ public abstract class BaseEventEntityQuery<T extends BaseEventEntity> extends Ba
     }
 
     public BaseEventEntityQuery<T> createBy(String createBy) {
-        return (BaseEventEntityQuery<T>) equals("createBy", createBy);
+        return (BaseEventEntityQuery<T>) addEquals("createBy", createBy);
     }
 
     public BaseEventEntityQuery<T> createdOn(Date date) {
-        return (BaseEventEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(date),
+        return (BaseEventEntityQuery<T>) addBetween("createDt", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 
     public BaseEventEntityQuery<T> createdBetween(Date fromDate, Date toDate) {
-        return (BaseEventEntityQuery<T>) between("createDt", CalendarUtils.getMidnightDate(fromDate),
+        return (BaseEventEntityQuery<T>) addBetween("createDt", CalendarUtils.getMidnightDate(fromDate),
                 CalendarUtils.getLastSecondDate(toDate));
     }
 
     public BaseEventEntityQuery<T> createdBefore(Date date) {
-        return (BaseEventEntityQuery<T>) less("createDt", date);
+        return (BaseEventEntityQuery<T>) addLessThan("createDt", date);
     }
 
     public BaseEventEntityQuery<T> createdOnBefore(Date date) {
-        return (BaseEventEntityQuery<T>) lessEqual("createDt", date);
+        return (BaseEventEntityQuery<T>) addLessThanEqual("createDt", date);
     }
 
     public BaseEventEntityQuery<T> createdAfter(Date date) {
-        return (BaseEventEntityQuery<T>) greater("createDt", date);
+        return (BaseEventEntityQuery<T>) addGreaterThan("createDt", date);
     }
 
     public BaseEventEntityQuery<T> createdOnAfter(Date date) {
-        return (BaseEventEntityQuery<T>) greaterEqual("createDt", date);
+        return (BaseEventEntityQuery<T>) addGreaterThanEqual("createDt", date);
     }
 }

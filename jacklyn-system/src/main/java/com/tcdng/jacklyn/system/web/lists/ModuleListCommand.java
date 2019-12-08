@@ -37,7 +37,7 @@ public class ModuleListCommand extends AbstractZeroParamsSystemListCommand {
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ModuleQuery query = new ModuleQuery();
-        query.installed(Boolean.TRUE).status(RecordStatus.ACTIVE).order("description");
+        query.installed(Boolean.TRUE).status(RecordStatus.ACTIVE).addOrder("description");
         return getSystemService().findModules(query);
     }
 }

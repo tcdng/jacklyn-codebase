@@ -41,7 +41,7 @@ public class SmsNotificationChannelListCommand extends AbstractZeroParamsNotific
     public List<? extends Listable> execute(Locale locale, ZeroParams param) throws UnifyException {
         return getNotificationModule()
                 .findNotificationChannels((NotificationChannelQuery) new NotificationChannelQuery()
-                        .notificationType(NotificationType.SMS).order("description"));
+                        .notificationType(NotificationType.SMS).addOrder("description"));
     }
 
 }

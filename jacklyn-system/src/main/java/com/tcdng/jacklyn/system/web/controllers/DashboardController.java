@@ -104,7 +104,7 @@ public class DashboardController extends AbstractSystemCrudController<Dashboard>
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findDashboards(query);
     }
 

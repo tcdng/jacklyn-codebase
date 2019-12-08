@@ -31,18 +31,18 @@ public class ClientAppAssetQuery extends BaseEntityQuery<ClientAppAsset> {
     }
 
     public ClientAppAssetQuery clientAppId(Long clientAppId) {
-        return (ClientAppAssetQuery) equals("clientAppId", clientAppId);
+        return (ClientAppAssetQuery) addEquals("clientAppId", clientAppId);
     }
 
     public ClientAppAssetQuery clientAppName(String clientAppName) {
-        return (ClientAppAssetQuery) equals("clientAppName", clientAppName);
+        return (ClientAppAssetQuery) addEquals("clientAppName", clientAppName);
     }
 
     public ClientAppAssetQuery assetName(String assetName) {
-        return (ClientAppAssetQuery) equals("assetName", assetName);
+        return (ClientAppAssetQuery) addEquals("assetName", assetName);
     }
 
     public ClientAppAssetQuery assetType(SystemAssetType assetType) {
-        return (ClientAppAssetQuery) equals("assetType", assetType);
+        return (ClientAppAssetQuery) addEquals("assetType", assetType);
     }
 }

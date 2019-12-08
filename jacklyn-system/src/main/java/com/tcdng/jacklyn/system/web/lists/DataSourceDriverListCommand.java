@@ -36,6 +36,6 @@ public class DataSourceDriverListCommand extends AbstractZeroParamsSystemListCom
 	@Override
 	public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
 		return getSystemService().findDataSourceDrivers(
-				(DataSourceDriverQuery) new DataSourceDriverQuery().order("description").ignoreEmptyCriteria(true));
+				(DataSourceDriverQuery) new DataSourceDriverQuery().addOrder("description").ignoreEmptyCriteria(true));
 	}
 }

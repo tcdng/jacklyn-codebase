@@ -30,6 +30,6 @@ public class WfUserActionQuery extends BaseEntityQuery<WfUserAction> {
     }
 
     public WfUserActionQuery wfStepId(Long wfStepId) {
-        return (WfUserActionQuery) equals("wfStepId", wfStepId);
+        return (WfUserActionQuery) addEquals("wfStepId", wfStepId);
     }
 }

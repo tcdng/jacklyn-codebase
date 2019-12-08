@@ -37,7 +37,7 @@ public class BatchFileReadDefinitionListCommand extends AbstractZeroParamsFileLi
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         BatchFileReadDefinitionQuery query = new BatchFileReadDefinitionQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         return this.getFileModule().findBatchFileReadDefinitions(query);
     }
 }

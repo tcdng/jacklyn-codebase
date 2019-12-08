@@ -88,7 +88,7 @@ public class InputCtrlDefController extends AbstractSystemCrudController<InputCt
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findInputCtrlDefs(query);
     }
 

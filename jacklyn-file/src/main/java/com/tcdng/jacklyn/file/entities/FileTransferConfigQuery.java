@@ -31,18 +31,18 @@ public class FileTransferConfigQuery extends BaseVersionedStatusEntityQuery<File
     }
 
     public FileTransferConfigQuery name(String name) {
-        return (FileTransferConfigQuery) equals("name", name);
+        return (FileTransferConfigQuery) addEquals("name", name);
     }
 
     public FileTransferConfigQuery nameLike(String name) {
-        return (FileTransferConfigQuery) like("name", name);
+        return (FileTransferConfigQuery) addLike("name", name);
     }
 
     public FileTransferConfigQuery descriptionLike(String description) {
-        return (FileTransferConfigQuery) like("description", description);
+        return (FileTransferConfigQuery) addLike("description", description);
     }
 
     public FileTransferConfigQuery direction(FileTransferDirection direction) {
-        return (FileTransferConfigQuery) equals("direction", direction);
+        return (FileTransferConfigQuery) addEquals("direction", direction);
     }
 }

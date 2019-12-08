@@ -48,7 +48,7 @@ public class UserHubListCommand extends AbstractZeroParamsSecurityListCommand {
         }
 
         return organizationService.findHubs(
-                (HubQuery) new HubQuery().ignoreEmptyCriteria(true).order("description"));
+                (HubQuery) new HubQuery().ignoreEmptyCriteria(true).addOrder("description"));
     }
 
 }

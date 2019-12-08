@@ -112,7 +112,7 @@ public class RoleController extends AbstractOrganizationCrudController<Role> {
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getOrganizationService().findRoles(query);
     }
 

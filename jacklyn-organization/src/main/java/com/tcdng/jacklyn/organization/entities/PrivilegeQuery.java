@@ -30,26 +30,26 @@ public class PrivilegeQuery extends BaseInstallEntityQuery<Privilege> {
     }
 
     public PrivilegeQuery name(String name) {
-        return (PrivilegeQuery) equals("name", name);
+        return (PrivilegeQuery) addEquals("name", name);
     }
 
     public PrivilegeQuery privilegeGroupId(Long privilegeGroupId) {
-        return (PrivilegeQuery) equals("privilegeGroupId", privilegeGroupId);
+        return (PrivilegeQuery) addEquals("privilegeGroupId", privilegeGroupId);
     }
 
     public PrivilegeQuery moduleId(Long moduleId) {
-        return (PrivilegeQuery) equals("moduleId", moduleId);
+        return (PrivilegeQuery) addEquals("moduleId", moduleId);
     }
 
     public PrivilegeQuery moduleName(String moduleName) {
-        return (PrivilegeQuery) equals("moduleName", moduleName);
+        return (PrivilegeQuery) addEquals("moduleName", moduleName);
     }
 
     public PrivilegeQuery privilegeCategoryId(Long privilegeCategoryId) {
-        return (PrivilegeQuery) equals("privilegeCategoryId", privilegeCategoryId);
+        return (PrivilegeQuery) addEquals("privilegeCategoryId", privilegeCategoryId);
     }
 
     public PrivilegeQuery categoryName(String categoryName) {
-        return (PrivilegeQuery) equals("categoryName", categoryName);
+        return (PrivilegeQuery) addEquals("categoryName", categoryName);
     }
 }

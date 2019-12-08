@@ -31,7 +31,7 @@ public class NotificationAttachmentQuery extends BaseEntityQuery<NotificationAtt
     }
 
     public NotificationAttachmentQuery notificationId(Long notificationId) {
-        return (NotificationAttachmentQuery) equals("notificationId", notificationId);
+        return (NotificationAttachmentQuery) addEquals("notificationId", notificationId);
     }
 
 }

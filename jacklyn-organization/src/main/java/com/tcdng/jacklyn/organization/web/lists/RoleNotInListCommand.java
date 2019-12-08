@@ -46,7 +46,7 @@ public class RoleNotInListCommand extends AbstractAssignParamsOrganizationListCo
         if (params.isAssignedIdList()) {
             query.idNotIn(params.getAssignedIdList(Long.class));
         }
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         query.ignoreEmptyCriteria(true);
         return getOrganizationService().findRoles(query);
     }

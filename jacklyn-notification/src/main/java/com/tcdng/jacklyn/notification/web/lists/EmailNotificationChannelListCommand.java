@@ -41,7 +41,7 @@ public class EmailNotificationChannelListCommand extends AbstractZeroParamsNotif
     public List<? extends Listable> execute(Locale locale, ZeroParams param) throws UnifyException {
         return getNotificationModule()
                 .findNotificationChannels((NotificationChannelQuery) new NotificationChannelQuery()
-                        .notificationType(NotificationType.EMAIL).order("description"));
+                        .notificationType(NotificationType.EMAIL).addOrder("description"));
     }
 
 }

@@ -37,6 +37,6 @@ public class PrivilegeCategoryListCommand extends AbstractZeroParamsOrganization
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         return getOrganizationService().findPrivilegeCategories(
-                (PrivilegeCategoryQuery) new PrivilegeCategoryQuery().status(RecordStatus.ACTIVE).order("description"));
+                (PrivilegeCategoryQuery) new PrivilegeCategoryQuery().status(RecordStatus.ACTIVE).addOrder("description"));
     }
 }

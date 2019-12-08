@@ -30,27 +30,27 @@ public class ApplicationMenuQuery extends BaseInstallEntityQuery<ApplicationMenu
     }
 
     @Override
-    public ApplicationMenuQuery order(String field) {
-        return (ApplicationMenuQuery) super.order(field);
+    public ApplicationMenuQuery addOrder(String field) {
+        return (ApplicationMenuQuery) super.addOrder(field);
     }
 
     public ApplicationMenuQuery moduleId(Long moduleId) {
-        return (ApplicationMenuQuery) equals("moduleId", moduleId);
+        return (ApplicationMenuQuery) addEquals("moduleId", moduleId);
     }
 
     public ApplicationMenuQuery moduleName(String moduleName) {
-        return (ApplicationMenuQuery) equals("moduleName", moduleName);
+        return (ApplicationMenuQuery) addEquals("moduleName", moduleName);
     }
 
     public ApplicationMenuQuery name(String name) {
-        return (ApplicationMenuQuery) equals("name", name);
+        return (ApplicationMenuQuery) addEquals("name", name);
     }
 
     public ApplicationMenuQuery orderByDisplayOrder() {
-        return (ApplicationMenuQuery) order("displayOrder");
+        return (ApplicationMenuQuery) addOrder("displayOrder");
     }
 
     public ApplicationMenuQuery orderByModuleDesc() {
-        return (ApplicationMenuQuery) order("moduleDesc");
+        return (ApplicationMenuQuery) addOrder("moduleDesc");
     }
 }

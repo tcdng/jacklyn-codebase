@@ -32,22 +32,22 @@ public class ReportableDefinitionQuery extends BaseInstallEntityQuery<Reportable
     }
 
     public ReportableDefinitionQuery name(String name) {
-        return (ReportableDefinitionQuery) equals("name", name);
+        return (ReportableDefinitionQuery) addEquals("name", name);
     }
 
     public ReportableDefinitionQuery recordName(String recordName) {
-        return (ReportableDefinitionQuery) equals("recordName", recordName);
+        return (ReportableDefinitionQuery) addEquals("recordName", recordName);
     }
 
     public ReportableDefinitionQuery moduleId(Long moduleId) {
-        return (ReportableDefinitionQuery) equals("moduleId", moduleId);
+        return (ReportableDefinitionQuery) addEquals("moduleId", moduleId);
     }
 
     public ReportableDefinitionQuery moduleName(String moduleName) {
-        return (ReportableDefinitionQuery) equals("moduleName", moduleName);
+        return (ReportableDefinitionQuery) addEquals("moduleName", moduleName);
     }
 
     public ReportableDefinitionQuery moduleActivityIdIn(Collection<Long> moduleActivityId) {
-        return (ReportableDefinitionQuery) amongst("moduleActivityId", moduleActivityId);
+        return (ReportableDefinitionQuery) addAmongst("moduleActivityId", moduleActivityId);
     }
 }

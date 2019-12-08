@@ -477,7 +477,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
             List<WfStep> wfStepList =
                     workflowService.findSteps(
-                            ((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).select("wfTemplateId", "name")));
+                            ((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).addSelect("wfTemplateId", "name")));
             for (WfStep wfStepData : wfStepList) {
                 roleWfStep.setWfTemplateId(wfStepData.getWfTemplateId());
                 roleWfStep.setStepName(wfStepData.getName());

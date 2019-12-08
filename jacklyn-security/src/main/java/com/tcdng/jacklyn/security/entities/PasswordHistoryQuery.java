@@ -30,10 +30,10 @@ public class PasswordHistoryQuery extends BaseEntityQuery<PasswordHistory> {
     }
 
     public PasswordHistoryQuery userId(Long userId) {
-        return (PasswordHistoryQuery) equals("userId", userId);
+        return (PasswordHistoryQuery) addEquals("userId", userId);
     }
 
     public PasswordHistoryQuery password(String password) {
-        return (PasswordHistoryQuery) equals("password", password);
+        return (PasswordHistoryQuery) addEquals("password", password);
     }
 }

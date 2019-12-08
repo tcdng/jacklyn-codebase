@@ -30,18 +30,18 @@ public class FileArchiveConfigQuery extends BaseVersionedStatusEntityQuery<FileA
     }
 
     public FileArchiveConfigQuery name(String name) {
-        return (FileArchiveConfigQuery) equals("name", name);
+        return (FileArchiveConfigQuery) addEquals("name", name);
     }
 
     public FileArchiveConfigQuery nameLike(String name) {
-        return (FileArchiveConfigQuery) like("name", name);
+        return (FileArchiveConfigQuery) addLike("name", name);
     }
 
     public FileArchiveConfigQuery descriptionLike(String description) {
-        return (FileArchiveConfigQuery) like("description", description);
+        return (FileArchiveConfigQuery) addLike("description", description);
     }
 
     public FileArchiveConfigQuery fieldType(String fieldType) {
-        return (FileArchiveConfigQuery) equals("fieldType", fieldType);
+        return (FileArchiveConfigQuery) addEquals("fieldType", fieldType);
     }
 }

@@ -118,7 +118,7 @@ public class MenuController extends AbstractSystemCrudController<ApplicationMenu
             query.status(getSearchStatus());
         }
         query.installed(Boolean.TRUE);
-        query.order("caption").ignoreEmptyCriteria(true);
+        query.addOrder("caption").ignoreEmptyCriteria(true);
         return getSystemService().findMenus(query);
     }
 

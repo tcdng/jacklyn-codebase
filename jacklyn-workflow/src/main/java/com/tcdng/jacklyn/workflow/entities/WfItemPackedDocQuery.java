@@ -32,11 +32,11 @@ public class WfItemPackedDocQuery extends BaseTimestampedEntityQuery<WfItemPacke
     }
 
     public WfItemPackedDocQuery wfItemId(Long wfItemId) {
-        return (WfItemPackedDocQuery) equals("wfItemId", wfItemId);
+        return (WfItemPackedDocQuery) addEquals("wfItemId", wfItemId);
     }
 
     public WfItemPackedDocQuery wfItemIdIn(Collection<Long> wfItemId) {
-        return (WfItemPackedDocQuery) amongst("wfItemId", wfItemId);
+        return (WfItemPackedDocQuery) addAmongst("wfItemId", wfItemId);
     }
 
 }

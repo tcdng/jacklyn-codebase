@@ -86,7 +86,7 @@ public class WfCategoryController extends AbstractWorkflowCrudController<WfCateg
             query.status(searchStatus);
         }
 
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getWorkflowService().findWfCategories(query);
     }
 

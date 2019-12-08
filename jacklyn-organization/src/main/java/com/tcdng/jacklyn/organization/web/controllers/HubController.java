@@ -74,7 +74,7 @@ public class HubController extends AbstractOrganizationCrudController<Hub> {
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getOrganizationService().findHubs(query);
     }
 

@@ -277,7 +277,7 @@ public class SystemServiceTest extends AbstractJacklynTest {
 
         SystemParameterQuery query = new SystemParameterQuery();
         query.moduleName(SystemModuleNameConstants.SYSTEM_MODULE);
-        query.order("name");
+        query.addOrder("name");
         List<SystemParameter> sysParameterList = systemService.findSysParameters(query);
         assertNotNull(sysParameterList);
         assertEquals(SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION, sysParameterList.get(0).getName());

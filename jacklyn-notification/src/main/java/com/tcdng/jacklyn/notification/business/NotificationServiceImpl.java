@@ -194,7 +194,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
 
     @Override
     public List<NotificationTemplate> findNotificationTemplates(NotificationTemplateQuery query) throws UnifyException {
-        return db().listAll(query.select("id", "name", "description", "subject", "htmlFlag", "moduleId", "moduleName",
+        return db().listAll(query.addSelect("id", "name", "description", "subject", "htmlFlag", "moduleId", "moduleName",
                 "moduleDescription", "status", "statusDesc"));
     }
 
@@ -325,7 +325,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
     @Override
     public List<? extends SystemNotification> findUserSystemNotifications(String userId) throws UnifyException {
         List<NotificationInbox> notificationList =
-                db().listAll(new NotificationInboxQuery().userId(userId).order(OrderType.DESCENDING, "createDt"));
+                db().listAll(new NotificationInboxQuery().userId(userId).addOrder(OrderType.DESCENDING, "createDt"));
         db().updateAll(new NotificationInboxQuery().userId(userId).status(NotificationInboxReadStatus.NOT_READ),
                 new Update().add("status", NotificationInboxReadStatus.READ));
         return notificationList;
@@ -386,7 +386,7 @@ public class NotificationServiceImpl extends AbstractJacklynBusinessService
                     Date now = db().getNow();
                     List<Notification> notificationList =
                             db().listAll(new NotificationQuery().due(now).status(NotificationStatus.NOT_SENT)
-                                    .orderById().limit(maxBatchSize));
+                                    .orderById().setLimit(maxBatchSize));
                     for (Notification notification : notificationList) {
                         int attempts = notification.getAttempts() + 1;
                         notification.setAttempts(attempts);

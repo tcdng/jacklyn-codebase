@@ -54,7 +54,7 @@ public class UserBranchListCommand extends AbstractZeroParamsSecurityListCommand
         }
 
         return organizationService.findBranches(
-                (BranchQuery) new BranchQuery().ignoreEmptyCriteria(true).order("description"));
+                (BranchQuery) new BranchQuery().ignoreEmptyCriteria(true).addOrder("description"));
     }
 
 }

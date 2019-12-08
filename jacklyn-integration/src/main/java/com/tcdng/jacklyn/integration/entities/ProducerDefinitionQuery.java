@@ -30,10 +30,10 @@ public class ProducerDefinitionQuery extends BaseVersionedStatusEntityQuery<Prod
     }
 
     public ProducerDefinitionQuery name(String name) {
-        return (ProducerDefinitionQuery) equals("name", name);
+        return (ProducerDefinitionQuery) addEquals("name", name);
     }
 
     public ProducerDefinitionQuery descriptionLike(String description) {
-        return (ProducerDefinitionQuery) like("description", description);
+        return (ProducerDefinitionQuery) addLike("description", description);
     }
 }

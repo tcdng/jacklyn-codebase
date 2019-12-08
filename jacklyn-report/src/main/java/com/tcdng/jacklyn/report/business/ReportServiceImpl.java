@@ -123,7 +123,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         query.status(RecordStatus.ACTIVE);
-        query.order("reportGroupDesc", "id");
+        query.addOrder("reportGroupDesc", "id");
         return db().listAll(query);
     }
 
