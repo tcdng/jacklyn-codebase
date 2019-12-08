@@ -30,6 +30,6 @@ public class PrivilegeCategoryQuery extends BaseInstallEntityQuery<PrivilegeCate
     }
 
     public PrivilegeCategoryQuery name(String name) {
-        return (PrivilegeCategoryQuery) equals("name", name);
+        return (PrivilegeCategoryQuery) addEquals("name", name);
     }
 }

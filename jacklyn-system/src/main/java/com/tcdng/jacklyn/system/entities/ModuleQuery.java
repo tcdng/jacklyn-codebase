@@ -30,20 +30,20 @@ public class ModuleQuery extends BaseInstallEntityQuery<Module> {
     }
 
     @Override
-    public ModuleQuery order(String field) {
-        return (ModuleQuery) super.order(field);
+    public ModuleQuery addOrder(String field) {
+        return (ModuleQuery) super.addOrder(field);
     }
 
     @Override
-    public ModuleQuery select(String field) {
-        return (ModuleQuery) super.select(field);
+    public ModuleQuery addSelect(String field) {
+        return (ModuleQuery) super.addSelect(field);
     }
 
     public ModuleQuery name(String name) {
-        return (ModuleQuery) equals("name", name);
+        return (ModuleQuery) addEquals("name", name);
     }
 
     public ModuleQuery descriptionLike(String description) {
-        return (ModuleQuery) like("description", description);
+        return (ModuleQuery) addLike("description", description);
     }
 }

@@ -39,7 +39,7 @@ public class MenuListCommand extends AbstractZeroParamsSystemListCommand {
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ApplicationMenuQuery query = new ApplicationMenuQuery();
         query.installed(Boolean.TRUE);
-        query.status(RecordStatus.ACTIVE).order("caption");
+        query.status(RecordStatus.ACTIVE).addOrder("caption");
         List<ApplicationMenu> menuList = getSystemService().findMenus(query);
         for (ApplicationMenu menuData : menuList) {
             menuData.setCaption(resolveSessionMessage(menuData.getCaption()));

@@ -118,7 +118,7 @@ public class BranchController extends AbstractOrganizationCrudController<Branch>
         }
         
         query.excludeSysRecords();
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getOrganizationService().findBranches(query);
     }
 

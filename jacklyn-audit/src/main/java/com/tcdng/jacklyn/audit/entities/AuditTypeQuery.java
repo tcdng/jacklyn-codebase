@@ -30,7 +30,7 @@ public class AuditTypeQuery extends BaseInstallEntityQuery<AuditType> {
     }
 
     public AuditTypeQuery recordName(String recordName) {
-        return (AuditTypeQuery) equals("recordName", recordName);
+        return (AuditTypeQuery) addEquals("recordName", recordName);
     }
 
 }

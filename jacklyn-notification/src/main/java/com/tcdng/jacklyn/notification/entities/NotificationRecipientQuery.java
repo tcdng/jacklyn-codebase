@@ -30,10 +30,10 @@ public class NotificationRecipientQuery extends BaseEntityQuery<NotificationReci
     }
 
     public NotificationRecipientQuery notificationId(Long notificationId) {
-        return (NotificationRecipientQuery) equals("notificationId", notificationId);
+        return (NotificationRecipientQuery) addEquals("notificationId", notificationId);
     }
 
     public NotificationRecipientQuery recipientNameLike(String recipientName) {
-        return (NotificationRecipientQuery) like("recipientName", recipientName);
+        return (NotificationRecipientQuery) addLike("recipientName", recipientName);
     }
 }

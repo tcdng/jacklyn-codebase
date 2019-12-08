@@ -30,10 +30,10 @@ public class FileOutboxQuery extends AbstractFileBoxDataQuery<FileOutbox> {
     }
 
     public FileOutboxQuery status(FileOutboxStatus status) {
-        return (FileOutboxQuery) equals("status", status);
+        return (FileOutboxQuery) addEquals("status", status);
     }
 
     public FileOutboxQuery statusNot(FileOutboxStatus status) {
-        return (FileOutboxQuery) notEqual("status", status);
+        return (FileOutboxQuery) addNotEqual("status", status);
     }
 }

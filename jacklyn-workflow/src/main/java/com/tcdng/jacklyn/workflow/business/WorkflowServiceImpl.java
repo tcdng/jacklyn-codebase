@@ -703,7 +703,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public List<WfTemplate> findWfTemplates(Long wfCategoryId) throws UnifyException {
-        return db().listAll(new WfTemplateQuery().wfCategoryId(wfCategoryId).order("description"));
+        return db().listAll(new WfTemplateQuery().wfCategoryId(wfCategoryId).addOrder("description"));
     }
 
     @Override
@@ -727,10 +727,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             query.nameIn(templateNames);
         }
 
-        query.select("id", "name", "description", "wfCategoryName", "wfCategoryDesc");
+        query.addSelect("id", "name", "description", "wfCategoryName", "wfCategoryDesc");
         query.wfCategoryStatus(RecordStatus.ACTIVE);
         query.manualOption(Boolean.TRUE);
-        query.order("wfCategoryDesc", "description");
+        query.addOrder("wfCategoryDesc", "description");
         List<WfTemplate> templateList = db().listAll(query);
 
         if (!templateList.isEmpty()) {
@@ -966,7 +966,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         wfItemQuery.isUnheldOrHeldBy(userLoginID);
         if (wfStepDef.getItemsPerSession() > 0) {
-            wfItemQuery.limit(wfStepDef.getItemsPerSession());
+            wfItemQuery.setLimit(wfStepDef.getItemsPerSession());
         }
         db().updateAll(wfItemQuery, new Update().add("heldBy", userLoginID));
 
@@ -1115,7 +1115,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         Long wfItemAttachmentRefId = db().value(Long.class, "wfItemAttachmentRefId", new WfItemQuery().id(wfItemId));
         WfItemAttachment wfItemAttachment =
                 db().find(new WfItemAttachmentQuery().wfItemAttachmentRefId(wfItemAttachmentRefId)
-                        .name(attachment.getName()).select("wfItemAttachmentRefId", "name"));
+                        .name(attachment.getName()).addSelect("wfItemAttachmentRefId", "name"));
         if (wfItemAttachment == null) {
             wfItemAttachment = new WfItemAttachment();
             wfItemAttachment.setWfItemAttachmentRefId(wfItemAttachmentRefId);
@@ -1142,7 +1142,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             WfItemAttachmentQuery query = new WfItemAttachmentQuery();
             query.wfItemAttachmentRefId(wfItemAttachmentRefId);
             if (attributesOnly) {
-                query.select("name", "fileName");
+                query.addSelect("name", "fileName");
             }
 
             Map<String, WfItemAttachment> map = db().listAllMap(String.class, "name", query);

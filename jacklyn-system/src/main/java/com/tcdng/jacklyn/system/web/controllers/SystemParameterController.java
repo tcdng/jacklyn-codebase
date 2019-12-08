@@ -108,7 +108,7 @@ public class SystemParameterController extends AbstractSystemCrudController<Syst
         if (QueryUtils.isValidStringCriteria(searchDescription)) {
             query.descriptionLike(searchDescription);
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findSysParameters(query);
     }
 

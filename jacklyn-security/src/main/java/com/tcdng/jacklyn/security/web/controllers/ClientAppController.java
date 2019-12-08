@@ -100,7 +100,7 @@ public class ClientAppController extends AbstractSecurityCrudController<ClientAp
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getSecurityService().findClientApps(query);
     }
 

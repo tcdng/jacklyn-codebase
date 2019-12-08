@@ -30,14 +30,14 @@ public class ReportGroupQuery extends BaseVersionedStatusEntityQuery<ReportGroup
 	}
 
 	public ReportGroupQuery moduleId(Long moduleId) {
-		return (ReportGroupQuery) equals("moduleId", moduleId);
+		return (ReportGroupQuery) addEquals("moduleId", moduleId);
 	}
 
 	public ReportGroupQuery name(String name) {
-		return (ReportGroupQuery) equals("name", name);
+		return (ReportGroupQuery) addEquals("name", name);
 	}
 
 	public ReportGroupQuery descriptionLike(String description) {
-		return (ReportGroupQuery) like("description", description);
+		return (ReportGroupQuery) addLike("description", description);
 	}
 }

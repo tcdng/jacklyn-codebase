@@ -80,7 +80,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
                 ArchivingModuleNameConstants.ARCHIVINGSERVICE);
         ArchivingFieldQuery query = new ArchivingFieldQuery();
         query.recordName(TestChequeImage.class.getName());
-        query.order("fieldName");
+        query.addOrder("fieldName");
         List<ArchivingField> archivableFieldList = archivingService.findArchivingFields(query);
         assertNotNull(archivableFieldList);
         assertEquals(4, archivableFieldList.size());

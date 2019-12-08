@@ -36,6 +36,6 @@ public class DataSourceListCommand extends AbstractZeroParamsSystemListCommand {
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         return getSystemService().findDataSources(
-                (DataSourceQuery) new DataSourceQuery().order("description").ignoreEmptyCriteria(true));
+                (DataSourceQuery) new DataSourceQuery().addOrder("description").ignoreEmptyCriteria(true));
     }
 }

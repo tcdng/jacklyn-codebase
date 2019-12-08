@@ -36,7 +36,7 @@ public class BatchFileDefinitionListCommand extends AbstractZeroParamsFileListCo
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return this.getFileModule().findBatchFileDefinitions(query);
     }
 }

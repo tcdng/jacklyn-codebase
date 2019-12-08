@@ -30,10 +30,10 @@ public class BiometricQuery extends BaseVersionedTimestampedEntityQuery<Biometri
     }
 
     public BiometricQuery categoryName(String categoryName) {
-        return (BiometricQuery) equals("categoryName", categoryName);
+        return (BiometricQuery) addEquals("categoryName", categoryName);
     }
 
     public BiometricQuery typeName(String typeName) {
-        return (BiometricQuery) equals("typeName", typeName);
+        return (BiometricQuery) addEquals("typeName", typeName);
     }
 }

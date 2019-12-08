@@ -30,10 +30,10 @@ public class CountryQuery extends BaseVersionedStatusEntityQuery<Country> {
     }
 
     public CountryQuery iso3Code(String iso3Code) {
-        return (CountryQuery) equals("iso3Code", iso3Code);
+        return (CountryQuery) addEquals("iso3Code", iso3Code);
     }
 
     public CountryQuery descriptionLike(String description) {
-        return (CountryQuery) like("description", description);
+        return (CountryQuery) addLike("description", description);
     }
 }

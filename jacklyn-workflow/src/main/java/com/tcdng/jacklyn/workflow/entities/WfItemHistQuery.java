@@ -30,6 +30,6 @@ public class WfItemHistQuery extends BaseTimestampedEntityQuery<WfItemHist> {
     }
 
     public WfItemHistQuery descriptionLike(String description) {
-        return (WfItemHistQuery) like("description", description);
+        return (WfItemHistQuery) addLike("description", description);
     }
 }

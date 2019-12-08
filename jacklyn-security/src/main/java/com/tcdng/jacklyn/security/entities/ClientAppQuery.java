@@ -31,18 +31,18 @@ public class ClientAppQuery extends BaseVersionedStatusEntityQuery<ClientApp> {
     }
 
     public ClientAppQuery name(String name) {
-        return (ClientAppQuery) equals("name", name);
+        return (ClientAppQuery) addEquals("name", name);
     }
 
     public ClientAppQuery nameLike(String name) {
-        return (ClientAppQuery) like("name", name);
+        return (ClientAppQuery) addLike("name", name);
     }
 
     public ClientAppQuery descriptionLike(String description) {
-        return (ClientAppQuery) like("description", description);
+        return (ClientAppQuery) addLike("description", description);
     }
 
     public ClientAppQuery type(ClientAppType type) {
-        return (ClientAppQuery) equals("type", type);
+        return (ClientAppQuery) addEquals("type", type);
     }
 }

@@ -295,7 +295,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         if (FileTransferDirection.UPLOAD.equals(fileTransferConfig.getDirection())) {
             List<FileOutbox> fileOutboxList =
                     db().listAll(new FileOutboxQuery().status(FileOutboxStatus.NOT_SENT)
-                            .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).order("filename"));
+                            .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).addOrder("filename"));
 
             List<FileOutbox> upFileOutboxList = new ArrayList<FileOutbox>();
             for (FileOutbox fileOutbox : fileOutboxList) {
@@ -319,7 +319,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
         } else {
             List<FileInbox> fileInboxList =
                     db().listAll(new FileInboxQuery().status(FileInboxStatus.NOT_RECEIVED)
-                            .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).order("filename"));
+                            .fileTransferConfigId(fileTransferConfig.getId()).createdOn(workingDt).addOrder("filename"));
 
             List<FileInbox> downFileInboxList = new ArrayList<FileInbox>();
             for (FileInbox fileInbox : fileInboxList) {

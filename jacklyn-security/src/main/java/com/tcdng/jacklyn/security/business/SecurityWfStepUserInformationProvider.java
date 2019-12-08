@@ -145,7 +145,7 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
             if (DataUtils.isNotBlank(roleList)) {
                 // Default to all participants in roles
                 UserRoleQuery userRoleQuery =
-                        (UserRoleQuery) new UserRoleQuery().roleNameIn(roleList).select("userName", "userEmail");
+                        (UserRoleQuery) new UserRoleQuery().roleNameIn(roleList).addSelect("userName", "userEmail");
 
                 // Restrict by participant type if necessary
                 if (participant.isPersonnel()) {

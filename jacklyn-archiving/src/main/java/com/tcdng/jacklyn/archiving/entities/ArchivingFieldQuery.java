@@ -31,38 +31,38 @@ public class ArchivingFieldQuery extends BaseInstallEntityQuery<ArchivingField> 
     }
 
     public ArchivingFieldQuery archivableDefId(Long archivableDefId) {
-        return (ArchivingFieldQuery) equals("archivableDefId", archivableDefId);
+        return (ArchivingFieldQuery) addEquals("archivableDefId", archivableDefId);
     }
 
     public ArchivingFieldQuery fieldName(String fieldName) {
-        return (ArchivingFieldQuery) equals("fieldName", fieldName);
+        return (ArchivingFieldQuery) addEquals("fieldName", fieldName);
     }
 
     public ArchivingFieldQuery fieldType(ArchivingFieldType fieldType) {
-        return (ArchivingFieldQuery) equals("fieldType", fieldType);
+        return (ArchivingFieldQuery) addEquals("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery fieldTypeIn(ArchivingFieldType[] fieldType) {
-        return (ArchivingFieldQuery) equals("fieldType", fieldType);
+        return (ArchivingFieldQuery) addEquals("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery fieldTypeNot(ArchivingFieldType fieldType) {
-        return (ArchivingFieldQuery) notEqual("fieldType", fieldType);
+        return (ArchivingFieldQuery) addNotEqual("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery fieldTypeNotIn(ArchivingFieldType[] fieldType) {
-        return (ArchivingFieldQuery) notEqual("fieldType", fieldType);
+        return (ArchivingFieldQuery) addNotEqual("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery recordName(String recordName) {
-        return (ArchivingFieldQuery) equals("recordName", recordName);
+        return (ArchivingFieldQuery) addEquals("recordName", recordName);
     }
 
     public ArchivingFieldQuery orderByFieldType() {
-        return (ArchivingFieldQuery) order("fieldType");
+        return (ArchivingFieldQuery) addOrder("fieldType");
     }
 
     public ArchivingFieldQuery orderByDescription() {
-        return (ArchivingFieldQuery) order("description");
+        return (ArchivingFieldQuery) addOrder("description");
     }
 }

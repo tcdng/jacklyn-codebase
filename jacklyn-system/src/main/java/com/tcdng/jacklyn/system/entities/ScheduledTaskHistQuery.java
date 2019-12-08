@@ -34,19 +34,19 @@ public class ScheduledTaskHistQuery extends BaseEntityQuery<ScheduledTaskHist> {
     }
 
     public ScheduledTaskHistQuery taskStatus(TaskStatus taskStatus) {
-        return (ScheduledTaskHistQuery) equals("taskStatus", taskStatus);
+        return (ScheduledTaskHistQuery) addEquals("taskStatus", taskStatus);
     }
 
     public ScheduledTaskHistQuery taskName(String taskName) {
-        return (ScheduledTaskHistQuery) equals("taskName", taskName);
+        return (ScheduledTaskHistQuery) addEquals("taskName", taskName);
     }
 
     public ScheduledTaskHistQuery scheduledTaskId(Long scheduledTaskId) {
-        return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
+        return (ScheduledTaskHistQuery) addEquals("scheduledTaskId", scheduledTaskId);
     }
 
     public ScheduledTaskHistQuery startedOn(Date date) {
-        return (ScheduledTaskHistQuery) between("startedOn", CalendarUtils.getMidnightDate(date),
+        return (ScheduledTaskHistQuery) addBetween("startedOn", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 }

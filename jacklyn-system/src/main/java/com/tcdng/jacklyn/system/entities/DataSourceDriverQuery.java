@@ -30,10 +30,10 @@ public class DataSourceDriverQuery extends BaseVersionedStatusEntityQuery<DataSo
 	}
 
 	public DataSourceDriverQuery name(String name) {
-		return (DataSourceDriverQuery) equals("name", name);
+		return (DataSourceDriverQuery) addEquals("name", name);
 	}
 
 	public DataSourceDriverQuery descriptionLike(String description) {
-		return (DataSourceDriverQuery) like("description", description);
+		return (DataSourceDriverQuery) addLike("description", description);
 	}
 }

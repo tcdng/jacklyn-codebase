@@ -30,6 +30,6 @@ public abstract class BaseWorkflowEntityQuery<T extends BaseWorkflowEntity>
     }
 
     public BaseWorkflowEntityQuery<T> workflowFlag(Boolean workflowFlag) {
-        return (BaseWorkflowEntityQuery<T>) equals("workflowFlag", workflowFlag);
+        return (BaseWorkflowEntityQuery<T>) addEquals("workflowFlag", workflowFlag);
     }
 }

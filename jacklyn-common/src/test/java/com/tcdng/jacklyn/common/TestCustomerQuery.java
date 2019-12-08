@@ -30,6 +30,6 @@ public class TestCustomerQuery extends BaseEntityQuery<TestCustomer> {
     }
 
     public TestCustomerQuery firstName(String firstName) {
-        return (TestCustomerQuery) this.equals("firstName", firstName);
+        return (TestCustomerQuery) addEquals("firstName", firstName);
     }
 }

@@ -37,7 +37,7 @@ public class ScheduledTaskListCommand extends AbstractZeroParamsSystemListComman
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ScheduledTaskQuery query = new ScheduledTaskQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         return getSystemService().findScheduledTasks(query);
     }
 }

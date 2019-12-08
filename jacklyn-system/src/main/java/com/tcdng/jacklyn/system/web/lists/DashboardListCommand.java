@@ -39,7 +39,7 @@ public class DashboardListCommand extends AbstractZeroParamsSystemListCommand {
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         DashboardQuery query = new DashboardQuery();
         query.status(RecordStatus.ACTIVE);
-        query.order("description");
+        query.addOrder("description");
         return getSystemService().findDashboards(query);
     }
 

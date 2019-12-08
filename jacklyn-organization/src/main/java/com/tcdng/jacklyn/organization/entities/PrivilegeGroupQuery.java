@@ -30,22 +30,22 @@ public class PrivilegeGroupQuery extends BaseEntityQuery<PrivilegeGroup> {
     }
 
     public PrivilegeGroupQuery moduleName(String moduleName) {
-        return (PrivilegeGroupQuery) equals("moduleName", moduleName);
+        return (PrivilegeGroupQuery) addEquals("moduleName", moduleName);
     }
 
     public PrivilegeGroupQuery categoryName(String categoryName) {
-        return (PrivilegeGroupQuery) equals("categoryName", categoryName);
+        return (PrivilegeGroupQuery) addEquals("categoryName", categoryName);
     }
 
     public PrivilegeGroupQuery moduleId(Long moduleId) {
-        return (PrivilegeGroupQuery) equals("moduleId", moduleId);
+        return (PrivilegeGroupQuery) addEquals("moduleId", moduleId);
     }
 
     public PrivilegeGroupQuery privilegeCategoryId(Long privilegeCategoryId) {
-        return (PrivilegeGroupQuery) equals("privilegeCategoryId", privilegeCategoryId);
+        return (PrivilegeGroupQuery) addEquals("privilegeCategoryId", privilegeCategoryId);
     }
 
     public PrivilegeGroupQuery orderByFullDesc() {
-        return (PrivilegeGroupQuery) order("moduleDesc", "description");
+        return (PrivilegeGroupQuery) addOrder("moduleDesc", "description");
     }
 }

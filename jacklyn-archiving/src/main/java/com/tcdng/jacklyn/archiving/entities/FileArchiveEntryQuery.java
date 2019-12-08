@@ -30,14 +30,14 @@ public class FileArchiveEntryQuery extends BaseEntityQuery<FileArchiveEntry> {
     }
 
     public FileArchiveEntryQuery archivedItemId(Long archivedItemId) {
-        return (FileArchiveEntryQuery) equals("archivedItemId", archivedItemId);
+        return (FileArchiveEntryQuery) addEquals("archivedItemId", archivedItemId);
     }
 
     public FileArchiveEntryQuery recordName(String recordName) {
-        return (FileArchiveEntryQuery) equals("recordName", recordName);
+        return (FileArchiveEntryQuery) addEquals("recordName", recordName);
     }
 
     public FileArchiveEntryQuery fieldName(String fieldName) {
-        return (FileArchiveEntryQuery) equals("fieldName", fieldName);
+        return (FileArchiveEntryQuery) addEquals("fieldName", fieldName);
     }
 }

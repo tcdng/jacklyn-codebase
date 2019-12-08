@@ -97,7 +97,7 @@ public class DataSourceDriverController extends AbstractSystemCrudController<Dat
             query.status(searchStatus);
         }
 
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
 		return getSystemService().findDataSourceDrivers(query);
 	}
 

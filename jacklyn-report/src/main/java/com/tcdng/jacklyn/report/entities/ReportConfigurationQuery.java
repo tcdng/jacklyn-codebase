@@ -32,18 +32,18 @@ public class ReportConfigurationQuery extends BaseVersionedStatusEntityQuery<Rep
 	}
 
 	public ReportConfigurationQuery reportGroupId(Long reportGroupId) {
-		return (ReportConfigurationQuery) equals("reportGroupId", reportGroupId);
+		return (ReportConfigurationQuery) addEquals("reportGroupId", reportGroupId);
 	}
 
 	public ReportConfigurationQuery name(String name) {
-		return (ReportConfigurationQuery) equals("name", name);
+		return (ReportConfigurationQuery) addEquals("name", name);
 	}
 
 	public ReportConfigurationQuery nameIn(Collection<String> name) {
-		return (ReportConfigurationQuery) amongst("name", name);
+		return (ReportConfigurationQuery) addAmongst("name", name);
 	}
 
 	public ReportConfigurationQuery descriptionLike(String description) {
-		return (ReportConfigurationQuery) like("description", description);
+		return (ReportConfigurationQuery) addLike("description", description);
 	}
 }

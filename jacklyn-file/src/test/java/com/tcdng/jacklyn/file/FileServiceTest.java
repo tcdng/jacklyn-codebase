@@ -331,7 +331,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         FileInboxQuery query = new FileInboxQuery();
         query.fileTransferConfigName("downloadFileTransfer");
-        query.order("filename");
+        query.addOrder("filename");
         List<FileInbox> fileInboxList = fileService.findFileInboxItems(query);
         assertNotNull(fileInboxList);
         assertEquals(3, fileInboxList.size());
@@ -388,7 +388,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         query = new FileInboxQuery();
         query.fileTransferConfigName("downloadFileTransfer");
-        query.order("filename");
+        query.addOrder("filename");
         List<FileInbox> fileInboxList = fileService.findFileInboxItems(query);
 
         FileInbox fileInbox = fileInboxList.get(0);
@@ -419,7 +419,7 @@ public class FileServiceTest extends AbstractJacklynTest {
 
         FileOutboxQuery query = new FileOutboxQuery();
         query.fileTransferConfigName("uploadFileTransfer");
-        query.order("filename");
+        query.addOrder("filename");
         List<FileOutbox> fileOutboxList = fileService.findFileOutboxItems(query);
         assertNotNull(fileOutboxList);
         assertEquals(2, fileOutboxList.size());
@@ -528,7 +528,7 @@ public class FileServiceTest extends AbstractJacklynTest {
         GenericService genericService = (GenericService) this
                 .getComponent(ApplicationComponents.APPLICATION_GENERICSERVICE);
         List<TestBank> bankList = genericService
-                .listAll(new Query<TestBank>(TestBank.class).order("id").ignoreEmptyCriteria(true));
+                .listAll(Query.of(TestBank.class).addOrder("id").ignoreEmptyCriteria(true));
         assertNotNull(bankList);
         assertEquals(3, bankList.size());
 

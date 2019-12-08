@@ -123,7 +123,7 @@ public class DataSourceController extends AbstractSystemCrudController<DataSourc
 			query.status(searchStatus);
 		}
 
-		query.order("description").ignoreEmptyCriteria(true);
+		query.addOrder("description").ignoreEmptyCriteria(true);
 		return getSystemService().findDataSources(query);
 	}
 

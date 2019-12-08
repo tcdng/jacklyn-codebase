@@ -30,6 +30,6 @@ public class ProducerQueueQuery extends BaseTimestampedEntityQuery<ProducerQueue
     }
 
     public ProducerQueueQuery producerDefinitionName(String producerDefinitionName) {
-        return (ProducerQueueQuery) equals("producerDefinitionName", producerDefinitionName);
+        return (ProducerQueueQuery) addEquals("producerDefinitionName", producerDefinitionName);
     }
 }

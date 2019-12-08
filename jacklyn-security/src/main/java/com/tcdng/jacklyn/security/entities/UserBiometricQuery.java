@@ -31,14 +31,14 @@ public class UserBiometricQuery extends BaseEntityQuery<UserBiometric> {
     }
 
     public UserBiometricQuery userId(Long userId) {
-        return (UserBiometricQuery) equals("userId", userId);
+        return (UserBiometricQuery) addEquals("userId", userId);
     }
 
     public UserBiometricQuery userLoginId(String userLoginId) {
-        return (UserBiometricQuery) equals("userLoginId", userLoginId);
+        return (UserBiometricQuery) addEquals("userLoginId", userLoginId);
     }
 
     public UserBiometricQuery typeName(BiometricType typeName) {
-        return (UserBiometricQuery) equals("typeName", typeName);
+        return (UserBiometricQuery) addEquals("typeName", typeName);
     }
 }

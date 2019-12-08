@@ -31,30 +31,30 @@ public class SystemParameterQuery extends BaseEntityQuery<SystemParameter> {
     }
 
     public SystemParameterQuery moduleId(Long moduleId) {
-        return (SystemParameterQuery) equals("moduleId", moduleId);
+        return (SystemParameterQuery) addEquals("moduleId", moduleId);
     }
 
     public SystemParameterQuery moduleName(String moduleName) {
-        return (SystemParameterQuery) equals("moduleName", moduleName);
+        return (SystemParameterQuery) addEquals("moduleName", moduleName);
     }
 
     public SystemParameterQuery name(String name) {
-        return (SystemParameterQuery) equals("name", name);
+        return (SystemParameterQuery) addEquals("name", name);
     }
 
     public SystemParameterQuery nameLike(String name) {
-        return (SystemParameterQuery) like("name", name);
+        return (SystemParameterQuery) addLike("name", name);
     }
 
     public SystemParameterQuery descriptionLike(String description) {
-        return (SystemParameterQuery) like("description", description);
+        return (SystemParameterQuery) addLike("description", description);
     }
 
     public SystemParameterQuery type(SystemParamType type) {
-        return (SystemParameterQuery) equals("type", type);
+        return (SystemParameterQuery) addEquals("type", type);
     }
 
     public SystemParameterQuery control(Boolean control) {
-        return (SystemParameterQuery) equals("control", control);
+        return (SystemParameterQuery) addEquals("control", control);
     }
 }

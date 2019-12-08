@@ -33,30 +33,30 @@ public class WfMessageQuery extends BaseEntityQuery<WfMessage> {
     }
 
     public WfMessageQuery wfCategoryId(Long wfCategoryId) {
-        return (WfMessageQuery) equals("wfCategoryId", wfCategoryId);
+        return (WfMessageQuery) addEquals("wfCategoryId", wfCategoryId);
     }
 
     public WfMessageQuery wfCategoryName(String wfCategoryName) {
-        return (WfMessageQuery) equals("wfCategoryName", wfCategoryName);
+        return (WfMessageQuery) addEquals("wfCategoryName", wfCategoryName);
     }
 
     public WfMessageQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-        return (WfMessageQuery) equals("wfCategoryStatus", wfCategoryStatus);
+        return (WfMessageQuery) addEquals("wfCategoryStatus", wfCategoryStatus);
     }
 
     public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
-        return (WfMessageQuery) equals("wfCategoryVersion", wfCategoryVersion);
+        return (WfMessageQuery) addEquals("wfCategoryVersion", wfCategoryVersion);
     }
 
     public WfMessageQuery name(String name) {
-        return (WfMessageQuery) equals("name", name);
+        return (WfMessageQuery) addEquals("name", name);
     }
 
     public WfMessageQuery namesIn(Collection<String> names) {
-        return (WfMessageQuery) amongst("name", names);
+        return (WfMessageQuery) addAmongst("name", names);
     }
 
     public WfMessageQuery descriptionLike(String description) {
-        return (WfMessageQuery) like("description", description);
+        return (WfMessageQuery) addLike("description", description);
     }
 }

@@ -39,7 +39,7 @@ public class RoleListCommand extends AbstractZeroParamsOrganizationListCommand {
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         return getOrganizationService()
-                .findRoles((RoleQuery) new RoleQuery().status(RecordStatus.ACTIVE).order("description"));
+                .findRoles((RoleQuery) new RoleQuery().status(RecordStatus.ACTIVE).addOrder("description"));
     }
 
 }

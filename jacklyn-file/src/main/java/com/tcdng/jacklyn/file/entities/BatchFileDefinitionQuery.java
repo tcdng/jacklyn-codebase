@@ -30,14 +30,14 @@ public class BatchFileDefinitionQuery extends BaseVersionedStatusEntityQuery<Bat
     }
 
     public BatchFileDefinitionQuery name(String name) {
-        return (BatchFileDefinitionQuery) equals("name", name);
+        return (BatchFileDefinitionQuery) addEquals("name", name);
     }
 
     public BatchFileDefinitionQuery nameLike(String name) {
-        return (BatchFileDefinitionQuery) like("name", name);
+        return (BatchFileDefinitionQuery) addLike("name", name);
     }
 
     public BatchFileDefinitionQuery descriptionLike(String description) {
-        return (BatchFileDefinitionQuery) like("description", description);
+        return (BatchFileDefinitionQuery) addLike("description", description);
     }
 }

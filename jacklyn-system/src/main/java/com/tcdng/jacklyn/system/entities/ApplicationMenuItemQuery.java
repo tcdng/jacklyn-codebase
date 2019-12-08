@@ -32,34 +32,34 @@ public class ApplicationMenuItemQuery extends BaseInstallEntityQuery<Application
     }
 
     public ApplicationMenuItemQuery moduleId(Long moduleId) {
-        return (ApplicationMenuItemQuery) equals("moduleId", moduleId);
+        return (ApplicationMenuItemQuery) addEquals("moduleId", moduleId);
     }
 
     public ApplicationMenuItemQuery moduleName(String moduleName) {
-        return (ApplicationMenuItemQuery) equals("moduleName", moduleName);
+        return (ApplicationMenuItemQuery) addEquals("moduleName", moduleName);
     }
 
     public ApplicationMenuItemQuery menuId(Long menuId) {
-        return (ApplicationMenuItemQuery) equals("menuId", menuId);
+        return (ApplicationMenuItemQuery) addEquals("menuId", menuId);
     }
 
     public ApplicationMenuItemQuery parentMenuItemId(Long parentMenuItemId) {
-        return (ApplicationMenuItemQuery) equals("parentMenuItemId", parentMenuItemId);
+        return (ApplicationMenuItemQuery) addEquals("parentMenuItemId", parentMenuItemId);
     }
 
     public ApplicationMenuItemQuery name(String name) {
-        return (ApplicationMenuItemQuery) equals("name", name);
+        return (ApplicationMenuItemQuery) addEquals("name", name);
     }
 
     public ApplicationMenuItemQuery nameNotIn(List<String> names) {
-        return (ApplicationMenuItemQuery) notAmongst("name", names);
+        return (ApplicationMenuItemQuery) addNotAmongst("name", names);
     }
 
     public ApplicationMenuItemQuery hidden(Boolean hidden) {
-        return (ApplicationMenuItemQuery) equals("hidden", hidden);
+        return (ApplicationMenuItemQuery) addEquals("hidden", hidden);
     }
 
     public ApplicationMenuItemQuery orderByDisplayOrder() {
-        return (ApplicationMenuItemQuery) order("displayOrder");
+        return (ApplicationMenuItemQuery) addOrder("displayOrder");
     }
 }

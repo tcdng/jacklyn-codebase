@@ -33,22 +33,22 @@ public abstract class AbstractFileBoxDataQuery<T extends AbstractFileTransferBox
     }
 
     public AbstractFileBoxDataQuery<T> fileTransferConfigId(Long fileTransferConfigId) {
-        return (AbstractFileBoxDataQuery<T>) equals("fileTransferConfigId", fileTransferConfigId);
+        return (AbstractFileBoxDataQuery<T>) addEquals("fileTransferConfigId", fileTransferConfigId);
     }
 
     public AbstractFileBoxDataQuery<T> fileTransferConfigName(String fileTransferConfigName) {
-        return (AbstractFileBoxDataQuery<T>) equals("fileTransferConfigName", fileTransferConfigName);
+        return (AbstractFileBoxDataQuery<T>) addEquals("fileTransferConfigName", fileTransferConfigName);
     }
 
     public AbstractFileBoxDataQuery<T> filenameLikeBeginWith(String filename) {
-        return (AbstractFileBoxDataQuery<T>) beginsWith("filename", filename);
+        return (AbstractFileBoxDataQuery<T>) addBeginsWith("filename", filename);
     }
 
     public AbstractFileBoxDataQuery<T> filenameLikeEndWith(String filename) {
-        return (AbstractFileBoxDataQuery<T>) endsWith("filename", filename);
+        return (AbstractFileBoxDataQuery<T>) addEndsWith("filename", filename);
     }
 
     public AbstractFileBoxDataQuery<T> setFilenameIn(Collection<String> filenames) {
-        return (AbstractFileBoxDataQuery<T>) amongst("filename", filenames);
+        return (AbstractFileBoxDataQuery<T>) addAmongst("filename", filenames);
     }
 }

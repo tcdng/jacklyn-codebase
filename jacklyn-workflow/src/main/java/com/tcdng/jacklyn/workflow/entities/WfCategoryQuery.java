@@ -30,18 +30,18 @@ public class WfCategoryQuery extends BaseStatusEntityQuery<WfCategory> {
     }
 
     public WfCategoryQuery version(String version) {
-        return (WfCategoryQuery) equals("version", version);
+        return (WfCategoryQuery) addEquals("version", version);
     }
 
     public WfCategoryQuery name(String name) {
-        return (WfCategoryQuery) equals("name", name);
+        return (WfCategoryQuery) addEquals("name", name);
     }
 
     public WfCategoryQuery nameLike(String name) {
-        return (WfCategoryQuery) like("name", name);
+        return (WfCategoryQuery) addLike("name", name);
     }
 
     public WfCategoryQuery descriptionLike(String description) {
-        return (WfCategoryQuery) like("description", description);
+        return (WfCategoryQuery) addLike("description", description);
     }
 }

@@ -309,7 +309,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
         UserQuery query = new UserQuery();
         query.notReserved();
-        query.order("loginId");
+        query.addOrder("loginId");
         List<User> userList = securityService.findUsers(query);
         assertEquals(2, userList.size());
 

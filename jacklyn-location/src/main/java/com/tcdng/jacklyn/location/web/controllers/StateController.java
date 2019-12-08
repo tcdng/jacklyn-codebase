@@ -88,7 +88,7 @@ public class StateController extends AbstractLocationCrudController<State> {
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getLocationService().findStates(query);
     }
 

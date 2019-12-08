@@ -7,7 +7,7 @@
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software
+ * UnaddLessThan required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
@@ -33,14 +33,14 @@ public class ScheduledTaskQuery extends BaseVersionedTimestampedStatusEntityQuer
     }
 
     public ScheduledTaskQuery descriptionLike(String description) {
-        return (ScheduledTaskQuery) like("description", description);
+        return (ScheduledTaskQuery) addLike("description", description);
     }
 
     public ScheduledTaskQuery taskName(String taskName) {
-        return (ScheduledTaskQuery) equals("taskName", taskName);
+        return (ScheduledTaskQuery) addEquals("taskName", taskName);
     }
 
     public ScheduledTaskQuery readyToRunOn(Date date) {
-        return (ScheduledTaskQuery) lessEqual("nextExecutionOn", date).equals("status", RecordStatus.ACTIVE);
+        return (ScheduledTaskQuery) addLessThanEqual("nextExecutionOn", date).addEquals("status", RecordStatus.ACTIVE);
     }
 }

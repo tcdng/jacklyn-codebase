@@ -47,18 +47,18 @@ public class UserQuery extends BaseVersionedTimestampedStatusEntityQuery<User> {
     }
 
     public UserQuery fullNameLike(String fullName) {
-        return (UserQuery) like("fullName", fullName);
+        return (UserQuery) addLike("fullName", fullName);
     }
 
     public UserQuery loginId(String loginId) {
-        return (UserQuery) equals("loginId", loginId);
+        return (UserQuery) addEquals("loginId", loginId);
     }
 
     public UserQuery loginIdLike(String loginId) {
-        return (UserQuery) like("loginId", loginId);
+        return (UserQuery) addLike("loginId", loginId);
     }
 
     public UserQuery password(String password) {
-        return (UserQuery) equals("password", password);
+        return (UserQuery) addEquals("password", password);
     }
 }

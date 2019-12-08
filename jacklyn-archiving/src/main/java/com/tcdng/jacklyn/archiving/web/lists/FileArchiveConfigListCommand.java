@@ -42,7 +42,7 @@ public class FileArchiveConfigListCommand extends AbstractArchivingListCommand<Z
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         FileArchiveConfigQuery query = new FileArchiveConfigQuery();
         query.status(RecordStatus.ACTIVE);
-        query.order("description");
+        query.addOrder("description");
         return getArchivingService().findFileArchiveConfigs(query);
     }
 }

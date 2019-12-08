@@ -37,7 +37,7 @@ public class SupportedLocaleListCommand extends AbstractZeroParamsSystemListComm
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         SupportedLocaleQuery query = new SupportedLocaleQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         return getSystemService().findSupportedLocales(query);
     }
 }

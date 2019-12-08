@@ -37,7 +37,7 @@ public class ThemeListCommand extends AbstractZeroParamsSystemListCommand {
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         ThemeQuery query = new ThemeQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         return getSystemService().findThemes(query);
     }
 }

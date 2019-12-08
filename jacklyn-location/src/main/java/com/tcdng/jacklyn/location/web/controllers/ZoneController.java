@@ -74,7 +74,7 @@ public class ZoneController extends AbstractLocationCrudController<Zone> {
         if (getSearchStatus() != null) {
             query.status(getSearchStatus());
         }
-        query.order("description").ignoreEmptyCriteria(true);
+        query.addOrder("description").ignoreEmptyCriteria(true);
         return getLocationService().findZones(query);
     }
 

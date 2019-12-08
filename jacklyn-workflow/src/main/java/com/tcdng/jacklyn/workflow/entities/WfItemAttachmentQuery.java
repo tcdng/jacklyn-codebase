@@ -30,11 +30,11 @@ public class WfItemAttachmentQuery extends BaseTimestampedEntityQuery<WfItemAtta
     }
 
     public WfItemAttachmentQuery wfItemAttachmentRefId(Long wfItemAttachmentRefId) {
-        return (WfItemAttachmentQuery) equals("wfItemAttachmentRefId", wfItemAttachmentRefId);
+        return (WfItemAttachmentQuery) addEquals("wfItemAttachmentRefId", wfItemAttachmentRefId);
     }
 
     public WfItemAttachmentQuery name(String name) {
-        return (WfItemAttachmentQuery) equals("name", name);
+        return (WfItemAttachmentQuery) addEquals("name", name);
     }
 
 }

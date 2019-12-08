@@ -29,6 +29,6 @@ public abstract class BaseVersionedStatusEntityQuery<T extends BaseVersionedStat
     }
 
     public BaseVersionedStatusEntityQuery<T> versionNo(long versionNo) {
-        return (BaseVersionedStatusEntityQuery<T>) equals("versionNo", versionNo);
+        return (BaseVersionedStatusEntityQuery<T>) addEquals("versionNo", versionNo);
     }
 }

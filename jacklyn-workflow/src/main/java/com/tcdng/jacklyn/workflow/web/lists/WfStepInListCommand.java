@@ -46,7 +46,7 @@ public class WfStepInListCommand extends AbstractAssignParamsWorkflowListCommand
             }
 
             query.idIn(params.getAssignedIdList(Long.class));
-            query.isParticipation().select("id", "description", "wfTemplateName");
+            query.isParticipation().addSelect("id", "description", "wfTemplateName");
             return getWorkflowModule().findSteps(query);
         }
 

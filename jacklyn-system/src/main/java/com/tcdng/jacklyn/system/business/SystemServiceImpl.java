@@ -338,7 +338,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public List<Authentication> findAuthentications(AuthenticationQuery query) throws UnifyException {
         Query<Authentication> cloneQuery = query.copy();
-        cloneQuery.select("id", "name", "description", "cryptograph", "status", "statusDesc");
+        cloneQuery.addSelect("id", "name", "description", "cryptograph", "status", "statusDesc");
         return db().listAll(cloneQuery);
     }
 
@@ -434,7 +434,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         List<SystemControlState> systemControlStateList = new ArrayList<SystemControlState>();
         Restriction criteria = query.getRestrictions();
         Query<SystemParameter> innerQuery =
-                query.copyNoCriteria().add(criteria).equals("control", Boolean.TRUE).order("name");
+                query.copyNoCriteria().addRestriction(criteria).addEquals("control", Boolean.TRUE).addOrder("name");
         int index = 0;
         List<SystemParameter> list = db().findAll(innerQuery);
         for (SystemParameter sysParameter : list) {
@@ -672,7 +672,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return Integer
                 .valueOf((String) db()
                         .aggregate(AggregateType.COUNT,
-                                new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
+                                new UserSessionTrackingQuery().loggedIn().addSelect("userLoginId").setDistinct(true))
                         .getValue());
     }
 

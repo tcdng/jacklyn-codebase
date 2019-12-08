@@ -43,7 +43,7 @@ public class SupportedLocaleLanguageListCommand extends AbstractZeroParamsSystem
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         List<ListData> result = Collections.emptyList();
         SupportedLocaleQuery query = new SupportedLocaleQuery();
-        query.status(RecordStatus.ACTIVE).order("description");
+        query.status(RecordStatus.ACTIVE).addOrder("description");
         List<SupportedLocale> supportedLocaleList = getSystemService().findSupportedLocales(query);
         if (DataUtils.isNotBlank(supportedLocaleList)) {
             result = new ArrayList<ListData>();

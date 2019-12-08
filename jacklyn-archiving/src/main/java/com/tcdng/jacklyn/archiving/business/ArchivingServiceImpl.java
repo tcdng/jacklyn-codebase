@@ -134,7 +134,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
     }
 
     @Synchronized(FILE_ARCHIVE_PROCESS_LOCK)
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     @Taskable(
             name = FileArchiveTaskConstants.BUILDLOBFILEARCHIVETASK, description = "Build LOB File Archive Taskable",
             parameters = { @Parameter(
@@ -161,11 +161,11 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
         String lobFieldName = fileArchiveConfig.getFieldName();
         Class<? extends Entity> recordClazz =
                 (Class<? extends Entity>) ReflectUtils.getClassForName(fileArchiveConfig.getRecordName());
-        Query<? extends Entity> query = new Query(recordClazz);
-        query.between(fileArchiveConfig.getDateFieldName(), CalendarUtils.getMidnightDate(workingDt),
+        Query<? extends Entity> query = Query.of(recordClazz);
+        query.addBetween(fileArchiveConfig.getDateFieldName(), CalendarUtils.getMidnightDate(workingDt),
                 CalendarUtils.getLastSecondDate(workingDt));
-        query.isNotNull(lobFieldName);
-        query.order("id").limit(fileArchiveConfig.getMaxItemsPerFile());
+        query.addIsNotNull(lobFieldName);
+        query.addOrder("id").setLimit(fileArchiveConfig.getMaxItemsPerFile());
         List<Long> targetIdList = db().valueList(Long.class, "id", query);
 
         if (!targetIdList.isEmpty()) {
@@ -198,7 +198,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
 
                     // Read LOB to archive
                     query.clear();
-                    query.equals("id", archivedItemId);
+                    query.addEquals("id", archivedItemId);
                     byte[] lobToArchive = null;
                     if (ArchivingFieldType.BLOB.equals(fileArchiveConfig.getFieldType())) {
                         lobToArchive = db().value(byte[].class, lobFieldName, query);
@@ -228,7 +228,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
             // Delete archived
             boolean deleteRowOnArchive = fileArchiveConfig.getDeleteRowOnArchive();
             query.clear();
-            query.amongst("id", targetIdList);
+            query.addAmongst("id", targetIdList);
             if (deleteRowOnArchive) {
                 // Delete entire rows
                 db().deleteAll(query);
