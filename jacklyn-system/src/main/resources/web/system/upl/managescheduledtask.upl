@@ -38,11 +38,11 @@
 !ui-time:frmStartTime caption:$m{system.scheduledtask.starttime} binding:data.startTime required:true
 !ui-time:frmEndTime caption:$m{system.scheduledtask.endtime} binding:data.endTime
 !ui-group:frmFreqCombo caption:$m{system.scheduledtask.frequency} components:$c{frmFreq frmFreqUnit} space:true
-!ui-dropdowncheckboxlist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
+!ui-dropdownchecklist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
     selectAllOption:$m{system.scheduledtask.selectalldays}
-!ui-dropdowncheckboxlist:frmDays binding:data.days caption:$m{system.scheduledtask.daysinmonth} list:dayinmonthlist columns:7
+!ui-dropdownchecklist:frmDays binding:data.days caption:$m{system.scheduledtask.daysinmonth} list:dayinmonthlist columns:7
     selectAllOption:$m{system.scheduledtask.selectalldays}
-!ui-dropdowncheckboxlist:frmMonths binding:data.months caption:$m{system.scheduledtask.monthsinyear} list:monthinyearlist columns:3
+!ui-dropdownchecklist:frmMonths binding:data.months caption:$m{system.scheduledtask.monthsinyear} list:monthinyearlist columns:3
     selectAllOption:$m{system.scheduledtask.selectallmonths}
 !ui-select:frmStatus caption:$m{system.scheduledtask.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
 
