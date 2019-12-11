@@ -38,11 +38,12 @@ public class CommonReportResponse extends AbstractOpenWindowPageControllerRespon
 
     @Override
     protected WindowResourceInfo prepareWindowResource() throws UnifyException {
-        ReportOptions reportOptions = (ReportOptions) getRequestAttribute(
-                JacklynRequestAttributeConstants.REPORTOPTIONS);
+        ReportOptions reportOptions =
+                (ReportOptions) getRequestAttribute(JacklynRequestAttributeConstants.REPORTOPTIONS);
         String reportFormat = reportOptions.getReportFormat();
-        String resourceName = getTimestampedResourceName(reportOptions.getTitle())
-                + ReportFormat.fromName(reportOptions.getReportFormat()).fileExt();
+        String resourceName =
+                getTimestampedResourceName(reportOptions.getTitle())
+                        + ReportFormat.fromName(reportOptions.getReportFormat()).fileExt();
         boolean download = reportOptions.isDownload();
 
         MimeType mimeType = MimeType.APPLICATION_OCTETSTREAM;
@@ -50,7 +51,7 @@ public class CommonReportResponse extends AbstractOpenWindowPageControllerRespon
             mimeType = ReportFormat.fromName(reportFormat).mimeType();
         }
 
-        return new WindowResourceInfo(reportOptions, reportOptions.getReportResourcePath(), resourceName, mimeType.template(),
-                download);
+        return new WindowResourceInfo(reportOptions, reportOptions.getReportResourcePath(), resourceName,
+                mimeType.template(), download);
     }
 }

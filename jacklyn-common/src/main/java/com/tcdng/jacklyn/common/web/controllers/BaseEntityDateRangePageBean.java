@@ -18,21 +18,21 @@ package com.tcdng.jacklyn.common.web.controllers;
 
 import java.util.Date;
 
-import com.tcdng.unify.core.database.Entity;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 
 /**
- * Base date range entity page bean.
+ * Base entity date range page bean.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseDateRangeEntityPageBean<T extends Entity> extends BaseEntityPageBean<T> {
+public abstract class BaseEntityDateRangePageBean<T extends BaseEntity> extends BaseEntityPageBean<T> {
 
     private Date searchFromDate;
 
     private Date searchToDate;
 
-    public BaseDateRangeEntityPageBean(String recordHintName) {
+    public BaseEntityDateRangePageBean(String recordHintName) {
         super(recordHintName);
     }
 

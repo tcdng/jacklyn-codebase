@@ -16,28 +16,28 @@
 
 package com.tcdng.jacklyn.common.web.controllers;
 
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.database.Entity;
 
 /**
- * Convenient abstract base class for page controllers that manage CRUD actions
- * on records using a tabbed panel.
+ * Convenient abstract base class for page controllers that manage prefetched
+ * records using a tabbed panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@UplBinding("web/common/upl/managerecordtabviewer.upl")
-public abstract class BaseTabCrudController<T extends BaseEntityPageBean<V>, U, V extends Entity>
-        extends BaseCrudController<T, U, V> {
+@UplBinding("web/common/upl/manageprefetchtabviewer.upl")
+public abstract class BasePrefetchTabController<T extends BaseEntityPageBean<V>, U, V extends BaseEntity>
+        extends BasePrefetchController<T, U, V> {
 
-    public BaseTabCrudController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
+    public BasePrefetchTabController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
         super(pageBeanClass, entityClass, modifier);
     }
 
     @Override
-    protected void setCrudViewerEditable(boolean editable) throws UnifyException {
-        setPageWidgetEditable("crudViewPanel", editable);
+    protected void setItemViewerEditable(boolean editable) throws UnifyException {
+        setPageWidgetEditable("prefetchItemViewPanel", editable);
     }
 
 }

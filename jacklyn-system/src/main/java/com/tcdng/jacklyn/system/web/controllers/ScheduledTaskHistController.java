@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
+import com.tcdng.jacklyn.common.web.controllers.BaseEntityFormController;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
@@ -39,7 +39,7 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/scheduledtaskhist")
 @UplBinding("web/system/upl/managescheduledtaskhist.upl")
-public class ScheduledTaskHistController extends BaseFormCrudController<ScheduledTaskHist, Long> {
+public class ScheduledTaskHistController extends BaseEntityFormController<ScheduledTaskHist, Long> {
 
     @Configurable
     private SystemService systemService;

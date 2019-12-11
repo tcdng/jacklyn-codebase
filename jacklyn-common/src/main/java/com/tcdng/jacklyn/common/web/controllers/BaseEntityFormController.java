@@ -15,23 +15,23 @@
  */
 package com.tcdng.jacklyn.common.web.controllers;
 
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.web.ui.container.Form;
 
 /**
- * Convenient abstract base class for page controllers that manage CRUD actions
- * on records using a form.
+ * Convenient abstract base class for page controllers that manage entity CRUD
+ * actions on records using a form.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @UplBinding("web/common/upl/managerecordformviewer.upl")
-public abstract class BaseFormCrudController<T extends BaseEntityPageBean<V>, U, V extends Entity>
-        extends BaseCrudController<T, U, V> {
+public abstract class BaseEntityFormController<T extends BaseEntityPageBean<V>, U, V extends BaseEntity>
+        extends BaseEntityController<T, U, V> {
 
-    public BaseFormCrudController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
+    public BaseEntityFormController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
         super(pageBeanClass, entityClass, modifier);
     }
 

@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.common.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.unify.core.database.Entity;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 
 /**
  * Base entity page bean.
@@ -26,7 +26,7 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseEntityPageBean<T extends Entity> extends BasePageBean {
+public abstract class BaseEntityPageBean<T extends BaseEntity> extends BasePageBean {
 
     private String itemCountLabel;
 

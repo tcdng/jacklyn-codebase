@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.location.web.controllers;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
-import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
+import com.tcdng.jacklyn.common.web.controllers.BaseEntityFormController;
 import com.tcdng.jacklyn.location.business.LocationService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -28,7 +28,7 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractLocationCrudController<T extends Entity> extends BaseFormCrudController<T, Long> {
+public abstract class AbstractLocationCrudController<T extends Entity> extends BaseEntityFormController<T, Long> {
 
     @Configurable
     private LocationService locationService;

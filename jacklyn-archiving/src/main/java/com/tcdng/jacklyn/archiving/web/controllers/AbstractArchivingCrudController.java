@@ -16,7 +16,7 @@
 package com.tcdng.jacklyn.archiving.web.controllers;
 
 import com.tcdng.jacklyn.archiving.business.ArchivingService;
-import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
+import com.tcdng.jacklyn.common.web.controllers.BaseEntityFormController;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.database.Entity;
@@ -27,7 +27,7 @@ import com.tcdng.unify.core.database.Entity;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractArchivingCrudController<T extends Entity> extends BaseFormCrudController<T, Long> {
+public abstract class AbstractArchivingCrudController<T extends Entity> extends BaseEntityFormController<T, Long> {
 
     @Configurable
     private ArchivingService archivingService;

@@ -47,7 +47,8 @@ import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
         @ResultMapping(
                 name = "viewreport",
                 response = { "!refreshpanelresponse panels:$l{reportRunnerPopup}", "!commonreportresponse" }) })
-public class JacklynCommonUtilitiesController extends AbstractCommonUtilitiesPageController<JacklynCommonUtilitiesPageBean> {
+public class JacklynCommonUtilitiesController
+        extends AbstractCommonUtilitiesPageController<JacklynCommonUtilitiesPageBean> {
 
     public JacklynCommonUtilitiesController() {
         super(JacklynCommonUtilitiesPageBean.class);

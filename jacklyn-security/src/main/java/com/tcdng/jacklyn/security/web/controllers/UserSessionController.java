@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.security.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
+import com.tcdng.jacklyn.common.web.controllers.BaseEntityFormController;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -37,7 +37,7 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/security/usersession")
 @UplBinding("web/security/upl/manageusersession.upl")
-public class UserSessionController extends BaseFormCrudController<UserSessionTracking, String> {
+public class UserSessionController extends BaseEntityFormController<UserSessionTracking, String> {
 
     @Configurable
     private UserSessionManager userSessionManager;

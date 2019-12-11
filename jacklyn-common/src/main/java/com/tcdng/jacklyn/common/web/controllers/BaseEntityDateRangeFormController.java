@@ -17,9 +17,8 @@ package com.tcdng.jacklyn.common.web.controllers;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.common.web.controllers.BaseFormCrudController;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.ui.data.MessageIcon;
@@ -31,19 +30,19 @@ import com.tcdng.unify.web.ui.data.MessageMode;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseFormDateRangeCrudController<T extends BaseDateRangeEntityPageBean<U>, U extends Entity>
-        extends BaseFormCrudController<T, Long, U> {
+public abstract class BaseEntityDateRangeFormController<T extends BaseEntityDateRangePageBean<U>, U extends BaseEntity>
+        extends BaseEntityFormController<T, Long, U> {
 
-    public BaseFormDateRangeCrudController(Class<T> pageBeanClass, Class<U> entityClass, int modifier) {
+    public BaseEntityDateRangeFormController(Class<T> pageBeanClass, Class<U> entityClass, int modifier) {
         super(pageBeanClass, entityClass, modifier);
     }
 
     @Action
     public String findRecords() throws UnifyException {
         if (ManageRecordModifier.isLimitDateRange(getModifier())) {
-            BaseDateRangeEntityPageBean<U> baseDateRangeCrudBean = getPageBean();
-            Date searchFromDate = baseDateRangeCrudBean.getSearchFromDate();
-            Date searchToDate = baseDateRangeCrudBean.getSearchToDate();
+            BaseEntityDateRangePageBean<U> baseEntityDateRangePageBean = getPageBean();
+            Date searchFromDate = baseEntityDateRangePageBean.getSearchFromDate();
+            Date searchToDate = baseEntityDateRangePageBean.getSearchToDate();
             int searchLimitDays = 0;
             if (searchFromDate == null || searchToDate == null || CalendarUtils.getDaysDifference(searchFromDate,
                     searchToDate) > (searchLimitDays = getNormalizedSearchDateRangeLimitDays())) {
@@ -60,11 +59,11 @@ public abstract class BaseFormDateRangeCrudController<T extends BaseDateRangeEnt
         super.onOpenPage();
 
         if (ManageRecordModifier.isInitDateRange(getModifier())) {
-            BaseDateRangeEntityPageBean<U> baseDateRangeCrudBean = getPageBean();
-            if (baseDateRangeCrudBean.getSearchFromDate() == null) {
+            BaseEntityDateRangePageBean<U> baseEntityDateRangePageBean = getPageBean();
+            if (baseEntityDateRangePageBean.getSearchFromDate() == null) {
                 Date now = CalendarUtils.getMidnightDate(new Date());
-                baseDateRangeCrudBean.setSearchFromDate(now);
-                baseDateRangeCrudBean.setSearchToDate(now);
+                baseEntityDateRangePageBean.setSearchFromDate(now);
+                baseEntityDateRangePageBean.setSearchToDate(now);
             }
         }
     }
