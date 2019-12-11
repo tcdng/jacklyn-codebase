@@ -31,7 +31,6 @@ import com.tcdng.unify.core.logging.FieldAudit;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.AbstractPageController;
 import com.tcdng.unify.web.DocViewController;
-import com.tcdng.unify.web.ui.Panel;
 import com.tcdng.unify.web.ui.data.MessageResult;
 import com.tcdng.unify.web.ui.data.SearchBox;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
@@ -42,25 +41,21 @@ import com.tcdng.unify.web.ui.panel.TableCrudPanel;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BasePageController extends AbstractPageController implements DocViewController {
+public abstract class BasePageController<T extends BasePageBean> extends AbstractPageController<T>
+        implements DocViewController<T> {
 
     @Configurable
     private UserSessionViewAccessProvider userSessionViewAccessProvider;
 
-    public BasePageController(boolean secured, boolean readOnly) {
-        super(secured, readOnly);
-    }
-
-    @Override
-    public Panel getDocViewPanel() throws UnifyException {
-        return getPanelByShortName(getDocViewPanelName());
+    public BasePageController(Class<T> pageBeanClass, boolean secured, boolean readOnly, boolean resetOnWrite) {
+        super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
     /**
      * Gets current user session branch IDs
      * 
      * @return list of branch IDs. Empty list is returned for system or application
-     *         admin users.
+     *         administrators.
      * @throws UnifyException
      *             if an error occurs
      */
@@ -212,7 +207,7 @@ public abstract class BasePageController extends AbstractPageController implemen
      *             if audit type with supplied action is unknown. If an error
      *             occurs.
      */
-    protected <T extends Entity> void logUserEvent(EventType eventType, T oldRecord, T newRecord)
+    protected <U extends Entity> void logUserEvent(EventType eventType, U oldRecord, U newRecord)
             throws UnifyException {
         getRequestContextUtil().logUserEvent(eventType, oldRecord, newRecord);
     }
@@ -245,8 +240,8 @@ public abstract class BasePageController extends AbstractPageController implemen
      *             if an error occurs
      */
     @SuppressWarnings("unchecked")
-    protected <T extends Entity> TableCrudPanel<T> getTableCrudPanel(String shortName) throws UnifyException {
-        return (TableCrudPanel<T>) getPageWidgetByShortName(TableCrudPanel.class, shortName);
+    protected <U extends Entity> TableCrudPanel<U> getTableCrudPanel(String shortName) throws UnifyException {
+        return (TableCrudPanel<U>) getPageWidgetByShortName(TableCrudPanel.class, shortName);
     }
 
     /**
@@ -290,6 +285,4 @@ public abstract class BasePageController extends AbstractPageController implemen
     protected boolean isHubAdminView() throws UnifyException {
         return getViewDirective(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
     }
-
-    protected abstract String getDocViewPanelName();
 }

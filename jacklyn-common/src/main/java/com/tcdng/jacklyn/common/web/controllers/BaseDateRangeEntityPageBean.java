@@ -16,28 +16,40 @@
 
 package com.tcdng.jacklyn.common.web.controllers;
 
-import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.annotation.UplBinding;
+import java.util.Date;
+
 import com.tcdng.unify.core.database.Entity;
 
 /**
- * Convenient abstract base class for page controllers that manage CRUD actions
- * on records using a tabbed panel.
+ * Base date range entity page bean.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@UplBinding("web/common/upl/managerecordtabviewer.upl")
-public abstract class BaseTabCrudController<T extends BaseEntityPageBean<V>, U, V extends Entity>
-        extends BaseCrudController<T, U, V> {
+public abstract class BaseDateRangeEntityPageBean<T extends Entity> extends BaseEntityPageBean<T> {
 
-    public BaseTabCrudController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
-        super(pageBeanClass, entityClass, modifier);
+    private Date searchFromDate;
+
+    private Date searchToDate;
+
+    public BaseDateRangeEntityPageBean(String recordHintName) {
+        super(recordHintName);
     }
 
-    @Override
-    protected void setCrudViewerEditable(boolean editable) throws UnifyException {
-        setPageWidgetEditable("crudViewPanel", editable);
+    public Date getSearchFromDate() {
+        return searchFromDate;
+    }
+
+    public void setSearchFromDate(Date searchFromDate) {
+        this.searchFromDate = searchFromDate;
+    }
+
+    public Date getSearchToDate() {
+        return searchToDate;
+    }
+
+    public void setSearchToDate(Date searchToDate) {
+        this.searchToDate = searchToDate;
     }
 
 }

@@ -28,15 +28,16 @@ import com.tcdng.unify.web.ui.container.Form;
  * @since 1.0
  */
 @UplBinding("web/common/upl/managerecordformviewer.upl")
-public abstract class BaseFormCrudController<T extends Entity, U> extends BaseCrudController<T, U> {
+public abstract class BaseFormCrudController<T extends BaseEntityPageBean<V>, U, V extends Entity>
+        extends BaseCrudController<T, U, V> {
 
-    public BaseFormCrudController(Class<T> entityClass, String hint, int modifier) {
-        super(entityClass, hint, modifier);
+    public BaseFormCrudController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
+        super(pageBeanClass, entityClass, modifier);
     }
 
     @Override
     protected void setCrudViewerEditable(boolean editable) throws UnifyException {
-        setEditable("crudViewPanel.mainBodyPanel", editable);
+        setPageWidgetEditable("crudViewPanel.mainBodyPanel", editable);
     }
 
     protected Form getForm() throws UnifyException {

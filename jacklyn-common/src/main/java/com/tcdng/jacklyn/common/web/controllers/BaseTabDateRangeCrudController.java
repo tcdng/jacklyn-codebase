@@ -30,19 +30,19 @@ import com.tcdng.unify.web.ui.data.MessageMode;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseTabDateRangeCrudController<T extends Entity> extends BaseTabCrudController<T, Long> {
+public abstract class BaseTabDateRangeCrudController<T extends BaseDateRangeEntityPageBean<U>, U extends Entity>
+        extends BaseTabCrudController<T, Long, U> {
 
-    private Date searchFromDate;
-
-    private Date searchToDate;
-
-    public BaseTabDateRangeCrudController(Class<T> entityClass, String hint, int modifier) {
-        super(entityClass, hint, modifier);
+    public BaseTabDateRangeCrudController(Class<T> pageBeanClass, Class<U> entityClass, int modifier) {
+        super(pageBeanClass, entityClass, modifier);
     }
 
     @Action
     public String findRecords() throws UnifyException {
         if (ManageRecordModifier.isLimitDateRange(getModifier())) {
+            BaseDateRangeEntityPageBean<U> baseDateRangeCrudBean = getPageBean();
+            Date searchFromDate = baseDateRangeCrudBean.getSearchFromDate();
+            Date searchToDate = baseDateRangeCrudBean.getSearchToDate();
             int searchLimitDays = 0;
             if (searchFromDate == null || searchToDate == null || CalendarUtils.getDaysDifference(searchFromDate,
                     searchToDate) > (searchLimitDays = getNormalizedSearchDateRangeLimitDays())) {
@@ -54,31 +54,16 @@ public abstract class BaseTabDateRangeCrudController<T extends Entity> extends B
         return super.findRecords();
     }
 
-    public Date getSearchFromDate() {
-        return searchFromDate;
-    }
-
-    public void setSearchFromDate(Date searchFromDate) {
-        this.searchFromDate = searchFromDate;
-    }
-
-    public Date getSearchToDate() {
-        return searchToDate;
-    }
-
-    public void setSearchToDate(Date searchToDate) {
-        this.searchToDate = searchToDate;
-    }
-
     @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
-        
+
         if (ManageRecordModifier.isInitDateRange(getModifier())) {
-            if (searchFromDate == null) {
+            BaseDateRangeEntityPageBean<U> baseDateRangeCrudBean = getPageBean();
+            if (baseDateRangeCrudBean.getSearchFromDate() == null) {
                 Date now = CalendarUtils.getMidnightDate(new Date());
-                searchFromDate = now;
-                searchToDate = now;
+                baseDateRangeCrudBean.setSearchFromDate(now);
+                baseDateRangeCrudBean.setSearchToDate(now);
             }
         }
     }

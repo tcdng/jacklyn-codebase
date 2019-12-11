@@ -28,15 +28,16 @@ import com.tcdng.unify.core.database.Entity;
  * @since 1.0
  */
 @UplBinding("web/common/upl/manageprefetchtabviewer.upl")
-public abstract class BaseTabPrefetchController<T extends Entity, U> extends BasePrefetchController<T, U> {
+public abstract class BaseTabPrefetchController<T extends BaseEntityPageBean<V>, U, V extends Entity>
+        extends BasePrefetchController<T, U, V> {
 
-    public BaseTabPrefetchController(Class<T> entityClass, String hint, int modifier) {
-        super(entityClass, hint, modifier);
+    public BaseTabPrefetchController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
+        super(pageBeanClass, entityClass, modifier);
     }
 
     @Override
     protected void setItemViewerEditable(boolean editable) throws UnifyException {
-        setEditable("prefetchItemViewPanel", editable);
+        setPageWidgetEditable("prefetchItemViewPanel", editable);
     }
 
 }

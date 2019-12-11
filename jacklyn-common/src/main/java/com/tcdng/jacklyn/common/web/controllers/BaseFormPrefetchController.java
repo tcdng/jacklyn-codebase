@@ -21,21 +21,23 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.web.ui.container.Form;
 
 /**
- * Convenient abstract base class for page controllers that manage prefetched records using a form.
+ * Convenient abstract base class for page controllers that manage prefetched
+ * records using a form.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
 @UplBinding("web/common/upl/manageprefetchformviewer.upl")
-public abstract class BaseFormPrefetchController<T extends Entity, U> extends BasePrefetchController<T, U> {
+public abstract class BaseFormPrefetchController<T extends BaseEntityPageBean<V>, U, V extends Entity>
+        extends BasePrefetchController<T, U, V> {
 
-    public BaseFormPrefetchController(Class<T> entityClass, String hint, int modifier) {
-        super(entityClass, hint, modifier);
+    public BaseFormPrefetchController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
+        super(pageBeanClass, entityClass, modifier);
     }
 
     @Override
     protected void setItemViewerEditable(boolean editable) throws UnifyException {
-        setEditable("prefetchItemViewPanel.mainBodyPanel", editable);
+        setPageWidgetEditable("prefetchItemViewPanel.mainBodyPanel", editable);
     }
 
     protected Form getForm() throws UnifyException {
