@@ -20,11 +20,11 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
+import com.tcdng.jacklyn.file.web.beans.BatchFileDefinitionPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -45,18 +45,11 @@ import com.tcdng.unify.web.annotation.ResultMappings;
         crudPanelLists = { @CrudPanelList(panel = "frmBatchFileFieldDefPanel", property = "record.fieldDefList") })
 @ResultMappings({
         @ResultMapping(name = "selectbeantomap", response = { "!showpopupresponse popup:$s{selectBeanToMapPopup}" }) })
-public class BatchFileDefinitionController extends AbstractFileCrudController<BatchFileDefinition> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private String beanType;
+public class BatchFileDefinitionController
+        extends AbstractFileFormController<BatchFileDefinitionPageBean, BatchFileDefinition> {
 
     public BatchFileDefinitionController() {
-        super(BatchFileDefinition.class, "$m{file.batchfiledefinition.hint}",
+        super(BatchFileDefinitionPageBean.class, BatchFileDefinition.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
@@ -68,58 +61,29 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
 
     @Action
     public String performMapBean() throws UnifyException {
-        BatchFileDefinition batchFileDefinition = getRecord();
+        BatchFileDefinitionPageBean pageBean = getPageBean();
+        BatchFileDefinition batchFileDefinition = pageBean.getRecord();
         List<BatchFileFieldDefinition> fieldDefList =
-                getFileService().mergeBatchFileFieldMapping(beanType, batchFileDefinition.getFieldDefList());
+                getFileService().mergeBatchFileFieldMapping(pageBean.getBeanType(),
+                        batchFileDefinition.getFieldDefList());
         batchFileDefinition.setFieldDefList(fieldDefList);
         return refreshCrudViewer();
     }
 
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public String getBeanType() {
-        return beanType;
-    }
-
-    public void setBeanType(String beanType) {
-        this.beanType = beanType;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
     @Override
     protected List<BatchFileDefinition> find() throws UnifyException {
+        BatchFileDefinitionPageBean pageBean = getPageBean();
         BatchFileDefinitionQuery query = new BatchFileDefinitionQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
 
         query.ignoreEmptyCriteria(true);
@@ -156,6 +120,6 @@ public class BatchFileDefinitionController extends AbstractFileCrudController<Ba
     @Override
     protected void onPrepareCrudViewer(BatchFileDefinition record, int mode) throws UnifyException {
         boolean isMapBean = mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
-        setVisible("mapBeanBtn", isMapBean);
+        setPageWidgetVisible("mapBeanBtn", isMapBean);
     }
 }

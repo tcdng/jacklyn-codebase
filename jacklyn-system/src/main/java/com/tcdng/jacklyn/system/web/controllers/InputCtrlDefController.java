@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
+import com.tcdng.jacklyn.system.web.beans.InputCtrlDefPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,60 +34,31 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/inputctrldef")
 @UplBinding("web/system/upl/manageinputctrldef.upl")
-public class InputCtrlDefController extends AbstractSystemCrudController<InputCtrlDef> {
-
-    private Long searchModuleId;
-
-    private String searchName;
-
-    private String searchDescription;
+public class InputCtrlDefController extends AbstractSystemFormController<InputCtrlDefPageBean, InputCtrlDef> {
 
     public InputCtrlDefController() {
-        super(InputCtrlDef.class, "$m{system.inputctrldef.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(InputCtrlDefPageBean.class, InputCtrlDef.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
     }
 
     @Override
     protected List<InputCtrlDef> find() throws UnifyException {
+        InputCtrlDefPageBean pageBean = getPageBean();
         InputCtrlDefQuery query = new InputCtrlDefQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.name(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findInputCtrlDefs(query);

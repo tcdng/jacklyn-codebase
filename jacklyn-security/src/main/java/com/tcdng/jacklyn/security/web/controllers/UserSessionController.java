@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.web.controllers.BaseEntityFormController;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
+import com.tcdng.jacklyn.security.web.beans.UserSessionTrackingPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -37,34 +38,15 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/security/usersession")
 @UplBinding("web/security/upl/manageusersession.upl")
-public class UserSessionController extends BaseEntityFormController<UserSessionTracking, String> {
+public class UserSessionController
+        extends BaseEntityFormController<UserSessionTrackingPageBean, String, UserSessionTracking> {
 
     @Configurable
     private UserSessionManager userSessionManager;
 
-    private String searchLoginId;
-
-    private String searchNodeId;
-
     public UserSessionController() {
-        super(UserSessionTracking.class, "$m{security.usersession.hint}",
+        super(UserSessionTrackingPageBean.class, UserSessionTracking.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchLoginId() {
-        return searchLoginId;
-    }
-
-    public void setSearchLoginId(String searchLoginId) {
-        this.searchLoginId = searchLoginId;
-    }
-
-    public String getSearchNodeId() {
-        return searchNodeId;
-    }
-
-    public void setSearchNodeId(String searchNodeId) {
-        this.searchNodeId = searchNodeId;
     }
 
     @Action
@@ -79,13 +61,14 @@ public class UserSessionController extends BaseEntityFormController<UserSessionT
 
     @Override
     protected List<UserSessionTracking> find() throws UnifyException {
+        UserSessionTrackingPageBean pageBean = getPageBean();
         UserSessionTrackingQuery query = new UserSessionTrackingQuery();
-        if (QueryUtils.isValidStringCriteria(searchLoginId)) {
-            query.userLoginId(searchLoginId);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchLoginId())) {
+            query.userLoginId(pageBean.getSearchLoginId());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchNodeId)) {
-            query.node(searchNodeId);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchNodeId())) {
+            query.node(pageBean.getSearchNodeId());
         }
         query.ignoreEmptyCriteria(true);
         return userSessionManager.findUserSessions(query);

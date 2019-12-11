@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.workflow.web.controllers;
 
 import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
+import com.tcdng.jacklyn.workflow.web.beans.ManualWorkItemInitiationPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -39,35 +40,20 @@ import com.tcdng.unify.web.ui.data.LinkGridInfo;
         @ResultMapping(
                 name = "switchworkitem",
                 response = { "!switchpanelresponse panels:$l{manualWorkItemPanel.createItemMainPanel}" }) })
-public class ManualWorkItemInitiationController extends AbstractWorkflowController {
+public class ManualWorkItemInitiationController extends AbstractWorkflowPageController<ManualWorkItemInitiationPageBean> {
 
     private static final int LISTING_MODE = 0;
 
     private static final int CREATE_ITEM_MODE = 1;
 
-    private LinkGridInfo wfTemplateGridInfo;
-
-    private ManualWfItem manualInitItem;
-
-    private String templateName;
-
-    private int mode;
-
     public ManualWorkItemInitiationController() {
-        super(true, false);
-    }
-
-    public LinkGridInfo getWfTemplateGridInfo() {
-        return wfTemplateGridInfo;
-    }
-
-    public ManualWfItem getManualInitItem() {
-        return manualInitItem;
+        super(ManualWorkItemInitiationPageBean.class, true, false, false);
     }
 
     @Action
     public String openCreateItem() throws UnifyException {
-        templateName = getRequestTarget(String.class);
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
+        pageBean.setTemplateName(getRequestTarget(String.class));
         return prepareCreate();
     }
 
@@ -97,7 +83,8 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 
     @Action
     public String cancelCreateItem() throws UnifyException {
-        mode = LISTING_MODE;
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
+        pageBean.setMode(LISTING_MODE);
         buildUserRoleTemplateListing();
         return "switchlisting";
     }
@@ -110,34 +97,35 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
 
     @Override
     protected void onOpenPage() throws UnifyException {
-        if (mode == LISTING_MODE) {
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
+        if (pageBean.getMode() == LISTING_MODE) {
             buildUserRoleTemplateListing();
         }
     }
 
-    @Override
-    protected String getDocViewPanelName() {
-        return "manualWorkItemFrame";
-    }
-
     private String prepareCreate() throws UnifyException {
-        manualInitItem = getWorkflowService().createManualInitItem(templateName);
-        mode = CREATE_ITEM_MODE;
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
+        ManualWfItem manualInitItem = getWorkflowService().createManualInitItem(pageBean.getTemplateName());
+        pageBean.setManualInitItem(manualInitItem);
+        pageBean.setMode(CREATE_ITEM_MODE);
         setPageValidationEnabled(true);
         return "switchworkitem";
     }
 
     private void pendItem() throws UnifyException {
-        getWorkflowService().pendManualInitItem(manualInitItem);
-        hintUser("$m{hint.workflow.manualinit.pend.success}", manualInitItem.getTitle());
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
+        getWorkflowService().pendManualInitItem(pageBean.getManualInitItem());
+        hintUser("$m{hint.workflow.manualinit.pend.success}", pageBean.getManualInitItem().getTitle());
     }
 
     private void submitItem() throws UnifyException {
-        getWorkflowService().submitManualInitItem(manualInitItem);
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
+        getWorkflowService().submitManualInitItem(pageBean.getManualInitItem());
         hintUser("$m{hint.workflow.manualinit.submit.success}");
     }
 
     private void buildUserRoleTemplateListing() throws UnifyException {
+        ManualWorkItemInitiationPageBean pageBean = getPageBean();
         LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
         for (ManualInitInfo manualInitInfo : getWorkflowService().findUserRoleManualInitInfos()) {
             String categoryName = manualInitInfo.getCategoryName();
@@ -149,6 +137,7 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowControll
             lb.addLink(categoryName, manualInitInfo.getProcessGlobalName(), manualInitInfo.getProcessDesc());
         }
 
-        wfTemplateGridInfo = lb.build();
+        LinkGridInfo wfTemplateGridInfo = lb.build();
+        pageBean.setWfTemplateGridInfo(wfTemplateGridInfo);
     }
 }

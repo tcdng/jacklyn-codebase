@@ -26,6 +26,7 @@ import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.common.utils.PageControllerSessionUtils;
+import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.unify.core.UnifyContainer;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
@@ -81,7 +82,7 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
                 response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{mainResultPanel.crudPanel}",
                         "!refreshpanelresponse panels:$l{searchPanel}" }),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
-public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V extends BaseEntity>
+public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V extends Entity>
         extends BasePageController<T> {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
@@ -100,10 +101,10 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     @Action
     public String findRecords() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
+        BaseEntityPageBean<V> pageBean = getPageBean();
         List<V> recordList = find();
-        baseEntityPageBean.setRecordList(recordList);
-        baseEntityPageBean.setRecord(null);
+        pageBean.setRecordList(recordList);
+        pageBean.setRecord(null);
         getTable().reset();
         logUserEvent(EventType.SEARCH, entityClass);
 
@@ -119,8 +120,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     @Action
     public String prepareCreateRecord() throws UnifyException {
         V record = prepareCreate();
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        baseEntityPageBean.setRecord(record);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setRecord(record);
         loadSessionOnCreate();
         updateCrudViewer(ManageRecordModifier.ADD);
         return getSwitchCrudMapping();
@@ -142,12 +143,12 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     public String prepareViewRecord() throws UnifyException {
         prepareView();
 
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         logUserEvent(EventType.VIEW, record, false);
         if (ManageRecordModifier.isActivatable(modifier)) {
             V oldRecord = ReflectUtils.shallowBeanCopy(record);
-            baseEntityPageBean.setOldRecord(oldRecord);
+            pageBean.setOldRecord(oldRecord);
         }
         updateCrudViewer(ManageRecordModifier.VIEW);
         return getSwitchCrudMapping();
@@ -156,10 +157,10 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     @Action
     public String prepareUpdateRecord() throws UnifyException {
         prepareView();
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         V oldRecord = ReflectUtils.shallowBeanCopy(record);
-        baseEntityPageBean.setOldRecord(oldRecord);
+        pageBean.setOldRecord(oldRecord);
         updateCrudViewer(ManageRecordModifier.MODIFY);
         return getSwitchCrudMapping();
     }
@@ -170,11 +171,11 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         doUpdate();
 
         Table table = getTable();
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         record = find((U) record.getId());
-        baseEntityPageBean.setRecord(record);
-        baseEntityPageBean.getRecordList().set(table.getViewIndex(), record);
+        pageBean.setRecord(record);
+        pageBean.getRecordList().set(table.getViewIndex(), record);
 
         if (table.isViewIndexAtLast()) {
             return done();
@@ -198,14 +199,14 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     @Action
     public String deleteRecord() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         delete(record);
         logUserEvent(EventType.DELETE, record, false);
-        hintUser("$m{hint.record.delete.success}", baseEntityPageBean.getRecordHintName());
+        hintUser("$m{hint.record.delete.success}", pageBean.getRecordHintName());
 
         Table table = getTable();
-        List<V> recordList = baseEntityPageBean.getRecordList();
+        List<V> recordList = pageBean.getRecordList();
         recordList.remove(table.getViewIndex());
 
         if (recordList.isEmpty()) {
@@ -221,27 +222,27 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     @Action
     public String activateRecord() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         activate(record);
-        logUserEvent(EventType.UPDATE, baseEntityPageBean.getOldRecord(), record);
+        logUserEvent(EventType.UPDATE, pageBean.getOldRecord(), record);
         return prepareViewRecord();
     }
 
     @Action
     public String deactivateRecord() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         deactivate(record);
-        logUserEvent(EventType.UPDATE, baseEntityPageBean.getOldRecord(), record);
+        logUserEvent(EventType.UPDATE, pageBean.getOldRecord(), record);
         return prepareViewRecord();
     }
 
     @Action
     public String copyRecord() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V clipRecord = ReflectUtils.shallowBeanCopy(baseEntityPageBean.getRecord());
-        baseEntityPageBean.setClipRecord(clipRecord);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V clipRecord = ReflectUtils.shallowBeanCopy(pageBean.getRecord());
+        pageBean.setClipRecord(clipRecord);
         onCopy(clipRecord);
         if (ManageRecordModifier.isCopyToAdd(modifier)) {
             return prepareCreateRecord();
@@ -253,9 +254,9 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     @Action
     public String pasteRecord() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
-        ReflectUtils.shallowBeanCopy(record, baseEntityPageBean.getClipRecord());
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
+        ReflectUtils.shallowBeanCopy(record, pageBean.getClipRecord());
         if (record instanceof BaseEntity) {
             ((BaseEntity) record).setId(null);
         }
@@ -291,8 +292,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     @Action
     public String lastRecord() throws UnifyException {
         loseView();
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        getTable().setViewIndex(baseEntityPageBean.getRecordList().size() - 1);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        getTable().setViewIndex(pageBean.getRecordList().size() - 1);
         return performModeAction();
     }
 
@@ -324,18 +325,18 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     @Action
     public String prepareGenerateReport() throws UnifyException {
         List<V> contentList = null;
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        if (baseEntityPageBean.getMode() == ManageRecordModifier.SEARCH) {
-            List<V> recordList = baseEntityPageBean.getRecordList();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        if (pageBean.getMode() == ManageRecordModifier.SEARCH) {
+            List<V> recordList = pageBean.getRecordList();
             if (recordList == null || recordList.isEmpty()) {
-                return showMessageBox(baseEntityPageBean.getNoRecordMessage());
+                return showMessageBox(pageBean.getNoRecordMessage());
             }
 
             contentList = recordList;
         } else {
-            V record = baseEntityPageBean.getRecord();
+            V record = pageBean.getRecord();
             if (record == null) {
-                return showMessageBox(baseEntityPageBean.getNoRecordMessage());
+                return showMessageBox(pageBean.getNoRecordMessage());
             }
 
             contentList = new ArrayList<V>();
@@ -346,7 +347,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
                 getCommonReportProvider().getDynamicReportOptions(entityClass.getName(),
                         getTable().getColumnPropertyList());
         reportOptions.setReportResourcePath("/common/resource/report");
-        reportOptions.setReportFormat(baseEntityPageBean.getReportType());
+        reportOptions.setReportFormat(pageBean.getReportType());
         // TODO Set report layout based on mode
         reportOptions.setContent(contentList);
         return showReportOptionsBox(reportOptions);
@@ -358,10 +359,10 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     @Override
     protected void onInitPage() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        baseEntityPageBean.setMode(ManageRecordModifier.SEARCH);
-        baseEntityPageBean.setNoRecordMessage(resolveSessionMessage(baseEntityPageBean.getNoRecordMessage()));
-        baseEntityPageBean.setRecordHintName(resolveSessionMessage(baseEntityPageBean.getRecordHintName()));
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setMode(ManageRecordModifier.SEARCH);
+        pageBean.setNoRecordMessage(resolveSessionMessage(pageBean.getNoRecordMessage()));
+        pageBean.setRecordHintName(resolveSessionMessage(pageBean.getRecordHintName()));
 
         // Set validation page attributes
         getPage().setAttribute("validationClass", entityClass);
@@ -378,8 +379,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     @Override
     protected void onOpenPage() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        if (baseEntityPageBean.getMode() == ManageRecordModifier.SEARCH) {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        if (pageBean.getMode() == ManageRecordModifier.SEARCH) {
             if ((ManageRecordModifier.SEARCH_ON_OPEN & modifier) > 0) {
                 findRecords();
             }
@@ -392,8 +393,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     protected V getSelectedRecord() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        List<V> recordList = baseEntityPageBean.getRecordList();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        List<V> recordList = pageBean.getRecordList();
         return recordList.get(getTable().getViewIndex());
     }
 
@@ -402,8 +403,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         if (table.getSelectedRows() > 0) {
             Integer[] selectedIndexes = table.getSelectedRowIndexes();
             List<Long> selectedIds = new ArrayList<Long>();
-            BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-            List<V> recordList = baseEntityPageBean.getRecordList();
+            BaseEntityPageBean<V> pageBean = getPageBean();
+            List<V> recordList = pageBean.getRecordList();
             for (int i = 0; i < selectedIndexes.length; i++) {
                 selectedIds.add((Long) recordList.get(selectedIndexes[i]).getId());
             }
@@ -419,8 +420,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
             Integer[] selectedIndexes = table.getSelectedRowIndexes();
             selectedDescriptions = new String[selectedIndexes.length];
             if (Describable.class.isAssignableFrom(entityClass)) {
-                BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-                List<V> recordList = baseEntityPageBean.getRecordList();
+                BaseEntityPageBean<V> pageBean = getPageBean();
+                List<V> recordList = pageBean.getRecordList();
                 for (int i = 0; i < selectedIndexes.length; i++) {
                     selectedDescriptions[i] = ((Describable) recordList.get(selectedIndexes[i])).getDescription();
                 }
@@ -430,8 +431,8 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     protected void updateSearch() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        baseEntityPageBean.setMode(ManageRecordModifier.SEARCH);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setMode(ManageRecordModifier.SEARCH);
 
         // Search
         setPageWidgetVisible("addTblBtn", ManageRecordModifier.isAddable(modifier));
@@ -535,13 +536,13 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     protected int getMode() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        return baseEntityPageBean.getMode();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        return pageBean.getMode();
     }
 
     protected boolean isEditableMode() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        int mode = baseEntityPageBean.getMode();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        int mode = pageBean.getMode();
         return mode == ManageRecordModifier.ADD || mode == ManageRecordModifier.MODIFY;
     }
 
@@ -591,47 +592,47 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     private void doCreate() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         Object id = create(record);
         if (id != null) {
             logUserEvent(EventType.CREATE, record, true);
-            hintUser("$m{hint.record.create.success}", baseEntityPageBean.getRecordHintName());
+            hintUser("$m{hint.record.create.success}", pageBean.getRecordHintName());
         } else {
-            hintUser("$m{hint.record.createtoworkflow.success}", baseEntityPageBean.getRecordHintName());
+            hintUser("$m{hint.record.createtoworkflow.success}", pageBean.getRecordHintName());
         }
     }
 
     private void doUpdate() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        V record = baseEntityPageBean.getRecord();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         int result = update(record);
         if (result > 0) {
-            logUserEvent(EventType.UPDATE, baseEntityPageBean.getOldRecord(), record);
-            hintUser("$m{hint.record.update.success}", baseEntityPageBean.getRecordHintName());
+            logUserEvent(EventType.UPDATE, pageBean.getOldRecord(), record);
+            hintUser("$m{hint.record.update.success}", pageBean.getRecordHintName());
         } else {
-            hintUser("$m{hint.record.updatetoworkflow.success}", baseEntityPageBean.getRecordHintName());
+            hintUser("$m{hint.record.updatetoworkflow.success}", pageBean.getRecordHintName());
         }
     }
 
     @SuppressWarnings("unchecked")
     private void prepareView() throws UnifyException {
         int index = getTable().getViewIndex();
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        List<V> recordList = baseEntityPageBean.getRecordList();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        List<V> recordList = pageBean.getRecordList();
         V record = find((U) recordList.get(index).getId());
-        baseEntityPageBean.setRecord(record);
+        pageBean.setRecord(record);
         recordList.set(index, record);
         onPrepareView(record, false);
         loadSessionOnRefresh();
     }
 
     private void updateCrudViewer(int mode) throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
-        baseEntityPageBean.setMode(mode);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setMode(mode);
 
-        V record = baseEntityPageBean.getRecord();
-        List<V> recordList = baseEntityPageBean.getRecordList();
+        V record = pageBean.getRecord();
+        List<V> recordList = pageBean.getRecordList();
         // Navigation buttons
         int viewIndex = getTable().getViewIndex();
         boolean isCreateMode = mode == ManageRecordModifier.ADD;
@@ -644,7 +645,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         setPageWidgetVisible("itemOfLabel", !isCreateMode);
         if (isCreateMode) {
             // Enable/disable paste button
-            setPageWidgetDisabled("pasteFrmBtn", baseEntityPageBean.getClipRecord() == null);
+            setPageWidgetDisabled("pasteFrmBtn", pageBean.getClipRecord() == null);
             setPageWidgetVisible("pasteFrmBtn", ManageRecordModifier.isPastable(modifier));
         } else {
             setPageWidgetDisabled("firstFrmBtn", recordList == null || viewIndex <= 0);
@@ -715,7 +716,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         // Index description
         if (recordList != null) {
             String itemCountLabel = getSessionMessage("label.itemcount", viewIndex + 1, recordList.size());
-            baseEntityPageBean.setItemCountLabel(itemCountLabel);
+            pageBean.setItemCountLabel(itemCountLabel);
         }
 
         updateModeDescription();
@@ -723,10 +724,10 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     private void updateModeDescription() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
+        BaseEntityPageBean<V> pageBean = getPageBean();
         String modeDescription = null;
         String modeStyle = null;
-        switch (baseEntityPageBean.getMode()) {
+        switch (pageBean.getMode()) {
             case ManageRecordModifier.ADD:
                 modeDescription = "managerecord.mode.add";
                 modeStyle = EventType.CREATE.colorMode();
@@ -750,15 +751,15 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
                 break;
         }
 
-        modeDescription = getSessionMessage(modeDescription, baseEntityPageBean.getRecordHintName());
-        baseEntityPageBean.setModeDescription(modeDescription);
-        baseEntityPageBean.setModeStyle(modeStyle);
+        modeDescription = getSessionMessage(modeDescription, pageBean.getRecordHintName());
+        pageBean.setModeDescription(modeDescription);
+        pageBean.setModeStyle(modeStyle);
     }
 
     private String performModeAction() throws UnifyException {
-        BaseEntityPageBean<V> baseEntityPageBean = getPageBean();
+        BaseEntityPageBean<V> pageBean = getPageBean();
         String result = null;
-        switch (baseEntityPageBean.getMode()) {
+        switch (pageBean.getMode()) {
             case ManageRecordModifier.ADD:
                 return prepareCreateRecord();
             case ManageRecordModifier.DELETE:

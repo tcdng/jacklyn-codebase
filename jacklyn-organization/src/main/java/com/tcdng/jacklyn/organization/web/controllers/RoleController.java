@@ -17,11 +17,11 @@ package com.tcdng.jacklyn.organization.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.organization.data.RoleLargeData;
 import com.tcdng.jacklyn.organization.entities.Role;
 import com.tcdng.jacklyn.organization.entities.RoleQuery;
+import com.tcdng.jacklyn.organization.web.beans.RolePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -37,80 +37,37 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/organization/role")
 @UplBinding("web/organization/upl/managerole.upl")
-public class RoleController extends AbstractOrganizationCrudController<Role> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private Long searchDepartmentId;
-    
-    private RecordStatus searchStatus;
-
-    private RoleLargeData largeData;
-
-    private RoleLargeData clipboardLargeData;
+public class RoleController extends AbstractOrganizationFormController<RolePageBean, Role> {
 
     public RoleController() {
-        super(Role.class, "$m{organization.role.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(RolePageBean.class, Role.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-        largeData = new RoleLargeData();
     }
 
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public Long getSearchDepartmentId() {
-        return searchDepartmentId;
-    }
-
-    public void setSearchDepartmentId(Long searchDepartmentId) {
-        this.searchDepartmentId = searchDepartmentId;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public RoleLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(RoleLargeData largeData) {
-        this.largeData = largeData;
+    @Override
+    @Action
+    public String copyRecord() throws UnifyException {
+        RolePageBean pageBean = getPageBean();
+        RoleLargeData clipboardLargeData = ReflectUtils.shallowBeanCopy(pageBean.getLargeData());
+        pageBean.setClipboardLargeData(clipboardLargeData);
+        return super.copyRecord();
     }
 
     @Override
     protected List<Role> find() throws UnifyException {
+        RolePageBean pageBean = getPageBean();
         RoleQuery query = new RoleQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (QueryUtils.isValidLongCriteria(searchDepartmentId)) {
-            query.departmentId(searchDepartmentId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchDepartmentId())) {
+            query.departmentId(pageBean.getSearchDepartmentId());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getOrganizationService().findRoles(query);
@@ -118,45 +75,48 @@ public class RoleController extends AbstractOrganizationCrudController<Role> {
 
     @Override
     protected Role find(Long id) throws UnifyException {
-        largeData = getOrganizationService().findRoleForm(id);
+        RolePageBean pageBean = getPageBean();
+        RoleLargeData largeData = getOrganizationService().findRoleForm(id);
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected Role prepareCreate() throws UnifyException {
-        largeData = new RoleLargeData();
+        RolePageBean pageBean = getPageBean();
+        RoleLargeData largeData = new RoleLargeData();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected void onPrepareView(Role roleData, boolean onPaste) throws UnifyException {
+        RolePageBean pageBean = getPageBean();
+        RoleLargeData largeData = pageBean.getLargeData();
         if (onPaste) {
+            RoleLargeData clipboardLargeData = pageBean.getClipboardLargeData();
             largeData.setPrivilegeIdList(clipboardLargeData.getPrivilegeIdList());
             largeData.setWfStepIdList(clipboardLargeData.getWfStepIdList());
         }
     }
 
     @Override
-    @Action
-    public String copyRecord() throws UnifyException {
-        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
-        return super.copyRecord();
-    }
-
-    @Override
     protected void onLoseView(Role roleData) throws UnifyException {
-        largeData = new RoleLargeData();
-        clipboardLargeData = null;
+        RolePageBean pageBean = getPageBean();
+        pageBean.setLargeData(new RoleLargeData());
+        pageBean.setClipboardLargeData(null);
     }
 
     @Override
     protected Object create(Role roleData) throws UnifyException {
-        return getOrganizationService().createRole(largeData);
+        RolePageBean pageBean = getPageBean();
+        return getOrganizationService().createRole(pageBean.getLargeData());
     }
 
     @Override
     protected int update(Role roleData) throws UnifyException {
-        return getOrganizationService().updateRole(largeData);
+        RolePageBean pageBean = getPageBean();
+        return getOrganizationService().updateRole(pageBean.getLargeData());
     }
 
     @Override

@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.organization.web.controllers;
 
+import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.unify.core.UnifyException;
@@ -27,13 +28,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractOrganizationPageController extends BasePageController {
+public abstract class AbstractOrganizationPageController<T extends BasePageBean> extends BasePageController<T> {
 
     @Configurable
     private OrganizationService organizationService;
 
-    public AbstractOrganizationPageController(boolean secured, boolean readOnly) {
-        super(secured, readOnly);
+    public AbstractOrganizationPageController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
+            boolean resetOnWrite) {
+        super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
     protected OrganizationService getOrganizationService() throws UnifyException {

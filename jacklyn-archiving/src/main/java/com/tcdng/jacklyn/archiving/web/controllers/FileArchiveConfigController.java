@@ -19,7 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.archiving.entities.FileArchiveConfig;
 import com.tcdng.jacklyn.archiving.entities.FileArchiveConfigQuery;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.archiving.web.beans.FileArchiveConfigPageBean;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -34,43 +34,25 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/archiving/filearchiveconfig")
 @UplBinding("web/archiving/upl/managefilearchiveconfig.upl")
-public class FileArchiveConfigController extends AbstractArchivingCrudController<FileArchiveConfig> {
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
+public class FileArchiveConfigController
+        extends AbstractArchivingFormController<FileArchiveConfigPageBean, FileArchiveConfig> {
 
     public FileArchiveConfigController() {
-        super(FileArchiveConfig.class, "$m{archiving.filearchiveconfig.hint}",
+        super(FileArchiveConfigPageBean.class, FileArchiveConfig.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
     @Override
     protected List<FileArchiveConfig> find() throws UnifyException {
+        FileArchiveConfigPageBean pageBean = getPageBean();
         FileArchiveConfigQuery query = new FileArchiveConfigQuery();
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
         return getArchivingService().findFileArchiveConfigs(query);

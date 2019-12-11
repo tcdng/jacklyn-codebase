@@ -19,10 +19,10 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfDocQuery;
+import com.tcdng.jacklyn.workflow.web.beans.WfDocPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -41,70 +41,31 @@ import com.tcdng.unify.core.util.QueryUtils;
         @CrudPanelList(panel = "frmWfDocClassifierListPanel", property = "record.classifierList"),
         @CrudPanelList(panel = "frmWfDocAttachmentListPanel", property = "record.attachmentList"),
         @CrudPanelList(panel = "frmWfDocBeanMappingListPanel", property = "record.beanMappingList")})
-public class WfDocController extends AbstractWorkflowCrudController<WfDoc> {
-
-    private Long searchWfCategoryId;
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
+public class WfDocController extends AbstractWorkflowFormController<WfDocPageBean, WfDoc> {
 
     public WfDocController() {
-        super(WfDoc.class, "$m{workflow.wfdoc.hint}",
+        super(WfDocPageBean.class, WfDoc.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchWfCategoryId() {
-        return searchWfCategoryId;
-    }
-
-    public void setSearchWfCategoryId(Long searchWfCategoryId) {
-        this.searchWfCategoryId = searchWfCategoryId;
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Override
     protected List<WfDoc> find() throws UnifyException {
+        WfDocPageBean pageBean = getPageBean();
         WfDocQuery query = new WfDocQuery();
-        if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
-            query.wfCategoryId(searchWfCategoryId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchWfCategoryId())) {
+            query.wfCategoryId(pageBean.getSearchWfCategoryId());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (searchStatus != null) {
-            query.wfCategoryStatus(searchStatus);
+        if (pageBean.getSearchStatus() != null) {
+            query.wfCategoryStatus(pageBean.getSearchStatus());
         }
 
         query.addOrder("description").ignoreEmptyCriteria(true);

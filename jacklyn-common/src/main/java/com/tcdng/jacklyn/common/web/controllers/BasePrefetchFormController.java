@@ -15,9 +15,10 @@
  */
 package com.tcdng.jacklyn.common.web.controllers;
 
-import com.tcdng.jacklyn.common.entities.BaseEntity;
+import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.web.ui.container.Form;
 
 /**
@@ -28,7 +29,7 @@ import com.tcdng.unify.web.ui.container.Form;
  * @since 1.0
  */
 @UplBinding("web/common/upl/manageprefetchformviewer.upl")
-public abstract class BasePrefetchFormController<T extends BaseEntityPageBean<V>, U, V extends BaseEntity>
+public abstract class BasePrefetchFormController<T extends BaseEntityPageBean<V>, U, V extends Entity>
         extends BasePrefetchController<T, U, V> {
 
     public BasePrefetchFormController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {

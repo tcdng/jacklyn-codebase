@@ -17,10 +17,10 @@ package com.tcdng.jacklyn.notification.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplateQuery;
+import com.tcdng.jacklyn.notification.web.beans.NotificationTemplatePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -34,68 +34,30 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/notification/notificationtemplate")
 @UplBinding("web/notification/upl/managenotificationtemplate.upl")
-public class NotificationTemplateController extends AbstractNotificationCrudController<NotificationTemplate> {
-
-    private Long searchModuleId;
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
+public class NotificationTemplateController
+        extends AbstractNotificationFormController<NotificationTemplatePageBean, NotificationTemplate> {
 
     public NotificationTemplateController() {
-        super(NotificationTemplate.class, "$m{notification.notificationtemplate.hint}",
+        super(NotificationTemplatePageBean.class, NotificationTemplate.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.COPY_TO_ADD
                         | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.REPORTABLE);
     }
 
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
     @Override
     protected List<NotificationTemplate> find() throws UnifyException {
+        NotificationTemplatePageBean pageBean = getPageBean();
         NotificationTemplateQuery query = new NotificationTemplateQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
         return getNotificationService().findNotificationTemplates(query);

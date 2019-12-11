@@ -17,11 +17,10 @@ package com.tcdng.jacklyn.notification.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.notification.entities.NotificationChannel;
 import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
-import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.jacklyn.notification.web.beans.NotificationChannelPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -35,70 +34,32 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/notification/notificationchannel")
 @UplBinding("web/notification/upl/managenotificationchannel.upl")
-public class NotificationChannelController extends AbstractNotificationCrudController<NotificationChannel> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private NotificationType searchNotificationType;
+public class NotificationChannelController
+        extends AbstractNotificationFormController<NotificationChannelPageBean, NotificationChannel> {
 
     public NotificationChannelController() {
-        super(NotificationChannel.class, "$m{notification.notificationchannel.hint}",
+        super(NotificationChannelPageBean.class, NotificationChannel.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.COPY_TO_ADD
                         | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.REPORTABLE);
     }
 
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public NotificationType getSearchNotificationType() {
-        return searchNotificationType;
-    }
-
-    public void setSearchNotificationType(NotificationType searchNotificationType) {
-        this.searchNotificationType = searchNotificationType;
-    }
-
     @Override
     protected List<NotificationChannel> find() throws UnifyException {
+        NotificationChannelPageBean pageBean = getPageBean();
         NotificationChannelQuery query = new NotificationChannelQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
-        }
-
-        if (searchNotificationType != null) {
-            query.notificationType(searchNotificationType);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (searchStatus != null) {
-            query.status(searchStatus);
+        if (pageBean.getSearchNotificationType() != null) {
+            query.notificationType(pageBean.getSearchNotificationType());
+        }
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
         return getNotificationService().findNotificationChannels(query);

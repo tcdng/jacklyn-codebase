@@ -15,16 +15,15 @@
  */
 package com.tcdng.jacklyn.audit.web.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import com.tcdng.jacklyn.audit.entities.AuditTrail;
 import com.tcdng.jacklyn.audit.entities.AuditTrailQuery;
+import com.tcdng.jacklyn.audit.web.beans.AuditTrailPageBean;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -39,67 +38,28 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/audit/upl/manageaudittrail.upl")
 @ResultMappings({
         @ResultMapping(name = "showusersearch", response = { "!showpopupresponse popup:$s{userSearchBoxPopup}" }) })
-public class AuditTrailController extends AbstractAuditCrudController<AuditTrail> {
-
-    private Date searchCreateDt;
-
-    private String searchUserLoginId;
-
-    private Long searchModuleId;
-
-    private EventType searchEventType;
+public class AuditTrailController extends AbstractAuditFormController<AuditTrailPageBean, AuditTrail> {
 
     public AuditTrailController() {
-        super(AuditTrail.class, "$m{audit.audittrail.hint}",
+        super(AuditTrailPageBean.class, AuditTrail.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Date getSearchCreateDt() {
-        return searchCreateDt;
-    }
-
-    public void setSearchCreateDt(Date searchCreateDt) {
-        this.searchCreateDt = searchCreateDt;
-    }
-
-    public String getSearchUserLoginId() {
-        return searchUserLoginId;
-    }
-
-    public void setSearchUserLoginId(String searchUserLoginId) {
-        this.searchUserLoginId = searchUserLoginId;
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public EventType getSearchEventType() {
-        return searchEventType;
-    }
-
-    public void setSearchEventType(EventType searchEventType) {
-        this.searchEventType = searchEventType;
     }
 
     @Override
     protected List<AuditTrail> find() throws UnifyException {
+        AuditTrailPageBean pageBean = getPageBean();
         AuditTrailQuery query = new AuditTrailQuery();
-        if (QueryUtils.isValidStringCriteria(searchUserLoginId)) {
-            query.userLoginId(searchUserLoginId);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchUserLoginId())) {
+            query.userLoginId(pageBean.getSearchUserLoginId());
         }
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
 
-        if (searchEventType != null) {
-            query.eventType(searchEventType);
+        if (pageBean.getSearchEventType() != null) {
+            query.eventType(pageBean.getSearchEventType());
         }
-        query.createdOn(searchCreateDt);
+        query.createdOn(pageBean.getSearchCreateDt());
         return getAuditService().findAuditTrail(query);
     }
 
@@ -131,8 +91,10 @@ public class AuditTrailController extends AbstractAuditCrudController<AuditTrail
     @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
-        if (searchCreateDt == null) {
-            searchCreateDt = getAuditService().getToday();
+
+        AuditTrailPageBean pageBean = getPageBean();
+        if (pageBean.getSearchCreateDt() == null) {
+            pageBean.setSearchCreateDt(getAuditService().getToday());
         }
     }
 }

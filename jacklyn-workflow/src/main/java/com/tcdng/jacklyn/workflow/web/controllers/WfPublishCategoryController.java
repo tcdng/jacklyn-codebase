@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.workflow.web.controllers;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowCategoryBinaryPublicationTaskConstants;
+import com.tcdng.jacklyn.workflow.web.beans.WfPublishCategoryPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -31,43 +32,22 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/workflow/wfpublishcategory")
 @UplBinding("web/workflow/upl/wfpublishcategory.upl")
-public class WfPublishCategoryController extends AbstractWorkflowController {
-
-    private byte[] wfCategoryBin;
-
-    private boolean activate;
+public class WfPublishCategoryController extends AbstractWorkflowPageController<WfPublishCategoryPageBean> {
 
     public WfPublishCategoryController() {
-        super(true, false);
+        super(WfPublishCategoryPageBean.class, true, false, false);
     }
 
     @Action
     public String startWfPublishCategoryTask() throws UnifyException {
-        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
-                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN, wfCategoryBin)
-                .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE, activate).logMessages()
-                .build();
+        WfPublishCategoryPageBean pageBean = getPageBean();
+        TaskSetup taskSetup =
+                TaskSetup.newBuilder().addTask(WorkflowCategoryBinaryPublicationTaskConstants.TASK_NAME)
+                        .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_BIN,
+                                pageBean.getWfCategoryBin())
+                        .setParam(WorkflowCategoryBinaryPublicationTaskConstants.WFCATEGORY_ACTIVATE,
+                                pageBean.isActivate())
+                        .logMessages().build();
         return launchTaskWithMonitorBox(taskSetup, "$m{workflow.wfcategory.publish}");
-    }
-
-    public byte[] getWfCategoryBin() {
-        return wfCategoryBin;
-    }
-
-    public void setWfCategoryBin(byte[] wfCategoryBin) {
-        this.wfCategoryBin = wfCategoryBin;
-    }
-
-    public boolean isActivate() {
-        return activate;
-    }
-
-    public void setActivate(boolean activate) {
-        this.activate = activate;
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        return "managePublishWorkflowPanel";
     }
 }

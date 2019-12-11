@@ -25,6 +25,7 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.security.web.beans.UserLoginPageBean;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
 import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyError;
@@ -58,87 +59,64 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
                 name = "switchchangepassword",
                 response = { "!switchpanelresponse panels:$l{loginSequencePanel.changePasswordBodyPanel}" }),
         @ResultMapping(name = "switchrolepanel", response = { "!showpopupresponse popup:$s{selectRolePanel}" }) })
-public class UserLoginController extends AbstractApplicationForwarderController {
-
-    private String userName;
-
-    private String password;
-
-    private String token;
-
-    private String oldPassword;
-
-    private String newPassword;
-
-    private String confirmPassword;
-
-    private String loginMessage;
-
-    private String languageTag;
-    
-    private List<UserRole> userRoleList;
-
-    private Table selectRoleTable;
-
-    private Locale origLocale;
-    
-    private boolean isLanguage;
-
-    private boolean is2FA;
+public class UserLoginController extends AbstractApplicationForwarderController<UserLoginPageBean> {
 
     public UserLoginController() {
-        super(false, false);
+        super(UserLoginPageBean.class, false, false, false);
     }
 
     @Action
     public String login() throws UnifyException {
+        UserLoginPageBean pageBean = getPageBean();
         try {
             Locale loginLocale = null;
-            if (isLanguage && StringUtils.isNotBlank(languageTag)) {
-                loginLocale = Locale.forLanguageTag(languageTag);
+            if (pageBean.isLanguage() && StringUtils.isNotBlank(pageBean.getLanguageTag())) {
+                loginLocale = Locale.forLanguageTag(pageBean.getLanguageTag());
             }
 
-            User user = getSecurityService().loginUser(userName, password, loginLocale);
-            userName = null;
-            password = null;
+            User user = getSecurityService().loginUser(pageBean.getUserName(), pageBean.getPassword(), loginLocale);
+            pageBean.setUserName(null);
+            pageBean.setPassword(null);
 
-            if (!user.isReserved() && is2FA) {
+            if (!user.isReserved() && pageBean.isIs2FA()) {
                 TwoFactorAutenticationService twoFactorAuthService =
                         (TwoFactorAutenticationService) this
                                 .getComponent(ApplicationComponents.APPLICATION_TWOFACTORAUTHENTICATIONSERVICE);
-                if (!twoFactorAuthService.authenticate(userName, token)) {
+                if (!twoFactorAuthService.authenticate(pageBean.getUserName(), pageBean.getToken())) {
                     throw new UnifyException(SecurityModuleErrorConstants.INVALID_ONETIME_PASSWORD);
                 }
             }
 
             logUserEvent(SecurityModuleAuditConstants.LOGIN);
-            setDisplayMessage(null);
+            pageBean.setLoginMessage(null);
 
             if (user.isChangeUserPassword() && !user.isReserved()) {
-                oldPassword = null;
-                newPassword = null;
-                confirmPassword = null;
+                pageBean.setOldPassword(null);
+                pageBean.setNewPassword(null);
+                pageBean.setConfirmPassword(null);
                 return "switchchangepassword";
             }
+
             return selectRole();
         } catch (UnifyException e) {
             logError(e);
             UnifyError err = e.getUnifyError();
-            setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
+            pageBean.setLoginMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
         }
         return "refreshlogin";
     }
 
     @Action
     public String changeUserPassword() throws UnifyException {
+        UserLoginPageBean pageBean = getPageBean();
         try {
-            setDisplayMessage(null);
-            getSecurityService().changeUserPassword(oldPassword, newPassword);
+            pageBean.setLoginMessage(null);
+            getSecurityService().changeUserPassword(pageBean.getOldPassword(), pageBean.getNewPassword());
             logUserEvent(SecurityModuleAuditConstants.CHANGE_PASSWORD);
             return selectRole();
         } catch (UnifyException e) {
             UnifyError err = e.getUnifyError();
-            setDisplayMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
+            pageBean.setLoginMessage(getSessionMessage(err.getErrorCode(), err.getErrorParams()));
             if (SecurityModuleErrorConstants.USER_ROLE_NOT_ACTIVE_AT_CURRENTTIME.equals(err.getErrorCode())) {
                 return "switchlogin";
             }
@@ -148,17 +126,19 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 
     @Action
     public String cancelChangeUserPassword() throws UnifyException {
-        userName = null;
-        password = null;
-        setDisplayMessage(null);
+        UserLoginPageBean pageBean = getPageBean();
+        pageBean.setUserName(null);
+        pageBean.setPassword(null);
+        pageBean.setLoginMessage(null);
         getSecurityService().logoutUser(false);
         return "switchlogin";
     }
 
     @Action
     public String selectUserRole() throws UnifyException {
-        UserRole userRole = userRoleList.get(selectRoleTable.getViewIndex());
-        userRoleList = null;
+        UserLoginPageBean pageBean = getPageBean();
+        UserRole userRole = pageBean.getUserRoleList().get(getRoleTable().getViewIndex());
+        pageBean.setUserRoleList(null);
         return forwardToApplication(userRole);
     }
 
@@ -169,125 +149,54 @@ public class UserLoginController extends AbstractApplicationForwarderController 
 
     @Action
     public String changeLanguage() throws UnifyException {
-        if (StringUtils.isNotBlank(languageTag)) {
-            getSessionContext().setLocale(Locale.forLanguageTag(languageTag));
+        UserLoginPageBean pageBean = getPageBean();
+        if (StringUtils.isNotBlank(pageBean.getLanguageTag())) {
+            getSessionContext().setLocale(Locale.forLanguageTag(pageBean.getLanguageTag()));
         } else {
-            getSessionContext().setLocale(origLocale);
+            getSessionContext().setLocale(pageBean.getOrigLocale());
         }
-        
+
         return "refreshlogin";
-    }
-    
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getOldPassword() {
-        return oldPassword;
-    }
-
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    public String getLoginMessage() {
-        return loginMessage;
-    }
-
-    public void setLoginMessage(String loginMessage) {
-        this.loginMessage = loginMessage;
-    }
-
-    public String getLanguageTag() {
-        return languageTag;
-    }
-
-    public void setLanguageTag(String languageTag) {
-        this.languageTag = languageTag;
-    }
-
-    public List<UserRole> getUserRoleList() {
-        return userRoleList;
-    }
-
-    public void setUserRoleList(List<UserRole> userRoleList) {
-        this.userRoleList = userRoleList;
     }
 
     @Override
-    protected void onSetPage() throws UnifyException {
-        selectRoleTable = getPageWidgetByShortName(Table.class, "selectRolePanel.roleTablePanel.contentTbl");
+    protected void onInitPage() throws UnifyException {
+        UserLoginPageBean pageBean = getPageBean();
         // Show/hide language field based on system parameter
-        isLanguage = getSystemService().getSysParameterValue(boolean.class,
-                SystemModuleSysParamConstants.SYSPARAM_USE_LOGIN_LOCALE);
-        setVisible("loginPanel.languageField", isLanguage);
+        boolean isLanguage =
+                getSystemService().getSysParameterValue(boolean.class,
+                        SystemModuleSysParamConstants.SYSPARAM_USE_LOGIN_LOCALE);
+        setPageWidgetVisible("loginPanel.languageField", isLanguage);
         if (isLanguage) {
-            origLocale = getSessionLocale();
+            pageBean.setOrigLocale(getSessionLocale());
         }
 
+        pageBean.setLanguage(isLanguage);
+
         // Show/hide token field based on system parameter
-        is2FA =
+        boolean is2FA =
                 getSystemService().getSysParameterValue(boolean.class,
                         SecurityModuleSysParamConstants.ENABLE_TWOFACTOR_AUTHENTICATION);
-        setVisible("loginPanel.tokenField", is2FA);
+        setPageWidgetVisible("loginPanel.tokenField", is2FA);
+        pageBean.setIs2FA(is2FA);
     }
 
     @Override
     protected void onOpenPage() throws UnifyException {
-        userName = null;
-        password = null;
-        token = null;
-        newPassword = null;
-        oldPassword = null;
-        confirmPassword = null;
-        SwitchPanel switchPanel = (SwitchPanel) getPanelByShortName("loginSequencePanel");
+        UserLoginPageBean pageBean = getPageBean();
+        pageBean.setUserName(null);
+        pageBean.setPassword(null);
+        pageBean.setToken(null);
+        pageBean.setNewPassword(null);
+        pageBean.setOldPassword(null);
+        pageBean.setConfirmPassword(null);
+        SwitchPanel switchPanel = (SwitchPanel) getPage().getPanelByShortName("loginSequencePanel");
         switchPanel.switchContent("loginBodyPanel");
-        setDisplayMessage(loginMessage);
-    }
-    
-    @Override
-    protected String getDocViewPanelName() {
-        return null;
     }
 
     private String selectRole() throws UnifyException {
-        setDisplayMessage(null);
+        UserLoginPageBean pageBean = getPageBean();
+        pageBean.setLoginMessage(null);
 
         // Get user roles that are active based on current time
         UserToken userToken = getUserToken();
@@ -305,8 +214,8 @@ public class UserLoginController extends AbstractApplicationForwarderController 
             }
         } else {
             if (userRoleList.size() > 1) {
-                this.userRoleList = userRoleList;
-                selectRoleTable.reset();
+                pageBean.setUserRoleList(userRoleList);
+                getRoleTable().reset();
                 return "switchrolepanel";
             }
             userRole = userRoleList.get(0);
@@ -315,7 +224,7 @@ public class UserLoginController extends AbstractApplicationForwarderController 
         return forwardToApplication(userRole);
     }
 
-    private void setDisplayMessage(String message) throws UnifyException {
-        loginMessage = message;
+    private Table getRoleTable() throws UnifyException {
+        return getPageWidgetByShortName(Table.class, "selectRolePanel.roleTablePanel.contentTbl");
     }
 }

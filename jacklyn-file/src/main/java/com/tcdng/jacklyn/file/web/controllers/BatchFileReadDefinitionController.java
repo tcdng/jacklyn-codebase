@@ -17,11 +17,11 @@ package com.tcdng.jacklyn.file.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.file.data.BatchFileReadDefinitionLargeData;
 import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
+import com.tcdng.jacklyn.file.web.beans.BatchFileReadDefinitionPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -37,20 +37,11 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/batchfilereaddefinition")
 @UplBinding("web/file/upl/managebatchfilereaddefinition.upl")
-public class BatchFileReadDefinitionController extends AbstractFileCrudController<BatchFileReadDefinition> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private BatchFileReadDefinitionLargeData largeData;
-
-    private BatchFileReadDefinitionLargeData clipboardLargeData;
+public class BatchFileReadDefinitionController
+        extends AbstractFileFormController<BatchFileReadDefinitionPageBean, BatchFileReadDefinition> {
 
     public BatchFileReadDefinitionController() {
-        super(BatchFileReadDefinition.class, "$m{file.batchfilereaddefinition.hint}",
+        super(BatchFileReadDefinitionPageBean.class, BatchFileReadDefinition.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
@@ -58,59 +49,32 @@ public class BatchFileReadDefinitionController extends AbstractFileCrudControlle
     @Action
     @Override
     public String copyRecord() throws UnifyException {
-        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        BatchFileReadDefinitionLargeData clipboardLargeData =
+                ReflectUtils.shallowBeanCopy(pageBean.getClipboardLargeData());
+        pageBean.setClipboardLargeData(clipboardLargeData);
         return super.copyRecord();
     }
 
     @Action
     public String refreshParameters() throws UnifyException {
-        onPrepareView(getRecord(), false);
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        onPrepareView(pageBean.getRecord(), false);
         return "refreshmain";
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public BatchFileReadDefinitionLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(BatchFileReadDefinitionLargeData largeData) {
-        this.largeData = largeData;
     }
 
     @Override
     protected List<BatchFileReadDefinition> find() throws UnifyException {
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
         BatchFileReadDefinitionQuery query = new BatchFileReadDefinitionQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
         return getFileService().findBatchFileReadDefinitions(query);
@@ -118,24 +82,30 @@ public class BatchFileReadDefinitionController extends AbstractFileCrudControlle
 
     @Override
     protected BatchFileReadDefinition find(Long id) throws UnifyException {
-        largeData = getFileService().findBatchFileReadDefinitionDocument(id);
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        BatchFileReadDefinitionLargeData largeData = getFileService().findBatchFileReadDefinitionDocument(id);
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected BatchFileReadDefinition prepareCreate() throws UnifyException {
-        largeData = new BatchFileReadDefinitionLargeData();
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        BatchFileReadDefinitionLargeData largeData = new BatchFileReadDefinitionLargeData();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected Object create(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
-        return getFileService().createBatchFileReadDefinition(largeData);
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        return getFileService().createBatchFileReadDefinition(pageBean.getLargeData());
     }
 
     @Override
     protected int update(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
-        return getFileService().updateBatchFileReadDefinition(largeData);
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        return getFileService().updateBatchFileReadDefinition(pageBean.getLargeData());
     }
 
     @Override
@@ -145,8 +115,10 @@ public class BatchFileReadDefinitionController extends AbstractFileCrudControlle
 
     @Override
     protected void onPrepareView(BatchFileReadDefinition batchUploadConfig, boolean onPaste) throws UnifyException {
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        BatchFileReadDefinitionLargeData largeData = pageBean.getLargeData();
         if (onPaste) {
-            largeData.setFileReaderParams(clipboardLargeData.getFileReaderParams());
+            largeData.setFileReaderParams(pageBean.getClipboardLargeData().getFileReaderParams());
         } else {
             largeData = getFileService().loadBatchFileReadConfigDocumentValues(largeData);
         }
@@ -154,7 +126,8 @@ public class BatchFileReadDefinitionController extends AbstractFileCrudControlle
 
     @Override
     protected void onLoseView(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
-        largeData = new BatchFileReadDefinitionLargeData();
-        clipboardLargeData = null;
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new BatchFileReadDefinitionLargeData());
+        pageBean.setClipboardLargeData(null);
     }
 }

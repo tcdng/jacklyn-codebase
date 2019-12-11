@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.entities.ScheduledTask;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
+import com.tcdng.jacklyn.system.web.beans.ScheduledTaskPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -36,71 +37,43 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/system/scheduledtask")
 @UplBinding("web/system/upl/managescheduledtask.upl")
-public class ScheduledTaskController extends AbstractSystemCrudController<ScheduledTask> {
-
-    private String searchTaskName;
-
-    private String searchDescription;
-
-    private ScheduledTaskLargeData largeData;
-
-    private ScheduledTaskLargeData clipboardLargeData;
+public class ScheduledTaskController extends AbstractSystemFormController<ScheduledTaskPageBean, ScheduledTask> {
 
     public ScheduledTaskController() {
-        super(ScheduledTask.class, "$m{system.scheduledtask.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ScheduledTaskPageBean.class, ScheduledTask.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
     @Action
     @Override
     public String copyRecord() throws UnifyException {
-        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
+        ScheduledTaskPageBean pageBean = getPageBean();
+        ScheduledTaskLargeData clipboardLargeData = ReflectUtils.shallowBeanCopy(pageBean.getLargeData());
+        pageBean.setClipboardLargeData(clipboardLargeData);
         return super.copyRecord();
     }
 
     @Action
     public String refreshParameters() throws UnifyException {
-        onPrepareView(getRecord(), false);
+        ScheduledTaskPageBean pageBean = getPageBean();
+        onPrepareView(pageBean.getRecord(), false);
         return "refreshmain";
-    }
-
-    public String getSearchTaskName() {
-        return searchTaskName;
-    }
-
-    public void setSearchTaskName(String searchTaskName) {
-        this.searchTaskName = searchTaskName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public ScheduledTaskLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(ScheduledTaskLargeData largeData) {
-        this.largeData = largeData;
     }
 
     @Override
     protected List<ScheduledTask> find() throws UnifyException {
+        ScheduledTaskPageBean pageBean = getPageBean();
         ScheduledTaskQuery query = new ScheduledTaskQuery();
-        if (QueryUtils.isValidStringCriteria(searchTaskName)) {
-            query.taskName(searchTaskName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchTaskName())) {
+            query.taskName(pageBean.getSearchTaskName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
 
@@ -109,24 +82,30 @@ public class ScheduledTaskController extends AbstractSystemCrudController<Schedu
 
     @Override
     protected ScheduledTask find(Long id) throws UnifyException {
-        largeData = getSystemService().findScheduledTaskDocument(id);
+        ScheduledTaskPageBean pageBean = getPageBean();
+        ScheduledTaskLargeData largeData = getSystemService().findScheduledTaskDocument(id);
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected ScheduledTask prepareCreate() throws UnifyException {
-        largeData = new ScheduledTaskLargeData();
+        ScheduledTaskPageBean pageBean = getPageBean();
+        ScheduledTaskLargeData largeData = new ScheduledTaskLargeData();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected Object create(ScheduledTask scheduledTask) throws UnifyException {
-        return getSystemService().createScheduledTask(largeData);
+        ScheduledTaskPageBean pageBean = getPageBean();
+        return getSystemService().createScheduledTask(pageBean.getLargeData());
     }
 
     @Override
     protected int update(ScheduledTask scheduledTask) throws UnifyException {
-        return getSystemService().updateScheduledTask(largeData);
+        ScheduledTaskPageBean pageBean = getPageBean();
+        return getSystemService().updateScheduledTask(pageBean.getLargeData());
     }
 
     @Override
@@ -142,19 +121,23 @@ public class ScheduledTaskController extends AbstractSystemCrudController<Schedu
 
     @Override
     protected void onPrepareView(ScheduledTask scheduledTask, boolean onPaste) throws UnifyException {
+        ScheduledTaskPageBean pageBean = getPageBean();
+        ScheduledTaskLargeData largeData = pageBean.getLargeData();
         if (onPaste) {
-            largeData.setScheduledTaskParams(clipboardLargeData.getScheduledTaskParams());
+            largeData.setScheduledTaskParams(pageBean.getClipboardLargeData().getScheduledTaskParams());
         } else {
             largeData = getSystemService().loadScheduledTaskDocumentValues(largeData);
         }
 
         boolean isDisabled = ManageRecordModifier.VIEW == getMode() || ManageRecordModifier.DELETE == getMode();
-        setDisabled("frmParamsTbl", isDisabled);
+        setPageWidgetDisabled("frmParamsTbl", isDisabled);
     }
 
     @Override
     protected void onLoseView(ScheduledTask scheduledTask) throws UnifyException {
-        largeData = new ScheduledTaskLargeData();
-        clipboardLargeData = null;
+        ScheduledTaskPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new ScheduledTaskLargeData());
+        pageBean.setClipboardLargeData(null);
+        ;
     }
 }

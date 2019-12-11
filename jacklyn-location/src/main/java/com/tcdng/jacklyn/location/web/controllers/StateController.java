@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.location.entities.State;
 import com.tcdng.jacklyn.location.entities.StateQuery;
+import com.tcdng.jacklyn.location.web.beans.StatePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,60 +34,31 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/location/state")
 @UplBinding("web/location/upl/managestate.upl")
-public class StateController extends AbstractLocationCrudController<State> {
-
-    private Long searchCountryId;
-    
-    private String searchCode;
-
-    private String searchDescription;
+public class StateController extends AbstractLocationFormController<StatePageBean, State> {
 
     public StateController() {
-        super(State.class, "$m{location.state.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(StatePageBean.class, State.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchCountryId() {
-        return searchCountryId;
-    }
-
-    public void setSearchCountryId(Long searchCountryId) {
-        this.searchCountryId = searchCountryId;
-    }
-
-    public String getSearchCode() {
-        return searchCode;
-    }
-
-    public void setSearchCode(String searchCode) {
-        this.searchCode = searchCode;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
     }
 
     @Override
     protected List<State> find() throws UnifyException {
+        StatePageBean pageBean = getPageBean();
         StateQuery query = new StateQuery();
-        if (QueryUtils.isValidLongCriteria(searchCountryId)) {
-            query.countryId(searchCountryId);
-        }
-        
-        if (QueryUtils.isValidStringCriteria(searchCode)) {
-            query.code(searchCode);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchCountryId())) {
+            query.countryId(pageBean.getSearchCountryId());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchCode())) {
+            query.code(pageBean.getSearchCode());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
+        }
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getLocationService().findStates(query);

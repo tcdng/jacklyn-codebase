@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.constants.SystemModuleAuditConstants;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuQuery;
+import com.tcdng.jacklyn.system.web.beans.ApplicationMenuPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -41,81 +42,66 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @ResultMappings({
         @ResultMapping(name = "managemenuitems", response = { "!postresponse path:$s{/system/menuitem/openPage}" }),
         @ResultMapping(name = "showorderpopup", response = { "!showpopupresponse popup:$s{orderMenuPopup}" }) })
-public class MenuController extends AbstractSystemCrudController<ApplicationMenu> {
-
-    private Long searchModuleId;
-
-    private List<ApplicationMenu> menuOrderList;
+public class MenuController extends AbstractSystemFormController<ApplicationMenuPageBean, ApplicationMenu> {
 
     public MenuController() {
-        super(ApplicationMenu.class, "$m{system.menu.hint}",
+        super(ApplicationMenuPageBean.class, ApplicationMenu.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 
     @Action
     public String prepareMenuItems() throws UnifyException {
-        writeControllerProperty("/system/menuitem", "searchMenuId", getSelectedRecord().getId());
+        writeOtherControllerProperty("/system/menuitem", "searchMenuId", getSelectedRecord().getId());
         return "managemenuitems";
     }
 
     @Action
     public String prepareSetMenuOrder() throws UnifyException {
+        ApplicationMenuPageBean pageBean = getPageBean();
         ApplicationMenuQuery query = new ApplicationMenuQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
-        
+
         query.installed(Boolean.TRUE);
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);
-        menuOrderList = getSystemService().findMenus(query);
+        pageBean.setMenuOrderList(getSystemService().findMenus(query));
         return "showorderpopup";
     }
 
     @Action
     public String saveMenuOrder() throws UnifyException {
+        ApplicationMenuPageBean pageBean = getPageBean();
+        List<ApplicationMenu> menuOrderList = pageBean.getMenuOrderList();
         getSystemService().saveMenuOrder(menuOrderList);
         logUserEvent(SystemModuleAuditConstants.SET_MENU_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, menuOrderList, "caption"));
         hintUser("$m{system.order.menu.saved}");
-        menuOrderList = null;
+        pageBean.setMenuOrderList(null);
         return hidePopup();
     }
 
     @Action
     public String cancelMenuOrder() throws UnifyException {
-        menuOrderList = null;
+        ApplicationMenuPageBean pageBean = getPageBean();
+        pageBean.setMenuOrderList(null);
         return hidePopup();
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public List<ApplicationMenu> getMenuOrderList() {
-        return menuOrderList;
-    }
-
-    public void setMenuOrderList(List<ApplicationMenu> menuOrderList) {
-        this.menuOrderList = menuOrderList;
     }
 
     @Override
     protected List<ApplicationMenu> find() throws UnifyException {
+        ApplicationMenuPageBean pageBean = getPageBean();
         ApplicationMenuQuery query = new ApplicationMenuQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.installed(Boolean.TRUE);
         query.addOrder("caption").ignoreEmptyCriteria(true);

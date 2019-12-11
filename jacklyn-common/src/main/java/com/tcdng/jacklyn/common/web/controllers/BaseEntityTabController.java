@@ -16,9 +16,10 @@
 
 package com.tcdng.jacklyn.common.web.controllers;
 
-import com.tcdng.jacklyn.common.entities.BaseEntity;
+import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.database.Entity;
 
 /**
  * Convenient abstract base class for page controllers that manage entity CRUD
@@ -28,7 +29,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
  * @since 1.0
  */
 @UplBinding("web/common/upl/managerecordtabviewer.upl")
-public abstract class BaseEntityTabController<T extends BaseEntityPageBean<V>, U, V extends BaseEntity>
+public abstract class BaseEntityTabController<T extends BaseEntityPageBean<V>, U, V extends Entity>
         extends BaseEntityController<T, U, V> {
 
     public BaseEntityTabController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {

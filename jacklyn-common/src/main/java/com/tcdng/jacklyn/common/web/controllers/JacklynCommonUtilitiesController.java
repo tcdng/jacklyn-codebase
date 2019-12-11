@@ -19,6 +19,7 @@ import com.tcdng.jacklyn.common.constants.CommonModuleAuditConstants;
 import com.tcdng.jacklyn.common.constants.JacklynRequestAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.data.ReportOptions;
+import com.tcdng.jacklyn.common.web.beans.JacklynCommonUtilitiesPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;

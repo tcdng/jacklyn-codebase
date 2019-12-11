@@ -17,10 +17,10 @@ package com.tcdng.jacklyn.workflow.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
+import com.tcdng.jacklyn.workflow.web.beans.WfCategoryPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -34,56 +34,27 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/workflow/wfcategory")
 @UplBinding("web/workflow/upl/managewfcategory.upl")
-public class WfCategoryController extends AbstractWorkflowCrudController<WfCategory> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
+public class WfCategoryController extends AbstractWorkflowFormController<WfCategoryPageBean, WfCategory> {
 
     public WfCategoryController() {
-        super(WfCategory.class, "$m{workflow.wfcategory.hint}",
+        super(WfCategoryPageBean.class, WfCategory.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Override
     protected List<WfCategory> find() throws UnifyException {
+        WfCategoryPageBean pageBean = getPageBean();
         WfCategoryQuery query = new WfCategoryQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (searchStatus != null) {
-            query.status(searchStatus);
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
 
         query.addOrder("description").ignoreEmptyCriteria(true);
@@ -101,17 +72,17 @@ public class WfCategoryController extends AbstractWorkflowCrudController<WfCateg
     }
 
     @Override
-    protected Object create(WfCategory wfCategoryData) throws UnifyException {
+    protected Object create(WfCategory wfCategory) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(WfCategory wfCategoryData) throws UnifyException {
-        return getWorkflowService().updateWfCategory(wfCategoryData);
+    protected int update(WfCategory wfCategory) throws UnifyException {
+        return getWorkflowService().updateWfCategory(wfCategory);
     }
 
     @Override
-    protected int delete(WfCategory record) throws UnifyException {
+    protected int delete(WfCategory wfCategory) throws UnifyException {
         return 0;
     }
 

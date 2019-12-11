@@ -16,9 +16,10 @@
 
 package com.tcdng.jacklyn.common.web.controllers;
 
-import com.tcdng.jacklyn.common.entities.BaseEntity;
+import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.core.database.Entity;
 
 /**
  * Convenient abstract base class for page controllers that manage prefetched
@@ -28,7 +29,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
  * @since 1.0
  */
 @UplBinding("web/common/upl/manageprefetchtabviewer.upl")
-public abstract class BasePrefetchTabController<T extends BaseEntityPageBean<V>, U, V extends BaseEntity>
+public abstract class BasePrefetchTabController<T extends BaseEntityPageBean<V>, U, V extends Entity>
         extends BasePrefetchController<T, U, V> {
 
     public BasePrefetchTabController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {

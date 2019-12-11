@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
+import com.tcdng.jacklyn.organization.web.beans.BranchPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,90 +34,41 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/organization/branch")
 @UplBinding("web/organization/upl/managebranch.upl")
-public class BranchController extends AbstractOrganizationCrudController<Branch> {
-
-    private String searchCode;
-
-    private String searchDescription;
-
-    private Long searchZoneId;
-
-    private Long searchStateId;
-
-    private Long searchHubId;
+public class BranchController extends AbstractOrganizationFormController<BranchPageBean, Branch> {
 
     public BranchController() {
-        super(Branch.class, "$m{organization.branch.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(BranchPageBean.class, Branch.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchCode() {
-        return searchCode;
-    }
-
-    public void setSearchCode(String searchCode) {
-        this.searchCode = searchCode;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public Long getSearchZoneId() {
-        return searchZoneId;
-    }
-
-    public void setSearchZoneId(Long searchZoneId) {
-        this.searchZoneId = searchZoneId;
-    }
-
-    public Long getSearchStateId() {
-        return searchStateId;
-    }
-
-    public void setSearchStateId(Long searchStateId) {
-        this.searchStateId = searchStateId;
-    }
-
-    public Long getSearchHubId() {
-        return searchHubId;
-    }
-
-    public void setSearchHubId(Long searchHubId) {
-        this.searchHubId = searchHubId;
     }
 
     @Override
     protected List<Branch> find() throws UnifyException {
+        BranchPageBean pageBean = getPageBean();
         BranchQuery query = new BranchQuery();
-        if (QueryUtils.isValidLongCriteria(searchZoneId)) {
-            query.zoneId(searchZoneId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchZoneId())) {
+            query.zoneId(pageBean.getSearchZoneId());
         }
 
-        if (QueryUtils.isValidLongCriteria(searchStateId)) {
-            query.stateId(searchStateId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchStateId())) {
+            query.stateId(pageBean.getSearchStateId());
         }
 
-        if (QueryUtils.isValidLongCriteria(searchHubId)) {
-            query.hubId(searchHubId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchHubId())) {
+            query.hubId(pageBean.getSearchHubId());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchCode)) {
-            query.code(searchCode);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchCode())) {
+            query.code(pageBean.getSearchCode());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
-        
+
         query.excludeSysRecords();
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getOrganizationService().findBranches(query);

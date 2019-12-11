@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.entities.Module;
 import com.tcdng.jacklyn.system.entities.ModuleQuery;
+import com.tcdng.jacklyn.system.web.beans.ModulePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -34,33 +35,24 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/module")
 @UplBinding("web/system/upl/managemodule.upl")
-public class ModuleController extends AbstractSystemCrudController<Module> {
-
-    private String searchDescription;
+public class ModuleController extends AbstractSystemFormController<ModulePageBean, Module> {
 
     public ModuleController() {
-        super(Module.class, "$m{system.module.hint}",
+        super(ModulePageBean.class, Module.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.MODIFY
                         | ManageRecordModifier.ACTIVATABLE | ManageRecordModifier.REPORTABLE
                         | ManageRecordModifier.ALTERNATE_SAVE);
     }
 
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
     @Override
     protected List<Module> find() throws UnifyException {
+        ModulePageBean pageBean  = getPageBean();
         ModuleQuery query = new ModuleQuery();
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.installed(Boolean.TRUE);
         query.addOrder("description").ignoreEmptyCriteria(true);
@@ -78,48 +70,48 @@ public class ModuleController extends AbstractSystemCrudController<Module> {
     }
 
     @Override
-    protected void onPrepareView(Module moduleData, boolean paste) throws UnifyException {
-        setEditable("frmStatus", moduleData.getDeactivatable());
+    protected void onPrepareView(Module module, boolean paste) throws UnifyException {
+        setPageWidgetEditable("frmStatus", module.getDeactivatable());
     }
 
     @Override
-    protected Object create(Module moduleData) throws UnifyException {
+    protected Object create(Module module) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(Module moduleData) throws UnifyException {
+    protected int update(Module module) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected int delete(Module moduleData) throws UnifyException {
+    protected int delete(Module module) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected boolean isActivatable(Module moduleData) throws UnifyException {
-        return moduleData.getDeactivatable();
+    protected boolean isActivatable(Module module) throws UnifyException {
+        return module.getDeactivatable();
     }
 
     @Override
-    protected int activate(Module moduleData) throws UnifyException {
-        getSystemService().activateModule(moduleData.getName());
-        moduleData.setStatus(RecordStatus.ACTIVE);
+    protected int activate(Module module) throws UnifyException {
+        getSystemService().activateModule(module.getName());
+        module.setStatus(RecordStatus.ACTIVE);
         return 1;
     }
 
     @Override
-    protected int deactivate(Module moduleData) throws UnifyException {
-        getSystemService().deactivateModule(moduleData.getName());
-        moduleData.setStatus(RecordStatus.INACTIVE);
+    protected int deactivate(Module module) throws UnifyException {
+        getSystemService().deactivateModule(module.getName());
+        module.setStatus(RecordStatus.INACTIVE);
         return 1;
     }
 
     @Override
-    protected void onSetPage() throws UnifyException {
-        super.onSetPage();
-        setEditable("frmName", false);
-        setEditable("frmDescription", false);
+    protected void onInitPage() throws UnifyException {
+        super.onInitPage();
+        setPageWidgetEditable("frmName", false);
+        setPageWidgetEditable("frmDescription", false);
     }
 }

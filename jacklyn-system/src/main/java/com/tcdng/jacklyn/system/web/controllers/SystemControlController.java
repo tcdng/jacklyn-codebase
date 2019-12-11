@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.system.constants.SystemModuleAuditConstants;
 import com.tcdng.jacklyn.system.data.SystemControlState;
 import com.tcdng.jacklyn.system.entities.SystemParameterQuery;
+import com.tcdng.jacklyn.system.web.beans.SystemControlPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -37,18 +38,17 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @Component("/system/systemcontrol")
 @UplBinding("web/system/upl/systemcontrol.upl")
 @ResultMappings({
-    @ResultMapping(name = "refreshcontrolpanel", response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
-public class SystemControlController extends AbstractSystemPageController {
-
-    private List<SystemControlState> systemControlStateList;
+        @ResultMapping(name = "refreshcontrolpanel", response = { "!refreshpanelresponse panels:$l{controlPanel}" }) })
+public class SystemControlController extends AbstractSystemPageController<SystemControlPageBean> {
 
     public SystemControlController() {
-        super(true, false); // Secured and not read-only
+        super(SystemControlPageBean.class, true, false, false); // Secured and not read-only
     }
 
     @Action
     public String performToggleAction() throws UnifyException {
-        SystemControlState systemControlState = systemControlStateList.get(getRequestTarget(int.class));
+        SystemControlPageBean pageBean = getPageBean();
+        SystemControlState systemControlState = pageBean.getSystemControlStateList().get(getRequestTarget(int.class));
         boolean newState = !systemControlState.isEnabled();
         getSystemService().setSysParameterValue(systemControlState.getName(), newState);
         updateControlStatus();
@@ -66,26 +66,16 @@ public class SystemControlController extends AbstractSystemPageController {
         return EventType.UPDATE.colorMode();
     }
 
-    public List<SystemControlState> getSystemControlStateList() {
-        return systemControlStateList;
-    }
-
-    public void setSystemControlStateList(List<SystemControlState> systemControlStateList) {
-        this.systemControlStateList = systemControlStateList;
-    }
-
     @Override
     protected void onOpenPage() throws UnifyException {
         updateControlStatus();
     }
 
-    @Override
-    protected String getDocViewPanelName() {
-        return "manageSystemControlPanel";
-    }
-
     private void updateControlStatus() throws UnifyException {
-        systemControlStateList = getSystemService()
-                .findSystemControlStates((SystemParameterQuery) new SystemParameterQuery().ignoreEmptyCriteria(true));
+        SystemControlPageBean pageBean = getPageBean();
+        List<SystemControlState> systemControlStateList =
+                getSystemService().findSystemControlStates(
+                        (SystemParameterQuery) new SystemParameterQuery().ignoreEmptyCriteria(true));
+        pageBean.setSystemControlStateList(systemControlStateList);
     }
 }

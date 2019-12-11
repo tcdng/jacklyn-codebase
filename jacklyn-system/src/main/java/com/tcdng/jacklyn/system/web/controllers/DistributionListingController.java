@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.system.web.controllers;
 
+import com.tcdng.jacklyn.system.web.beans.DistributionListingPageBean;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -27,16 +28,10 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("/system/distributionlisting")
 @UplBinding("web/system/upl/distributionlisting.upl")
-public class DistributionListingController extends AbstractSystemPageController {
+public class DistributionListingController extends AbstractSystemPageController<DistributionListingPageBean> {
 
     public DistributionListingController() {
-        super(true, false);
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        // TODO Auto-generated method stub
-        return null;
+        super(DistributionListingPageBean.class, true, false, false);
     }
 
 }

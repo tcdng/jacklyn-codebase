@@ -16,19 +16,17 @@
 package com.tcdng.jacklyn.system.web.controllers;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import com.tcdng.jacklyn.common.web.controllers.BaseEntityFormController;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
+import com.tcdng.jacklyn.system.web.beans.ScheduledTaskHistPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.task.TaskStatus;
 import com.tcdng.unify.core.util.QueryUtils;
 
 /**
@@ -39,65 +37,38 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/scheduledtaskhist")
 @UplBinding("web/system/upl/managescheduledtaskhist.upl")
-public class ScheduledTaskHistController extends BaseEntityFormController<ScheduledTaskHist, Long> {
+public class ScheduledTaskHistController extends AbstractSystemFormController<ScheduledTaskHistPageBean, ScheduledTaskHist> {
 
     @Configurable
     private SystemService systemService;
 
-    private Date searchExecutionDt;
-
-    private Long searchScheduledTaskId;
-
-    private TaskStatus searchStatus;
-
     public ScheduledTaskHistController() {
-        super(ScheduledTaskHist.class, "$m{system.scheduledtaskhist.hint}",
+        super(ScheduledTaskHistPageBean.class, ScheduledTaskHist.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Date getSearchExecutionDt() {
-        return searchExecutionDt;
-    }
-
-    public void setSearchExecutionDt(Date searchExecutionDt) {
-        this.searchExecutionDt = searchExecutionDt;
-    }
-
-    public Long getSearchScheduledTaskId() {
-        return searchScheduledTaskId;
-    }
-
-    public void setSearchScheduledTaskId(Long searchScheduledTaskId) {
-        this.searchScheduledTaskId = searchScheduledTaskId;
-    }
-
-    public TaskStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(TaskStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
-        if (searchExecutionDt == null) {
-            searchExecutionDt = systemService.getToday();
+        
+        ScheduledTaskHistPageBean pageBean = getPageBean();
+        if (pageBean.getSearchExecutionDt() == null) {
+            pageBean.setSearchExecutionDt(systemService.getToday());
         }
     }
 
     @Override
     protected List<ScheduledTaskHist> find() throws UnifyException {
+        ScheduledTaskHistPageBean pageBean = getPageBean();
         ScheduledTaskHistQuery query = new ScheduledTaskHistQuery();
-        if (searchExecutionDt != null && QueryUtils.isValidLongCriteria(searchScheduledTaskId)) {
-            query.scheduledTaskId(searchScheduledTaskId);
+        if (pageBean.getSearchExecutionDt() != null && QueryUtils.isValidLongCriteria(pageBean.getSearchScheduledTaskId())) {
+            query.scheduledTaskId(pageBean.getSearchScheduledTaskId());
             
-            if (getSearchStatus() != null) {
-                query.taskStatus(getSearchStatus());
+            if (pageBean.getSearchStatus() != null) {
+                query.taskStatus(pageBean.getSearchStatus());
             }
 
-            query.startedOn(searchExecutionDt);
+            query.startedOn(pageBean.getSearchExecutionDt());
             return systemService.findScheduledTaskHistory(query);
         }
 
@@ -115,17 +86,17 @@ public class ScheduledTaskHistController extends BaseEntityFormController<Schedu
     }
 
     @Override
-    protected Object create(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
+    protected Object create(ScheduledTaskHist scheduledTaskHist) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
+    protected int update(ScheduledTaskHist scheduledTaskHist) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected int delete(ScheduledTaskHist scheduledTaskHistData) throws UnifyException {
+    protected int delete(ScheduledTaskHist scheduledTaskHist) throws UnifyException {
         return 0;
     }
 }

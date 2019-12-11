@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.file.web.controllers;
 
+import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.file.business.FileService;
 import com.tcdng.unify.core.UnifyException;
@@ -26,13 +27,13 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractFilePageController extends BasePageController {
+public abstract class AbstractFilePageController<T extends BasePageBean> extends BasePageController<T> {
 
     @Configurable
     private FileService fileService;
 
-    public AbstractFilePageController(boolean secured, boolean readOnly) {
-        super(secured, readOnly);
+    public AbstractFilePageController(Class<T> pageBeanClass, boolean secured, boolean readOnly, boolean resetOnWrite) {
+        super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
     protected FileService getFileService() throws UnifyException {

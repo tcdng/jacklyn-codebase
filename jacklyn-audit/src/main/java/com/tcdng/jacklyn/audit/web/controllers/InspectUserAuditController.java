@@ -16,14 +16,12 @@
 
 package com.tcdng.jacklyn.audit.web.controllers;
 
-import java.util.Date;
-
 import com.tcdng.jacklyn.audit.constants.AuditModuleAuditConstants;
 import com.tcdng.jacklyn.audit.data.InspectUserInfo;
+import com.tcdng.jacklyn.audit.web.beans.InspectUserAuditPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -37,75 +35,10 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @Component("/audit/inspectuser")
 @UplBinding("web/audit/upl/inspectuser.upl")
 @ResultMappings({ @ResultMapping(name = "refreshmain", response = { "!refreshpanelresponse panels:$l{mainPanel}" }) })
-public class InspectUserAuditController extends AbstractAuditPageController {
-
-    private String searchUserLoginId;
-
-    private Date searchCreateDt;
-
-    private Long searchModuleId;
-
-    private EventType searchEventType;
-
-    private InspectUserInfo inspectUserInfo;
+public class InspectUserAuditController extends AbstractAuditPageController<InspectUserAuditPageBean> {
 
     public InspectUserAuditController() {
-        super(true, false);
-    }
-
-    public String getModeStyle() {
-        return EventType.VIEW.colorMode();
-    }
-
-    public String getSearchUserLoginId() {
-        return searchUserLoginId;
-    }
-
-    public void setSearchUserLoginId(String searchUserLoginId) {
-        this.searchUserLoginId = searchUserLoginId;
-    }
-
-    public Date getSearchCreateDt() {
-        return searchCreateDt;
-    }
-
-    public void setSearchCreateDt(Date searchCreateDt) {
-        this.searchCreateDt = searchCreateDt;
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public EventType getSearchEventType() {
-        return searchEventType;
-    }
-
-    public void setSearchEventType(EventType searchEventType) {
-        this.searchEventType = searchEventType;
-    }
-
-    public InspectUserInfo getInspectUserInfo() {
-        return inspectUserInfo;
-    }
-
-    @Override
-    protected void onOpenPage() throws UnifyException {
-        super.onOpenPage();
-        if (searchCreateDt == null) {
-            searchCreateDt = getAuditService().getToday();
-        }
-
-        performFetchInspectUserInfo();
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        return "manageInspectUserPanel";
+        super(InspectUserAuditPageBean.class, true, false, false);
     }
 
     @Action
@@ -115,10 +48,24 @@ public class InspectUserAuditController extends AbstractAuditPageController {
         return "refreshmain";
     }
 
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        super.onOpenPage();
+
+        InspectUserAuditPageBean pageBean = getPageBean();
+        if (pageBean.getSearchCreateDt() == null) {
+            pageBean.setSearchCreateDt(getAuditService().getToday());
+        }
+
+        performFetchInspectUserInfo();
+    }
+
     private void performFetchInspectUserInfo() throws UnifyException {
-        inspectUserInfo =
-                getAuditService().fetchInspectUserInfo(searchUserLoginId, searchCreateDt, searchModuleId,
-                        searchEventType);
-        setVisible("userDetailsPanel", inspectUserInfo.isUser());
+        InspectUserAuditPageBean pageBean = getPageBean();
+        InspectUserInfo inspectUserInfo =
+                getAuditService().fetchInspectUserInfo(pageBean.getSearchUserLoginId(), pageBean.getSearchCreateDt(),
+                        pageBean.getSearchModuleId(), pageBean.getSearchEventType());
+        pageBean.setInspectUserInfo(inspectUserInfo);
+        setPageWidgetVisible("userDetailsPanel", inspectUserInfo.isUser());
     }
 }

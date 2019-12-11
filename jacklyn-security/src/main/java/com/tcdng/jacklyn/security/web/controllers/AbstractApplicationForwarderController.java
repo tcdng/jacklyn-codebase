@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.security.web.controllers;
 
+import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.system.business.SystemService;
@@ -30,14 +31,16 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@ResultMappings({ @ResultMapping(name = "forwardtoapplication",
-        response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
-public abstract class AbstractApplicationForwarderController extends AbstractSecurityPageController {
+@ResultMappings({ @ResultMapping(
+        name = "forwardtoapplication", response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
+public abstract class AbstractApplicationForwarderController<T extends BasePageBean>
+        extends AbstractSecurityPageController<T> {
 
     private String applicationPath;
 
-    public AbstractApplicationForwarderController(boolean secured, boolean readOnly) {
-        super(secured, readOnly);
+    public AbstractApplicationForwarderController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
+            boolean resetOnWrite) {
+        super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
     public String getApplicationPath() {
@@ -63,8 +66,9 @@ public abstract class AbstractApplicationForwarderController extends AbstractSec
         }
 
         if (StringUtils.isBlank(applicationPath)) {
-            applicationPath = getSystemService().getSysParameterValue(String.class,
-                    SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
+            applicationPath =
+                    getSystemService().getSysParameterValue(String.class,
+                            SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
         }
 
         getSecurityService().setCurrentUserRole(userRole);

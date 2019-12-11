@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.entities.SupportedLocale;
 import com.tcdng.jacklyn.system.entities.SupportedLocaleQuery;
+import com.tcdng.jacklyn.system.web.beans.SupportedLocalePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,46 +34,27 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/supportedlocale")
 @UplBinding("web/system/upl/managesupportedlocale.upl")
-public class SupportedLocaleController extends AbstractSystemCrudController<SupportedLocale> {
-
-    private String searchName;
-
-    private String searchDescription;
+public class SupportedLocaleController extends AbstractSystemFormController<SupportedLocalePageBean, SupportedLocale> {
 
     public SupportedLocaleController() {
-        super(SupportedLocale.class, "$m{system.supportedlocale.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(SupportedLocalePageBean.class, SupportedLocale.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
     }
 
     @Override
     protected List<SupportedLocale> find() throws UnifyException {
+        SupportedLocalePageBean pageBean = getPageBean();
         SupportedLocaleQuery query = new SupportedLocaleQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.name(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findSupportedLocales(query);

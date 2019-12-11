@@ -22,6 +22,7 @@ import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.jacklyn.common.web.UserSessionViewAccessProvider;
+import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;

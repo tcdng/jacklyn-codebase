@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.integration.entities.ProducerDefinition;
 import com.tcdng.jacklyn.integration.entities.ProducerDefinitionQuery;
+import com.tcdng.jacklyn.integration.web.beans.ProducerDefinitionPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,47 +34,28 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/integration/producerdefinition")
 @UplBinding("web/integration/upl/manageproducerdefinition.upl")
-public class ProducerDefinitionController extends AbstractIntegrationCrudController<ProducerDefinition> {
-
-    private String searchName;
-
-    private String searchDescription;
+public class ProducerDefinitionController extends AbstractIntegrationFormController<ProducerDefinitionPageBean, ProducerDefinition> {
 
     public ProducerDefinitionController() {
-        super(ProducerDefinition.class, "$m{integration.producerdefinition.hint}",
+        super(ProducerDefinitionPageBean.class, ProducerDefinition.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
     @Override
     protected List<ProducerDefinition> find() throws UnifyException {
+        ProducerDefinitionPageBean pageBean = getPageBean();
         ProducerDefinitionQuery query = new ProducerDefinitionQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.name(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getIntegrationService().findProducerDefinitions(query);

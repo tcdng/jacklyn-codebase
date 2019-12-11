@@ -17,10 +17,10 @@ package com.tcdng.jacklyn.system.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.entities.DataSourceDriver;
 import com.tcdng.jacklyn.system.entities.DataSourceDriverQuery;
+import com.tcdng.jacklyn.system.web.beans.DataSourceDriverPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -34,85 +34,57 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/datasourcedriver")
 @UplBinding("web/system/upl/managedatasourcedriver.upl")
-public class DataSourceDriverController extends AbstractSystemCrudController<DataSourceDriver> {
+public class DataSourceDriverController
+        extends AbstractSystemFormController<DataSourceDriverPageBean, DataSourceDriver> {
 
-    private String searchCode;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-	public DataSourceDriverController() {
-		super(DataSourceDriver.class, "$m{system.datasourcedriver.hint}",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
-						| ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-	}
-
-	public String getSearchCode() {
-        return searchCode;
-    }
-
-    public void setSearchCode(String searchCode) {
-        this.searchCode = searchCode;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
+    public DataSourceDriverController() {
+        super(DataSourceDriverPageBean.class, DataSourceDriver.class,
+                ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
+                        | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
     @Override
-	protected Object create(DataSourceDriver datasourceDriver) throws UnifyException {
-		return getSystemService().createDataSourceDriver(datasourceDriver);
-	}
+    protected Object create(DataSourceDriver datasourceDriver) throws UnifyException {
+        return getSystemService().createDataSourceDriver(datasourceDriver);
+    }
 
-	@Override
-	protected int delete(DataSourceDriver datasourceDriver) throws UnifyException {
-		return getSystemService().deleteDataSourceDriver(datasourceDriver.getId());
-	}
+    @Override
+    protected int delete(DataSourceDriver datasourceDriver) throws UnifyException {
+        return getSystemService().deleteDataSourceDriver(datasourceDriver.getId());
+    }
 
-	@Override
-	protected List<DataSourceDriver> find() throws UnifyException {
-		DataSourceDriverQuery query = new DataSourceDriverQuery();
-		if (QueryUtils.isValidStringCriteria(getSearchCode())) {
-			query.name(getSearchCode());
-		}
+    @Override
+    protected List<DataSourceDriver> find() throws UnifyException {
+        DataSourceDriverPageBean pageBean = getPageBean();
+        DataSourceDriverQuery query = new DataSourceDriverQuery();
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchCode())) {
+            query.name(pageBean.getSearchCode());
+        }
 
-		if (QueryUtils.isValidStringCriteria(getSearchDescription())) {
-			query.descriptionLike(getSearchDescription());
-		}
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
+        }
 
-        if (searchStatus != null) {
-            query.status(searchStatus);
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
 
         query.addOrder("description").ignoreEmptyCriteria(true);
-		return getSystemService().findDataSourceDrivers(query);
-	}
+        return getSystemService().findDataSourceDrivers(query);
+    }
 
-	@Override
-	protected DataSourceDriver find(Long dataSourceDriverId) throws UnifyException {
-		return getSystemService().findDataSourceDriver(dataSourceDriverId);
-	}
+    @Override
+    protected DataSourceDriver find(Long dataSourceDriverId) throws UnifyException {
+        return getSystemService().findDataSourceDriver(dataSourceDriverId);
+    }
 
-	@Override
-	protected DataSourceDriver prepareCreate() throws UnifyException {
-		return new DataSourceDriver();
-	}
+    @Override
+    protected DataSourceDriver prepareCreate() throws UnifyException {
+        return new DataSourceDriver();
+    }
 
-	@Override
-	protected int update(DataSourceDriver datasourceDriver) throws UnifyException {
-		return getSystemService().updateDataSourceDriver(datasourceDriver);
-	}
+    @Override
+    protected int update(DataSourceDriver datasourceDriver) throws UnifyException {
+        return getSystemService().updateDataSourceDriver(datasourceDriver);
+    }
 }

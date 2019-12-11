@@ -15,15 +15,13 @@
  */
 package com.tcdng.jacklyn.file.web.controllers;
 
-import java.util.Date;
-
 import com.tcdng.jacklyn.file.constants.FileModuleAuditConstants;
 import com.tcdng.jacklyn.file.constants.FileTransferTaskConstants;
 import com.tcdng.jacklyn.file.entities.FileTransferConfig;
+import com.tcdng.jacklyn.file.web.beans.FileTransferPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.annotation.Action;
 
@@ -36,58 +34,33 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/filetransfer")
 @UplBinding("web/file/upl/filetransfer.upl")
-public class FileTransferController extends AbstractFilePageController {
-
-    private Long fileTransferConfigId;
-
-    private Date workingDt;
+public class FileTransferController extends AbstractFilePageController<FileTransferPageBean> {
 
     public FileTransferController() {
-        super(true, false);
+        super(FileTransferPageBean.class, true, false, false);
     }
 
     @Action
     public String startFileTransferTask() throws UnifyException {
-        FileTransferConfig fileTransferConfigData = getFileService().findFileTransferConfig(fileTransferConfigId);
-        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERTASK)
-                .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, fileTransferConfigData.getName())
-                .setParam(FileTransferTaskConstants.WORKINGDT, workingDt)
-                .setParam(FileTransferTaskConstants.UPDATEFILEBOX, true)
-                .logEvent(FileModuleAuditConstants.START_FILETRANSFERTASK, fileTransferConfigData.getName(),
-                        String.valueOf(workingDt))
-                .logMessages().build();
+        FileTransferPageBean pageBean = getPageBean();
+        FileTransferConfig fileTransferConfig =
+                getFileService().findFileTransferConfig(pageBean.getFileTransferConfigId());
+        TaskSetup taskSetup =
+                TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERTASK)
+                        .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGNAME, fileTransferConfig.getName())
+                        .setParam(FileTransferTaskConstants.WORKINGDT, pageBean.getWorkingDt())
+                        .setParam(FileTransferTaskConstants.UPDATEFILEBOX, true)
+                        .logEvent(FileModuleAuditConstants.START_FILETRANSFERTASK, fileTransferConfig.getName(),
+                                String.valueOf(pageBean.getWorkingDt()))
+                        .logMessages().build();
         return launchTaskWithMonitorBox(taskSetup, "$m{file.filetransfer.execution}");
-    }
-
-    public String getModeStyle() {
-        return EventType.CREATE.colorMode();
-    }
-
-    public Long getFileTransferConfigId() {
-        return fileTransferConfigId;
-    }
-
-    public void setFileTransferConfigId(Long fileTransferConfigId) {
-        this.fileTransferConfigId = fileTransferConfigId;
-    }
-
-    public Date getWorkingDt() {
-        return workingDt;
-    }
-
-    public void setWorkingDt(Date workingDt) {
-        this.workingDt = workingDt;
     }
 
     @Override
     protected void onOpenPage() throws UnifyException {
-        if (workingDt == null) {
-            workingDt = getFileService().getToday();
+        FileTransferPageBean pageBean = getPageBean();
+        if (pageBean.getWorkingDt() == null) {
+            pageBean.setWorkingDt(getFileService().getToday());
         }
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        return "basePanel";
     }
 }

@@ -21,8 +21,8 @@ import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.file.constants.FileModuleAuditConstants;
 import com.tcdng.jacklyn.file.entities.FileInbox;
 import com.tcdng.jacklyn.file.entities.FileInboxQuery;
+import com.tcdng.jacklyn.file.web.beans.FileInboxPageBean;
 import com.tcdng.jacklyn.shared.file.FileInboxReadStatus;
-import com.tcdng.jacklyn.shared.file.FileInboxStatus;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -37,31 +37,11 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/fileinbox")
 @UplBinding("web/file/upl/managefileinbox.upl")
-public class FileInboxController extends AbstractFileTransferBoxController<FileInbox> {
-
-    private FileInboxReadStatus searchReadStatus;
-
-    private FileInboxStatus searchStatus;
+public class FileInboxController extends AbstractFileTransferBoxFormController<FileInboxPageBean, FileInbox> {
 
     public FileInboxController() {
-        super(FileInbox.class, "$m{file.fileinbox.hint}",
+        super(FileInboxPageBean.class, FileInbox.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public FileInboxReadStatus getSearchReadStatus() {
-        return searchReadStatus;
-    }
-
-    public void setSearchReadStatus(FileInboxReadStatus searchReadStatus) {
-        this.searchReadStatus = searchReadStatus;
-    }
-
-    public FileInboxStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(FileInboxStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Action
@@ -90,20 +70,21 @@ public class FileInboxController extends AbstractFileTransferBoxController<FileI
 
     @Override
     protected List<FileInbox> find() throws UnifyException {
+        FileInboxPageBean pageBean = getPageBean();
         FileInboxQuery query = new FileInboxQuery();
-        if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
-            query.fileTransferConfigId(getSearchFileTransferConfigId());
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchFileTransferConfigId())) {
+            query.fileTransferConfigId(pageBean.getSearchFileTransferConfigId());
         }
 
-        if (getSearchReadStatus() != null) {
-            query.readStatus(getSearchReadStatus());
+        if (pageBean.getSearchReadStatus() != null) {
+            query.readStatus(pageBean.getSearchReadStatus());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
 
-        query.createdOn(getSearchCreateDt());
+        query.createdOn(pageBean.getSearchCreateDt());
         return getFileService().findFileInboxItems(query);
     }
 

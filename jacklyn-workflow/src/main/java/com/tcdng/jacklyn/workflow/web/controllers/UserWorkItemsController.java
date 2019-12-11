@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
@@ -27,7 +26,7 @@ import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
-import com.tcdng.jacklyn.workflow.web.widgets.CommentsInfo;
+import com.tcdng.jacklyn.workflow.web.beans.UserWorkItemsPageBean;
 import com.tcdng.jacklyn.workflow.web.widgets.UserWorkItemsPage;
 import com.tcdng.jacklyn.workflow.web.widgets.WfItemCommentsPanel;
 import com.tcdng.unify.core.UnifyException;
@@ -71,33 +70,10 @@ import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
         @ResultMapping(
                 name = "showcomments",
                 response = { "!validationerrorresponse", "!showpopupresponse popup:$s{commentsPopup}" }) })
-public class UserWorkItemsController extends AbstractWorkflowController {
-
-    private String wfStepName;
-
-    private InteractWfItems csWorkItems;
-
-    private FlowingWfItem workflowItem;
-
-    private Table table;
-
-    private List<Long> wfItemIds;
-
-    private int viewIndex;
-
-    private String actionName;
-
-    private FileAttachmentsInfo fileAttachmentsInfo;
-
-    private CommentsInfo commentsInfo;
-
-    private Map<Long, FlowingWfItem> workingCache;
-
-    private WfItemCommentsPanel wfItemCommentsPanel;
+public class UserWorkItemsController extends AbstractWorkflowPageController<UserWorkItemsPageBean> {
 
     public UserWorkItemsController() {
-        super(true, false);
-        commentsInfo = new CommentsInfo();
+        super(UserWorkItemsPageBean.class, true, false, false);
     }
 
     @Action
@@ -108,11 +84,13 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     @Action
     public String refreshWorkflowItems() throws UnifyException {
-        if (QueryUtils.isValidStringCriteria(wfStepName)) {
-            csWorkItems = getWorkflowService().getCurrentUserWorkItems(wfStepName);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        if (QueryUtils.isValidStringCriteria(pageBean.getWfStepName())) {
+            InteractWfItems csWorkItems = getWorkflowService().getCurrentUserWorkItems(pageBean.getWfStepName());
+            pageBean.setCsWorkItems(csWorkItems);
             ((UserWorkItemsPage) getPage()).setPageValidationActions(csWorkItems.getValidatePageActions());
         } else {
-            csWorkItems = null;
+            pageBean.setCsWorkItems(null);
             ((UserWorkItemsPage) getPage()).setPageValidationActions(null);
         }
 
@@ -122,7 +100,9 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     @Action
     public String applyActionToMultipleWorkflowItems() throws UnifyException {
-        actionName = getRequestTarget(String.class);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        String actionName = getRequestTarget(String.class);
+        pageBean.setActionName(actionName);
         List<Long> wfItemIds = getSelectedIds();
         TaskSetup taskSetup =
                 TaskSetup.newBuilder().addTask(WorkflowApplyActionTaskConstants.TASK_NAME)
@@ -134,19 +114,21 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     @Action
     public String applyActionToWorkflowItem() throws UnifyException {
-        actionName = getRequestTarget(String.class);
-        commentsInfo.setComment(null);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        String actionName = getRequestTarget(String.class);
+        pageBean.setActionName(actionName);
+        pageBean.getCommentsInfo().setComment(null);
 
         // Check for comments
-        for (WfAction wfAction : workflowItem.getActionList()) {
+        for (WfAction wfAction : pageBean.getWorkflowItem().getActionList()) {
             if (actionName.equals(wfAction.getName())) {
                 RequirementType commentsReq = wfAction.getCommentReqType();
                 if (commentsReq == null || RequirementType.NONE.equals(commentsReq)) {
                     break;
                 }
 
-                commentsInfo.setRequired(RequirementType.MANDATORY.equals(commentsReq));
-                commentsInfo
+                pageBean.getCommentsInfo().setRequired(RequirementType.MANDATORY.equals(commentsReq));
+                pageBean.getCommentsInfo()
                         .setApplyActionCaption(getSessionMessage("button.addcommentsapplyaction", wfAction.getLabel()));
                 return showComments(true);
             }
@@ -157,33 +139,38 @@ public class UserWorkItemsController extends AbstractWorkflowController {
 
     @Action
     public String applyActionWithComments() throws UnifyException {
-        workflowItem.setComment(commentsInfo.getComment());
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.getWorkflowItem().setComment(pageBean.getCommentsInfo().getComment());
         return internalApplyActionToWorkflowItem();
     }
 
     @Action
     public String prepareViewWorkflowItems() throws UnifyException {
-        wfItemIds = getSelectedIds();
-        viewIndex = 0;
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.setWfItemIds(getSelectedIds());
+        pageBean.setViewIndex(0);
         return prepareWorkflowItemForView();
     }
 
     @Action
     public String fetchWorkflowItems() throws UnifyException {
-        getWorkflowService().grabCurrentUserWorkItems(wfStepName);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        getWorkflowService().grabCurrentUserWorkItems(pageBean.getWfStepName());
         return refreshWorkflowItemSummary();
     }
 
     @Action
     public String releaseWorkflowItems() throws UnifyException {
+        UserWorkItemsPageBean pageBean = getPageBean();
         List<Long> wfItemIds = getSelectedIds();
-        getWorkflowService().releaseCurrentUserWorkItems(wfStepName, wfItemIds);
+        getWorkflowService().releaseCurrentUserWorkItems(pageBean.getWfStepName(), wfItemIds);
         return refreshWorkflowItemSummary();
     }
 
     @Action
     public String showWorkflowItemAttachments() throws UnifyException {
-        Long wfItemId = wfItemIds.get(viewIndex);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        Long wfItemId = pageBean.getWfItemIds().get(pageBean.getViewIndex());
         List<WfItemAttachmentInfo> wfAttachmentList = getWorkflowService().fetchWorkflowItemAttachments(wfItemId, true);
         List<FileAttachmentInfo> filaAttachmentInfoList = new ArrayList<FileAttachmentInfo>();
         for (WfItemAttachmentInfo workflowItemAttachment : wfAttachmentList) {
@@ -194,7 +181,8 @@ public class UserWorkItemsController extends AbstractWorkflowController {
             filaAttachmentInfoList.add(fileAttachmentInfo);
         }
 
-        fileAttachmentsInfo = new FileAttachmentsInfo(wfItemId, filaAttachmentInfoList);
+        FileAttachmentsInfo fileAttachmentsInfo = new FileAttachmentsInfo(wfItemId, filaAttachmentInfoList);
+        pageBean.setFileAttachmentsInfo(fileAttachmentsInfo);
         return "showattachments";
     }
 
@@ -207,81 +195,40 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     public String closeViewWorkflowItems() throws UnifyException {
         refreshWorkflowItemSummary();
 
-        wfItemIds = null;
-        viewIndex = 0;
-        workflowItem = null;
-        workingCache = null;
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.setWfItemIds(null);
+        pageBean.setViewIndex(0);
+        pageBean.setWorkflowItem(null);
+        pageBean.setWorkingCache(null);
         return "switchsearchitems";
     }
 
     @Action
     public String firstRecord() throws UnifyException {
-        viewIndex = 0;
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.setViewIndex(0);
         return prepareWorkflowItemForView();
     }
 
     @Action
     public String previousRecord() throws UnifyException {
-        viewIndex--;
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.setViewIndex(pageBean.getViewIndex() - 1);
         return prepareWorkflowItemForView();
     }
 
     @Action
     public String nextRecord() throws UnifyException {
-        viewIndex++;
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.setViewIndex(pageBean.getViewIndex() + 1);
         return prepareWorkflowItemForView();
     }
 
     @Action
     public String lastRecord() throws UnifyException {
-        viewIndex = wfItemIds.size() - 1;
+        UserWorkItemsPageBean pageBean = getPageBean();
+        pageBean.setViewIndex(pageBean.getWfItemIds().size() - 1);
         return prepareWorkflowItemForView();
-    }
-
-    public String getWfStepName() {
-        return wfStepName;
-    }
-
-    public void setWfStepName(String wfStepName) {
-        this.wfStepName = wfStepName;
-    }
-
-    public InteractWfItems getCsWorkItems() {
-        return csWorkItems;
-    }
-
-    public void setCsWorkItems(InteractWfItems csWorkItems) {
-        this.csWorkItems = csWorkItems;
-    }
-
-    public FlowingWfItem getWorkflowItem() {
-        return workflowItem;
-    }
-
-    public int getItemCount() {
-        if (wfItemIds != null) {
-            return wfItemIds.size();
-        }
-
-        return 0;
-    }
-
-    public int getViewIndex() {
-        return viewIndex;
-    }
-
-    public FileAttachmentsInfo getFileAttachmentsInfo() {
-        return fileAttachmentsInfo;
-    }
-
-    public CommentsInfo getCommentsInfo() {
-        return commentsInfo;
-    }
-
-    @Override
-    protected void onSetPage() throws UnifyException {
-        table = getPageWidgetByShortName(Table.class, "wfItemsTbl");
-        wfItemCommentsPanel = getPageWidgetByShortName(WfItemCommentsPanel.class, "commentsPopup");
     }
 
     @Override
@@ -289,47 +236,49 @@ public class UserWorkItemsController extends AbstractWorkflowController {
         manageDisplay();
     }
 
-    @Override
-    protected String getDocViewPanelName() {
-        return "userWorkItemsPanel";
-    }
-
     private String showComments(boolean isAddComment) throws UnifyException {
-        WfItemHistory wih = getWorkflowService().findWorkflowItemHistory(workflowItem.getWfItemHistId(), true);
-        commentsInfo.setCommentsHistEventList(wih.getEventList());
-        wfItemCommentsPanel.setAddComments(isAddComment);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        WfItemHistory wih =
+                getWorkflowService().findWorkflowItemHistory(pageBean.getWorkflowItem().getWfItemHistId(), true);
+        pageBean.getCommentsInfo().setCommentsHistEventList(wih.getEventList());
+        getWfItemCommentsPanel().setAddComments(isAddComment);
         return "showcomments";
     }
 
     private String prepareWorkflowItemForView() throws UnifyException {
+        UserWorkItemsPageBean pageBean = getPageBean();
         // Load workflow item
-        Long wfItemId = wfItemIds.get(viewIndex);
-        if (workingCache != null && workingCache.containsKey(wfItemId)) {
-            workflowItem = workingCache.get(wfItemId);
+        FlowingWfItem workflowItem = null;
+        Long wfItemId = pageBean.getWfItemIds().get(pageBean.getViewIndex());
+        if (pageBean.getWorkingCache() != null && pageBean.getWorkingCache().containsKey(wfItemId)) {
+            workflowItem = pageBean.getWorkingCache().get(wfItemId);
         } else {
             workflowItem = getWorkflowService().findWorkflowItem(wfItemId);
-            workflowItem.setActionList(csWorkItems.getActionList());
+            workflowItem.setActionList(pageBean.getCsWorkItems().getActionList());
 
-            if (workingCache == null) {
-                workingCache = new HashMap<Long, FlowingWfItem>();
+            if (pageBean.getWorkingCache() == null) {
+                pageBean.setWorkingCache(new HashMap<Long, FlowingWfItem>());
             }
 
-            workingCache.put(wfItemId, workflowItem);
+            pageBean.getWorkingCache().put(wfItemId, workflowItem);
         }
 
-        workflowItem.setLabel(getSessionMessage("label.itemcount", viewIndex + 1, wfItemIds.size()));
+        workflowItem.setLabel(
+                getSessionMessage("label.itemcount", pageBean.getViewIndex() + 1, pageBean.getWfItemIds().size()));
+        pageBean.setWorkflowItem(workflowItem);
         return "switchdocviewer";
     }
 
     private String internalApplyActionToWorkflowItem() throws UnifyException {
-        getWorkflowService().applyWorkflowAction(workflowItem, actionName);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        getWorkflowService().applyWorkflowAction(pageBean.getWorkflowItem(), pageBean.getActionName());
         hintUser("$m{hint.workflow.userworkitems.applyaction.success}");
-        Long wfItemId = wfItemIds.remove(viewIndex);
-        workingCache.remove(wfItemId);
+        Long wfItemId = pageBean.getWfItemIds().remove(pageBean.getViewIndex());
+        pageBean.getWorkingCache().remove(wfItemId);
 
-        if (!wfItemIds.isEmpty()) {
-            if (viewIndex >= wfItemIds.size()) {
-                viewIndex = wfItemIds.size() - 1;
+        if (!pageBean.getWfItemIds().isEmpty()) {
+            if (pageBean.getViewIndex() >= pageBean.getWfItemIds().size()) {
+                pageBean.setViewIndex(pageBean.getWfItemIds().size() - 1);
             }
             return prepareWorkflowItemForView();
         }
@@ -338,11 +287,12 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     }
 
     private List<Long> getSelectedIds() throws UnifyException {
-        if (table.getSelectedRows() > 0) {
-            Integer[] selectedIndexes = table.getSelectedRowIndexes();
+        UserWorkItemsPageBean pageBean = getPageBean();
+        if (getTable().getSelectedRows() > 0) {
+            Integer[] selectedIndexes = getTable().getSelectedRowIndexes();
             List<Long> selectedIds = new ArrayList<Long>();
             for (int i = 0; i < selectedIndexes.length; i++) {
-                selectedIds.add(csWorkItems.getWfItemList().get(selectedIndexes[i]).getId());
+                selectedIds.add(pageBean.getCsWorkItems().getWfItemList().get(selectedIndexes[i]).getId());
             }
             return selectedIds;
         }
@@ -350,10 +300,19 @@ public class UserWorkItemsController extends AbstractWorkflowController {
     }
 
     private void manageDisplay() throws UnifyException {
-        boolean isItems = csWorkItems != null && csWorkItems.isActionListItems();
-        setVisible("wfActionButtonsOnMultiple", isItems);
-        setDisabled("fetchItemsBtn", StringUtils.isBlank(wfStepName));
-        setDisabled("releaseItemsBtn", !isItems);
-        setDisabled("viewItemsBtn", !isItems);
+        UserWorkItemsPageBean pageBean = getPageBean();
+        boolean isItems = pageBean.getCsWorkItems() != null && pageBean.getCsWorkItems().isActionListItems();
+        setPageWidgetVisible("wfActionButtonsOnMultiple", isItems);
+        setPageWidgetDisabled("fetchItemsBtn", StringUtils.isBlank(pageBean.getWfStepName()));
+        setPageWidgetDisabled("releaseItemsBtn", !isItems);
+        setPageWidgetDisabled("viewItemsBtn", !isItems);
+    }
+
+    private Table getTable() throws UnifyException {
+        return getPageWidgetByShortName(Table.class, "wfItemsTbl");
+    }
+
+    private WfItemCommentsPanel getWfItemCommentsPanel() throws UnifyException {
+        return getPageWidgetByShortName(WfItemCommentsPanel.class, "commentsPopup");
     }
 }
