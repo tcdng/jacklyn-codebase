@@ -23,6 +23,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.constant.LocaleType;
 import com.tcdng.unify.core.report.AbstractBeanCollectionReportProcessor;
+import com.tcdng.unify.core.report.Report;
 import com.tcdng.unify.core.report.ReportParameters;
 
 /**
@@ -72,6 +73,11 @@ public abstract class BaseBeanCollectionReportProcessor<T> extends AbstractBeanC
             }
             setReportHeaderParameter(reportParameters, "header_" + paramName, description, itemTypeDesc);
         }
+    }
+
+    @Override
+    protected void doProcess(Report report) throws UnifyException {
+        
     }
 
 }
