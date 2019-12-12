@@ -15,9 +15,9 @@
  */
 package com.tcdng.jacklyn.security.web.controllers;
 
-import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.UserRole;
+import com.tcdng.jacklyn.security.web.beans.AbstractApplicationForwarderPageBean;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
@@ -33,22 +33,12 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @ResultMappings({ @ResultMapping(
         name = "forwardtoapplication", response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
-public abstract class AbstractApplicationForwarderController<T extends BasePageBean>
+public abstract class AbstractApplicationForwarderController<T extends AbstractApplicationForwarderPageBean>
         extends AbstractSecurityPageController<T> {
-
-    private String applicationPath;
 
     public AbstractApplicationForwarderController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
             boolean resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
-    }
-
-    public String getApplicationPath() {
-        return applicationPath;
-    }
-
-    public void setApplicationPath(String applicationPath) {
-        this.applicationPath = applicationPath;
     }
 
     /**
@@ -61,6 +51,8 @@ public abstract class AbstractApplicationForwarderController<T extends BasePageB
      *             if an error occurs
      */
     protected String forwardToApplication(UserRole userRole) throws UnifyException {
+        AbstractApplicationForwarderPageBean pageBean = getPageBean();
+        String applicationPath = null;
         if (userRole != null) {
             applicationPath = userRole.getRoleApplication();
         }
@@ -72,6 +64,7 @@ public abstract class AbstractApplicationForwarderController<T extends BasePageB
         }
 
         getSecurityService().setCurrentUserRole(userRole);
+        pageBean.setApplicationPath(applicationPath);
         return "forwardtoapplication";
     }
 

@@ -19,7 +19,6 @@ package com.tcdng.jacklyn.security.web.beans;
 import java.util.List;
 import java.util.Locale;
 
-import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.security.entities.UserRole;
 
 /**
@@ -28,7 +27,7 @@ import com.tcdng.jacklyn.security.entities.UserRole;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class UserLoginPageBean extends BasePageBean {
+public class UserLoginPageBean extends AbstractApplicationForwarderPageBean {
 
     private String userName;
 

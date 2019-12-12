@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.SystemNotificationProvider;
 import com.tcdng.jacklyn.common.data.SystemNotification;
-import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.resource.ImageGenerator;
 
@@ -30,7 +29,7 @@ import com.tcdng.unify.core.resource.ImageGenerator;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class ApplicationPageBean extends BasePageBean {
+public class ApplicationPageBean extends AbstractApplicationForwarderPageBean {
 
     private List<? extends SystemNotification> userNotifications;
 
