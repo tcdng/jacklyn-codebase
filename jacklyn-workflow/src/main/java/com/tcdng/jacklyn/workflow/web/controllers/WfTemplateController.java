@@ -19,11 +19,11 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.jacklyn.workflow.entities.WfTemplateQuery;
+import com.tcdng.jacklyn.workflow.web.beans.WfTemplatePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -45,76 +45,31 @@ import com.tcdng.unify.core.util.QueryUtils;
         @CrudPanelList(panel = "frmWfFormPrivilegeListPanel", property = "largeData.formPrivilegeList"),
         @CrudPanelList(panel = "frmWfPolicyListPanel", property = "largeData.policyList"),
         @CrudPanelList(panel = "frmWfAlertListPanel", property = "largeData.alertList") })
-public class WfTemplateController extends AbstractWorkflowCrudController<WfTemplate> {
-
-    private Long searchWfCategoryId;
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private WfTemplateLargeData largeData;
+public class WfTemplateController extends AbstractWorkflowFormController<WfTemplatePageBean, WfTemplate> {
 
     public WfTemplateController() {
-        super(WfTemplate.class, "$m{workflow.wftemplate.hint}",
+        super(WfTemplatePageBean.class, WfTemplate.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchWfCategoryId() {
-        return searchWfCategoryId;
-    }
-
-    public void setSearchWfCategoryId(Long searchWfCategoryId) {
-        this.searchWfCategoryId = searchWfCategoryId;
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public WfTemplateLargeData getLargeData() {
-        return largeData;
     }
 
     @Override
     protected List<WfTemplate> find() throws UnifyException {
+        WfTemplatePageBean pageBean = getPageBean();
         WfTemplateQuery query = new WfTemplateQuery();
-        if (QueryUtils.isValidLongCriteria(searchWfCategoryId)) {
-            query.wfCategoryId(searchWfCategoryId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchWfCategoryId())) {
+            query.wfCategoryId(pageBean.getSearchWfCategoryId());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (searchStatus != null) {
-            query.wfCategoryStatus(searchStatus);
+        if (pageBean.getSearchStatus() != null) {
+            query.wfCategoryStatus(pageBean.getSearchStatus());
         }
 
         query.ignoreEmptyCriteria(true);
@@ -123,7 +78,9 @@ public class WfTemplateController extends AbstractWorkflowCrudController<WfTempl
 
     @Override
     protected WfTemplate find(Long id) throws UnifyException {
-        largeData = getWorkflowService().findLargeWfTemplate(id);
+        WfTemplateLargeData largeData = getWorkflowService().findLargeWfTemplate(id);
+        WfTemplatePageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
@@ -133,17 +90,17 @@ public class WfTemplateController extends AbstractWorkflowCrudController<WfTempl
     }
 
     @Override
-    protected Object create(WfTemplate wfDefData) throws UnifyException {
+    protected Object create(WfTemplate wfTemplate) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(WfTemplate wfDefData) throws UnifyException {
+    protected int update(WfTemplate wfTemplate) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected int delete(WfTemplate wfDefData) throws UnifyException {
+    protected int delete(WfTemplate wfTemplate) throws UnifyException {
         return 0;
     }
 }

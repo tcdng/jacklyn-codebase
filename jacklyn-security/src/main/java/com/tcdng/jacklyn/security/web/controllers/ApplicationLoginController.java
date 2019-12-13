@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.security.web.controllers;
 
+import com.tcdng.jacklyn.security.web.beans.ApplicationLoginPageBean;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.AbstractPageController;
@@ -27,9 +28,9 @@ import com.tcdng.unify.web.AbstractPageController;
  */
 @Component("/application/home")
 @UplBinding("web/security/upl/applicationlogin.upl")
-public class ApplicationLoginController extends AbstractPageController {
+public class ApplicationLoginController extends AbstractPageController<ApplicationLoginPageBean> {
 
     public ApplicationLoginController() {
-        super(false, false); // Unsecured and not read-only
+        super(ApplicationLoginPageBean.class, false, false, false); // Unsecured and not read-only
     }
 }

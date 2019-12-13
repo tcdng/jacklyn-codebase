@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.report.web.controllers;
 
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.jacklyn.report.entities.ReportConfiguration;
+import com.tcdng.jacklyn.report.web.beans.ReportListingPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
@@ -32,72 +33,52 @@ import com.tcdng.unify.web.ui.data.LinkGridInfo;
  */
 @Component("/report/reportlisting")
 @UplBinding("web/report/upl/reportlisting.upl")
-public class ReportListingController extends AbstractReportPageController {
+public class ReportListingController extends AbstractReportPageController<ReportListingPageBean> {
 
-	@Configurable("/resource/jacklynreport")
-	private String reportResourcePath;
+    @Configurable("/resource/jacklynreport")
+    private String reportResourcePath;
 
-	private LinkGridInfo linkGridInfo;
-
-	public ReportListingController() {
-		super(true, false);
-	}
-
-	@Action
-	public String prepareGenerateReport() throws UnifyException {
-		String reportConfigName = getRequestContextUtil().getRequestTargetValue(String.class);
-		ReportOptions reportOptions = getReportService().getReportOptionsForConfiguration(reportConfigName);
-		reportOptions.setReportResourcePath(reportResourcePath);
-		reportOptions.setUserInputOnly(true);
-		return showReportOptionsBox(reportOptions);
-	}
-
-	public LinkGridInfo getLinkGridInfo() {
-		return linkGridInfo;
-	}
-
-	public void setLinkGridInfo(LinkGridInfo linkGridInfo) {
-		this.linkGridInfo = linkGridInfo;
-	}
-
-    @Override
-    protected String getDocViewPanelName() {
-        // TODO Auto-generated method stub
-        return null;
+    public ReportListingController() {
+        super(ReportListingPageBean.class, true, false, false);
     }
 
-	@Override
-	protected void onSetPage() throws UnifyException {
-		super.onSetPage();
-		setPageValidationEnabled(true);
-	}
+    @Action
+    public String prepareGenerateReport() throws UnifyException {
+        String reportConfigName = getRequestContextUtil().getRequestTargetValue(String.class);
+        ReportOptions reportOptions = getReportService().getReportOptionsForConfiguration(reportConfigName);
+        reportOptions.setReportResourcePath(reportResourcePath);
+        reportOptions.setUserInputOnly(true);
+        return showReportOptionsBox(reportOptions);
+    }
 
-	@Override
-	protected void onClosePage() throws UnifyException {
-		linkGridInfo = null;
-	}
+    @Override
+    protected void onInitPage() throws UnifyException {
+        setPageValidationEnabled(true);
+    }
 
-	@Override
-	protected void onOpenPage() throws UnifyException {
-		// Load link grid information
-		LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
-		String roleCode = null;
-		if (!getUserToken().isReservedUser() && !isAppAdminView()) {
-	        roleCode = getUserToken().getRoleCode();
-		}
-		
-		String grpCode = null;
-		for (ReportConfiguration rcd : getReportService().getRoleReportListing(roleCode)) {
-			if (!rcd.getReportGroupCode().equals(grpCode)) {
-				grpCode = rcd.getReportGroupCode();
-				lb.addCategory(grpCode, rcd.getReportGroupDesc(), "/report/reportlisting/prepareGenerateReport");
-			}
+    @Override
+    protected void onOpenPage() throws UnifyException {
+        // Load link grid information
+        LinkGridInfo.Builder lb = LinkGridInfo.newBuilder();
+        String roleCode = null;
+        if (!getUserToken().isReservedUser() && !isAppAdminView()) {
+            roleCode = getUserToken().getRoleCode();
+        }
 
-			String name = rcd.getName();
-			lb.addLink(grpCode, name, rcd.getDescription());
-		}
+        String grpCode = null;
+        for (ReportConfiguration rcd : getReportService().getRoleReportListing(roleCode)) {
+            if (!rcd.getReportGroupCode().equals(grpCode)) {
+                grpCode = rcd.getReportGroupCode();
+                lb.addCategory(grpCode, rcd.getReportGroupDesc(), "/report/reportlisting/prepareGenerateReport");
+            }
 
-		linkGridInfo = lb.build();
-	}
+            String name = rcd.getName();
+            lb.addLink(grpCode, name, rcd.getDescription());
+        }
+
+        ReportListingPageBean pageBean = getPageBean();
+        LinkGridInfo linkGridInfo = lb.build();
+        pageBean.setLinkGridInfo(linkGridInfo);
+    }
 
 }

@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.location.entities.Country;
 import com.tcdng.jacklyn.location.entities.CountryQuery;
+import com.tcdng.jacklyn.location.web.beans.CountryPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,46 +34,27 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/location/country")
 @UplBinding("web/location/upl/managecountry.upl")
-public class CountryController extends AbstractLocationCrudController<Country> {
-
-    private String searchCode;
-
-    private String searchDescription;
+public class CountryController extends AbstractLocationFormController<CountryPageBean, Country> {
 
     public CountryController() {
-        super(Country.class, "$m{location.country.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(CountryPageBean.class, Country.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchCode() {
-        return searchCode;
-    }
-
-    public void setSearchCode(String searchCode) {
-        this.searchCode = searchCode;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
     }
 
     @Override
     protected List<Country> find() throws UnifyException {
+        CountryPageBean pageBean = getPageBean();
         CountryQuery query = new CountryQuery();
-        if (QueryUtils.isValidStringCriteria(searchCode)) {
-            query.iso3Code(searchCode);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchCode())) {
+            query.iso3Code(pageBean.getSearchCode());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getLocationService().findCountries(query);

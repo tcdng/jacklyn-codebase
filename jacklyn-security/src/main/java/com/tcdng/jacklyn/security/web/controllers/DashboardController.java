@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.security.web.controllers;
 
+import com.tcdng.jacklyn.security.web.beans.DashboardPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -27,26 +28,18 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 @Component("/security/landing")
 @UplBinding("web/security/upl/dashboardlanding.upl")
-public class DashboardController extends AbstractSecurityPageController {
-
-    private String dashboardViewer;
+public class DashboardController extends AbstractSecurityPageController<DashboardPageBean> {
 
     public DashboardController() {
-        super(true, false);// Secure and not-readonly
-    }
-
-    public String getDashboardViewer() {
-        return dashboardViewer;
+        super(DashboardPageBean.class, true, false, false);// Secure and not-readonly
     }
 
     @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
-        dashboardViewer = getSecurityService().getCurrentUserRoleDashboardViewer();
-   }
 
-    @Override
-    protected String getDocViewPanelName() {
-        return "mainDashboardPanel";
+        DashboardPageBean pageBean = getPageBean();
+        String dashboardViewer = getSecurityService().getCurrentUserRoleDashboardViewer();
+        pageBean.setDashboardViewer(dashboardViewer);
     }
 }

@@ -17,11 +17,11 @@ package com.tcdng.jacklyn.security.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.security.data.ClientAppLargeData;
 import com.tcdng.jacklyn.security.entities.ClientApp;
 import com.tcdng.jacklyn.security.entities.ClientAppQuery;
+import com.tcdng.jacklyn.security.web.beans.ClientAppPageBean;
 import com.tcdng.jacklyn.shared.system.ClientAppType;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -38,67 +38,25 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/security/clientapp")
 @UplBinding("web/security/upl/manageclientapp.upl")
-public class ClientAppController extends AbstractSecurityCrudController<ClientApp> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private ClientAppLargeData largeData;
-
-    private ClientAppLargeData clipboardLargeData;
+public class ClientAppController extends AbstractSecurityFormController<ClientAppPageBean, ClientApp> {
 
     public ClientAppController() {
-        super(ClientApp.class, "$m{security.clientapp.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ClientAppPageBean.class, ClientApp.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-        largeData = new ClientAppLargeData();
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public ClientAppLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(ClientAppLargeData largeData) {
-        this.largeData = largeData;
     }
 
     @Override
     protected List<ClientApp> find() throws UnifyException {
+        ClientAppPageBean pageBean = getPageBean();
         ClientAppQuery query = new ClientAppQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSecurityService().findClientApps(query);
@@ -106,45 +64,58 @@ public class ClientAppController extends AbstractSecurityCrudController<ClientAp
 
     @Override
     protected ClientApp find(Long id) throws UnifyException {
-        largeData = getSecurityService().findClientApp(id);
+        ClientAppLargeData largeData = getSecurityService().findClientApp(id);
+        ClientAppPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected ClientApp prepareCreate() throws UnifyException {
-        largeData = new ClientAppLargeData();
+        ClientAppLargeData largeData = new ClientAppLargeData();
         largeData.getData().setType(ClientAppType.STANDARD);
+        ClientAppPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected void onPrepareView(ClientApp clientAppData, boolean onPaste) throws UnifyException {
+        ClientAppPageBean pageBean = getPageBean();
+        ClientAppLargeData largeData = pageBean.getLargeData();
         if (onPaste) {
-            largeData.setSystemAssetIdList(clipboardLargeData.getSystemAssetIdList());
+            largeData.setSystemAssetIdList(pageBean.getClipboardLargeData().getSystemAssetIdList());
         }
     }
 
     @Override
     @Action
     public String copyRecord() throws UnifyException {
-        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
+        ClientAppPageBean pageBean = getPageBean();
+        ClientAppLargeData clipboardLargeData = ReflectUtils.shallowBeanCopy(pageBean.getLargeData());
+        pageBean.setClipboardLargeData(clipboardLargeData);
+        
         return super.copyRecord();
     }
 
     @Override
     protected void onLoseView(ClientApp clientAppData) throws UnifyException {
-        largeData = new ClientAppLargeData();
-        clipboardLargeData = null;
+        ClientAppPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new ClientAppLargeData());
+        pageBean.setClipboardLargeData(null);
+        ;
     }
 
     @Override
     protected Object create(ClientApp clientAppData) throws UnifyException {
-        return (Long) getSecurityService().createClientApp(largeData);
+        ClientAppPageBean pageBean = getPageBean();
+        return (Long) getSecurityService().createClientApp(pageBean.getLargeData());
     }
 
     @Override
     protected int update(ClientApp clientAppData) throws UnifyException {
-        return getSecurityService().updateClientApp(largeData);
+        ClientAppPageBean pageBean = getPageBean();
+        return getSecurityService().updateClientApp(pageBean.getLargeData());
     }
 
     @Override

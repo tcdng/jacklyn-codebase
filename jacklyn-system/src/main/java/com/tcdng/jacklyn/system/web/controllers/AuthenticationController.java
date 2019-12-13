@@ -18,11 +18,11 @@ package com.tcdng.jacklyn.system.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
+import com.tcdng.jacklyn.system.web.beans.AuthenticationPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -36,66 +36,26 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/authentication")
 @UplBinding("web/system/upl/manageauthentication.upl")
-public class AuthenticationController extends AbstractSystemCrudController<Authentication> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private AuthenticationLargeData largeData;
+public class AuthenticationController extends AbstractSystemFormController<AuthenticationPageBean, Authentication> {
 
     public AuthenticationController() {
-        super(Authentication.class, "$m{system.authentication.hint}",
+        super(AuthenticationPageBean.class, Authentication.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-        largeData = new AuthenticationLargeData();
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public AuthenticationLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(AuthenticationLargeData largeData) {
-        this.largeData = largeData;
     }
 
     @Override
     protected List<Authentication> find() throws UnifyException {
+        AuthenticationPageBean pageBean = getPageBean();
         AuthenticationQuery query = new AuthenticationQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findAuthentications(query);
@@ -103,13 +63,17 @@ public class AuthenticationController extends AbstractSystemCrudController<Authe
 
     @Override
     protected Authentication find(Long id) throws UnifyException {
-        largeData = getSystemService().findAuthentication(id);
+        AuthenticationLargeData largeData = getSystemService().findAuthentication(id);
+        AuthenticationPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected Authentication prepareCreate() throws UnifyException {
-        largeData = new AuthenticationLargeData();
+        AuthenticationLargeData largeData = new AuthenticationLargeData();
+        AuthenticationPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
@@ -120,17 +84,20 @@ public class AuthenticationController extends AbstractSystemCrudController<Authe
 
     @Override
     protected void onLoseView(Authentication authenticationData) throws UnifyException {
-        this.largeData = new AuthenticationLargeData();
+        AuthenticationPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new AuthenticationLargeData());
     }
 
     @Override
     protected Object create(Authentication authenticationData) throws UnifyException {
-        return getSystemService().createAuthentication(largeData);
+        AuthenticationPageBean pageBean = getPageBean();
+        return getSystemService().createAuthentication(pageBean.getLargeData());
     }
 
     @Override
     protected int update(Authentication authenticationData) throws UnifyException {
-        return getSystemService().updateAuthentication(largeData);
+        AuthenticationPageBean pageBean = getPageBean();
+        return getSystemService().updateAuthentication(pageBean.getLargeData());
     }
 
     @Override

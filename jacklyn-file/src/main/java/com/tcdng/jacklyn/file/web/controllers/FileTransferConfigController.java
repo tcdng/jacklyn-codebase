@@ -17,13 +17,12 @@ package com.tcdng.jacklyn.file.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.file.constants.FileModuleAuditConstants;
 import com.tcdng.jacklyn.file.constants.FileTransferTaskConstants;
 import com.tcdng.jacklyn.file.entities.FileTransferConfig;
 import com.tcdng.jacklyn.file.entities.FileTransferConfigQuery;
-import com.tcdng.jacklyn.shared.file.FileTransferDirection;
+import com.tcdng.jacklyn.file.web.beans.FileTransferConfigPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -39,64 +38,38 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/file/filetransferconfig")
 @UplBinding("web/file/upl/managefiletransferconfig.upl")
-public class FileTransferConfigController extends AbstractFileCrudController<FileTransferConfig> {
-
-    private String searchName;
-
-    private FileTransferDirection searchDirection;
-
-    private RecordStatus searchStatus;
+public class FileTransferConfigController
+        extends AbstractFileFormController<FileTransferConfigPageBean, FileTransferConfig> {
 
     public FileTransferConfigController() {
-        super(FileTransferConfig.class, "$m{file.filetransferconfig.hint}",
+        super(FileTransferConfigPageBean.class, FileTransferConfig.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
                         | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
     @Action
     public String testFileTransferConfig() throws UnifyException {
-        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK)
-                .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, getRecord())
-                .logEvent(FileModuleAuditConstants.TEST_FILETRANSFERCONFIG, getRecord().getName()).logMessages()
-                .build();
+        FileTransferConfigPageBean pageBean = getPageBean();
+        TaskSetup taskSetup =
+                TaskSetup.newBuilder().addTask(FileTransferTaskConstants.FILETRANSFERCONFIGTESTTASK)
+                        .setParam(FileTransferTaskConstants.FILETRANSFERCONFIGDATA, pageBean.getRecord())
+                        .logEvent(FileModuleAuditConstants.TEST_FILETRANSFERCONFIG, pageBean.getRecord().getName())
+                        .logMessages().build();
         return launchTaskWithMonitorBox(taskSetup, "$m{file.filetransferconfig.test}");
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public FileTransferDirection getSearchDirection() {
-        return searchDirection;
-    }
-
-    public void setSearchDirection(FileTransferDirection searchDirection) {
-        this.searchDirection = searchDirection;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Override
     protected List<FileTransferConfig> find() throws UnifyException {
+        FileTransferConfigPageBean pageBean = getPageBean();
         FileTransferConfigQuery query = new FileTransferConfigQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (getSearchDirection() != null) {
-            query.direction(searchDirection);
+        if (pageBean.getSearchDirection() != null) {
+            query.direction(pageBean.getSearchDirection());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.ignoreEmptyCriteria(true);
         return getFileService().findFileTransferConfigs(query);

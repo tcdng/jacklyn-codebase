@@ -24,13 +24,13 @@ import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionAttr;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
+import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.util.ReflectUtils;
-import com.tcdng.unify.web.PageController;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
 
 /**
@@ -44,13 +44,15 @@ public class PageControllerSessionUtilsImpl extends AbstractUnifyComponent imple
 
     private static final SessionLoadingConfig BLANK_CONFIG = new SessionLoadingConfig();
 
-    private FactoryMap<Class<? extends PageController>, SessionLoadingConfig> sessionLoadingConfigs;
+    @SuppressWarnings("rawtypes")
+    private FactoryMap<Class<? extends BasePageController>, SessionLoadingConfig> sessionLoadingConfigs;
 
+    @SuppressWarnings("rawtypes")
     public PageControllerSessionUtilsImpl() {
-        sessionLoadingConfigs = new FactoryMap<Class<? extends PageController>, SessionLoadingConfig>() {
+        sessionLoadingConfigs = new FactoryMap<Class<? extends BasePageController>, SessionLoadingConfig>() {
 
             @Override
-            protected SessionLoadingConfig create(Class<? extends PageController> type, Object... params)
+            protected SessionLoadingConfig create(Class<? extends BasePageController> type, Object... params)
                     throws Exception {
                 SessionLoadingConfig sessionLoadingConfig = BLANK_CONFIG;
                 SessionLoading slsa = type.getAnnotation(SessionLoading.class);
@@ -74,20 +76,21 @@ public class PageControllerSessionUtilsImpl extends AbstractUnifyComponent imple
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends Entity> void loadSession(PageController pageController) throws UnifyException {
-        SessionLoadingConfig slc = sessionLoadingConfigs.get(pageController.getClass());
+    public <T extends Entity> void loadSession(BasePageController<?> basePageController) throws UnifyException {
+        SessionLoadingConfig slc = sessionLoadingConfigs.get(basePageController.getClass());
         for (Map.Entry<String, String> entry : slc.getSetAttributeConfigs().entrySet()) {
-            setSessionAttribute(entry.getKey(), ReflectUtils.getNestedBeanProperty(pageController, entry.getValue()));
+            setSessionAttribute(entry.getKey(),
+                    ReflectUtils.getNestedBeanProperty(basePageController, entry.getValue()));
         }
 
         for (Map.Entry<String, String> entry : slc.getCrudPanelConfigs().entrySet()) {
-            ((TableCrudPanel<T>) pageController.getPage().getWidgetByShortName(entry.getKey()))
-                    .setRecordList((List<T>) ReflectUtils.getNestedBeanProperty(pageController, entry.getValue()));
+            ((TableCrudPanel<T>) basePageController.getPage().getWidgetByShortName(entry.getKey()))
+                    .setRecordList((List<T>) ReflectUtils.getNestedBeanProperty(basePageController, entry.getValue()));
         }
     }
 
     @Override
-    public void unloadSession(PageController pageController) throws UnifyException {
+    public void unloadSession(BasePageController<?> pageController) throws UnifyException {
         SessionLoadingConfig slc = sessionLoadingConfigs.get(pageController.getClass());
         removeSessionAttributes(slc.getSetAttributeConfigs().keySet().toArray(new String[0]));
     }

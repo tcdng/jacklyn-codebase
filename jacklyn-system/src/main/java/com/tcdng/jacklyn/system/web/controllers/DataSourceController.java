@@ -17,12 +17,12 @@ package com.tcdng.jacklyn.system.web.controllers;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskConstants;
 import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskParamConstants;
 import com.tcdng.jacklyn.system.entities.DataSource;
 import com.tcdng.jacklyn.system.entities.DataSourceQuery;
+import com.tcdng.jacklyn.system.web.beans.DataSourcePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -39,112 +39,75 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/system/datasource")
 @UplBinding("web/system/upl/managedatasource.upl")
-public class DataSourceController extends AbstractSystemCrudController<DataSource> {
+public class DataSourceController extends AbstractSystemFormController<DataSourcePageBean, DataSource> {
 
-    private String searchCode;
-
-    private String searchDescription;
-
-    private BooleanType searchAppReserved;
-    
-	private RecordStatus searchStatus;
-
-	public DataSourceController() {
-		super(DataSource.class, "$m{system.datasource.hint}",
-				ManageRecordModifier.SECURE | ManageRecordModifier.CRUD | ManageRecordModifier.CLIPBOARD
-						| ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-	}
-
-	@Action
-	public String testDataSource() throws UnifyException {
-		TaskSetup taskSetup = TaskSetup.newBuilder().addTask(SystemDataSourceTaskConstants.DATASOURCETESTTASK)
-				.setParam(SystemDataSourceTaskParamConstants.DATASOURCE, getRecord()).logMessages().build();
-		return launchTaskWithMonitorBox(taskSetup, "$m{system.datasource.test}");
-	}
-
-	public String getSearchCode() {
-        return searchCode;
+    public DataSourceController() {
+        super(DataSourcePageBean.class, DataSource.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+                | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
     }
 
-    public void setSearchCode(String searchCode) {
-        this.searchCode = searchCode;
+    @Action
+    public String testDataSource() throws UnifyException {
+        DataSourcePageBean pageBean = getPageBean();
+        TaskSetup taskSetup =
+                TaskSetup.newBuilder().addTask(SystemDataSourceTaskConstants.DATASOURCETESTTASK)
+                        .setParam(SystemDataSourceTaskParamConstants.DATASOURCE, pageBean.getRecord()).logMessages()
+                        .build();
+        return launchTaskWithMonitorBox(taskSetup, "$m{system.datasource.test}");
     }
 
-    public String getSearchDescription() {
-        return searchDescription;
+    @Override
+    protected Object create(DataSource dataSource) throws UnifyException {
+        return getSystemService().createDataSource(dataSource);
     }
 
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
+    @Override
+    protected int delete(DataSource dataSource) throws UnifyException {
+        return getSystemService().deleteDataSource(dataSource.getId());
     }
 
-    public BooleanType getSearchAppReserved() {
-        return searchAppReserved;
+    @Override
+    protected List<DataSource> find() throws UnifyException {
+        DataSourcePageBean pageBean = getPageBean();
+        DataSourceQuery query = new DataSourceQuery();
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchCode())) {
+            query.name(pageBean.getSearchCode());
+        }
+
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
+        }
+
+        if (pageBean.getSearchAppReserved() != null) {
+            query.appReserved(pageBean.getSearchAppReserved());
+        }
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
+        }
+
+        query.addOrder("description").ignoreEmptyCriteria(true);
+        return getSystemService().findDataSources(query);
     }
 
-    public void setSearchAppReserved(BooleanType searchAppReserved) {
-        this.searchAppReserved = searchAppReserved;
+    @Override
+    protected DataSource find(Long dataSourceId) throws UnifyException {
+        return getSystemService().findDataSource(dataSourceId);
     }
 
-    public RecordStatus getSearchStatus() {
-		return searchStatus;
-	}
+    @Override
+    protected DataSource prepareCreate() throws UnifyException {
+        return new DataSource();
+    }
 
-	public void setSearchStatus(RecordStatus searchStatus) {
-		this.searchStatus = searchStatus;
-	}
-
-	@Override
-	protected Object create(DataSource dataSource) throws UnifyException {
-		return getSystemService().createDataSource(dataSource);
-	}
-
-	@Override
-	protected int delete(DataSource dataSource) throws UnifyException {
-		return getSystemService().deleteDataSource(dataSource.getId());
-	}
-
-	@Override
-	protected List<DataSource> find() throws UnifyException {
-		DataSourceQuery query = new DataSourceQuery();
-		if (QueryUtils.isValidStringCriteria(getSearchCode())) {
-			query.name(getSearchCode());
-		}
-
-		if (QueryUtils.isValidStringCriteria(getSearchDescription())) {
-			query.descriptionLike(getSearchDescription());
-		}
-
-		if (searchAppReserved != null) {
-		    query.appReserved(searchAppReserved);
-		}
-
-		if (searchStatus != null) {
-			query.status(searchStatus);
-		}
-
-		query.addOrder("description").ignoreEmptyCriteria(true);
-		return getSystemService().findDataSources(query);
-	}
-
-	@Override
-	protected DataSource find(Long dataSourceId) throws UnifyException {
-		return getSystemService().findDataSource(dataSourceId);
-	}
-
-	@Override
-	protected DataSource prepareCreate() throws UnifyException {
-		return new DataSource();
-	}
-
-	@Override
-	protected int update(DataSource dataSource) throws UnifyException {
-		return getSystemService().updateDataSource(dataSource);
-	}
+    @Override
+    protected int update(DataSource dataSource) throws UnifyException {
+        return getSystemService().updateDataSource(dataSource);
+    }
 
     @Override
     protected void onPrepareCrudViewer(DataSource dataSource, int mode) throws UnifyException {
-        setVisible("frmAppReserved", ManageRecordModifier.ADD != mode);
+        setPageWidgetVisible("frmAppReserved", ManageRecordModifier.ADD != mode);
         if (ManageRecordModifier.isEditable(mode)) {
             setCrudViewerEditable(!BooleanType.TRUE.equals(dataSource.getAppReserved()));
         }

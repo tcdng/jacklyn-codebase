@@ -18,9 +18,9 @@ package com.tcdng.jacklyn.system.web.controllers;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
-import com.tcdng.jacklyn.shared.system.SystemParamType;
 import com.tcdng.jacklyn.system.entities.SystemParameter;
 import com.tcdng.jacklyn.system.entities.SystemParameterQuery;
+import com.tcdng.jacklyn.system.web.beans.SystemParameterPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -34,79 +34,41 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/sysparameter")
 @UplBinding("web/system/upl/managesysparameter.upl")
-public class SystemParameterController extends AbstractSystemCrudController<SystemParameter> {
-
-    private Long searchModuleId;
-
-    private SystemParamType searchType;
-
-    private String searchName;
-
-    private String searchDescription;
+public class SystemParameterController extends AbstractSystemFormController<SystemParameterPageBean, SystemParameter> {
 
     public SystemParameterController() {
-        super(SystemParameter.class, "$m{system.sysparameter.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-                | ManageRecordModifier.MODIFY | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public SystemParamType getSearchType() {
-        return searchType;
-    }
-
-    public void setSearchType(SystemParamType searchType) {
-        this.searchType = searchType;
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
+        super(SystemParameterPageBean.class, SystemParameter.class, ManageRecordModifier.SECURE
+                | ManageRecordModifier.VIEW | ManageRecordModifier.MODIFY | ManageRecordModifier.REPORTABLE);
     }
 
     @Override
-    protected void onSetPage() throws UnifyException {
-        super.onSetPage();
-        setEditable("tablePanel", false);
-        setEditable("frmName", false);
-        setEditable("frmDescription", false);
-        setEditable("frmType", false);
+    protected void onInitPage() throws UnifyException {
+        super.onInitPage();
+
+        setPageWidgetEditable("tablePanel", false);
+        setPageWidgetEditable("frmName", false);
+        setPageWidgetEditable("frmDescription", false);
+        setPageWidgetEditable("frmType", false);
     }
 
     @Override
     protected List<SystemParameter> find() throws UnifyException {
+        SystemParameterPageBean pageBean = getPageBean();
         SystemParameterQuery query = new SystemParameterQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
 
-        if (searchType != null) {
-            query.type(searchType);
+        if (pageBean.getSearchType() != null) {
+            query.type(pageBean.getSearchType());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findSysParameters(query);
@@ -123,22 +85,22 @@ public class SystemParameterController extends AbstractSystemCrudController<Syst
     }
 
     @Override
-    protected Object create(SystemParameter sysParameterData) throws UnifyException {
+    protected Object create(SystemParameter sysParameter) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(SystemParameter sysParameterData) throws UnifyException {
-        return getSystemService().setSysParameterValue(sysParameterData.getName(), sysParameterData.getValue());
+    protected int update(SystemParameter sysParameter) throws UnifyException {
+        return getSystemService().setSysParameterValue(sysParameter.getName(), sysParameter.getValue());
     }
 
     @Override
-    protected int delete(SystemParameter sysParameterData) throws UnifyException {
+    protected int delete(SystemParameter sysParameter) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected boolean isEditable(SystemParameter sysParameterData) throws UnifyException {
-        return sysParameterData.getEditable();
+    protected boolean isEditable(SystemParameter sysParameter) throws UnifyException {
+        return sysParameter.getEditable();
     }
 }

@@ -17,10 +17,10 @@ package com.tcdng.jacklyn.file.web.controllers;
 
 import com.tcdng.jacklyn.file.constants.BatchFileReadTaskConstants;
 import com.tcdng.jacklyn.file.data.BatchFileReadInputParameters;
+import com.tcdng.jacklyn.file.web.beans.BatchFileUploadPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
@@ -36,57 +36,34 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/file/batchupload")
 @UplBinding("web/file/upl/batchupload.upl")
-@ResultMappings({ @ResultMapping(name = "refreshinputparameters",
-        response = { "!refreshpanelresponse panels:$l{batchParamPanel}" }) })
-public class BatchFileUploadController extends AbstractFilePageController {
-
-    private Long batchUploadConfigId;
-
-    private BatchFileReadInputParameters batchUploadParameters;
+@ResultMappings({ @ResultMapping(
+        name = "refreshinputparameters", response = { "!refreshpanelresponse panels:$l{batchParamPanel}" }) })
+public class BatchFileUploadController extends AbstractFilePageController<BatchFileUploadPageBean> {
 
     public BatchFileUploadController() {
-        super(true, false);
+        super(BatchFileUploadPageBean.class, true, false, false);
     }
 
     @Action
     public String prepareBatchUpload() throws UnifyException {
-        batchUploadParameters = null;
-        if (QueryUtils.isValidLongCriteria(batchUploadConfigId)) {
-            batchUploadParameters = getFileService().getBatchFileReadInputParameters(batchUploadConfigId);
+        BatchFileUploadPageBean pageBean = getPageBean();
+        BatchFileReadInputParameters batchUploadParameters = null;
+        if (QueryUtils.isValidLongCriteria(pageBean.getBatchUploadConfigId())) {
+            batchUploadParameters = getFileService().getBatchFileReadInputParameters(pageBean.getBatchUploadConfigId());
         }
+
+        pageBean.setBatchUploadParameters(batchUploadParameters);
         return "refreshinputparameters";
     }
 
     @Action
     public String startBatchUploadTask() throws UnifyException {
-        TaskSetup taskSetup = TaskSetup.newBuilder().addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
-                .setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS, batchUploadParameters).logMessages()
-                .build();
+        BatchFileUploadPageBean pageBean = getPageBean();
+        TaskSetup taskSetup =
+                TaskSetup.newBuilder().addTask(BatchFileReadTaskConstants.BATCHFILEREADTASK)
+                        .setParam(BatchFileReadTaskConstants.BATCHFILEREADINPUTPARAMS,
+                                pageBean.getBatchUploadParameters())
+                        .logMessages().build();
         return launchTaskWithMonitorBox(taskSetup, "$m{file.batchupload.execution}");
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        return "manageBatchUploadPanel";
-    }
-
-    public String getModeStyle() {
-        return EventType.CREATE.colorMode();
-    }
-
-    public Long getBatchUploadConfigId() {
-        return batchUploadConfigId;
-    }
-
-    public void setBatchUploadConfigId(Long batchUploadConfigId) {
-        this.batchUploadConfigId = batchUploadConfigId;
-    }
-
-    public BatchFileReadInputParameters getBatchUploadParameters() {
-        return batchUploadParameters;
-    }
-
-    public void setBatchUploadParameters(BatchFileReadInputParameters batchUploadParameters) {
-        this.batchUploadParameters = batchUploadParameters;
     }
 }

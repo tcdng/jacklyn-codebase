@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.security.web.controllers;
 
+import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
@@ -26,13 +27,14 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractSecurityPageController extends BasePageController {
+public abstract class AbstractSecurityPageController<T extends BasePageBean> extends BasePageController<T> {
 
     @Configurable
     private SecurityService securityService;
 
-    public AbstractSecurityPageController(boolean secured, boolean readOnly) {
-        super(secured, readOnly);
+    public AbstractSecurityPageController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
+            boolean resetOnWrite) {
+        super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
     protected SecurityService getSecurityService() throws UnifyException {

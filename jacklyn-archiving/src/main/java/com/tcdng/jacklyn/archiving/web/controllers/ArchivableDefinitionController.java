@@ -19,7 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.archiving.entities.ArchivableDefinition;
 import com.tcdng.jacklyn.archiving.entities.ArchivableDefinitionQuery;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.archiving.web.beans.ArchivableDefinitionPageBean;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -34,42 +34,26 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/archiving/archivabledefinition")
 @UplBinding("web/archiving/upl/managearchivabledefinitions.upl")
-public class ArchivableDefinitionController extends AbstractArchivingCrudController<ArchivableDefinition> {
-
-    private Long searchModuleId;
-
-    private RecordStatus searchStatus;
+public class ArchivableDefinitionController
+        extends AbstractArchivingFormController<ArchivableDefinitionPageBean, ArchivableDefinition> {
 
     public ArchivableDefinitionController() {
-        super(ArchivableDefinition.class, "$m{archiving.archivabledefinition.hint}",
+        super(ArchivableDefinitionPageBean.class, ArchivableDefinition.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Override
     protected List<ArchivableDefinition> find() throws UnifyException {
+        ArchivableDefinitionPageBean pageBean = getPageBean();
         ArchivableDefinitionQuery query = new ArchivableDefinitionQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
+
         query.installed(Boolean.TRUE);
         query.ignoreEmptyCriteria(true);
         return getArchivingService().findArchivableDefinitions(query);

@@ -15,15 +15,14 @@
  */
 package com.tcdng.jacklyn.notification.web.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.notification.constants.NotificationModuleAuditConstants;
 import com.tcdng.jacklyn.notification.entities.Notification;
 import com.tcdng.jacklyn.notification.entities.NotificationQuery;
+import com.tcdng.jacklyn.notification.web.beans.NotificationPageBean;
 import com.tcdng.jacklyn.shared.notification.NotificationStatus;
-import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -38,20 +37,10 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/notification/notification")
 @UplBinding("web/notification/upl/managenotification.upl")
-public class NotificationController extends AbstractNotificationCrudController<Notification> {
-
-    private Date searchCreateDt;
-
-    private Long searchModuleId;
-
-    private Long searchNotificationTemplateId;
-
-    private NotificationType searchNotificationType;
-
-    private NotificationStatus searchStatus;
+public class NotificationController extends AbstractNotificationFormController<NotificationPageBean, Notification> {
 
     public NotificationController() {
-        super(Notification.class, "$m{notification.notification.hint}",
+        super(NotificationPageBean.class, Notification.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 
@@ -88,69 +77,32 @@ public class NotificationController extends AbstractNotificationCrudController<N
         return findRecords();
     }
 
-    public Date getSearchCreateDt() {
-        return searchCreateDt;
-    }
-
-    public void setSearchCreateDt(Date searchCreateDt) {
-        this.searchCreateDt = searchCreateDt;
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public Long getSearchNotificationTemplateId() {
-        return searchNotificationTemplateId;
-    }
-
-    public void setSearchNotificationTemplateId(Long searchNotificationTemplateId) {
-        this.searchNotificationTemplateId = searchNotificationTemplateId;
-    }
-
-    public NotificationType getSearchNotificationType() {
-        return searchNotificationType;
-    }
-
-    public void setSearchNotificationType(NotificationType searchNotificationType) {
-        this.searchNotificationType = searchNotificationType;
-    }
-
-    public NotificationStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(NotificationStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
     @Override
     protected void onOpenPage() throws UnifyException {
         super.onOpenPage();
-        if (searchCreateDt == null) {
-            searchCreateDt = getNotificationService().getToday();
+
+        NotificationPageBean pageBean = getPageBean();
+        if (pageBean.getSearchCreateDt() == null) {
+            pageBean.setSearchCreateDt(getNotificationService().getToday());
         }
     }
 
     @Override
     protected List<Notification> find() throws UnifyException {
+        NotificationPageBean pageBean = getPageBean();
         NotificationQuery query = new NotificationQuery();
-        query.createdOn(searchCreateDt);
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        query.createdOn(pageBean.getSearchCreateDt());
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        if (QueryUtils.isValidLongCriteria(searchNotificationTemplateId)) {
-            query.notificationTemplateId(searchNotificationTemplateId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchNotificationTemplateId())) {
+            query.notificationTemplateId(pageBean.getSearchNotificationTemplateId());
         }
-        if (getSearchNotificationType() != null) {
-            query.notificationType(getSearchNotificationType());
+        if (pageBean.getSearchNotificationType() != null) {
+            query.notificationType(pageBean.getSearchNotificationType());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         return getNotificationService().findNotifications(query);
     }

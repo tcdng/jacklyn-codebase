@@ -24,6 +24,7 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
 import com.tcdng.jacklyn.security.data.UserLargeData;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserQuery;
+import com.tcdng.jacklyn.security.web.beans.UserPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -40,106 +41,58 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/security/user")
 @UplBinding("web/security/upl/manageuser.upl")
-public class UserController extends AbstractSecurityCrudController<User> {
-
-    private Long searchRoleId;
-
-    private String searchLoginId;
-
-    private String searchFullName;
-
-    private RecordStatus searchStatus;
-
-    private UserLargeData largeData;
-
-    private UserLargeData clipboardLargeData;
+public class UserController extends AbstractSecurityFormController<UserPageBean, User> {
 
     public UserController() {
-        super(User.class, "$m{security.user.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(UserPageBean.class, User.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-        largeData = new UserLargeData();
     }
 
     @Override
     @Action
     public String copyRecord() throws UnifyException {
-        clipboardLargeData = ReflectUtils.shallowBeanCopy(largeData);
+        UserPageBean pageBean = getPageBean();
+        UserLargeData clipboardLargeData = ReflectUtils.shallowBeanCopy(pageBean.getLargeData());
+        pageBean.setClipboardLargeData(clipboardLargeData);
+
         return super.copyRecord();
     }
 
     @Action
     public String resetUserPassword() throws UnifyException {
-        User userData = getRecord();
-        getSecurityService().resetUserPassword(userData.getId());
-        logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, userData.getFullName());
-        hintUser("$m{security.user.hint.passwordreset}", userData.getFullName());
+        UserPageBean pageBean = getPageBean();
+        User user = pageBean.getRecord();
+        getSecurityService().resetUserPassword(user.getId());
+        logUserEvent(SecurityModuleAuditConstants.RESET_PASSWORD, user.getFullName());
+        hintUser("$m{security.user.hint.passwordreset}", user.getFullName());
         return noResult();
-    }
-
-    public Long getSearchRoleId() {
-        return searchRoleId;
-    }
-
-    public void setSearchRoleId(Long searchRoleId) {
-        this.searchRoleId = searchRoleId;
-    }
-
-    public String getSearchLoginId() {
-        return searchLoginId;
-    }
-
-    public void setSearchLoginId(String searchLoginId) {
-        this.searchLoginId = searchLoginId;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public String getSearchFullName() {
-        return searchFullName;
-    }
-
-    public void setSearchFullName(String searchFullName) {
-        this.searchFullName = searchFullName;
-    }
-
-    public UserLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(UserLargeData largeData) {
-        this.largeData = largeData;
     }
 
     @Override
     protected List<User> find() throws UnifyException {
+        UserPageBean pageBean = getPageBean();
         UserQuery query = new UserQuery();
-        if (QueryUtils.isValidLongCriteria(searchRoleId)) {
-            List<Long> userIdList = getSecurityService().findRoleUserIds(searchRoleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchRoleId())) {
+            List<Long> userIdList = getSecurityService().findRoleUserIds(pageBean.getSearchRoleId());
             if (DataUtils.isBlank(userIdList)) {
                 return Collections.emptyList();
             }
-            
+
             query.idIn(userIdList);
         }
-        
-        if (QueryUtils.isValidStringCriteria(searchLoginId)) {
-            query.loginIdLike(searchLoginId);
+
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchLoginId())) {
+            query.loginIdLike(pageBean.getSearchLoginId());
         }
-        
-        if (QueryUtils.isValidStringCriteria(searchFullName)) {
-            query.fullNameLike(searchFullName);
+
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchFullName())) {
+            query.fullNameLike(pageBean.getSearchFullName());
         }
-        
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
-        
+
         query.excludeSysRecords();
         query.addOrder("fullName").ignoreEmptyCriteria(true);
         return getSecurityService().findUsers(query);
@@ -147,71 +100,80 @@ public class UserController extends AbstractSecurityCrudController<User> {
 
     @Override
     protected User find(Long id) throws UnifyException {
-        largeData = getSecurityService().findUserDocument(id);
+        UserLargeData largeData = getSecurityService().findUserDocument(id);
+        UserPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected User prepareCreate() throws UnifyException {
-        setEditable("frmLoginId", true);
+        setPageWidgetEditable("frmLoginId", true);
 
-        largeData = new UserLargeData();
-        User userData = largeData.getData();
-        userData.setStatus(RecordStatus.ACTIVE);
-        userData.setPasswordExpires(Boolean.TRUE);
-        return userData;
+        UserPageBean pageBean = getPageBean();
+        UserLargeData largeData = new UserLargeData();
+        User user = largeData.getData();
+        user.setStatus(RecordStatus.ACTIVE);
+        user.setPasswordExpires(Boolean.TRUE);
+        pageBean.setLargeData(largeData);
+        return user;
     }
 
     @Override
-    protected void onPrepareView(User userData, boolean onPaste) throws UnifyException {
+    protected void onPrepareView(User user, boolean onPaste) throws UnifyException {
+        UserPageBean pageBean = getPageBean();
+        UserLargeData largeData = pageBean.getLargeData();
         if (onPaste) {
-            largeData.setPhotograph(clipboardLargeData.getPhotograph());
-            largeData.setRoleIdList(clipboardLargeData.getRoleIdList());
+            largeData.setPhotograph(pageBean.getClipboardLargeData().getPhotograph());
+            largeData.setRoleIdList(pageBean.getClipboardLargeData().getRoleIdList());
         }
 
         if (ManageRecordModifier.ADD == getMode()) {
-            setDisabled("resetBtn", true);
-            setDisabled("frmImage", false);
-            setEditable("frmLoginId", true);
-            setEditable("frmRoleAssignPanel", true);
+            setPageWidgetDisabled("resetBtn", true);
+            setPageWidgetDisabled("frmImage", false);
+            setPageWidgetEditable("frmLoginId", true);
+            setPageWidgetEditable("frmRoleAssignPanel", true);
             setCrudViewerEditable(true);
         } else {
-            boolean isDisabled = userData.isReserved();
-            setDisabled("resetBtn", isDisabled);
-            setDisabled("frmImage", isDisabled);
-            setEditable("frmLoginId", false);
-            setEditable("frmRoleAssignPanel", !isDisabled);
+            boolean isDisabled = user.isReserved();
+            setPageWidgetDisabled("resetBtn", isDisabled);
+            setPageWidgetDisabled("frmImage", isDisabled);
+            setPageWidgetEditable("frmLoginId", false);
+            setPageWidgetEditable("frmRoleAssignPanel", !isDisabled);
             setCrudViewerEditable(!isDisabled);
         }
     }
 
     @Override
-    protected void onLoseView(User userData) throws UnifyException {
-        largeData = new UserLargeData();
-        clipboardLargeData = null;
+    protected void onLoseView(User user) throws UnifyException {
+        UserPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new UserLargeData());
+        pageBean.setClipboardLargeData(null);
     }
 
     @Override
-    protected Object create(User userData) throws UnifyException {
-        return getSecurityService().createUser(largeData);
+    protected Object create(User user) throws UnifyException {
+        UserPageBean pageBean = getPageBean();
+        return getSecurityService().createUser(pageBean.getLargeData());
     }
 
     @Override
-    protected int update(User userData) throws UnifyException {
-        return getSecurityService().updateUser(largeData);
+    protected int update(User user) throws UnifyException {
+        UserPageBean pageBean = getPageBean();
+        return getSecurityService().updateUser(pageBean.getLargeData());
     }
 
     @Override
-    protected int delete(User userData) throws UnifyException {
-        return getSecurityService().deleteUser(userData.getId());
+    protected int delete(User user) throws UnifyException {
+        return getSecurityService().deleteUser(user.getId());
     }
 
     @Override
     protected void onPrepareCrudViewer(User record, int mode) throws UnifyException {
-        setVisible("resetBtn", mode != ManageRecordModifier.ADD);
+        setPageWidgetVisible("resetBtn", mode != ManageRecordModifier.ADD);
         if (mode == ManageRecordModifier.ADD) {
-            setEditable("frmRoleAssignPanel", true);
-            setDisabled("frmImage", false);
+            setPageWidgetEditable("frmRoleAssignPanel", true);
+            setPageWidgetDisabled("frmImage", false);
         }
     }
 }

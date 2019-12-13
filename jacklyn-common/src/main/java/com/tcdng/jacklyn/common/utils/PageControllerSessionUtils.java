@@ -15,10 +15,10 @@
  */
 package com.tcdng.jacklyn.common.utils;
 
+import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.database.Entity;
-import com.tcdng.unify.web.PageController;
 
 /**
  * Page controller session utilities.
@@ -31,20 +31,20 @@ public interface PageControllerSessionUtils extends UnifyComponent {
     /**
      * Loads session for supplied controller using data object
      * 
-     * @param pageController
+     * @param basePageController
      *            the page controller
      * @throws UnifyException
      *             if an error occurs
      */
-    <T extends Entity> void loadSession(PageController pageController) throws UnifyException;
+    <T extends Entity> void loadSession(BasePageController<?> basePageController) throws UnifyException;
 
     /**
      * Clears session for supplied controller.
      * 
-     * @param pageController
+     * @param basePageController
      *            the page controller
      * @throws UnifyException
      *             if an error occurs
      */
-    void unloadSession(PageController pageController) throws UnifyException;
+    void unloadSession(BasePageController<?> basePageController) throws UnifyException;
 }

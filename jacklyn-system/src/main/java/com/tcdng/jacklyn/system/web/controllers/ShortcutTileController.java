@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.constants.SystemModuleAuditConstants;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.web.beans.ShortcutTilePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -40,35 +41,35 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/system/upl/manageshortcuttiles.upl")
 @ResultMappings({ @ResultMapping(name = "showorderpopup",
         response = { "!showpopupresponse popup:$s{orderShortcutTilePopup}" }) })
-public class ShortcutTileController extends AbstractSystemCrudController<ShortcutTile> {
-
-    private Long searchModuleId;
-
-    private List<ShortcutTile> shortcutTileOrderList;
+public class ShortcutTileController extends AbstractSystemFormController<ShortcutTilePageBean, ShortcutTile> {
 
     public ShortcutTileController() {
-        super(ShortcutTile.class, "$m{system.shortcuttile.hint}",
+        super(ShortcutTilePageBean.class, ShortcutTile.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
     }
 
     @Action
     public String prepareSetShortcutTileOrder() throws UnifyException {
+        ShortcutTilePageBean pageBean = getPageBean();
         ShortcutTileQuery query = new ShortcutTileQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.installed(Boolean.TRUE);
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);
-        shortcutTileOrderList = getSystemService().findShortcutTiles(query);
+        List<ShortcutTile> shortcutTileOrderList = getSystemService().findShortcutTiles(query);
+        pageBean.setShortcutTileOrderList(shortcutTileOrderList);
         return "showorderpopup";
     }
 
     @Action
     public String saveShortcutTileOrder() throws UnifyException {
+        ShortcutTilePageBean pageBean = getPageBean();
+        List<ShortcutTile> shortcutTileOrderList = pageBean.getShortcutTileOrderList();
         getSystemService().saveShortcutTileOrder(shortcutTileOrderList);
         logUserEvent(SystemModuleAuditConstants.SET_SHORTCUTTILE_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, shortcutTileOrderList, "description"));
@@ -78,35 +79,21 @@ public class ShortcutTileController extends AbstractSystemCrudController<Shortcu
 
     @Action
     public String cancelShortcutTileOrder() throws UnifyException {
-        shortcutTileOrderList = null;
+        ShortcutTilePageBean pageBean = getPageBean();
+        pageBean.setShortcutTileOrderList(null);
         return hidePopup();
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public List<ShortcutTile> getShortcutTileOrderList() {
-        return shortcutTileOrderList;
-    }
-
-    public void setShortcutTileOrderList(List<ShortcutTile> shortcutTileOrderList) {
-        this.shortcutTileOrderList = shortcutTileOrderList;
     }
 
     @Override
     protected List<ShortcutTile> find() throws UnifyException {
+        ShortcutTilePageBean pageBean = getPageBean();
         ShortcutTileQuery query = new ShortcutTileQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
 
         query.installed(Boolean.TRUE);
@@ -126,17 +113,17 @@ public class ShortcutTileController extends AbstractSystemCrudController<Shortcu
     }
 
     @Override
-    protected Object create(ShortcutTile record) throws UnifyException {
+    protected Object create(ShortcutTile shortcutTile) throws UnifyException {
         return null;
     }
 
     @Override
-    protected int update(ShortcutTile record) throws UnifyException {
+    protected int update(ShortcutTile shortcutTile) throws UnifyException {
         return 0;
     }
 
     @Override
-    protected int delete(ShortcutTile record) throws UnifyException {
+    protected int delete(ShortcutTile shortcutTile) throws UnifyException {
         return 0;
     }
 }

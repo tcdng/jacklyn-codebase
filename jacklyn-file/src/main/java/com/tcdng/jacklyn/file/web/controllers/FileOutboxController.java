@@ -20,7 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.file.entities.FileOutbox;
 import com.tcdng.jacklyn.file.entities.FileOutboxQuery;
-import com.tcdng.jacklyn.shared.file.FileOutboxStatus;
+import com.tcdng.jacklyn.file.web.beans.FileOutboxPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -34,35 +34,26 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/file/fileoutbox")
 @UplBinding("web/file/upl/managefileoutbox.upl")
-public class FileOutboxController extends AbstractFileTransferBoxController<FileOutbox> {
-
-    private FileOutboxStatus searchStatus;
+public class FileOutboxController extends AbstractFileTransferBoxFormController<FileOutboxPageBean, FileOutbox> {
 
     public FileOutboxController() {
-        super(FileOutbox.class, "$m{file.fileoutbox.hint}",
+        super(FileOutboxPageBean.class, FileOutbox.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE);
-    }
-
-    public FileOutboxStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(FileOutboxStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Override
     protected List<FileOutbox> find() throws UnifyException {
+        FileOutboxPageBean pageBean = getPageBean();
         FileOutboxQuery query = new FileOutboxQuery();
-        if (QueryUtils.isValidLongCriteria(getSearchFileTransferConfigId())) {
-            query.fileTransferConfigId(getSearchFileTransferConfigId());
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchFileTransferConfigId())) {
+            query.fileTransferConfigId(pageBean.getSearchFileTransferConfigId());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
 
-        query.createdOn(getSearchCreateDt());
+        query.createdOn(pageBean.getSearchCreateDt());
         return getFileService().findFileOutboxItems(query);
     }
 

@@ -20,12 +20,12 @@ import java.util.List;
 import com.tcdng.jacklyn.audit.constants.AuditModuleAuditConstants;
 import com.tcdng.jacklyn.audit.entities.AuditDefinition;
 import com.tcdng.jacklyn.audit.entities.AuditDefinitionQuery;
+import com.tcdng.jacklyn.audit.web.beans.AuditSettingPageBean;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
 
@@ -37,41 +37,11 @@ import com.tcdng.unify.web.annotation.Action;
  */
 @Component("/audit/auditsettings")
 @UplBinding("web/audit/upl/manageauditsettings.upl")
-public class AuditSettingController extends AbstractAuditCrudController<AuditDefinition> {
-
-    private Long searchModuleId;
-
-    private EventType searchEventType;
-
-    private RecordStatus searchStatus;
+public class AuditSettingController extends AbstractAuditFormController<AuditSettingPageBean, AuditDefinition> {
 
     public AuditSettingController() {
-        super(AuditDefinition.class, "$m{audit.auditsettings.hint}",
+        super(AuditSettingPageBean.class, AuditDefinition.class,
                 ManageRecordModifier.SECURE | ManageRecordModifier.REPORTABLE);
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public EventType getSearchEventType() {
-        return searchEventType;
-    }
-
-    public void setSearchEventType(EventType searchEventType) {
-        this.searchEventType = searchEventType;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
     }
 
     @Action
@@ -100,16 +70,20 @@ public class AuditSettingController extends AbstractAuditCrudController<AuditDef
 
     @Override
     protected List<AuditDefinition> find() throws UnifyException {
+        AuditSettingPageBean pageBean = getPageBean();
         AuditDefinitionQuery query = new AuditDefinitionQuery();
-        if (QueryUtils.isValidLongCriteria(searchModuleId)) {
-            query.moduleId(searchModuleId);
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
+            query.moduleId(pageBean.getSearchModuleId());
         }
-        if (getSearchEventType() != null) {
-            query.eventType(getSearchEventType());
+
+        if (pageBean.getSearchEventType() != null) {
+            query.eventType(pageBean.getSearchEventType());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
+
         query.installed(Boolean.TRUE);
         query.ignoreEmptyCriteria(true);
         return getAuditService().findAuditTypes(query);

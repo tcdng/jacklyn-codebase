@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.entities.Theme;
 import com.tcdng.jacklyn.system.entities.ThemeQuery;
+import com.tcdng.jacklyn.system.web.beans.ThemePageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,46 +34,27 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/system/theme")
 @UplBinding("web/system/upl/managetheme.upl")
-public class ThemeController extends AbstractSystemCrudController<Theme> {
-
-    private String searchName;
-
-    private String searchDescription;
+public class ThemeController extends AbstractSystemFormController<ThemePageBean, Theme> {
 
     public ThemeController() {
-        super(Theme.class, "$m{system.theme.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(ThemePageBean.class, Theme.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
     }
 
     @Override
     protected List<Theme> find() throws UnifyException {
+        ThemePageBean pageBean = getPageBean();
         ThemeQuery query = new ThemeQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.name(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findThemes(query);

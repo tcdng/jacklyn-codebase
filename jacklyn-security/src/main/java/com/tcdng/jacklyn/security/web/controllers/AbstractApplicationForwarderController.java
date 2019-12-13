@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.security.web.controllers;
 
 import com.tcdng.jacklyn.security.constants.SecurityModuleSysParamConstants;
 import com.tcdng.jacklyn.security.entities.UserRole;
+import com.tcdng.jacklyn.security.web.beans.AbstractApplicationForwarderPageBean;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
@@ -30,22 +31,14 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@ResultMappings({ @ResultMapping(name = "forwardtoapplication",
-        response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
-public abstract class AbstractApplicationForwarderController extends AbstractSecurityPageController {
+@ResultMappings({ @ResultMapping(
+        name = "forwardtoapplication", response = { "!forwardresponse pathBinding:$s{applicationPath}" }) })
+public abstract class AbstractApplicationForwarderController<T extends AbstractApplicationForwarderPageBean>
+        extends AbstractSecurityPageController<T> {
 
-    private String applicationPath;
-
-    public AbstractApplicationForwarderController(boolean secured, boolean readOnly) {
-        super(secured, readOnly);
-    }
-
-    public String getApplicationPath() {
-        return applicationPath;
-    }
-
-    public void setApplicationPath(String applicationPath) {
-        this.applicationPath = applicationPath;
+    public AbstractApplicationForwarderController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
+            boolean resetOnWrite) {
+        super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
     /**
@@ -58,16 +51,20 @@ public abstract class AbstractApplicationForwarderController extends AbstractSec
      *             if an error occurs
      */
     protected String forwardToApplication(UserRole userRole) throws UnifyException {
+        AbstractApplicationForwarderPageBean pageBean = getPageBean();
+        String applicationPath = null;
         if (userRole != null) {
             applicationPath = userRole.getRoleApplication();
         }
 
         if (StringUtils.isBlank(applicationPath)) {
-            applicationPath = getSystemService().getSysParameterValue(String.class,
-                    SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
+            applicationPath =
+                    getSystemService().getSysParameterValue(String.class,
+                            SecurityModuleSysParamConstants.USER_DEFAULT_APPLICATION);
         }
 
         getSecurityService().setCurrentUserRole(userRole);
+        pageBean.setApplicationPath(applicationPath);
         return "forwardtoapplication";
     }
 

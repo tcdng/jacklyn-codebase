@@ -27,6 +27,7 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleAuditConstants;
 import com.tcdng.jacklyn.security.data.UserRoleOptions;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.security.web.beans.ApplicationPageBean;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
@@ -68,7 +69,7 @@ import com.tcdng.unify.web.ui.control.Table;
                 name = "refreshusernotifications",
                 response = { "!refreshpanelresponse panels:$l{topAlert userNotificationsPopup}" }),
         @ResultMapping(name = "showuserdetails", response = { "!showpopupresponse popup:$s{userDetailsPopup}" }) })
-public class ApplicationController extends AbstractApplicationForwarderController {
+public class ApplicationController extends AbstractApplicationForwarderController<ApplicationPageBean> {
 
     @Configurable
     private SystemNotificationProvider systemNotificationProvider;
@@ -79,37 +80,16 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Configurable("userphoto-generator")
     private ImageGenerator userPhotoGenerator;
 
-    private List<? extends SystemNotification> userNotifications;
-
-    private Table selectRoleTableState;
-
-    private String notificationResolutionPath;
-
     public ApplicationController() {
-        super(true, false);
-    }
-
-    public List<? extends SystemNotification> getUserNotifications() {
-        return userNotifications;
-    }
-
-    public int getAlertCount() throws UnifyException {
-        return systemNotificationProvider.countUserSystemNotifications(getUserToken().getUserLoginId());
-    }
-
-    public ImageGenerator getUserPhotoGenerator() {
-        return userPhotoGenerator;
-    }
-
-    public String getNotificationResolutionPath() {
-        return notificationResolutionPath;
+        super(ApplicationPageBean.class, true, false, false);
     }
 
     @Action
     public String resolveUserNotification() throws UnifyException {
+        ApplicationPageBean pageBean = getPageBean();
         SystemNotification systemNotification = getTargetSystemNotification();
         systemNotificationProvider.dismissUserSystemNotification(systemNotification);
-        notificationResolutionPath = systemNotification.getActionLink();
+        pageBean.setNotificationResolutionPath(systemNotification.getActionLink());
         return "resolveusernotification";
     }
 
@@ -130,7 +110,8 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
 
     @Action
     public String cancelUserNotifications() throws UnifyException {
-        userNotifications = null;
+        ApplicationPageBean pageBean = getPageBean();
+        pageBean.setNotificationResolutionPath(null);
         return hidePopup();
     }
 
@@ -179,13 +160,16 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     public String switchUserRole() throws UnifyException {
         UserRoleOptions userRoleOptions =
                 (UserRoleOptions) getSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS);
-        UserRole userRoleData = userRoleOptions.getUserRoleList().get(selectRoleTableState.getViewIndex());
+        UserRole userRoleData = userRoleOptions.getUserRoleList().get(getRoleTable().getViewIndex());
         return forwardToApplication(userRoleData);
     }
 
     @Override
     protected void onIndexPage() throws UnifyException {
         super.onIndexPage();
+
+        ApplicationPageBean pageBean = getPageBean();
+        pageBean.setUserLoginId(getUserToken().getUserLoginId());
 
         List<Tile> tileList = Collections.emptyList();
         ShortcutTileQuery query = new ShortcutTileQuery().orderByDisplayOrder();
@@ -205,21 +189,26 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     }
 
     @Override
-    protected void onSetPage() throws UnifyException {
-        selectRoleTableState = getPageWidgetByShortName(Table.class, "userRoleOptionsPopup.roleTablePanel.contentTbl");
+    protected void onInitPage() throws UnifyException {
+        ApplicationPageBean pageBean = getPageBean();
+        pageBean.setUserPhotoGenerator(userPhotoGenerator);
+        pageBean.setSystemNotificationProvider(systemNotificationProvider);
     }
 
-    @Override
-    protected String getDocViewPanelName() {
-        return null;
+    private Table getRoleTable() throws UnifyException {
+        return getPageWidgetByShortName(Table.class, "userRoleOptionsPopup.roleTablePanel.contentTbl");
     }
 
     private boolean fetchUserNotifications() throws UnifyException {
-        userNotifications = systemNotificationProvider.findUserSystemNotifications(getUserToken().getUserLoginId());
+        ApplicationPageBean pageBean = getPageBean();
+        List<? extends SystemNotification> userNotifications =
+                systemNotificationProvider.findUserSystemNotifications(getUserToken().getUserLoginId());
+        pageBean.setUserNotifications(userNotifications);
         return !userNotifications.isEmpty();
     }
 
     private SystemNotification getTargetSystemNotification() throws UnifyException {
-        return userNotifications.get(getRequestTarget(int.class));
+        ApplicationPageBean pageBean = getPageBean();
+        return pageBean.getUserNotifications().get(getRequestTarget(int.class));
     }
 }

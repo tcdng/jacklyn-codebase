@@ -20,11 +20,11 @@ import java.util.List;
 import com.tcdng.jacklyn.common.annotation.CrudPanelList;
 import com.tcdng.jacklyn.common.annotation.SessionAttr;
 import com.tcdng.jacklyn.common.annotation.SessionLoading;
-import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
 import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
+import com.tcdng.jacklyn.system.web.beans.DashboardPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -39,70 +39,28 @@ import com.tcdng.unify.core.util.QueryUtils;
 @Component("/system/dashboard")
 @UplBinding("web/system/upl/managedashboard.upl")
 @SessionLoading(
-        sessionAttributes = {
-                @SessionAttr(name = "largeData.layerList", property = "largeData.layerList") },
-        crudPanelLists = {
-                @CrudPanelList(panel = "frmLayerListPanel", property = "largeData.layerList"),
+        sessionAttributes = { @SessionAttr(name = "largeData.layerList", property = "largeData.layerList") },
+        crudPanelLists = { @CrudPanelList(panel = "frmLayerListPanel", property = "largeData.layerList"),
                 @CrudPanelList(panel = "frmPortletListPanel", property = "largeData.portletList") })
-public class DashboardController extends AbstractSystemCrudController<Dashboard> {
-
-    private String searchName;
-
-    private String searchDescription;
-
-    private RecordStatus searchStatus;
-
-    private DashboardLargeData largeData;
+public class DashboardController extends AbstractSystemFormController<DashboardPageBean, Dashboard> {
 
     public DashboardController() {
-        super(Dashboard.class, "$m{system.dashboard.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(DashboardPageBean.class, Dashboard.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-        largeData = new DashboardLargeData();
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
-    }
-
-    public RecordStatus getSearchStatus() {
-        return searchStatus;
-    }
-
-    public void setSearchStatus(RecordStatus searchStatus) {
-        this.searchStatus = searchStatus;
-    }
-
-    public DashboardLargeData getLargeData() {
-        return largeData;
-    }
-
-    public void setLargeData(DashboardLargeData largeData) {
-        this.largeData = largeData;
     }
 
     @Override
     protected List<Dashboard> find() throws UnifyException {
+        DashboardPageBean pageBean = getPageBean();
         DashboardQuery query = new DashboardQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.nameLike(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.nameLike(pageBean.getSearchName());
         }
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getSystemService().findDashboards(query);
@@ -110,29 +68,36 @@ public class DashboardController extends AbstractSystemCrudController<Dashboard>
 
     @Override
     protected Dashboard find(Long id) throws UnifyException {
-        largeData = getSystemService().findDashboard(id);
+        DashboardLargeData largeData = getSystemService().findDashboard(id);
+        DashboardPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected Dashboard prepareCreate() throws UnifyException {
-        largeData = new DashboardLargeData();
+        DashboardLargeData largeData = new DashboardLargeData();
+        DashboardPageBean pageBean = getPageBean();
+        pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
     protected void onLoseView(Dashboard dashboardData) throws UnifyException {
-        largeData = new DashboardLargeData();
+        DashboardPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new DashboardLargeData());
     }
 
     @Override
     protected Object create(Dashboard dashboardData) throws UnifyException {
-        return (Long) getSystemService().createDashboard(largeData.getData());
+        DashboardPageBean pageBean = getPageBean();
+        return (Long) getSystemService().createDashboard(pageBean.getLargeData().getData());
     }
 
     @Override
     protected int update(Dashboard dashboardData) throws UnifyException {
-        return getSystemService().updateDashboard(largeData);
+        DashboardPageBean pageBean = getPageBean();
+        return getSystemService().updateDashboard(pageBean.getLargeData());
     }
 
     @Override

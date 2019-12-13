@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.system.constants.SystemModuleAuditConstants;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItem;
 import com.tcdng.jacklyn.system.entities.ApplicationMenuItemQuery;
+import com.tcdng.jacklyn.system.web.beans.ApplicationMenuItemPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -39,71 +40,56 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 @UplBinding("web/system/upl/managemenuitem.upl")
 @ResultMappings({
         @ResultMapping(name = "showorderpopup", response = { "!showpopupresponse popup:$s{orderMenuItemPopup}" }) })
-public class MenuItemController extends AbstractSystemCrudController<ApplicationMenuItem> {
-
-    private Long searchMenuId;
-
-    private List<ApplicationMenuItem> menuItemOrderList;
+public class MenuItemController extends AbstractSystemFormController<ApplicationMenuItemPageBean, ApplicationMenuItem> {
 
     public MenuItemController() {
-        super(ApplicationMenuItem.class, "$m{system.menuitem.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.VIEW
-                | ManageRecordModifier.REPORTABLE | ManageRecordModifier.SEARCH_ON_OPEN);
+        super(ApplicationMenuItemPageBean.class, ApplicationMenuItem.class, ManageRecordModifier.SECURE
+                | ManageRecordModifier.VIEW | ManageRecordModifier.REPORTABLE | ManageRecordModifier.SEARCH_ON_OPEN);
     }
 
     @Action
     public String prepareSetMenuItemOrder() throws UnifyException {
+        ApplicationMenuItemPageBean pageBean = getPageBean();
         ApplicationMenuItemQuery query = new ApplicationMenuItemQuery();
-        query.menuId(searchMenuId);
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        query.menuId(pageBean.getSearchMenuId());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
-        
+
         query.hidden(Boolean.FALSE);
         query.installed(Boolean.TRUE);
         query.orderByDisplayOrder();
         query.ignoreEmptyCriteria(true);
-        menuItemOrderList = getSystemService().findMenuItems(query);
+        pageBean.setMenuItemOrderList(getSystemService().findMenuItems(query));
         return "showorderpopup";
     }
 
     @Action
     public String saveMenuItemOrder() throws UnifyException {
+        ApplicationMenuItemPageBean pageBean = getPageBean();
+        List<ApplicationMenuItem> menuItemOrderList = pageBean.getMenuItemOrderList();
         getSystemService().saveMenuItemOrder(menuItemOrderList);
         logUserEvent(SystemModuleAuditConstants.SET_MENUITEM_DISPLAY_ORDER,
                 DataUtils.getBeanPropertyArray(String.class, menuItemOrderList, "caption"));
         hintUser("$m{system.order.menuitem.saved}");
-        menuItemOrderList = null;
+        pageBean.setMenuItemOrderList(null);
         return hidePopup();
     }
 
     @Action
     public String cancelMenuItemOrder() throws UnifyException {
-        menuItemOrderList = null;
+        ApplicationMenuItemPageBean pageBean = getPageBean();
+        pageBean.setMenuItemOrderList(null);
         return hidePopup();
-    }
-
-    public Long getSearchMenuId() {
-        return searchMenuId;
-    }
-
-    public void setSearchMenuId(Long searchMenuId) {
-        this.searchMenuId = searchMenuId;
-    }
-
-    public List<ApplicationMenuItem> getMenuItemOrderList() {
-        return menuItemOrderList;
-    }
-
-    public void setMenuItemOrderList(List<ApplicationMenuItem> menuItemOrderList) {
-        this.menuItemOrderList = menuItemOrderList;
     }
 
     @Override
     protected List<ApplicationMenuItem> find() throws UnifyException {
+        ApplicationMenuItemPageBean pageBean = getPageBean();
         ApplicationMenuItemQuery query = new ApplicationMenuItemQuery();
-        query.menuId(searchMenuId);
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        query.menuId(pageBean.getSearchMenuId());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.hidden(Boolean.FALSE);
         query.installed(Boolean.TRUE);

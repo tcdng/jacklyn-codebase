@@ -25,11 +25,11 @@ import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
 import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.jacklyn.common.utils.PageControllerSessionUtils;
+import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.unify.core.UnifyContainer;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.data.Describable;
 import com.tcdng.unify.core.database.Entity;
@@ -72,63 +72,37 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
                 response = { "!hidepopupresponse", "!switchpanelresponse panels:$l{manageBodyPanel.prefetchItemPanel}",
                         "!refreshpanelresponse panels:$l{detailsPanel}" }),
         @ResultMapping(name = "documentView", response = { "!docviewresponse" }) })
-public abstract class BasePrefetchController<T extends Entity, U> extends BasePageController {
+public abstract class BasePrefetchController<T extends BaseEntityPageBean<V>, U, V extends Entity>
+        extends BasePageController<T> {
 
     public static final String HIDEPOPUP_REFERESHMAIN = "hidepopuprefreshmain";
 
     private static final String SWITCH_MAPPING = "switch-mapping";
 
-    @Configurable("$m{common.report.norecordintable}")
-    private String noRecordMessage;
-
-    private Class<T> entityClass;
+    private Class<V> entityClass;
 
     private int modifier;
-    
-    private int mode;
 
-    private String itemCountLabel;
-
-    private String modeDescription;
-
-    private String modeStyle;
-
-    private String reportType;
-
-    private List<T> recordList;
-
-    private T record;
-
-    private T oldRecord;
-
-    private Table table;
-
-    private String recordHintName;
-
-    private boolean describable;
-
-    private boolean prefetch;
-    
-    public BasePrefetchController(Class<T> entityClass, String hint, int modifier) {
-        super(ManageRecordModifier.isSecure(modifier), false);
+    public BasePrefetchController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
+        super(pageBeanClass, ManageRecordModifier.isSecure(modifier), false, false);
         this.entityClass = entityClass;
         this.modifier = modifier;
-        recordHintName = hint;
-        describable = Describable.class.isAssignableFrom(entityClass);
-        prefetch = true;
     }
 
     @Action
     public String prepareViewRecord() throws UnifyException {
         prepareView(ManageRecordModifier.VIEW);
-        logUserEvent(EventType.VIEW, record, false);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        logUserEvent(EventType.VIEW, pageBean.getRecord(), false);
         return getSwitchItemViewMapping();
     }
 
     @Action
     public String prepareUpdateRecord() throws UnifyException {
         prepareView(ManageRecordModifier.MODIFY);
-        oldRecord = ReflectUtils.shallowBeanCopy(record);
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V oldRecord = ReflectUtils.shallowBeanCopy(pageBean.getRecord());
+        pageBean.setOldRecord(oldRecord);
         return getSwitchItemViewMapping();
     }
 
@@ -137,8 +111,12 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     public String updateAndNextRecord() throws UnifyException {
         doUpdate();
 
+        Table table = getTable();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         record = find((U) record.getId());
-        recordList.set(table.getViewIndex(), record);
+        pageBean.setRecord(record);
+        pageBean.getRecordList().set(table.getViewIndex(), record);
 
         if (table.isViewIndexAtLast()) {
             return done();
@@ -155,35 +133,38 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     @Action
     public String firstRecord() throws UnifyException {
-        onLoseView(record);
-        table.setViewIndex(0);
+        loseView();
+        getTable().setViewIndex(0);
         return performModeAction();
     }
 
     @Action
     public String previousRecord() throws UnifyException {
-        onLoseView(record);
+        loseView();
+        Table table = getTable();
         table.setViewIndex(table.getViewIndex() - 1);
         return performModeAction();
     }
 
     @Action
     public String nextRecord() throws UnifyException {
-        onLoseView(record);
+        loseView();
+        Table table = getTable();
         table.setViewIndex(table.getViewIndex() + 1);
         return performModeAction();
     }
 
     @Action
     public String lastRecord() throws UnifyException {
-        onLoseView(record);
-        table.setViewIndex(recordList.size() - 1);
+        loseView();
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        getTable().setViewIndex(pageBean.getRecordList().size() - 1);
         return performModeAction();
     }
 
     @Action
     public String done() throws UnifyException {
-        onLoseView(record);
+        loseView();
         findRecords();
         return "switchsearch";
     }
@@ -202,79 +183,32 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     @Action
     public String prepareGenerateReport() throws UnifyException {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        List<V> recordList = pageBean.getRecordList();
         if (recordList == null || recordList.isEmpty()) {
-            return showMessageBox(noRecordMessage);
+            return showMessageBox(pageBean.getNoRecordMessage());
         }
 
         ReportOptions reportOptions =
-                getCommonReportProvider().getDynamicReportOptions(entityClass.getName(), table.getColumnPropertyList());
+                getCommonReportProvider().getDynamicReportOptions(entityClass.getName(),
+                        getTable().getColumnPropertyList());
         reportOptions.setReportResourcePath("/common/resource/report");
-        reportOptions.setReportFormat(reportType);
+        reportOptions.setReportFormat(pageBean.getReportType());
         reportOptions.setContent(recordList);
         return showReportOptionsBox(reportOptions);
     }
 
-    public List<T> getRecordList() {
-        return recordList;
-    }
-
-    public void setRecordList(List<T> recordList) {
-        this.recordList = recordList;
-    }
-
-    public T getRecord() {
-        return record;
-    }
-
-    public void setRecord(T record) {
-        this.record = record;
-    }
-
-    public String getItemCountLabel() {
-        return itemCountLabel;
-    }
-
-    public String getModeDescription() {
-        return modeDescription;
-    }
-
-    public void setModeDescription(String modeDescription) {
-        this.modeDescription = modeDescription;
-    }
-
-    public String getModeStyle() {
-        return modeStyle;
-    }
-
-    public String getReportType() {
-        return reportType;
-    }
-
-    public void setReportType(String reportType) {
-        this.reportType = reportType;
-    }
-
     @Override
-    protected void onInitialize() throws UnifyException {
-        noRecordMessage = resolveSessionMessage(noRecordMessage);
-        recordHintName = resolveSessionMessage(recordHintName);
-    }
-
-    @Override
-    protected void onSetPage() throws UnifyException {
-        // Get reference to UPL table
-        table = getPageWidgetByShortName(Table.class, "tablePanel.contentTbl");
+    protected void onInitPage() throws UnifyException {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setNoRecordMessage(resolveSessionMessage(pageBean.getNoRecordMessage()));
+        pageBean.setRecordHintName(resolveSessionMessage(pageBean.getRecordHintName()));
 
         // Set validation page attributes
         getPage().setAttribute("validationClass", entityClass);
         getPage().setAttribute("validationIdClass", Long.class);
 
         manageReportable();
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        return "manageRecordPanel";
     }
 
     @Override
@@ -285,28 +219,21 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     @Override
     protected void onOpenPage() throws UnifyException {
-        if (prefetch) {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        if (pageBean.isPrefetch()) {
             findRecords();
             switchToTableContentPanel();
-            prefetch = false;
+            pageBean.setPrefetch(false);
         }
-        
-        super.onOpenPage();
-    }
 
-    @Override
-    protected void onClosePage() throws UnifyException {
-        table = null;
-        recordList = null;
-        oldRecord = null;
-        record = null;
+        super.onOpenPage();
     }
 
     protected void setSwitchItemViewMapping(String mapping) throws UnifyException {
         setRequestAttribute(SWITCH_MAPPING, mapping);
     }
 
-    protected void onLoseView(T record) throws UnifyException {
+    protected void onLoseView(V record) throws UnifyException {
         onloadSessionOnLoseView();
     }
 
@@ -324,29 +251,37 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         SwitchPanel switchPanel = getPageWidgetByShortName(SwitchPanel.class, "manageBodyPanel");
         return switchPanel.getCurrentWidgetShortName();
     }
-    
+
     protected PageControllerSessionUtils getPageControllerSessionUtils() throws UnifyException {
         return (PageControllerSessionUtils) getComponent(CommonModuleNameConstants.PAGECONTROLLERSESSIONUTILS);
     }
 
     protected abstract void prepareForPrefetch() throws UnifyException;
 
-    protected abstract List<T> find() throws UnifyException;
+    protected abstract List<V> find() throws UnifyException;
 
-    protected abstract T find(U id) throws UnifyException;
+    protected abstract V find(U id) throws UnifyException;
 
-    protected abstract int update(T record) throws UnifyException;
+    protected abstract int update(V record) throws UnifyException;
 
     protected abstract void setItemViewerEditable(boolean editable) throws UnifyException;
 
-    protected T getSelectedRecord() throws UnifyException {
-        return recordList.get(table.getViewIndex());
+    protected Table getTable() throws UnifyException {
+        return getPageWidgetByShortName(Table.class, "tablePanel.contentTbl");
+    }
+
+    protected V getSelectedRecord() throws UnifyException {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        return pageBean.getRecordList().get(getTable().getViewIndex());
     }
 
     protected List<Long> getSelectedIds() throws UnifyException {
+        Table table = getTable();
         if (table.getSelectedRows() > 0) {
             Integer[] selectedIndexes = table.getSelectedRowIndexes();
             List<Long> selectedIds = new ArrayList<Long>();
+            BaseEntityPageBean<V> pageBean = getPageBean();
+            List<V> recordList = pageBean.getRecordList();
             for (int i = 0; i < selectedIndexes.length; i++) {
                 selectedIds.add((Long) recordList.get(selectedIndexes[i]).getId());
             }
@@ -357,10 +292,13 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     protected String[] getSelectedDescription() throws UnifyException {
         String[] selectedDescriptions = DataUtils.ZEROLEN_STRING_ARRAY;
+        Table table = getTable();
         if (table.getSelectedRows() > 0) {
             Integer[] selectedIndexes = table.getSelectedRowIndexes();
             selectedDescriptions = new String[selectedIndexes.length];
-            if (describable) {
+            if (Describable.class.isAssignableFrom(entityClass)) {
+                BaseEntityPageBean<V> pageBean = getPageBean();
+                List<V> recordList = pageBean.getRecordList();
                 for (int i = 0; i < selectedIndexes.length; i++) {
                     selectedDescriptions[i] = ((Describable) recordList.get(selectedIndexes[i])).getDescription();
                 }
@@ -370,17 +308,17 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     protected void updateSearch() throws UnifyException {
-        setVisible("editTblBtn", ManageRecordModifier.isEditable(modifier));
-        setVisible("viewTblBtn", ManageRecordModifier.isViewable(modifier));
+        setPageWidgetVisible("editTblBtn", ManageRecordModifier.isEditable(modifier));
+        setPageWidgetVisible("viewTblBtn", ManageRecordModifier.isViewable(modifier));
 
         manageReportable();
     }
 
-    protected void onPrepareView(T record) throws UnifyException {
+    protected void onPrepareView(V record) throws UnifyException {
 
     }
 
-    protected void onPrepareItemViewer(T record) throws UnifyException {
+    protected void onPrepareItemViewer(V record) throws UnifyException {
 
     }
 
@@ -392,28 +330,32 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     }
 
-    protected Table getTable() {
-        return table;
-    }
-
     protected String getSwitchItemViewMapping() throws UnifyException {
         String mapping = (String) getRequestAttribute(SWITCH_MAPPING);
         if (StringUtils.isNotBlank(mapping)) {
             return mapping;
         }
-        
+
         return "switchitemview";
     }
 
-    protected void setPrefetchOnly() {
-        this.prefetch = true;
+    protected void setPrefetchOnly() throws UnifyException {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setPrefetch(true);
+    }
+
+    private void loseView() throws UnifyException {
+        onLoseView((V) getPageBean().getRecord());
     }
 
     private String findRecords() throws UnifyException {
         prepareForPrefetch();
-        record = null;
-        recordList = find();
-        table.reset();
+
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        List<V> recordList = find();
+        pageBean.setRecordList(recordList);
+        pageBean.setRecord(null);
+        getTable().reset();
         logUserEvent(EventType.SEARCH, entityClass);
 
         if (recordList != null && recordList.size() >= getContainerSetting(int.class,
@@ -426,12 +368,14 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
     }
 
     private void doUpdate() throws UnifyException {
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        V record = pageBean.getRecord();
         int result = update(record);
         if (result > 0) {
-            logUserEvent(EventType.UPDATE, oldRecord, record);
-            hintUser("$m{hint.record.update.success}", recordHintName);
+            logUserEvent(EventType.UPDATE, pageBean.getOldRecord(), record);
+            hintUser("$m{hint.record.update.success}", pageBean.getRecordHintName());
         } else {
-            hintUser("$m{hint.record.updatetoworkflow.success}", recordHintName);
+            hintUser("$m{hint.record.updatetoworkflow.success}", pageBean.getRecordHintName());
         }
     }
 
@@ -450,7 +394,7 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
             }
         }
 
-        setVisible("reportBtn", isReportable);
+        setPageWidgetVisible("reportBtn", isReportable);
     }
 
     private void loadSessionOnRefresh() throws UnifyException {
@@ -463,62 +407,73 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
 
     @SuppressWarnings("unchecked")
     private void prepareView(int mode) throws UnifyException {
-        this.mode = mode;
+        BaseEntityPageBean<V> pageBean = getPageBean();
+        pageBean.setMode(mode);
+
+        Table table = getTable();
         int index = table.getViewIndex();
-        record = find((U) recordList.get(index).getId());
+        List<V> recordList = pageBean.getRecordList();
+        V record = find((U) recordList.get(index).getId());
+        pageBean.setRecord(record);
         recordList.set(index, record);
         onPrepareView(record);
         loadSessionOnRefresh();
-        
+
         // Navigation buttons
         int viewIndex = table.getViewIndex();
-        setDisabled("firstFrmBtn", recordList == null || viewIndex <= 0);
-        setDisabled("prevFrmBtn", recordList == null || viewIndex <= 0);
-        setDisabled("nextFrmBtn", recordList == null || viewIndex >= (recordList.size() - 1));
-        setDisabled("lastFrmBtn", recordList == null || viewIndex >= (recordList.size() - 1));
+        setPageWidgetDisabled("firstFrmBtn", recordList == null || viewIndex <= 0);
+        setPageWidgetDisabled("prevFrmBtn", recordList == null || viewIndex <= 0);
+        setPageWidgetDisabled("nextFrmBtn", recordList == null || viewIndex >= (recordList.size() - 1));
+        setPageWidgetDisabled("lastFrmBtn", recordList == null || viewIndex >= (recordList.size() - 1));
 
         // Index description
         if (recordList != null) {
-            itemCountLabel = getSessionMessage("label.itemcount", viewIndex + 1, recordList.size());
+            String itemCountLabel = getSessionMessage("label.itemcount", viewIndex + 1, recordList.size());
+            pageBean.setItemCountLabel(itemCountLabel);
         }
 
         // Action buttons
-        setVisible("saveNextFrmBtn", false);
-        setVisible("saveCloseFrmBtn", false);
-        setVisible("cancelFrmBtn", false);
-        setVisible("doneFrmBtn", false);
+        setPageWidgetVisible("saveNextFrmBtn", false);
+        setPageWidgetVisible("saveCloseFrmBtn", false);
+        setPageWidgetVisible("cancelFrmBtn", false);
+        setPageWidgetVisible("doneFrmBtn", false);
         setPageValidationEnabled(false);
 
-        switch (this.mode) {
+        String modeDescription = null;
+        String modeStyle = null;
+        switch (mode) {
             case ManageRecordModifier.MODIFY:
-                setVisible("saveNextFrmBtn", true);
-                setVisible("saveCloseFrmBtn", true);
+                setPageWidgetVisible("saveNextFrmBtn", true);
+                setPageWidgetVisible("saveCloseFrmBtn", true);
                 setItemViewerEditable(true);
                 setPageValidationEnabled(true);
-                setVisible("cancelFrmBtn", true);
-                
-                modeDescription = getSessionMessage("managerecord.mode.modify", recordHintName);
+                setPageWidgetVisible("cancelFrmBtn", true);
+
+                modeDescription = getSessionMessage("managerecord.mode.modify", pageBean.getRecordHintName());
                 modeStyle = EventType.UPDATE.colorMode();
                 break;
             case ManageRecordModifier.VIEW:
                 setItemViewerEditable(false);
-                setVisible("doneFrmBtn", true);
-                
-                modeDescription = getSessionMessage("managerecord.mode.view", recordHintName);
+                setPageWidgetVisible("doneFrmBtn", true);
+
+                modeDescription = getSessionMessage("managerecord.mode.view", pageBean.getRecordHintName());
                 modeStyle = EventType.VIEW.colorMode();
-               break;
+                break;
             default:
                 break;
         }
-        
+
+        pageBean.setModeDescription(modeDescription);
+        pageBean.setModeStyle(modeStyle);
+
         // Call on update item viewer
         onPrepareItemViewer(record);
     }
-    
 
     private String performModeAction() throws UnifyException {
+        BaseEntityPageBean<V> pageBean = getPageBean();
         String result = null;
-        switch (this.mode) {
+        switch (pageBean.getMode()) {
             case ManageRecordModifier.MODIFY:
                 return prepareUpdateRecord();
             case ManageRecordModifier.VIEW:
@@ -529,5 +484,4 @@ public abstract class BasePrefetchController<T extends Entity, U> extends BasePa
         return result;
     }
 
-    
 }

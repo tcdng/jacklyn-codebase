@@ -21,6 +21,7 @@ import java.util.List;
 import com.tcdng.jacklyn.organization.entities.RolePrivilege;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidget;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidgetQuery;
+import com.tcdng.jacklyn.organization.web.beans.RoleDocumentControlPageBean;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
@@ -39,18 +40,12 @@ import com.tcdng.unify.web.annotation.ResultMappings;
  */
 @Component("/organization/roledocumentcontrol")
 @UplBinding("web/organization/upl/manageroledocumentcontrol.upl")
-@ResultMappings({ @ResultMapping(name = "refreshtable",
-        response = { "!refreshpanelresponse panels:$l{tablePanel actionPanel}" }) })
-public class RoleDocumentControlController extends AbstractOrganizationPageController {
-
-    private Long searchRoleId;
-
-    private Long searchModuleId;
-
-    private List<RolePrivilegeWidget> rolePrivilegeWidgetList;
+@ResultMappings({ @ResultMapping(
+        name = "refreshtable", response = { "!refreshpanelresponse panels:$l{tablePanel actionPanel}" }) })
+public class RoleDocumentControlController extends AbstractOrganizationPageController<RoleDocumentControlPageBean> {
 
     public RoleDocumentControlController() {
-        super(true, false);
+        super(RoleDocumentControlPageBean.class, true, false, false);
     }
 
     @Action
@@ -62,42 +57,22 @@ public class RoleDocumentControlController extends AbstractOrganizationPageContr
 
     @Action
     public String savePrivileges() throws UnifyException {
-        getOrganizationService().updateRoleDocumentControls(rolePrivilegeWidgetList);
+        RoleDocumentControlPageBean pageBean = getPageBean();
+        getOrganizationService().updateRoleDocumentControls(pageBean.getRolePrivilegeWidgetList());
         hintUser("$m{hint.organization.roleprivilege.saved}");
         doFindPrivileges();
         return "refreshtable";
     }
 
-    public Long getSearchRoleId() {
-        return searchRoleId;
-    }
-
-    public void setSearchRoleId(Long searchRoleId) {
-        this.searchRoleId = searchRoleId;
-    }
-
-    public Long getSearchModuleId() {
-        return searchModuleId;
-    }
-
-    public void setSearchModuleId(Long searchModuleId) {
-        this.searchModuleId = searchModuleId;
-    }
-
-    public List<RolePrivilegeWidget> getRolePrivilegeWidgetList() {
-        return rolePrivilegeWidgetList;
-    }
-
-    public void setRolePrivilegeWidgetList(List<RolePrivilegeWidget> rolePrivilegeWidgetList) {
-        this.rolePrivilegeWidgetList = rolePrivilegeWidgetList;
-    }
-
     @Override
     protected void onIndexPage() throws UnifyException {
         super.onIndexPage();
-        searchRoleId = null;
-        searchModuleId = null;
-        rolePrivilegeWidgetList = Collections.emptyList();
+
+        RoleDocumentControlPageBean pageBean = getPageBean();
+        pageBean.setSearchRoleId(null);
+        pageBean.setSearchModuleId(null);
+        List<RolePrivilegeWidget> rolePrivilegeWidgetList = Collections.emptyList();
+        pageBean.setRolePrivilegeWidgetList(rolePrivilegeWidgetList);
     }
 
     @Override
@@ -105,27 +80,18 @@ public class RoleDocumentControlController extends AbstractOrganizationPageContr
         doFindPrivileges();
     }
 
-    @Override
-    protected void onClosePage() throws UnifyException {
-        searchRoleId = null;
-        searchModuleId = null;
-        rolePrivilegeWidgetList = null;
-    }
-
-    @Override
-    protected String getDocViewPanelName() {
-        return "searchBodyPanel";
-    }
-
     protected void doFindPrivileges() throws UnifyException {
-        if (QueryUtils.isValidLongCriteria(searchRoleId) && QueryUtils.isValidLongCriteria(searchModuleId)) {
+        RoleDocumentControlPageBean pageBean = getPageBean();
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchRoleId())
+                && QueryUtils.isValidLongCriteria(pageBean.getSearchModuleId())) {
             RolePrivilegeWidgetQuery query = new RolePrivilegeWidgetQuery();
-            query.roleId(searchRoleId);
-            query.moduleId(searchModuleId);
+            query.roleId(pageBean.getSearchRoleId());
+            query.moduleId(pageBean.getSearchModuleId());
             query.categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL);
-            rolePrivilegeWidgetList = getOrganizationService().findRoleDocumentControls(query);
+            pageBean.setRolePrivilegeWidgetList(getOrganizationService().findRoleDocumentControls(query));
         } else {
-            rolePrivilegeWidgetList = Collections.emptyList();
+            List<RolePrivilegeWidget> rolePrivilegeWidgetList = Collections.emptyList();
+            pageBean.setRolePrivilegeWidgetList(rolePrivilegeWidgetList);
         }
     }
 }

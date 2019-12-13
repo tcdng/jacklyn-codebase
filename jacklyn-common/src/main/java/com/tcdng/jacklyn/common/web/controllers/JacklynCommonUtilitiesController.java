@@ -19,10 +19,11 @@ import com.tcdng.jacklyn.common.constants.CommonModuleAuditConstants;
 import com.tcdng.jacklyn.common.constants.JacklynRequestAttributeConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.data.ReportOptions;
+import com.tcdng.jacklyn.common.web.beans.JacklynCommonUtilitiesPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.CommonUtilitiesPageController;
+import com.tcdng.unify.web.AbstractCommonUtilitiesPageController;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
@@ -47,11 +48,12 @@ import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
         @ResultMapping(
                 name = "viewreport",
                 response = { "!refreshpanelresponse panels:$l{reportRunnerPopup}", "!commonreportresponse" }) })
-public class JacklynCommonUtilitiesController extends CommonUtilitiesPageController {
+public class JacklynCommonUtilitiesController
+        extends AbstractCommonUtilitiesPageController<JacklynCommonUtilitiesPageBean> {
 
-    private SearchBoxPanel searchBoxState;
-
-    private String searchSelectPath;
+    public JacklynCommonUtilitiesController() {
+        super(JacklynCommonUtilitiesPageBean.class);
+    }
 
     @Action
     public String generateReport() throws UnifyException {
@@ -70,9 +72,10 @@ public class JacklynCommonUtilitiesController extends CommonUtilitiesPageControl
 
     @Action
     public String searchBoxSelect() throws UnifyException {
-        searchBoxState.setResultBeanProperties();
+        getSearchBoxPanel().setResultBeanProperties();
         SearchBox searchBoxInfo = (SearchBox) removeSessionAttribute(JacklynSessionAttributeConstants.SEARCHBOX);
-        searchSelectPath = searchBoxInfo.getResultPath();
+        JacklynCommonUtilitiesPageBean jacklynCommonUtilitiesPageBean = getPageBean();
+        jacklynCommonUtilitiesPageBean.setSearchSelectPath(searchBoxInfo.getResultPath());
         return "searchdone";
     }
 
@@ -82,17 +85,7 @@ public class JacklynCommonUtilitiesController extends CommonUtilitiesPageControl
         return hidePopup();
     }
 
-    public String getSearchSelectPath() {
-        return searchSelectPath;
-    }
-
-    public void setSearchSelectPath(String searchSelectPath) {
-        this.searchSelectPath = searchSelectPath;
-    }
-
-    @Override
-    protected void onSetPage() throws UnifyException {
-        super.onSetPage();
-        searchBoxState = getPageWidgetByShortName(SearchBoxPanel.class, "searchBoxPopup");
+    private SearchBoxPanel getSearchBoxPanel() throws UnifyException {
+        return getPageWidgetByShortName(SearchBoxPanel.class, "searchBoxPopup");
     }
 }

@@ -20,6 +20,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.web.controllers.ManageRecordModifier;
 import com.tcdng.jacklyn.organization.entities.Hub;
 import com.tcdng.jacklyn.organization.entities.HubQuery;
+import com.tcdng.jacklyn.organization.web.beans.HubPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -33,46 +34,27 @@ import com.tcdng.unify.core.util.QueryUtils;
  */
 @Component("/organization/hub")
 @UplBinding("web/organization/upl/managehub.upl")
-public class HubController extends AbstractOrganizationCrudController<Hub> {
-
-    private String searchName;
-
-    private String searchDescription;
+public class HubController extends AbstractOrganizationFormController<HubPageBean, Hub> {
 
     public HubController() {
-        super(Hub.class, "$m{organization.hub.hint}", ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
+        super(HubPageBean.class, Hub.class, ManageRecordModifier.SECURE | ManageRecordModifier.CRUD
                 | ManageRecordModifier.CLIPBOARD | ManageRecordModifier.COPY_TO_ADD | ManageRecordModifier.REPORTABLE);
-    }
-
-    public String getSearchName() {
-        return searchName;
-    }
-
-    public void setSearchName(String searchName) {
-        this.searchName = searchName;
-    }
-
-    public String getSearchDescription() {
-        return searchDescription;
-    }
-
-    public void setSearchDescription(String searchDescription) {
-        this.searchDescription = searchDescription;
     }
 
     @Override
     protected List<Hub> find() throws UnifyException {
+        HubPageBean pageBean = getPageBean();
         HubQuery query = new HubQuery();
-        if (QueryUtils.isValidStringCriteria(searchName)) {
-            query.name(searchName);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchName())) {
+            query.name(pageBean.getSearchName());
         }
 
-        if (QueryUtils.isValidStringCriteria(searchDescription)) {
-            query.descriptionLike(searchDescription);
+        if (QueryUtils.isValidStringCriteria(pageBean.getSearchDescription())) {
+            query.descriptionLike(pageBean.getSearchDescription());
         }
 
-        if (getSearchStatus() != null) {
-            query.status(getSearchStatus());
+        if (pageBean.getSearchStatus() != null) {
+            query.status(pageBean.getSearchStatus());
         }
         query.addOrder("description").ignoreEmptyCriteria(true);
         return getOrganizationService().findHubs(query);
