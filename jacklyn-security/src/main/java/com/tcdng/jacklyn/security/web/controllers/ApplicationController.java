@@ -168,6 +168,9 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     protected void onIndexPage() throws UnifyException {
         super.onIndexPage();
 
+        ApplicationPageBean pageBean = getPageBean();
+        pageBean.setUserLoginId(getUserToken().getUserLoginId());
+
         List<Tile> tileList = Collections.emptyList();
         ShortcutTileQuery query = new ShortcutTileQuery().orderByDisplayOrder();
         query.installed(Boolean.TRUE);
@@ -188,7 +191,6 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     @Override
     protected void onInitPage() throws UnifyException {
         ApplicationPageBean pageBean = getPageBean();
-        pageBean.setUserLoginId(getUserToken().getUserLoginId());
         pageBean.setUserPhotoGenerator(userPhotoGenerator);
         pageBean.setSystemNotificationProvider(systemNotificationProvider);
     }
