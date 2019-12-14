@@ -32,7 +32,7 @@ public interface UserSessionViewAccessProvider extends UnifyComponent {
     /**
      * Finds current user session branch IDs
      * 
-     * @return list of branch IDs. Empty list is returned for system or application
+     * @return list of branch IDs. Null is returned for system or application
      *         admin users.
      * @throws UnifyException
      *             if an error occurs
@@ -42,7 +42,7 @@ public interface UserSessionViewAccessProvider extends UnifyComponent {
     /**
      * Finds current user session department IDs
      * 
-     * @return list of department IDs. Empty list is returned for system or
+     * @return list of department IDs. Null is returned for system or
      *         application admin users.
      * @throws UnifyException
      *             if an error occurs

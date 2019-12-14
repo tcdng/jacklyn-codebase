@@ -56,9 +56,11 @@ public class UserSessionViewAccessProviderImpl extends AbstractUserSessionViewAc
 
                 return Arrays.asList(organizationService.findBranchId(branchCode));
             }
+
+            return Collections.emptyList();
         }
 
-        return Collections.emptyList();
+        return null;
     }
 
     @Override
@@ -68,7 +70,7 @@ public class UserSessionViewAccessProviderImpl extends AbstractUserSessionViewAc
             return securityService.findUserDepartmentIds(userToken.getUserLoginId());
         }
 
-        return Collections.emptyList();
+        return null;
     }
 
 }

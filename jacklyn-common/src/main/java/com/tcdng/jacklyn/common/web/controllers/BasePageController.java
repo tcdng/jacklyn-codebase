@@ -55,7 +55,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
     /**
      * Gets current user session branch IDs
      * 
-     * @return list of branch IDs. Empty list is returned for system or application
+     * @return list of branch IDs. Null is returned for system or application
      *         administrators.
      * @throws UnifyException
      *             if an error occurs
