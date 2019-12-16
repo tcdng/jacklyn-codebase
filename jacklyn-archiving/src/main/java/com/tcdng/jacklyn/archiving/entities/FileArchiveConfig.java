@@ -40,11 +40,14 @@ public class FileArchiveConfig extends BaseVersionedStatusEntity {
     @ForeignKey(ArchivableDefinition.class)
     private Long archivableDefId;
 
-    @ForeignKey(ArchivingField.class)
+    @ForeignKey(type = ArchivingField.class, nullable = true)
     private Long archivableFieldId;
 
     @ForeignKey(ArchivingField.class)
     private Long archivableDateFieldId;
+
+    @ForeignKey(ArchivingField.class)
+    private Long archivableIndicatorFieldId;
 
     @ForeignKey(type = FileTransferConfig.class, nullable = true)
     private Long backupFileTransferCfgId;
@@ -70,6 +73,9 @@ public class FileArchiveConfig extends BaseVersionedStatusEntity {
     @Column
     private Boolean deleteRowOnArchive;
 
+    @Column(name = "ARCHIVING_POLICY_NM", length = 48, nullable = true)
+    private String archivingPolicyName;
+
     @ListOnly(key = "archivableDefId", property = "recordType")
     private String recordName;
 
@@ -85,6 +91,9 @@ public class FileArchiveConfig extends BaseVersionedStatusEntity {
     @ListOnly(key = "archivableDateFieldId", property = "fieldName")
     private String dateFieldName;
 
+    @ListOnly(key = "archivableIndicatorFieldId", property = "fieldName")
+    private String indicatorFieldName;
+    
     public Long getArchivableDefId() {
         return archivableDefId;
     }
@@ -107,6 +116,14 @@ public class FileArchiveConfig extends BaseVersionedStatusEntity {
 
     public void setArchivableDateFieldId(Long archivableDateFieldId) {
         this.archivableDateFieldId = archivableDateFieldId;
+    }
+
+    public Long getArchivableIndicatorFieldId() {
+        return archivableIndicatorFieldId;
+    }
+
+    public void setArchivableIndicatorFieldId(Long archivableIndicatorFieldId) {
+        this.archivableIndicatorFieldId = archivableIndicatorFieldId;
     }
 
     public String getName() {
@@ -165,6 +182,14 @@ public class FileArchiveConfig extends BaseVersionedStatusEntity {
         this.deleteRowOnArchive = deleteRowOnArchive;
     }
 
+    public String getArchivingPolicyName() {
+        return archivingPolicyName;
+    }
+
+    public void setArchivingPolicyName(String archivingPolicyName) {
+        this.archivingPolicyName = archivingPolicyName;
+    }
+
     public Long getBackupFileTransferCfgId() {
         return backupFileTransferCfgId;
     }
@@ -211,5 +236,13 @@ public class FileArchiveConfig extends BaseVersionedStatusEntity {
 
     public void setDateFieldName(String dateFieldName) {
         this.dateFieldName = dateFieldName;
+    }
+
+    public String getIndicatorFieldName() {
+        return indicatorFieldName;
+    }
+
+    public void setIndicatorFieldName(String indicatorFieldName) {
+        this.indicatorFieldName = indicatorFieldName;
     }
 }

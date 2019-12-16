@@ -83,24 +83,29 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         query.addOrder("fieldName");
         List<ArchivingField> archivableFieldList = archivingService.findArchivingFields(query);
         assertNotNull(archivableFieldList);
-        assertEquals(4, archivableFieldList.size());
+        assertEquals(5, archivableFieldList.size());
 
         ArchivingField archivableField = archivableFieldList.get(0);
+        assertEquals("archivedFlag", archivableField.getFieldName());
+        assertEquals("Archived Flag", archivableField.getDescription());
+        assertEquals(ArchivingFieldType.BOOLEAN, archivableField.getFieldType());
+
+        archivableField = archivableFieldList.get(1);
         assertEquals("createDt", archivableField.getFieldName());
         assertEquals("Create Dt", archivableField.getDescription());
         assertEquals(ArchivingFieldType.TIMESTAMP_UTC, archivableField.getFieldType());
 
-        archivableField = archivableFieldList.get(1);
+        archivableField = archivableFieldList.get(2);
         assertEquals("image", archivableField.getFieldName());
         assertEquals("Image", archivableField.getDescription());
         assertEquals(ArchivingFieldType.BLOB, archivableField.getFieldType());
 
-        archivableField = archivableFieldList.get(2);
+        archivableField = archivableFieldList.get(3);
         assertEquals("template", archivableField.getFieldName());
         assertEquals("Template", archivableField.getDescription());
         assertEquals(ArchivingFieldType.CLOB, archivableField.getFieldType());
 
-        archivableField = archivableFieldList.get(3);
+        archivableField = archivableFieldList.get(4);
         assertEquals("updateDt", archivableField.getFieldName());
         assertEquals("Update Dt", archivableField.getDescription());
         assertEquals(ArchivingFieldType.TIMESTAMP_UTC, archivableField.getFieldType());
@@ -192,6 +197,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         byte[] image = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setImage(image);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId = (Long) createRecord(testChequeImage);
 
         TestChequeImage fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
@@ -218,6 +224,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         byte[] image = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setImage(image);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId = (Long) createRecord(testChequeImage);
 
         TestChequeImage fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
@@ -247,6 +254,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setImage(image1);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
         Calendar cal = Calendar.getInstance();
@@ -284,6 +292,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setImage(image1);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
         Calendar cal = Calendar.getInstance();
@@ -291,6 +300,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         byte[] image2 = new byte[] { (byte) 0x2B, (byte) 0xDD, (byte) 0x05, (byte) 0x72, (byte) 0x3E };
         testChequeImage.setImage(image2);
         testChequeImage.setCreateDt(cal.getTime());
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
         TestChequeImage fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId1);
@@ -323,6 +333,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
 
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setTemplate("Hello World!");
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId = (Long) createRecord(testChequeImage);
 
         TestChequeImage fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
@@ -347,6 +358,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         byte[] image = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setImage(image);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId = (Long) createRecord(testChequeImage);
 
         TestChequeImage fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
@@ -376,14 +388,17 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         testChequeImage.setCreateDt(workingDt);
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         testChequeImage.setImage(image1);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
         byte[] image2 = new byte[] { (byte) 0xC4, (byte) 0x80, (byte) 0x2F, (byte) 0xD4, (byte) 0xBB };
         testChequeImage.setImage(image2);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
         byte[] image3 = new byte[] { (byte) 0x01, (byte) 0x36, (byte) 0x44 };
         testChequeImage.setImage(image3);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId3 = (Long) createRecord(testChequeImage);
 
         TaskMonitor tm = launchBlobFileArchiveTask("ChequeImageArchive", workingDt);
@@ -420,14 +435,17 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         testChequeImage.setCreateDt(workingDt);
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         testChequeImage.setImage(image1);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
         byte[] image2 = new byte[] { (byte) 0xC4, (byte) 0x80, (byte) 0x2F, (byte) 0xD4, (byte) 0xBB };
         testChequeImage.setImage(image2);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
         byte[] image3 = new byte[] { (byte) 0x01, (byte) 0x36, (byte) 0x44 };
         testChequeImage.setImage(image3);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId3 = (Long) createRecord(testChequeImage);
 
         // Single pass
@@ -466,14 +484,17 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         testChequeImage.setCreateDt(workingDt);
         byte[] image1 = new byte[] { (byte) 0x34, (byte) 0x3F, (byte) 0xAC, (byte) 0xD4 };
         testChequeImage.setImage(image1);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId1 = (Long) createRecord(testChequeImage);
 
         byte[] image2 = new byte[] { (byte) 0xC4, (byte) 0x80, (byte) 0x2F, (byte) 0xD4, (byte) 0xBB };
         testChequeImage.setImage(image2);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId2 = (Long) createRecord(testChequeImage);
 
         byte[] image3 = new byte[] { (byte) 0x01, (byte) 0x36, (byte) 0x44 };
         testChequeImage.setImage(image3);
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId3 = (Long) createRecord(testChequeImage);
 
         // Mutiple pass
@@ -511,6 +532,7 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
 
         TestChequeImage testChequeImage = new TestChequeImage();
         testChequeImage.setTemplate("Hello World!");
+        testChequeImage.setArchivedFlag(Boolean.FALSE);
         Long testChequeImageId = (Long) createRecord(testChequeImage);
 
         TestChequeImage fetchedTestChequeImage = findRecord(TestChequeImage.class, testChequeImageId);
@@ -565,9 +587,15 @@ public class ArchivingServiceTest extends AbstractJacklynTest {
         query.fieldName("createDt");
         ArchivingField dfd = archivingService.findArchivingField(query);
         
+        query.clear();
+        query.recordName(TestChequeImage.class.getName());
+        query.fieldName("archivedFlag");
+        ArchivingField ifd = archivingService.findArchivingField(query);
+        
         fileArchiveConfig.setArchivableDefId(afd.getArchivableDefId());
         fileArchiveConfig.setArchivableFieldId(afd.getId());
         fileArchiveConfig.setArchivableDateFieldId(dfd.getId());
+        fileArchiveConfig.setArchivableIndicatorFieldId(ifd.getId());
         fileArchiveConfig.setName("ChequeImageArchive");
         fileArchiveConfig.setDescription("Cheque ImageImpl Archive");
         fileArchiveConfig.setLocalArchivePath("c:\\archive\\images");
