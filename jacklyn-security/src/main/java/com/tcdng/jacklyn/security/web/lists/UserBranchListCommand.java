@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.security.web.lists;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,7 +28,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
-import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.core.util.QueryUtils;
 
 /**
  * User branch list command.
@@ -44,17 +45,20 @@ public class UserBranchListCommand extends AbstractZeroParamsSecurityListCommand
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         UserToken userToken = getUserToken();
-        String branchCode = userToken.getBranchCode();
-        if (!StringUtils.isBlank(branchCode) && !userToken.isReservedUser() && !isAppAdminView()) {
-            if(isHubAdminView()) {
-                return organizationService.findHubBranchesByBranch(branchCode);
+        if (!userToken.isReservedUser() && !isAppAdminView()) {
+            if (QueryUtils.isValidStringCriteria(userToken.getBranchCode())) {
+                if (isHubAdminView()) {
+                    return organizationService.findHubBranchesByBranch(userToken.getBranchCode());
+                }
+
+                return Arrays.asList(organizationService.findBranch(new BranchQuery().code(userToken.getBranchCode())));
             }
 
-            return Arrays.asList(organizationService.findBranch(new BranchQuery().code(branchCode)));
+            return Collections.emptyList();
         }
 
-        return organizationService.findBranches(
-                (BranchQuery) new BranchQuery().ignoreEmptyCriteria(true).addOrder("description"));
+        return organizationService
+                .findBranches((BranchQuery) new BranchQuery().ignoreEmptyCriteria(true).addOrder("description"));
     }
 
 }

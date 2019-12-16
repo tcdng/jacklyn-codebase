@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.security.web.lists;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,6 +28,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.data.Listable;
 import com.tcdng.unify.core.list.ZeroParams;
+import com.tcdng.unify.core.util.QueryUtils;
 
 /**
  * User hub list command.
@@ -44,11 +46,15 @@ public class UserHubListCommand extends AbstractZeroParamsSecurityListCommand {
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         UserToken userToken = getUserToken();
         if (!userToken.isReservedUser() && !isAppAdminView()) {
-            return Arrays.asList(organizationService.findHubByBranch(userToken.getBranchCode()));
+            if (QueryUtils.isValidStringCriteria(userToken.getBranchCode())) {
+                return Arrays.asList(organizationService.findHubByBranch(userToken.getBranchCode()));
+            }
+
+            return Collections.emptyList();
         }
 
-        return organizationService.findHubs(
-                (HubQuery) new HubQuery().ignoreEmptyCriteria(true).addOrder("description"));
+        return organizationService
+                .findHubs((HubQuery) new HubQuery().ignoreEmptyCriteria(true).addOrder("description"));
     }
 
 }
