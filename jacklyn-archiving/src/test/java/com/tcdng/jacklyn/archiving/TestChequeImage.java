@@ -38,6 +38,9 @@ public class TestChequeImage extends BaseTimestampedEntity {
     @Column(type = ColumnType.CLOB, nullable = true)
     private String template;
 
+    @Column
+    private Boolean archivedFlag;
+    
     @Override
     public String getDescription() {
         return this.template;
@@ -57,5 +60,13 @@ public class TestChequeImage extends BaseTimestampedEntity {
 
     public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public Boolean getArchivedFlag() {
+        return archivedFlag;
+    }
+
+    public void setArchivedFlag(Boolean archivedFlag) {
+        this.archivedFlag = archivedFlag;
     }
 }

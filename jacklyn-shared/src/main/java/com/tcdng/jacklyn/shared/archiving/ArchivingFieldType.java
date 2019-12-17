@@ -29,30 +29,29 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("archivingfieldtypelist")
 public enum ArchivingFieldType implements EnumConst {
 
-    BLOB(ColumnType.BLOB.code(), true, false),
-    CLOB(ColumnType.CLOB.code(), true, false),
-    DATE(ColumnType.DATE.code(), false, true),
-    TIMESTAMP_UTC(ColumnType.TIMESTAMP_UTC.code(), false, true),
-    TIMESTAMP(ColumnType.TIMESTAMP.code(), false, true);
+    BLOB(ColumnType.BLOB.code()),
+    CLOB(ColumnType.CLOB.code()),
+    BOOLEAN(ColumnType.BOOLEAN.code()),
+    DATE(ColumnType.DATE.code()),
+    TIMESTAMP_UTC(ColumnType.TIMESTAMP_UTC.code()),
+    TIMESTAMP(ColumnType.TIMESTAMP.code());
 
     private final String code;
 
-    private final boolean lob;
-
-    private final boolean timestamp;
-
-    private ArchivingFieldType(String code, boolean lob, boolean timestamp) {
+    private ArchivingFieldType(String code) {
         this.code = code;
-        this.lob = lob;
-        this.timestamp = timestamp;
     }
 
     public boolean isLob() {
-        return lob;
+        return BLOB.equals(this) || CLOB.equals(this);
     }
 
     public boolean isTimestamp() {
-        return timestamp;
+        return DATE.equals(this) || TIMESTAMP_UTC.equals(this) || TIMESTAMP.equals(this);
+    }
+
+    public boolean isIndicator() {
+        return BOOLEAN.equals(this);
     }
 
     @Override
