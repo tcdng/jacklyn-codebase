@@ -40,7 +40,7 @@ import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.web.annotation.GatewayAction;
+import com.tcdng.unify.web.annotation.RemoteAction;
 
 /**
  * Workflow module remote call controller.
@@ -49,50 +49,50 @@ import com.tcdng.unify.web.annotation.GatewayAction;
  * @since 1.0
  */
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE)
-@Component("/workflow/gate")
-public class WorkflowRemoteGateController extends BaseRemoteCallController {
+@Component("/workflow/remotecall")
+public class WorkflowRemoteCallController extends BaseRemoteCallController {
 
     @Configurable
     private WorkflowService workflowService;
 
-    @GatewayAction(
+    @RemoteAction(
             name = WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY,
-            description = "$m{workflow.gate.remotecall.publishwfcategory}")
+            description = "$m{workflow.remotecall.publishwfcategory}")
     public PublishWfCategoryResult publishWfCategory(PublishWfCategoryParams params) throws UnifyException {
         workflowService.executeWorkflowCategoryPublicationTask(null, params.getWfCategoryXml(), params.isActivate());
         return new PublishWfCategoryResult();
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = WorkflowRemoteCallNameConstants.GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST,
-            description = "$m{workflow.gate.remotecall.gettoolingclassifierlogic}")
+            description = "$m{workflow.remotecall.gettoolingclassifierlogic}")
     public GetToolingItemClassifierLogicResult getToolingItemClassifierLogicList(
             GetToolingItemClassifierLogicParams params) throws UnifyException {
         List<ToolingItemClassifierLogicItem> list = workflowService.findToolingItemClassifierLogicTypes();
         return new GetToolingItemClassifierLogicResult(list);
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = WorkflowRemoteCallNameConstants.GET_TOOLING_ENRICHMENT_LOGIC_LIST,
-            description = "$m{workflow.gate.remotecall.gettoolingenrichmentlogic}")
+            description = "$m{workflow.remotecall.gettoolingenrichmentlogic}")
     public GetToolingEnrichmentLogicResult getToolingEnrichmentLogicList(GetToolingEnrichmentLogicParams params)
             throws UnifyException {
         List<ToolingEnrichmentLogicItem> list = workflowService.findToolingEnrichmentLogicTypes();
         return new GetToolingEnrichmentLogicResult(list);
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = WorkflowRemoteCallNameConstants.GET_TOOLING_POLICY_LOGIC_LIST,
-            description = "$m{workflow.gate.remotecall.gettoolingpolicylogic}")
+            description = "$m{workflow.remotecall.gettoolingpolicylogic}")
     public GetToolingPolicyLogicResult getToolingPolicyLogicList(GetToolingPolicyLogicParams params)
             throws UnifyException {
         List<ToolingPolicyLogicItem> list = workflowService.findToolingPolicyLogicTypes();
         return new GetToolingPolicyLogicResult(list);
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = WorkflowRemoteCallNameConstants.GET_TOOLING_WFDOC_UPLGENERATOR_LIST,
-            description = "$m{workflow.gate.remotecall.gettoolingwfdocuplgenerator}")
+            description = "$m{workflow.remotecall.gettoolingwfdocuplgenerator}")
     public GetToolingWfDocUplGeneratorResult getToolingWfDocUplGeneratorList(GetToolingWfDocUplGeneratorParams params)
             throws UnifyException {
         List<ToolingWfDocUplGeneratorItem> list = workflowService.findToolingWfDocUplGeneratorTypes();

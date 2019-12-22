@@ -25,7 +25,7 @@ import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.web.annotation.GatewayAction;
+import com.tcdng.unify.web.annotation.RemoteAction;
 
 /**
  * Security module remote call controller.
@@ -34,15 +34,15 @@ import com.tcdng.unify.web.annotation.GatewayAction;
  * @since 1.0
  */
 @Managed(module = SecurityModuleNameConstants.SECURITY_MODULE)
-@Component("/security/gate")
-public class SecurityRemoteGateController extends BaseRemoteCallController {
+@Component("/security/remotecall")
+public class SecurityRemoteCallController extends BaseRemoteCallController {
 
     @Configurable
     private SecurityService securityService;
 
-    @GatewayAction(
+    @RemoteAction(
             name = SecurityRemoteCallNameConstants.OS_REQUEST_INSTALL,
-            description = "$m{security.gate.remotecall.osrequestinstall}", restricted = false)
+            description = "$m{security.remotecall.osrequestinstall}", restricted = false)
     public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
             throws UnifyException {
         return securityService.processOSInstallationRequest(oSInstallationReqParams);

@@ -54,7 +54,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.web.annotation.GatewayAction;
+import com.tcdng.unify.web.annotation.RemoteAction;
 
 /**
  * System module remote call controller.
@@ -63,15 +63,15 @@ import com.tcdng.unify.web.annotation.GatewayAction;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE)
-@Component("/system/gate")
-public class SystemRemoteGateController extends BaseRemoteCallController {
+@Component("/system/remotecall")
+public class SystemRemoteCallController extends BaseRemoteCallController {
 
     @Configurable
     private SystemService systemService;
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_APPLICATION_INFO,
-            description = "$m{system.gate.remotecall.getapplicationinfo}")
+            description = "$m{system.remotecall.getapplicationinfo}")
     public GetAppInfoResult getApplicationInfo(GetAppInfoParams params) throws UnifyException {
         return new GetAppInfoResult(getApplicationName(),
                 systemService.getSysParameterValue(String.class,
@@ -79,9 +79,9 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
                 systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_CLIENT_TITLE));
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_APPLICATION_MENU,
-            description = "$m{system.gate.remotecall.getapplicationmenu}")
+            description = "$m{system.remotecall.getapplicationmenu}")
     public GetAppMenuResult getApplicationMenu(GetAppMenuParams params) throws UnifyException {
         List<AppMenuItemGroup> appMenuItemGroupList = new ArrayList<AppMenuItemGroup>();
         ApplicationMenuQuery menuQuery = new ApplicationMenuQuery();
@@ -123,9 +123,9 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         return new GetAppMenuResult(appMenuItemGroupList);
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_APPLICATION_MODULES,
-            description = "$m{system.gate.remotecall.getapplicationmodule}")
+            description = "$m{system.remotecall.getapplicationmodule}")
     public GetAppModulesResult getApplicationModules(GetAppModulesParams params) throws UnifyException {
         List<AppModule> appModuleList = new ArrayList<AppModule>();
         List<Module> moduleList = systemService.findModules((ModuleQuery) new ModuleQuery().installed(Boolean.TRUE));
@@ -137,38 +137,38 @@ public class SystemRemoteGateController extends BaseRemoteCallController {
         return new GetAppModulesResult(appModuleList);
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_TOOLING_BASE_TYPES,
-            description = "$m{system.gate.remotecall.getbasetypes}")
+            description = "$m{system.remotecall.getbasetypes}")
     public GetToolingBaseTypeResult getToolingBaseTypes(GetToolingBaseTypeParams params) throws UnifyException {
         return new GetToolingBaseTypeResult(systemService.findToolingBaseTypes());
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_TOOLING_RECORD_TYPES,
-            description = "$m{system.gate.remotecall.getrecordtypes}")
+            description = "$m{system.remotecall.getrecordtypes}")
     public GetToolingRecordTypeResult getToolingRecordTypes(GetToolingRecordTypeParams params) throws UnifyException {
         return new GetToolingRecordTypeResult(systemService.findToolingDocumentTypes());
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_TOOLING_ENUMERATION_TYPES,
-            description = "$m{system.gate.remotecall.getenumtypes}")
+            description = "$m{system.remotecall.getenumtypes}")
     public GetToolingEnumTypeResult getToolingEnumTypes(GetToolingEnumTypeParams params) throws UnifyException {
         return new GetToolingEnumTypeResult(systemService.findToolingEnumTypes());
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_TOOLING_TRANSFORMER_TYPES,
-            description = "$m{system.gate.remotecall.gettransformertypes}")
+            description = "$m{system.remotecall.gettransformertypes}")
     public GetToolingTransformerTypeResult getToolingTransformerTypes(GetToolingTransformerTypeParams params)
             throws UnifyException {
         return new GetToolingTransformerTypeResult(systemService.findToolingTransformerTypes());
     }
 
-    @GatewayAction(
+    @RemoteAction(
             name = SystemRemoteCallNameConstants.GET_TOOLING_LIST_TYPES,
-            description = "$m{system.gate.remotecall.getlisttypes}")
+            description = "$m{system.remotecall.getlisttypes}")
     public GetToolingListTypeResult getToolingListTypes(GetToolingListTypeParams params) throws UnifyException {
         return new GetToolingListTypeResult(systemService.findToolingListTypes());
     }

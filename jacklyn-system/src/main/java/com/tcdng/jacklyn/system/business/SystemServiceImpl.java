@@ -154,7 +154,7 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.RemoteCallController;
-import com.tcdng.unify.web.annotation.GatewayAction;
+import com.tcdng.unify.web.annotation.RemoteAction;
 
 /**
  * Default implementation of system business service.
@@ -1403,7 +1403,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             Long moduleId = module.getId();
             Method[] methods = remoteCallClass.getMethods();
             for (Method method : methods) {
-                GatewayAction goa = method.getAnnotation(GatewayAction.class);
+                RemoteAction goa = method.getAnnotation(RemoteAction.class);
                 if (goa != null) {
                     sysAssetQuery.clear();
                     SystemAsset oldSystemAsset =
