@@ -170,7 +170,7 @@ public class UserController extends AbstractSecurityFormController<UserPageBean,
 
     @Override
     protected void onPrepareCrudViewer(User record, int mode) throws UnifyException {
-        setPageWidgetVisible("resetBtn", mode != ManageRecordModifier.ADD);
+        setPageWidgetVisible("resetBtn", mode == ManageRecordModifier.VIEW);
         if (mode == ManageRecordModifier.ADD) {
             setPageWidgetEditable("frmRoleAssignPanel", true);
             setPageWidgetDisabled("frmImage", false);
