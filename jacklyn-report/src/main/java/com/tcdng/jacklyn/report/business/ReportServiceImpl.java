@@ -79,7 +79,7 @@ import com.tcdng.unify.core.util.GetterSetterInfo;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.web.util.WebUtils;
+import com.tcdng.unify.web.ThemeManager;
 
 /**
  * Default implementation of report business service.
@@ -90,6 +90,9 @@ import com.tcdng.unify.web.util.WebUtils;
 @Transactional
 @Component(ReportModuleNameConstants.REPORTSERVICE)
 public class ReportServiceImpl extends AbstractJacklynBusinessService implements ReportService {
+
+    @Configurable
+    private ThemeManager themeManager;
 
     @Configurable
     private SystemService systemService;
@@ -741,7 +744,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         report.setParameter(ReportParameterConstants.REPORT_TITLE, "Report Title", report.getTitle());
 
         String imagePath =
-                WebUtils.expandThemeTag(systemService.getSysParameterValue(String.class,
+                themeManager.expandThemeTag(systemService.getSysParameterValue(String.class,
                         ReportModuleSysParamConstants.REPORT_CLIENT_LOGO));
         byte[] clientLogo = IOUtils.readFileResourceInputStream(imagePath, getUnifyComponentContext().getWorkingPath());
         report.setParameter(ReportParameterConstants.CLIENT_LOGO, "Client Logo", clientLogo);

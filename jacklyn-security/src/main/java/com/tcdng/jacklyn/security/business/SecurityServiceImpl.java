@@ -90,8 +90,8 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.web.ThemeManager;
 import com.tcdng.unify.web.UnifyWebSessionAttributeConstants;
-import com.tcdng.unify.web.util.WebUtils;
 
 /**
  * Default implementation of security business service.
@@ -102,6 +102,9 @@ import com.tcdng.unify.web.util.WebUtils;
 @Transactional
 @Component(SecurityModuleNameConstants.SECURITYSERVICE)
 public class SecurityServiceImpl extends AbstractJacklynBusinessService implements SecurityService {
+
+    @Configurable
+    private ThemeManager themeManager;
 
     @Configurable
     private UserSessionManager userSessionManager;
@@ -233,7 +236,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         airResult.setAppName(getApplicationName());
         airResult.setAppName(getApplicationName());
         String bannerFilename =
-                WebUtils.expandThemeTag(systemService.getSysParameterValue(String.class,
+                themeManager.expandThemeTag(systemService.getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
         byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
         airResult.setAppIcon(icon);
