@@ -659,8 +659,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         String adminEmail =
                 systemService.getSysParameterValue(String.class, SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
         if (StringUtils.isBlank(adminEmail)) {
-            systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL,
-                    getContainerSetting(String.class, JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL));
+            systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL, getContainerSetting(
+                    String.class, JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL));
         }
 
         // Check for default dashboard and create if necessary
@@ -745,9 +745,10 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             globalAccess = organizationService.getBranchHeadOfficeFlag(user.getBranchId());
         }
 
+        String tenantCode = null; // For multi-tenancy
         String colorScheme = null; // For now always use default color scheme
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getBranchCode(), user.getZoneName(), colorScheme, globalAccess, user.isReserved(),
+                user.getBranchCode(), user.getZoneName(), tenantCode, colorScheme, globalAccess, user.isReserved(),
                 allowMultipleLogin, false);
     }
 

@@ -669,11 +669,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public int getUniqueActiveUserSessions() throws UnifyException {
-        return Integer
-                .valueOf((String) db()
-                        .aggregate(AggregateType.COUNT,
-                                new UserSessionTrackingQuery().loggedIn().addSelect("userLoginId").setDistinct(true))
-                        .getValue());
+        return Integer.valueOf((String) db()
+                .aggregate(AggregateType.COUNT,
+                        new UserSessionTrackingQuery().loggedIn().addSelect("userLoginId").setDistinct(true))
+                .getValue());
     }
 
     @Override
@@ -1444,8 +1443,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, null, true, true,
-                true, false);
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, null, null, true,
+                true, true, false);
     }
 
     private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {
