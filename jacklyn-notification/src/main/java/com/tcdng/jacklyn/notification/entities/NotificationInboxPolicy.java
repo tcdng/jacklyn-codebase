@@ -30,9 +30,9 @@ import com.tcdng.unify.core.database.Entity;
  * @since 1.0
  */
 @Component("notificationinbox-policy")
-public class NontificationInboxPolicy extends BaseEntityPolicy {
+public class NotificationInboxPolicy extends BaseEntityPolicy {
 
-    public NontificationInboxPolicy() {
+    public NotificationInboxPolicy() {
         super(true); // Set now
     }
 
