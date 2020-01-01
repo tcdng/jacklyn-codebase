@@ -9,6 +9,8 @@
 Jacklyn Codebase is an open source full stack Java framework for developing business applications.
 Built upon component-based [Unify Framework](https://github.com/tcdng/unify-framework), it is a much higher level framework with pre-built functional modules that allows you to deliver production-ready enterprise web applications rapidly.
 
+<img src="docs/images/screenshot.png" alt="Screenshot" align="center">
+
 ## Features
 
 ### One Structured Framework
