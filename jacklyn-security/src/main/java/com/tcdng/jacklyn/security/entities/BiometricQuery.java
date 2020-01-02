@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,10 +30,10 @@ public class BiometricQuery extends BaseVersionedTimestampedEntityQuery<Biometri
     }
 
     public BiometricQuery categoryName(String categoryName) {
-        return (BiometricQuery) equals("categoryName", categoryName);
+        return (BiometricQuery) addEquals("categoryName", categoryName);
     }
 
     public BiometricQuery typeName(String typeName) {
-        return (BiometricQuery) equals("typeName", typeName);
+        return (BiometricQuery) addEquals("typeName", typeName);
     }
 }

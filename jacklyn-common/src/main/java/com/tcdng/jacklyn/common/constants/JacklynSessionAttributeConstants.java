@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,12 +26,6 @@ public interface JacklynSessionAttributeConstants {
     /** Shortcut deck */
     String SHORTCUTDECK = "JKLN.SHORTCUTDECK";
 
-    /** Message Box */
-    String MESSAGEBOX = "JKLN.MESSAGEBOX";
-
-    /** Task monitor info */
-    String TASKMONITORINFO = "JKLN.TASKMONITORINFO";
-
     /** Report options */
     String REPORTOPTIONS = "JKLN.REPORTOPTIONS";
 
@@ -41,20 +35,14 @@ public interface JacklynSessionAttributeConstants {
     /** Search box */
     String SEARCHBOX = "JKLN.SEARCHBOX";
 
-    /** Role description */
-    String ROLEDESCRIPTION = "JKLN.ROLEDESCRIPTION";
-
     /** User name */
     String USERNAME = "JKLN.USERNAME";
 
-    /** User ID */
-    String USERID = "JKLN.USERID";
-
-    /** Branch ID */
-    String BRANCHID = "JKLN.BRANCHID";
-
     /** Branch Description */
     String BRANCHDESC = "JKLN.BRANCHDESC";
+
+    /** Role description */
+    String ROLEDESCRIPTION = "JKLN.ROLEDESCRIPTION";
 
     /** Reserved flag */
     String RESERVEDFLAG = "JKLN.RESERVEDFLAG";

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Theme", reportable = true, auditable = true)
-@Table(name = "THEME", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKTHEME", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Theme extends BaseVersionedStatusEntity {
 
     @Column(name = "THEME_NM", length = 32)
@@ -59,6 +59,7 @@ public class Theme extends BaseVersionedStatusEntity {
         this.name = name;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }

@@ -1,14 +1,13 @@
-// UPL generic base template for managing records
-// Copyright 2018-2019 The Code Department.
+// UPL generic base template for managing records (Io)
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$s{} components:$c{manageRecordPanel}
-    tableSerialNumbers:true
+    tableSerialNumbers:true tablePagination:true
     tableRowEventHandler:$d{!ui-event event:ondblclick action:$c{prepareViewAct}}
-    formColumns:2 formBinding:record
 
 !ui-panel:manageRecordPanel style:$s{height:100%;}
-    layout:$d{!ui-horizontal style:$s{height:100%;} widths:$l{none 100%} heights:$l{100% 100%}}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} widths:$l{none 100%} heights:$l{100% 100%}}
     components:$c{searchPanel mainResultPanel}
 
 // Search panel
@@ -16,9 +15,12 @@
     layout:$d{!ui-vertical style:$s{padding-left: 8px;}}
     searchLayout:$d{!ui-vertical showCaption:true captionSuffix:$s{:}}
     searchClearList:$f{searchClearList} searchByList:$g{searchByList} searchPath:$n{/findRecords}
+// Dummy control for compatibility with Default and Europa search grid layout
+!ui-hidden:searchColComp binding:$f{searchColumns}
 
 // Main result panel
 !ui-switchpanel:mainResultPanel style:$s{height:100%;} components:$c{searchResultPanel crudPanel}
+   components:$f{moreSwitchBodyPanels}
 
 !ui-panel:searchResultPanel style:$s{height:100%;}
     layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
@@ -29,16 +31,18 @@
     tableSerialNumbers:$f{tableSerialNumbers} tableBinding:recordList tableColumnList:$g{tableColumnList}
     tableRowSelectable:true  tableRowEventHandler:$f{tableRowEventHandler}
     tableSelDependentList:$c{editTblBtn viewTblBtn deleteTblBtn}
-    tableWindowed:true tablePagination:true
+    tableWindowed:true tablePagination:$f{tablePagination}
     tableMultiSelect:$f{tableMultiSelect} tableMultiSelDependentList:$f{tableMultiSelDependentList}
     tableSortable:true
+    tableHeaderEllipsis:$f{tableHeaderEllipsis}
+    tableContentEllipsis:$f{tableContentEllipsis}
     tableSelDependentList:$f{moreTableSelDependentList}
    
 !ui-panel:actionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
     components:$c{actionPanel reportPanel}
 !ui-panel:actionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
     components:$c{addTblBtn viewTblBtn editTblBtn deleteTblBtn}
-    components:$f{moreSearchActionComponentList}
+    components:$f{moreTableActionComponentList}
     components:$c{doneTblBtn}
 !ui-panel:reportPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{reportType reportBtn}
@@ -48,31 +52,27 @@
     layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} heights:$l{100% 100%} widths:$l{none 148px}}
     components:$c{crudBasePanel crudActionsGrpPanel}
 
-!ui-panel:crudBasePanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-    components:$c{maintainTypeLabel crudFormPanel}
+!ui-panel:crudBasePanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;} heights:$l{none 100%}}
+    components:$c{maintainTypeLabelPanel crudViewPanel}
 
+// Top Label Panel
+!ui-panel:maintainTypeLabelPanel layout:$d{!ui-horizontal style:$s{width:100%;}} components:$c{maintainTypeLabel itemOfLabel}
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} binding:modeDescription styleClassBinding:modeStyle
+!ui-label:itemOfLabel styleClass:$e{jk-countlabel} binding:itemCountLabel
 
-!ui-formpanel:crudFormPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
-    formBinding:$f{formBinding} formAttachment:$f{formAttachment}
-    formColumns:$f{formColumns} formSection:$f{formSection}
-    formSection:$d{!ui-section components:$c{frmId} hidden:true}
-
+// Crud Action Panel
 !ui-panel:crudActionsGrpPanel layout:$d{!ui-vertical style:$s{margin:0 auto;}} style:$s{width:100%;}
     components:$c{topActionPanel bottomActionPanel}
 !ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
-    components:$c{itemOfLabel pasteFrmBtn firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn copyFrmBtn}
+    components:$c{pasteFrmBtn firstFrmBtn prevFrmBtn nextFrmBtn lastFrmBtn copyFrmBtn}
     components:$f{moreCrudHeaderComponentList}
 !ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{createNextFrmBtn createCloseFrmBtn saveNextFrmBtn saveCloseFrmBtn deleteFrmBtn}
     components:$c{activateFrmBtn deactivateFrmBtn cancelFrmBtn doneFrmBtn}
     components:$f{moreCrudFooterComponentList}
 
-//Common form components
+//Common components
 !ui-hidden:frmId binding:id
-
-//Labels
-!ui-label:itemOfLabel styleClass:$e{jk-mildlabel} binding:itemCountLabel
 
 //Action buttons    
 !ui-button:addTblBtn styleClass:$e{jk-button} privilege:$f{addPrivilege} caption:$m{button.add}
@@ -130,16 +130,16 @@
 !ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel}
 !ui-post:prepareEditAct path:$n{/prepareUpdateRecord} components:$c{tablePanel}
 !ui-post:prepareDeleteAct path:$n{/prepareDeleteRecord} components:$c{tablePanel}
-!ui-post:firstAct path:$n{/firstRecord}
-!ui-post:prevAct path:$n{/previousRecord}
-!ui-post:nextAct path:$n{/nextRecord}
-!ui-post:lastAct path:$n{/lastRecord}
-!ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{addValidations}
-!ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{addValidations}
-!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{saveValidations}
-!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} validations:$c{formValidation} validations:$f{saveValidations}
+!ui-post:firstAct path:$n{/firstRecord} components:$f{moreNavigationPushComponents}
+!ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents}
+!ui-post:nextAct path:$n{/nextRecord} components:$f{moreNavigationPushComponents}
+!ui-post:lastAct path:$n{/lastRecord} components:$f{moreNavigationPushComponents}
+!ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{addValidations}
+!ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{addValidations}
+!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
+!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
 !ui-post:deleteAct path:$n{/deleteRecord} confirm:$f{deleteConfirm}
-!ui-post:doneAct path:$n{/done}
+!ui-post:doneAct path:$n{/done} components:$f{moreNavigationPushComponents}
 !ui-post:cancelAct path:$n{/cancel}
 !ui-post:activateAct path:$n{/activateRecord} components:$c{crudPanel} validations:$f{activateValidations}
 !ui-post:deactivateAct path:$n{/deactivateRecord} components:$c{crudPanel} validations:$f{deactivateValidations}
@@ -147,12 +147,12 @@
 !ui-post:pasteAct path:$n{/pasteRecord}
 
 // Validations
-!ui-validation:formValidation components:$c{crudFormPanel}
+!ui-validation:crudViewerVal components:$c{crudViewPanel}
 
 //Other actions
 !ui-post:searchAct path:$n{/findRecords} components:$g{searchByList}
 !ui-post:refreshSearchAct path:$n{/refreshSearch} components:$c{searchPanel}
-!ui-post:refreshFormAct path:$n{/refreshForm} components:$c{crudPanel}
+!ui-post:refreshCrudViewerAct path:$n{/refreshCrudViewer} components:$c{crudPanel}
 !ui-post:manageDoneAct path:$n{/closePage}
 
 //Report actions 

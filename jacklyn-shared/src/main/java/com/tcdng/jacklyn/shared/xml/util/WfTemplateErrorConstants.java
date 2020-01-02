@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -173,13 +173,13 @@ public interface WfTemplateErrorConstants {
     String WFTEMPLATE_ROUTING_TARGET_UNKNOWN = "WFTMPL_001D";
 
     /**
-     * Workflow template routing target refers to start step. Index = {0}, step =
+     * Workflow template routing target reference to start step not allowed. Index = {0}, step =
      * {1}, name = {2}, target = {3}.
      */
     String WFTEMPLATE_ROUTING_TARGET_START = "WFTMPL_001E";
 
     /**
-     * Workflow template routing target refers to self step. Index = {0}, step =
+     * Workflow template routing target reference to self step not allowed. Index = {0}, step =
      * {1}, name = {2}, target = {3}.
      */
     String WFTEMPLATE_ROUTING_TARGET_SELF = "WFTMPL_001F";
@@ -306,10 +306,10 @@ public interface WfTemplateErrorConstants {
     String WFTEMPLATE_USERACTION_INVALID_NAME = "WFTMPL_0035";
 
     /**
-     * Workflow template user action has no notes requirement type. Index = {0},
+     * Workflow template user action has no comment requirement type. Index = {0},
      * step = {1}, name = {2}.
      */
-    String WFTEMPLATE_USERACTION_NO_NOTES_TYPE = "WFTMPL_0036";
+    String WFTEMPLATE_USERACTION_NO_COMMENT_TYPE = "WFTMPL_0036";
 
     /**
      * Workflow template user action has no target. Index = {0}, step = {1}, name =
@@ -427,4 +427,202 @@ public interface WfTemplateErrorConstants {
      * Workflow template step has no actual participant. Index = {0}, name = {1}, type = {2}.
      */
     String WFTEMPLATE_STEP_NO_ACTUAL_PARTICIPANT = "WFTMPL_004B";
+
+    /**
+     * Workflow template alert refers to incompatible message. Index = {0}, step = {1},
+     * name = {2}, message = {3}, document = {4}.
+     */
+    String WFTEMPLATE_ALERT_MESSAGE_INCOMPATIBLE = "WFTMPL_004C";
+
+    /**
+     * Workflow template document has no name. Index = {0}.
+     */
+    String WFTEMPLATE_DOC_NO_NAME = "WFTMPL_004D";
+
+    /**
+     * Workflow template document with name already exists. Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_DOC_EXIST = "WFTMPL_004E";
+
+    /**
+     * Workflow template document refers to unknown category document {0}.
+     */
+    String WFTEMPLATE_DOC_UNKNOWN_CATEGORY_DOC = "WFTMPL_004F";
+
+    /**
+     * Workflow template routing with classifier has no document reference. Index = {0}, step = {1}, classifier = {2}.
+     */
+    String WFTEMPLATE_ROUTING_WITH_CLASSIFIER_NO_DOC = "WFTMPL_0050";
+
+    /**
+     * Workflow template routing refers to unknown template document. Index = {0}, step = {1}, routing = {2}, document = {3}.
+     */
+    String WFTEMPLATE_ROUTING_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0051";
+
+    /**
+     * Workflow template policy refers to unknown template document. Index = {0}, step = {1}, policy = {2}, document = {3}.
+     */
+    String WFTEMPLATE_POLICY_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0052";
+
+    /**
+     * Workflow template enrichment refers to unknown template document. Index = {0}, step = {1}, enrichment = {2}, document = {3}.
+     */
+    String WFTEMPLATE_ENRICHMENT_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0053";
+
+    /**
+     * Workflow template record action has no document reference. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_RECORDACTION_WITH_NO_DOC = "WFTMPL_0054";
+
+    /**
+     * Workflow template record action refers to unknown template document. Index = {0}, step = {1}, record action = {2}, document = {3}.
+     */
+    String WFTEMPLATE_RECORDACTION_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0055";
+
+    /**
+     * Workflow template record action refers to unknown category document mapping. Index = {0}, step = {1}, record action = {2}, document = {3}, mapping = {4}.
+     */
+    String WFTEMPLATE_RECORDACTION_UNKNOWN_CATEGORY_DOC_MAPPING = "WFTMPL_0056";
+
+    /**
+     * Workflow template routing refers to unknown category document classifier. Index = {0}, step = {1}, routing = {2}, document = {3}, classifier = {4}.
+     */
+    String WFTEMPLATE_ROUTING_UNKNOWN_CATEGORY_DOC_CLASSIFIER = "WFTMPL_0057";
+
+    /**
+     * Workflow template form privilege has no document reference. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_FORMPRIVILEGE_WITH_NO_DOC = "WFTMPL_0058";
+
+    /**
+     * Workflow template form privilege refers to unknown template document. Index = {0}, step = {1}, record action = {2}, document = {3}.
+     */
+    String WFTEMPLATE_FORMPRIVILEGE_UNKNOWN_TEMPLATE_DOC = "WFTMPL_0059";
+
+    /**
+     * Workflow template alert refers to unknown template document. Index = {0}, step = {1}, alert = {2}, document = {3}.
+     */
+    String WFTEMPLATE_ALERT_UNKNOWN_TEMPLATE_DOC = "WFTMPL_005A";
+
+    /**
+     * Workflow template alert has no document reference. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_ALERT_WITH_NO_DOC = "WFTMPL_005B";
+
+    /**
+     * Workflow template alert has no participant. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_ALERT_NO_PARICIPANT = "WFTMPL_005C";
+
+    /**
+     * Workflow template alert has no notification channel. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_ALERT_NO_CHANNEL = "WFTMPL_005D";
+
+    /**
+     * Workflow template has multiple error steps.
+     */
+    String WFTEMPLATE_STEP_MULTIPLE_ERROR = "WFTMPL_005E";
+
+    /**
+     * Workflow template has no error step.
+     */
+    String WFTEMPLATE_STEP_NO_ERROR = "WFTMPL_005F";
+
+    /**
+     * Workflow template routing target reference to error step not allowed. Index = {0}, step =
+     * {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_ROUTING_TARGET_ERROR = "WFTMPL_0060";
+
+    /**
+     * Workflow template user action target reference to error step not allowed. Index = {0}, step
+     * = {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_USERACTION_TARGET_ERROR = "WFTMPL_0061";
+
+    /**
+     * Workflow template step branch has no name. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_NO_NAME = "WFTMPL_0062";
+
+    /**
+     * Workflow template step branch has no description. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_NO_DESC = "WFTMPL_0063";
+
+    /**
+     * Workflow template step branch has no target. Index = {0}, step = {1}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_NO_TARGET = "WFTMPL_0064";
+
+    /**
+     * Workflow template step branch with name already exists. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_STEP_BRANCH_EXIST = "WFTMPL_0065";
+
+    /**
+     * Workflow template step branch with invalid name. Index = {0}, step = {1}, name = {2}.
+     */
+    String WFTEMPLATE_BRANCH_INVALID_NAME = "WFTMPL_0066";
+
+    /**
+     * Workflow template step must have at least one branch. Index = {0}, step = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_BRANCHES_NOT_EXIST = "WFTMPL_0067";
+
+    /**
+     * Workflow template step branches not allowed for type. Index = {0}, step = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_BRANCHES_EXIST = "WFTMPL_0068";
+
+    /**
+     * Workflow template step has alerts. Index = {0}, step = {1}, type = {2}.
+     */
+    String WFTEMPLATE_STEP_ALERTS_EXIST = "WFTMPL_0069";
+
+    /**
+     * Workflow template routing targets step in different branch. Index = {0}, step = {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_ROUTING_TARGET_NOT_SAME_BRANCH = "WFTMPL_006A";
+
+    /**
+     * Workflow template branch with name already exists. Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_BRANCH_EXIST = "WFTMPL_006B";
+
+    /**
+     * Workflow template branch references an unknown target. Branch = {0}, target = {1}.
+     */
+    String WFTEMPLATE_BRANCH_UNKNOWN_TARGET = "WFTMPL_006C";
+
+    /**
+     * Workflow template branch references target in different branch. Branch = {0}, target = {1}, target branch = {2}.
+     */
+    String WFTEMPLATE_BRANCH_TARGET_DIFFERENT_BRANCH = "WFTMPL_006D";
+
+    /**
+     * Workflow template step has no origin. Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_STEP_NO_ORIGIN = "WFTMPL_006E";
+
+    /**
+     * Workflow template merge step origin not referring to a split step . Index = {0}, name = {1}.
+     */
+    String WFTEMPLATE_STEP_INVALID_ORIGIN = "WFTMPL_006F";
+
+    /**
+     * Workflow template multiple merge steps referring to the same origin split step. Index = {0}, step name = {1}, origin name = {2}.
+     */
+    String WFTEMPLATE_STEP_SAME_ORIGIN = "WFTMPL_0070";
+
+    /**
+     * Workflow template split step has no corresponding merge step. Split name = {0}.
+     */
+    String WFTEMPLATE_STEP_SPLIT_NO_MERGE = "WFTMPL_0071";
+
+    /**
+     * Workflow template routing targets step in different origin. Index = {0}, step = {1}, name = {2}, target = {3}.
+     */
+    String WFTEMPLATE_ROUTING_TARGET_NOT_SAME_ORIGIN = "WFTMPL_0072";
 }

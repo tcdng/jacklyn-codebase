@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,9 @@
  */
 package com.tcdng.jacklyn.common.data;
 
-import com.tcdng.unify.core.operation.Operator;
+import java.util.List;
+
+import com.tcdng.unify.core.criterion.RestrictionType;
 
 /**
  * Report filter option.
@@ -25,7 +27,7 @@ import com.tcdng.unify.core.operation.Operator;
  */
 public class ReportFilterOptions {
 
-    private Operator op;
+    private RestrictionType op;
 
     private String tableName;
 
@@ -35,7 +37,9 @@ public class ReportFilterOptions {
 
     private Object param2;
 
-    public ReportFilterOptions(Operator op, String tableName, String columnName, Object param1, Object param2) {
+    private List<ReportFilterOptions> subFilterOptionList;
+
+    public ReportFilterOptions(RestrictionType op, String tableName, String columnName, Object param1, Object param2) {
         this.op = op;
         this.tableName = tableName;
         this.columnName = columnName;
@@ -43,8 +47,17 @@ public class ReportFilterOptions {
         this.param2 = param2;
     }
 
-    public Operator getOp() {
+    public ReportFilterOptions(RestrictionType op, List<ReportFilterOptions> subFilterOptionList) {
+        this.op = op;
+        this.subFilterOptionList = subFilterOptionList;
+    }
+
+    public RestrictionType getOp() {
         return op;
+    }
+
+    public boolean isCompound() {
+        return op.isCompound();
     }
 
     public String getTableName() {
@@ -61,5 +74,9 @@ public class ReportFilterOptions {
 
     public Object getParam2() {
         return param2;
+    }
+
+    public List<ReportFilterOptions> getSubFilterOptionList() {
+        return subFilterOptionList;
     }
 }

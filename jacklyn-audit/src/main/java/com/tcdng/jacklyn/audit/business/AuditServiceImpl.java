@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -47,8 +47,9 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Transactional;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.logging.EventType;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
 
@@ -70,7 +71,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
 
     @Override
     public List<AuditDefinition> findAuditTypes(AuditDefinitionQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -104,6 +105,34 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
     }
 
     @Override
+    public List<InspectUserAuditItem> findInspectUserAuditItems(AuditTrailQuery query) throws UnifyException {
+        List<InspectUserAuditItem> inspectUserAuditItemList = Collections.emptyList();
+        List<AuditTrail> auditTrailList = db().listAll(query);
+        if (!auditTrailList.isEmpty()) {
+            inspectUserAuditItemList = new ArrayList<InspectUserAuditItem>();
+            for (AuditTrail auditTrail : auditTrailList) {
+                List<String> details = Collections.emptyList();
+                List<AuditDetail> auditDetailList =
+                        db().findAll(new AuditDetailQuery().auditTrailId(auditTrail.getId()));
+                if (!auditDetailList.isEmpty()) {
+                    details = new ArrayList<String>();
+                    for (AuditDetail auditDetailData : auditDetailList) {
+                        details.add(auditDetailData.getDetail());
+                    }
+                    details = Collections.unmodifiableList(details);
+                }
+
+                inspectUserAuditItemList.add(new InspectUserAuditItem(auditTrail.getUserLoginId(),
+                        auditTrail.getAuditDesc(), auditTrail.getModuleDesc(), auditTrail.getIpAddress(),
+                        auditTrail.getCreateDt(), auditTrail.getEventType(), auditTrail.getActionDesc(), details));
+            }
+            inspectUserAuditItemList = Collections.unmodifiableList(inspectUserAuditItemList);
+        }
+
+        return inspectUserAuditItemList;
+    }
+
+    @Override
     public InspectUserInfo fetchInspectUserInfo(String userLoginId, Date createDt, Long moduleId, EventType eventType)
             throws UnifyException {
         if (StringUtils.isBlank(userLoginId)) {
@@ -111,7 +140,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         }
 
         User user = securityService.findUser(userLoginId);
-        byte[] photo = securityService.findUserPhotograph(user.getId());
+        byte[] photo = securityService.findUserPhotograph(userLoginId);
 
         AuditTrailQuery query = new AuditTrailQuery();
         query.userLoginId(userLoginId);
@@ -126,36 +155,14 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         query.createdOn(createDt);
         query.orderById();
 
-        List<InspectUserAuditItem> auditItems = Collections.emptyList();
-        List<AuditTrail> auditTrailList = db().listAll(query);
-        if (!auditTrailList.isEmpty()) {
-            auditItems = new ArrayList<InspectUserAuditItem>();
-            for (AuditTrail auditTrail : auditTrailList) {
-                List<String> details = Collections.emptyList();
-                List<AuditDetail> auditDetailList = db()
-                        .findAll(new AuditDetailQuery().auditTrailId(auditTrail.getId()));
-                if (!auditDetailList.isEmpty()) {
-                    details = new ArrayList<String>();
-                    for (AuditDetail auditDetailData : auditDetailList) {
-                        details.add(auditDetailData.getDetail());
-                    }
-                    details = Collections.unmodifiableList(details);
-                }
-
-                auditItems.add(new InspectUserAuditItem(auditTrail.getAuditDesc(), auditTrail.getModuleDesc(),
-                        auditTrail.getIpAddress(), auditTrail.getCreateDt(), auditTrail.getEventType(),
-                        auditTrail.getActionDesc(), details));
-            }
-            auditItems = Collections.unmodifiableList(auditItems);
-        }
-
-        return new InspectUserInfo(user.getFullName(), user.getEmail(), photo, auditItems);
+        return new InspectUserInfo(user.getFullName(), user.getEmail(), photo, findInspectUserAuditItems(query));
     }
 
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         // Uninstall old records
-        db().updateAll(new AuditDefinitionQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));
+        db().updateAll(new AuditDefinitionQuery().installed(Boolean.TRUE),
+                new Update().add("installed", Boolean.FALSE));
 
         // Install new and update old
         AuditDefinition auditDefinition = new AuditDefinition();
@@ -163,7 +170,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
         for (ModuleConfig moduleConfig : moduleConfigList) {
             Long moduleId = systemService.getModuleId(moduleConfig.getName());
 
-            if (moduleConfig.getAudits() != null) {
+            if (moduleConfig.getAudits() != null && DataUtils.isNotBlank(moduleConfig.getAudits().getAuditList())) {
                 logDebug("Installing audit definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 AuditDefinitionQuery adQuery = new AuditDefinitionQuery();
@@ -171,8 +178,10 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
                     adQuery.clear();
                     Long auditTypeId = null;
                     if (auditConfig.isType()) {
-                        auditTypeId = installAuditType(
-                                JacklynUtils.getManagedConfig(moduleConfig, auditConfig.getAuditable()), auditConfig);
+                        auditTypeId =
+                                installAuditType(
+                                        JacklynUtils.getManagedConfig(moduleConfig, auditConfig.getAuditable()),
+                                        auditConfig);
                     }
 
                     AuditDefinition oldAuditDefinition = db().find(adQuery.name(auditConfig.getName()));
@@ -184,6 +193,7 @@ public class AuditServiceImpl extends AbstractJacklynBusinessService implements 
                         auditDefinition.setName(auditConfig.getName());
                         auditDefinition.setDescription(description);
                         auditDefinition.setEventType(auditConfig.getAction());
+                        auditDefinition.setInstalled(Boolean.TRUE);
                         if (auditConfig.isActive()) {
                             auditDefinition.setStatus(RecordStatus.ACTIVE);
                         } else {

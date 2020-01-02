@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,6 +19,8 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.business.ReportProvider;
+import com.tcdng.jacklyn.common.data.ReportOptions;
+import com.tcdng.jacklyn.report.entities.ReportConfiguration;
 import com.tcdng.jacklyn.report.entities.ReportableDefinition;
 import com.tcdng.jacklyn.report.entities.ReportableDefinitionQuery;
 import com.tcdng.unify.core.UnifyException;
@@ -63,4 +65,36 @@ public interface ReportService extends JacklynBusinessService, ReportProvider {
      *             if an error occurs
      */
     List<ReportableDefinition> findRoleReportables(Long moduleId) throws UnifyException;
+
+    /**
+     * Gets configured report listing based on user role.
+     * 
+     * @param roleCode
+     *            the role code. Assumes super user if role is null.
+     * @return the report listing
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ReportConfiguration> getRoleReportListing(String roleCode) throws UnifyException;
+
+    /**
+     * Get report options for configured report.
+     * 
+     * @param reportConfigName
+     *            the report configuration name
+     * @return the report options object
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    ReportOptions getReportOptionsForConfiguration(String reportConfigName) throws UnifyException;
+
+    /**
+     * Populates extra report options data that depend on input parameters.
+     * 
+     * @param reportOptions
+     *            the report options to populate
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    void populateExtraConfigurationReportOptions(ReportOptions reportOptions) throws UnifyException;
 }

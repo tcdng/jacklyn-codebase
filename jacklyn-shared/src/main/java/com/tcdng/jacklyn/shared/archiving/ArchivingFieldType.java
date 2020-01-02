@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,32 +29,39 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("archivingfieldtypelist")
 public enum ArchivingFieldType implements EnumConst {
 
-    BLOB(ColumnType.BLOB.code(), true, false), CLOB(ColumnType.CLOB.code(), true, false), DATE(ColumnType.DATE.code(),
-            false, true), TIMESTAMP(ColumnType.TIMESTAMP.code(), false, true);
+    BLOB(ColumnType.BLOB.code()),
+    CLOB(ColumnType.CLOB.code()),
+    BOOLEAN(ColumnType.BOOLEAN.code()),
+    DATE(ColumnType.DATE.code()),
+    TIMESTAMP_UTC(ColumnType.TIMESTAMP_UTC.code()),
+    TIMESTAMP(ColumnType.TIMESTAMP.code());
 
     private final String code;
 
-    private final boolean lob;
-
-    private final boolean timestamp;
-
-    private ArchivingFieldType(String code, boolean lob, boolean timestamp) {
+    private ArchivingFieldType(String code) {
         this.code = code;
-        this.lob = lob;
-        this.timestamp = timestamp;
     }
 
     public boolean isLob() {
-        return lob;
+        return BLOB.equals(this) || CLOB.equals(this);
     }
 
     public boolean isTimestamp() {
-        return timestamp;
+        return DATE.equals(this) || TIMESTAMP_UTC.equals(this) || TIMESTAMP.equals(this);
+    }
+
+    public boolean isIndicator() {
+        return BOOLEAN.equals(this);
     }
 
     @Override
     public String code() {
         return this.code;
+    }
+
+    @Override
+    public String defaultCode() {
+        return BLOB.code;
     }
 
     public static ArchivingFieldType fromCode(String code) {

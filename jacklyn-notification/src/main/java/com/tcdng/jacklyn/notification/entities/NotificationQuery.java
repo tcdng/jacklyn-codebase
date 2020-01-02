@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -7,7 +7,7 @@
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software
+ * UnaddLessThan required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
@@ -35,40 +35,40 @@ public class NotificationQuery extends BaseTimestampedEntityQuery<Notification> 
     }
 
     public NotificationQuery notificationTemplateId(Long notificationTemplateId) {
-        return (NotificationQuery) equals("notificationTemplateId", notificationTemplateId);
+        return (NotificationQuery) addEquals("notificationTemplateId", notificationTemplateId);
     }
 
     public NotificationQuery moduleId(Long moduleId) {
-        return (NotificationQuery) equals("moduleId", moduleId);
+        return (NotificationQuery) addEquals("moduleId", moduleId);
     }
 
     public NotificationQuery moduleName(String moduleName) {
-        return (NotificationQuery) equals("moduleName", moduleName);
+        return (NotificationQuery) addEquals("moduleName", moduleName);
     }
 
     public NotificationQuery notificationTemplateName(String notificationTemplateName) {
-        return (NotificationQuery) equals("notificationTemplateName", notificationTemplateName);
+        return (NotificationQuery) addEquals("notificationTemplateName", notificationTemplateName);
     }
 
     public NotificationQuery notificationType(NotificationType notificationType) {
-        return (NotificationQuery) equals("notificationType", notificationType);
+        return (NotificationQuery) addEquals("notificationType", notificationType);
     }
 
     public NotificationQuery sentOn(Date date) {
-        return (NotificationQuery) between("sentDt", CalendarUtils.getMidnightDate(date),
+        return (NotificationQuery) addBetween("sentDt", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 
-    public NotificationQuery due() {
-        return (NotificationQuery) lessEqual("dueDt", new Date());
+    public NotificationQuery due(Date now) {
+        return (NotificationQuery) addLessThanEqual("dueDt", now);
     }
 
     public NotificationQuery createdOn(Date date) {
-        return (NotificationQuery) between("createDt", CalendarUtils.getMidnightDate(date),
+        return (NotificationQuery) addBetween("createDt", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 
     public NotificationQuery status(NotificationStatus status) {
-        return (NotificationQuery) equals("status", status);
+        return (NotificationQuery) addEquals("status", status);
     }
 }

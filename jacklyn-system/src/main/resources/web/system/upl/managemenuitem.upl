@@ -1,5 +1,5 @@
 // UPL template for managing menu items
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.menuitem.manage}
@@ -7,12 +7,12 @@
     searchClearList:$c{searchStatus}
     tableColumnList:$c{menuCaption name caption path statusDesc}
     formSection:$d{!ui-section caption:$m{system.menuitem.section.basicdetails} components:$c{frmMenuCaption frmName frmCaption frmPath frmStatus}}
-    moreSearchActionComponentList:$c{setOrderBtn}
+    moreTableActionComponentList:$c{setOrderBtn}
     moreTableSelDependentList:$c{setOrderBtn}
     viewPrivilege:$s{sys-menuitemview}
 
 //Search
-!ui-select:searchMenuId caption:$m{system.menuitem.menucaption} binding:searchMenuId list:menulist
+!ui-select:searchMenuId caption:$m{system.menuitem.menucaption} binding:searchMenuId list:menulist formatter:$d{!messageformat}
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{system.menuitem.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
         eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}

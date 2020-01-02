@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Detail")
-@Table("AUDITDETAIL")
+@Table("JKAUDITDETAIL")
 public class AuditDetail extends BaseEntity {
 
     @ForeignKey(AuditTrail.class)
@@ -38,6 +38,14 @@ public class AuditDetail extends BaseEntity {
     @Column(length = 256)
     private String detail;
 
+    public AuditDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public AuditDetail() {
+
+    }
+    
     @Override
     public String getDescription() {
         return this.detail;

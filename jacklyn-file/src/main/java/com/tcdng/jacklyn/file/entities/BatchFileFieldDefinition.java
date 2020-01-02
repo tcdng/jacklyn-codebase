@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,17 +28,19 @@ import com.tcdng.unify.core.constant.PadDirection;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "BATCHFILEFLDDEF", uniqueConstraints = { @UniqueConstraint({ "batchFileDefinitionId", "name" }) })
+@Table(
+        name = "JKBATCHFILEFLDDEF",
+        uniqueConstraints = { @UniqueConstraint({ "batchFileDefinitionId", "beanFieldName" }) })
 public class BatchFileFieldDefinition extends BaseVersionedEntity {
 
     @ForeignKey(BatchFileDefinition.class)
     private Long batchFileDefinitionId;
 
-    @Column(name = "BATCHFILEFIELD_NM")
-    private String name;
+    @Column(name = "BATCHFILEFIELD_NM", nullable = true)
+    private String fileFieldName;
 
-    @Column(nullable = true)
-    private String mappedField;
+    @Column(name = "BEANFIELD_NM")
+    private String beanFieldName;
 
     @Column(nullable = true)
     private Character padChar;
@@ -66,7 +68,7 @@ public class BatchFileFieldDefinition extends BaseVersionedEntity {
 
     @Override
     public String getDescription() {
-        return name;
+        return beanFieldName;
     }
 
     public Long getBatchFileDefinitionId() {
@@ -77,20 +79,20 @@ public class BatchFileFieldDefinition extends BaseVersionedEntity {
         this.batchFileDefinitionId = batchFileDefinitionId;
     }
 
-    public String getName() {
-        return name;
+    public String getFileFieldName() {
+        return fileFieldName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFileFieldName(String fileFieldName) {
+        this.fileFieldName = fileFieldName;
     }
 
-    public String getMappedField() {
-        return mappedField;
+    public String getBeanFieldName() {
+        return beanFieldName;
     }
 
-    public void setMappedField(String mappedField) {
-        this.mappedField = mappedField;
+    public void setBeanFieldName(String beanFieldName) {
+        this.beanFieldName = beanFieldName;
     }
 
     public Character getPadChar() {

@@ -11,8 +11,7 @@
 		<menu name="cus-mainsystem" description="Customer" caption="Customer Module">
 			<menuitem name="cus-managemodule" description="Customer"
 				caption="Customer" path="/customer/module/openPage"
-				pageCaption="Manage Customer"
-				remotePath="/customer/module/getRemoteDoc" />
+				pageCaption="Manage Customer" />
 		</menu>
 	</menus>
 	<wf-categories>

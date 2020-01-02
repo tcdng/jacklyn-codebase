@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,6 +36,10 @@ public final class NotificationUtils {
             @Override
             protected TemplateNameParts create(String globalName, Object... params) throws Exception {
                 String[] names = StringUtils.dotSplit(globalName);
+                if (names.length > 2) {                    
+                    return new TemplateNameParts(names[0], StringUtils.dotify(names[1], names[2]));
+                }
+                
                 return new TemplateNameParts(names[0], names[1]);
             }
 
@@ -46,12 +50,12 @@ public final class NotificationUtils {
 
     }
 
-    public static String getGlobalTemplateName(String moduleName, String templateName) {
+    public static String getTemplateGlobalName(String moduleName, String templateName) {
         return StringUtils.dotify(moduleName, templateName);
     }
 
-    public static TemplateNameParts getTemplateNameParts(String globalTemplateName) throws UnifyException {
-        return templateNames.get(globalTemplateName);
+    public static TemplateNameParts getTemplateNameParts(String templateGlobalName) throws UnifyException {
+        return templateNames.get(templateGlobalName);
     }
 
     public static class TemplateNameParts {

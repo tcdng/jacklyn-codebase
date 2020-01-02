@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -46,15 +46,19 @@ public class EmailMessagingChannel extends AbstractMessagingChannel {
             List<FileAttachment> fileAttachmentList) throws UnifyException {
         String configurationCode = notificationChannelDef.getNotificationChannelName();
         if (!emailServer.isConfigured(configurationCode)) {
-            emailServer.configure(configurationCode,
-                    new EmailServerConfig(notificationChannelDef.getHostAddress(), notificationChannelDef.getHostPort(),
-                            notificationChannelDef.getSecurityType(), notificationChannelDef.getUsername(),
-                            notificationChannelDef.getPassword()));
+            EmailServerConfig emailServerConfig =
+                    EmailServerConfig.newBuilder().hostAddress(notificationChannelDef.getHostAddress())
+                            .hostPort(notificationChannelDef.getHostPort())
+                            .useSecurityType(notificationChannelDef.getSecurityType())
+                            .username(notificationChannelDef.getUsername())
+                            .password(notificationChannelDef.getPassword()).build();
+            emailServer.configure(configurationCode, emailServerConfig);
         }
 
-        Email email = Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
-                .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody).asHTML(isHtml)
-                .build();
+        Email email =
+                Email.newBuilder().fromSender(senderContact).toRecipients(TYPE.TO, recipientContactList)
+                        .withSubject(subject).withAttachments(fileAttachmentList).containingMessage(messageBody)
+                        .asHTML(isHtml).build();
         emailServer.sendEmail(configurationCode, email);
         return email.isSent();
     }

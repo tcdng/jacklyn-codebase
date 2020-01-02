@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.notification.data.Message;
+import com.tcdng.jacklyn.notification.data.NotificationTemplateDef;
 import com.tcdng.jacklyn.notification.entities.Notification;
 import com.tcdng.jacklyn.notification.entities.NotificationChannel;
 import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
@@ -31,7 +32,7 @@ import com.tcdng.jacklyn.shared.notification.data.ToolingAttachmentGenItem;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Message business service.
+ * Notification business service.
  * 
  * @author Lateef Ojulari
  * @since 1.0
@@ -59,6 +60,17 @@ public interface NotificationService extends JacklynBusinessService {
      *             if notificationChannel with ID is not found
      */
     NotificationChannel findNotificationChannel(Long notificationChannelId) throws UnifyException;
+
+    /**
+     * Finds notification channel by query.
+     * 
+     * @param query
+     *            the notification channel query
+     * @return the notification channel if found otherwise null
+     * @throws UnifyException
+     *             if multiple records are found
+     */
+    NotificationChannel findNotificationChannel(NotificationChannelQuery query) throws UnifyException;
 
     /**
      * Finds notification channels by query.
@@ -162,6 +174,18 @@ public interface NotificationService extends JacklynBusinessService {
     int deleteNotificationTemplate(Long id) throws UnifyException;
 
     /**
+     * Returns a runtime notification template definition.
+     * 
+     * @param templateGlobalName
+     *            the template name
+     * @return the runtime definition
+     * @throws UnifyException
+     *             if notification with global template name does not exist. if an
+     *             error occurs
+     */
+    NotificationTemplateDef getRuntimeNotificationTemplateDef(String templateGlobalName) throws UnifyException;
+
+    /**
      * Sends a notification. This is an asynchronous call where message is pushed
      * into communication system which is left to do actual notification
      * transmission.
@@ -226,7 +250,7 @@ public interface NotificationService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    void createUserSystemNotifications(MessageType messageType, String subject, String message, String link,
+    void createSystemNotifications(MessageType messageType, String subject, String message, String link,
             String reference, List<String> userIdList) throws UnifyException;
 
     /**

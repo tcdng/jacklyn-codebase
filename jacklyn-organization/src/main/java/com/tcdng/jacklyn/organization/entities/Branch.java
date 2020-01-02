@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,9 +17,14 @@ package com.tcdng.jacklyn.organization.entities;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntity;
+import com.tcdng.jacklyn.location.entities.State;
+import com.tcdng.jacklyn.location.entities.Zone;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
+import com.tcdng.unify.core.annotation.ForeignKey;
+import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 import com.tcdng.unify.core.batch.BatchItemRecord;
 
@@ -29,20 +34,60 @@ import com.tcdng.unify.core.batch.BatchItemRecord;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Managed(module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
+@Tooling(name = "branch", description = "Branch")
+@Managed(
+        module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Branch", reportable = true,
         auditable = true)
-@Table(name = "BRANCH", uniqueConstraints = { @UniqueConstraint({ "name" }), @UniqueConstraint({ "description" }) })
+@Table(
+        name = "JKBRANCH", uniqueConstraints = { @UniqueConstraint({ "code" }), @UniqueConstraint({ "description" }),
+                @UniqueConstraint({ "sortCode" }) })
 public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord {
 
-    @Column(name = "BRANCH_NM", length = 32)
-    private String name;
+    @ForeignKey(State.class)
+    private Long stateId;
+
+    @ForeignKey(Zone.class)
+    private Long zoneId;
+
+    @ForeignKey(type = Hub.class, nullable = true)
+    private Long hubId;
+
+    @Column(name = "BRANCH_CD", length = 32)
+    private String code;
 
     @Column(name = "BRANCH_DESC", length = 64)
     private String description;
 
-    @Column(name="HEAD_OFFICE_FG")
+    @Column(name = "SORT_CD", length = 32)
+    private String sortCode;
+
+    @Column(name = "HEAD_OFFICE_FG")
     private Boolean headOffice;
-    
+
+    @ListOnly(key = "stateId", property = "code")
+    private String stateCode;
+
+    @ListOnly(key = "stateId", property = "description")
+    private String stateDesc;
+
+    @ListOnly(key = "zoneId", property = "name")
+    private String zoneName;
+
+    @ListOnly(key = "zoneId", property = "description")
+    private String zoneDesc;
+
+    @ListOnly(key = "zoneId", property = "languageTag")
+    private String languageTag;
+
+    @ListOnly(key = "zoneId", property = "timeZone")
+    private String timeZone;
+
+    @ListOnly(key = "hubId", property = "name")
+    private String hubName;
+
+    @ListOnly(key = "hubId", property = "description")
+    private String hubDesc;
+
     @Override
     public Object getBatchId() {
         return null;
@@ -58,16 +103,24 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
         return this.description;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(String sortCode) {
+        this.sortCode = sortCode;
     }
 
     public Boolean getHeadOffice() {
@@ -76,5 +129,93 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
 
     public void setHeadOffice(Boolean headOffice) {
         this.headOffice = headOffice;
+    }
+
+    public Long getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getStateDesc() {
+        return stateDesc;
+    }
+
+    public void setStateDesc(String stateDesc) {
+        this.stateDesc = stateDesc;
+    }
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public String getZoneDesc() {
+        return zoneDesc;
+    }
+
+    public void setZoneDesc(String zoneDesc) {
+        this.zoneDesc = zoneDesc;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public String getLanguageTag() {
+        return languageTag;
+    }
+
+    public void setLanguageTag(String languageTag) {
+        this.languageTag = languageTag;
+    }
+
+    public Long getHubId() {
+        return hubId;
+    }
+
+    public void setHubId(Long hubId) {
+        this.hubId = hubId;
+    }
+
+    public String getHubName() {
+        return hubName;
+    }
+
+    public void setHubName(String hubName) {
+        this.hubName = hubName;
+    }
+
+    public String getHubDesc() {
+        return hubDesc;
+    }
+
+    public void setHubDesc(String hubDesc) {
+        this.hubDesc = hubDesc;
     }
 }

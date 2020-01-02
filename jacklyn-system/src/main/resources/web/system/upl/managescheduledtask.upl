@@ -1,13 +1,14 @@
 // UPL template for scheduled tasks
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.scheduledtask.manage}
     searchByList:$c{searchDescription searchTaskName searchStatus}
     searchClearList:$c{searchDescription searchTaskName searchStatus}
-    tableColumnList:$c{taskName description startTime endTime statusDesc}
+    tableColumnList:$c{taskName description lastExecutionOn nextExecutionOn statusDesc}
     formSection:$d{!ui-section caption:$m{system.scheduledtask.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
-    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.schedule} components:$c{frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.schedule} components:$c{frmStartTime frmEndTime frmFreqCombo frmWeekDays frmDays frmMonths}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtask.section.execution} components:$c{frmLastExecutionOn frmNextExecutionOn}}
     formSection:$d{!ui-section caption:$m{system.scheduledtask.section.parameters} components:$c{frmAttachment}}
     formBinding:largeData
     addPrivilege:$s{sys-schdtaskadd} editPrivilege:$s{sys-schdtaskedit}
@@ -26,8 +27,8 @@
 //Table columns
 !ui-label:taskName caption:$m{system.scheduledtask.taskname} binding:taskName columnStyle:$s{width:200px;} sortable:true
 !ui-label:description caption:$m{system.scheduledtask.description} binding:description  columnStyle:$s{width:250px;} sortable:true
-!ui-label:startTime caption:$m{system.scheduledtask.starttime} binding:startTime formatter:$d{!timeformat style:medium} columnStyle:$s{width:200px;} sortable:true
-!ui-label:endTime caption:$m{system.scheduledtask.endtime} binding:endTime formatter:$d{!timeformat style:medium} columnStyle:$s{width:200px;} sortable:true
+!ui-label:nextExecutionOn caption:$m{system.scheduledtask.nextexecutionon} binding:nextExecutionOn formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:200px;} sortable:true
+!ui-label:lastExecutionOn caption:$m{system.scheduledtask.lastexecutionon} binding:lastExecutionOn formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:200px;} sortable:true
 !ui-label:statusDesc caption:$m{system.scheduledtask.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
@@ -35,19 +36,23 @@
     eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}} required:true
 !ui-text:frmDescription caption:$m{system.scheduledtask.description} binding:data.description maxLen:48 size:40 required:true
 !ui-time:frmStartTime caption:$m{system.scheduledtask.starttime} binding:data.startTime required:true
+!ui-time:frmEndTime caption:$m{system.scheduledtask.endtime} binding:data.endTime
 !ui-group:frmFreqCombo caption:$m{system.scheduledtask.frequency} components:$c{frmFreq frmFreqUnit} space:true
-!ui-integer:frmNumberOfTimes caption:$m{system.scheduledtask.numberoftimes} binding:data.numberOfTimes precision:4 size:5
-!ui-checkbox:frmExpires caption:$m{system.scheduledtask.expires} binding:data.expires
-!ui-dropdowncheckboxlist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
+!ui-dropdownchecklist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
     selectAllOption:$m{system.scheduledtask.selectalldays}
-!ui-dropdowncheckboxlist:frmDays binding:data.days caption:$m{system.scheduledtask.daysinmonth} list:dayinmonthlist columns:7
+!ui-dropdownchecklist:frmDays binding:data.days caption:$m{system.scheduledtask.daysinmonth} list:dayinmonthlist columns:7
     selectAllOption:$m{system.scheduledtask.selectalldays}
-!ui-dropdowncheckboxlist:frmMonths binding:data.months caption:$m{system.scheduledtask.monthsinyear} list:monthinyearlist columns:3
+!ui-dropdownchecklist:frmMonths binding:data.months caption:$m{system.scheduledtask.monthsinyear} list:monthinyearlist columns:3
     selectAllOption:$m{system.scheduledtask.selectallmonths}
 !ui-select:frmStatus caption:$m{system.scheduledtask.status} binding:data.status list:recordstatuslist blankOption:$s{} required:true
 
 !ui-integer:frmFreq binding:data.frequency precision:3 size:4
 !ui-select:frmFreqUnit binding:data.frequencyUnit list:frequencyunitlist blankOption:$s{}
+
+!ui-text:frmNextExecutionOn caption:$m{system.scheduledtask.nextexecutionon} binding:data.nextExecutionOn
+    formatter:$d{!datetimeformat style:medium} size:32 readOnly:true
+!ui-text:frmLastExecutionOn caption:$m{system.scheduledtask.lastexecutionon} binding:data.lastExecutionOn
+    formatter:$d{!datetimeformat style:medium} size:32 readOnly:true
 
 //Form attachments
 !ui-panel:frmAttachment layout:$d{!ui-vertical} components:$c{frmParamsTbl}
@@ -60,4 +65,4 @@
 
 //Actions
 !ui-post:refreshParamsAct path:$n{/refreshParameters}
-    components:$c{frmTaskName frmDescription frmStartTime frmFreqCombo frmNumberOfTimes frmExpires frmWeekDays frmDays frmMonths frmStatus}
+    components:$c{frmTaskName frmDescription frmStartTime frmEndTime frmFreqCombo frmWeekDays frmDays frmMonths frmStatus}

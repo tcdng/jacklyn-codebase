@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,10 +28,23 @@ public class ManualWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
+    private WfTemplateDocDef wfTemplateDocDef;
+
+    private String branchCode;
+
+    private String departmentCode;
+
+    private String processGlobalName;
+
     private PackableDoc pd;
 
-    public ManualWfItem(WfStepDef wfStepDef, PackableDoc pd) {
+    public ManualWfItem(WfStepDef wfStepDef, WfTemplateDocDef wfTemplateDocDef, String processGlobalName,
+            String branchCode, String departmentCode, PackableDoc pd) {
         this.wfStepDef = wfStepDef;
+        this.wfTemplateDocDef = wfTemplateDocDef;
+        this.processGlobalName = processGlobalName;
+        this.branchCode = branchCode;
+        this.departmentCode = departmentCode;
         this.pd = pd;
     }
 
@@ -42,7 +55,7 @@ public class ManualWfItem implements ViewableWfItem {
 
     @Override
     public String getDocViewer() {
-        return wfStepDef.getDocViewer();
+        return wfTemplateDocDef.getWfDocUplGenerator().getDocViewer(pd);
     }
 
     @Override
@@ -53,5 +66,30 @@ public class ManualWfItem implements ViewableWfItem {
     @Override
     public WfStepDef getWfStepDef() {
         return wfStepDef;
+    }
+
+    @Override
+    public WfTemplateDocDef getWfTemplateDocDef() {
+        return wfTemplateDocDef;
+    }
+
+    @Override
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    @Override
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    @Override
+    public String getProcessGlobalName() {
+        return processGlobalName;
+    }
+
+    @Override
+    public String getDocName() {
+        return wfTemplateDocDef.getDocName();
     }
 }

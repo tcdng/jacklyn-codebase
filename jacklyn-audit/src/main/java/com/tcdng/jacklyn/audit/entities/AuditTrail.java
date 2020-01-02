@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,12 +15,16 @@
  */
 package com.tcdng.jacklyn.audit.entities;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.audit.constants.AuditModuleNameConstants;
 import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntity;
+import com.tcdng.unify.core.annotation.ChildList;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
+import com.tcdng.unify.core.annotation.Index;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.logging.EventType;
@@ -32,13 +36,13 @@ import com.tcdng.unify.core.logging.EventType;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Trail", reportable = true, auditable = true)
-@Table("AUDITTRAIL")
+@Table(name = "JKAUDITTRAIL", indexes = {@Index("userLoginId")})
 public class AuditTrail extends BaseTimestampedEntity {
 
     @ForeignKey(AuditDefinition.class)
     private Long auditDefinitionId;
 
-    @Column(length = 32)
+    @Column(length = 64)
     private String userLoginId;
 
     @Column(length = 64)
@@ -49,6 +53,9 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     @Column(name = "REMOTE_FG", nullable = true)
     private Boolean remoteEvent;
+
+    @ChildList
+    private List<AuditDetail> auditDetailList;
 
     @ListOnly(key = "auditDefinitionId", property = "name")
     private String auditDefinitionName;
@@ -71,6 +78,9 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     @ListOnly(key = "auditDefinitionId", property = "actionDesc")
     private String actionDesc;
+
+    @ListOnly(key = "auditDefinitionId", property = "recordName")
+    private String recordName;
 
     @Override
     public String getDescription() {
@@ -107,6 +117,14 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     public void setRemoteEvent(Boolean remoteEvent) {
         this.remoteEvent = remoteEvent;
+    }
+
+    public List<AuditDetail> getAuditDetailList() {
+        return auditDetailList;
+    }
+
+    public void setAuditDetailList(List<AuditDetail> auditDetailList) {
+        this.auditDetailList = auditDetailList;
     }
 
     public String getAuditDefinitionName() {
@@ -171,5 +189,13 @@ public class AuditTrail extends BaseTimestampedEntity {
 
     public void setActionDesc(String actionDesc) {
         this.actionDesc = actionDesc;
+    }
+
+    public String getRecordName() {
+        return recordName;
+    }
+
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
     }
 }

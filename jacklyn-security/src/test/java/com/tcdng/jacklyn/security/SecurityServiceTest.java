@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Test;
 
@@ -51,7 +52,7 @@ import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 
 /**
  * Security business service tests.
@@ -114,8 +115,8 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setPhotograph(photograph);
-        Long userId = securityService.createUser(userDoc);
-        byte[] fetchedPhotograph = securityService.findUserPhotograph(userId);
+        securityService.createUser(userDoc);
+        byte[] fetchedPhotograph = securityService.findUserPhotograph("joemoe");
         assertNotNull(fetchedPhotograph);
         assertTrue(Arrays.equals(photograph, fetchedPhotograph));
     }
@@ -244,7 +245,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         userDoc.setPhotograph(photograph1);
         Long userId = securityService.createUser(userDoc);
         securityService.updateUserPhotograph(userId, photograph2);
-        byte[] fetchedPhotograph = securityService.findUserPhotograph(userId);
+        byte[] fetchedPhotograph = securityService.findUserPhotograph("joemoe");
         assertTrue(Arrays.equals(photograph2, fetchedPhotograph));
     }
 
@@ -308,7 +309,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
         UserQuery query = new UserQuery();
         query.notReserved();
-        query.order("loginId");
+        query.addOrder("loginId");
         List<User> userList = securityService.findUsers(query);
         assertEquals(2, userList.size());
 
@@ -361,7 +362,15 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
+    }
+
+    @Test
+    public void testUserLoginWithLocale() throws Exception {
+        User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
+        SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
+        securityService.createUser(userA);
+        securityService.loginUser("joemoe", "joemoe", Locale.ENGLISH);
     }
 
     @Test
@@ -371,11 +380,11 @@ public class SecurityServiceTest extends AbstractJacklynTest {
                 (SecurityService) this.getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
 
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
         UserToken userToken = securityService.getCurrentUserToken();
         assertTrue("Joe Moe".equals(userToken.getUserName()));
 
-        securityService.logout(true);
+        securityService.logoutUser(true);
         userToken = securityService.getCurrentUserToken();
         assertNotNull(userToken);
         assertFalse("Joe Moe".equals(userToken.getUserName()));
@@ -386,10 +395,10 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
         securityService.changeUserPassword("joemoe", "demo");
-        securityService.logout(true);
-        securityService.login("joemoe", "demo");
+        securityService.logoutUser(true);
+        securityService.loginUser("joemoe", "demo", null);
     }
 
     @Test
@@ -398,7 +407,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         SecurityService securityService =
                 (SecurityService) this.getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
 
         try {
             // Try to change using invalid current password
@@ -421,7 +430,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
         securityService.changeUserPassword("joemoe", "demo");
 
         try {
@@ -446,7 +455,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         securityService.createUser(userA);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
         securityService.changeUserPassword("joemoe", "password1");
         securityService.changeUserPassword("password1", "password2");
         // This should push out 'joemoe' from history
@@ -464,26 +473,26 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
         // Force account lock
         try {
-            securityService.login("joemoe", "terces");
+            securityService.loginUser("joemoe", "terces", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "retaw");
+            securityService.loginUser("joemoe", "retaw", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "tset");
+            securityService.loginUser("joemoe", "tset", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "alcatraz");
+            securityService.loginUser("joemoe", "alcatraz", null);
         } catch (Exception e) {
         }
 
         // Locked message exception should be thrown on any other attempt
         boolean isLocked = false;
         try {
-            securityService.login("joemoe", "tset");
+            securityService.loginUser("joemoe", "tset", null);
         } catch (UnifyException ue) {
             if (!(isLocked = SecurityModuleErrorConstants.USER_ACCOUNT_IS_LOCKED.equals(ue.getErrorCode()))) {
                 throw ue;
@@ -501,11 +510,11 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         User userA = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
         Long userId = securityService.createUser(userA);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
         securityService.changeUserPassword("joemoe", "demo");
         securityService.resetUserPassword(userId);
-        securityService.logout(true);
-        securityService.login("joemoe", "joemoe");
+        securityService.logoutUser(true);
+        securityService.loginUser("joemoe", "joemoe", null);
     }
 
     @Test
@@ -516,19 +525,19 @@ public class SecurityServiceTest extends AbstractJacklynTest {
 
         // Force account lock
         try {
-            securityService.login("joemoe", "terces");
+            securityService.loginUser("joemoe", "terces", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "retaw");
+            securityService.loginUser("joemoe", "retaw", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "tset");
+            securityService.loginUser("joemoe", "tset", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "ming");
+            securityService.loginUser("joemoe", "ming", null);
         } catch (Exception e) {
         }
 
@@ -550,15 +559,15 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         SecurityService securityService = (SecurityService) getComponent(SecurityModuleNameConstants.SECURITYSERVICE);
         Long userId = securityService.createUser(user);
         try {
-            securityService.login("joemoe", "terces");
+            securityService.loginUser("joemoe", "terces", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "retaw");
+            securityService.loginUser("joemoe", "retaw", null);
         } catch (Exception e) {
         }
         try {
-            securityService.login("joemoe", "tset");
+            securityService.loginUser("joemoe", "tset", null);
         } catch (Exception e) {
         }
 
@@ -573,7 +582,7 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         User user = new User(0L, "Joe Moe", "joemoe", "joe.moe@thecodedepartment.com.ng", false);
 
         securityService.createUser(user);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
 
         UserToken userToken = securityService.getCurrentUserToken();
         assertNotNull(userToken);
@@ -593,10 +602,10 @@ public class SecurityServiceTest extends AbstractJacklynTest {
         UserLargeData userDoc = new UserLargeData(user);
         userDoc.setRoleIdList(roleIdList);
         Long userId = securityService.createUser(userDoc);
-        securityService.login("joemoe", "joemoe");
+        securityService.loginUser("joemoe", "joemoe", null);
 
         List<UserRole> userRoleList = securityService.findUserRoles(new UserRoleQuery().userId(userId));
-        securityService.setCurrentUserRole(userRoleList.get(0).getId());
+        securityService.setCurrentUserRole(userRoleList.get(0));
 
         UserToken userToken = securityService.getCurrentUserToken();
         assertEquals("sec-001", userToken.getRoleCode());

@@ -1,8 +1,11 @@
 // UPL template for inspect user audit page
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-page caption:$m{audit.inspectuser.menu.title} layout:$d{!ui-vertical}
+!ui-page caption:$m{audit.inspectuser.menu.title}
+    components:$c{manageInspectUserPanel}
+
+!ui-panel:manageInspectUserPanel layout:$d{!ui-vertical}
     components:$c{maintainTypeLabel mainPanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle

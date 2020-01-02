@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,35 +32,31 @@ public class WfMessageQuery extends BaseEntityQuery<WfMessage> {
         super(WfMessage.class);
     }
 
-    public WfMessageQuery wfTemplateId(Long wfTemplateId) {
-        return (WfMessageQuery) equals("wfTemplateId", wfTemplateId);
-    }
-
     public WfMessageQuery wfCategoryId(Long wfCategoryId) {
-        return (WfMessageQuery) equals("wfCategoryId", wfCategoryId);
+        return (WfMessageQuery) addEquals("wfCategoryId", wfCategoryId);
     }
 
     public WfMessageQuery wfCategoryName(String wfCategoryName) {
-        return (WfMessageQuery) equals("wfCategoryName", wfCategoryName);
-    }
-
-    public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
-        return (WfMessageQuery) equals("wfCategoryVersion", wfCategoryVersion);
+        return (WfMessageQuery) addEquals("wfCategoryName", wfCategoryName);
     }
 
     public WfMessageQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-        return (WfMessageQuery) equals("wfCategoryStatus", wfCategoryStatus);
+        return (WfMessageQuery) addEquals("wfCategoryStatus", wfCategoryStatus);
+    }
+
+    public WfMessageQuery wfCategoryVersion(String wfCategoryVersion) {
+        return (WfMessageQuery) addEquals("wfCategoryVersion", wfCategoryVersion);
     }
 
     public WfMessageQuery name(String name) {
-        return (WfMessageQuery) equals("name", name);
+        return (WfMessageQuery) addEquals("name", name);
     }
 
     public WfMessageQuery namesIn(Collection<String> names) {
-        return (WfMessageQuery) amongst("name", names);
+        return (WfMessageQuery) addAmongst("name", names);
     }
 
     public WfMessageQuery descriptionLike(String description) {
-        return (WfMessageQuery) like("description", description);
+        return (WfMessageQuery) addLike("description", description);
     }
 }

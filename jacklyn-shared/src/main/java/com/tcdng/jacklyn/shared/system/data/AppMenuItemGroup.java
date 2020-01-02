@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,56 +19,35 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.BaseToolingItem;
+
 /**
  * Application menu item group.
  * 
  * @author Lateef
  * @since 1.0
  */
-public class AppMenuItemGroup {
-
-    private String name;
-
-    private String description;
+public class AppMenuItemGroup extends BaseToolingItem {
 
     private String pageCaption;
 
     private String caption;
 
-    private String path;
+    private String openPath;
 
     private List<AppMenuItem> menuItemList;
 
-    public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String path,
+    public AppMenuItemGroup(String name, String description, String pageCaption, String caption, String openPath,
             List<AppMenuItem> menuItemList) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
         this.pageCaption = pageCaption;
         this.caption = caption;
-        this.path = path;
+        this.openPath = openPath;
         this.menuItemList = menuItemList;
     }
 
     public AppMenuItemGroup() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getPageCaption() {
@@ -89,13 +68,13 @@ public class AppMenuItemGroup {
         this.caption = caption;
     }
 
-    public String getPath() {
-        return path;
+    public String getOpenPath() {
+        return openPath;
     }
 
     @XmlElement
-    public void setPath(String path) {
-        this.path = path;
+    public void setOpenPath(String openPath) {
+        this.openPath = openPath;
     }
 
     public List<AppMenuItem> getMenuItemList() {

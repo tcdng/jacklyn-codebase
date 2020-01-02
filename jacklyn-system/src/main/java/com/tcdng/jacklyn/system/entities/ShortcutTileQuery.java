@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,18 +32,18 @@ public class ShortcutTileQuery extends BaseInstallEntityQuery<ShortcutTile> {
     }
 
     public ShortcutTileQuery moduleId(Long moduleId) {
-        return (ShortcutTileQuery) equals("moduleId", moduleId);
+        return (ShortcutTileQuery) addEquals("moduleId", moduleId);
     }
 
     public ShortcutTileQuery name(String name) {
-        return (ShortcutTileQuery) equals("name", name);
+        return (ShortcutTileQuery) addEquals("name", name);
     }
 
     public ShortcutTileQuery nameIn(Collection<String> name) {
-        return (ShortcutTileQuery) amongst("name", name);
+        return (ShortcutTileQuery) addAmongst("name", name);
     }
 
     public ShortcutTileQuery orderByDisplayOrder() {
-        return (ShortcutTileQuery) order("displayOrder");
+        return (ShortcutTileQuery) addOrder("displayOrder");
     }
 }

@@ -1,14 +1,17 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
 <module name="archiving" description="$m{archiving.module}">
 	<menus>
 		<menu name="arc-mainarchiving" description="$m{archiving.menu.main}"
 			caption="$m{archiving.menu.title}">
 			<menuitem name="arc-managearchivabledefinition" description="$m{archiving.menuitem.archivabledefinition}"
 				caption="$m{archiving.archivabledefinition.menu.title}" pageCaption="$m{archiving.archivabledefinition.manage}"
-				path="/archiving/archivabledefinition/openPage" remotePath="/archiving/archivabledefinition/getRemoteDoc" />
+				path="/archiving/archivabledefinition/openPage" />
 			<menuitem name="arc-managefilearchiveconfig" description="$m{archiving.menuitem.filearchiveconfig}"
 				caption="$m{archiving.filearchiveconfig.menu.title}" pageCaption="$m{archiving.filearchiveconfig.manage}"
-				path="/archiving/filearchiveconfig/openPage" remotePath="/archiving/filearchiveconfig/getRemoteDoc" />
+				path="/archiving/filearchiveconfig/openPage" />
 		</menu>
 	</menus>
 	<privileges>

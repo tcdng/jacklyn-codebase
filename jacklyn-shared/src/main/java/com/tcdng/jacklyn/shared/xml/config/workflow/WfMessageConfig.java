@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,6 +32,8 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfMessageConfig extends BaseConfig {
 
+    private String document;
+
     private String subject;
 
     private String body;
@@ -47,6 +49,15 @@ public class WfMessageConfig extends BaseConfig {
     public WfMessageConfig() {
         messageType = MessageType.INFORMATION;
         html = Boolean.FALSE;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    @XmlAttribute(name = "document", required = true)
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public String getSubject() {
@@ -82,7 +93,9 @@ public class WfMessageConfig extends BaseConfig {
 
     @XmlAttribute(required = true)
     public void setHtml(Boolean html) {
-        this.html = html;
+        if (html != null) {
+            this.html = html;
+        }
     }
 
     public MessageType getMessageType() {
@@ -92,7 +105,9 @@ public class WfMessageConfig extends BaseConfig {
     @XmlJavaTypeAdapter(MessageTypeXmlAdapter.class)
     @XmlAttribute(name="message-type")
     public void setMessageType(MessageType messageType) {
-        this.messageType = messageType;
+        if (messageType != null) {
+            this.messageType = messageType;
+        }
     }
 
     public String getActionLink() {

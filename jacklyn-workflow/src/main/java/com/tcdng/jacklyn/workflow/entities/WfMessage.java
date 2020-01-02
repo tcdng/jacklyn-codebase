@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,6 +14,8 @@
  * the License.
  */
 package com.tcdng.jacklyn.workflow.entities;
+
+import java.util.Date;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
@@ -30,12 +32,12 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFMESSAGE", uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
-        @UniqueConstraint({ "wfTemplateId", "description" }) })
+@Table(name = "JKWFMESSAGE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
+        @UniqueConstraint({ "wfCategoryId", "description" }) })
 public class WfMessage extends BaseEntity {
 
-    @ForeignKey(WfTemplate.class)
-    private Long wfTemplateId;
+    @ForeignKey(WfCategory.class)
+    private Long wfCategoryId;
 
     @ForeignKey
     private MessageType messageType;
@@ -45,6 +47,9 @@ public class WfMessage extends BaseEntity {
 
     @Column(name = "MESSAGE_DESC", length = 64)
     private String description;
+
+    @Column(name = "DOCUMENT_NM", length = 32)
+    private String wfDocName;
 
     @Column(length = 64)
     private String subject;
@@ -61,20 +66,23 @@ public class WfMessage extends BaseEntity {
     @Column(length = 32, nullable = true)
     private String attachmentGenerator;
 
-    @ListOnly(key = "wfTemplateId", property = "name")
-    private String wfTemplateName;
+    @ListOnly(key = "wfCategoryId", property = "name")
+    private String wfCategoryName;
 
-    @ListOnly(key = "wfTemplateId", property = "wfCategoryId")
-    private Long wfCategoryId;
+    @ListOnly(key = "wfCategoryId", property = "description")
+    private String wfCategoryDesc;
 
-    @ListOnly(key = "wfTemplateId", property = "wfCategoryStatus")
-    private RecordStatus wfCategoryStatus;
-
-    @ListOnly(key = "wfTemplateId", property = "wfCategoryVersion")
+    @ListOnly(key = "wfCategoryId", property = "version")
     private String wfCategoryVersion;
 
-    @ListOnly(key = "wfTemplateId", property = "wfCategoryName")
-    private String wfCategoryName;
+    @ListOnly(key = "wfCategoryId", property = "status")
+    private RecordStatus wfCategoryStatus;
+
+    @ListOnly(key = "wfCategoryId", property = "statusDesc")
+    private String wfCategoryStatusDesc;
+
+    @ListOnly(key = "wfCategoryId", property = "updateDt")
+    private Date wfCategoryUpdateDt;
 
     @ListOnly(key = "messageType", property = "description")
     private String messageTypeDesc;
@@ -82,14 +90,6 @@ public class WfMessage extends BaseEntity {
     @Override
     public String getDescription() {
         return this.description;
-    }
-
-    public Long getWfTemplateId() {
-        return wfTemplateId;
-    }
-
-    public void setWfTemplateId(Long wfTemplateId) {
-        this.wfTemplateId = wfTemplateId;
     }
 
     public String getName() {
@@ -120,6 +120,14 @@ public class WfMessage extends BaseEntity {
         this.description = description;
     }
 
+    public String getWfDocName() {
+        return wfDocName;
+    }
+
+    public void setWfDocName(String wfDocName) {
+        this.wfDocName = wfDocName;
+    }
+
     public Boolean getHtmlFlag() {
         return htmlFlag;
     }
@@ -134,14 +142,6 @@ public class WfMessage extends BaseEntity {
 
     public void setAttachmentGenerator(String attachmentGenerator) {
         this.attachmentGenerator = attachmentGenerator;
-    }
-
-    public String getWfTemplateName() {
-        return wfTemplateName;
-    }
-
-    public void setWfTemplateName(String wfTemplateName) {
-        this.wfTemplateName = wfTemplateName;
     }
 
     public Long getWfCategoryId() {
@@ -174,6 +174,30 @@ public class WfMessage extends BaseEntity {
 
     public void setWfCategoryVersion(String wfCategoryVersion) {
         this.wfCategoryVersion = wfCategoryVersion;
+    }
+
+    public String getWfCategoryDesc() {
+        return wfCategoryDesc;
+    }
+
+    public void setWfCategoryDesc(String wfCategoryDesc) {
+        this.wfCategoryDesc = wfCategoryDesc;
+    }
+
+    public String getWfCategoryStatusDesc() {
+        return wfCategoryStatusDesc;
+    }
+
+    public void setWfCategoryStatusDesc(String wfCategoryStatusDesc) {
+        this.wfCategoryStatusDesc = wfCategoryStatusDesc;
+    }
+
+    public Date getWfCategoryUpdateDt() {
+        return wfCategoryUpdateDt;
+    }
+
+    public void setWfCategoryUpdateDt(Date wfCategoryUpdateDt) {
+        this.wfCategoryUpdateDt = wfCategoryUpdateDt;
     }
 
     public MessageType getMessageType() {

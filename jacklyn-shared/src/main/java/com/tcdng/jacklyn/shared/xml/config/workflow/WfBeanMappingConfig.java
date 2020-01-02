@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,10 +20,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
-import com.tcdng.jacklyn.shared.xml.adapter.WorkflowBeanMappingTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 
 /**
@@ -34,24 +31,19 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 public class WfBeanMappingConfig extends BaseConfig {
 
-    private WorkflowBeanMappingType type;
+    private String complexFieldName;
 
     private String beanType;
 
     private List<WfFieldMappingConfig> fieldMappingList;
 
-    public WfBeanMappingConfig() {
-        this.type = WorkflowBeanMappingType.NONENTRY;
+    public String getComplexFieldName() {
+        return complexFieldName;
     }
 
-    public WorkflowBeanMappingType getType() {
-        return type;
-    }
-
-    @XmlJavaTypeAdapter(WorkflowBeanMappingTypeXmlAdapter.class)
-    @XmlAttribute(required = true)
-    public void setType(WorkflowBeanMappingType type) {
-        this.type = type;
+    @XmlAttribute(name = "complex-field")
+    public void setComplexFieldName(String complexFieldName) {
+        this.complexFieldName = complexFieldName;
     }
 
     public String getBeanType() {

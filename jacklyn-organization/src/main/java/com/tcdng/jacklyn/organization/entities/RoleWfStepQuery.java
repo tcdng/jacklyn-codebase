@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,22 +32,34 @@ public class RoleWfStepQuery extends BaseEntityQuery<RoleWfStep> {
     }
 
     public RoleWfStepQuery roleId(Long roleId) {
-        return (RoleWfStepQuery) equals("roleId", roleId);
+        return (RoleWfStepQuery) addEquals("roleId", roleId);
     }
 
     public RoleWfStepQuery roleName(String roleName) {
-        return (RoleWfStepQuery) equals("roleName", roleName);
+        return (RoleWfStepQuery) addEquals("roleName", roleName);
     }
 
     public RoleWfStepQuery wfTemplateId(Long wfTemplateId) {
-        return (RoleWfStepQuery) equals("wfTemplateId", wfTemplateId);
+        return (RoleWfStepQuery) addEquals("wfTemplateId", wfTemplateId);
+    }
+
+    public RoleWfStepQuery wfCategoryName(String wfCategoryName) {
+        return (RoleWfStepQuery) addEquals("wfCategoryName", wfCategoryName);
+    }
+
+    public RoleWfStepQuery wfTemplateName(String wfTemplateName) {
+        return (RoleWfStepQuery) addEquals("wfTemplateName", wfTemplateName);
+    }
+
+    public RoleWfStepQuery stepName(String stepName) {
+        return (RoleWfStepQuery) addEquals("stepName", stepName);
     }
 
     public RoleWfStepQuery wfStepNameIn(Collection<String> stepName) {
-        return (RoleWfStepQuery) amongst("stepName", stepName);
+        return (RoleWfStepQuery) addAmongst("stepName", stepName);
     }
 
     public RoleWfStepQuery wfStepNameNotIn(Collection<String> stepName) {
-        return (RoleWfStepQuery) notAmongst("stepName", stepName);
+        return (RoleWfStepQuery) addNotAmongst("stepName", stepName);
     }
 }

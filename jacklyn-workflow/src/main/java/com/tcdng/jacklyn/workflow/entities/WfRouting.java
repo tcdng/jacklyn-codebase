@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFROUTING", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
+@Table(name = "JKWFROUTING", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
         @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfRouting extends BaseEntity {
 
@@ -43,6 +43,9 @@ public class WfRouting extends BaseEntity {
 
     @Column(name = "ROUTING_DESC", length = 64)
     private String description;
+
+    @Column(name = "DOC_NM", length = 32, nullable = true)
+    private String docName;
 
     @Column(name = "CLASSIFIER_NM", nullable = true)
     private String classifierName;
@@ -84,6 +87,14 @@ public class WfRouting extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getClassifierName() {

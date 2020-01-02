@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,9 +17,10 @@ package com.tcdng.jacklyn.common.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
-import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -31,6 +32,8 @@ import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.system.ParameterService;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.web.UnifyWebSessionAttributeConstants;
 
 /**
  * Abstract base class for Jacklyn business service implementations.
@@ -52,11 +55,7 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
 
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
-        
-    }
 
-    protected ParameterService getParameterService() {
-        return parameterService;
     }
 
     @Override
@@ -68,21 +67,36 @@ public abstract class AbstractJacklynBusinessService extends AbstractBusinessSer
         return userToken;
     }
 
-    protected Long getUserBranchId() throws UnifyException {
-        return (Long) getSessionAttribute(JacklynSessionAttributeConstants.BRANCHID);
+    protected ParameterService getParameterService() {
+        return parameterService;
     }
 
-    protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type)
-            throws UnifyException {
+    protected <T, U extends UnifyComponent> List<T> getToolingTypes(Class<T> itemClass, Class<U> type,
+            String... basePackages) throws UnifyException {
         List<T> list = new ArrayList<T>();
-        for (Class<? extends U> typeClass : getAnnotatedClasses(type, Tooling.class)) {
+        for (Class<? extends U> typeClass : getAnnotatedClasses(type, Tooling.class, basePackages)) {
             Component ca = typeClass.getAnnotation(Component.class);
             if (ca != null) {
                 Tooling ta = typeClass.getAnnotation(Tooling.class);
                 list.add(ReflectUtils.newInstance(itemClass, TOOLING_DESCRIBABLE_PARAM_TYPE,
-                        AnnotationUtils.getComponentName(typeClass), resolveApplicationMessage(ta.value())));
+                        AnnotationUtils.getComponentName(typeClass), resolveApplicationMessage(ta.description())));
             }
         }
         return list;
+    }
+
+    protected void broadcastRefreshMenu() throws UnifyException {
+        broadcastToOtherSessions(UnifyWebSessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
+    }
+    
+    protected Locale getCountryLocale() throws UnifyException {
+        Locale countryLocale = getApplicationLocale();
+        String countyLanguageTag =  getContainerSetting(String.class,
+                        JacklynContainerPropertyConstants.JACKLYN_COUNTRY_LOCALE, null);
+        if(!StringUtils.isBlank(countyLanguageTag)) {
+            countryLocale = Locale.forLanguageTag(countyLanguageTag);
+        }
+        
+        return countryLocale;
     }
 }

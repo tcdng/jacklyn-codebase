@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.shared.xml.config.module;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -49,6 +50,8 @@ public class ModuleConfig extends BaseConfig implements FeatureDefinition {
     private MenusConfig menus;
 
     private NotificationTemplatesConfig notificationTemplates;
+
+    private List<ReportConfig> reportableList;
 
     private ReportsConfig reports;
 
@@ -160,6 +163,15 @@ public class ModuleConfig extends BaseConfig implements FeatureDefinition {
     @XmlElement(name = "sys-parameters")
     public void setSysParams(SysParamsConfig sysParams) {
         this.sysParams = sysParams;
+    }
+
+
+    public List<ReportConfig> getReportableList() {
+        return reportableList;
+    }
+
+    public void setReportableList(List<ReportConfig> reportableList) {
+        this.reportableList = reportableList;
     }
 
     public void add(ManagedConfig managedConfig) {

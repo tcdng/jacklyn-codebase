@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -32,20 +33,21 @@ import com.tcdng.jacklyn.common.TestCustomer;
 import com.tcdng.jacklyn.common.TestCustomerService;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
-import com.tcdng.jacklyn.shared.workflow.WorkflowBeanMappingType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepPriority;
 import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.shared.xml.util.WfCategoryConfigUtils;
-import com.tcdng.jacklyn.workflow.TestOpenAccountPolicyLogic.OpenAccountDetails;
+import com.tcdng.jacklyn.workflow.TestOpenAccountProcessPolicy.OpenAccountDetails;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
-import com.tcdng.jacklyn.workflow.data.WfItemHistObject;
-import com.tcdng.jacklyn.workflow.data.WfItemObject;
+import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.entities.WfAlert;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -71,14 +73,15 @@ import com.tcdng.jacklyn.workflow.entities.WfRecordAction;
 import com.tcdng.jacklyn.workflow.entities.WfRouting;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
+import com.tcdng.jacklyn.workflow.entities.WfTemplateDoc;
 import com.tcdng.jacklyn.workflow.entities.WfUserAction;
 import com.tcdng.unify.core.UnifyCoreErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.constant.DataType;
 import com.tcdng.unify.core.constant.FileAttachmentType;
 import com.tcdng.unify.core.constant.RequirementType;
+import com.tcdng.unify.core.criterion.FilterConditionType;
 import com.tcdng.unify.core.data.PackableDoc;
-import com.tcdng.unify.core.operation.FilterConditionType;
 import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
@@ -95,7 +98,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     private static boolean published = false;
 
     @Test
-    public void testPublishedWorkflowCategory() throws Exception {
+    public void testPublishWorkflowCategory() throws Exception {
         WorkflowService wfService = getWorkflowService();
         /* Categories */
         List<WfCategory> wfCategoryList = wfService.findWfCategories(new WfCategoryQuery().name("customerCategory"));
@@ -117,7 +120,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         WfDoc wfDoc = wfDocList.get(0);
         assertNotNull(wfDoc);
-        assertEquals("custInfo", wfDoc.getName());
+        assertEquals("custDoc", wfDoc.getName());
         assertEquals("Customer Information", wfDoc.getDescription());
         assertNull(wfDoc.getFieldList());
         assertNull(wfDoc.getClassifierList());
@@ -126,101 +129,83 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         wfDoc = wfService.findWfDoc(wfDoc.getId());
         assertNotNull(wfDoc);
-        assertEquals("custInfo", wfDoc.getName());
+        assertEquals("custDoc", wfDoc.getName());
         assertEquals("Customer Information", wfDoc.getDescription());
 
         /* Document fields */
         List<WfDocField> docFieldList = wfDoc.getFieldList();
         assertNotNull(docFieldList);
-        assertEquals(11, docFieldList.size());
+        assertEquals(10, docFieldList.size());
 
         WfDocField wfDocField = docFieldList.get(0);
-        assertNotNull(wfDocField);
-        assertNull(wfDocField.getParentName());
-        assertEquals("id", wfDocField.getName());
-        assertEquals("Customer ID", wfDocField.getDescription());
-        assertEquals(DataType.LONG, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
-
-        wfDocField = docFieldList.get(1);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("firstName", wfDocField.getName());
         assertEquals("First Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(2);
+        wfDocField = docFieldList.get(1);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("lastName", wfDocField.getName());
         assertEquals("Last Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(3);
+        wfDocField = docFieldList.get(2);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("age", wfDocField.getName());
         assertEquals("Age", wfDocField.getDescription());
         assertEquals(DataType.INTEGER, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(4);
+        wfDocField = docFieldList.get(3);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("height", wfDocField.getName());
         assertEquals("Height", wfDocField.getDescription());
         assertEquals(DataType.DOUBLE, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(5);
+        wfDocField = docFieldList.get(4);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("accountNo", wfDocField.getName());
         assertEquals("Account Number", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(6);
+        wfDocField = docFieldList.get(5);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("fullName", wfDocField.getName());
         assertEquals("Full Name", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(7);
+        wfDocField = docFieldList.get(6);
         assertNotNull(wfDocField);
         assertNull(wfDocField.getParentName());
         assertEquals("driversLicense", wfDocField.getName());
         assertEquals("Driver's License", wfDocField.getDescription());
-        assertEquals(DataType.COMPLEX, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
+        assertNull(wfDocField.getDataType());
 
-        wfDocField = docFieldList.get(8);
+        wfDocField = docFieldList.get(7);
         assertNotNull(wfDocField);
         assertEquals("driversLicense", wfDocField.getParentName());
         assertEquals("licenseNo", wfDocField.getName());
         assertEquals("License No.", wfDocField.getDescription());
         assertEquals(DataType.STRING, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(9);
+        wfDocField = docFieldList.get(8);
         assertNotNull(wfDocField);
         assertEquals("driversLicense", wfDocField.getParentName());
         assertEquals("issueDt", wfDocField.getName());
         assertEquals("Issue Date", wfDocField.getDescription());
         assertEquals(DataType.DATE, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
-        wfDocField = docFieldList.get(10);
+        wfDocField = docFieldList.get(9);
         assertNotNull(wfDocField);
         assertEquals("driversLicense", wfDocField.getParentName());
         assertEquals("expiryDt", wfDocField.getName());
         assertEquals("Expiry Date", wfDocField.getDescription());
         assertEquals(DataType.DATE, wfDocField.getDataType());
-        assertEquals(Integer.valueOf(-1), wfDocField.getRepeat());
 
         /* Classifier */
         List<WfDocClassifier> classifierList = wfDoc.getClassifierList();
@@ -262,32 +247,26 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("custBeanMapping", wfDocBeanMapping.getName());
         assertEquals("Customer Bean Mapping", wfDocBeanMapping.getDescription());
         assertEquals("com.tcdng.jacklyn.common.TestCustomer", wfDocBeanMapping.getBeanType());
-        assertEquals(WorkflowBeanMappingType.PRIMARY, wfDocBeanMapping.getType());
         List<WfDocFieldMapping> fieldMappingList = wfDocBeanMapping.getFieldMappingList();
         assertNotNull(fieldMappingList);
-        assertEquals(5, fieldMappingList.size());
+        assertEquals(4, fieldMappingList.size());
 
         WfDocFieldMapping wfDocFieldMapping = fieldMappingList.get(0);
-        assertNotNull(wfDocFieldMapping);
-        assertEquals("id", wfDocFieldMapping.getDocFieldName());
-        assertEquals("id", wfDocFieldMapping.getBeanFieldName());
-
-        wfDocFieldMapping = fieldMappingList.get(1);
         assertNotNull(wfDocFieldMapping);
         assertEquals("firstName", wfDocFieldMapping.getDocFieldName());
         assertEquals("firstName", wfDocFieldMapping.getBeanFieldName());
 
-        wfDocFieldMapping = fieldMappingList.get(2);
+        wfDocFieldMapping = fieldMappingList.get(1);
         assertNotNull(wfDocFieldMapping);
         assertEquals("lastName", wfDocFieldMapping.getDocFieldName());
         assertEquals("lastName", wfDocFieldMapping.getBeanFieldName());
 
-        wfDocFieldMapping = fieldMappingList.get(3);
+        wfDocFieldMapping = fieldMappingList.get(2);
         assertNotNull(wfDocFieldMapping);
         assertEquals("age", wfDocFieldMapping.getDocFieldName());
         assertEquals("age", wfDocFieldMapping.getBeanFieldName());
 
-        wfDocFieldMapping = fieldMappingList.get(4);
+        wfDocFieldMapping = fieldMappingList.get(3);
         assertNotNull(wfDocFieldMapping);
         assertEquals("height", wfDocFieldMapping.getDocFieldName());
         assertEquals("height", wfDocFieldMapping.getBeanFieldName());
@@ -391,6 +370,32 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Expiry Date", wfFormField.getLabel());
         assertEquals(Boolean.TRUE, wfFormField.getRequired());
 
+        /* Messages */
+        List<WfMessage> messageList = wfService.findWfMessages(wfCategoryId);
+        assertNotNull(messageList);
+        assertEquals(2, messageList.size());
+
+        WfMessage wfMessage = messageList.get(0);
+        assertNotNull(wfMessage);
+        assertEquals("awaitCustApproval", wfMessage.getName());
+        assertEquals("Awaiting Customer Approval", wfMessage.getDescription());
+        assertEquals("Awaiting Customer Approval", wfMessage.getSubject());
+        assertEquals("Awaiting approval for {firstName} {lastName}", wfMessage.getTemplate());
+        assertEquals("custDoc", wfMessage.getWfDocName());
+        assertEquals("default-attachmentgenerator", wfMessage.getAttachmentGenerator());
+        assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
+
+        wfMessage = messageList.get(1);
+        assertNotNull(wfMessage);
+        assertEquals("custFlowError", wfMessage.getName());
+        assertEquals("Customer Document Flow Error", wfMessage.getDescription());
+        assertEquals("Customer Document Flow Error", wfMessage.getSubject());
+        assertEquals("Workflow error while processing customer document. Document Details: {firstName} {lastName}",
+                wfMessage.getTemplate());
+        assertEquals("custDoc", wfMessage.getWfDocName());
+        assertNull(wfMessage.getAttachmentGenerator());
+        assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
+
         /* Templates */
         List<WfTemplate> wfTemplateList = wfService.findWfTemplates(wfCategoryId);
         assertNotNull(wfTemplateList);
@@ -401,33 +406,29 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wfTemplate);
         assertEquals("custOnboarding", wfTemplate.getName());
         assertEquals("Customer Onboarding", wfTemplate.getDescription());
-        assertEquals("custInfo", wfTemplate.getWfDocName());
         assertNull(wfTemplate.getStepList());
 
         wfTemplate = wfService.findWfTemplate(wfTemplate.getId());
         assertNotNull(wfTemplate);
         assertEquals("custOnboarding", wfTemplate.getName());
         assertEquals("Customer Onboarding", wfTemplate.getDescription());
-        assertEquals("custInfo", wfTemplate.getWfDocName());
 
-        /* Messages */
-        List<WfMessage> messageList = wfTemplate.getMessageList();
-        assertNotNull(messageList);
-        assertEquals(1, messageList.size());
+        /* Documents */
+        List<WfTemplateDoc> templateDocList = wfTemplate.getTemplateDocList();
+        assertNotNull(templateDocList);
+        assertEquals(1, templateDocList.size());
 
-        WfMessage wfMessage = messageList.get(0);
-        assertNotNull(wfMessage);
-        assertEquals("awaitCustApproval", wfMessage.getName());
-        assertEquals("Awaiting Customer Approval", wfMessage.getDescription());
-        assertEquals("Awaiting Customer Approval", wfMessage.getSubject());
-        assertEquals("Awaiting approval for {firstName} {lastName}", wfMessage.getTemplate());
-        assertEquals("default-attachmentgenerator", wfMessage.getAttachmentGenerator());
-        assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
+        WfTemplateDoc wfTemplateDoc = templateDocList.get(0);
+        assertNotNull(wfTemplateDoc);
+        assertEquals("custDoc", wfTemplateDoc.getWfDocName());
+        assertEquals(Boolean.TRUE, wfTemplateDoc.getManual());
+        assertNull(wfTemplateDoc.getWfDocViewer());
 
         /* Steps */
         List<WfStep> stepList = wfTemplate.getStepList();
         assertNotNull(stepList);
-        assertEquals(5, stepList.size());
+        assertEquals(7, stepList.size());
+
         // 0
         WfStep wfStep = stepList.get(0);
         assertNotNull(wfStep);
@@ -448,7 +449,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
         assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
         assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
-        
+
         // Implicit user actions for manual step
         List<WfUserAction> userActionList = wfStep.getUserActionList();
         assertNotNull(userActionList);
@@ -460,7 +461,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Manual Submit", wfUserAction.getDescription());
         assertEquals("Submit", wfUserAction.getLabel());
         assertEquals("start", wfUserAction.getTargetWfStepName());
-        assertEquals(RequirementType.NONE, wfUserAction.getNoteReqType());
+        assertEquals(RequirementType.NONE, wfUserAction.getCommentReqType());
         assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
 
         wfUserAction = userActionList.get(1);
@@ -469,9 +470,9 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Manual Discard", wfUserAction.getDescription());
         assertEquals("Discard", wfUserAction.getLabel());
         assertEquals("end", wfUserAction.getTargetWfStepName());
-        assertEquals(RequirementType.NONE, wfUserAction.getNoteReqType());
+        assertEquals(RequirementType.NONE, wfUserAction.getCommentReqType());
         assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
-        
+
         // 1
         wfStep = stepList.get(1);
         assertNotNull(wfStep);
@@ -500,7 +501,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wfEnrichment);
         assertEquals("testEnrichment", wfEnrichment.getName());
         assertEquals("Test Enrichment", wfEnrichment.getDescription());
-        assertEquals("testcustomer-enrichmentlogic", wfEnrichment.getLogic());
+        assertNull(wfEnrichment.getDocName());
+        assertEquals("testcustomer-enrichmentpolicy", wfEnrichment.getLogic());
 
         List<WfRouting> routingList = wfStep.getRoutingList();
         assertNotNull(routingList);
@@ -510,6 +512,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wfRouting);
         assertEquals("routToCreate", wfRouting.getName());
         assertEquals("Route to Create", wfRouting.getDescription());
+        assertEquals("custDoc", wfRouting.getDocName());
         assertEquals("validAge", wfRouting.getClassifierName());
         assertEquals("createCust", wfRouting.getTargetWfStepName());
 
@@ -517,6 +520,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wfRouting);
         assertEquals("routToApproval", wfRouting.getName());
         assertEquals("Route to Approval", wfRouting.getDescription());
+        assertNull(wfRouting.getDocName());
         assertNull(wfRouting.getClassifierName());
         assertEquals("custApproval", wfRouting.getTargetWfStepName());
 
@@ -548,7 +552,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wfPolicy);
         assertEquals("testOpenAccount", wfPolicy.getName());
         assertEquals("Open Account", wfPolicy.getDescription());
-        assertEquals("testopenaccount-policylogic", wfPolicy.getLogic());
+        assertNull(wfPolicy.getDocName());
+        assertEquals("testopenaccount-processpolicy", wfPolicy.getLogic());
 
         List<WfRecordAction> recordActionList = wfStep.getRecordActionList();
         assertNotNull(recordActionList);
@@ -558,6 +563,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("createCust", wfRecordAction.getName());
         assertEquals("Create Customer", wfRecordAction.getDescription());
         assertEquals(WorkflowRecordActionType.CREATE, wfRecordAction.getActionType());
+        assertEquals("custDoc", wfRecordAction.getDocName());
         assertEquals("custBeanMapping", wfRecordAction.getDocMappingName());
 
         routingList = wfStep.getRoutingList();
@@ -568,6 +574,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wfRouting);
         assertEquals("routToEnd", wfRouting.getName());
         assertEquals("Route to End", wfRouting.getDescription());
+        assertNull(wfRouting.getDocName());
         assertNull(wfRouting.getClassifierName());
         assertEquals("end", wfRouting.getTargetWfStepName());
 
@@ -599,11 +606,12 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("awaitApproval", wfAlert.getName());
         assertEquals("Awaiting Approval", wfAlert.getDescription());
         assertEquals("awaitCustApproval", wfAlert.getNotificationTemplateCode());
-        assertEquals(NotificationType.SYSTEM, wfAlert.getType());
+        assertEquals(WorkflowAlertType.USER_INTERACT, wfAlert.getType());
+        assertEquals(NotificationType.SYSTEM, wfAlert.getChannel());
 
         userActionList = wfStep.getUserActionList();
         assertNotNull(userActionList);
-        assertEquals(2, userActionList.size());
+        assertEquals(3, userActionList.size());
 
         wfUserAction = userActionList.get(0);
         assertNotNull(wfUserAction);
@@ -611,20 +619,63 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Approve Customer", wfUserAction.getDescription());
         assertEquals("Approve", wfUserAction.getLabel());
         assertEquals("createCust", wfUserAction.getTargetWfStepName());
-        assertEquals(RequirementType.OPTIONAL, wfUserAction.getNoteReqType());
+        assertEquals(RequirementType.OPTIONAL, wfUserAction.getCommentReqType());
         assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
 
         wfUserAction = userActionList.get(1);
+        assertNotNull(wfUserAction);
+        assertEquals("checkCust", wfUserAction.getName());
+        assertEquals("Check Customer", wfUserAction.getDescription());
+        assertEquals("Check", wfUserAction.getLabel());
+        assertEquals("checkCust", wfUserAction.getTargetWfStepName());
+        assertEquals(RequirementType.NONE, wfUserAction.getCommentReqType());
+        assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
+
+        wfUserAction = userActionList.get(2);
         assertNotNull(wfUserAction);
         assertEquals("rejectCust", wfUserAction.getName());
         assertEquals("Reject Customer", wfUserAction.getDescription());
         assertEquals("Reject", wfUserAction.getLabel());
         assertEquals("end", wfUserAction.getTargetWfStepName());
-        assertEquals(RequirementType.MANDATORY, wfUserAction.getNoteReqType());
+        assertEquals(RequirementType.MANDATORY, wfUserAction.getCommentReqType());
         assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
 
         // 4
         wfStep = stepList.get(4);
+        assertNotNull(wfStep);
+        assertEquals("checkCust", wfStep.getName());
+        assertEquals("Customer Check", wfStep.getDescription());
+        assertNull(wfStep.getLabel());
+        assertEquals("test-wfitemassignmentpolicy", wfStep.getWorkAssigner());
+        assertEquals(WorkflowStepType.INTERACTIVE, wfStep.getStepType());
+        assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
+        assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
+        assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertFalse(wfStep.getAudit());
+        assertFalse(wfStep.getBranchOnly());
+        assertFalse(wfStep.getIncludeForwarder());
+        assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
+        assertTrue(DataUtils.isBlank(wfStep.getRoutingList()));
+        assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+        assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
+        assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
+
+        userActionList = wfStep.getUserActionList();
+        assertNotNull(userActionList);
+        assertEquals(1, userActionList.size());
+
+        wfUserAction = userActionList.get(0);
+        assertNotNull(wfUserAction);
+        assertEquals("validateCust", wfUserAction.getName());
+        assertEquals("Validate Check", wfUserAction.getDescription());
+        assertEquals("Validate", wfUserAction.getLabel());
+        assertEquals("end", wfUserAction.getTargetWfStepName());
+        assertEquals(RequirementType.MANDATORY, wfUserAction.getCommentReqType());
+        assertTrue(DataUtils.isBlank(wfUserAction.getAttachmentCheckList()));
+
+        // 5
+        wfStep = stepList.get(5);
         assertNotNull(wfStep);
         assertEquals("end", wfStep.getName());
         assertEquals("End Step", wfStep.getDescription());
@@ -645,48 +696,88 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertTrue(DataUtils.isBlank(wfStep.getEnrichmentList()));
         assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
         assertTrue(DataUtils.isBlank(wfStep.getAlertList()));
+
+        // 6
+        wfStep = stepList.get(6);
+        assertNotNull(wfStep);
+        assertEquals("error", wfStep.getName());
+        assertEquals("Error Step", wfStep.getDescription());
+        assertNull(wfStep.getLabel());
+        assertEquals(WorkflowStepType.ERROR, wfStep.getStepType());
+        assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
+        assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
+        assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertFalse(wfStep.getAudit());
+        assertFalse(wfStep.getBranchOnly());
+        assertFalse(wfStep.getIncludeForwarder());
+        assertTrue(DataUtils.isBlank(wfStep.getRoutingList()));
+        assertTrue(DataUtils.isBlank(wfStep.getFormPrivilegeList()));
+        assertTrue(DataUtils.isBlank(wfStep.getRecordActionList()));
+        assertTrue(DataUtils.isBlank(wfStep.getUserActionList()));
+        assertTrue(DataUtils.isBlank(wfStep.getPolicyList()));
+
+        alertList = wfStep.getAlertList();
+        assertNotNull(alertList);
+        assertEquals(1, alertList.size());
+
+        wfAlert = alertList.get(0);
+        assertNotNull(wfAlert);
+        assertEquals("flowError", wfAlert.getName());
+        assertEquals("Flow Error Alert", wfAlert.getDescription());
+        assertEquals("custFlowError", wfAlert.getNotificationTemplateCode());
+        assertEquals(WorkflowAlertType.PASS_THROUGH, wfAlert.getType());
+        assertEquals(NotificationType.SYSTEM, wfAlert.getChannel());
     }
 
     @Test
     public void testSubmitToWorkflow() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82);
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
-        assertNotNull(wfItemId);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        assertNotNull(submissionId);
     }
 
     @Test
-    public void testFindWorkflowItem() throws Exception {
+    public void testFindWorkflowItemBySubmission() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(wfItemId);
-        assertNotNull(workflowItem);
-        assertEquals("customerCategory.custOnboarding.custApproval", workflowItem.getWfStepDef().getGlobalName());
-        assertEquals("custApproval", workflowItem.getWfStepDef().getName());
-        assertEquals("Customer:Tom Jones", workflowItem.getDescription());
-        assertNotNull(workflowItem.getWfItemHistId());
-        assertNotNull(workflowItem.getWfHistEventId());
-        assertNotNull(workflowItem.getPd());
-        assertNotNull(workflowItem.getCreateDt());
-        assertNotNull(workflowItem.getStepDt());
-        assertNull(workflowItem.getHeldBy());
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItemBySubmission(submissionId);
+        assertNotNull(flowingWfItem);
+        assertNotNull(flowingWfItem.getWfStepDef());
+        assertNotNull(flowingWfItem.getWfTemplateDocDef());
+        assertEquals("customerCategory.custOnboarding.custApproval", flowingWfItem.getWfStepDef().getGlobalName());
+        assertEquals("custApproval", flowingWfItem.getWfStepDef().getName());
+        assertEquals("Customer:Tom Jones", flowingWfItem.getDescription());
+        assertEquals("custDoc", flowingWfItem.getWfTemplateDocDef().getDocName());
+        assertNotNull(flowingWfItem.getWfTemplateDocDef().getWfDocDef());
+        assertNotNull(flowingWfItem.getWfTemplateDocDef().getWfDocUplGenerator());
+        assertNotNull(flowingWfItem.getWfItemHistId());
+        assertNotNull(flowingWfItem.getWfHistEventId());
+        assertNotNull(flowingWfItem.getPd());
+        assertNotNull(flowingWfItem.getCreateDt());
+        assertNotNull(flowingWfItem.getStepDt());
+        assertNull(flowingWfItem.getHeldBy());
+        assertEquals("wfsingleformviewer-generator>g>customerCategory.custDoc", flowingWfItem.getDocViewer());
     }
 
     @Test
     public void testFindWorkflowItemHistory() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(wfItemId);
-        WfItemHistObject workflowItemHist = wfService.findWorkflowItemHistory(workflowItem.getWfItemHistId(), false);
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItemBySubmission(submissionId);
+        WfItemHistory workflowItemHist = wfService.findWorkflowItemHistory(flowingWfItem.getWfItemHistId(), false);
         assertNotNull(workflowItemHist);
         assertNotNull(workflowItemHist.getId());
-        assertNull(workflowItemHist.getDocumentId());
-        assertEquals("customerCategory.custInfo", workflowItemHist.getGlobalDocName());
-        assertEquals("customerCategory.custOnboarding", workflowItemHist.getGlobalTemplateName());
+        assertNull(workflowItemHist.getDocId());
+        assertEquals("customerCategory.custDoc", workflowItemHist.getDocGlobalName());
+        assertEquals("customerCategory.custOnboarding", workflowItemHist.getTemplateGlobalName());
         assertEquals("Customer:Tom Jones", workflowItemHist.getDescription());
 
         List<WfItemHistEvent> eventList = workflowItemHist.getEventList();
@@ -699,7 +790,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(wihe.getWfAction());
         assertNull(wihe.getActionDt());
         assertNull(wihe.getActor());
-        assertNull(wihe.getNotes());
+        assertNull(wihe.getComments());
 
         wihe = eventList.get(1);
         assertEquals("custApproval", wihe.getWfStep());
@@ -707,22 +798,22 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(wihe.getWfAction());
         assertNull(wihe.getActionDt());
         assertNull(wihe.getActor());
-        assertNull(wihe.getNotes());
+        assertNull(wihe.getComments());
     }
 
     @Test
     public void testRouteWorkflowItemByClassifier() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 25, 1.82); // Use valid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
-        assertNull(wfItemId);
+        wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
     }
 
     @Test
     public void testGrabWorkflowItem() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 10, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         List<Long> grabItemIdList = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval");
         assertNotNull(grabItemIdList);
@@ -734,28 +825,30 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyWorkflowAction() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 10, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-        workflowItem.setNotes("Goody!");
-        wfService.applyWorkflowAction(workflowItem, "rejectCust");
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        flowingWfItem.setComment("Goody!");
+        wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
     }
 
     @Test
     public void testApplyUnknownWorkflowAction() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 10, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
         String errorName = null;
         try {
-            WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-            workflowItem.setNotes("Goody!");
-            wfService.applyWorkflowAction(workflowItem, "rejectMyCust"); // Unknown action
+            FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+            flowingWfItem.setComment("Goody!");
+            wfService.applyWorkflowAction(flowingWfItem, "rejectMyCust"); // Unknown action
         } catch (UnifyException e) {
             errorName = e.getErrorCode();
         }
@@ -767,13 +860,14 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyWorkflowActionNotHeld() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        Long wfItemId = wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(wfItemId);
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItemBySubmission(submissionId);
         String errorName = null;
         try {
-            workflowItem.setNotes("Goody!");
-            wfService.applyWorkflowAction(workflowItem, "approveCust");
+            flowingWfItem.setComment("Goody!");
+            wfService.applyWorkflowAction(flowingWfItem, "approveCust");
         } catch (UnifyException e) {
             errorName = e.getErrorCode();
         }
@@ -785,21 +879,23 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyWorkflowActionHistory() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-        Long wfItemHistId = workflowItem.getWfItemHistId();
-        workflowItem.setNotes("Goody!");
-        wfService.applyWorkflowAction(workflowItem, "approveCust");
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        Long wfItemHistId = flowingWfItem.getWfItemHistId();
+        flowingWfItem.setComment("Goody!");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "approveCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
-        WfItemHistObject workflowItemHist = wfService.findWorkflowItemHistory(wfItemHistId, false);
+        WfItemHistory workflowItemHist = wfService.findWorkflowItemHistory(wfItemHistId, false);
         assertNotNull(workflowItemHist);
         assertNotNull(workflowItemHist.getId());
-        assertNotNull(workflowItemHist.getDocumentId());
-        assertEquals("customerCategory.custInfo", workflowItemHist.getGlobalDocName());
-        assertEquals("customerCategory.custOnboarding", workflowItemHist.getGlobalTemplateName());
+        assertNotNull(workflowItemHist.getDocId());
+        assertEquals("customerCategory.custDoc", workflowItemHist.getDocGlobalName());
+        assertEquals("customerCategory.custOnboarding", workflowItemHist.getTemplateGlobalName());
         assertEquals("Customer:Tom Jones", workflowItemHist.getDescription());
 
         List<WfItemHistEvent> eventList = workflowItemHist.getEventList();
@@ -811,7 +907,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
         assertNull(wihe.getActor());
-        assertNull(wihe.getNotes());
+        assertNull(wihe.getComments());
         assertNull(wihe.getActionDt());
 
         wihe = eventList.get(1);
@@ -819,7 +915,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wihe.getStepDt());
         assertEquals("approveCust", wihe.getWfAction());
         assertEquals("SYSTEM", wihe.getActor());
-        assertEquals("Goody!", wihe.getNotes());
+        assertEquals("Goody!", wihe.getComments());
         assertNotNull(wihe.getActionDt());
 
         wihe = eventList.get(2);
@@ -827,7 +923,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
         assertNull(wihe.getActor());
-        assertNull(wihe.getNotes());
+        assertNull(wihe.getComments());
         assertNull(wihe.getActionDt());
 
         wihe = eventList.get(3);
@@ -835,25 +931,105 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
         assertNull(wihe.getActor());
-        assertNull(wihe.getNotes());
+        assertNull(wihe.getComments());
         assertNull(wihe.getActionDt());
+    }
+
+    @Test
+    public void testWorkflowItemAssignment() throws Exception {
+        WorkflowService wfService = getWorkflowService();
+        TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Use invalid age
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
+
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "checkCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        assertNotNull(flowingWfItem);
+        assertEquals("checkCust", flowingWfItem.getWfStepDef().getName());
+        assertEquals("terry5432", flowingWfItem.getHeldBy());
+    }
+
+    @Test
+    public void testWorkflowErrorStep() throws Exception {
+        WorkflowService wfService = getWorkflowService();
+        // Use bad customer "BadFox" and invalid age to trigger exception
+        TestCustomer testCustomer = new TestCustomer("BadFox", "Jones", 8, 1.82);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
+
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "checkCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        assertNotNull(flowingWfItem);
+        assertEquals("error", flowingWfItem.getWfStepDef().getName());
+        assertEquals("checkCust", flowingWfItem.getErrorSource());
+        assertEquals("Bad customer detected!", flowingWfItem.getErrorMsg());
+        assertNull(flowingWfItem.getHeldBy());
+
+        WfItemHistory workflowItemHist = wfService.findWorkflowItemHistory(flowingWfItem.getWfItemHistId(), false);
+        assertNotNull(workflowItemHist);
+        assertNotNull(workflowItemHist.getId());
+        assertEquals("customerCategory.custDoc", workflowItemHist.getDocGlobalName());
+        assertEquals("customerCategory.custOnboarding", workflowItemHist.getTemplateGlobalName());
+        assertEquals("Customer:BadFox Jones", workflowItemHist.getDescription());
+
+        List<WfItemHistEvent> eventList = workflowItemHist.getEventList();
+        assertNotNull(eventList);
+        assertEquals(3, eventList.size());
+
+        WfItemHistEvent wihe = eventList.get(0);
+        assertEquals("start", wihe.getWfStep());
+        assertNotNull(wihe.getStepDt());
+        assertNull(wihe.getWfAction());
+        assertNull(wihe.getActor());
+        assertNull(wihe.getComments());
+        assertNull(wihe.getActionDt());
+
+        wihe = eventList.get(1);
+        assertEquals("custApproval", wihe.getWfStep());
+        assertNotNull(wihe.getStepDt());
+        assertEquals("checkCust", wihe.getWfAction());
+        assertEquals("SYSTEM", wihe.getActor());
+        assertNull(wihe.getComments());
+        assertNotNull(wihe.getActionDt());
+
+        wihe = eventList.get(2);
+        assertEquals("error", wihe.getWfStep());
+        assertNotNull(wihe.getStepDt());
+        assertNull(wihe.getWfAction());
+        assertNull(wihe.getActor());
+        assertNull(wihe.getComments());
+        assertNull(wihe.getActionDt());
+        assertEquals("checkCust", wihe.getErrorSource());
+        assertEquals("Bad customer detected!", wihe.getErrorMsg());
     }
 
     @Test
     public void testRouteWorkflowItemByAction() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-        workflowItem.setNotes("Goody!");
-        wfService.applyWorkflowAction(workflowItem, "rejectCust");
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        flowingWfItem.setComment("Goody!");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         String errorName = null;
         try {
-            workflowItem = wfService.findWorkflowItem(gWfItemId);
+            flowingWfItem = wfService.findWorkflowItem(gWfItemId);
         } catch (UnifyException e) {
             errorName = e.getErrorCode();
         }
@@ -865,16 +1041,18 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testWorkflowItemDeletedOnEndStep() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-        wfService.applyWorkflowAction(workflowItem, "rejectCust");
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "rejectCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         String errorName = null;
         try {
-            workflowItem = wfService.findWorkflowItem(gWfItemId);
+            flowingWfItem = wfService.findWorkflowItem(gWfItemId);
         } catch (UnifyException e) {
             errorName = e.getErrorCode();
         }
@@ -886,25 +1064,28 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testApplyEnrichment() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 8, 1.82); // Invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-        PackableDoc pd = workflowItem.getPd();
-        assertEquals("Tom Jones", pd.readFieldValue(String.class, "fullName"));
-        assertEquals("0123456789", pd.readFieldValue(String.class, "accountNo"));
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        PackableDoc pd = flowingWfItem.getPd();
+        assertEquals("Tom Jones", pd.read(String.class, "fullName"));
+        assertEquals("0123456789", pd.read(String.class, "accountNo"));
     }
 
     @Test
     public void testApplyExtensionPolicy() throws Exception {
-        TestOpenAccountPolicyLogic testOpenAccountPolicyLogic = (TestOpenAccountPolicyLogic) getComponent(
-                "testopenaccount-policylogic");
+        TestOpenAccountProcessPolicy testOpenAccountPolicyLogic =
+                (TestOpenAccountProcessPolicy) getComponent("testopenaccount-processpolicy");
         testOpenAccountPolicyLogic.clear();
+        assertNull(testOpenAccountPolicyLogic.getOpenAccountDetails());
 
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 20, 1.82); // Valid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         OpenAccountDetails openAccountDetails = testOpenAccountPolicyLogic.getOpenAccountDetails();
         assertNotNull(openAccountDetails);
@@ -916,7 +1097,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
     public void testRecordActionCreate() throws Exception {
         WorkflowService wfService = getWorkflowService();
         TestCustomer testCustomer = new TestCustomer("Tom", "Jones", 50, 1.82); // Use invalid age
-        wfService.submitToWorkflow("customerCategory.custOnboarding", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerCategory.custOnboarding.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         TestCustomerService tcbm = (TestCustomerService) getComponent("test-customerservice");
         TestCustomer createdCustomer = tcbm.findCustomer("Tom");
@@ -924,9 +1106,10 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
         Long gWfItemId = wfService.grabCurrentUserWorkItems("customerCategory.custOnboarding.custApproval").get(0);
 
-        WfItemObject workflowItem = wfService.findWorkflowItem(gWfItemId);
-        workflowItem.setNotes("Goody!");
-        wfService.applyWorkflowAction(workflowItem, "approveCust");
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(gWfItemId);
+        flowingWfItem.setComment("Goody!");
+        submissionId = wfService.applyWorkflowAction(flowingWfItem, "approveCust");
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         createdCustomer = tcbm.findCustomer("Tom");
         assertNotNull(createdCustomer);
@@ -945,7 +1128,8 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         WorkflowService wfService = getWorkflowService();
         testCustomer.setLastName("Doe");
         testCustomer.setHeight(2.86);
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         testCustomer = tcbm.findCustomer(custId);
         assertEquals("Tom", testCustomer.getFirstName());
@@ -965,7 +1149,16 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         mockCustomer.setId(custId);
         mockCustomer.setFirstName("mockFirstName");
         mockCustomer.setAge(45); // Class 2
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust", mockCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", mockCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        // Read should have updated packable document fields with details from database
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItemBySubmission(submissionId);
+        PackableDoc pd = flowingWfItem.getPd();
+        assertEquals("Tom", pd.read("firstName"));
+        assertEquals("Jones", pd.read("lastName"));
+        assertEquals(Integer.valueOf(24), pd.read("age"));
+        assertEquals(Double.valueOf(1.82), pd.read("height"));
     }
 
     @Test
@@ -978,10 +1171,29 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(foundCustomer);
 
         WorkflowService wfService = getWorkflowService();
-        wfService.submitToWorkflow("customerRecActionCategory.manageCust", testCustomer);
+        Long submissionId = wfService.submitToWorkflow("customerRecActionCategory.manageCust.custDoc", testCustomer);
+        wfService.ensureSubmissionsProcessed(submissionId);
 
         foundCustomer = tcbm.findCustomer("Tom");
         assertNull(foundCustomer);
+    }
+
+    @Test
+    public void testSimpleSplitMerge() throws Exception {
+        WorkflowService wfService = getWorkflowService();
+        Order order = new Order("book", "Book Order", 10, BigDecimal.valueOf(120));
+        Long submissionId = wfService.submitToWorkflow("orderCategory.simpleOrder.orderDoc", order);
+        wfService.ensureSubmissionsProcessed(submissionId);
+
+        Long wfItemId = wfService.grabCurrentUserWorkItems("orderCategory.simpleOrder.finalApproval").get(0);
+
+        FlowingWfItem flowingWfItem = wfService.findWorkflowItem(wfItemId);
+        Reader reader = flowingWfItem.getReader();
+        assertEquals(BigDecimal.valueOf(1200.00).setScale(2), reader.read(BigDecimal.class, "amount"));
+        assertEquals(BigDecimal.valueOf(60.00).setScale(2), reader.read(BigDecimal.class, "vat"));
+        assertEquals(BigDecimal.valueOf(1260.00).setScale(2), reader.read(BigDecimal.class, "totalAmount"));
+        assertEquals("24 Parklane", reader.read(String.class, "address"));
+        assertEquals("Delivery Pending", reader.read(String.class, "status"));
     }
 
     @Override
@@ -992,6 +1204,9 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
 
             WfCategoryConfig custRecActionWfCategoryConfig = readWfCategoryConfig("xml/wfcustomer-recordaction.xml");
             publish(custRecActionWfCategoryConfig);
+
+            WfCategoryConfig orderWfCategoryConfig = readWfCategoryConfig("xml/wforder.xml");
+            publish(orderWfCategoryConfig);
             published = true;
         }
     }
@@ -1026,7 +1241,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         while (!taskMonitor.isDone()) {
             ThreadUtils.yield();
         }
-
+        
         if (taskMonitor.getExceptions() != null && taskMonitor.getExceptions().length > 0) {
             throw taskMonitor.getExceptions()[0];
         }

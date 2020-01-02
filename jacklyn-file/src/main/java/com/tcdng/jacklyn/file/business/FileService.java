@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,12 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
-import com.tcdng.jacklyn.file.data.BatchFileReadConfigLargeData;
+import com.tcdng.jacklyn.file.data.BatchFileReadDefinitionLargeData;
 import com.tcdng.jacklyn.file.data.BatchFileReadInputParameters;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinition;
 import com.tcdng.jacklyn.file.entities.BatchFileDefinitionQuery;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfig;
-import com.tcdng.jacklyn.file.entities.BatchFileReadConfigQuery;
+import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinition;
+import com.tcdng.jacklyn.file.entities.BatchFileReadDefinitionQuery;
 import com.tcdng.jacklyn.file.entities.FileInbox;
 import com.tcdng.jacklyn.file.entities.FileInboxQuery;
 import com.tcdng.jacklyn.file.entities.FileOutbox;
@@ -34,7 +35,7 @@ import com.tcdng.jacklyn.file.entities.FileTransferConfig;
 import com.tcdng.jacklyn.file.entities.FileTransferConfigQuery;
 import com.tcdng.jacklyn.shared.file.FileInboxReadStatus;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.batch.BatchFileConfig;
+import com.tcdng.unify.core.batch.BatchFileReadConfig;
 
 /**
  * File business service.
@@ -248,105 +249,96 @@ public interface FileService extends JacklynBusinessService {
     int deleteBatchFileDefinition(Long id) throws UnifyException;
 
     /**
-     * Returns batch configuration from batch file definition.
-     * 
-     * @param batchFileDefinitionName
-     *            the batch file definition code
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    BatchFileConfig getBatchConfig(String batchFileDefinitionName) throws UnifyException;
-
-    /**
-     * Finds batch file read configurations using query.
+     * Finds batch file read definitions using query.
      * 
      * @param query
      *            the search query
-     * @return list of batch file read configurations that match query
+     * @return list of batch file read definitions that match query
      * @throws UnifyException
      *             if an error occurs
      */
-    List<BatchFileReadConfig> findBatchFileReadConfigs(BatchFileReadConfigQuery query) throws UnifyException;
+    List<BatchFileReadDefinition> findBatchFileReadDefinitions(BatchFileReadDefinitionQuery query)
+            throws UnifyException;
 
     /**
-     * Finds batch file read configuration by Id.
+     * Finds batch file read definition by Id.
      * 
      * @param id
-     *            the batch file read configuration Id
+     *            the batch file read definition Id
      * @return the batch file read configuration record
      * @throws UnifyException
      *             if batch file read configuration with id not found
      */
-    BatchFileReadConfig findBatchFileReadConfig(Long id) throws UnifyException;
+    BatchFileReadDefinition findBatchFileReadDefinition(Long id) throws UnifyException;
 
     /**
-     * Finds batch file read configuration document by ID
+     * Finds batch file read definition document by ID
      * 
      * @param id
-     *            the batch file read configuration Id
-     * @return the batch file read configuration document
+     *            the batch file read definition Id
+     * @return the batch file read definition document
      * @throws UnifyException
-     *             if batch file read configuration with id not found
+     *             if batch file read definition with id not found
      */
-    BatchFileReadConfigLargeData findBatchFileReadConfigDocument(Long id) throws UnifyException;
+    BatchFileReadDefinitionLargeData findBatchFileReadDefinitionDocument(Long id) throws UnifyException;
 
     /**
-     * Creates a batch file read configuration.
+     * Creates a batch file read definition.
      * 
-     * @param record
-     *            the batch file read configuration record
+     * @param batchFileReadDefinition
+     *            the batch file read definition record
      * @return the Id of the created record
      * @throws UnifyException
-     *             If batch file read configuration creation failed
+     *             If batch file read definition creation failed
      */
-    Long createBatchFileReadConfig(BatchFileReadConfig record) throws UnifyException;
+    Long createBatchFileReadDefinition(BatchFileReadDefinition batchFileReadDefinition) throws UnifyException;
 
     /**
-     * Creates a batch file read configuration.
+     * Creates a batch file read definition.
      * 
      * @param document
-     *            the batch file read configuration document
+     *            the batch file read definition document
      * @return the Id of the created record
      * @throws UnifyException
-     *             If batch file read configuration creation failed
+     *             If batch file read definition creation failed
      */
-    Long createBatchFileReadConfig(BatchFileReadConfigLargeData document) throws UnifyException;
+    Long createBatchFileReadDefinition(BatchFileReadDefinitionLargeData document) throws UnifyException;
 
     /**
-     * Updates a batch file read configuration record by Id and version.
+     * Updates a batch file read definition record by Id and version.
      * 
-     * @param record
-     *            the batch file read configuration record
+     * @param batchFileReadDefinition
+     *            the batch file read definition record
      * @return the update count
      * @throws UnifyException
-     *             if batch file read configuration record with version and ID does
-     *             not exist
+     *             if batch file read definition record with version and ID does not
+     *             exist
      */
-    int updateBatchFileReadConfig(BatchFileReadConfig record) throws UnifyException;
+    int updateBatchFileReadDefinition(BatchFileReadDefinition batchFileReadDefinition) throws UnifyException;
 
     /**
-     * Updates a batch file read configuration record by Id and version.
+     * Updates a batch file read definition record by Id and version.
      * 
      * @param document
-     *            the batch file read configuration document
+     *            the batch file read definition document
      * @return the update count
      * @throws UnifyException
-     *             if batch file read configuration record with version and ID does
-     *             not exist
+     *             if batch file read definition record with version and ID does not
+     *             exist
      */
-    int updateBatchFileReadConfig(BatchFileReadConfigLargeData document) throws UnifyException;
+    int updateBatchFileReadDefinition(BatchFileReadDefinitionLargeData document) throws UnifyException;
 
     /**
-     * Deletes batch file read configuration record by id.
+     * Deletes batch file read definition record by id.
      * 
      * @param id
-     *            the batch file read configuration id
+     *            the batch file read definition id
      * @return the delete count
      * @throws UnifyException
-     *             if batch file read configuration with Id does not exists. If an
+     *             if batch file read definition with Id does not exists. If an
      *             error occurs
      */
-    int deleteBatchFileReadConfig(Long id) throws UnifyException;
+    int deleteBatchFileReadDefinition(Long id) throws UnifyException;
 
     /**
      * Reloads parameter values for a batch file read configuration
@@ -357,29 +349,45 @@ public interface FileService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    BatchFileReadConfigLargeData loadBatchFileReadConfigDocumentValues(BatchFileReadConfigLargeData document)
+    BatchFileReadDefinitionLargeData loadBatchFileReadConfigDocumentValues(BatchFileReadDefinitionLargeData document)
             throws UnifyException;
 
     /**
-     * Creates new batch file read input parameters using a batch file read
-     * configuration.
+     * Gets new batch file read input parameters using a batch file read definition.
      * 
-     * @param batchUploadConfigId
-     *            the batch file read configuration ID
+     * @param batchFileReadDefinitionId
+     *            the batch file read definition ID
      * @return a batch upload input parameters object
      * @throws UnifyException
      *             if an error occurs
      */
-    BatchFileReadInputParameters getBatchFileReadInputParameters(Long batchUploadConfigId) throws UnifyException;
+    BatchFileReadInputParameters getBatchFileReadInputParameters(Long batchFileReadDefinitionId) throws UnifyException;
 
     /**
-     * Returns batch file read execution parameters
+     * Gets new batch file read configuration using a batch file read definition.
      * 
-     * @param batchFileReadConfigId
-     *            the batch file read configuration
-     * @return the parameters
+     * @param batchFileReadDefinitionName
+     *            the batch file read definition name
+     * @param parameters
+     *            optional parameters
+     * @return the batch file read configuration
      * @throws UnifyException
      *             if an error occurs
      */
-    Map<String, Object> getBatchFileReadConfigExecutionParameters(Long batchFileReadConfigId) throws UnifyException;
+    BatchFileReadConfig getBatchFileReadConfig(String batchFileReadDefinitionName, Map<String, Object> parameters)
+            throws UnifyException;
+
+    /**
+     * Merges bean fields to file field definition mappings.
+     * 
+     * @param beanType
+     *            the bean type
+     * @param baseFieldDefList
+     *            the base field definition list
+     * @return new list of batch file field definitions
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<BatchFileFieldDefinition> mergeBatchFileFieldMapping(String beanType,
+            List<BatchFileFieldDefinition> baseFieldDefList) throws UnifyException;
 }

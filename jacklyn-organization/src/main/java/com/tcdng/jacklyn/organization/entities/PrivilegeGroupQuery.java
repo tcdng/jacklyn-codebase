@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,22 +30,22 @@ public class PrivilegeGroupQuery extends BaseEntityQuery<PrivilegeGroup> {
     }
 
     public PrivilegeGroupQuery moduleName(String moduleName) {
-        return (PrivilegeGroupQuery) equals("moduleName", moduleName);
+        return (PrivilegeGroupQuery) addEquals("moduleName", moduleName);
     }
 
     public PrivilegeGroupQuery categoryName(String categoryName) {
-        return (PrivilegeGroupQuery) equals("categoryName", categoryName);
+        return (PrivilegeGroupQuery) addEquals("categoryName", categoryName);
     }
 
     public PrivilegeGroupQuery moduleId(Long moduleId) {
-        return (PrivilegeGroupQuery) equals("moduleId", moduleId);
+        return (PrivilegeGroupQuery) addEquals("moduleId", moduleId);
     }
 
     public PrivilegeGroupQuery privilegeCategoryId(Long privilegeCategoryId) {
-        return (PrivilegeGroupQuery) equals("privilegeCategoryId", privilegeCategoryId);
+        return (PrivilegeGroupQuery) addEquals("privilegeCategoryId", privilegeCategoryId);
     }
 
     public PrivilegeGroupQuery orderByFullDesc() {
-        return (PrivilegeGroupQuery) order("moduleDesc", "description");
+        return (PrivilegeGroupQuery) addOrder("moduleDesc", "description");
     }
 }

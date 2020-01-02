@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,8 @@
 package com.tcdng.jacklyn.security.business;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.business.RemoteCallSystemAssetProvider;
@@ -34,7 +36,7 @@ import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.application.StartupShutdownHook;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 
 /**
  * Security business service.
@@ -127,17 +129,32 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     Long createBiometric(BiometricCategory category, BiometricType type, byte[] biometric) throws UnifyException;
 
     /**
-     * Login to application with login ID and password.
+     * Finds user by credentials.
      * 
      * @param loginId
      *            the login ID
      * @param password
      *            the password
+     * @return the user record if found otherwise null
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    User findUserByCredentials(String loginId, String password) throws UnifyException;
+
+    /**
+     * Login user to application with login ID and password.
+     * 
+     * @param loginId
+     *            the login ID
+     * @param password
+     *            the password
+     * @param loginLocale
+     *            optional login locale
      * @return the user record
      * @throws UnifyException
      *             if login ID or password is invalid
      */
-    User login(String loginId, String password) throws UnifyException;
+    User loginUser(String loginId, String password, Locale loginLocale) throws UnifyException;
 
     /**
      * Logs out current session user.
@@ -147,7 +164,7 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      * @throws UnifyException
      *             if an error occurs
      */
-    void logout(boolean complete) throws UnifyException;
+    void logoutUser(boolean complete) throws UnifyException;
 
     /**
      * Changes a user password for current session user.
@@ -221,9 +238,9 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      * 
      * @param userLoginId
      *            the user Id
-     * @return the user record
+     * @return the user record if found otherwise null
      * @throws UnifyException
-     *             if user with id not found
+     *             if an error occurs
      */
     User findUser(String userLoginId) throws UnifyException;
 
@@ -331,13 +348,24 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     /**
      * Gets photograph for specified user.
      * 
-     * @param userId
-     *            the user ID
+     * @param userLoginId
+     *            the user login ID
      * @return the user photograph if found otherwise null
      * @throws UnifyException
      *             if an error occurs
      */
-    byte[] findUserPhotograph(Long userId) throws UnifyException;
+    byte[] findUserPhotograph(String userLoginId) throws UnifyException;
+
+    /**
+     * Gets department ID list for specified user.
+     * 
+     * @param userLoginId
+     *            the user login ID
+     * @return the department ID list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException;
 
     /**
      * Gets role ID list for specified user.
@@ -351,6 +379,17 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     List<Long> findUserRoleIds(Long userId) throws UnifyException;
 
     /**
+     * Gets user ID list for specified role.
+     * 
+     * @param roleId
+     *            the role ID
+     * @return the user ID list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> findRoleUserIds(Long roleId) throws UnifyException;
+
+    /**
      * Finds user roles by query.
      * 
      * @param query
@@ -360,6 +399,17 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
      *             if an error occurs
      */
     List<UserRole> findUserRoles(UserRoleQuery query) throws UnifyException;
+
+    /**
+     * Finds users matched by supplied user role query.
+     * 
+     * @param query
+     *            the query to use
+     * @return a set of user login IDs
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Set<String> findUsers(UserRoleQuery query) throws UnifyException;
 
     /**
      * Returns the user token for current user session.
@@ -372,12 +422,12 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     /**
      * Sets the role of the current user using user role information.
      * 
-     * @param userRoleId
-     *            the id of the user role information
+     * @param userRole
+     *            the user role to set
      * @throws UnifyException
      *             if an error occurs
      */
-    void setCurrentUserRole(Long userRoleId) throws UnifyException;
+    void setCurrentUserRole(UserRole userRole) throws UnifyException;
 
     /**
      * Returns the current user role dashboard viewer component.

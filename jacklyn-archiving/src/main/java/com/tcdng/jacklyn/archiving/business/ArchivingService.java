@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -77,6 +77,17 @@ public interface ArchivingService extends JacklynBusinessService {
      *             if record with id is not found
      */
     ArchivingField findArchivingField(Long archivingFieldId) throws UnifyException;
+
+    /**
+     * Finds archiving field by query
+     * 
+     * @param query
+     *            the
+     * @return archiving field data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. If an error occurs
+     */
+    ArchivingField findArchivingField(ArchivingFieldQuery query) throws UnifyException;
 
     /**
      * Creates a new file archive config.

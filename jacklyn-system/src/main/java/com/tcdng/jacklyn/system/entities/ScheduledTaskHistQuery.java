@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.system.entities;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
+import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.unify.core.task.TaskStatus;
 import com.tcdng.unify.core.util.CalendarUtils;
 
@@ -27,26 +27,26 @@ import com.tcdng.unify.core.util.CalendarUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class ScheduledTaskHistQuery extends BaseTimestampedEntityQuery<ScheduledTaskHist> {
+public class ScheduledTaskHistQuery extends BaseEntityQuery<ScheduledTaskHist> {
 
     public ScheduledTaskHistQuery() {
         super(ScheduledTaskHist.class);
     }
 
     public ScheduledTaskHistQuery taskStatus(TaskStatus taskStatus) {
-        return (ScheduledTaskHistQuery) equals("taskStatus", taskStatus);
+        return (ScheduledTaskHistQuery) addEquals("taskStatus", taskStatus);
     }
 
     public ScheduledTaskHistQuery taskName(String taskName) {
-        return (ScheduledTaskHistQuery) equals("taskName", taskName);
+        return (ScheduledTaskHistQuery) addEquals("taskName", taskName);
     }
 
     public ScheduledTaskHistQuery scheduledTaskId(Long scheduledTaskId) {
-        return (ScheduledTaskHistQuery) equals("scheduledTaskId", scheduledTaskId);
+        return (ScheduledTaskHistQuery) addEquals("scheduledTaskId", scheduledTaskId);
     }
 
-    public ScheduledTaskHistQuery createdOn(Date date) {
-        return (ScheduledTaskHistQuery) between("createDt", CalendarUtils.getMidnightDate(date),
+    public ScheduledTaskHistQuery startedOn(Date date) {
+        return (ScheduledTaskHistQuery) addBetween("startedOn", CalendarUtils.getMidnightDate(date),
                 CalendarUtils.getLastSecondDate(date));
     }
 }

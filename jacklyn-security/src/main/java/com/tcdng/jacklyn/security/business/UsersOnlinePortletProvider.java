@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -41,7 +41,7 @@ public class UsersOnlinePortletProvider extends AbstractQuickPercentageProvider 
     private SecurityService securityService;
 
     @Override
-    protected QuickPercentage doProvide() throws UnifyException {
+    protected QuickPercentage doProvide(Object... params) throws UnifyException {
         return new QuickPercentage(systemService.getUniqueActiveUserSessions(),
                 securityService.countUsers((UserQuery) new UserQuery().status(RecordStatus.ACTIVE)));
     }

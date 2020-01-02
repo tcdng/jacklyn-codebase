@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,16 +29,12 @@ public class WfItemAttachmentQuery extends BaseTimestampedEntityQuery<WfItemAtta
         super(WfItemAttachment.class);
     }
 
-    public WfItemAttachmentQuery wfItemId(Long wfItemId) {
-        return (WfItemAttachmentQuery) equals("wfItemId", wfItemId);
-    }
-
-    public WfItemAttachmentQuery wfItemAttachmentDefId(Long wfItemAttachmentDefId) {
-        return (WfItemAttachmentQuery) equals("wfItemAttachmentDefId", wfItemAttachmentDefId);
+    public WfItemAttachmentQuery wfItemAttachmentRefId(Long wfItemAttachmentRefId) {
+        return (WfItemAttachmentQuery) addEquals("wfItemAttachmentRefId", wfItemAttachmentRefId);
     }
 
     public WfItemAttachmentQuery name(String name) {
-        return (WfItemAttachmentQuery) equals("name", name);
+        return (WfItemAttachmentQuery) addEquals("name", name);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFENRICHMENT", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
+@Table(name = "JKWFENRICHMENT", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
         @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfEnrichment extends BaseEntity {
 
@@ -42,7 +42,10 @@ public class WfEnrichment extends BaseEntity {
     @Column(name = "ENRICHMENT_DESC", length = 64)
     private String description;
 
-    @Column
+    @Column(name = "DOC_NM", length = 32, nullable = true)
+    private String docName;
+
+    @Column(length=48)
     private String logic;
 
     @ListOnly(key = "wfStepId", property = "name")
@@ -66,6 +69,14 @@ public class WfEnrichment extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getLogic() {

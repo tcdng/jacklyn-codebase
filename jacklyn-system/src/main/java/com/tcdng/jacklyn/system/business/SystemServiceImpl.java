@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,21 +25,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.shared.system.SystemAssetType;
+import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityFieldItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
-import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
+import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
 import com.tcdng.jacklyn.shared.xml.config.module.InputControlConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuItemConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.SysParamConfig;
+import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskConstants;
+import com.tcdng.jacklyn.system.constants.SystemDataSourceTaskParamConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleErrorConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 import com.tcdng.jacklyn.system.constants.SystemModuleSysParamConstants;
@@ -50,6 +56,7 @@ import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
 import com.tcdng.jacklyn.system.data.DashboardLayerDef;
 import com.tcdng.jacklyn.system.data.DashboardPortletDef;
+import com.tcdng.jacklyn.system.data.ScheduledTaskDef;
 import com.tcdng.jacklyn.system.data.ScheduledTaskLargeData;
 import com.tcdng.jacklyn.system.data.SystemControlState;
 import com.tcdng.jacklyn.system.entities.ApplicationMenu;
@@ -62,8 +69,10 @@ import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
-import com.tcdng.jacklyn.system.entities.ShortcutTile;
-import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.entities.DataSource;
+import com.tcdng.jacklyn.system.entities.DataSourceDriver;
+import com.tcdng.jacklyn.system.entities.DataSourceDriverQuery;
+import com.tcdng.jacklyn.system.entities.DataSourceQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -72,6 +81,10 @@ import com.tcdng.jacklyn.system.entities.ScheduledTask;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHist;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
+import com.tcdng.jacklyn.system.entities.ShortcutTile;
+import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.entities.SupportedLocale;
+import com.tcdng.jacklyn.system.entities.SupportedLocaleQuery;
 import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.jacklyn.system.entities.SystemParameter;
@@ -89,35 +102,45 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.Id;
+import com.tcdng.unify.core.annotation.ListOnly;
+import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.StaticList;
+import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.criterion.Restriction;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.data.AggregateType;
+import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
+import com.tcdng.unify.core.database.AbstractEntity;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
+import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
+import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceManager;
+import com.tcdng.unify.core.database.sql.SqlDialectNameConstants;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
-import com.tcdng.unify.core.operation.Criteria;
-import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.TwoWayStringCryptograph;
+import com.tcdng.unify.core.system.entities.AbstractSequencedEntity;
 import com.tcdng.unify.core.system.entities.ParameterDef;
 import com.tcdng.unify.core.system.entities.UserSessionTrackingQuery;
 import com.tcdng.unify.core.task.Task;
+import com.tcdng.unify.core.task.TaskExecLimit;
 import com.tcdng.unify.core.task.TaskManager;
 import com.tcdng.unify.core.task.TaskMonitor;
-import com.tcdng.unify.core.task.TaskParameterConstants;
 import com.tcdng.unify.core.task.TaskStatus;
 import com.tcdng.unify.core.task.TaskStatusLogger;
 import com.tcdng.unify.core.task.TaskableMethodConfig;
+import com.tcdng.unify.core.transform.Transformer;
 import com.tcdng.unify.core.ui.Menu;
 import com.tcdng.unify.core.ui.MenuItem;
 import com.tcdng.unify.core.ui.MenuItemSet;
@@ -129,9 +152,9 @@ import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.RemoteCallController;
-import com.tcdng.unify.web.annotation.GatewayAction;
-import com.tcdng.unify.web.constant.SessionAttributeConstants;
+import com.tcdng.unify.web.annotation.RemoteAction;
 
 /**
  * Default implementation of system business service.
@@ -143,6 +166,8 @@ import com.tcdng.unify.web.constant.SessionAttributeConstants;
 @Component(SystemModuleNameConstants.SYSTEMSERVICE)
 public class SystemServiceImpl extends AbstractJacklynBusinessService implements SystemService {
 
+    private static final String SCHEDULED_TASK = "scheduledTask";
+
     @Configurable
     private TaskManager taskManager;
 
@@ -152,25 +177,68 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Configurable("scheduledtaskstatuslogger")
     private TaskStatusLogger taskStatusLogger;
 
-    private static final String SCHEDULED_TASK = "scheduledTask";
+    @Configurable
+    private DynamicSqlDataSourceManager dataSourceManager;
 
-    private Map<Long, TaskInfo> triggeredTaskInfoMap;
+    private FactoryMap<Long, ScheduledTaskDef> scheduledTaskDefs;
 
-    private Date workingDt;
-
-    private FactoryMap<String, DashboardDef> dashboards;
+    private FactoryMap<String, DashboardDef> dashboardDefs;
 
     public SystemServiceImpl() {
-        triggeredTaskInfoMap = new ConcurrentHashMap<Long, TaskInfo>();
+        scheduledTaskDefs = new FactoryMap<Long, ScheduledTaskDef>(true) {
 
-        dashboards = new FactoryMap<String, DashboardDef>(true) {
+            @Override
+            protected boolean stale(Long scheduledTaskId, ScheduledTaskDef scheduledTaskDef) throws Exception {
+                boolean stale = false;
+                try {
+                    Date updateDt = db().value(Date.class, "updateDt", new ScheduledTaskQuery().id(scheduledTaskId));
+                    stale = resolveUTC(updateDt) != scheduledTaskDef.getTimestamp();
+                } catch (Exception e) {
+                    logError(e);
+                }
+
+                return stale;
+            }
+
+            @Override
+            protected ScheduledTaskDef create(Long scheduledTaskId, Object... params) throws Exception {
+                ScheduledTask scheduledTask = db().find(ScheduledTask.class, scheduledTaskId);
+
+                String lock = "scheduledtask-lock" + scheduledTaskId;
+                long startTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getStartTime());
+                long endTimeOffset = 0;
+                if (scheduledTask.getEndTime() != null) {
+                    endTimeOffset = CalendarUtils.getTimeOfDayOffset(scheduledTask.getEndTime());
+                } else {
+                    endTimeOffset = CalendarUtils.getTimeOfDayOffset(CalendarUtils.getLastSecondDate(getNow()));
+                }
+
+                long repeatMillSecs = 0;
+                if (scheduledTask.getFrequency() != null && scheduledTask.getFrequencyUnit() != null) {
+                    repeatMillSecs =
+                            CalendarUtils.getMilliSecondsByFrequency(scheduledTask.getFrequencyUnit(),
+                                    scheduledTask.getFrequency());
+                }
+
+                List<Input<?>> inputList =
+                        getParameterService()
+                                .fetchNormalizedInputs(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId)
+                                .getInputList();
+                return new ScheduledTaskDef(lock, scheduledTask.getDescription(), scheduledTask.getTaskName(),
+                        startTimeOffset, endTimeOffset, repeatMillSecs, scheduledTask.getWeekdays(),
+                        scheduledTask.getDays(), scheduledTask.getMonths(), inputList,
+                        resolveUTC(scheduledTask.getUpdateDt()));
+            }
+        };
+
+        dashboardDefs = new FactoryMap<String, DashboardDef>(true) {
 
             @Override
             protected boolean stale(String name, DashboardDef dashboardDef) throws Exception {
                 boolean stale = false;
                 try {
                     Date updateDt = db().value(Date.class, "updateDt", new DashboardQuery().name(name));
-                    stale = !updateDt.equals(dashboardDef.getTimestamp());
+                    stale = resolveUTC(updateDt) != dashboardDef.getTimestamp();
                 } catch (Exception e) {
                     logError(e);
                 }
@@ -208,8 +276,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
                 String dashboardViewer =
                         UplUtils.generateUplGeneratorTargetName("dashboard-generator", dashboard.getName());
-                return new DashboardDef(dashboard.getName(), dashboard.getOrientationType(), dashboard.getUpdateDt(),
-                        DataUtils.unmodifiableList(layerList), dashboardViewer);
+                return new DashboardDef(dashboard.getName(), dashboard.getOrientationType(),
+                        resolveUTC(dashboard.getUpdateDt()), DataUtils.unmodifiableList(layerList), dashboardViewer);
             }
         };
     }
@@ -252,7 +320,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public DashboardDef getRuntimeDashboardDef(String name) throws UnifyException {
-        return dashboards.get(name);
+        return dashboardDefs.get(name);
     }
 
     @Override
@@ -270,7 +338,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public List<Authentication> findAuthentications(AuthenticationQuery query) throws UnifyException {
         Query<Authentication> cloneQuery = query.copy();
-        cloneQuery.select("id", "name", "description", "cryptograph", "status", "statusDesc");
+        cloneQuery.addSelect("id", "name", "description", "cryptograph", "status", "statusDesc");
         return db().listAll(cloneQuery);
     }
 
@@ -293,7 +361,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public Module findModule(String name) throws UnifyException {
-        return db().list(new ModuleQuery().name(name).installed(Boolean.TRUE));
+        return db().list(new ModuleQuery().name(name));
     }
 
     @Override
@@ -308,7 +376,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public Long getModuleId(String moduleName) throws UnifyException {
-        return db().value(Long.class, "id", new ModuleQuery().name(moduleName).installed(Boolean.TRUE));
+        return db().value(Long.class, "id", new ModuleQuery().name(moduleName));
     }
 
     @Override
@@ -328,7 +396,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ApplicationMenuItem> findMenuItems(ApplicationMenuItemQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -338,7 +406,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ApplicationMenu> findMenus(ApplicationMenuQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -364,9 +432,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public List<SystemControlState> findSystemControlStates(SystemParameterQuery query) throws UnifyException {
         List<SystemControlState> systemControlStateList = new ArrayList<SystemControlState>();
-        Criteria criteria = query.getCriteria();
+        Restriction criteria = query.getRestrictions();
         Query<SystemParameter> innerQuery =
-                query.copyNoCriteria().add(criteria).equals("control", Boolean.TRUE).order("name");
+                query.copyNoCriteria().addRestriction(criteria).addEquals("control", Boolean.TRUE).addOrder("name");
         int index = 0;
         List<SystemParameter> list = db().findAll(innerQuery);
         for (SystemParameter sysParameter : list) {
@@ -400,8 +468,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public Long createScheduledTask(ScheduledTaskLargeData scheduledTaskFormData) throws UnifyException {
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
         Long scheduledTaskId = (Long) db().create(scheduledTask);
-        getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId,
-                scheduledTaskFormData.getScheduledTaskParams());
+        Inputs inputs = scheduledTaskFormData.getScheduledTaskParams();
+        if (inputs.size() > 0) {
+            getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTaskId,
+                    inputs);
+        }
+
         return scheduledTaskId;
     }
 
@@ -425,17 +497,19 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public int updateScheduledTask(ScheduledTask scheduledTask) throws UnifyException {
-        scheduledTask.setUpdated(Boolean.TRUE);
         return db().updateByIdVersion(scheduledTask);
     }
 
     @Override
     public int updateScheduledTask(ScheduledTaskLargeData scheduledTaskFormData) throws UnifyException {
         ScheduledTask scheduledTask = scheduledTaskFormData.getData();
-        scheduledTask.setUpdated(Boolean.TRUE);
         int updateCount = db().updateByIdVersion(scheduledTask);
-        getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTask.getId(),
-                scheduledTaskFormData.getScheduledTaskParams());
+        Inputs inputs = scheduledTaskFormData.getScheduledTaskParams();
+        if (inputs.size() > 0) {
+            getParameterService().updateParameterValues(scheduledTask.getTaskName(), SCHEDULED_TASK,
+                    scheduledTask.getId(), inputs);
+        }
+
         return updateCount;
     }
 
@@ -473,14 +547,24 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             throws UnifyException {
         ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
         scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
-        if (errorMessages != null) {
-            if (errorMessages.length() > 250) {
-                errorMessages = errorMessages.substring(0, 250);
-            }
-        }
+        scheduledTaskHist.setStartedOn(db().getNow());
         scheduledTaskHist.setErrorMsg(errorMessages);
         scheduledTaskHist.setTaskStatus(taskStatus);
         return (Long) db().create(scheduledTaskHist);
+    }
+
+    @Override
+    public void releaseScheduledTask(Long scheduledTaskId, Long scheduledTaskHistId, TaskStatus completionTaskStatus,
+            String errorMsg) throws UnifyException {
+        // Release lock on scheduled task
+        releaseClusterLock(scheduledTaskDefs.get(scheduledTaskId).getLock());
+
+        // Update history
+        ScheduledTaskHist scheduledTaskHist = db().find(ScheduledTaskHist.class, scheduledTaskHistId);
+        scheduledTaskHist.setFinishedOn(db().getNow());
+        scheduledTaskHist.setTaskStatus(completionTaskStatus);
+        scheduledTaskHist.setErrorMsg(errorMsg);
+        db().updateByIdVersion(scheduledTaskHist);
     }
 
     @Override
@@ -519,6 +603,31 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     @Override
+    public Long createSupportedLocale(SupportedLocale supportedLocale) throws UnifyException {
+        return (Long) db().create(supportedLocale);
+    }
+
+    @Override
+    public SupportedLocale findSupportedLocale(Long supportedLocaleId) throws UnifyException {
+        return db().find(SupportedLocale.class, supportedLocaleId);
+    }
+
+    @Override
+    public List<SupportedLocale> findSupportedLocales(SupportedLocaleQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateSupportedLocale(SupportedLocale supportedLocale) throws UnifyException {
+        return db().updateByIdVersion(supportedLocale);
+    }
+
+    @Override
+    public int deleteSupportedLocale(Long id) throws UnifyException {
+        return db().delete(SupportedLocale.class, id);
+    }
+
+    @Override
     public Long createInputCtrlDef(InputCtrlDef inputCtrlDef) throws UnifyException {
         return (Long) db().create(inputCtrlDef);
     }
@@ -550,7 +659,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<SystemAsset> findSystemAssets(SystemAssetQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -562,36 +671,172 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public int getUniqueActiveUserSessions() throws UnifyException {
         return Integer.valueOf((String) db()
                 .aggregate(AggregateType.COUNT,
-                        new UserSessionTrackingQuery().loggedIn().select("userLoginId").distinct(true))
-                .get(0).getValue());
+                        new UserSessionTrackingQuery().loggedIn().addSelect("userLoginId").setDistinct(true))
+                .getValue());
     }
 
     @Override
-    public List<ToolingRecordTypeItem> findToolingRecordTypes() throws UnifyException {
-        List<ToolingRecordTypeItem> resultList = new ArrayList<ToolingRecordTypeItem>();
-        for (Class<? extends Entity> entityClass : getAnnotatedClasses(Entity.class, Tooling.class)) {
-            Tooling ta = entityClass.getAnnotation(Tooling.class);
-            List<String> fieldList = new ArrayList<String>();
-            String id = null;
+    public Long createDataSourceDriver(DataSourceDriver datasourceDriver) throws UnifyException {
+        return (Long) db().create(datasourceDriver);
+    }
 
-            for (Field f : ReflectUtils.getAnnotatedFields(entityClass, Id.class)) {
-                id = f.getName();
-                fieldList.add(id);
-                break;
-            }
+    @Override
+    public DataSourceDriver findDataSourceDriver(Long datasourceDriverId) throws UnifyException {
+        return db().find(DataSourceDriver.class, datasourceDriverId);
+    }
 
-            for (Field f : ReflectUtils.getAnnotatedFields(entityClass, ForeignKey.class)) {
-                fieldList.add(f.getName());
-            }
+    @Override
+    public List<DataSourceDriver> findDataSourceDrivers(DataSourceDriverQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
 
-            for (Field f : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
-                fieldList.add(f.getName());
-            }
+    @Override
+    public int updateDataSourceDriver(DataSourceDriver datasourceDriver) throws UnifyException {
+        return db().updateByIdVersion(datasourceDriver);
+    }
 
-            resultList.add(new ToolingRecordTypeItem(ta.value(), entityClass.getName(), id, fieldList));
+    @Override
+    public int deleteDataSourceDriver(Long id) throws UnifyException {
+        return db().delete(DataSourceDriver.class, id);
+    }
+
+    @Override
+    public Long createDataSource(DataSource dataSourceName) throws UnifyException {
+        return (Long) db().create(dataSourceName);
+    }
+
+    @Override
+    public DataSource findDataSource(Long dataSourceId) throws UnifyException {
+        return db().list(DataSource.class, dataSourceId);
+    }
+
+    @Override
+    public DataSource findDataSource(String dataSourceName) throws UnifyException {
+        return db().list(new DataSourceQuery().name(dataSourceName));
+    }
+
+    @Override
+    public List<DataSource> findDataSources(DataSourceQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateDataSource(DataSource dataSource) throws UnifyException {
+        int updateCount = db().updateByIdVersion(dataSource);
+        if (dataSourceManager.isConfigured(dataSource.getName())) {
+            dataSourceManager.reconfigure(getDynamicSqlDataSourceConfig(dataSource));
         }
 
+        return updateCount;
+    }
+
+    @Override
+    public int deleteDataSource(Long id) throws UnifyException {
+        DataSource dataSource = db().list(new DataSourceQuery().id(id));
+        int updateCount = db().delete(DataSource.class, id);
+        if (dataSourceManager.isConfigured(dataSource.getName())) {
+            dataSourceManager.terminateConfiguration(dataSource.getName());
+        }
+
+        return updateCount;
+    }
+
+    @Override
+    public boolean activateDataSource(String dataSourceName) throws UnifyException {
+        if (!dataSourceManager.isConfigured(dataSourceName)) {
+            DataSource dataSource = db().list(new DataSourceQuery().name(dataSourceName));
+            dataSourceManager.configure(getDynamicSqlDataSourceConfig(dataSource));
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String activateDataSource(Long dataSourceId) throws UnifyException {
+        DataSource dataSource = db().list(new DataSourceQuery().id(dataSourceId));
+        if (!dataSourceManager.isConfigured(dataSource.getName())) {
+            dataSourceManager.configure(getDynamicSqlDataSourceConfig(dataSource));
+        }
+
+        return dataSource.getName();
+    }
+
+    @Taskable(
+            name = SystemDataSourceTaskConstants.DATASOURCETESTTASK, description = "DataSource Test Task",
+            parameters = { @Parameter(
+                    name = SystemDataSourceTaskParamConstants.DATASOURCE, type = DataSource.class, mandatory = true) },
+            limit = TaskExecLimit.ALLOW_MULTIPLE)
+    public boolean executeTestDataSourceTask(TaskMonitor taskMonitor, DataSource dataSource) throws UnifyException {
+        boolean result = false;
+
+        addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.performing}");
+        addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.connecting}", dataSource.getConnectionUrl());
+        DataSourceDriver driver = findDataSourceDriver(dataSource.getDataSourceDriverId());
+        result =
+                dataSourceManager.testConfiguration(new DynamicSqlDataSourceConfig(taskMonitor.getTaskId(0),
+                        driver.getDialect(), driver.getDriverType(), dataSource.getConnectionUrl(),
+                        dataSource.getUserName(), dataSource.getPassword(), 1, false));
+        addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.completed}", result);
+        return result;
+    }
+
+    @Override
+    public List<ToolingEntityItem> findToolingBaseTypes() throws UnifyException {
+        List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
+        for (Class<? extends Entity> entityClass : getAnnotatedClasses(BaseEntity.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            resultList.add(createToolingEntityItem(entityClass));
+        }
+
+        resultList.add(createToolingEntityItem(AbstractEntity.class));
+        resultList.add(createToolingEntityItem(AbstractSequencedEntity.class));
         return resultList;
+    }
+
+    @Override
+    public List<ToolingEntityItem> findToolingDocumentTypes() throws UnifyException {
+        List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
+        for (Class<? extends Document> entityClass : getAnnotatedClassesExcluded(Document.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            resultList.add(createToolingEntityItem(entityClass));
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException {
+        List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
+        List<ToolingEntityFieldItem> fieldList = new ArrayList<ToolingEntityFieldItem>();
+        fieldList.add(new ToolingEntityFieldItem("code", String.class.getCanonicalName()));
+        fieldList.add(new ToolingEntityFieldItem("description", String.class.getCanonicalName()));
+        for (Class<? extends EnumConst> enumClass : getAnnotatedClassesExcluded(EnumConst.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            Tooling ta = enumClass.getAnnotation(Tooling.class);
+            StaticList sla = enumClass.getAnnotation(StaticList.class);
+            if (sla != null) {
+                resultList.add(new ToolingEntityItem(sla.value(), resolveApplicationMessage(ta.description()),
+                        enumClass.getName(), "code", ta.guarded(), fieldList));
+            }
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<ToolingDocumentListItem> findToolingDocumentListItems() throws UnifyException {
+        List<ToolingDocumentListItem> resultList = new ArrayList<ToolingDocumentListItem>();
+        for (Class<? extends Document> documentClass : getAnnotatedClassesExcluded(Document.class, Tooling.class,
+                "com.tcdng.jacklyn.common.entities")) {
+            Tooling ta = documentClass.getAnnotation(Tooling.class);
+            resultList.add(
+                    new ToolingDocumentListItem(documentClass.getName(), resolveApplicationMessage(ta.description())));
+        }
+        return resultList;
+    }
+
+    @Override
+    public List<ToolingTransformerTypeItem> findToolingTransformerTypes() throws UnifyException {
+        return getToolingTypes(ToolingTransformerTypeItem.class, Transformer.class);
     }
 
     @Override
@@ -601,7 +846,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             StaticList sla = enumClass.getAnnotation(StaticList.class);
             if (sla != null) {
                 Tooling ta = enumClass.getAnnotation(Tooling.class);
-                resultList.add(new ToolingListTypeItem(sla.value(), resolveApplicationMessage(ta.value())));
+                resultList.add(new ToolingListTypeItem(sla.value(), resolveApplicationMessage(ta.description())));
             }
         }
 
@@ -616,144 +861,107 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         // scheduled tasks
         if (taskMonitor.isCanceled() || !getSysParameterValue(Boolean.class,
                 SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_ENABLED)) {
-            if (!triggeredTaskInfoMap.isEmpty()) {
-                logDebug("Stopping all running scheduled tasks...");
-                for (TaskInfo taskInfo : triggeredTaskInfoMap.values()) {
-                    if (!taskInfo.isDummy()) {
-                        taskInfo.getTaskMonitor().cancel();
-                    }
-                }
-                triggeredTaskInfoMap.clear();
-            }
             return;
         }
 
-        // Check working date. If not current day, stop all scheduled tasks,
-        // then clear task information map
-        Date now = new Date();
-        Date currentDt = CalendarUtils.getMidnightDate(now);
-        if (!currentDt.equals(workingDt)) {
-            for (TaskInfo taskInfo : triggeredTaskInfoMap.values()) {
-                if (!taskInfo.isDummy()) {
-                    logDebug("Stopping scheduled task [{0}] from running...", taskInfo.getDescription());
-                    taskInfo.getTaskMonitor().cancel();
-                }
-            }
-            triggeredTaskInfoMap.clear();
-            workingDt = currentDt;
-        }
+        // Working dates
+        Date now = db().getNow();
+        final Date workingDt = CalendarUtils.getMidnightDate(now);
 
-        long scheduledTaskExpirationAllowance =
-                getSysParameterValue(long.class,
+        // Expiration allowance
+        int expirationAllowanceMins =
+                getSysParameterValue(int.class,
                         SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION);
-        // Convert to milliseconds
-        scheduledTaskExpirationAllowance = scheduledTaskExpirationAllowance * 60 * 1000;
+        long expirationAllowanceMilliSec =
+                CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.MINUTE, expirationAllowanceMins);
 
         int maxScheduledTaskTrigger =
                 getSysParameterValue(int.class, SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER);
 
-        // Fetch new scheduled tasks with start time less or equal current
-        // time
-        logDebug("Fetching new scheduled tasks...");
-        now = CalendarUtils.getTimeOfDay(now);
-        List<ScheduledTask> scheduledTaskList =
-                listNewScheduledTasks(now, new ArrayList<Long>(triggeredTaskInfoMap.keySet()));
+        // Fetch tasks ready to run
+        logDebug("Fetching ready tasks...");
+        List<Long> readyScheduledTaskIdList =
+                db().valueList(Long.class, "id", new ScheduledTaskQuery().readyToRunOn(now));
 
         // Schedule tasks that are active only today
-        logDebug("[{0}] new scheduled task(s) fetched...", scheduledTaskList.size());
+        logDebug("[{0}] potential scheduled task(s) to run...", readyScheduledTaskIdList.size());
         int triggered = 0;
-        for (ScheduledTask scheduledTask : scheduledTaskList) {
-            Long scheduledTaskId = scheduledTask.getId();
-            // Cancel any task that has been updated
-            TaskInfo taskInfo = triggeredTaskInfoMap.remove(scheduledTaskId);
-            if (taskInfo != null && !taskInfo.isDummy()) {
-                taskInfo.getTaskMonitor().cancel();
-            }
+        for (Long scheduledTaskId : readyScheduledTaskIdList) {
+            ScheduledTaskDef scheduledTaskDef = scheduledTaskDefs.get(scheduledTaskId);
+            String taskLock = scheduledTaskDef.getLock();
+            logDebug("Attempting to grab scheduled task lock [{0}] ...", taskLock);
 
-            Date scheduledTaskTime = CalendarUtils.getTimeOfDay(scheduledTask.getStartTime());
-            if (now.after(scheduledTaskTime) && isOkToRunOnWorkingDate(scheduledTask)) {
-                String taskLock = "scheduledtask-lock" + scheduledTaskId;
-                if (grabClusterLock(taskLock)) {
-                    Map<String, Object> schdParameters = new HashMap<String, Object>();
+            if (!isWithClusterLock(taskLock) && grabClusterLock(taskLock)) {
+                logDebug("Grabbed scheduled task lock [{0}] ...", taskLock);
+
+                boolean lockHeldForTask = false;
+                try {
+                    logDebug("Setting up scheduled task [{0}] ...", scheduledTaskDef.getDescription());
+                    Map<String, Object> taskParameters = new HashMap<String, Object>();
+                    taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, scheduledTaskId);
+
+                    Date nextExecutionOn =
+                            db().value(Date.class, "nextExecutionOn", new ScheduledTaskQuery().id(scheduledTaskId));
+                    Date expiryOn = CalendarUtils.getDateWithOffset(nextExecutionOn, expirationAllowanceMilliSec);
+                    if (now.before(expiryOn)) {
+                        // Task execution has not expired. Start task
+                        // Load settings
+                        for (Input<?> input : scheduledTaskDef.getInputList()) {
+                            taskParameters.put(input.getName(), input.getTypeValue());
+                        }
+
+                        // Create history
+                        ScheduledTaskHist scheduledTaskHist = new ScheduledTaskHist();
+                        scheduledTaskHist.setScheduledTaskId(scheduledTaskId);
+                        scheduledTaskHist.setStartedOn(now);
+                        scheduledTaskHist.setTaskStatus(TaskStatus.INITIALIZED);
+                        Long scheduledTaskHistId = (Long) db().create(scheduledTaskHist);
+                        taskParameters.put(SystemSchedTaskConstants.SCHEDULEDTASKHIST_ID, scheduledTaskHistId);
+
+                        // Fire task
+                        taskManager.startTask(scheduledTaskDef.getTaskName(), taskParameters, true,
+                                taskStatusLogger.getName());
+                        logDebug("Task [{0}] is setup to run...", scheduledTaskDef.getDescription());
+
+                        lockHeldForTask = true;
+                        triggered++;
+                    }
+
+                    // Calculate and set next execution
+                    Date calcNextExecutionOn = null;
+                    long repeatMillSecs = scheduledTaskDef.getRepeatMillSecs();
+                    if (repeatMillSecs > 0) {
+                        Date limit = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getEndOffset());
+                        long factor = ((now.getTime() - nextExecutionOn.getTime()) / repeatMillSecs) + 1;
+                        long actNextOffsetMillSecs = factor * repeatMillSecs;
+                        calcNextExecutionOn = CalendarUtils.getDateWithOffset(nextExecutionOn, actNextOffsetMillSecs);
+                        if (calcNextExecutionOn.compareTo(limit) >= 0) {
+                            calcNextExecutionOn = null;
+                        }
+                    }
+
+                    if (calcNextExecutionOn == null) {
+                        // Use next eligible date start time
+                        calcNextExecutionOn =
+                                CalendarUtils.getDateWithOffset(
+                                        CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
+                                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
+                                        scheduledTaskDef.getStartOffset());
+                    }
+
+                    db().updateById(ScheduledTask.class, scheduledTaskId,
+                            new Update().add("nextExecutionOn", calcNextExecutionOn).add("lastExecutionOn", now));
+                    logDebug("Task [{0}] is scheduled to run next on [{1,date,dd/MM/yy HH:mm:ss}]...",
+                            scheduledTaskDef.getDescription(), calcNextExecutionOn);
+
+                } catch (UnifyException e) {
                     try {
-                        schdParameters.put(TaskParameterConstants.LOCK_TO_RELEASE, taskLock);
-                        schdParameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, scheduledTaskId);
-                        for (Input parameterValue : getParameterService().fetchNormalizedInputs(
-                                scheduledTask.getTaskName(), SCHEDULED_TASK, scheduledTask.getId()).getInputList()) {
-                            schdParameters.put(parameterValue.getName(), parameterValue.getTypeValue());
-                        }
-
-                        TaskMonitor schdTaskMonitor = null;
-                        if (scheduledTask.getFrequency() != null && scheduledTask.getFrequencyUnit() != null) {
-                            long periodInMillSec =
-                                    CalendarUtils.getMilliSecondsByFrequency(scheduledTask.getFrequencyUnit(),
-                                            scheduledTask.getFrequency());
-
-                            int numberOfTimes = 0;
-                            if (scheduledTask.getNumberOfTimes() != null) {
-                                numberOfTimes = scheduledTask.getNumberOfTimes();
-                            }
-
-                            // Check for expiry
-                            boolean isExpired = false;
-                            if (scheduledTask.getExpires()) {
-                                long windowToRunMillSec =
-                                        numberOfTimes * periodInMillSec + scheduledTaskExpirationAllowance;
-                                long actualWindowToRunMillSec =
-                                        windowToRunMillSec - (now.getTime() - scheduledTaskTime.getTime());
-                                if (actualWindowToRunMillSec > 0) {
-                                    // Recalculate number of times to repeat
-                                    if (periodInMillSec > 0) {
-                                        int reCalcNumberOfTimes = (int) (actualWindowToRunMillSec / periodInMillSec);
-                                        if (reCalcNumberOfTimes < numberOfTimes) {
-                                            numberOfTimes = reCalcNumberOfTimes;
-                                        }
-                                    }
-                                } else {
-                                    isExpired = true;
-                                }
-                            }
-
-                            // Schedule periodic if not expired
-                            if (!isExpired) {
-                                logDebug("Scheduling task [{0}] to run every [{1}ms] with a [{2}ms] delay...",
-                                        scheduledTask.getDescription(), periodInMillSec, 0);
-                                schdTaskMonitor =
-                                        taskManager.scheduleTaskToRunPeriodically(scheduledTask.getTaskName(),
-                                                schdParameters, false, 0, periodInMillSec, numberOfTimes,
-                                                taskStatusLogger.getName());
-                            }
-                        } else {
-                            // Check for expiry
-                            boolean isExpired = false;
-                            if (scheduledTask.getExpires()) {
-                                long actualWindowToRunMillSec =
-                                        scheduledTaskExpirationAllowance
-                                                - (now.getTime() - scheduledTask.getStartTime().getTime());
-                                isExpired = actualWindowToRunMillSec <= 0;
-                            }
-
-                            if (!isExpired) {
-                                // Schedule one-shot
-                                logDebug("Scheduling task [{0}] to run one time...", scheduledTask.getDescription());
-                                schdTaskMonitor =
-                                        taskManager.startTask(scheduledTask.getTaskName(), schdParameters, false,
-                                                taskStatusLogger.getName());
-                            }
-                        }
-
-                        if (schdTaskMonitor != null) {
-                            triggered++;
-                            triggeredTaskInfoMap.put(scheduledTaskId,
-                                    new TaskInfo(schdTaskMonitor, scheduledTask.getDescription()));
-                        }
-                    } catch (UnifyException e) {
-                        try {
-                            releaseClusterLock(taskLock);
-                        } catch (Exception e1) {
-                        }
-
-                        taskStatusLogger.logCriticalFailure(scheduledTask.getTaskName(), schdParameters, e);
+                        releaseClusterLock(taskLock);
+                    } catch (Exception e1) {
+                    }
+                } finally {
+                    if (!lockHeldForTask) {
+                        releaseClusterLock(taskLock);
                     }
                 }
             }
@@ -805,8 +1013,9 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
         for (ApplicationMenu applicationMenu : applicationMenuList) {
             List<ApplicationMenuItem> applicationMenuItemList =
-                    findMenuItems((ApplicationMenuItemQuery) new ApplicationMenuItemQuery()
-                            .menuId(applicationMenu.getId()).orderByDisplayOrder().installed(Boolean.TRUE));
+                    findMenuItems(
+                            (ApplicationMenuItemQuery) new ApplicationMenuItemQuery().menuId(applicationMenu.getId())
+                                    .orderByDisplayOrder().hidden(Boolean.FALSE).installed(Boolean.TRUE));
             List<MenuItem> menuItemList = new ArrayList<MenuItem>();
             for (ApplicationMenuItem applicationMenuItem : applicationMenuItemList) {
                 MenuItem menuItem =
@@ -820,8 +1029,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         MenuSet menuSet = new MenuSet();
-        menuSet.add(
-                new Menu(getApplicationName(), getApplicationName(), Collections.unmodifiableList(menuItemSetList)));
+        menuSet.add(new Menu(getApplicationName(), getApplicationName(), null,
+                Collections.unmodifiableList(menuItemSetList)));
         if (getContainerSetting(boolean.class, UnifyCorePropertyConstants.APPLICATION_OSMODE, false)) {
             // Load application menus
             menuSet.setAlwaysSelect(true);
@@ -833,7 +1042,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         setApplicationAttribute(ApplicationAttributeConstants.APPLICATION_MENUSET, menuSet);
 
-        broadcastToOtherSessions(SessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
+        broadcastRefreshMenu();
 
         logInfo("Application menu loaded.");
     }
@@ -850,7 +1059,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<ShortcutTile> findShortcutTiles(ShortcutTileQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -865,7 +1074,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public List<Tile> generateTiles(ShortcutTileQuery query) throws UnifyException {
-        return generateTiles(db().findAll(query.installed(Boolean.TRUE)));
+        return generateTiles(db().findAll(query));
     }
 
     @Override
@@ -902,17 +1111,13 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     @Override
     public void onApplicationStartup() throws UnifyException {
         // Default system user tokens
-        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN,
-                createUserToken(SystemReservedUserConstants.SYSTEM_LOGINID, SystemReservedUserConstants.SYSTEM_ID));
-        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN, createUserToken(
-                SystemReservedUserConstants.ANONYMOUS_LOGINID, SystemReservedUserConstants.ANONYMOUS_ID));
+        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_SYSTEM_USERTOKEN, createReservedUserToken(
+                SystemReservedUserConstants.SYSTEM_LOGINID, SystemReservedUserConstants.SYSTEM_ID));
+        setApplicationAttribute(JacklynApplicationAttributeConstants.DEFAULT_ANONYMOUS_USERTOKEN,
+                createReservedUserToken(SystemReservedUserConstants.ANONYMOUS_LOGINID,
+                        SystemReservedUserConstants.ANONYMOUS_ID));
 
         loadApplicationMenu();
-    }
-
-    private UserToken createUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), id, null, true, true, true,
-                false);
     }
 
     @Override
@@ -957,6 +1162,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     module.setDescription(resolveApplicationMessage(moduleConfig.getDescription()));
                     module.setDeactivatable(moduleConfig.isDeactivatable());
                     module.setRemote(Boolean.FALSE);
+                    module.setInstalled(Boolean.TRUE);
                     db().create(module);
                 } else {
                     // Otherwise perform update
@@ -982,8 +1188,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             }
 
             Long moduleId = module.getId();
-            if (moduleConfig.getSysParams() != null) {
+            if (moduleConfig.getSysParams() != null
+                    && DataUtils.isNotBlank(moduleConfig.getSysParams().getSysParamList())) {
                 logDebug("Updating system parameter definitions for module [{0}]...", module.getDescription());
+                boolean updateVersion = true;
                 for (SysParamConfig sysParamConfig : moduleConfig.getSysParams().getSysParamList()) {
                     SystemParameter sysParameter = findSysParameter(sysParamConfig.getName());
                     String description = resolveApplicationMessage(sysParamConfig.getDescription());
@@ -993,7 +1201,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setModuleId(module.getId());
                         sysParameter.setName(sysParamConfig.getName());
                         sysParameter.setDescription(description);
-                        sysParameter.setValue(sysParamConfig.getDefaultValue());
+                        String defaultVal = sysParamConfig.getDefaultVal();
+                        if (SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL.equals(sysParamConfig.getName())) {
+                            defaultVal =
+                                    getContainerSetting(String.class,
+                                            JacklynContainerPropertyConstants.JACKLYN_SYSTEM_DEFAULT_EMAIL, defaultVal);
+                        }
+
+                        sysParameter.setValue(defaultVal);
                         sysParameter.setEditor(sysParamConfig.getEditor());
                         sysParameter.setType(sysParamConfig.getType());
                         sysParameter.setControl(sysParamConfig.isControl());
@@ -1007,12 +1222,18 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         sysParameter.setType(sysParamConfig.getType());
                         sysParameter.setControl(sysParamConfig.isControl());
                         sysParameter.setEditable(sysParamConfig.isEditable());
+                        // Check for application version
+                        if (updateVersion && SystemModuleSysParamConstants.SYSPARAM_APPLICATION_VERSION
+                                .equals(sysParamConfig.getName())) {
+                            sysParameter.setValue(getDeploymentVersion());
+                            updateVersion = false;
+                        }
                         db().updateByIdVersion(sysParameter);
                     }
                 }
             }
 
-            if (moduleConfig.getMenus() != null) {
+            if (moduleConfig.getMenus() != null && DataUtils.isNotBlank(moduleConfig.getMenus().getMenuList())) {
                 logDebug("Updating menu definitions for module [{0}]...", module.getDescription());
                 List<MenuConfig> menuConfigList = moduleConfig.getMenus().getMenuList();
 
@@ -1032,7 +1253,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         applicationMenu.setPageCaption(menuConfig.getPageCaption());
                         applicationMenu.setCaption(menuConfig.getCaption());
                         applicationMenu.setPath(menuConfig.getPath());
-                        applicationMenu.setRemotePath(menuConfig.getRemotePath());
+                        applicationMenu.setInstalled(Boolean.TRUE);
                         menuId = (Long) db().create(applicationMenu);
                     } else {
                         logDebug("Updating module menu definition [{0}]...", oldApplicationMenu.getName());
@@ -1040,7 +1261,6 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                         oldApplicationMenu.setPageCaption(menuConfig.getPageCaption());
                         oldApplicationMenu.setCaption(menuConfig.getCaption());
                         oldApplicationMenu.setPath(menuConfig.getPath());
-                        oldApplicationMenu.setRemotePath(menuConfig.getRemotePath());
                         oldApplicationMenu.setInstalled(Boolean.TRUE);
                         db().updateByIdVersion(oldApplicationMenu);
                         menuId = oldApplicationMenu.getId();
@@ -1060,7 +1280,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 applicationMenuItem.setPageCaption(menuItemConfig.getPageCaption());
                                 applicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 applicationMenuItem.setPath(menuItemConfig.getPath());
-                                applicationMenuItem.setRemotePath(menuItemConfig.getRemotePath());
+                                applicationMenuItem.setHidden(menuItemConfig.isHidden());
+                                applicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().create(applicationMenuItem);
                             } else {
                                 oldApplicationMenuItem.setMenuId(menuId);
@@ -1068,7 +1289,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 oldApplicationMenuItem.setPageCaption(menuItemConfig.getPageCaption());
                                 oldApplicationMenuItem.setCaption(menuItemConfig.getCaption());
                                 oldApplicationMenuItem.setPath(menuItemConfig.getPath());
-                                oldApplicationMenuItem.setRemotePath(menuItemConfig.getRemotePath());
+                                oldApplicationMenuItem.setHidden(menuItemConfig.isHidden());
                                 oldApplicationMenuItem.setInstalled(Boolean.TRUE);
                                 db().updateByIdVersion(oldApplicationMenuItem);
                             }
@@ -1077,7 +1298,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getShortcutTiles() != null) {
+            if (moduleConfig.getShortcutTiles() != null
+                    && DataUtils.isNotBlank(moduleConfig.getShortcutTiles().getShortcutTileList())) {
                 logDebug("Reading shortcut tile definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
@@ -1095,6 +1317,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                                 .setGenerator(AnnotationUtils.getAnnotationString(shortcutTileConfig.getGenerator()));
                         shortcutTile.setPath(shortcutTileConfig.getPath());
                         shortcutTile.setLandscape(shortcutTileConfig.isLandscape());
+                        shortcutTile.setInstalled(Boolean.TRUE);
                         db().create(shortcutTile);
                     } else {
                         oldShortcutTile.setDescription(resolveApplicationMessage(shortcutTileConfig.getDescription()));
@@ -1111,7 +1334,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 }
             }
 
-            if (moduleConfig.getInputControls() != null) {
+            if (moduleConfig.getInputControls() != null
+                    && DataUtils.isNotBlank(moduleConfig.getInputControls().getInputControlList())) {
                 logDebug("Reading input control defintions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
 
@@ -1178,17 +1402,17 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             Long moduleId = module.getId();
             Method[] methods = remoteCallClass.getMethods();
             for (Method method : methods) {
-                GatewayAction goa = method.getAnnotation(GatewayAction.class);
+                RemoteAction goa = method.getAnnotation(RemoteAction.class);
                 if (goa != null) {
                     sysAssetQuery.clear();
                     SystemAsset oldSystemAsset =
-                            db().find(sysAssetQuery.type(SystemAssetType.REMOTECALLMETHOD).name(goa.name()));
+                            db().find(sysAssetQuery.type(SystemAssetType.REMOTECALL_METHOD).name(goa.name()));
                     String description = resolveApplicationMessage(goa.description());
                     if (oldSystemAsset == null) {
                         systemAsset.setModuleId(moduleId);
                         systemAsset.setName(goa.name());
                         systemAsset.setDescription(description);
-                        systemAsset.setType(SystemAssetType.REMOTECALLMETHOD);
+                        systemAsset.setType(SystemAssetType.REMOTECALL_METHOD);
                         db().create(systemAsset);
                     } else {
                         oldSystemAsset.setModuleId(moduleId);
@@ -1201,6 +1425,59 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         }
 
+        // Configure default data source drivers
+        ensureDataSourceDriver("HSQLDB_DRV", "Hyper SQL JDBC Driver", SqlDialectNameConstants.HSQLDB,
+                "org.hsqldb.jdbcDriver");
+        ensureDataSourceDriver("MSSQL_DRV", "Microsoft SQL JDBC Driver", SqlDialectNameConstants.MSSQL,
+                "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        ensureDataSourceDriver("MSSQL_2012_DRV", "Microsoft SQL 2012 JDBC Driver", SqlDialectNameConstants.MSSQL_2012,
+                "com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        ensureDataSourceDriver("MYSQL_DRV", "MySQL JDBC Driver", SqlDialectNameConstants.MYSQL,
+                "com.mysql.jdbc.Driver");
+        ensureDataSourceDriver("ORACLE_DRV", "Oracle JDBC Driver", SqlDialectNameConstants.ORACLE,
+                "oracle.jdbc.OracleDriver");
+        ensureDataSourceDriver("ORACLE12C_DRV", "Oracle (12c) JDBC Driver", SqlDialectNameConstants.ORACLE_12C,
+                "oracle.jdbc.OracleDriver");
+        ensureDataSourceDriver("POSTGRESQL_DRV", "PostgreSQL JDBC Driver", SqlDialectNameConstants.POSTGRESQL,
+                "org.postgresql.Driver");
+    }
+
+    private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, null, null, true,
+                true, true, false);
+    }
+
+    private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {
+        Tooling ta = entityClass.getAnnotation(Tooling.class);
+        List<ToolingEntityFieldItem> fieldList = new ArrayList<ToolingEntityFieldItem>();
+        String id = null;
+
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Id.class)) {
+            id = field.getName();
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+            break;
+        }
+
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ForeignKey.class)) {
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+        }
+
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+        }
+
+        // Add list-only fields 11/7/19
+        for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ListOnly.class)) {
+            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+        }
+
+        String entityToolingName = AnnotationUtils.getAnnotationString(ta.name());
+        if (StringUtils.isBlank(entityToolingName)) {
+            throw new UnifyException(SystemModuleErrorConstants.TOOLING_ENTITY_NAME_REQUIRED, entityClass);
+        }
+
+        return new ToolingEntityItem(entityToolingName, resolveApplicationMessage(ta.description()),
+                entityClass.getName(), id, ta.guarded(), fieldList);
     }
 
     private AuthenticationLargeData internalFindAuthentication(Authentication authentication) throws UnifyException {
@@ -1227,73 +1504,16 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         db().updateAll(query, new Update().add("status", status));
     }
 
-    private boolean isOkToRunOnWorkingDate(ScheduledTask scheduledTask) throws UnifyException {
-        // Add scheduled task ID to triggeredTaskInfoMap, marking the scheduled
-        // task as treated using a dummy task
-        triggeredTaskInfoMap.put(scheduledTask.getId(), new TaskInfo());
-
-        return RecordStatus.ACTIVE.equals(scheduledTask.getStatus()) && CalendarUtils.isWithinCalendar(
-                scheduledTask.getWeekdays(), scheduledTask.getDays(), scheduledTask.getMonths(), workingDt);
+    private DynamicSqlDataSourceConfig getDynamicSqlDataSourceConfig(DataSource dataSource) throws UnifyException {
+        return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
+                dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(),
+                dataSource.getMaxConnections(), false);
     }
 
-    private List<ScheduledTask> listNewScheduledTasks(Date time, List<Long> oldScheduledTaskIds) throws UnifyException {
-        // Fetch truly new tasks
-        ScheduledTaskQuery query = new ScheduledTaskQuery();
-        if (!oldScheduledTaskIds.isEmpty()) {
-            query.idNotIn(oldScheduledTaskIds);
-        }
-        query.startTimeBeforeOrOn(time);
-        query.status(RecordStatus.ACTIVE);
-        List<ScheduledTask> list = db().findAll(query);
-
-        // Fetch old tasks that may have been modified
-        if (!oldScheduledTaskIds.isEmpty()) {
-            query.clear();
-            query.idIn(oldScheduledTaskIds);
-            query.updated(Boolean.TRUE);
-            List<ScheduledTask> oldList = db().findAll(query);
-            list.addAll(oldList);
-        }
-
-        // Clear update flags
-        if (!list.isEmpty()) {
-            List<Long> idList = new ArrayList<Long>();
-            for (ScheduledTask scheduledTask : list) {
-                idList.add(scheduledTask.getId());
-            }
-
-            query.clear();
-            query.idIn(idList);
-            db().updateAll(query, new Update().add("updated", Boolean.FALSE));
-        }
-        return list;
-    }
-
-    private class TaskInfo {
-
-        private TaskMonitor taskMonitor;
-
-        private String description;
-
-        public TaskInfo() {
-
-        }
-
-        public TaskInfo(TaskMonitor taskMonitor, String description) {
-            this.taskMonitor = taskMonitor;
-            this.description = description;
-        }
-
-        public TaskMonitor getTaskMonitor() {
-            return taskMonitor;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public boolean isDummy() {
-            return taskMonitor == null;
+    private void ensureDataSourceDriver(String name, String description, String dialect, String driverType)
+            throws UnifyException {
+        if (db().countAll(new DataSourceDriverQuery().name(name)) == 0) {
+            db().create(new DataSourceDriver(name, description, dialect, driverType));
         }
     }
 }

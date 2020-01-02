@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,10 +30,10 @@ public class WfItemEventQuery extends BaseEntityQuery<WfItemEvent> {
     }
 
     public WfItemEventQuery wfItemHistId(Long wfItemHistId) {
-        return (WfItemEventQuery) equals("wfItemHistId", wfItemHistId);
+        return (WfItemEventQuery) addEquals("wfItemHistId", wfItemHistId);
     }
 
-    public WfItemEventQuery notesOnly() {
-        return (WfItemEventQuery) isNotNull("notes");
+    public WfItemEventQuery commentsOnly() {
+        return (WfItemEventQuery) addIsNotNull("comment");
     }
 }

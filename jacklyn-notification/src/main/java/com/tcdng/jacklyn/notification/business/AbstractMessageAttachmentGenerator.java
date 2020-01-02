@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,7 +25,8 @@ import com.tcdng.unify.core.UnifyException;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractMessageAttachmentGenerator extends AbstractUnifyComponent {
+public abstract class AbstractMessageAttachmentGenerator extends AbstractUnifyComponent
+        implements MessageAttachmentGenerator {
 
     @Override
     protected void onInitialize() throws UnifyException {

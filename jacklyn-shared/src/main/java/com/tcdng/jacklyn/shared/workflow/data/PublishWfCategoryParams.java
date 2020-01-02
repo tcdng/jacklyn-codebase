@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
-import com.tcdng.unify.web.RemoteCallParams;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
  * Publish workflow category request parameters.
@@ -36,12 +36,13 @@ public class PublishWfCategoryParams extends RemoteCallParams {
     private boolean activate;
 
     public PublishWfCategoryParams() {
-        this(null);
+        this(null, false);
     }
 
-    public PublishWfCategoryParams(byte[] wfCategoryXml) {
+    public PublishWfCategoryParams(byte[] wfCategoryXml, boolean activate) {
         super(WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
         this.wfCategoryXml = wfCategoryXml;
+        this.activate = activate;
     }
 
     public byte[] getWfCategoryXml() {
@@ -57,6 +58,7 @@ public class PublishWfCategoryParams extends RemoteCallParams {
         return activate;
     }
 
+    @XmlElement
     public void setActivate(boolean activate) {
         this.activate = activate;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,12 +21,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.business.AbstractJacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.jacklyn.common.constants.JacklynSessionAttributeConstants;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.data.ManagedEntityPrivilegeNames;
@@ -70,6 +73,7 @@ import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
+import com.tcdng.unify.core.SessionContext;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Broadcast;
@@ -77,15 +81,17 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.database.Entity;
-import com.tcdng.unify.core.operation.Update;
 import com.tcdng.unify.core.security.OneWayStringCryptograph;
 import com.tcdng.unify.core.security.PasswordGenerator;
 import com.tcdng.unify.core.system.UserSessionManager;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.web.util.WebUtils;
+import com.tcdng.unify.web.ThemeManager;
+import com.tcdng.unify.web.UnifyWebSessionAttributeConstants;
 
 /**
  * Default implementation of security business service.
@@ -96,6 +102,9 @@ import com.tcdng.unify.web.util.WebUtils;
 @Transactional
 @Component(SecurityModuleNameConstants.SECURITYSERVICE)
 public class SecurityServiceImpl extends AbstractJacklynBusinessService implements SecurityService {
+
+    @Configurable
+    private ThemeManager themeManager;
 
     @Configurable
     private UserSessionManager userSessionManager;
@@ -218,7 +227,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         // Grant OS access to all remote calls.
         List<Long> systemAssetIdList =
                 systemService.findSystemAssetIds((SystemAssetQuery) new SystemAssetQuery()
-                        .type(SystemAssetType.REMOTECALLMETHOD).installed(Boolean.TRUE));
+                        .type(SystemAssetType.REMOTECALL_METHOD).installed(Boolean.TRUE));
         updateClientAppAssets(clientAppId, systemAssetIdList);
 
         // Return result
@@ -227,7 +236,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         airResult.setAppName(getApplicationName());
         airResult.setAppName(getApplicationName());
         String bannerFilename =
-                WebUtils.expandThemeTag(systemService.getSysParameterValue(String.class,
+                themeManager.expandThemeTag(systemService.getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
         byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
         airResult.setAppIcon(icon);
@@ -278,12 +287,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         Long userId = (Long) db().create(user);
 
         // Create biometric record
-        UserBiometric userBiometric = new UserBiometric();
-        Long biometricId =
-                createBiometric(BiometricCategory.USERS, BiometricType.PHOTOGRAPH, userDocument.getPhotograph());
-        userBiometric.setUserId(userId);
-        userBiometric.setBiometricId(biometricId);
-        db().create(userBiometric);
+        createUserBiometric(BiometricType.PHOTOGRAPH, userId, userDocument.getPhotograph());
 
         // Create roles
         updateUserRoles(userId, userDocument.getRoleIdList());
@@ -322,10 +326,14 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Override
     public int updateUserPhotograph(Long userId, byte[] photograph) throws UnifyException {
-        Long biometricId =
-                db().value(Long.class, "biometricId",
-                        new UserBiometricQuery().typeName(BiometricType.PHOTOGRAPH).userId(userId));
-        return db().updateAll(new BiometricQuery().id(biometricId), new Update().add("biometric", photograph));
+        UserBiometric userBiometric =
+                db().find(new UserBiometricQuery().typeName(BiometricType.PHOTOGRAPH).userId(userId));
+        if (userBiometric == null) {
+            return createUserBiometric(BiometricType.PHOTOGRAPH, userId, photograph);
+        }
+
+        return db().updateAll(new BiometricQuery().id(userBiometric.getBiometricId()),
+                new Update().add("biometric", photograph));
     }
 
     @Override
@@ -394,9 +402,19 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public byte[] findUserPhotograph(Long userId) throws UnifyException {
+    public byte[] findUserPhotograph(String userLoginId) throws UnifyException {
         return db().value(byte[].class, "biometric",
-                new UserBiometricQuery().userId(userId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
+                new UserBiometricQuery().userLoginId(userLoginId).typeName(BiometricType.PHOTOGRAPH).mustMatch(false));
+    }
+
+    @Override
+    public List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException {
+        Set<Long> idSet = db().valueSet(Long.class, "departmentId", new UserRoleQuery().userLoginId(userLoginId));
+        if (DataUtils.isNotBlank(idSet)) {
+            return new ArrayList<Long>(idSet);
+        }
+
+        return Collections.emptyList();
     }
 
     @Override
@@ -405,12 +423,35 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public List<Long> findRoleUserIds(Long roleId) throws UnifyException {
+        return db().valueList(Long.class, "userId", new UserRoleQuery().roleId(roleId).orderById());
+    }
+
+    @Override
     public List<UserRole> findUserRoles(UserRoleQuery query) throws UnifyException {
         return db().listAll(query);
     }
 
     @Override
-    public User login(String loginId, String password) throws UnifyException {
+    public Set<String> findUsers(UserRoleQuery query) throws UnifyException {
+        return db().valueSet(String.class, "userLoginId", query);
+    }
+
+    @Override
+    public User findUserByCredentials(String loginId, String password) throws UnifyException {
+        User user = db().list(new UserQuery().loginId(loginId));
+        if (user != null) {
+            password = passwordCryptograph.encrypt(password);
+            if (user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public User loginUser(String loginId, String password, Locale loginLocale) throws UnifyException {
         User user = db().list(new UserQuery().loginId(loginId));
         if (user == null) {
             throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
@@ -433,37 +474,52 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         password = passwordCryptograph.encrypt(password);
         if (!user.getPassword().equals(password)) {
-            if (accountLockingEnabled) {
+            if (accountLockingEnabled && !user.isReserved()) { // No locking for reserved users
                 updateLoginAttempts(user);
             }
 
             throw new UnifyException(SecurityModuleErrorConstants.INVALID_LOGIN_ID_PASSWORD);
         }
 
-        Update update = new Update().add("lastLoginDt", new Date()).add("loginAttempts", Integer.valueOf(0));
+        Date now = db().getNow();
+        Update update = new Update().add("lastLoginDt", now).add("loginAttempts", Integer.valueOf(0));
         Date paswwordExpiryDt = user.getPasswordExpiryDt();
-        if (paswwordExpiryDt != null && paswwordExpiryDt.before(new Date())) {
+        if (paswwordExpiryDt != null && paswwordExpiryDt.before(now)) {
             update.add("changePassword", Boolean.TRUE);
             user.setChangePassword(Boolean.TRUE);
         }
         db().updateAll(new UserQuery().id(user.getId()), update);
 
+        // Set session locale
+        SessionContext sessionCtx = getSessionContext();
+        if (loginLocale != null) {
+            sessionCtx.setLocale(loginLocale);
+        } else if (StringUtils.isNotBlank(user.getBranchLanguageTag())) {
+            sessionCtx.setLocale(Locale.forLanguageTag(user.getBranchLanguageTag()));
+        }
+
+        // Set session time zone
+        if (StringUtils.isNotBlank(user.getBranchTimeZone())) {
+            sessionCtx.setTimeZone(TimeZone.getTimeZone(user.getBranchTimeZone()));
+        }
+
+        sessionCtx.setUseDaylightSavings(sessionCtx.getTimeZone().inDaylightTime(now));
+
         // Login to session and set session attributes
-        userSessionManager.logIn(createUserToken(user));
-        setSessionAttribute(JacklynSessionAttributeConstants.USERID, user.getId());
+        userSessionManager.login(createUserToken(user));
         setSessionAttribute(JacklynSessionAttributeConstants.USERNAME, user.getFullName());
-        setSessionAttribute(JacklynSessionAttributeConstants.BRANCHID, user.getBranchId());
         String branchDesc = user.getBranchDesc();
         if (StringUtils.isBlank(branchDesc)) {
             branchDesc = getApplicationMessage("application.no.branch");
         }
+
+        setSessionAttribute(UnifyWebSessionAttributeConstants.MESSAGEBOX, null);
+        setSessionAttribute(UnifyWebSessionAttributeConstants.TASKMONITORINFO, null);
         setSessionAttribute(JacklynSessionAttributeConstants.BRANCHDESC, branchDesc);
         setSessionAttribute(JacklynSessionAttributeConstants.RESERVEDFLAG, user.isReserved());
         setSessionAttribute(JacklynSessionAttributeConstants.SUPERVISORFLAG, user.getSupervisor());
         setSessionAttribute(JacklynSessionAttributeConstants.USERROLEOPTIONS, null);
         setSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS, null);
-        setSessionAttribute(JacklynSessionAttributeConstants.MESSAGEBOX, null);
-        setSessionAttribute(JacklynSessionAttributeConstants.TASKMONITORINFO, null);
         setSessionAttribute(JacklynSessionAttributeConstants.SHORTCUTDECK, null);
 
         return user;
@@ -483,8 +539,8 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public void logout(boolean complete) throws UnifyException {
-        userSessionManager.logOut(complete);
+    public void logoutUser(boolean complete) throws UnifyException {
+        userSessionManager.logout(complete);
     }
 
     @Override
@@ -535,6 +591,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         user.setPassword(password);
         user.setChangePassword(Boolean.TRUE);
         user.setLoginLocked(Boolean.FALSE);
+        user.setLoginAttempts(Integer.valueOf(0));
         db().updateByIdVersion(user);
     }
 
@@ -544,15 +601,15 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public void setCurrentUserRole(Long userRoleId) throws UnifyException {
-        if (userRoleId != null) {
-            UserRole userRole = db().list(UserRole.class, userRoleId);
+    public void setCurrentUserRole(UserRole userRole) throws UnifyException {
+        if (userRole != null) {
             if (!isRoleAttributes(userRole.getRoleName())) {
                 organizationService.loadRoleAttributesToApplication(new String[] { userRole.getRoleName() });
             }
 
             UserToken userToken = getUserToken();
             userToken.setRoleCode(userRole.getRoleName());
+            userToken.setDepartmentCode(userRole.getDepartmentName());
             userToken.setThemePath(getUserRoleThemeResourcePath(userRole.getId()));
             setSessionAttribute(JacklynSessionAttributeConstants.ROLEDESCRIPTION, userRole.getRoleDesc());
         } else {
@@ -583,14 +640,27 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         logInfo("Managing security module...");
+        String sysEmail =
+                systemService.getSysParameterValue(String.class, SystemModuleSysParamConstants.SYSPARAM_SYSTEM_EMAIL);
         if (db().countAll(new UserQuery().id(SystemReservedUserConstants.SYSTEM_ID)) == 0) {
             createUser(new User(SystemReservedUserConstants.SYSTEM_ID, "System",
-                    SystemReservedUserConstants.SYSTEM_LOGINID, "info@tcdng.com", Boolean.FALSE));
+                    SystemReservedUserConstants.SYSTEM_LOGINID, sysEmail, Boolean.FALSE));
+        } else {
+            db().updateById(User.class, SystemReservedUserConstants.SYSTEM_ID, new Update().add("email", sysEmail));
         }
 
         if (db().countAll(new UserQuery().id(SystemReservedUserConstants.ANONYMOUS_ID)) == 0) {
             createUser(new User(SystemReservedUserConstants.ANONYMOUS_ID, "Anonymous",
-                    SystemReservedUserConstants.ANONYMOUS_LOGINID, "info@tcdng.com", Boolean.FALSE));
+                    SystemReservedUserConstants.ANONYMOUS_LOGINID, sysEmail, Boolean.FALSE));
+        } else {
+            db().updateById(User.class, SystemReservedUserConstants.ANONYMOUS_ID, new Update().add("email", sysEmail));
+        }
+
+        String adminEmail =
+                systemService.getSysParameterValue(String.class, SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
+        if (StringUtils.isBlank(adminEmail)) {
+            systemService.setSysParameterValue(SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL, getContainerSetting(
+                    String.class, JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL));
         }
 
         // Check for default dashboard and create if necessary
@@ -648,6 +718,15 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
     }
 
+    private int createUserBiometric(BiometricType type, Long userId, byte[] biometricImage) throws UnifyException {
+        UserBiometric userBiometric = new UserBiometric();
+        Long biometricId = createBiometric(BiometricCategory.USERS, type, biometricImage);
+        userBiometric.setUserId(userId);
+        userBiometric.setBiometricId(biometricId);
+        db().create(userBiometric);
+        return 1;
+    }
+
     private UserToken createUserToken(User user) throws UnifyException {
         boolean allowMultipleLogin = user.isReserved();
         if (!allowMultipleLogin) {
@@ -666,8 +745,11 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
             globalAccess = organizationService.getBranchHeadOfficeFlag(user.getBranchId());
         }
 
+        String tenantCode = null; // For multi-tenancy
+        String colorScheme = null; // For now always use default color scheme
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getId(), user.getBranchName(), globalAccess, user.isReserved(), allowMultipleLogin, false);
+                user.getBranchCode(), user.getZoneName(), tenantCode, colorScheme, globalAccess, user.isReserved(),
+                allowMultipleLogin, false);
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {
@@ -694,7 +776,7 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
                     systemService.getSysParameterValue(String.class,
                             SecurityModuleSysParamConstants.ADMINISTRATOR_EMAIL);
             Message message =
-                    Message.newBuilder(NotificationUtils.getGlobalTemplateName(
+                    Message.newBuilder(NotificationUtils.getTemplateGlobalName(
                             SecurityModuleNameConstants.SECURITY_MODULE, notificationTemplateName))
                             .fromSender(administratorName, administratorEmail)
                             .toRecipient(user.getFullName(), user.getEmail())

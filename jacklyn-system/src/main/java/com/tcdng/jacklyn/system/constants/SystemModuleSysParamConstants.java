@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,4 +34,12 @@ public interface SystemModuleSysParamConstants {
     String SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION = "SYS-0005";
 
     String SYSPARAM_APPLICATION_BANNER = "SYS-0006";
+
+    String SYSPARAM_USE_LOGIN_LOCALE = "SYS-0007";
+
+    String SYSPARAM_SYSTEM_SMS_MOBILENO = "SYS-0008";
+
+    String SYSPARAM_SYSTEM_EMAIL = "SYS-0009";
+
+    String SYSPARAM_SYSTEM_NAME = "SYS-000A";
 }

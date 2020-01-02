@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,18 +31,18 @@ public class ClientAppAssetQuery extends BaseEntityQuery<ClientAppAsset> {
     }
 
     public ClientAppAssetQuery clientAppId(Long clientAppId) {
-        return (ClientAppAssetQuery) equals("clientAppId", clientAppId);
+        return (ClientAppAssetQuery) addEquals("clientAppId", clientAppId);
     }
 
     public ClientAppAssetQuery clientAppName(String clientAppName) {
-        return (ClientAppAssetQuery) equals("clientAppName", clientAppName);
+        return (ClientAppAssetQuery) addEquals("clientAppName", clientAppName);
     }
 
     public ClientAppAssetQuery assetName(String assetName) {
-        return (ClientAppAssetQuery) equals("assetName", assetName);
+        return (ClientAppAssetQuery) addEquals("assetName", assetName);
     }
 
     public ClientAppAssetQuery assetType(SystemAssetType assetType) {
-        return (ClientAppAssetQuery) equals("assetType", assetType);
+        return (ClientAppAssetQuery) addEquals("assetType", assetType);
     }
 }

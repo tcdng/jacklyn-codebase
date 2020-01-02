@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.tcdng.unify.core.constant.RequirementType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFATTACHMENTCHECK",
+@Table(name = "JKWFATTACHMENTCHECK",
         uniqueConstraints = { @UniqueConstraint({ "wfUserActionId", "wfDocAttachmentName" }) })
 public class WfAttachmentCheck extends BaseEntity {
 
@@ -38,6 +38,9 @@ public class WfAttachmentCheck extends BaseEntity {
 
     @ForeignKey
     private RequirementType requirementType;
+
+    @Column(name = "DOC_NM", length = 32)
+    private String docName;
 
     @Column(name = "ATTACHMENT_NM")
     private String wfDocAttachmentName;
@@ -64,6 +67,14 @@ public class WfAttachmentCheck extends BaseEntity {
 
     public void setRequirementType(RequirementType requirementType) {
         this.requirementType = requirementType;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getWfDocAttachmentName() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,7 +21,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.tcdng.unify.web.RemoteCallResult;
+import com.tcdng.unify.web.remotecall.RemoteCallResult;
 
 /**
  * Get tooling record types request result.
@@ -32,9 +32,9 @@ import com.tcdng.unify.web.RemoteCallResult;
 @XmlRootElement
 public class GetToolingRecordTypeResult extends RemoteCallResult {
 
-    private List<ToolingRecordTypeItem> recordTypeList;
+    private List<ToolingEntityItem> recordTypeList;
 
-    public GetToolingRecordTypeResult(List<ToolingRecordTypeItem> recordTypeList) {
+    public GetToolingRecordTypeResult(List<ToolingEntityItem> recordTypeList) {
         this.recordTypeList = recordTypeList;
     }
 
@@ -42,12 +42,12 @@ public class GetToolingRecordTypeResult extends RemoteCallResult {
 
     }
 
-    public List<ToolingRecordTypeItem> getRecordTypeList() {
+    public List<ToolingEntityItem> getRecordTypeList() {
         return recordTypeList;
     }
 
     @XmlElement(name = "recordType")
-    public void setRecordTypeList(List<ToolingRecordTypeItem> recordTypeList) {
+    public void setRecordTypeList(List<ToolingEntityItem> recordTypeList) {
         this.recordTypeList = recordTypeList;
     }
 }

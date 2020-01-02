@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Application Menu Item", reportable = true,
         auditable = true)
-@Table(name = "MENUITEM", uniqueConstraints = { @UniqueConstraint({ "menuId", "name" }) })
+@Table(name = "JKMENUITEM", uniqueConstraints = { @UniqueConstraint({ "menuId", "name" }) })
 public class ApplicationMenuItem extends BaseInstallEntity {
 
     @ForeignKey(ApplicationMenu.class)
@@ -62,6 +62,9 @@ public class ApplicationMenuItem extends BaseInstallEntity {
     @Column
     private int displayOrder;
 
+    @Column(name = "HIDDEN_FG")
+    private Boolean hidden;
+    
     @ListOnly(key = "menuId", property = "moduleId")
     private Long moduleId;
 
@@ -142,6 +145,14 @@ public class ApplicationMenuItem extends BaseInstallEntity {
 
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
+    }
+
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
     }
 
     public Long getModuleId() {

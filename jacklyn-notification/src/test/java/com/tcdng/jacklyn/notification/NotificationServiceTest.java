@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -53,7 +53,7 @@ import com.tcdng.jacklyn.system.constants.SystemModuleNameConstants;
 public class NotificationServiceTest extends AbstractJacklynTest {
 
     private static final String NOTIFICATION_TEMPLATE_NAME = NotificationUtils
-            .getGlobalTemplateName(SystemModuleNameConstants.SYSTEM_MODULE, "ACC-SMRY-001");
+            .getTemplateGlobalName(SystemModuleNameConstants.SYSTEM_MODULE, "ACC-SMRY-001");
 
     private static final String NOTIFICATION_CHANNEL_NAME = "testNotificationChannel";
 

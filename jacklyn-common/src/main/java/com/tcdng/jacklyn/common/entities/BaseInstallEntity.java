@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,6 +21,7 @@ import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 
 /**
  * Base install entity.
@@ -28,11 +29,12 @@ import com.tcdng.unify.core.annotation.Policy;
  * @author Lateef Ojulari
  * @version 1.0
  */
+@Tooling(name = "baseInstallEntity", description = "Base Install")
 @Policy("installentity-policy")
 public abstract class BaseInstallEntity extends BaseStatusEntity {
 
     @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    @Column(type = ColumnType.TIMESTAMP_UTC, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date updateDt;
 
     @Column(name = "INSTALLED_FG")

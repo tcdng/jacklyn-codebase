@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
 <module name="notification" description="$m{notification.module}">
 	<audits>
 		<audit name="not-markoutwardunsent" description="$m{notification.auditsettings.message.markunsent}"
@@ -13,13 +16,13 @@
 			description="$m{notification.menu.main}">
 			<menuitem name="not-managenotificationtemplate" caption="$m{notification.notificationtemplate.menu.title}"
 				pageCaption="$m{notification.notificationtemplate.manage}" description="$m{notification.menuitem.notificationtemplate}"
-				path="/notification/notificationtemplate/openPage" remotePath="/notification/notificationtemplate/getRemoteDoc" />
+				path="/notification/notificationtemplate/openPage" />
 			<menuitem name="not-managenotificationchannel" caption="$m{notification.notificationchannel.menu.title}"
 				pageCaption="$m{notification.notificationchannel.manage}" description="$m{notification.menuitem.notificationchannel}"
-				path="/notification/notificationchannel/openPage" remotePath="/notification/notificationchannel/getRemoteDoc" />
+				path="/notification/notificationchannel/openPage" />
 			<menuitem name="not-managemessage" caption="$m{notification.notification.menu.title}"
 				pageCaption="$m{notification.notification.manage}" description="$m{notification.menuitem.message}"
-				path="/notification/notification/openPage" remotePath="/notification/notification/getRemoteDoc" />
+				path="/notification/notification/openPage" />
 		</menu>
 	</menus>
 	<privileges>
@@ -39,16 +42,16 @@
 		</privilege-group>
 	</privileges>
 	<sys-parameters>
-		<sys-parameter name="NOT-0001" defaultValue="false"
+		<sys-parameter name="NOT-0001" defaultVal="false"
 			description="$m{notification.sysparam.notificationenabled}" editor="!ui-select list:booleanlist"
 			type="boolean" control="true" editable="false" />
-		<sys-parameter name="NOT-0002" defaultValue="15"
+		<sys-parameter name="NOT-0002" defaultVal="15"
 			description="$m{notification.sysparam.notificationmaximumtries}" editor="!ui-integer precision:2"
 			type="number" />
-		<sys-parameter name="NOT-0003" defaultValue="1"
+		<sys-parameter name="NOT-0003" defaultVal="1"
 			description="$m{notification.sysparam.notificationretryminutes}" editor="!ui-integer precision:2"
 			type="number" />
-		<sys-parameter name="NOT-0004" defaultValue="80"
+		<sys-parameter name="NOT-0004" defaultVal="80"
 			description="$m{notification.sysparam.notificationmaxbatchsize}" editor="!ui-integer precision:2"
 			type="number" />
 	</sys-parameters>

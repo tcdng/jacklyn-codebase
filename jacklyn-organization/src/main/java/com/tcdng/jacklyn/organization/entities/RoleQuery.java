@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.organization.entities;
 import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseVersionedStatusEntityQuery;
-import com.tcdng.unify.core.operation.OrBuilder;
+import com.tcdng.unify.core.criterion.OrBuilder;
 
 /**
  * Query class for roles.
@@ -33,36 +33,42 @@ public class RoleQuery extends BaseVersionedStatusEntityQuery<Role> {
     }
 
     @Override
-    public RoleQuery order(String field) {
-        return (RoleQuery) super.order(field);
+    public RoleQuery addOrder(String field) {
+        return (RoleQuery) super.addOrder(field);
     }
 
     @Override
-    public RoleQuery select(String field) {
-        return (RoleQuery) super.select(field);
+    public RoleQuery addSelect(String field) {
+        return (RoleQuery) super.addSelect(field);
     }
 
     public RoleQuery departmentId(Long departmentId) {
-        return (RoleQuery) equals("departmentId", departmentId);
+        return (RoleQuery) addEquals("departmentId", departmentId);
     }
 
     public RoleQuery name(String name) {
-        return (RoleQuery) equals("name", name);
+        return (RoleQuery) addEquals("name", name);
     }
 
     public RoleQuery nameLike(String name) {
-        return (RoleQuery) like("name", name);
+        return (RoleQuery) addLike("name", name);
+    }
+
+    public RoleQuery description(String description) {
+        return (RoleQuery) addEquals("description", description);
     }
 
     public RoleQuery descriptionLike(String description) {
-        return (RoleQuery) like("description", description);
+        return (RoleQuery) addLike("description", description);
     }
 
     public RoleQuery activeBefore(Date activeBefore) {
-        return (RoleQuery) add(new OrBuilder().lessEqual("activeBefore", activeBefore).isNull("activeBefore"));
+        return (RoleQuery) addRestriction(
+                new OrBuilder().lessEqual("activeBefore", activeBefore).isNull("activeBefore").build());
     }
 
     public RoleQuery activeAfter(Date activeAfter) {
-        return (RoleQuery) add(new OrBuilder().greaterEqual("activeAfter", activeAfter).isNull("activeAfter"));
+        return (RoleQuery) addRestriction(
+                new OrBuilder().greaterEqual("activeAfter", activeAfter).isNull("activeAfter").build());
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,6 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,39 +29,17 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
 @XmlRootElement(name = "template")
 public class WfTemplateConfig extends BaseConfig {
 
-    private String document;
-
-    private String version;
-
-    private WfMessagesConfig wfMessagesConfig;
-
+    private WfTemplateDocsConfig wfTemplateDocsConfig;
+    
     private WfStepsConfig wfStepsConfig;
 
-    public String getDocument() {
-        return document;
+    public WfTemplateDocsConfig getWfTemplateDocsConfig() {
+        return wfTemplateDocsConfig;
     }
 
-    @XmlAttribute(name = "document", required = true)
-    public void setDocument(String document) {
-        this.document = document;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    @XmlAttribute(name = "version", required = true)
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public WfMessagesConfig getWfMessagesConfig() {
-        return wfMessagesConfig;
-    }
-
-    @XmlElement(name = "messages")
-    public void setWfMessagesConfig(WfMessagesConfig wfMessagesConfig) {
-        this.wfMessagesConfig = wfMessagesConfig;
+    @XmlElement(name = "documents", required = true)
+    public void setWfTemplateDocsConfig(WfTemplateDocsConfig wfTemplateDocsConfig) {
+        this.wfTemplateDocsConfig = wfTemplateDocsConfig;
     }
 
     public WfStepsConfig getWfStepsConfig() {

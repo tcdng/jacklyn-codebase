@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,15 +32,23 @@ public class WfFieldConfig extends BaseConfig {
 
     private DataType dataType;
 
-    private int repeat;
-
-    public WfFieldConfig(DataType dataType, Boolean multiple) {
+    private boolean list;
+    
+    public WfFieldConfig(DataType dataType) {
         this.dataType = dataType;
-        this.repeat = -1;
     }
 
     public WfFieldConfig() {
-        this.repeat = -1;
+
+    }
+
+    public boolean isList() {
+        return list;
+    }
+
+    @XmlAttribute(name = "list")
+    public void setList(boolean list) {
+        this.list = list;
     }
 
     public DataType getDataType() {
@@ -51,14 +59,6 @@ public class WfFieldConfig extends BaseConfig {
     @XmlAttribute(name = "type", required = true)
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
-    }
-
-    public int getRepeat() {
-        return repeat;
-    }
-
-    public void setRepeat(int repeat) {
-        this.repeat = repeat;
     }
 
 }

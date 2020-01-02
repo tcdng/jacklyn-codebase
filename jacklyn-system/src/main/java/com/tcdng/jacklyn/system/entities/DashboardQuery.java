@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,24 +30,24 @@ public class DashboardQuery extends BaseVersionedTimestampedStatusEntityQuery<Da
     }
 
     @Override
-    public DashboardQuery order(String field) {
-        return (DashboardQuery) super.order(field);
+    public DashboardQuery addOrder(String field) {
+        return (DashboardQuery) super.addOrder(field);
     }
 
     @Override
-    public DashboardQuery select(String field) {
-        return (DashboardQuery) super.select(field);
+    public DashboardQuery addSelect(String field) {
+        return (DashboardQuery) super.addSelect(field);
     }
 
     public DashboardQuery name(String name) {
-        return (DashboardQuery) equals("name", name);
+        return (DashboardQuery) addEquals("name", name);
     }
 
     public DashboardQuery nameLike(String name) {
-        return (DashboardQuery) like("name", name);
+        return (DashboardQuery) addLike("name", name);
     }
 
     public DashboardQuery descriptionLike(String description) {
-        return (DashboardQuery) like("description", description);
+        return (DashboardQuery) addLike("description", description);
     }
 }

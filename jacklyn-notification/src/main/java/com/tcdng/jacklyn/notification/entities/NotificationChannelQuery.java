@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,19 +32,19 @@ public class NotificationChannelQuery extends BaseVersionedStatusEntityQuery<Not
     }
 
     public NotificationChannelQuery notificationType(NotificationType notificationType) {
-        return (NotificationChannelQuery) equals("notificationType", notificationType);
+        return (NotificationChannelQuery) addEquals("notificationType", notificationType);
     }
 
     public NotificationChannelQuery name(String name) {
-        return (NotificationChannelQuery) equals("name", name);
+        return (NotificationChannelQuery) addEquals("name", name);
     }
 
     public NotificationChannelQuery nameLike(String name) {
-        return (NotificationChannelQuery) like("name", name);
+        return (NotificationChannelQuery) addLike("name", name);
     }
 
     public NotificationChannelQuery descriptionLike(String description) {
-        return (NotificationChannelQuery) like("description", description);
+        return (NotificationChannelQuery) addLike("description", description);
     }
 
 }

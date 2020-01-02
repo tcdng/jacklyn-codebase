@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -41,8 +41,25 @@ public enum WorkflowParticipantType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return NONE.code;
+    }
+
     public boolean isParticipant() {
         return !NONE.equals(this);
+    }
+
+    public boolean isSupervisor() {
+        return SUPERVISOR.equals(this);
+    }
+
+    public boolean isPersonnel() {
+        return PERSONNEL.equals(this);
+    }
+
+    public boolean isAllParticipants() {
+        return ALL.equals(this);
     }
     
     public static WorkflowParticipantType fromCode(String code) {

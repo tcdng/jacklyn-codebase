@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,22 +30,22 @@ public class NotificationTemplateQuery extends BaseVersionedStatusEntityQuery<No
     }
 
     public NotificationTemplateQuery moduleId(Long moduleId) {
-        return (NotificationTemplateQuery) equals("moduleId", moduleId);
+        return (NotificationTemplateQuery) addEquals("moduleId", moduleId);
     }
 
     public NotificationTemplateQuery moduleName(String moduleName) {
-        return (NotificationTemplateQuery) equals("moduleName", moduleName);
+        return (NotificationTemplateQuery) addEquals("moduleName", moduleName);
     }
 
     public NotificationTemplateQuery name(String name) {
-        return (NotificationTemplateQuery) equals("name", name);
+        return (NotificationTemplateQuery) addEquals("name", name);
     }
 
     public NotificationTemplateQuery nameLike(String name) {
-        return (NotificationTemplateQuery) like("name", name);
+        return (NotificationTemplateQuery) addLike("name", name);
     }
 
     public NotificationTemplateQuery descriptionLike(String description) {
-        return (NotificationTemplateQuery) like("description", description);
+        return (NotificationTemplateQuery) addLike("description", description);
     }
 }

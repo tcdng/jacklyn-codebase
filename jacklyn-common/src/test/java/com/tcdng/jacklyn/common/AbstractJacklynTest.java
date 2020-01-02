@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.common;
 
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
+import com.tcdng.jacklyn.common.constants.JacklynContainerPropertyConstants;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.web.AbstractUnifyWebTest;
 
@@ -34,6 +35,8 @@ public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_BOOT, CommonModuleNameConstants.JACKLYNBOOTSERVICE);
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_MESSAGES_BASE,
                 new String[] { "com.tcdng.unify.core.resources.test" });
+        addContainerSetting(JacklynContainerPropertyConstants.JACKLYN_SYSTEM_DEFAULT_EMAIL, "info@tcdng.com");
+        addContainerSetting(JacklynContainerPropertyConstants.JACKLYN_ADMINISTRATOR_DEFAULT_EMAIL, "info@tcdng.com");
     }
 
     protected void swapApplicationSystemAnonymousUserTokens() throws Exception {

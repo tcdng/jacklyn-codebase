@@ -1,26 +1,43 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+<!--
+  Copyright 2018-2020 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!-- Jacklyn configuration for workflow module -->
 <module name="workflow" description="$m{workflow.module}">
 	<menus>
 		<menu name="wf-mainworkflow" caption="$m{workflow.menu.title}"
 			description="$m{workflow.menu.main}">
 			<menuitem name="wf-wfcategory-manage" caption="$m{workflow.wfcategory.menu.title}"
 				pageCaption="$m{workflow.wfcategory.manage}"
-				description="$m{workflow.wfcategory.menuitem}" path="/workflow/wfcategory/openPage"
-				remotePath="/workflow/wfcategory/getRemoteDoc" />
+				description="$m{workflow.wfcategory.menuitem}" path="/workflow/wfcategory/openPage" />
 			<menuitem name="wf-publish-manage" caption="$m{workflow.wfcategory.publish.menu.title}"
 				pageCaption="$m{workflow.wfcategory.publish.manage}" description="$m{workflow.wfcategory.publish.menuitem}"
-				path="/workflow/wfpublishcategory/openPage" remotePath="/workflow/wfpublishcategory/getRemoteDoc" />
+				path="/workflow/wfpublishcategory/openPage" />
 			<menuitem name="wf-manual-item" caption="$m{workflow.wfcategory.manualinit.menu.title}"
 				pageCaption="$m{workflow.wfcategory.manualinit.manage}" description="$m{workflow.wfcategory.manualinit.menuitem}"
-				path="/workflow/manualworkiteminitiation/openPage" remotePath="/workflow/manualworkiteminitiation/getRemoteDoc" />
+				path="/workflow/manualworkiteminitiation/openPage" />
 			<menuitem name="wf-wfdoc-manage" caption="$m{workflow.wfdoc.menu.title}"
 				pageCaption="$m{workflow.wfdoc.manage}"
-				description="$m{workflow.wfdoc.menuitem}" path="/workflow/wfdoc/openPage"
-				remotePath="/workflow/wfdoc/getRemoteDoc" />
+				description="$m{workflow.wfdoc.menuitem}" path="/workflow/wfdoc/openPage" />
 			<menuitem name="wf-wftemplate-manage" caption="$m{workflow.wftemplate.menu.title}"
 				pageCaption="$m{workflow.wftemplate.manage}"
-				description="$m{workflow.wftemplate.menuitem}" path="/workflow/wftemplate/openPage"
-				remotePath="/workflow/wftemplate/getRemoteDoc" />
+				description="$m{workflow.wftemplate.menuitem}" path="/workflow/wftemplate/openPage" />
 			<menuitem name="wf-userwfitems-manage" caption="$m{workflow.userworkflowitems.menu.title}"
 				pageCaption="$m{workflow.userworkflowitems.manage}"
 				description="$m{workflow.userworkflowitems.menuitem}" path="/workflow/userworkflowitems/openPage"/>
@@ -43,4 +60,15 @@
 				description="$m{workflow.privilege.wftemplate.delete}" />
 		</privilege-group>
 	</privileges>
+    <sys-parameters>
+        <sys-parameter name="WFL-0001" defaultVal=""
+            description="$m{workflow.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name"
+            type="string" />
+        <sys-parameter name="WFL-0002" defaultVal=""
+            description="$m{workflow.sysparam.smsnotificationchannel}" editor="!ui-select list:smsnotificationchannellist listKey:name"
+            type="string" />
+        <sys-parameter name="WFL-0003" defaultVal="defWfSysNotifChannel"
+            description="$m{workflow.sysparam.systemnotificationchannel}" editor="!ui-select list:systemnotificationchannellist listKey:name"
+            type="string" />
+    </sys-parameters>
 </module>

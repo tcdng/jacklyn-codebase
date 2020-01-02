@@ -1,12 +1,12 @@
 // UPL template for managing file inbox
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 
 !ui-page caption:$m{file.fileinbox.manage}
     searchByList:$c{searchCreateDt searchFileTransferConfigId searchReadStatus searchStatus}
     searchClearList:$c{searchFileTransferConfigId searchReadStatus searchStatus}
-    moreSearchActionComponentList:$c{markReadBtn markUnreadBtn}
+    moreTableActionComponentList:$c{markReadBtn markUnreadBtn}
     tableColumnList:$c{filename fileLength downloadAttempts readStatusDesc statusDesc}
     tableMultiSelect:true tableMultiSelDependentList:$c{markReadBtn markUnreadBtn}
     formSection:$d{!ui-section caption:$m{file.fileinbox.section.basicdetails} components:$c{frmFileTransferConfig frmFilename frmFileLength frmDownloadAttempts frmDownloadedOn frmReadStatus frmFileStatus}}

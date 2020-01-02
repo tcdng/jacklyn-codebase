@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,8 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
+import com.tcdng.unify.core.data.Document;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow record action definition.
@@ -26,24 +28,33 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowRecordActionType;
  */
 public class WfRecordActionDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 6228193786297652259L;
+    private String docName;
 
     private WorkflowRecordActionType actionType;
 
-    private WfDocBeanMappingDef beanMapping;
+    private Class<? extends Document> beanClass;
 
-    public WfRecordActionDef(String name, String description, WorkflowRecordActionType actionType,
-            WfDocBeanMappingDef beanMapping) {
+    public WfRecordActionDef(String name, String description, String docName, WorkflowRecordActionType actionType,
+            Class<? extends Document> beanClass) {
         super(name, description);
+        this.docName = docName;
         this.actionType = actionType;
-        this.beanMapping = beanMapping;
+        this.beanClass = beanClass;
+    }
+
+    public String getDocName() {
+        return docName;
     }
 
     public WorkflowRecordActionType getActionType() {
         return actionType;
     }
+    
+    public Class<? extends Document> getBeanClass() {
+        return beanClass;
+    }
 
-    public WfDocBeanMappingDef getBeanMapping() {
-        return beanMapping;
+    public boolean isDoc() {
+        return StringUtils.isNotBlank(docName);
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -37,15 +37,12 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Template", reportable = true,
         auditable = true)
-@Table(name = "WFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
+@Table(name = "JKWFTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "wfCategoryId", "name" }),
         @UniqueConstraint({ "wfCategoryId", "description" }) })
 public class WfTemplate extends BaseEntity {
 
     @ForeignKey(WfCategory.class)
     private Long wfCategoryId;
-
-    @Column(name = "DOCUMENT_NM", length = 32)
-    private String wfDocName;
 
     @Column(name = "TEMPLATE_NM", length = 32)
     private String name;
@@ -75,8 +72,8 @@ public class WfTemplate extends BaseEntity {
     private Date wfCategoryUpdateDt;
 
     @ChildList
-    private List<WfMessage> messageList;
-
+    private List<WfTemplateDoc> templateDocList;
+    
     @ChildList
     private List<WfStep> stepList;
 
@@ -95,14 +92,6 @@ public class WfTemplate extends BaseEntity {
 
     public void setWfCategoryId(Long wfCategoryId) {
         this.wfCategoryId = wfCategoryId;
-    }
-
-    public String getWfDocName() {
-        return wfDocName;
-    }
-
-    public void setWfDocName(String wfDocName) {
-        this.wfDocName = wfDocName;
     }
 
     public String getName() {
@@ -169,12 +158,12 @@ public class WfTemplate extends BaseEntity {
         this.wfCategoryUpdateDt = wfCategoryUpdateDt;
     }
 
-    public List<WfMessage> getMessageList() {
-        return messageList;
+    public List<WfTemplateDoc> getTemplateDocList() {
+        return templateDocList;
     }
 
-    public void setMessageList(List<WfMessage> messageList) {
-        this.messageList = messageList;
+    public void setTemplateDocList(List<WfTemplateDoc> templateDocList) {
+        this.templateDocList = templateDocList;
     }
 
     public List<WfStep> getStepList() {

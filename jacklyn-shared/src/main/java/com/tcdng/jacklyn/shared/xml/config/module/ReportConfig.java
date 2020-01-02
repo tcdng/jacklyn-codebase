@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -36,11 +36,21 @@ public class ReportConfig extends BaseConfig {
 
     private String template;
 
-    private boolean dynamic;
+    private String layout;
 
-    private boolean managed;
+    private ColumnsConfig columns;
 
     private ParametersConfig parameters;
+
+    private FilterConfig filter;
+
+    private boolean invertGroupColors;
+
+    private boolean landscape;
+
+    private boolean underlineRows;
+
+    private boolean shadeOddRows;
 
     public String getTitle() {
         return title;
@@ -69,6 +79,15 @@ public class ReportConfig extends BaseConfig {
         this.reportable = reportable;
     }
 
+    public ColumnsConfig getColumns() {
+        return columns;
+    }
+
+    @XmlElement
+    public void setColumns(ColumnsConfig columns) {
+        this.columns = columns;
+    }
+
     public ParametersConfig getParameters() {
         return parameters;
     }
@@ -76,6 +95,15 @@ public class ReportConfig extends BaseConfig {
     @XmlElement
     public void setParameters(ParametersConfig parameters) {
         this.parameters = parameters;
+    }
+
+    public FilterConfig getFilter() {
+        return filter;
+    }
+
+    @XmlElement(name = "filter")
+    public void setFilter(FilterConfig filter) {
+        this.filter = filter;
     }
 
     public String getTemplate() {
@@ -87,20 +115,48 @@ public class ReportConfig extends BaseConfig {
         this.template = template;
     }
 
-    public boolean isDynamic() {
-        return dynamic;
+    public String getLayout() {
+        return layout;
     }
 
     @XmlAttribute
-    public void setDynamic(boolean dynamic) {
-        this.dynamic = dynamic;
+    public void setLayout(String layout) {
+        this.layout = layout;
     }
 
-    public boolean isManaged() {
-        return managed;
+    public boolean isInvertGroupColors() {
+        return invertGroupColors;
     }
 
-    public void setManaged(boolean managed) {
-        this.managed = managed;
+    @XmlAttribute
+    public void setInvertGroupColors(boolean invertGroupColors) {
+        this.invertGroupColors = invertGroupColors;
+    }
+
+    public boolean isLandscape() {
+        return landscape;
+    }
+
+    @XmlAttribute
+    public void setLandscape(boolean landscape) {
+        this.landscape = landscape;
+    }
+
+    public boolean isUnderlineRows() {
+        return underlineRows;
+    }
+
+    @XmlAttribute
+    public void setUnderlineRows(boolean underlineRows) {
+        this.underlineRows = underlineRows;
+    }
+
+    public boolean isShadeOddRows() {
+        return shadeOddRows;
+    }
+
+    @XmlAttribute
+    public void setShadeOddRows(boolean shadeOddRows) {
+        this.shadeOddRows = shadeOddRows;
     }
 }

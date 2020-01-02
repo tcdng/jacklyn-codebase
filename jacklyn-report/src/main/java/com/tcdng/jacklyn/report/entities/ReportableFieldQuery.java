@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,22 +32,22 @@ public class ReportableFieldQuery extends BaseInstallEntityQuery<ReportableField
     }
 
     public ReportableFieldQuery reportableId(Long reportableId) {
-        return (ReportableFieldQuery) equals("reportableId", reportableId);
+        return (ReportableFieldQuery) addEquals("reportableId", reportableId);
     }
 
     public ReportableFieldQuery parameterOnly(boolean parameterOnly) {
-        return (ReportableFieldQuery) equals("parameterOnly", parameterOnly);
+        return (ReportableFieldQuery) addEquals("parameterOnly", parameterOnly);
     }
 
     public ReportableFieldQuery name(String name) {
-        return (ReportableFieldQuery) equals("name", name);
+        return (ReportableFieldQuery) addEquals("name", name);
     }
 
     public ReportableFieldQuery nameIn(Collection<String> names) {
-        return (ReportableFieldQuery) amongst("name", names);
+        return (ReportableFieldQuery) addAmongst("name", names);
     }
 
     public ReportableFieldQuery nameNotIn(Collection<String> names) {
-        return (ReportableFieldQuery) notAmongst("name", names);
+        return (ReportableFieldQuery) addNotAmongst("name", names);
     }
 }

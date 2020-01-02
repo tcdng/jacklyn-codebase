@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @version 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Type")
-@Table(name = "AUDITTYPE", uniqueConstraints = { @UniqueConstraint({ "recordName" }) })
+@Table(name = "JKAUDITTYPE", uniqueConstraints = { @UniqueConstraint({ "recordName" }) })
 public class AuditType extends BaseInstallEntity {
 
     @Column(name = "RECORD_NM", length = 128)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -58,4 +58,10 @@ public interface SystemModuleErrorConstants {
 
     /** Dashboard with name {0} is unknown*/
     String DASHBOARD_NAME_UNKNOWN = "SYSTEM_000A";
+
+    /** Scheduled task with ID {0} is unknown*/
+    String SCHEDULED_TASK_ID_UNKNOWN = "SYSTEM_000B";
+
+    /** Name attribute is required for tooling annotation of entity {0}.*/
+    String TOOLING_ENTITY_NAME_REQUIRED = "SYSTEM_000C";
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,26 +32,22 @@ public class ReportableDefinitionQuery extends BaseInstallEntityQuery<Reportable
     }
 
     public ReportableDefinitionQuery name(String name) {
-        return (ReportableDefinitionQuery) equals("name", name);
+        return (ReportableDefinitionQuery) addEquals("name", name);
     }
 
     public ReportableDefinitionQuery recordName(String recordName) {
-        return (ReportableDefinitionQuery) equals("recordName", recordName);
+        return (ReportableDefinitionQuery) addEquals("recordName", recordName);
     }
 
     public ReportableDefinitionQuery moduleId(Long moduleId) {
-        return (ReportableDefinitionQuery) equals("moduleId", moduleId);
+        return (ReportableDefinitionQuery) addEquals("moduleId", moduleId);
     }
 
     public ReportableDefinitionQuery moduleName(String moduleName) {
-        return (ReportableDefinitionQuery) equals("moduleName", moduleName);
+        return (ReportableDefinitionQuery) addEquals("moduleName", moduleName);
     }
 
     public ReportableDefinitionQuery moduleActivityIdIn(Collection<Long> moduleActivityId) {
-        return (ReportableDefinitionQuery) amongst("moduleActivityId", moduleActivityId);
-    }
-
-    public ReportableDefinitionQuery dynamic(boolean dynamic) {
-        return (ReportableDefinitionQuery) equals("dynamic", dynamic);
+        return (ReportableDefinitionQuery) addAmongst("moduleActivityId", moduleActivityId);
     }
 }

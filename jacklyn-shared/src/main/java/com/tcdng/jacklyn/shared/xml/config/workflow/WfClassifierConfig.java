@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,8 +19,11 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.tcdng.jacklyn.shared.xml.adapter.BinaryLogicTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+import com.tcdng.unify.core.constant.BinaryLogicType;
 
 /**
  * Workflow document classifier configuration.
@@ -32,8 +35,14 @@ public class WfClassifierConfig extends BaseConfig {
 
     private String logic;
 
+    private BinaryLogicType filterLogic;
+    
     private List<WfClassifierFilterConfig> wfClassifierFilterConfigList;
 
+    public WfClassifierConfig() {
+        filterLogic = BinaryLogicType.AND;
+    }
+    
     public String getLogic() {
         return logic;
     }
@@ -41,6 +50,18 @@ public class WfClassifierConfig extends BaseConfig {
     @XmlAttribute
     public void setLogic(String logic) {
         this.logic = logic;
+    }
+
+    public BinaryLogicType getFilterLogic() {
+        return filterLogic;
+    }
+
+    @XmlJavaTypeAdapter(BinaryLogicTypeXmlAdapter.class)
+    @XmlAttribute(name="filter-logic")
+    public void setFilterLogic(BinaryLogicType filterLogic) {
+        if (filterLogic != null) {
+            this.filterLogic = filterLogic;
+        }
     }
 
     public List<WfClassifierFilterConfig> getWfClassifierFilterConfigList() {

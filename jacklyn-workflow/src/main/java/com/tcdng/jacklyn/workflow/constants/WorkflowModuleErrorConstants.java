@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -124,4 +124,39 @@ public interface WorkflowModuleErrorConstants {
      * Workflow category with name {0} and version {1} is unknown.
      */
     String WORKFLOW_CATEGORY_NAME_VERSION_UNKNOWN = "WORKFLOW_0014";
+
+    /**
+     * Workflow tagged mapping with tag name {0} is unknown.
+     */
+    String WORKFLOW_TAGGEDMAPPING_WITH_TAGNAME_UNKNOWN = "WORKFLOW_0015";
+
+    /**
+     * Workflow template {0} has no manual initiation step for document {1}.
+     */
+    String WORKFLOW_TEMPLATE_NO_DOC_MANUAL_INIT = "WORKFLOW_0016";
+
+    /**
+     * Workflow {0} with document {1} is unknown.
+     */
+    String WORKFLOW_TEMPLATE_DOCUMENT_WITH_NAME_UNKNOWN = "WORKFLOW_0017";
+
+    /**
+     * Workflow merge step {0} does not resolve to a route.
+     */
+    String WORKFLOW_MERGE_DOES_NOT_RESOLVE_TO_ROUTE = "WORKFLOW_0018";
+
+    /**
+     * Workflow step {0} branch {1} is unknown.
+     */
+    String WORKFLOW_STEP_BRANCH_WITH_NAME_UNKNOWN = "WORKFLOW_0019";
+
+    /**
+     * Workflow queue manager transition queue index {0} out of bounds.
+     */
+    String WORKFLOW_QUEUEMANAGER_TRANSITION_QUEUE_INDEX_OUT_BOUNDS = "WORKFLOW_001A";
+    
+    /**
+     * Workflow queue manager submission ID {0} is already pending.
+     */
+    String WORKFLOW_QUEUEMANAGER_SUBMISSION_ID_PENDING = "WORKFLOW_001B";
 }

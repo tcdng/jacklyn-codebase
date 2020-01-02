@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,7 +26,11 @@ public interface WorkflowRemoteCallNameConstants {
 
     String PUBLISH_WORKFLOW_CATEGORY = "wfPublishWfCategory";
 
+    String GET_TOOLING_ITEMCLASSIFIER_LOGIC_LIST = "wfGetToolingItemClassifierLogicList";
+    
     String GET_TOOLING_ENRICHMENT_LOGIC_LIST = "wfGetToolingEnrichmentLogicList";
 
     String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
+
+    String GET_TOOLING_WFDOC_UPLGENERATOR_LIST = "wfGetToolingWfDocUplGeneratorList";
 }

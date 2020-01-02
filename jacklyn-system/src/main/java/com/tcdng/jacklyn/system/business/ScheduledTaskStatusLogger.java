@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,7 +24,6 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.constant.LocaleType;
 import com.tcdng.unify.core.task.AbstractTaskStatusLogger;
 import com.tcdng.unify.core.task.TaskMonitor;
-import com.tcdng.unify.core.task.TaskStatus;
 
 /**
  * Logs the status of a scheduled task.
@@ -40,38 +39,30 @@ public class ScheduledTaskStatusLogger extends AbstractTaskStatusLogger {
 
     @Override
     public void logTaskStatus(TaskMonitor taskMonitor, Map<String, Object> parameters) {
-        createScheduledTaskHistory(taskMonitor.getCurrentTaskStatus(), parameters, taskMonitor.getExceptions());
-
         if (taskMonitor.isDone()) {
-            parameters.remove(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
-        }
-    }
-
-    @Override
-    public void logCriticalFailure(String taskName, Map<String, Object> parameters, Exception exception) {
-        createScheduledTaskHistory(TaskStatus.CRITICAL, parameters, exception);
-    }
-
-    private void createScheduledTaskHistory(TaskStatus taskStatus, Map<String, Object> parameters,
-            Exception... exceptions) {
-        try {
-            String errorMessages = null;
-            if (exceptions != null && exceptions.length > 0) {
-                StringBuilder sb = new StringBuilder();
-                for (Exception exception : exceptions) {
-                    sb.append(getExceptionMessage(LocaleType.APPLICATION, exception));
+            Long scheduledTaskId = (Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
+            Long scheduledTaskHistId = (Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASKHIST_ID);
+            String errorMsgs = null;
+            try {
+                Exception[] exceptions = taskMonitor.getExceptions();
+                if (exceptions != null && exceptions.length > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Exception exception : exceptions) {
+                        sb.append(getExceptionMessage(LocaleType.APPLICATION, exception));
+                        sb.append(getLineSeparator());
+                    }
+                    errorMsgs = sb.toString();
                 }
-                errorMessages = sb.toString();
+            } catch (UnifyException e) {
+                logError(e);
             }
 
-            TaskStatus oldTaskStatus = (TaskStatus) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID);
-            if (!taskStatus.equals(oldTaskStatus)) {
-                systemService.createScheduledTaskHistory(
-                        (Long) parameters.get(SystemSchedTaskConstants.SCHEDULEDTASK_ID), taskStatus, errorMessages);
-                parameters.put(SystemSchedTaskConstants.SCHEDULEDTASK_ID, taskStatus);
+            try {
+                systemService.releaseScheduledTask(scheduledTaskId, scheduledTaskHistId, taskMonitor.getTaskStatus(0),
+                        errorMsgs);
+            } catch (UnifyException e) {
+                logError(e);
             }
-        } catch (UnifyException e) {
-            logError(e);
         }
     }
 }

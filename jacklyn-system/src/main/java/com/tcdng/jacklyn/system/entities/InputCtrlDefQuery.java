@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,28 +30,28 @@ public class InputCtrlDefQuery extends BaseVersionedStatusEntityQuery<InputCtrlD
     }
 
     public InputCtrlDefQuery moduleId(Long moduleId) {
-        return (InputCtrlDefQuery) equals("moduleId", moduleId);
+        return (InputCtrlDefQuery) addEquals("moduleId", moduleId);
     }
 
     public InputCtrlDefQuery moduleName(String moduleName) {
-        return (InputCtrlDefQuery) equals("moduleName", moduleName);
+        return (InputCtrlDefQuery) addEquals("moduleName", moduleName);
     }
 
     @Override
-    public InputCtrlDefQuery order(String field) {
-        return (InputCtrlDefQuery) super.order(field);
+    public InputCtrlDefQuery addOrder(String field) {
+        return (InputCtrlDefQuery) super.addOrder(field);
     }
 
     @Override
-    public InputCtrlDefQuery select(String field) {
-        return (InputCtrlDefQuery) super.select(field);
+    public InputCtrlDefQuery addSelect(String field) {
+        return (InputCtrlDefQuery) super.addSelect(field);
     }
 
     public InputCtrlDefQuery name(String name) {
-        return (InputCtrlDefQuery) equals("name", name);
+        return (InputCtrlDefQuery) addEquals("name", name);
     }
 
     public InputCtrlDefQuery descriptionLike(String description) {
-        return (InputCtrlDefQuery) like("description", description);
+        return (InputCtrlDefQuery) addLike("description", description);
     }
 }

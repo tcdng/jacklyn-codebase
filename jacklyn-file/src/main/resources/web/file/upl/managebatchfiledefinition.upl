@@ -1,5 +1,5 @@
 // UPL template for managing file transfer configuration
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{file.batchfiledefinition.manage}
@@ -8,6 +8,7 @@
     tableColumnList:$c{name description statusDesc}
     formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.basicdetails} components:$c{frmName frmDescription frmSkipFirst frmStatus}}
     formSection:$d{!ui-section caption:$m{file.batchfiledefinition.section.fields} components:$c{frmBatchFileFieldDefPanel}}
+    moreCrudHeaderComponentList:$c{spacer mapBeanBtn}
     addPrivilege:$s{fil-batchfiledefinitionadd} editPrivilege:$s{fil-batchfiledefinitionedit}
     viewPrivilege:$s{fil-batchfiledefinitionview} deletePrivilege:$s{fil-batchfiledefinitiondelete}
     addValidations:$c{frmNameVal frmDescVal}
@@ -32,8 +33,19 @@
 
 !ui-batchfilefielddefcrudpanel:frmBatchFileFieldDefPanel createNext:true
 
+// Map bean popup
+!ui-selectmappedbeanpanel:selectBeanToMapPopup
+    beanTypeBinding:beanType
+    performMappingPath:$n{/performMapBean}
+
+//More action components
+!ui-span:spacer
+!ui-button:mapBeanBtn caption:$m{button.mapbean} styleClass:$e{jk-button}
+    eventHandler:$d{!ui-event event:onclick action:$c{prepareMapBeanAct}}
+
 //Validations
 !ui-uniquevalidation:frmNameVal components:$c{frmName}
 !ui-uniquevalidation:frmDescVal components:$c{frmDescription}
 
 //Actions
+!ui-post:prepareMapBeanAct path:$n{/prepareMapBean} components:$c{frmName frmDescription frmSkipFirst frmStatus}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.workflow.data;
 
 import java.io.Serializable;
 
-import com.tcdng.unify.core.operation.FilterConditionType;
+import com.tcdng.unify.core.criterion.FilterConditionType;
 
 /**
  * Workflow document classifier filter definition.

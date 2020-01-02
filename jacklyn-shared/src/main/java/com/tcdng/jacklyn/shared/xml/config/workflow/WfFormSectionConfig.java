@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -59,7 +59,7 @@ public class WfFormSectionConfig extends BaseConfig {
         return wfFormFieldConfigList;
     }
 
-    @XmlElement(name = "field", required = true)
+    @XmlElement(name = "form-field", required = true)
     public void setWfFormFieldConfigList(List<WfFormFieldConfig> wfFormFieldConfigList) {
         this.wfFormFieldConfigList = wfFormFieldConfigList;
     }

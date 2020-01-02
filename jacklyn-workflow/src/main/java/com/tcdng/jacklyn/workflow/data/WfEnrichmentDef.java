@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import com.tcdng.unify.core.util.StringUtils;
+
 /**
  * Workflow document enrichment definition.
  * 
@@ -24,16 +26,25 @@ package com.tcdng.jacklyn.workflow.data;
  */
 public class WfEnrichmentDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 295716302360623629L;
+    private String docName;
 
     private String logic;
 
-    public WfEnrichmentDef(String name, String description, String logic) {
+    public WfEnrichmentDef(String name, String description, String docName, String logic) {
         super(name, description);
+        this.docName = docName;
         this.logic = logic;
+    }
+
+    public String getDocName() {
+        return docName;
     }
 
     public String getLogic() {
         return logic;
+    }
+    
+    public boolean isDoc() {
+        return StringUtils.isNotBlank(docName);
     }
 }

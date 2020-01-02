@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,12 +17,7 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.tcdng.unify.core.constant.DataType;
-import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
 
 /**
  * Document complex field configuration.
@@ -35,7 +30,7 @@ public class WfComplexFieldConfig extends WfFieldConfig {
     private List<WfFieldConfig> wfFieldConfigList;
 
     public WfComplexFieldConfig() {
-        super(DataType.COMPLEX, Boolean.FALSE);
+        super(null);
     }
 
     public List<WfFieldConfig> getWfFieldConfigList() {
@@ -45,12 +40,5 @@ public class WfComplexFieldConfig extends WfFieldConfig {
     @XmlElement(name = "field", required = true)
     public void setWfFieldConfigList(List<WfFieldConfig> wfFieldConfigList) {
         this.wfFieldConfigList = wfFieldConfigList;
-    }
-
-    @Override
-    @XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
-    @XmlAttribute(name = "type", required = true)
-    public void setDataType(DataType dataType) {
-
     }
 }

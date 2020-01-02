@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,10 +19,10 @@ import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
-import com.tcdng.unify.core.operation.Equal;
-import com.tcdng.unify.core.operation.IsNull;
-import com.tcdng.unify.core.operation.NotEqual;
-import com.tcdng.unify.core.operation.Or;
+import com.tcdng.unify.core.criterion.Equals;
+import com.tcdng.unify.core.criterion.IsNull;
+import com.tcdng.unify.core.criterion.NotEqual;
+import com.tcdng.unify.core.criterion.Or;
 
 /**
  * Workflow item query.
@@ -35,50 +35,57 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     public WfItemQuery() {
         super(WfItem.class);
     }
-
-    public WfItemQuery ownerId(Long ownerId) {
-        return (WfItemQuery) equals("ownerId", ownerId);
+    
+    public WfItemQuery wfItemSplitEventId(Long wfItemSplitEventId) {
+        return (WfItemQuery) addEquals("wfItemSplitEventId", wfItemSplitEventId);
+    }
+    
+    public WfItemQuery submissionId(Long submissionId) {
+        return (WfItemQuery) addEquals("submissionId", submissionId);
     }
 
-    public WfItemQuery globalTemplateName(String globalTemplateName) {
-        return (WfItemQuery) equals("globalTemplateName", globalTemplateName);
+    public WfItemQuery branchCode(String branchCode) {
+        return (WfItemQuery) addEquals("branchCode", branchCode);
     }
 
-    public WfItemQuery wfStepName(String wfStepName) {
-        return (WfItemQuery) equals("wfStepName", wfStepName);
+    public WfItemQuery departmentCode(String departmentCode) {
+        return (WfItemQuery) addEquals("departmentCode", departmentCode);
+    }
+
+    public WfItemQuery stepGlobalName(String stepGlobalName) {
+        return (WfItemQuery) addEquals("stepGlobalName", stepGlobalName);
     }
 
     public WfItemQuery descriptionLike(String description) {
-        return (WfItemQuery) like("description", description);
+        return (WfItemQuery) addLike("description", description);
     }
 
     public WfItemQuery heldBy(String heldBy) {
-        return (WfItemQuery) equals("heldBy", heldBy);
+        return (WfItemQuery) addEquals("heldBy", heldBy);
     }
 
     public WfItemQuery isHeld() {
-        return (WfItemQuery) isNotNull("heldBy");
+        return (WfItemQuery) addIsNotNull("heldBy");
     }
 
     public WfItemQuery isUnheld() {
-        return (WfItemQuery) isNull("heldBy");
+        return (WfItemQuery) addIsNull("heldBy");
     }
 
     public WfItemQuery stepDt(Date stepDt) {
-        return (WfItemQuery) equals("stepDt", stepDt);
+        return (WfItemQuery) addEquals("stepDt", stepDt);
     }
 
     public WfItemQuery isUnheldOrHeldBy(String heldBy) {
-        return (WfItemQuery) add(new Or(new IsNull("heldBy"), new Equal("heldBy", heldBy)));
+        return (WfItemQuery) addRestriction(new Or().add(new IsNull("heldBy")).add(new Equals("heldBy", heldBy)));
     }
 
     public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
-        return (WfItemQuery) add(new Or(new Equal("participantType", WorkflowParticipantType.ALL),
-                new Equal("participantType", participantType)));
+        return (WfItemQuery) addRestriction(new Or().add(new Equals("participantType", WorkflowParticipantType.ALL)).add(
+                new Equals("participantType", participantType)));
     }
 
     public WfItemQuery notForwardedBy(String userId) {
-        Or or = new Or(new NotEqual("forwardedBy", userId), new IsNull("forwardedBy"));
-        return (WfItemQuery) add(or);
+        return (WfItemQuery) addRestriction(new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
     }
 }

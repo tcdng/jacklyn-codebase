@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,7 +33,7 @@ import com.tcdng.unify.core.util.StringUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "APPUSERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
+@Table(name = "JKUSERROLE", uniqueConstraints = { @UniqueConstraint({ "userId", "roleId" }) })
 public class UserRole extends BaseEntity implements Describable {
 
     @ForeignKey(User.class)
@@ -48,8 +48,20 @@ public class UserRole extends BaseEntity implements Describable {
     @ListOnly(key = "userId", property = "fullName")
     private String userName;
 
+    @ListOnly(key = "userId", property = "email")
+    private String userEmail;
+
+    @ListOnly(key = "userId", property = "mobileNo")
+    private String userMobileNo;
+
     @ListOnly(key = "userId", property = "themeId")
     private Long userThemeId;
+
+    @ListOnly(name = "BRANCH_CD", key = "userId", property = "branchCode")
+    private String branchCode;
+
+    @ListOnly(name = "SUPERVISOR_FG", key = "userId", property = "supervisor")
+    private Boolean supervisor;
 
     @ListOnly(key = "roleId", property = "name")
     private String roleName;
@@ -71,6 +83,15 @@ public class UserRole extends BaseEntity implements Describable {
 
     @ListOnly(key = "roleId", property = "themeId")
     private Long roleThemeId;
+
+    @ListOnly(key = "roleId", property = "departmentId")
+    private Long departmentId;
+
+    @ListOnly(key = "roleId", property = "departmentName")
+    private String departmentName;
+
+    @ListOnly(key = "roleId", property = "departmentDesc")
+    private String departmentDesc;
 
     @Override
     public String getDescription() {
@@ -109,6 +130,22 @@ public class UserRole extends BaseEntity implements Describable {
         this.userName = userName;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserMobileNo() {
+        return userMobileNo;
+    }
+
+    public void setUserMobileNo(String userMobileNo) {
+        this.userMobileNo = userMobileNo;
+    }
+
     public String getRoleName() {
         return roleName;
     }
@@ -119,6 +156,22 @@ public class UserRole extends BaseEntity implements Describable {
 
     public void setUserThemeId(Long userThemeId) {
         this.userThemeId = userThemeId;
+    }
+
+    public String getBranchCode() {
+        return branchCode;
+    }
+
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public Boolean getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Boolean supervisor) {
+        this.supervisor = supervisor;
     }
 
     public void setRoleName(String roleName) {
@@ -171,5 +224,29 @@ public class UserRole extends BaseEntity implements Describable {
 
     public void setRoleThemeId(Long roleThemeId) {
         this.roleThemeId = roleThemeId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getDepartmentDesc() {
+        return departmentDesc;
+    }
+
+    public void setDepartmentDesc(String departmentDesc) {
+        this.departmentDesc = departmentDesc;
     }
 }

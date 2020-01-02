@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -39,7 +39,7 @@ import com.tcdng.unify.core.annotation.Table;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Inbox", reportable = true)
 @Policy("notificationinbox-policy")
-@Table("NOTIFICATIONINBOX")
+@Table("JKNOTIFICATIONINBOX")
 public class NotificationInbox extends BaseEntity implements SystemNotification {
 
     @ForeignKey(name = "REC_ST")
@@ -63,7 +63,7 @@ public class NotificationInbox extends BaseEntity implements SystemNotification 
     @Column(name = "USER_ID")
     private String userId;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date createDt;
 
     @ListOnly(key = "status", property = "description")

@@ -1,5 +1,5 @@
 // UPL template for base simple dial portlet panel
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 !ui-simpledialportletpanel styleClass:$s{jk-simpledial}
     components:$c{bodyPanel}
     sdTotalTitle:$m{system.simpledial.portlet.total}
@@ -9,7 +9,7 @@
     components:$c{title basePanel}
 
 !ui-label:title caption:$f{sdTitle} styleClass:$e{sdtitle}
-!ui-panel:basePanel layout:$d{!ui-horizontal style:$s{width:100%;}}
+!ui-panel:basePanel layout:$d{!ui-horizontal style:$s{width:100%;} widths:$l{30% 70%}}
     components:$c{detailsPanel dialImg}
 
 !ui-panel:detailsPanel styleClass:$e{sdfooter} layout:$d{!ui-vertical style:$s{width:100%;}}

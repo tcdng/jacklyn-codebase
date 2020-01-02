@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = SystemModuleNameConstants.SYSTEM_MODULE, title = "Application Menu", reportable = true,
         auditable = true)
-@Table(name = "MENU", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
+@Table(name = "JKMENU", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }) })
 public class ApplicationMenu extends BaseInstallEntity {
 
     @ForeignKey(Module.class)

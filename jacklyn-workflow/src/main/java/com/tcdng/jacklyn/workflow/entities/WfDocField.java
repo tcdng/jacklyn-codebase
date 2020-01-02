@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,14 +30,14 @@ import com.tcdng.unify.core.constant.DataType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFDOCFIELD", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
+@Table(name = "JKWFDOCFIELD", uniqueConstraints = { @UniqueConstraint({ "wfDocId", "name" }),
         @UniqueConstraint({ "wfDocId", "description" }) })
 public class WfDocField extends BaseEntity {
 
     @ForeignKey(WfDoc.class)
     private Long wfDocId;
 
-    @ForeignKey
+    @ForeignKey(nullable = true)
     private DataType dataType;
 
     @Column(name = "PARENT_FIELD_NM", length = 32, nullable = true)
@@ -49,9 +49,9 @@ public class WfDocField extends BaseEntity {
     @Column(name = "FIELD_DESC", length = 64)
     private String description;
 
-    @Column(name = "REPEAT_COUNT")
-    private Integer repeat;
-
+    @Column(name = "LIST_FG")
+    private Boolean list;
+    
     @ListOnly(key = "wfDocId", property = "name")
     private String wfDocName;
 
@@ -102,12 +102,12 @@ public class WfDocField extends BaseEntity {
         this.dataType = dataType;
     }
 
-    public Integer getRepeat() {
-        return repeat;
+    public Boolean getList() {
+        return list;
     }
 
-    public void setRepeat(Integer repeat) {
-        this.repeat = repeat;
+    public void setList(Boolean list) {
+        this.list = list;
     }
 
     public String getWfDocName() {

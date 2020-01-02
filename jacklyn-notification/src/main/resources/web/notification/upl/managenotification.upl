@@ -1,5 +1,5 @@
 // UPL template for managing notifications
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{notification.notification.manage}
@@ -9,7 +9,7 @@
     tableMultiSelect:true tableMultiSelDependentList:$c{markUnsentBtn markSentBtn markAbortBtn}
     formSection:$d{!ui-section caption:$m{notification.notification.section-basicdetails} components:$c{frmNotificationTemplate frmNotificationType frmAttempts frmCreateDt frmDueDt frmSentDt frmStatus}}
     formSection:$d{!ui-section caption:$m{notification.notification.section-sender} components:$c{frmSenderName frmSenderContact}}
-    moreSearchActionComponentList:$c{markUnsentBtn markSentBtn markAbortBtn}
+    moreTableActionComponentList:$c{markUnsentBtn markSentBtn markAbortBtn}
      viewPrivilege:$s{not-notification-view}
 
 //Search
@@ -29,7 +29,7 @@
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:messageTypeDesc caption:$m{notification.notification.notificationtemplate} binding:messageTypeDesc columnStyle:$s{width:160px;} sortable:true
+!ui-label:messageTypeDesc caption:$m{notification.notification.notificationtemplate} binding:notificationTemplateDesc columnStyle:$s{width:160px;} sortable:true
 !ui-label:notificationTypeDesc caption:$m{notification.notification.notificationtype} binding:notificationTypeDesc columnStyle:$s{width:120px;} sortable:true
 !ui-label:senderName caption:$m{notification.notification.sendername} binding:senderName  columnStyle:$s{width:250px;} sortable:true
 !ui-label:senderContact caption:$m{notification.notification.sendercontact} binding:senderContact  columnStyle:$s{width:200px;} sortable:true

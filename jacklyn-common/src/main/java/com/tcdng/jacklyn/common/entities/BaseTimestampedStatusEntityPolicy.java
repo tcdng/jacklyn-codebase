@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -41,13 +41,19 @@ public class BaseTimestampedStatusEntityPolicy extends BaseStatusEntityPolicy {
             baseTimestampedRecord.setCreateDt(now);
         }
 
+        if (baseTimestampedRecord.getCreateBy() == null) {
+            baseTimestampedRecord.setCreateBy(getUserLoginId());
+        }
+
         baseTimestampedRecord.setUpdateDt(now);
+        baseTimestampedRecord.setUpdateBy(getUserLoginId());
         return super.preCreate(record, now);
     }
 
     @Override
     public void preUpdate(Entity record, Date now) throws UnifyException {
         ((BaseTimestampedStatusEntity) record).setUpdateDt(now);
+        ((BaseTimestampedStatusEntity) record).setUpdateBy(getUserLoginId());
         super.preUpdate(record, now);
     }
 }

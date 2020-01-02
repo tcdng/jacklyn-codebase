@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,11 +30,17 @@ public class ReportOptions {
 
     private String reportName;
 
-    private String recordName;
+    private String reportDescription;
 
     private String reportFormat;
 
+    private String reportLayout;
+
     private String reportResourcePath;
+
+    private String recordName;
+
+    private String processor;
 
     private String dataSource;
 
@@ -49,39 +55,48 @@ public class ReportOptions {
     private List<ReportColumnOptions> columnOptionsList;
 
     private List<ReportJoinOptions> joinOptionsList;
-
-    private List<ReportFilterOptions> filterOptionsList;
+    
+    private ReportFilterOptions filterOptions;
 
     private List<?> content;
 
-    private List<Input> userInputList;
+    private List<Input<?>> userInputList;
 
-    private List<Input> systemInputList;
+    private List<Input<?>> systemInputList;
+
+    private int pageWidth;
+
+    private int pageHeight;
 
     private boolean dynamicDataSource;
 
     private boolean printColumnNames;
 
+    private boolean printGroupColumnNames;
+
+    private boolean invertGroupColors;
+
     private boolean shadeOddRows;
 
     private boolean underlineRows;
-
-    private boolean columnarLayout;
 
     private boolean landscape;
 
     private boolean download;
 
+    private boolean userInputOnly;
+    
     public ReportOptions() {
         columnOptionsList = new ArrayList<ReportColumnOptions>();
         joinOptionsList = new ArrayList<ReportJoinOptions>();
-        filterOptionsList = new ArrayList<ReportFilterOptions>();
         printColumnNames = true;
+        printGroupColumnNames = true;
         shadeOddRows = true;
     }
 
     public void reset() {
         printColumnNames = true;
+        printGroupColumnNames = true;
         shadeOddRows = true;
         underlineRows = false;
         landscape = false;
@@ -96,12 +111,12 @@ public class ReportOptions {
         this.reportName = reportName;
     }
 
-    public String getRecordName() {
-        return recordName;
+    public String getReportDescription() {
+        return reportDescription;
     }
 
-    public void setRecordName(String recordName) {
-        this.recordName = recordName;
+    public void setReportDescription(String reportDescription) {
+        this.reportDescription = reportDescription;
     }
 
     public String getTableName() {
@@ -120,6 +135,22 @@ public class ReportOptions {
         this.reportFormat = reportFormat;
     }
 
+    public String getReportLayout() {
+        return reportLayout;
+    }
+
+    public void setReportLayout(String reportLayout) {
+        this.reportLayout = reportLayout;
+    }
+
+    public String getRecordName() {
+        return recordName;
+    }
+
+    public void setRecordName(String recordName) {
+        this.recordName = recordName;
+    }
+
     public String getReportResourcePath() {
         return reportResourcePath;
     }
@@ -134,6 +165,14 @@ public class ReportOptions {
 
     public void setDataSource(String dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
     }
 
     public List<?> getContent() {
@@ -164,44 +203,44 @@ public class ReportOptions {
         return joinOptionsList;
     }
 
-    public void addFilterOptions(ReportFilterOptions reportFilterOptions) {
-        filterOptionsList.add(reportFilterOptions);
+    public ReportFilterOptions getFilterOptions() {
+        return filterOptions;
     }
 
-    public List<ReportFilterOptions> getFilterOptionsList() {
-        return filterOptionsList;
+    public void setFilterOptions(ReportFilterOptions filterOptions) {
+        this.filterOptions = filterOptions;
     }
 
-    public List<Input> getUserInputList() {
+    public List<Input<?>> getUserInputList() {
         return userInputList;
     }
 
-    public void setUserInputList(List<Input> userInputList) {
+    public void setUserInputList(List<Input<?>> userInputList) {
         this.userInputList = userInputList;
     }
 
-    public List<Input> getSystemInputList() {
+    public List<Input<?>> getSystemInputList() {
         return systemInputList;
     }
 
-    public void setSystemInputList(List<Input> systemInputList) {
+    public void setSystemInputList(List<Input<?>> systemInputList) {
         this.systemInputList = systemInputList;
     }
 
-    public boolean isUserInput() {
+    public boolean isWithUserInput() {
         return userInputList != null && !userInputList.isEmpty();
     }
 
-    public boolean isColumnOptions() {
+    public boolean isWithColumnOptions() {
         return columnOptionsList != null && !columnOptionsList.isEmpty();
     }
 
-    public boolean isJoinOptions() {
+    public boolean isWithJoinOptions() {
         return joinOptionsList != null && !joinOptionsList.isEmpty();
     }
 
-    public boolean isFilterOptions() {
-        return filterOptionsList != null && !filterOptionsList.isEmpty();
+    public boolean isWithFilterOptions() {
+        return filterOptions != null;
     }
 
     public String getTitle() {
@@ -228,6 +267,22 @@ public class ReportOptions {
         this.query = query;
     }
 
+    public int getPageWidth() {
+        return pageWidth;
+    }
+
+    public void setPageWidth(int pageWidth) {
+        this.pageWidth = pageWidth;
+    }
+
+    public int getPageHeight() {
+        return pageHeight;
+    }
+
+    public void setPageHeight(int pageHeight) {
+        this.pageHeight = pageHeight;
+    }
+
     public boolean isDynamicDataSource() {
         return dynamicDataSource;
     }
@@ -242,6 +297,22 @@ public class ReportOptions {
 
     public void setPrintColumnNames(boolean printColumnNames) {
         this.printColumnNames = printColumnNames;
+    }
+
+    public boolean isPrintGroupColumnNames() {
+        return printGroupColumnNames;
+    }
+
+    public void setPrintGroupColumnNames(boolean printGroupColumnNames) {
+        this.printGroupColumnNames = printGroupColumnNames;
+    }
+
+    public boolean isInvertGroupColors() {
+        return invertGroupColors;
+    }
+
+    public void setInvertGroupColors(boolean invertGroupColors) {
+        this.invertGroupColors = invertGroupColors;
     }
 
     public boolean isShadeOddRows() {
@@ -260,14 +331,6 @@ public class ReportOptions {
         this.underlineRows = underlineRows;
     }
 
-    public boolean isColumnarLayout() {
-        return columnarLayout;
-    }
-
-    public void setColumnarLayout(boolean columnarLayout) {
-        this.columnarLayout = columnarLayout;
-    }
-
     public boolean isLandscape() {
         return landscape;
     }
@@ -282,5 +345,13 @@ public class ReportOptions {
 
     public void setDownload(boolean download) {
         this.download = download;
+    }
+
+    public boolean isUserInputOnly() {
+        return userInputOnly;
+    }
+
+    public void setUserInputOnly(boolean userInputOnly) {
+        this.userInputOnly = userInputOnly;
     }
 }

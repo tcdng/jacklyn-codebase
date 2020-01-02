@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
+import com.tcdng.jacklyn.shared.system.data.ToolingDocumentListItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingEntityItem;
 import com.tcdng.jacklyn.shared.system.data.ToolingListTypeItem;
-import com.tcdng.jacklyn.shared.system.data.ToolingRecordTypeItem;
+import com.tcdng.jacklyn.shared.system.data.ToolingTransformerTypeItem;
 import com.tcdng.jacklyn.system.data.AuthenticationLargeData;
 import com.tcdng.jacklyn.system.data.DashboardDef;
 import com.tcdng.jacklyn.system.data.DashboardLargeData;
@@ -34,6 +36,10 @@ import com.tcdng.jacklyn.system.entities.Authentication;
 import com.tcdng.jacklyn.system.entities.AuthenticationQuery;
 import com.tcdng.jacklyn.system.entities.Dashboard;
 import com.tcdng.jacklyn.system.entities.DashboardQuery;
+import com.tcdng.jacklyn.system.entities.DataSource;
+import com.tcdng.jacklyn.system.entities.DataSourceDriver;
+import com.tcdng.jacklyn.system.entities.DataSourceDriverQuery;
+import com.tcdng.jacklyn.system.entities.DataSourceQuery;
 import com.tcdng.jacklyn.system.entities.InputCtrlDef;
 import com.tcdng.jacklyn.system.entities.InputCtrlDefQuery;
 import com.tcdng.jacklyn.system.entities.Module;
@@ -44,6 +50,8 @@ import com.tcdng.jacklyn.system.entities.ScheduledTaskHistQuery;
 import com.tcdng.jacklyn.system.entities.ScheduledTaskQuery;
 import com.tcdng.jacklyn.system.entities.ShortcutTile;
 import com.tcdng.jacklyn.system.entities.ShortcutTileQuery;
+import com.tcdng.jacklyn.system.entities.SupportedLocale;
+import com.tcdng.jacklyn.system.entities.SupportedLocaleQuery;
 import com.tcdng.jacklyn.system.entities.SystemAsset;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.jacklyn.system.entities.SystemParameter;
@@ -87,12 +95,15 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
 
     /**
      * Finds a dashboard definition by name.
-     * @param name the name to find with
+     * 
+     * @param name
+     *            the name to find with
      * @return dashboard with corresponding name otherwise null
-     * @throws UnifyException if an error occurs
+     * @throws UnifyException
+     *             if an error occurs
      */
     Dashboard findDashboard(String name) throws UnifyException;
-    
+
     /**
      * Finds dashboards by query.
      * 
@@ -577,6 +588,23 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
             throws UnifyException;
 
     /**
+     * Release a scheduled task.
+     * 
+     * @param scheduledTaskId
+     *            the scheduled task ID
+     * @param scheduledTaskHistId
+     *            the scheduled task history
+     * @param completionTaskStatus
+     *            the task completion status
+     * @param errorMsg
+     *            optional error messages
+     * @throws UnifyException
+     *             if scheduled task history does not exist. if an error occurs
+     */
+    void releaseScheduledTask(Long scheduledTaskId, Long scheduledTaskHistId, TaskStatus completionTaskStatus,
+            String errorMsg) throws UnifyException;
+
+    /**
      * Finds scheduled task history by query.
      * 
      * @param query
@@ -652,6 +680,61 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
      *             if an error occurs
      */
     int deleteTheme(Long id) throws UnifyException;
+
+    /**
+     * Creates a new supported locale.
+     * 
+     * @param supportedLocale
+     *            the supported locale data
+     * @return the created supported locale ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createSupportedLocale(SupportedLocale supportedLocale) throws UnifyException;
+
+    /**
+     * Finds supported locale by ID.
+     * 
+     * @param supportedLocaleId
+     *            the supported locale ID
+     * @return the supported locale data
+     * @throws UnifyException
+     *             if supported locale with ID is not found
+     */
+    SupportedLocale findSupportedLocale(Long supportedLocaleId) throws UnifyException;
+
+    /**
+     * Finds supported locales by query.
+     * 
+     * @param query
+     *            the supported locale query
+     * @return the list of supported locales found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<SupportedLocale> findSupportedLocales(SupportedLocaleQuery query) throws UnifyException;
+
+    /**
+     * Updates a supported locale.
+     * 
+     * @param supportedLocale
+     *            the supported locale
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateSupportedLocale(SupportedLocale supportedLocale) throws UnifyException;
+
+    /**
+     * Deletes a supported locale.
+     * 
+     * @param id
+     *            the supported locale ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteSupportedLocale(Long id) throws UnifyException;
 
     /**
      * Creates a new shortcut tile.
@@ -838,13 +921,194 @@ public interface SystemService extends JacklynBusinessService, StartupShutdownHo
     int getUniqueActiveUserSessions() throws UnifyException;
 
     /**
-     * Finds all tooling record types.
+     * Creates a new datasource driver.
      * 
-     * @return list of record types
+     * @param dataSourceDriver
+     *            the data source driver data
+     * @return the created data source driver ID
      * @throws UnifyException
      *             if an error occurs
      */
-    List<ToolingRecordTypeItem> findToolingRecordTypes() throws UnifyException;
+    Long createDataSourceDriver(DataSourceDriver dataSourceDriver) throws UnifyException;
+
+    /**
+     * Finds datasource driver by ID.
+     * 
+     * @param dataSourceDriverId
+     *            the data source driver ID
+     * @return the data source driver data
+     * @throws UnifyException
+     *             if data source driver with ID is not found
+     */
+    DataSourceDriver findDataSourceDriver(Long dataSourceDriverId) throws UnifyException;
+
+    /**
+     * Finds datasource drivers by query.
+     * 
+     * @param query
+     *            the datasource driver query
+     * @return the list of data source drivers found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<DataSourceDriver> findDataSourceDrivers(DataSourceDriverQuery query) throws UnifyException;
+
+    /**
+     * Updates a datasource driver.
+     * 
+     * @param dataSourceDriver
+     *            the datasource driver data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateDataSourceDriver(DataSourceDriver dataSourceDriver) throws UnifyException;
+
+    /**
+     * Deletes a datasource driver.
+     * 
+     * @param dataSourceDriverId
+     *            the data source driver ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteDataSourceDriver(Long dataSourceDriverId) throws UnifyException;
+
+    /**
+     * Creates a new datasource.
+     * 
+     * @param dataSource
+     *            the data source data
+     * @return the created data source ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createDataSource(DataSource dataSource) throws UnifyException;
+
+    /**
+     * Finds datasource by ID.
+     * 
+     * @param dataSourceId
+     *            the data source ID
+     * @return the datasource data
+     * @throws UnifyException
+     *             if data source with ID is not found
+     */
+    DataSource findDataSource(Long dataSourceId) throws UnifyException;
+
+    /**
+     * Finds datasource by name.
+     * 
+     * @param dataSourceName
+     *            the data source name
+     * @return the datasource data if found otherwise null
+     * @throws UnifyException
+     *             if multiple data sources with name found. if an error occurs
+     */
+    DataSource findDataSource(String dataSourceName) throws UnifyException;
+
+    /**
+     * Finds datasources by query.
+     * 
+     * @param query
+     *            the datasource query
+     * @return the list of datasources found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<DataSource> findDataSources(DataSourceQuery query) throws UnifyException;
+
+    /**
+     * Updates a datasource.
+     * 
+     * @param dataSource
+     *            the datasource record
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateDataSource(DataSource dataSource) throws UnifyException;
+
+    /**
+     * Deletes a datasource.
+     * 
+     * @param dataSourceId
+     *            the datasource ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteDataSource(Long dataSourceId) throws UnifyException;
+
+    /**
+     * Activates datasource in application datasource manager for use if not already
+     * activated.
+     * 
+     * @param dataSourceName
+     *            the datasource name
+     * @return a true value if activated otherwise false when already activated
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean activateDataSource(String dataSourceName) throws UnifyException;
+
+    /**
+     * Activates datasource in application datasource manager for use if not already
+     * activated.
+     * 
+     * @param dataSourceId
+     *            the datasource ID
+     * @return the datasource name
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    String activateDataSource(Long dataSourceId) throws UnifyException;
+
+    /**
+     * Finds all tooling base types.
+     * 
+     * @return list of base types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingEntityItem> findToolingBaseTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling document types.
+     * 
+     * @return list of document types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingEntityItem> findToolingDocumentTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling enumeration types.
+     * 
+     * @return list of enumeration types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling document list items.
+     * 
+     * @return list of document list items
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingDocumentListItem> findToolingDocumentListItems() throws UnifyException;
+
+    /**
+     * Finds all tooling transformer types.
+     * 
+     * @return list of transformer types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingTransformerTypeItem> findToolingTransformerTypes() throws UnifyException;
 
     /**
      * Finds all tooling list types.

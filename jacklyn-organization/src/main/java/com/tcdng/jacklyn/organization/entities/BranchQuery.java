@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,15 +29,35 @@ public class BranchQuery extends BaseVersionedStatusEntityQuery<Branch> {
         super(Branch.class);
     }
 
-    public BranchQuery name(String name) {
-        return (BranchQuery) equals("name", name);
+    public BranchQuery hubId(Long hubId) {
+        return (BranchQuery) addEquals("hubId", hubId);
     }
 
-    public BranchQuery nameLike(String name) {
-        return (BranchQuery) like("name", name);
+    public BranchQuery hubName(String hubName) {
+        return (BranchQuery) addEquals("hubName", hubName);
+    }
+
+    public BranchQuery zoneId(Long zoneId) {
+        return (BranchQuery) addEquals("zoneId", zoneId);
+    }
+
+    public BranchQuery stateId(Long stateId) {
+        return (BranchQuery) addEquals("stateId", stateId);
+    }
+
+    public BranchQuery code(String code) {
+        return (BranchQuery) addEquals("code", code);
+    }
+
+    public BranchQuery sortCode(String sortCode) {
+        return (BranchQuery) addEquals("sortCode", sortCode);
+    }
+
+    public BranchQuery sortCodeLike(String sortCode) {
+        return (BranchQuery) addLike("sortCode", sortCode);
     }
 
     public BranchQuery descriptionLike(String description) {
-        return (BranchQuery) like("description", description);
+        return (BranchQuery) addLike("description", description);
     }
 }

@@ -1,12 +1,14 @@
 // UPL template for managing schedule task history
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.scheduledtaskhist.manage}
     searchByList:$c{searchExecutionDt searchScheduledTaskId searchStatus}
     searchClearList:$c{searchScheduledTaskId searchStatus}
-    tableColumnList:$c{scheduledTaskDesc startTime endTime statusDesc}
-    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.basicdetails} components:$c{frmTaskName frmDescription frmStartTime frmEndTime frmErrorMsg frmStatus}}
+    tableColumnList:$c{taskName scheduledTaskDesc startedOn finishedOn statusDesc}
+    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.basicdetails} components:$c{frmTaskName frmDescription frmStatus}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.timestamp} components:$c{frmStartedOn frmFinishedOn}}
+    formSection:$d{!ui-section caption:$m{system.scheduledtaskhist.section.exception} components:$c{frmErrorMsg}}
     viewPrivilege:$s{sys-schdtaskhistview}
 
 //Search
@@ -18,15 +20,19 @@
     eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 
 //Table columns
-!ui-label:scheduledTaskDesc caption:$m{system.scheduledtaskhist.taskname} binding:scheduledTaskDesc  columnStyle:$s{width:300px;} sortable:true
-!ui-label:startTime caption:$m{system.scheduledtaskhist.starttime} binding:startTime style:$s{text-align:center;} formatter:$d{!timeformat style:medium}  columnStyle:$s{width:120px;} sortable:true
-!ui-label:endTime caption:$m{system.scheduledtaskhist.endtime} binding:endTime style:$s{text-align:center;} formatter:$d{!timeformat style:medium} columnStyle:$s{width:120px;} sortable:true
-!ui-label:statusDesc caption:$m{system.scheduledtaskhist.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:taskName caption:$m{system.scheduledtaskhist.taskname} binding:taskName  columnStyle:$s{width:180px;} sortable:true
+!ui-label:scheduledTaskDesc caption:$m{system.scheduledtaskhist.description} binding:scheduledTaskDesc  columnStyle:$s{width:180px;} sortable:true
+!ui-label:startedOn caption:$m{system.scheduledtaskhist.startedon} binding:startedOn formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
+!ui-label:finishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
+!ui-label:statusDesc caption:$m{system.scheduledtaskhist.status} binding:taskStatusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
 
 //Form components   
 !ui-text:frmTaskName caption:$m{system.scheduledtaskhist.taskname} binding:taskName
 !ui-text:frmDescription caption:$m{system.scheduledtaskhist.description} binding:scheduledTaskDesc
-!ui-time:frmStartTime caption:$m{system.scheduledtaskhist.starttime} binding:startTime
-!ui-time:frmEndTime caption:$m{system.scheduledtaskhist.endtime} binding:endTime
+!ui-text:frmStartedOn caption:$m{system.scheduledtaskhist.startedon} binding:startedOn
+    formatter:$d{!datetimeformat style:medium} size:32
+!ui-text:frmFinishedOn caption:$m{system.scheduledtaskhist.finishedon} binding:finishedOn
+    formatter:$d{!datetimeformat style:medium} size:32
 !ui-textarea:frmErrorMsg caption:$m{system.scheduledtaskhist.errormsg} binding:errorMsg wordWrap:true
-!ui-select:frmStatus caption:$m{system.scheduledtaskhist.status} binding:status  list:taskstatuslist
+     columns:40 rows:8
+!ui-select:frmStatus caption:$m{system.scheduledtaskhist.status} binding:taskStatus  list:taskstatuslist

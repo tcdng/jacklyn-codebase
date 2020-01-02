@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,4 +23,9 @@ package com.tcdng.jacklyn.workflow.constants;
  */
 public interface WorkflowModuleSysParamConstants {
 
+    String SYSPARAM_WORKFLOW_EMAIL_CHANNEL = "WFL-0001";
+
+    String SYSPARAM_WORKFLOW_SMS_CHANNEL = "WFL-0002";
+
+    String SYSPARAM_WORKFLOW_SYSTEM_CHANNEL = "WFL-0003";
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -22,8 +22,11 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
+import com.tcdng.unify.core.annotation.Index;
 import com.tcdng.unify.core.annotation.ListOnly;
+import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
  * Represents a workflow item.
@@ -31,41 +34,77 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Table("WFITEM")
+@Policy("wfitem-entitypolicy")
+@Table(
+        name = "JKWFITEM", uniqueConstraints = { @UniqueConstraint({ "submissionId" }) },
+        indexes = { @Index("wfItemSplitEventId"), @Index("branchCode"), @Index("departmentCode"),
+                @Index("stepGlobalName") })
 public class WfItem extends BaseTimestampedEntity {
 
     @ForeignKey(type = WfItemEvent.class, nullable = true)
     private Long wfHistEventId;
 
-    @Column(name = "GLOBAL_TEMPLATE_NM", length = 64)
-    private String globalTemplateName;
+    @ForeignKey(type = WfItemSplitEvent.class, nullable = true)
+    private Long wfItemSplitEventId;
 
-    @Column(nullable = true)
-    private Long ownerId;
+    @Column(name = "SUBMISSION_ID", nullable = true)
+    private Long submissionId;
 
-    @Column(length = 32, nullable = true)
-    private String wfStepName;
+    @Column(name = "BRANCH_CD", nullable = true)
+    private String branchCode;
 
-    @Column(name = "WFITEM_DESC", length = 128)
-    private String description;
+    @Column(name = "DEPARTMENT_CD", nullable = true)
+    private String departmentCode;
+
+    @Column(name = "GLOBAL_STEP_NM", length = 128)
+    private String stepGlobalName;
+
+    @Column(name = "SPLIT_BRANCH_NM", nullable = true)
+    private String splitBranchName;
+
+    @Column
+    private Long wfItemAttachmentRefId;
 
     @Column(nullable = true)
     private WorkflowParticipantType participantType;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date stepDt;
 
-    @Column(nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
+    private Date expectedDt;
+
+    @Column(length = 96, nullable = true)
     private String heldBy;
 
-    @Column(nullable = true)
+    @Column(length = 96, nullable = true)
     private String forwardedBy;
 
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
     private Long wfItemHistId;
 
-    @ListOnly(key = "wfHistEventId", property = "documentId")
-    private Long documentId;
+    @ListOnly(key = "wfHistEventId", property = "processGlobalName")
+    private String processGlobalName;
+
+    @ListOnly(key = "wfHistEventId", property = "docId")
+    private Long docId;
+
+    @ListOnly(key = "wfHistEventId", property = "wfItemDesc")
+    private String wfItemDesc;
+
+    @ListOnly(key = "wfHistEventId", property = "srcWfStepName")
+    private String srcWfStepName;
+
+    @ListOnly(key = "wfHistEventId", property = "errorCode")
+    private String errorCode;
+
+    @ListOnly(key = "wfHistEventId", property = "errorMsg")
+    private String errorMsg;
+
+    @Override
+    public String getDescription() {
+        return wfItemDesc;
+    }
 
     public Long getWfItemHistId() {
         return wfItemHistId;
@@ -73,22 +112,6 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setWfItemHistId(Long wfItemHistId) {
         this.wfItemHistId = wfItemHistId;
-    }
-
-    public String getGlobalTemplateName() {
-        return globalTemplateName;
-    }
-
-    public void setGlobalTemplateName(String globalTemplateName) {
-        this.globalTemplateName = globalTemplateName;
-    }
-
-    public Long getDocumentId() {
-        return documentId;
-    }
-
-    public void setDocumentId(Long documentId) {
-        this.documentId = documentId;
     }
 
     public Long getWfHistEventId() {
@@ -99,29 +122,70 @@ public class WfItem extends BaseTimestampedEntity {
         this.wfHistEventId = wfHistEventId;
     }
 
+    public Long getWfItemSplitEventId() {
+        return wfItemSplitEventId;
+    }
+
+    public void setWfItemSplitEventId(Long wfItemSplitEventId) {
+        this.wfItemSplitEventId = wfItemSplitEventId;
+    }
+
+    public Long getSubmissionId() {
+        return submissionId;
+    }
+
+    public void setSubmissionId(Long submissionId) {
+        this.submissionId = submissionId;
+    }
+
     @Override
-    public Long getOwnerId() {
-        return ownerId;
+    public String getBranchCode() {
+        return branchCode;
     }
 
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
+    @Override
+    public String getDepartmentCode() {
+        return departmentCode;
     }
 
-    public String getWfStepName() {
-        return wfStepName;
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
     }
 
-    public void setWfStepName(String wfStepName) {
-        this.wfStepName = wfStepName;
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
     }
 
-    public String getDescription() {
-        return description;
+    public String getStepGlobalName() {
+        return stepGlobalName;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStepGlobalName(String stepGlobalName) {
+        this.stepGlobalName = stepGlobalName;
+    }
+
+    public String getSplitBranchName() {
+        return splitBranchName;
+    }
+
+    public void setSplitBranchName(String splitBranchName) {
+        this.splitBranchName = splitBranchName;
+    }
+
+    public Long getWfItemAttachmentRefId() {
+        return wfItemAttachmentRefId;
+    }
+
+    public void setWfItemAttachmentRefId(Long wfItemAttachmentRefId) {
+        this.wfItemAttachmentRefId = wfItemAttachmentRefId;
+    }
+
+    public WorkflowParticipantType getParticipantType() {
+        return participantType;
+    }
+
+    public void setParticipantType(WorkflowParticipantType participantType) {
+        this.participantType = participantType;
     }
 
     public Date getStepDt() {
@@ -130,6 +194,14 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setStepDt(Date stepDt) {
         this.stepDt = stepDt;
+    }
+
+    public Date getExpectedDt() {
+        return expectedDt;
+    }
+
+    public void setExpectedDt(Date expectedDt) {
+        this.expectedDt = expectedDt;
     }
 
     public String getHeldBy() {
@@ -148,12 +220,52 @@ public class WfItem extends BaseTimestampedEntity {
         this.forwardedBy = forwardedBy;
     }
 
-    public WorkflowParticipantType getParticipantType() {
-        return participantType;
+    public String getProcessGlobalName() {
+        return processGlobalName;
     }
 
-    public void setParticipantType(WorkflowParticipantType participantType) {
-        this.participantType = participantType;
+    public void setProcessGlobalName(String processGlobalName) {
+        this.processGlobalName = processGlobalName;
+    }
+
+    public Long getDocId() {
+        return docId;
+    }
+
+    public void setDocId(Long docId) {
+        this.docId = docId;
+    }
+
+    public String getWfItemDesc() {
+        return wfItemDesc;
+    }
+
+    public void setWfItemDesc(String wfItemDesc) {
+        this.wfItemDesc = wfItemDesc;
+    }
+
+    public String getSrcWfStepName() {
+        return srcWfStepName;
+    }
+
+    public void setSrcWfStepName(String srcWfStepName) {
+        this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,6 +30,8 @@ import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
 import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
+import com.tcdng.jacklyn.organization.entities.Hub;
+import com.tcdng.jacklyn.organization.entities.HubQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategory;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategoryQuery;
@@ -49,22 +51,22 @@ import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils;
+import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.StepNameParts;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.jacklyn.workflow.entities.WfStepQuery;
-import com.tcdng.unify.core.PrivilegeSettings;
 import com.tcdng.unify.core.RoleAttributes;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.ViewDirective;
 import com.tcdng.unify.core.annotation.Broadcast;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Synchronized;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.TriState;
-import com.tcdng.unify.core.operation.Update;
+import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.util.DataUtils;
-import com.tcdng.unify.web.constant.SessionAttributeConstants;
 
 /**
  * Default implementation of organization business service.
@@ -75,6 +77,14 @@ import com.tcdng.unify.web.constant.SessionAttributeConstants;
 @Transactional
 @Component(OrganizationModuleNameConstants.ORGANIZATIONSERVICE)
 public class OrganizationServiceImpl extends AbstractJacklynBusinessService implements OrganizationService {
+
+    private static final String REGISTER_PRIVILEGE_CATEGORY_LOCK = "org::registerprivilegecat-lock";
+
+    private static final String REGISTER_PRIVILEGE_LOCK = "org::registerprivilege-lock";
+
+    private static final String UPDATE_PRIVILEGE_LOCK = "org::updateprivilege-lock";
+
+    private static final String UNREGISTER_PRIVILEGE_LOCK = "org::unregisterprivilege-lock";
 
     @Configurable
     private SystemService systemService;
@@ -90,6 +100,16 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     @Override
     public Branch findBranch(Long branchId) throws UnifyException {
         return db().find(Branch.class, branchId);
+    }
+
+    @Override
+    public Long findBranchId(String branchCode) throws UnifyException {
+        return db().value(Long.class, "id", new BranchQuery().code(branchCode));
+    }
+
+    @Override
+    public Branch findBranch(BranchQuery query) throws UnifyException {
+        return db().find(query);
     }
 
     @Override
@@ -127,6 +147,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public Department findDepartment(DepartmentQuery query) throws UnifyException {
+        return db().find(query);
+    }
+
+    @Override
     public List<Department> findDepartments(DepartmentQuery query) throws UnifyException {
         return db().listAll(query);
     }
@@ -139,6 +164,70 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     @Override
     public int deleteDepartment(Long id) throws UnifyException {
         return db().delete(Department.class, id);
+    }
+
+    @Override
+    public Long createHub(Hub hub) throws UnifyException {
+        return (Long) db().create(hub);
+    }
+
+    @Override
+    public Hub findHub(Long hubId) throws UnifyException {
+        return db().find(Hub.class, hubId);
+    }
+
+    @Override
+    public Hub findHub(HubQuery query) throws UnifyException {
+        return db().find(query);
+    }
+
+    @Override
+    public List<Hub> findHubs(HubQuery query) throws UnifyException {
+        return db().listAll(query);
+    }
+
+    @Override
+    public int updateHub(Hub hub) throws UnifyException {
+        return db().updateByIdVersion(hub);
+    }
+
+    @Override
+    public int deleteHub(Long id) throws UnifyException {
+        return db().delete(Hub.class, id);
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByHub(Long hubId) throws UnifyException {
+        return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByBranch(Long branchId) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().id(branchId));
+        return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public List<Long> findHubBranchIdsByBranch(String branchCode) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().code(branchCode));
+        return db().valueList(Long.class, "id", new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByHub(String hubCode) throws UnifyException {
+        return db().listAll(new BranchQuery().hubName(hubCode));
+    }
+
+    @Override
+    public List<Branch> findHubBranchesByBranch(String branchCode) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().code(branchCode));
+        return db().listAll(new BranchQuery().hubId(hubId));
+    }
+
+    @Override
+    public Hub findHubByBranch(String branchCode) throws UnifyException {
+        Long hubId = db().value(Long.class, "hubId", new BranchQuery().code(branchCode));
+        return db().list(Hub.class, hubId);
     }
 
     @Override
@@ -157,6 +246,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     @Override
     public Role findRole(Long roleId) throws UnifyException {
         return db().list(Role.class, roleId);
+    }
+
+    @Override
+    public Role findRole(RoleQuery query) throws UnifyException {
+        return db().find(query);
     }
 
     @Override
@@ -200,7 +294,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return db().value(String.class, "dashboardName", new RoleQuery().name(roleName));
     }
 
-    @Synchronized("register-privilege-category")
+    @Synchronized(REGISTER_PRIVILEGE_CATEGORY_LOCK)
     @Override
     public Long registerPrivilegeCategory(String categoryName, String descriptionKey) throws UnifyException {
         PrivilegeCategory privilegeCategory = findPrivilegeCategory(categoryName);
@@ -219,7 +313,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return privilegeCategory.getId();
     }
 
-    @Synchronized("register-privilege")
+    @Synchronized(REGISTER_PRIVILEGE_LOCK)
     @Override
     public Long registerPrivilege(String categoryName, String moduleName, String privilegeName, String privilegeDesc)
             throws UnifyException {
@@ -248,7 +342,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return privilege.getId();
     }
 
-    @Synchronized("update-privilege")
+    @Synchronized(UPDATE_PRIVILEGE_LOCK)
     @Override
     public boolean updateRegisteredPrivilege(String categoryName, String moduleName, String privilegeName,
             String privilegeDesc) throws UnifyException {
@@ -262,7 +356,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return false;
     }
 
-    @Synchronized("unregister-privilege")
+    @Synchronized(UNREGISTER_PRIVILEGE_LOCK)
     @Override
     public void unregisterPrivilege(String categoryName, String moduleName, String... privilegeName)
             throws UnifyException {
@@ -279,7 +373,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public PrivilegeCategory findPrivilegeCategory(String name) throws UnifyException {
-        return db().list(new PrivilegeCategoryQuery().name(name).installed(Boolean.TRUE));
+        return db().list(new PrivilegeCategoryQuery().name(name));
     }
 
     @Override
@@ -299,7 +393,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public List<Privilege> findPrivileges(PrivilegeQuery query) throws UnifyException {
-        return db().listAll(query.installed(Boolean.TRUE));
+        return db().listAll(query);
     }
 
     @Override
@@ -376,14 +470,14 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         // Delete old step privileges.
         updateCount = db().deleteAll(new RoleWfStepQuery().roleId(roleId));
 
-        if (!DataUtils.isBlank(wfStepIdList)) {
+        if (DataUtils.isNotBlank(wfStepIdList)) {
             // Create new privileges
             RoleWfStep roleWfStep = new RoleWfStep();
             roleWfStep.setRoleId(roleId);
 
             List<WfStep> wfStepList =
                     workflowService.findSteps(
-                            ((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).select("wfTemplateId", "name")));
+                            ((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).addSelect("wfTemplateId", "name")));
             for (WfStep wfStepData : wfStepList) {
                 roleWfStep.setWfTemplateId(wfStepData.getWfTemplateId());
                 roleWfStep.setStepName(wfStepData.getName());
@@ -408,8 +502,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     public synchronized void loadRoleAttributesToApplication(String... roleNames) throws UnifyException {
         if (roleNames.length > 0) {
             for (String roleName : roleNames) {
-                // Do document privileges
-                Map<String, PrivilegeSettings> docPrivilegeSettings = new HashMap<String, PrivilegeSettings>();
+                // Do dynamic view directive privileges
+                Map<String, ViewDirective> dynamicViewDirectives = new HashMap<String, ViewDirective>();
                 List<Long> rolePrivilegeIdList =
                         db().valueList(Long.class, "id", new RolePrivilegeQuery().roleName(roleName)
                                 .categoryName(PrivilegeCategoryConstants.DOCUMENTCONTROL));
@@ -417,49 +511,59 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
                     List<RolePrivilegeWidget> rolePrivilegeWidgetList =
                             db().listAll(new RolePrivilegeWidgetQuery().rolePrivilegeIdIn(rolePrivilegeIdList));
                     for (RolePrivilegeWidget rolePrivilegeWidget : rolePrivilegeWidgetList) {
-                        docPrivilegeSettings.put(rolePrivilegeWidget.getPrivilegeName(),
-                                new PrivilegeSettings(rolePrivilegeWidget.isVisible(), rolePrivilegeWidget.isEditable(),
+                        dynamicViewDirectives.put(rolePrivilegeWidget.getPrivilegeName(),
+                                new ViewDirective(rolePrivilegeWidget.isVisible(), rolePrivilegeWidget.isEditable(),
                                         rolePrivilegeWidget.isDisabled(),
                                         TriState.getTriState(rolePrivilegeWidget.isRequired())));
                     }
                 }
 
-                // Do non-document privileges
+                // Do non-dynamic privileges
                 List<RolePrivilege> rolePrivilegeList =
                         db().listAll(new RolePrivilegeQuery().roleName(roleName)
                                 .categoryNameNot(PrivilegeCategoryConstants.DOCUMENTCONTROL));
-                Map<String, Set<String>> nonWidgetPrivilegeNames = new HashMap<String, Set<String>>();
-                Set<String> allAccessWidgetPrivileges = new HashSet<String>();
+                Map<String, Set<String>> nonViewDirectivePrivilegeCodes = new HashMap<String, Set<String>>();
+                Set<String> staticViewDirectivePrivilegeCodes = new HashSet<String>();
                 for (RolePrivilege rpd : rolePrivilegeList) {
                     String categoryName = rpd.getCategoryName();
                     if (PrivilegeCategoryConstants.APPLICATIONUI.equals(categoryName)) {
-                        allAccessWidgetPrivileges.add(rpd.getPrivilegeName());
+                        // View directive privileges
+                        staticViewDirectivePrivilegeCodes.add(rpd.getPrivilegeName());
                     } else {
-                        Set<String> privilegeNameList = nonWidgetPrivilegeNames.get(categoryName);
-                        if (privilegeNameList == null) {
-                            privilegeNameList = new HashSet<String>();
-                            nonWidgetPrivilegeNames.put(categoryName, privilegeNameList);
+                        Set<String> privilegeCodes = nonViewDirectivePrivilegeCodes.get(categoryName);
+                        if (privilegeCodes == null) {
+                            privilegeCodes = new HashSet<String>();
+                            nonViewDirectivePrivilegeCodes.put(categoryName, privilegeCodes);
                         }
-                        privilegeNameList.add(rpd.getPrivilegeName());
+                        privilegeCodes.add(rpd.getPrivilegeName());
                     }
                 }
 
                 // Workflow steps
-                Set<String> wfStepNames = new HashSet<String>();
+                Set<String> wfStepCodes = new HashSet<String>();
                 List<RoleWfStep> roleWfStepList = db().listAll(new RoleWfStepQuery().roleName(roleName));
                 for (RoleWfStep roleWfStep : roleWfStepList) {
-                    wfStepNames.add(WfNameUtils.getGlobalStepName(roleWfStep.getWfCategoryName(),
+                    wfStepCodes.add(WfNameUtils.getStepGlobalName(roleWfStep.getWfCategoryName(),
                             roleWfStep.getWfTemplateName(), roleWfStep.getStepName()));
                 }
 
                 // Create and set role attributes
                 Role role = db().find(new RoleQuery().name(roleName));
-                setRoleAttributes(role.getName(), new RoleAttributes(role.getName(), role.getDescription(),
-                        docPrivilegeSettings, allAccessWidgetPrivileges, nonWidgetPrivilegeNames, wfStepNames));
+                setRoleAttributes(role.getName(),
+                        new RoleAttributes(role.getName(), role.getDescription(), dynamicViewDirectives,
+                                staticViewDirectivePrivilegeCodes, nonViewDirectivePrivilegeCodes, wfStepCodes));
             }
 
-            broadcastToOtherSessions(SessionAttributeConstants.REFRESH_MENU, Boolean.TRUE);
+            broadcastRefreshMenu();
         }
+    }
+
+    @Override
+    public List<String> findWfStepRoles(String stepGlobalName) throws UnifyException {
+        // TODO Implement cache
+        StepNameParts stepNameParts = WfNameUtils.getStepNameParts(stepGlobalName);
+        return db().valueList(String.class, "roleName", new RoleWfStepQuery().stepName(stepNameParts.getStepName())
+                .wfTemplateName(stepNameParts.getTemplateName()).wfCategoryName(stepNameParts.getCategoryName()));
     }
 
     @Override
@@ -471,6 +575,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         registerPrivilegeCategory(PrivilegeCategoryConstants.DOCUMENTCONTROL,
                 "reserved.privilegecategory.documentcontrol");
         registerPrivilegeCategory(PrivilegeCategoryConstants.REPORTABLE, "reserved.privilegecategory.reportable");
+        registerPrivilegeCategory(PrivilegeCategoryConstants.CONFIGUREDREPORTS,
+                "reserved.privilegecategory.configuredreport");
 
         // Uninstall old
         db().updateAll(new PrivilegeQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));
@@ -483,7 +589,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         privilege.setStatus(RecordStatus.ACTIVE);
         privilege.setInstalled(Boolean.TRUE);
         for (ModuleConfig moduleConfig : moduleConfigList) {
-            if (moduleConfig.getPrivileges() != null) {
+            if (moduleConfig.getPrivileges() != null
+                    && DataUtils.isNotBlank(moduleConfig.getPrivileges().getPrivilegeGroupList())) {
                 logDebug("Installing role privilege definitions for module [{0}]...",
                         resolveApplicationMessage(moduleConfig.getDescription()));
                 PrivilegeQuery pQuery = new PrivilegeQuery();
@@ -515,6 +622,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
                         if (oldPrivilege == null) {
                             privilege.setName(privilegeConfig.getName());
                             privilege.setDescription(description);
+                            privilege.setInstalled(Boolean.TRUE);
                             db().create(privilege);
                         } else {
                             oldPrivilege.setName(privilegeConfig.getName());

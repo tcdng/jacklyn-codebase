@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.shared.workflow.data;
 
-import javax.xml.bind.annotation.XmlElement;
+import com.tcdng.jacklyn.shared.BaseToolingItem;
 
 /**
  * Tooling enrichment logic item.
@@ -24,37 +24,14 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Lateef
  * @since 1.0
  */
-public class ToolingEnrichmentLogicItem {
-
-    private String name;
-
-    private String description;
+public class ToolingEnrichmentLogicItem extends BaseToolingItem {
 
     public ToolingEnrichmentLogicItem(String name, String description) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
     }
 
     public ToolingEnrichmentLogicItem() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

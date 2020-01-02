@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
 <category name="customerCategory" description="Customer Workflow Category"
 	version="1.0">
 	<documents>
-		<document name="customerCategory.custInfo" description="Customer Information"
-			version="1.0">
+		<document name="custDoc" description="Customer Information">
 			<item-description-format>Customer:{firstName} {lastName}</item-description-format>
 			<fields>
-				<field name="id" description="Customer ID" type="long" />
 				<field name="firstName" description="First Name" type="string" />
 				<field name="lastName" description="Last Name" type="string" />
 				<field name="age" description="Age" type="integer" />
@@ -31,8 +32,7 @@
 			</attachments>
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
-					type="primary" bean-type="com.tcdng.jacklyn.common.TestCustomer">
-					<field-mapping doc-field="id" bean-field="id" />
+					bean-type="com.tcdng.jacklyn.common.TestCustomer">
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />
 					<field-mapping doc-field="age" bean-field="age" />
@@ -42,57 +42,65 @@
 			<form>
 				<tab name="main" description="Main Tab" label="Main" pseudo="true">
 					<section name="basicDetails" description="Basic Details">
-						<field binding="firstName" editor="!ui-text" label="First Name"
+						<form-field binding="firstName" editor="!ui-text" label="First Name"
 							required="true" />
-						<field binding="lastName" editor="!ui-text" label="Last Name"
+						<form-field binding="lastName" editor="!ui-text" label="Last Name"
 							required="true" />
-						<field binding="age" editor="!ui-integer" label="Age"
+						<form-field binding="age" editor="!ui-integer" label="Age"
 							required="true" />
-						<field binding="height" editor="!ui-decimal" label="Height"
+						<form-field binding="height" editor="!ui-decimal" label="Height"
 							required="true" />
 					</section>
 					<section name="licenseDetails" description="License Details"
 						binding="driversLicense">
-						<field binding="licenseNo" editor="!ui-text" label="License No."
+						<form-field binding="licenseNo" editor="!ui-text" label="License No."
 							required="true" />
-						<field binding="issueDt" editor="!ui-date" label="Issue Date"
+						<form-field binding="issueDt" editor="!ui-date" label="Issue Date"
 							required="true" />
-						<field binding="expiryDt" editor="!ui-date" label="Expiry Date"
+						<form-field binding="expiryDt" editor="!ui-date" label="Expiry Date"
 							required="true" />
 					</section>
 				</tab>
 			</form>
 		</document>
 	</documents>
+	<messages>
+		<message name="awaitCustApproval" description="Awaiting Customer Approval"
+			attachment-generator="default-attachmentgenerator" html="false"
+			document="custDoc">
+			<subject>Awaiting Customer Approval</subject>
+			<body>Awaiting approval for {firstName} {lastName}</body>
+		</message>
+		<message name="custFlowError" description="Customer Document Flow Error"
+			html="false" document="custDoc">
+			<subject>Customer Document Flow Error</subject>
+			<body>Workflow error while processing customer document. Document Details: {firstName} {lastName}</body>
+		</message>
+	</messages>
 	<templates>
-		<template name="customerCategory.custOnboarding" description="Customer Onboarding"
-			document="customerCategory.custInfo" version="1.0">
-			<messages>
-				<message name="awaitCustApproval" description="Awaiting Customer Approval"
-					attachment-generator="default-attachmentgenerator" html="false">
-					<subject>Awaiting Customer Approval</subject>
-					<body>Awaiting approval for {firstName} {lastName}</body>
-				</message>
-			</messages>
+		<template name="custOnboarding" description="Customer Onboarding">
+			<documents>
+				<document name="custDoc" manual="true" />
+			</documents>
 			<steps>
 				<step name="manual" description="Manual Create Customer" type="manual"
 					participant="personnel" />
 				<step name="start" description="Start Step" type="start">
+                    <enrichments>
+                        <enrichment name="testEnrichment" description="Test Enrichment"
+                            logic="testcustomer-enrichmentpolicy" />
+                    </enrichments>
 					<routings>
 						<routing name="routToCreate" description="Route to Create"
-							target="createCust" classifier="validAge" />
+							target="createCust" document="custDoc" classifier="validAge" />
 						<routing name="routToApproval" description="Route to Approval"
 							target="custApproval" />
 					</routings>
-					<enrichments>
-						<enrichment name="testEnrichment" description="Test Enrichment"
-							logic="testcustomer-enrichmentlogic" />
-					</enrichments>
 				</step>
 				<step name="createCust" description="Create Customer" type="automatic">
 					<record-actions>
 						<record-action name="createCust" description="Create Customer"
-							mapping="custBeanMapping" type="create" />
+							document="custDoc" mapping="custBeanMapping" type="create" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
@@ -100,23 +108,40 @@
 					</routings>
 					<policies>
 						<policy name="testOpenAccount" description="Open Account"
-							logic="testopenaccount-policylogic" />
+							logic="testopenaccount-processpolicy" />
 					</policies>
 				</step>
 				<step name="custApproval" description="Customer Approval"
 					participant="all" priority="high" type="interactive">
 					<alerts>
 						<alert name="awaitApproval" description="Awaiting Approval"
-							message="awaitCustApproval" type="system" />
+							document="custDoc" message="awaitCustApproval" />
 					</alerts>
 					<user-actions>
 						<user-action name="approveCust" description="Approve Customer"
-							label="Approve" target="createCust" notes-requirement="optional" />
+							label="Approve" target="createCust" comment-requirement="optional" />
+						<user-action name="checkCust" description="Check Customer"
+							label="Check" target="checkCust" />
 						<user-action name="rejectCust" description="Reject Customer"
-							label="Reject" target="end" notes-requirement="mandatory" />
+							label="Reject" target="end" comment-requirement="mandatory" />
+					</user-actions>
+				</step>
+				<step name="checkCust" description="Customer Check"
+					participant="all" priority="high" type="interactive"
+					assigner="test-wfitemassignmentpolicy">
+					<user-actions>
+						<user-action name="validateCust" description="Validate Check"
+							label="Validate" target="end" comment-requirement="mandatory" />
 					</user-actions>
 				</step>
 				<step name="end" description="End Step" type="end" />
+				<step name="error" description="Error Step" participant="all"
+					priority="high" type="error">
+					<alerts>
+						<alert name="flowError" description="Flow Error Alert"
+							document="custDoc" message="custFlowError" type="pass_through" />
+					</alerts>
+				</step>
 			</steps>
 		</template>
 	</templates>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,6 +28,7 @@ import com.tcdng.unify.core.annotation.ForeignKey;
 import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.annotation.Policy;
 import com.tcdng.unify.core.annotation.Table;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 
 /**
@@ -36,9 +37,10 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(name = "user", description = "User")
 @Policy("userpolicy")
 @Managed(module = SecurityModuleNameConstants.SECURITY_MODULE, title = "User", reportable = true, auditable = true)
-@Table(name = "APPUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
+@Table(name = "JKUSER", uniqueConstraints = { @UniqueConstraint({ "loginId" }) })
 public class User extends BaseVersionedTimestampedStatusEntity {
 
     @ForeignKey(type = Theme.class, nullable = true)
@@ -47,10 +49,10 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @ForeignKey(type = Branch.class, nullable = true)
     private Long branchId;
 
-    @Column(length = 64)
+    @Column(length = 96)
     private String fullName;
 
-    @Column(transformer = "uppercase-transformer")
+    @Column(length = 64, transformer = "uppercase-transformer")
     private String loginId;
 
     @Column(length = 256)
@@ -58,6 +60,9 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     @Column(length = 64)
     private String email;
+
+    @Column(length = 24, nullable = true)
+    private String mobileNo;
 
     @Column
     private Integer loginAttempts;
@@ -77,17 +82,35 @@ public class User extends BaseVersionedTimestampedStatusEntity {
     @Column(nullable = true)
     private Date passwordExpiryDt;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date lastLoginDt;
 
     @Column(name = "SUPERVISOR_FG")
     private Boolean supervisor;
 
-    @ListOnly(key = "branchId", property = "name")
-    private String branchName;
+    @ListOnly(key = "branchId", property = "code")
+    private String branchCode;
+
+    @ListOnly(key = "branchId", property = "zoneName")
+    private String zoneName;
 
     @ListOnly(key = "branchId", property = "description")
     private String branchDesc;
+
+    @ListOnly(key = "branchId", property = "languageTag")
+    private String branchLanguageTag;
+
+    @ListOnly(key = "branchId", property = "timeZone")
+    private String branchTimeZone;
+
+    @ListOnly(key = "branchId", property = "zoneId")
+    private Long zoneId;
+
+    @ListOnly(key = "branchId", property = "stateId")
+    private Long stateId;
+
+    @ListOnly(key = "branchId", property = "hubId")
+    private Long hubId;
 
     @ListOnly(key = "themeId", property = "description")
     private String themeDesc;
@@ -158,6 +181,14 @@ public class User extends BaseVersionedTimestampedStatusEntity {
         this.email = email;
     }
 
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
     public Boolean getLoginLocked() {
         return loginLocked;
     }
@@ -206,12 +237,20 @@ public class User extends BaseVersionedTimestampedStatusEntity {
         this.lastLoginDt = lastLoginDt;
     }
 
-    public String getBranchName() {
-        return branchName;
+    public String getBranchCode() {
+        return branchCode;
     }
 
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
     }
 
     public String getBranchDesc() {
@@ -220,6 +259,22 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setBranchDesc(String branchDesc) {
         this.branchDesc = branchDesc;
+    }
+
+    public String getBranchLanguageTag() {
+        return branchLanguageTag;
+    }
+
+    public void setBranchLanguageTag(String branchLanguageTag) {
+        this.branchLanguageTag = branchLanguageTag;
+    }
+
+    public String getBranchTimeZone() {
+        return branchTimeZone;
+    }
+
+    public void setBranchTimeZone(String branchTimeZone) {
+        this.branchTimeZone = branchTimeZone;
     }
 
     public String getThemeDesc() {
@@ -248,5 +303,29 @@ public class User extends BaseVersionedTimestampedStatusEntity {
 
     public void setSupervisor(Boolean supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
+
+    public Long getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
+    }
+
+    public Long getHubId() {
+        return hubId;
+    }
+
+    public void setHubId(Long hubId) {
+        this.hubId = hubId;
     }
 }

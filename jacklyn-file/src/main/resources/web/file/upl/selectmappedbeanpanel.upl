@@ -1,0 +1,24 @@
+// UPL template for select mapped bean panel
+// Copyright 2018-2020 The Code Department.
+!ui-selectmappedbeanpanel dialogCaption:$m{file.selectmappedbean.title}
+    dialogBodyLayout:$d{!ui-vertical}
+    dialogBodyComponents:$c{mappedBeanPanel}
+    dialogActionComponents:$c{applyMappingBtn cancelBtn}
+
+// Mapped bean panel
+!ui-formpanel:mappedBeanPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;}}
+    formSection:$d{!ui-section components:$c{frmSelectBean}}
+    formCaptionSuffix:$s{:} formColumns:1
+!ui-select:frmSelectBean caption:$m{file.selectmappedbean.bean} binding:$g{beanTypeBinding} required:true
+    list:toolingdocumentlist blankOption:$s{}
+    eventHandler:$d{!ui-event event:onchange action:$c{disableApplyAct}}
+
+// Action components
+!ui-button:applyMappingBtn caption:$m{button.performmapping}
+	eventHandler:$d{!ui-event event:onclick action:$c{performMappingAct}}
+!ui-button:cancelBtn styleClass:$e{ui-button-alert} caption:$m{button.cancel}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeDialogAct}}
+
+// Actions
+!ui-disable:disableApplyAct valueComponentList:$c{frmSelectBean} components:$c{applyMappingBtn}
+!ui-post:performMappingAct path:$g{performMappingPath} components:$c{mappedBeanPanel}

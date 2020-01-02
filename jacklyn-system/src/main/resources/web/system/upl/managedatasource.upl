@@ -1,0 +1,59 @@
+// UPL template for managing data sources
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.datasource.manage}
+	searchByList:$c{searchCode searchDescription searchAppReserved searchStatus}
+   	searchClearList:$c{searchCode searchDescription searchAppReserved searchStatus}
+	tableColumnList:$c{dataSourceDriverDesc name description appReservedDesc statusDesc}
+	formSection:$d{!ui-section caption:$m{system.datasource.section.basicdetails} components:$c{frmName frmDescription frmAppReserved frmStatus}}
+	formSection:$d{!ui-section caption:$m{system.datasource.section.connection} components:$c{frmDataSourceDriverId frmConnectionUrl frmMaxConnections frmUserName frmPassword}}
+    moreCrudFooterComponentList:$c{spacer testBtn}
+ 	addPrivilege:$s{sys-adddatasource} editPrivilege:$s{sys-editdatasource}
+	viewPrivilege:$s{sys-viewdatasource} deletePrivilege:$s{sys-deletedatasource}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchCode caption:$m{system.datasource.name} binding:searchCode
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{system.datasource.description} binding:searchDescription
+	eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchAppReserved caption:$m{system.datasource.reserved} list:booleanlist blankOption:$s{} binding:searchAppReserved
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.datasource.status} list:recordstatuslist blankOption:$s{} binding:searchStatus
+    eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:dataSourceDriverDesc caption:$m{system.datasource.driver} binding:dataSourceDriverDesc columnStyle:$s{width:180px;} sortable:true
+!ui-label:name caption:$m{system.datasource.name} binding:name columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{system.datasource.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:appReservedDesc caption:$m{system.datasource.reserved} binding:appReservedDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{system.datasource.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-select:frmDataSourceDriverId caption:$m{system.datasource.driver} binding:dataSourceDriverId
+	list:datasourcedriverlist blankOption:$s{} required:true style:$s{width:180px;}
+!ui-name:frmName caption:$m{system.datasource.name} binding:name underscore:true case:upper minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{system.datasource.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-text:frmConnectionUrl caption:$m{system.datasource.connectionurl} binding:connectionUrl minLen:3 maxLen:128 size:56 required:true
+!ui-integer:frmMaxConnections caption:$m{system.datasource.maxconnections} binding:maxConnections maxLen:3 required:true
+!ui-name:frmUserName caption:$m{system.datasource.username} binding:userName maxLen:32
+!ui-password:frmPassword caption:$m{system.datasource.password} binding:password maxLen:32
+!ui-select:frmAppReserved caption:$m{system.datasource.reserved} binding:appReserved list:booleanlist blankOption:$s{} readOnly:true
+!ui-select:frmStatus caption:$m{system.datasource.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Test button
+!ui-span:spacer
+!ui-button:testBtn styleClass:$s{jk-button} caption:$m{button.test}
+	eventHandler:$d{!ui-event event:onclick action:$c{testAct}}
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}
+!ui-validation:frmTestGrpVal components:$c{frmDataSourceDriverId frmConnectionUrl}
+
+//Actions
+!ui-post:testAct path:$n{/testDataSource} validations:$c{frmTestGrpVal}
+    components:$c{frmDataSourceDriverId frmConnectionUrl frmMaxConnections frmUserName frmPassword}
+

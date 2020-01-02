@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,6 +30,7 @@ import com.tcdng.jacklyn.shared.workflow.data.PublishWfCategoryResult;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfDoc;
 import com.tcdng.jacklyn.workflow.entities.WfForm;
+import com.tcdng.jacklyn.workflow.entities.WfMessage;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.IOUtils;
@@ -47,7 +48,7 @@ public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
     @Test(expected = UnifyException.class)
     public void testPublishWfCategoryNoXml() throws Exception {
         PublishWfCategoryParams params = new PublishWfCategoryParams();
-        PublishWfCategoryResult result = getRemoteCallClient().remoteCall(PublishWfCategoryResult.class,
+        PublishWfCategoryResult result = getWebClient().remoteCall(PublishWfCategoryResult.class,
                 TEST_REMOTE_APP_URL, params);
         assertNotNull(result);
     }
@@ -59,8 +60,8 @@ public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
             inputStream = IOUtils.openClassLoaderResourceInputStream("xml/wfcustomer.xml");
             byte[] xml = IOUtils.readAll(inputStream);
 
-            PublishWfCategoryParams params = new PublishWfCategoryParams(xml);
-            PublishWfCategoryResult result = getRemoteCallClient().remoteCall(PublishWfCategoryResult.class,
+            PublishWfCategoryParams params = new PublishWfCategoryParams(xml, true);
+            PublishWfCategoryResult result = getWebClient().remoteCall(PublishWfCategoryResult.class,
                     TEST_REMOTE_APP_URL, params);
             assertNotNull(result);
             assertFalse(result.isError());
@@ -71,9 +72,9 @@ public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
 
     @Override
     protected void onSetup() throws Exception {
-        if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
+        if (!getWebClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
                 WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY)) {
-            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+            getWebClient().setupRemoteCall(TEST_REMOTE_APP_URL,
                     WorkflowRemoteCallNameConstants.PUBLISH_WORKFLOW_CATEGORY);
         }
     }
@@ -81,7 +82,7 @@ public class WorkflowRemoteGateTest extends AbstractJacklynWebTest {
     @SuppressWarnings("unchecked")
     @Override
     protected void onTearDown() throws Exception {
-        deleteAll(WfTemplate.class, WfForm.class, WfDoc.class, WfCategory.class);
+        deleteAll(WfMessage.class, WfTemplate.class, WfForm.class, WfDoc.class, WfCategory.class);
     }
 
 }

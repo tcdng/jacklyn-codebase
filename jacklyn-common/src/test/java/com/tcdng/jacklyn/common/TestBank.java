@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,7 +19,7 @@ import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.Table;
 import com.tcdng.unify.core.annotation.UniqueConstraint;
 import com.tcdng.unify.core.batch.BatchItemRecord;
-import com.tcdng.unify.core.database.AbstractTestEntity;
+import com.tcdng.unify.core.database.AbstractTestTableEntity;
 
 /**
  * Test bank record.
@@ -28,7 +28,7 @@ import com.tcdng.unify.core.database.AbstractTestEntity;
  * @since 1.0
  */
 @Table(name = "TEST_BANK", uniqueConstraints = { @UniqueConstraint({ "name" }) })
-public class TestBank extends AbstractTestEntity implements BatchItemRecord {
+public class TestBank extends AbstractTestTableEntity implements BatchItemRecord {
 
     @Column
     private String name;

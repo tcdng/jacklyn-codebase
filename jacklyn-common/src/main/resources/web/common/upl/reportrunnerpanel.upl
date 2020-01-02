@@ -1,12 +1,18 @@
 // UPL template for report runner panel
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-reportrunnerpanel dialogCaption:$m{common.report.reportrunner}
-    dialogBodyComponents:$c{rptParamsPanel rptColumnOptionsPanel}
+    dialogBodyComponents:$c{runnerTitlePanel runnerBaseBodyPanel}
     dialogActionLayout:$d{!ui-vertical style:$s{width:100%;}}
     dialogActionComponents:$c{reportOptionsPanel reportActionPanel}
 
+!ui-panel:runnerTitlePanel style:$s{width:100%;} components:$c{reportTitle}
+!ui-label:reportTitle styleClass:$s{title} binding:reportDescription
+
+!ui-panel:runnerBaseBodyPanel layout:$d{!ui-horizontal style:$s{width:100%;}}
+    components:$c{rptParamsPanel rptColumnOptionsPanel}
+    
 // Report parameters
 !ui-panel:rptParamsPanel layout:$d{!ui-vertical} components:$c{inputParameters}
 !ui-multidynamic:inputParameters binding:userInputList
@@ -18,7 +24,7 @@
     multiSelect:true selectBinding:included multiSelDependentList:$c{genReportBtn}
     windowed:true
 !ui-label:columnDescription caption:$m{common.report.column.description} binding:description columnStyle:$s{width:160px;}
-!ui-select:columnOrder caption:$m{common.report.column.order} binding:order style:$s{width:128px;} columnStyle:$s{width:100px;} list:orderlist blankOption:$s{}
+!ui-select:columnOrder caption:$m{common.report.column.order} binding:orderType style:$s{width:128px;} columnStyle:$s{width:100px;} list:orderlist blankOption:$s{}
 !ui-checkbox:columnGroup caption:$m{common.report.column.group} binding:group columnStyle:$s{width:60px;}
 !ui-checkbox:columnSum caption:$m{common.report.column.sum} binding:sum columnStyle:$s{width:60px;}
 

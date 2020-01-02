@@ -1,4 +1,24 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+<!--
+  Copyright 2018-2020 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!-- Jacklyn configuration for system module -->
 <module name="system" description="$m{system.module}">
 	<audits>
 		<audit name="sys-activatemoduleact" description="$m{system.auditsettings.module.privilege.activate}"
@@ -27,51 +47,59 @@
 			image="$t{images/manageschdtasks.png}" path="/system/scheduledtask/openPage" />
 	</shortcut-tiles>
 	<menus>
+		<menu name="sys-mainuserint" caption="$m{system.userinterface.menu.title}"
+			description="$m{system.userinterface.menu.main}">
+			<menuitem name="sys-managetheme" description="$m{system.menuitem.theme}"
+				caption="$m{system.theme.menu.title}" path="/system/theme/openPage"
+				pageCaption="$m{system.theme.manage}" />
+			<menuitem name="sys-managedashboard" description="$m{system.menuitem.dashboard}"
+				caption="$m{system.dashboard.menu.title}" path="/system/dashboard/openPage"
+				pageCaption="$m{system.dashboard.manage}" />
+			<menuitem name="sys-manageinputctrldef" description="$m{system.menuitem.inputctrldef}"
+				caption="$m{system.inputctrldef.menu.title}" path="/system/inputctrldef/openPage"
+				pageCaption="$m{system.inputctrldef.manage}" />
+			<menuitem name="sys-managemenu" description="$m{system.menu.menu}"
+				caption="$m{system.menu.menu.title}" path="/system/menu/openPage"
+				pageCaption="$m{system.menu.manage}" />
+            <menuitem name="sys-managemenuitem" description="$m{system.menuitem.menu}"
+                caption="$m{system.menu.menuitem.title}" path="/system/menuitem/openPage"
+                pageCaption="$m{system.menuitem.manage}" hidden="true"/>
+		</menu>
 		<menu name="sys-mainsystem" description="$m{system.menu.main}"
 			caption="$m{system.menu.title}">
 			<menuitem name="sys-managemodule" description="$m{system.menuitem.module}"
 				caption="$m{system.module.menu.title}" path="/system/module/openPage"
-				pageCaption="$m{system.module.manage}"
-				remotePath="/system/module/getRemoteDoc" />
-			<menuitem name="sys-managetheme" description="$m{system.menuitem.theme}"
-				caption="$m{system.theme.menu.title}" path="/system/theme/openPage"
-				pageCaption="$m{system.theme.manage}"
-				remotePath="/system/theme/getRemoteDoc" />
-            <menuitem name="sys-managedashboard" description="$m{system.menuitem.dashboard}"
-                caption="$m{system.dashboard.menu.title}" path="/system/dashboard/openPage"
-                pageCaption="$m{system.dashboard.manage}"
-                remotePath="/system/dashboard/getRemoteDoc" />
-			<menuitem name="sys-manageinputctrldef" description="$m{system.menuitem.inputctrldef}"
-				caption="$m{system.inputctrldef.menu.title}" path="/system/inputctrldef/openPage"
-				pageCaption="$m{system.inputctrldef.manage}"
-				remotePath="/system/inputctrldef/getRemoteDoc" />
-			<menuitem name="sys-managemenu" description="$m{system.menuitem.menu}"
-				caption="$m{system.menu.menu.title}" path="/system/menu/openPage"
-				pageCaption="$m{system.menu.manage}"
-				remotePath="/system/menu/getRemoteDoc" />
+				pageCaption="$m{system.module.manage}" />
+			<menuitem name="sys-managesupportedlocale" description="$m{system.menuitem.supportedlocale}"
+				caption="$m{system.supportedlocale.menu.title}" path="/system/supportedlocale/openPage"
+				pageCaption="$m{system.supportedlocale.manage}" />
 			<menuitem name="sys-managesysparameter" description="$m{system.menuitem.sysparameter}"
 				caption="$m{system.sysparameter.menu.title}" path="/system/sysparameter/openPage"
-				pageCaption="$m{system.sysparameter.manage}"
-				remotePath="/system/sysparameter/getRemoteDoc" />
+				pageCaption="$m{system.sysparameter.manage}" />
 			<menuitem name="sys-manageschdtask" description="$m{system.menuitem.schdtask}"
 				caption="$m{system.scheduledtask.menu.title}" path="/system/scheduledtask/openPage"
-				pageCaption="$m{system.scheduledtask.manage}"
-				remotePath="/system/scheduledtask/getRemoteDoc" />
+				pageCaption="$m{system.scheduledtask.manage}" />
 			<menuitem name="sys-manageschdtaskhist" description="$m{system.menuitem.schdtaskhist}"
 				caption="$m{system.scheduledtaskhist.menu.title}" path="/system/scheduledtaskhist/openPage"
-				pageCaption="$m{system.scheduledtaskhist.manage}"
-				remotePath="/system/scheduledtaskhist/getRemoteDoc" />
+				pageCaption="$m{system.scheduledtaskhist.manage}" />
 			<menuitem name="sys-manageshortcuttile" description="$m{system.menuitem.shortcut}"
 				caption="$m{system.shortcuttile.menu.title}" path="/system/shortcuttile/openPage"
-				pageCaption="$m{system.shortcuttile.manage}"
-				remotePath="/system/shortcuttile/getRemoteDoc" />
-			<menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
-				pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
-				path="/system/authentication/openPage" remotePath="/system/authentication/getRemoteDoc" />
+				pageCaption="$m{system.shortcuttile.manage}" />
 			<menuitem name="sys-systemcontrol" description="$m{system.menuitem.syscontrol}"
 				caption="$m{system.systemcontrol.menu.title}" path="/system/systemcontrol/openPage"
-				pageCaption="$m{system.systemcontrol.menu.title}"
-				remotePath="/system/systemcontrol/getRemoteDoc" />
+				pageCaption="$m{system.systemcontrol.menu.title}" />
+			<menuitem name="sys-managedatasourcedrivers" caption="$m{system.datasourcedriver.menu.title}"
+				description="$m{system.menuitem.datasourcedriver}" pageCaption="$m{system.datasourcedriver.manage}"
+				path="/system/datasourcedriver/openPage" />
+			<menuitem name="sys-managedatasources" caption="$m{system.datasource.menu.title}"
+				description="$m{system.menuitem.datasource}" pageCaption="$m{system.datasource.manage}"
+				path="/system/datasource/openPage" />
+			<menuitem name="sys-manageauthentication" caption="$m{system.authentication.menu.title}"
+				pageCaption="$m{system.authentication.manage}" description="$m{system.menuitem.authentication}"
+				path="/system/authentication/openPage" />
+            <menuitem name="sys-distributionlisting" caption="$m{system.distributionlisting.menu.title}"
+                description="$m{system.menuitem.distributionlisting}" pageCaption="$m{system.distributionlisting}"
+                path="/system/distributionlisting/openPage" />
 		</menu>
 	</menus>
 	<input-controls>
@@ -93,10 +121,15 @@
 			<privilege name="sys-themeedit" description="$m{system.privilege.theme.edit}" />
 			<privilege name="sys-themeview" description="$m{system.privilege.theme.view}" />
 			<privilege name="sys-themedelete" description="$m{system.privilege.theme.delete}" />
-            <privilege name="sys-dashboardadd" description="$m{system.privilege.dashboard.add}" />
-            <privilege name="sys-dashboardedit" description="$m{system.privilege.dashboard.edit}" />
-            <privilege name="sys-dashboardview" description="$m{system.privilege.dashboard.view}" />
-            <privilege name="sys-dashboarddelete" description="$m{system.privilege.dashboard.delete}" />
+			<privilege name="sys-supportedlocaleadd" description="$m{system.privilege.supportedlocale.add}" />
+			<privilege name="sys-supportedlocaleedit" description="$m{system.privilege.supportedlocale.edit}" />
+			<privilege name="sys-supportedlocaleview" description="$m{system.privilege.supportedlocale.view}" />
+			<privilege name="sys-supportedlocaledelete"
+				description="$m{system.privilege.supportedlocale.delete}" />
+			<privilege name="sys-dashboardadd" description="$m{system.privilege.dashboard.add}" />
+			<privilege name="sys-dashboardedit" description="$m{system.privilege.dashboard.edit}" />
+			<privilege name="sys-dashboardview" description="$m{system.privilege.dashboard.view}" />
+			<privilege name="sys-dashboarddelete" description="$m{system.privilege.dashboard.delete}" />
 			<privilege name="sys-menuview" description="$m{system.privilege.menu.view}" />
 			<privilege name="sys-menuedit" description="$m{system.privilege.menu.edit}" />
 			<privilege name="sys-menuitemview" description="$m{system.privilege.menuitem.view}" />
@@ -106,50 +139,80 @@
 			<privilege name="sys-shortcuttileview" description="$m{system.privilege.shortcuttile.view}" />
 			<privilege name="sys-shortcuttiledelete" description="$m{system.privilege.shortcuttile.delete}" />
 			<privilege name="sys-authentication-add" description="$m{system.privilege.authentication.add}" />
-			<privilege name="sys-authentication-view"
-				description="$m{system.privilege.authentication.view}" />
-			<privilege name="sys-authentication-edit"
-				description="$m{system.privilege.authentication.edit}" />
+			<privilege name="sys-authentication-view" description="$m{system.privilege.authentication.view}" />
+			<privilege name="sys-authentication-edit" description="$m{system.privilege.authentication.edit}" />
 			<privilege name="sys-authentication-delete"
 				description="$m{system.privilege.authentication.delete}" />
 			<privilege name="sys-inputctrldefadd" description="$m{system.privilege.inputctrldef.add}" />
 			<privilege name="sys-inputctrldefedit" description="$m{system.privilege.inputctrldef.edit}" />
 			<privilege name="sys-inputctrldefview" description="$m{system.privilege.inputctrldef.view}" />
 			<privilege name="sys-inputctrldefdelete" description="$m{system.privilege.inputctrldef.delete}" />
+			<privilege name="sys-adddatasourcedriver" description="$m{system.privilege.adddatasourcedriver}" />
+			<privilege name="sys-editdatasourcedriver" description="$m{system.privilege.editdatasourcedriver}" />
+			<privilege name="sys-viewdatasourcedriver" description="$m{system.privilege.viewdatasourcedriver}" />
+			<privilege name="sys-deletedatasourcedriver"
+				description="$m{system.privilege.deletedatasourcedriver}" />
+			<privilege name="sys-adddatasource" description="$m{system.privilege.adddatasource}" />
+			<privilege name="sys-editdatasource" description="$m{system.privilege.editdatasource}" />
+			<privilege name="sys-viewdatasource" description="$m{system.privilege.viewdatasource}" />
+			<privilege name="sys-deletedatasource" description="$m{system.privilege.deletedatasource}" />
 		</privilege-group>
 	</privileges>
 	<reports>
-		<report name="sys-scheduledtaskhistreport" description="$m{system.report.scheduledtaskhist.description}"
-			title="$m{system.report.scheduledtaskhist.title}" processor="scheduledtaskhist-reportprocessor"
-			reportable="com.tcdng.jacklyn.system.entities.ScheduledTaskHist"
-			fields="scheduledTaskDesc,createDt,errorMsg,statusDesc">
-			<parameters>
-				<parameter name="executionDt" description="$m{system.scheduledtaskhist.executiondt}"
-					editor="!ui-date" type="date" mandatory="true" />
-				<parameter name="scheduledTaskId"
-					description="$m{system.scheduledtaskhist.scheduledtask}" editor="!ui-select list:scheduledtasklist blankOption:$s{}" />
-				<parameter name="status" description="$m{system.scheduledtaskhist.status}"
-					editor="!ui-select list:taskstatuslist blankOption:$s{}" />
-			</parameters>
-		</report>
+		<report-group name="systemReports" description="System Reports">
+			<report name="sys-scheduledtaskhistreport" description="$m{system.report.scheduledtaskhist.description}"
+				title="$m{system.report.scheduledtaskhist.title}"
+				reportable="com.tcdng.jacklyn.system.entities.ScheduledTaskHist">
+				<columns>
+                    <column field="scheduledTaskDesc" description="Scheduled Task"/>
+                    <column field="taskName" description="Task Name"/>
+                    <column field="startedOn" description="Started On"/>
+                    <column field="finishedOn" description="Finished On"/>
+                    <column field="taskStatusDesc" description="Status"/>
+				</columns>
+				<parameters>
+					<parameter name="executionDt" description="Execution Date"
+						label="$m{system.scheduledtaskhist.executiondt}" editor="!ui-date"
+						type="date" mandatory="true" />
+					<parameter name="scheduledTaskId" description="Scheduled Task"
+						label="$m{system.scheduledtaskhist.scheduledtask}" editor="!ui-select list:scheduledtasklist blankOption:$s{}" />
+					<parameter name="status" description="Status"
+						label="$m{system.scheduledtaskhist.status}" editor="!ui-select list:taskstatuslist blankOption:$s{}" />
+				</parameters>
+				<filter op="and">
+				    <filter field="startedOn" value1="executionDt" value2="executionDt" useParameter="true" op="between"/>
+                    <filter field="scheduledTaskId" value1="scheduledTaskId" useParameter="true" op="equals"/>
+                    <filter field="taskStatus" value1="status" useParameter="true" op="equals"/>
+				</filter>
+			</report>
+		</report-group>
 	</reports>
 	<sys-parameters>
-		<sys-parameter name="SYS-0001" defaultValue="1.0.0"
+		<sys-parameter name="SYS-0001" defaultVal="1.0.0"
 			description="$m{system.sysparam.applicationversion}" editor="!ui-text size:24"
 			editable="false" />
-		<sys-parameter name="SYS-0002" defaultValue="Client Title"
+		<sys-parameter name="SYS-0002" defaultVal="Client Title"
 			description="$m{system.sysparam.clienttitle}" editor="!ui-text size:40" />
-		<sys-parameter name="SYS-0003" defaultValue="false"
+		<sys-parameter name="SYS-0003" defaultVal="false"
 			description="$m{system.sysparam.enablesystemscheduler}" editor="!ui-select list:booleanlist"
 			type="boolean" control="true" editable="false" />
-		<sys-parameter name="SYS-0004" defaultValue="8"
+		<sys-parameter name="SYS-0004" defaultVal="8"
 			description="$m{system.sysparam.maxscheduledtasktrigger}" editor="!ui-integer precision:2"
 			type="number" />
-		<sys-parameter name="SYS-0005" defaultValue="5"
+		<sys-parameter name="SYS-0005" defaultVal="5"
 			description="$m{system.sysparam.tasktriggerexpiration}" editor="!ui-integer precision:3"
 			type="number" />
-		<sys-parameter name="SYS-0006"
-			defaultValue="web/images/applicationbanner.jpg" description="$m{system.sysparam.applicationbanner}"
-			editor="!ui-text size:40" editable="false" />
+		<sys-parameter name="SYS-0006" defaultVal="web/images/applicationbanner.png"
+			description="$m{system.sysparam.applicationbanner}" editor="!ui-text size:40"
+			editable="true" />
+		<sys-parameter name="SYS-0007" description="$m{system.sysparam.useloginlocale}"
+			defaultVal="false" editor="!ui-select list:booleanlist" type="boolean"
+			editable="true" />
+        <sys-parameter name="SYS-0008" description="$m{system.sysparam.systemsmsmobileno}"
+            editor="!ui-text size:40" />
+        <sys-parameter name="SYS-0009" description="$m{system.sysparam.systememail}"
+            editor="!ui-text size:40" />
+		<sys-parameter name="SYS-000A" defaultVal="System"
+			description="$m{system.sysparam.systemname}" editor="!ui-text size:24" />
 	</sys-parameters>
 </module>

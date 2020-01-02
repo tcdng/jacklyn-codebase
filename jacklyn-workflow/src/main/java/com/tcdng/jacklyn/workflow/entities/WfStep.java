@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,8 +35,9 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFSTEP", uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
-        @UniqueConstraint({ "wfTemplateId", "description" }) })
+@Table(
+        name = "JKWFSTEP", uniqueConstraints = { @UniqueConstraint({ "wfTemplateId", "name" }),
+                @UniqueConstraint({ "wfTemplateId", "description" }) })
 public class WfStep extends BaseEntity {
 
     @ForeignKey(WfTemplate.class)
@@ -60,6 +61,15 @@ public class WfStep extends BaseEntity {
     @Column(name = "STEP_LABEL", length = 64, nullable = true)
     private String label;
 
+    @Column(length = 64, nullable = true)
+    private String workAssigner;
+    
+    @Column(length = 64, nullable = true)
+    private String branch;
+    
+    @Column(length = 64, nullable = true)
+    private String origin;
+
     @Column
     private Integer itemsPerSession;
 
@@ -72,8 +82,14 @@ public class WfStep extends BaseEntity {
     @Column(name = "BRANCH_ONLY_FG")
     private Boolean branchOnly;
 
+    @Column(name = "DEPARTMENT_ONLY_FG")
+    private Boolean departmentOnly;
+
     @Column(name = "INCLUDE_FORWARDER_FG")
     private Boolean includeForwarder;
+
+    @ChildList
+    private List<WfBranch> branchList;
 
     @ChildList
     private List<WfEnrichment> enrichmentList;
@@ -125,6 +141,12 @@ public class WfStep extends BaseEntity {
         return description;
     }
 
+    public String getExtDescription() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(wfTemplateName).append("::").append(description);
+        return sb.toString();
+    }
+
     public Long getWfTemplateId() {
         return wfTemplateId;
     }
@@ -173,6 +195,30 @@ public class WfStep extends BaseEntity {
         this.label = label;
     }
 
+    public String getWorkAssigner() {
+        return workAssigner;
+    }
+
+    public void setWorkAssigner(String workAssigner) {
+        this.workAssigner = workAssigner;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
     public Integer getItemsPerSession() {
         return itemsPerSession;
     }
@@ -205,12 +251,28 @@ public class WfStep extends BaseEntity {
         this.branchOnly = branchOnly;
     }
 
+    public Boolean getDepartmentOnly() {
+        return departmentOnly;
+    }
+
+    public void setDepartmentOnly(Boolean departmentOnly) {
+        this.departmentOnly = departmentOnly;
+    }
+
     public Boolean getIncludeForwarder() {
         return includeForwarder;
     }
 
     public void setIncludeForwarder(Boolean includeForwarder) {
         this.includeForwarder = includeForwarder;
+    }
+
+    public List<WfBranch> getBranchList() {
+        return branchList;
+    }
+
+    public void setBranchList(List<WfBranch> branchList) {
+        this.branchList = branchList;
     }
 
     public List<WfEnrichment> getEnrichmentList() {

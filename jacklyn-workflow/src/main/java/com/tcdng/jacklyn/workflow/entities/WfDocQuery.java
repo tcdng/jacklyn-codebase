@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,30 +32,30 @@ public class WfDocQuery extends BaseEntityQuery<WfDoc> {
     }
 
     public WfDocQuery wfCategoryId(Long wfCategoryId) {
-        return (WfDocQuery) equals("wfCategoryId", wfCategoryId);
+        return (WfDocQuery) addEquals("wfCategoryId", wfCategoryId);
     }
 
     public WfDocQuery wfCategoryName(String wfCategoryName) {
-        return (WfDocQuery) equals("wfCategoryName", wfCategoryName);
+        return (WfDocQuery) addEquals("wfCategoryName", wfCategoryName);
     }
 
     public WfDocQuery wfCategoryStatus(RecordStatus wfCategoryStatus) {
-        return (WfDocQuery) equals("wfCategoryStatus", wfCategoryStatus);
+        return (WfDocQuery) addEquals("wfCategoryStatus", wfCategoryStatus);
     }
 
     public WfDocQuery wfCategoryVersion(String wfCategoryVersion) {
-        return (WfDocQuery) equals("wfCategoryVersion", wfCategoryVersion);
+        return (WfDocQuery) addEquals("wfCategoryVersion", wfCategoryVersion);
     }
 
     public WfDocQuery name(String name) {
-        return (WfDocQuery) equals("name", name);
+        return (WfDocQuery) addEquals("name", name);
     }
 
     public WfDocQuery nameLike(String name) {
-        return (WfDocQuery) like("name", name);
+        return (WfDocQuery) addLike("name", name);
     }
 
     public WfDocQuery descriptionLike(String description) {
-        return (WfDocQuery) like("description", description);
+        return (WfDocQuery) addLike("description", description);
     }
 }

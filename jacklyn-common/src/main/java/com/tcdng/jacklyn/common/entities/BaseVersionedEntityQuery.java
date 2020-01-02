@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,6 +28,6 @@ public abstract class BaseVersionedEntityQuery<T extends BaseVersionedEntity> ex
     }
 
     public BaseVersionedEntityQuery<T> versionNo(long versionNo) {
-        return (BaseVersionedEntityQuery<T>) equals("versionNo", versionNo);
+        return (BaseVersionedEntityQuery<T>) addEquals("versionNo", versionNo);
     }
 }

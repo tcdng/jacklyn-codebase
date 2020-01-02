@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,9 +15,14 @@
  */
 package com.tcdng.jacklyn.shared.xml.util;
 
+import java.util.List;
+
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.data.FactoryMap;
+import com.tcdng.unify.core.data.PackableDoc;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.StringUtils;
+import com.tcdng.unify.core.util.StringUtils.StringToken;
 
 /**
  * Workflow name utilities.
@@ -30,6 +35,8 @@ public final class WfNameUtils {
     private static FactoryMap<String, DocNameParts> docNames;
 
     private static FactoryMap<String, TemplateNameParts> templateNames;
+
+    private static FactoryMap<String, ProcessNameParts> processNames;
 
     private static FactoryMap<String, StepNameParts> stepNames;
 
@@ -54,12 +61,23 @@ public final class WfNameUtils {
 
         };
 
+        processNames = new FactoryMap<String, ProcessNameParts>() {
+
+            @Override
+            protected ProcessNameParts create(String globalName, Object... params) throws Exception {
+                String[] names = StringUtils.dotSplit(globalName);
+                return new ProcessNameParts(names[0], names[1], names[2], getTemplateGlobalName(names[0], names[1]),
+                        getDocGlobalName(names[0], names[2]));
+            }
+
+        };
+
         stepNames = new FactoryMap<String, StepNameParts>() {
 
             @Override
             protected StepNameParts create(String globalName, Object... params) throws Exception {
                 String[] names = StringUtils.dotSplit(globalName);
-                return new StepNameParts(names[0], names[1], getGlobalTemplateName(names[0], names[1]), names[2]);
+                return new StepNameParts(names[0], names[1], getTemplateGlobalName(names[0], names[1]), names[2]);
             }
 
         };
@@ -70,22 +88,26 @@ public final class WfNameUtils {
     }
 
     public static boolean isValidName(String name) {
-        return !StringUtils.isBlank(name) && !StringUtils.containsWhitespace(name);
+        return StringUtils.isNotBlank(name) && !StringUtils.containsWhitespace(name);
     }
 
-    public static String getGlobalDocName(String categoryName, String docName) {
+    public static String getDocGlobalName(String categoryName, String docName) {
         return StringUtils.dotify(categoryName, docName);
     }
 
-    public static String getGlobalTemplateName(String categoryName, String templateName) {
+    public static String getTemplateGlobalName(String categoryName, String templateName) {
         return StringUtils.dotify(categoryName, templateName);
     }
 
-    public static String getGlobalMessageName(String categoryName, String templateName, String messageName) {
-        return StringUtils.dotify(categoryName, templateName, messageName);
+    public static String getMessageGlobalName(String categoryName, String messageName) {
+        return StringUtils.dotify(categoryName, messageName);
     }
 
-    public static String getGlobalStepName(String categoryName, String templateName, String stepName) {
+    public static String getProcessGlobalName(String categoryName, String templateName, String docName) {
+        return StringUtils.dotify(categoryName, templateName, docName);
+    }
+
+    public static String getStepGlobalName(String categoryName, String templateName, String stepName) {
         return StringUtils.dotify(categoryName, templateName, stepName);
     }
 
@@ -97,8 +119,29 @@ public final class WfNameUtils {
         return templateNames.get(globalName);
     }
 
+    public static ProcessNameParts getProcessNameParts(String globalName) throws UnifyException {
+        return processNames.get(globalName);
+    }
+
     public static StepNameParts getStepNameParts(String globalName) throws UnifyException {
         return stepNames.get(globalName);
+    }
+
+    public static String describe(List<StringToken> itemDescFormat, PackableDoc packableDoc) throws UnifyException {
+        if (itemDescFormat.isEmpty()) {
+            return DataUtils.EMPTY_STRING;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (StringToken stringToken : itemDescFormat) {
+            if (stringToken.isParam()) {
+                sb.append(packableDoc.read(String.class, stringToken.getToken()));
+            } else {
+                sb.append(stringToken.getToken());
+            }
+        }
+
+        return sb.toString();
     }
 
     public static class DocNameParts {
@@ -163,20 +206,63 @@ public final class WfNameUtils {
         }
     }
 
+    public static class ProcessNameParts {
+
+        private String categoryName;
+
+        private String templateName;
+
+        private String docName;
+
+        private String templateGlobalName;
+
+        private String docGlobalName;
+
+        public ProcessNameParts(String categoryName, String templateName, String docName, String templateGlobalName,
+                String docGlobalName) {
+            this.categoryName = categoryName;
+            this.templateName = templateName;
+            this.docName = docName;
+            this.templateGlobalName = templateGlobalName;
+            this.docGlobalName = docGlobalName;
+        }
+
+        public String getCategoryName() {
+            return categoryName;
+        }
+
+        public String getTemplateName() {
+            return templateName;
+        }
+
+        public String getDocName() {
+            return docName;
+        }
+
+        public String getTemplateGlobalName() {
+            return templateGlobalName;
+        }
+
+        public String getDocGlobalName() {
+            return docGlobalName;
+        }
+
+    }
+
     public static class StepNameParts {
 
         private String categoryName;
 
         private String templateName;
 
-        private String globalTemplateName;
+        private String templateGlobalName;
 
         private String stepName;
 
-        public StepNameParts(String categoryName, String templateName, String globalTemplateName, String stepName) {
+        public StepNameParts(String categoryName, String templateName, String templateGlobalName, String stepName) {
             this.categoryName = categoryName;
             this.templateName = templateName;
-            this.globalTemplateName = globalTemplateName;
+            this.templateGlobalName = templateGlobalName;
             this.stepName = stepName;
         }
 
@@ -188,8 +274,8 @@ public final class WfNameUtils {
             return templateName;
         }
 
-        public String getGlobalTemplateName() {
-            return globalTemplateName;
+        public String getTemplateGlobalName() {
+            return templateGlobalName;
         }
 
         public String getStepName() {

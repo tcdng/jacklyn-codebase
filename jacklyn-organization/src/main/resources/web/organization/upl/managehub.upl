@@ -1,0 +1,33 @@
+// UPL template for managing hubs
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{organization.hub.manage}
+    searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+    tableColumnList:$c{name description statusDesc}
+    formSection:$d{!ui-section caption:$m{organization.hub.section.basicdetails} components:$c{frmName frmDescription frmStatus}}
+    addPrivilege:$s{org-hubadd} editPrivilege:$s{org-hubedit}
+    viewPrivilege:$s{org-hubview} deletePrivilege:$s{org-hubdelete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchName caption:$m{organization.hub.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{organization.hub.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{organization.hub.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{organization.hub.name} binding:name columnStyle:$s{width:80px;} sortable:true
+!ui-label:description caption:$m{organization.hub.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:statusDesc caption:$m{organization.hub.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{organization.hub.name} binding:name minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{organization.hub.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-select:frmStatus caption:$m{organization.hub.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

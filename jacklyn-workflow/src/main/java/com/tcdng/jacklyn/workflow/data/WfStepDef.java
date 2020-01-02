@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,8 +15,10 @@
  */
 package com.tcdng.jacklyn.workflow.data;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +28,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow step definition.
@@ -35,21 +38,23 @@ import com.tcdng.unify.core.util.DataUtils;
  */
 public class WfStepDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = 1353403743220906693L;
-
     private Long wfTemplateId;
 
-    private String globalTemplateName;
+    private String templateGlobalName;
 
-    private String globalFormName;
-
+    private String templateGlobalLockName;
+    
     private String globalName;
 
-    private String docViewer;
+    private String originGlobalName;
+    
+    private String workAssignerName;
 
     private WorkflowStepType stepType;
 
     private WorkflowParticipantType participantType;
+
+    private Map<String, WfBranchDef> splitBranches;
 
     private List<WfEnrichmentDef> enrichmentList;
 
@@ -69,35 +74,53 @@ public class WfStepDef extends BaseLabelWfDef {
 
     private int itemsPerSession;
 
-    private int expiryHours;
+    private long expiryMilliSec;
 
     private boolean audit;
 
     private boolean branchOnly;
 
+    private boolean departmentOnly;
+
     private boolean includeForwarder;
 
-    public WfStepDef(Long wfTemplateId, String globalTemplateName, String globalFormName, String globalName,
-            String docViewer, String name, String description, String label, WorkflowStepType stepType,
-            WorkflowParticipantType participantType, List<WfEnrichmentDef> enrichmentList,
-            List<WfRoutingDef> routingList, List<WfRecordActionDef> recordActionList,
-            List<WfUserActionDef> userActionList, List<WfFormPrivilegeDef> formPrivilegeList,
-            List<WfAlertDef> alertList, List<WfPolicyDef> policyList, int itemsPerSession, int expiryHours,
-            boolean audit, boolean branchOnly, boolean includeForwarder) {
+    private long versionTimestamp;
+
+    public WfStepDef(Long wfTemplateId, String templateGlobalName, String templateGlobalLockName, String globalName, String originGlobalName, String name, String description,
+            String label, String workAssignerName, WorkflowStepType stepType, WorkflowParticipantType participantType,
+            List<WfBranchDef> branchList, List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
+            List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
+            List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
+            int itemsPerSession, long expiryMilliSec, boolean audit, boolean branchOnly, boolean departmentOnly,
+            boolean includeForwarder, long versionTimestamp) {
         super(name, description, label);
         this.wfTemplateId = wfTemplateId;
-        this.globalTemplateName = globalTemplateName;
-        this.globalFormName = globalFormName;
+        this.templateGlobalName = templateGlobalName;
+        this.templateGlobalLockName = templateGlobalLockName;
         this.globalName = globalName;
-        this.docViewer = docViewer;
+        this.originGlobalName = originGlobalName;
+        this.workAssignerName = workAssignerName;
         this.stepType = stepType;
         this.participantType = participantType;
         this.itemsPerSession = itemsPerSession;
-        this.expiryHours = expiryHours;
+        this.expiryMilliSec = expiryMilliSec;
         this.audit = audit;
         this.branchOnly = branchOnly;
+        this.departmentOnly = departmentOnly;
         this.includeForwarder = includeForwarder;
+        this.versionTimestamp = versionTimestamp;
 
+        if (!DataUtils.isBlank(branchList)) {
+            this.splitBranches = new LinkedHashMap<String, WfBranchDef>();
+            for (WfBranchDef wfBranchDef: branchList) {
+                this.splitBranches.put(wfBranchDef.getName(), wfBranchDef);
+            }
+            
+            this.splitBranches = Collections.unmodifiableMap(this.splitBranches);
+        } else {
+            this.splitBranches = Collections.emptyMap();
+        }
+        
         this.enrichmentList = DataUtils.unmodifiableList(enrichmentList);
         this.routingList = DataUtils.unmodifiableList(routingList);
         this.recordActionList = DataUtils.unmodifiableList(recordActionList);
@@ -116,24 +139,33 @@ public class WfStepDef extends BaseLabelWfDef {
         this.policyList = DataUtils.unmodifiableList(policyList);
     }
 
+    public WfStepDef(String templateGlobalName) {
+        super(null, null, null);
+        this.templateGlobalName = templateGlobalName;
+    }
+    
     public Long getWfTemplateId() {
         return wfTemplateId;
     }
 
-    public String getGlobalTemplateName() {
-        return globalTemplateName;
+    public String getTemplateGlobalName() {
+        return templateGlobalName;
     }
 
-    public String getGlobalFormName() {
-        return globalFormName;
+    public String getTemplateGlobalLockName() {
+        return templateGlobalLockName;
     }
 
     public String getGlobalName() {
         return globalName;
     }
 
-    public String getDocViewer() {
-        return docViewer;
+    public String getOriginGlobalName() {
+        return originGlobalName;
+    }
+
+    public String getWorkAssignerName() {
+        return workAssignerName;
     }
 
     public WorkflowStepType getStepType() {
@@ -144,6 +176,24 @@ public class WfStepDef extends BaseLabelWfDef {
         return participantType;
     }
 
+    public WfBranchDef getWfBranchDef(String name) throws UnifyException {
+        WfBranchDef wfBranchDef = splitBranches.get(name);
+        if (wfBranchDef == null) {
+            throw new UnifyException(WorkflowModuleErrorConstants.WORKFLOW_STEP_BRANCH_WITH_NAME_UNKNOWN,
+                    getDescription(), name);
+        }
+        
+        return wfBranchDef;
+    }
+    
+    public Collection<WfBranchDef> getBranchList() {
+        return splitBranches.values();
+    }
+
+    public int branchCount() {
+        return splitBranches.size();
+    }
+    
     public List<WfEnrichmentDef> getEnrichmentList() {
         return enrichmentList;
     }
@@ -176,8 +226,12 @@ public class WfStepDef extends BaseLabelWfDef {
         return itemsPerSession;
     }
 
-    public int getExpiryHours() {
-        return expiryHours;
+    public long getExpiryMilliSec() {
+        return expiryMilliSec;
+    }
+
+    public boolean isExpiry() {
+        return expiryMilliSec > 0;
     }
 
     public boolean isAudit() {
@@ -188,20 +242,36 @@ public class WfStepDef extends BaseLabelWfDef {
         return branchOnly;
     }
 
+    public boolean isDepartmentOnly() {
+        return departmentOnly;
+    }
+
     public boolean isIncludeForwarder() {
         return includeForwarder;
+    }
+
+    public long getVersionTimestamp() {
+        return versionTimestamp;
     }
 
     public boolean isStart() {
         return stepType.isStart();
     }
 
+    public boolean isError() {
+        return stepType.isError();
+    }
+
     public boolean isManual() {
         return stepType.isManual();
     }
 
-    public boolean isReceptacle() {
-        return stepType.isReceptacle();
+    public boolean isSplit() {
+        return stepType.isSplit();
+    }
+
+    public boolean isMerge() {
+        return stepType.isMerge();
     }
 
     public boolean isAutomatic() {
@@ -220,6 +290,10 @@ public class WfStepDef extends BaseLabelWfDef {
         return stepType.isEnd();
     }
 
+    public boolean isWithWorkAssigner() {
+        return !StringUtils.isBlank(workAssignerName);
+    }
+    
     public Set<String> getWfActionNames() {
         return userActions.keySet();
     }

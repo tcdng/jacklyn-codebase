@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,7 +28,14 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfsteptypelist")
 public enum WorkflowStepType implements EnumConst {
 
-    START("S"), MANUAL("M"), RECEPTACLE("R"), AUTOMATIC("A"), INTERACTIVE("I"), END("E");
+    START("S"),
+    MANUAL("M"),
+    AUTOMATIC("A"),
+    INTERACTIVE("I"),
+    ERROR("X"),
+    SPLIT("T"),
+    MERGE("G"),
+    END("E");
 
     private final String code;
 
@@ -41,6 +48,11 @@ public enum WorkflowStepType implements EnumConst {
         return this.code;
     }
 
+    @Override
+    public String defaultCode() {
+        return START.code;
+    }
+
     public boolean isStart() {
         return START.equals(this);
     }
@@ -49,8 +61,16 @@ public enum WorkflowStepType implements EnumConst {
         return MANUAL.equals(this);
     }
 
-    public boolean isReceptacle() {
-        return RECEPTACLE.equals(this);
+    public boolean isError() {
+        return ERROR.equals(this);
+    }
+
+    public boolean isSplit() {
+        return SPLIT.equals(this);
+    }
+
+    public boolean isMerge() {
+        return MERGE.equals(this);
     }
 
     public boolean isEnd() {

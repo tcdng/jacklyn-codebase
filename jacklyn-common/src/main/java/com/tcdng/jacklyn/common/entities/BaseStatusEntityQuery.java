@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,10 +30,10 @@ public class BaseStatusEntityQuery<T extends BaseStatusEntity> extends BaseEntit
     }
 
     public BaseStatusEntityQuery<T> status(RecordStatus status) {
-        return (BaseStatusEntityQuery<T>) equals("status", status);
+        return (BaseStatusEntityQuery<T>) addEquals("status", status);
     }
 
     public BaseStatusEntityQuery<T> statusNot(RecordStatus status) {
-        return (BaseStatusEntityQuery<T>) notEqual("status", status);
+        return (BaseStatusEntityQuery<T>) addNotEqual("status", status);
     }
 }

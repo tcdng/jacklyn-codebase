@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,9 +17,7 @@ package com.tcdng.jacklyn.workflow.entities;
 
 import java.util.Date;
 
-import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
-import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -32,20 +30,22 @@ import com.tcdng.unify.core.annotation.Table;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@Managed(module = WorkflowModuleNameConstants.WORKFLOW_MODULE, title = "Workflow Item Event")
-@Table("WFITEMEVENT")
+@Table("JKWFITEMEVENT")
 public class WfItemEvent extends BaseEntity {
 
     @ForeignKey(WfItemHist.class)
     private Long wfItemHistId;
 
-    @Column
+    @Column(length = 64)
     private String wfStepName;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date stepDt;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
+    private Date expectedDt;
+
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date actionDt;
 
     @Column(nullable = true)
@@ -54,15 +54,30 @@ public class WfItemEvent extends BaseEntity {
     @Column(length = 32, nullable = true)
     private String wfAction;
 
-    @Column(length = 512, nullable = true)
-    private String notes;
+    @Column(name = "ACTOR_COMMENT", length = 512, nullable = true)
+    private String comment;
 
-    @ListOnly(key = "wfItemHistId", property = "documentId")
-    private Long documentId;
+    @Column(length = 64, nullable = true)
+    private String srcWfStepName;
+
+    @Column(name = "ERROR_CD", length = 32, nullable = true)
+    private String errorCode;
+
+    @Column(name = "ERROR_MSG", length = 512, nullable = true)
+    private String errorMsg;
+
+    @ListOnly(key = "wfItemHistId", property = "processGlobalName")
+    private String processGlobalName;
+
+    @ListOnly(key = "wfItemHistId", property = "docId")
+    private Long docId;
+
+    @ListOnly(key = "wfItemHistId", property = "description")
+    private String wfItemDesc;
 
     @Override
     public String getDescription() {
-        return null;
+        return wfItemDesc;
     }
 
     public Long getWfItemHistId() {
@@ -89,6 +104,14 @@ public class WfItemEvent extends BaseEntity {
         this.stepDt = stepDt;
     }
 
+    public Date getExpectedDt() {
+        return expectedDt;
+    }
+
+    public void setExpectedDt(Date expectedDt) {
+        this.expectedDt = expectedDt;
+    }
+
     public Date getActionDt() {
         return actionDt;
     }
@@ -113,19 +136,59 @@ public class WfItemEvent extends BaseEntity {
         this.wfAction = wfAction;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getComment() {
+        return comment;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public Long getDocumentId() {
-        return documentId;
+    public String getSrcWfStepName() {
+        return srcWfStepName;
     }
 
-    public void setDocumentId(Long documentId) {
-        this.documentId = documentId;
+    public void setSrcWfStepName(String srcWfStepName) {
+        this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getProcessGlobalName() {
+        return processGlobalName;
+    }
+
+    public void setProcessGlobalName(String processGlobalName) {
+        this.processGlobalName = processGlobalName;
+    }
+
+    public Long getDocId() {
+        return docId;
+    }
+
+    public void setDocId(Long docId) {
+        this.docId = docId;
+    }
+
+    public String getWfItemDesc() {
+        return wfItemDesc;
+    }
+
+    public void setWfItemDesc(String wfItemDesc) {
+        this.wfItemDesc = wfItemDesc;
     }
 }

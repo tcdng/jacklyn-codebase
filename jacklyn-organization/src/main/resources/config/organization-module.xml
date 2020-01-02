@@ -1,4 +1,24 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+<!--
+  Copyright 2018-2020 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!-- Jacklyn configuration for organization module -->
 <module name="organization" description="$m{organization.module}">
     <shortcut-tiles>
         <shortcut-tile name="org-roles"
@@ -10,16 +30,19 @@
 			caption="$m{organization.menu.title}">
 			<menuitem name="org-managebranch" description="$m{organization.menuitem.branch}"
 				caption="$m{organization.branch.menu.title}" pageCaption="$m{organization.branch.manage}"
-				path="/organization/branch/openPage" remotePath="/organization/branch/getRemoteDoc" />
+				path="/organization/branch/openPage" />
             <menuitem name="org-managedepartment" description="$m{organization.menuitem.department}"
                 caption="$m{organization.department.menu.title}" pageCaption="$m{organization.department.manage}"
-                path="/organization/department/openPage" remotePath="/organization/department/getRemoteDoc" />
+                path="/organization/department/openPage" />
+            <menuitem name="org-managehub" description="$m{organization.menuitem.hub}"
+                caption="$m{organization.hub.menu.title}" pageCaption="$m{organization.hub.manage}"
+                path="/organization/hub/openPage" />
             <menuitem name="org-managerole" caption="$m{organization.role.menu.title}"
                 pageCaption="$m{organization.role.manage}" description="$m{organization.menuitem.role}"
-                path="/organization/role/openPage" remotePath="/organization/role/getRemoteDoc" />
+                path="/organization/role/openPage" />
             <menuitem name="org-manageroledocumentcontrol" caption="$m{organization.roledocumentcontrol.menu.title}"
                 pageCaption="$m{organization.roleprivilege.manage}" description="$m{organization.menuitem.roledocumentcontrol}"
-                path="/organization/roledocumentcontrol/openPage" remotePath="/organization/roledocumentcontrol/getRemoteDoc" />
+                path="/organization/roledocumentcontrol/openPage" />
 		</menu>
 	</menus>
 	<privileges>
@@ -32,6 +55,10 @@
             <privilege name="org-departmentedit" description="$m{organization.privilege.department.edit}" />
             <privilege name="org-departmentview" description="$m{organization.privilege.department.view}" />
             <privilege name="org-departmentdelete" description="$m{organization.privilege.department.delete}" />
+            <privilege name="org-hubadd" description="$m{organization.privilege.hub.add}" />
+            <privilege name="org-hubedit" description="$m{organization.privilege.hub.edit}" />
+            <privilege name="org-hubview" description="$m{organization.privilege.hub.view}" />
+            <privilege name="org-hubdelete" description="$m{organization.privilege.hub.delete}" />
             <privilege name="org-role-add" description="$m{organization.privilege.role.add}" />
             <privilege name="org-role-view" description="$m{organization.privilege.role.view}" />
             <privilege name="org-role-edit" description="$m{organization.privilege.role.edit}" />

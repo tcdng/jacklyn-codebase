@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,8 @@
 package com.tcdng.jacklyn.workflow.data;
 
 import com.tcdng.jacklyn.shared.notification.NotificationType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
+import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 
 /**
  * Workflow document alert definition.
@@ -26,23 +28,58 @@ import com.tcdng.jacklyn.shared.notification.NotificationType;
  */
 public class WfAlertDef extends BaseWfDef {
 
-    private static final long serialVersionUID = 9168747124616981593L;
+    private WorkflowAlertType type;
+    
+    private WorkflowParticipantType participant;
 
-    private NotificationType type;
+    private NotificationType channel;
+
+    private String docName;
+
+    private String stepGlobalName;
 
     private String notificationTemplateCode;
 
-    public WfAlertDef(String name, String description, NotificationType type, String notificationTemplateCode) {
+    public WfAlertDef(String docName, String stepGlobalName, String name, String description, WorkflowAlertType type,
+            WorkflowParticipantType participant, NotificationType channel, String notificationTemplateCode) {
         super(name, description);
+        this.docName = docName;
+        this.stepGlobalName = stepGlobalName;
         this.type = type;
+        this.participant = participant;
+        this.channel = channel;
         this.notificationTemplateCode = notificationTemplateCode;
     }
 
-    public NotificationType getType() {
+    public String getStepGlobalName() {
+        return stepGlobalName;
+    }
+
+    public WorkflowAlertType getType() {
         return type;
+    }
+
+    public WorkflowParticipantType getParticipant() {
+        return participant;
+    }
+
+    public NotificationType getChannel() {
+        return channel;
     }
 
     public String getNotificationTemplateCode() {
         return notificationTemplateCode;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public boolean isPassThrough() {
+        return type.isPassThrough();
+    }
+
+    public boolean isUserInteract() {
+        return type.isUserInteract();
     }
 }

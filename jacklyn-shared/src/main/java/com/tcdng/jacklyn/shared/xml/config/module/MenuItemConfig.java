@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,8 +33,8 @@ public class MenuItemConfig extends BaseConfig {
 
     private String path;
 
-    private String remotePath;
-
+    private boolean hidden;
+    
     public String getCaption() {
         return caption;
     }
@@ -62,12 +62,12 @@ public class MenuItemConfig extends BaseConfig {
         this.path = path;
     }
 
-    public String getRemotePath() {
-        return remotePath;
+    public boolean isHidden() {
+        return hidden;
     }
 
     @XmlAttribute
-    public void setRemotePath(String remotePath) {
-        this.remotePath = remotePath;
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }

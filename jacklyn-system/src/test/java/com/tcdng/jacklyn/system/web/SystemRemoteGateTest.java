@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -42,7 +42,7 @@ public class SystemRemoteGateTest extends AbstractJacklynWebTest {
     @Test
     public void testGetApplicationInfo() throws Exception {
         GetAppInfoParams params = new GetAppInfoParams();
-        GetAppInfoResult result = getRemoteCallClient().remoteCall(GetAppInfoResult.class, TEST_REMOTE_APP_URL, params);
+        GetAppInfoResult result = getWebClient().remoteCall(GetAppInfoResult.class, TEST_REMOTE_APP_URL, params);
         assertNotNull(result);
         assertFalse(result.isError());
         assertEquals("jacklyn-codebase", result.getAppName());
@@ -55,7 +55,7 @@ public class SystemRemoteGateTest extends AbstractJacklynWebTest {
     @Test
     public void testGetApplicationModules() throws Exception {
         GetAppModulesParams params = new GetAppModulesParams();
-        GetAppModulesResult result = getRemoteCallClient().remoteCall(GetAppModulesResult.class, TEST_REMOTE_APP_URL,
+        GetAppModulesResult result = getWebClient().remoteCall(GetAppModulesResult.class, TEST_REMOTE_APP_URL,
                 params);
         assertNotNull(result);
         assertFalse(result.isError());
@@ -67,11 +67,11 @@ public class SystemRemoteGateTest extends AbstractJacklynWebTest {
 
     @Override
     protected void onSetup() throws Exception {
-        if (!getRemoteCallClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
+        if (!getWebClient().isRemoteCallSetup(TEST_REMOTE_APP_URL,
                 SystemRemoteCallNameConstants.GET_APPLICATION_INFO)) {
-            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+            getWebClient().setupRemoteCall(TEST_REMOTE_APP_URL,
                     SystemRemoteCallNameConstants.GET_APPLICATION_INFO);
-            getRemoteCallClient().setupRemoteCall(TEST_REMOTE_APP_URL,
+            getWebClient().setupRemoteCall(TEST_REMOTE_APP_URL,
                     SystemRemoteCallNameConstants.GET_APPLICATION_MODULES);
         }
     }

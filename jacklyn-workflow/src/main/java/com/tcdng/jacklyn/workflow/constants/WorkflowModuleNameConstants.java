@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,9 +27,13 @@ public interface WorkflowModuleNameConstants {
 
     String WORKFLOWSERVICE = "jacklyn-workflowservice";
 
-    String DEFAULTWORKFLOWITEMALERTLOGIC = "default-workflowitemalertlogic";
+    String DEFAULTWORKFLOWITEMALERTPOLICY = "default-wftemalertpolicy";
 
-    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-workflowitemclassifierlogic";
+    String DEFAULTWORKFLOWITEMCLASSIFIERLOGIC = "default-wfitemclassifierlogic";
 
-    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-workflowitemattachmenthandler";
+    String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-wfitemattachmenthandler";
+
+    String DEFAULTWORKFLOWITEMASSIGNMENTPOLICY = "default-wfitemassignpolicy";
+
+    String DEFAULTWORKFLOWTRANSITIONQUEUEMANAGER = "default-wftransitionqueuemanager";
 }

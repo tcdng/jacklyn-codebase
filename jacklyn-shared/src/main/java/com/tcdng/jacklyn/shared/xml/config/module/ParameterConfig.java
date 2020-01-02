@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,10 @@
 package com.tcdng.jacklyn.shared.xml.config.module;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.tcdng.unify.core.constant.DataType;
+import com.tcdng.unify.core.util.xml.adapter.DataTypeXmlAdapter;
 
 /**
  * Parameter configuration.
@@ -29,14 +33,18 @@ public class ParameterConfig {
 
     private String description;
 
+    private String label;
+
     private String editor;
 
-    private String type;
+    private String defaultVal;
+
+    private DataType type;
 
     private boolean mandatory;
 
     public ParameterConfig() {
-        this.type = String.class.getName();
+        type = DataType.STRING;
     }
 
     public String getName() {
@@ -52,7 +60,7 @@ public class ParameterConfig {
         return description;
     }
 
-    @XmlAttribute(required = true)
+    @XmlAttribute
     public void setDescription(String description) {
         this.description = description;
     }
@@ -66,15 +74,6 @@ public class ParameterConfig {
         this.editor = editor;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    @XmlAttribute(required = true)
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public boolean isMandatory() {
         return mandatory;
     }
@@ -82,5 +81,33 @@ public class ParameterConfig {
     @XmlAttribute
     public void setMandatory(boolean mandatory) {
         this.mandatory = mandatory;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    @XmlAttribute(required = true)
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getDefaultVal() {
+        return defaultVal;
+    }
+
+    @XmlAttribute
+    public void setDefaultVal(String defaultVal) {
+        this.defaultVal = defaultVal;
+    }
+
+    public DataType getType() {
+        return type;
+    }
+
+    @XmlJavaTypeAdapter(DataTypeXmlAdapter.class)
+    @XmlAttribute(required = true)
+    public void setType(DataType type) {
+        this.type = type;
     }
 }

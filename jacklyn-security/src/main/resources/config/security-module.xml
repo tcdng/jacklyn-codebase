@@ -1,4 +1,24 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+<!--
+  Copyright 2018-2020 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!-- Jacklyn configuration for security module -->
 <module name="security" description="$m{security.module}">
 	<audits>
 		<audit name="sec-login" description="$m{security.auditsettings.loggedin}"
@@ -20,17 +40,16 @@
 			description="$m{security.menu.main}">
 			<menuitem name="sec-manageuser" caption="$m{security.user.menu.title}"
 				pageCaption="$m{security.user.manage}" description="$m{security.menuitem.user}"
-				path="/security/user/openPage" remotePath="/security/user/getRemoteDoc" />
+				path="/security/user/openPage" />
 			<menuitem name="sec-manageusersession" caption="$m{security.usersession.menu.title}"
 				pageCaption="$m{security.usersession.manage}" description="$m{security.menuitem.usersession}"
-				path="/security/usersession/openPage" remotePath="/security/usersession/getRemoteDoc" />
+				path="/security/usersession/openPage" />
 			<menuitem name="sec-changepassword" caption="$m{security.changepassword.menu.title}"
 				pageCaption="$m{security.changepassword.menu.title}" description="$m{security.menuitem.changepassword}"
 				path="/security/changepassword/openPage" />
             <menuitem name="sec-manageclientapp" caption="$m{security.clientapp.menu.title}"
                 pageCaption="$m{security.clientapp.manage}"
-                description="$m{security.menuitem.clientapp}" path="/security/clientapp/openPage"
-                remotePath="/security/clientapp/getRemoteDoc" />
+                description="$m{security.menuitem.clientapp}" path="/security/clientapp/openPage" />
 		</menu>
 	</menus>
 	<notification-templates>
@@ -43,7 +62,8 @@
 	</notification-templates>
 	<privileges>
 		<privilege-group>
-			<privilege name="sec-appadmin" description="$m{security.privilege.appadmin}" />
+            <privilege name="sec-appadmin" description="$m{security.privilege.appadmin}" />
+            <privilege name="sec-hubadmin" description="$m{security.privilege.hubadmin}" />
 			<privilege name="sec-user-add" description="$m{security.privilege.user.add}" />
 			<privilege name="sec-user-view" description="$m{security.privilege.user.view}" />
 			<privilege name="sec-user-edit" description="$m{security.privilege.user.edit}" />
@@ -60,76 +80,76 @@
 		</privilege-group>
 	</privileges>
 	<sys-parameters>
-		<sys-parameter name="SEC-0001" defaultValue="false"
+		<sys-parameter name="SEC-0001" defaultVal="false"
 			description="$m{security.sysparam.enableuserthemes}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-0002" defaultValue="false"
+		<sys-parameter name="SEC-0002" defaultVal="false"
 			description="$m{security.sysparam.enablerolethemes}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-0003" defaultValue="false"
+		<sys-parameter name="SEC-0003" defaultVal="false"
 			description="$m{security.sysparam.enablepasswordhist}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-0004" defaultValue="6"
+		<sys-parameter name="SEC-0004" defaultVal="6"
 			description="$m{security.sysparam.passwordhistlen}" editor="!ui-integer precision:2"
 			type="number" />
-		<sys-parameter name="SEC-0005" defaultValue="false"
+		<sys-parameter name="SEC-0005" defaultVal="false"
 			description="$m{security.sysparam.enablepasswordexpiry}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-0006" defaultValue="30"
+		<sys-parameter name="SEC-0006" defaultVal="30"
 			description="$m{security.sysparam.passwordexpirydays}" editor="!ui-integer precision:3"
 			type="number" />
-		<sys-parameter name="SEC-0007" defaultValue="true"
+		<sys-parameter name="SEC-0007" defaultVal="true"
 			description="$m{security.sysparam.enableaccountlock}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-0008" defaultValue="4"
+		<sys-parameter name="SEC-0008" defaultVal="4"
 			description="$m{security.sysparam.maxlogintries}" editor="!ui-integer precision:2"
 			type="number" />
 		<sys-parameter name="SEC-0009"
-			defaultValue="lowercaseprincipal-passwordgenerator" description="$m{security.sysparam.userpasswordgenerator}"
+			defaultVal="lowercaseprincipal-passwordgenerator" description="$m{security.sysparam.userpasswordgenerator}"
 			editor="!ui-select list:passwordgeneratorlist" type="string" />
-		<sys-parameter name="SEC-000A" defaultValue="8"
+		<sys-parameter name="SEC-000A" defaultVal="8"
 			description="$m{security.sysparam.userpasswordlength}" editor="!ui-integer precision:2"
 			type="number" />
-		<sys-parameter name="SEC-000B" defaultValue="false"
+		<sys-parameter name="SEC-000B" defaultVal="false"
 			description="$m{security.sysparam.userpasswordsendemail}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-000C" defaultValue="/application"
+		<sys-parameter name="SEC-000C" defaultVal="/application"
 			description="$m{security.sysparam.userdefaultapplication}" editor="!ui-select list:webapplicationlist"
 			type="string" />
-		<sys-parameter name="SEC-000D" defaultValue="false"
+		<sys-parameter name="SEC-000D" defaultVal="false"
 			description="$m{security.sysparam.enabletwofactorauthentication}"
 			editor="!ui-select list:booleanlist" type="boolean" />
-		<sys-parameter name="SEC-000E" defaultValue="false"
+		<sys-parameter name="SEC-000E" defaultVal="false"
 			description="$m{security.sysparam.enablesystemwidemultiloginrule}"
 			editor="!ui-select list:booleanlist" type="boolean" />
-		<sys-parameter name="SEC-000F" defaultValue="false"
+		<sys-parameter name="SEC-000F" defaultVal="false"
 			description="$m{security.sysparam.systemwidemultiloginrule}" editor="!ui-select list:booleanlist"
 			type="boolean" />
-		<sys-parameter name="SEC-0010" defaultValue="/application"
+		<sys-parameter name="SEC-0010" defaultVal="/application"
 			description="$m{security.sysparam.applicationkey}" editor="!ui-text maxLen:48"
 			type="string" />
-		<sys-parameter name="SEC-0011" defaultValue="newpassword"
+		<sys-parameter name="SEC-0011" defaultVal="newpassword"
 			description="$m{security.sysparam.newpasswordnotificationtemplate}"
 			editor="!ui-select list:notificationtemplatelist listKey:name listParams:$l{security}"
 			type="string" />
-		<sys-parameter name="SEC-0012" defaultValue="resetpassword"
+		<sys-parameter name="SEC-0012" defaultVal="resetpassword"
 			description="$m{security.sysparam.resetpasswordnotificationtemplate}"
 			editor="!ui-select list:notificationtemplatelist listKey:name listParams:$l{security}"
 			type="string" />
-		<sys-parameter name="SEC-0013" defaultValue=""
-			description="$m{security.sysparam.emailnotificationchannel}" editor="!ui-select list:notificationchannellist listKey:name"
+		<sys-parameter name="SEC-0013" defaultVal=""
+			description="$m{security.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name"
 			type="string" />
 		<sys-parameter name="SEC-0014"
-			defaultValue="info@tcdng.com" description="$m{security.sysparam.administratoremail}"
+			description="$m{security.sysparam.administratoremail}"
 			editor="!ui-text size:40"/>
 		<sys-parameter name="SEC-0015"
-			defaultValue="Administrator" description="$m{security.sysparam.administratorname}"
+			defaultVal="Administrator" description="$m{security.sysparam.administratorname}"
 			editor="!ui-text size:24"/>
         <sys-parameter name="SEC-0016"
-            defaultValue="defaultDashboard" description="$m{security.sysparam.defaultdashboard}"
+            defaultVal="defaultDashboard" description="$m{security.sysparam.defaultdashboard}"
             editor="!ui-text size:48"/>
         <sys-parameter name="SEC-0017"
-            defaultValue="defaultSystemDashboard" description="$m{security.sysparam.defaultsystemdashboard}"
+            defaultVal="defaultSystemDashboard" description="$m{security.sysparam.defaultsystemdashboard}"
             editor="!ui-text size:48"/>
 	</sys-parameters>
 </module>

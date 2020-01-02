@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,22 +32,22 @@ public class AuditFieldQuery extends BaseInstallEntityQuery<AuditField> {
     }
 
     public AuditFieldQuery auditTypeId(Long auditTypeId) {
-        return (AuditFieldQuery) equals("auditTypeId", auditTypeId);
+        return (AuditFieldQuery) addEquals("auditTypeId", auditTypeId);
     }
 
     public AuditFieldQuery fieldName(String fieldName) {
-        return (AuditFieldQuery) equals("fieldName", fieldName);
+        return (AuditFieldQuery) addEquals("fieldName", fieldName);
     }
 
     public AuditFieldQuery fieldNameLike(String fieldName) {
-        return (AuditFieldQuery) like("fieldName", fieldName);
+        return (AuditFieldQuery) addLike("fieldName", fieldName);
     }
 
     public AuditFieldQuery fieldNameIn(Collection<String> fieldNames) {
-        return (AuditFieldQuery) amongst("fieldName", fieldNames);
+        return (AuditFieldQuery) addAmongst("fieldName", fieldNames);
     }
 
     public AuditFieldQuery fieldNameNotIn(Collection<String> fieldNames) {
-        return (AuditFieldQuery) notAmongst("fieldName", fieldNames);
+        return (AuditFieldQuery) addNotAmongst("fieldName", fieldNames);
     }
 }

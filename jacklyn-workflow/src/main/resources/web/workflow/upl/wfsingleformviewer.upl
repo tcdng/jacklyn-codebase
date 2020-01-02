@@ -1,0 +1,13 @@
+// UPL template for single form viewer
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-wfsingleformviewer layout:$d{!ui-vertical} components:$c{formPanel} formColumns:1
+
+!ui-formpanel:formPanel layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;}}
+    formSection:$f{formSection}
+    formColumns:$f{formColumns}
+    
+// Validations
+!ui-validation:formValidation components:$c{formPanel}
+    

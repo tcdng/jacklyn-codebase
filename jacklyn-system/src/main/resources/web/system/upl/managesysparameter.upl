@@ -1,5 +1,5 @@
 // UPL template for managing system parameters
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{system.sysparameter.manage}
@@ -32,3 +32,9 @@
 !ui-text:frmDescription caption:$m{system.sysparameter.description} size:56 binding:description
 !ui-dynamic:frmValue caption:$m{system.sysparameter.value} binding:value descriptorBinding:editor
 !ui-select:frmType caption:$m{system.sysparameter.type} list:systemparamtypelist binding:type
+
+//Override parent behavior to show warning on modify
+!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
+    confirm:$m{system.systemcontrol.action.confirm} iconIndex:1
+!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} validations:$c{crudViewerVal} validations:$f{saveValidations}
+    confirm:$m{system.systemcontrol.action.confirm} iconIndex:1

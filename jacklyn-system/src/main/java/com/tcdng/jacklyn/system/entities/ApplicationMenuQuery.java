@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,27 +30,27 @@ public class ApplicationMenuQuery extends BaseInstallEntityQuery<ApplicationMenu
     }
 
     @Override
-    public ApplicationMenuQuery order(String field) {
-        return (ApplicationMenuQuery) super.order(field);
+    public ApplicationMenuQuery addOrder(String field) {
+        return (ApplicationMenuQuery) super.addOrder(field);
     }
 
     public ApplicationMenuQuery moduleId(Long moduleId) {
-        return (ApplicationMenuQuery) equals("moduleId", moduleId);
+        return (ApplicationMenuQuery) addEquals("moduleId", moduleId);
     }
 
     public ApplicationMenuQuery moduleName(String moduleName) {
-        return (ApplicationMenuQuery) equals("moduleName", moduleName);
+        return (ApplicationMenuQuery) addEquals("moduleName", moduleName);
     }
 
     public ApplicationMenuQuery name(String name) {
-        return (ApplicationMenuQuery) equals("name", name);
+        return (ApplicationMenuQuery) addEquals("name", name);
     }
 
     public ApplicationMenuQuery orderByDisplayOrder() {
-        return (ApplicationMenuQuery) order("displayOrder");
+        return (ApplicationMenuQuery) addOrder("displayOrder");
     }
 
     public ApplicationMenuQuery orderByModuleDesc() {
-        return (ApplicationMenuQuery) order("moduleDesc");
+        return (ApplicationMenuQuery) addOrder("moduleDesc");
     }
 }

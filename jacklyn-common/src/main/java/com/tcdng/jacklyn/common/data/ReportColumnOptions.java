@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.common.data;
 
 import com.tcdng.unify.core.constant.HAlignType;
+import com.tcdng.unify.core.constant.OrderType;
 
 /**
  * Report column options.
@@ -41,9 +42,11 @@ public class ReportColumnOptions {
 
     private int width;
 
-    private String order;
+    private OrderType orderType;
 
     private boolean group;
+
+    private boolean groupOnNewPage;
 
     private boolean sum;
 
@@ -127,12 +130,12 @@ public class ReportColumnOptions {
         }
     }
 
-    public String getOrder() {
-        return order;
+    public OrderType getOrderType() {
+        return orderType;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
     }
 
     public boolean isGroup() {
@@ -141,6 +144,14 @@ public class ReportColumnOptions {
 
     public void setGroup(boolean group) {
         this.group = group;
+    }
+
+    public boolean isGroupOnNewPage() {
+        return groupOnNewPage;
+    }
+
+    public void setGroupOnNewPage(boolean groupOnNewPage) {
+        this.groupOnNewPage = groupOnNewPage;
     }
 
     public boolean isSum() {

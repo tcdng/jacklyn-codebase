@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,31 +21,24 @@ import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ColumnType;
 import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 
 /**
- * Base class for entity that require a time stamp.
+ * Base class for entity that require a timestamp on create and every update.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(name = "baseTStmpEntity", description = "Base Timestamped")
 @Policy("timestampedentity-policy")
-public abstract class BaseTimestampedEntity extends BaseEntity {
+public abstract class BaseTimestampedEntity extends BaseEventEntity {
 
     @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
-    private Date createDt;
-
-    @Format(formatter = "!datetimeformat")
-    @Column(type = ColumnType.TIMESTAMP, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
+    @Column(type = ColumnType.TIMESTAMP_UTC, position = ColumnPositionConstants.BASE_COLUMN_POSITION)
     private Date updateDt;
 
-    public Date getCreateDt() {
-        return createDt;
-    }
-
-    public void setCreateDt(Date createDt) {
-        this.createDt = createDt;
-    }
+    @Column(length = 64)
+    private String updateBy;
 
     public Date getUpdateDt() {
         return updateDt;
@@ -53,5 +46,13 @@ public abstract class BaseTimestampedEntity extends BaseEntity {
 
     public void setUpdateDt(Date updateDt) {
         this.updateDt = updateDt;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }

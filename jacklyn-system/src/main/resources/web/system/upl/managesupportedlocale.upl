@@ -1,0 +1,35 @@
+// UPL template for managing supported locale
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{system.supportedlocale.manage}
+    searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+    tableColumnList:$c{name description languageTag statusDesc}
+    formSection:$d{!ui-section caption:$m{system.supportedlocale.section.basicdetails} components:$c{frmName frmDescription frmLanguageTag frmStatus}}
+    addPrivilege:$s{sys-supportedlocaleadd} editPrivilege:$s{sys-supportedlocaleedit}
+    viewPrivilege:$s{sys-supportedlocaleview} deletePrivilege:$s{sys-supportedlocaledelete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchName caption:$m{system.supportedlocale.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{system.supportedlocale.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{system.supportedlocale.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{system.supportedlocale.name} binding:name columnStyle:$s{width:80px;} sortable:true
+!ui-label:description caption:$m{system.supportedlocale.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:languageTag caption:$m{system.supportedlocale.locale} binding:languageTag  columnStyle:$s{width:250px;} sortable:true
+!ui-label:statusDesc caption:$m{system.supportedlocale.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{system.supportedlocale.name} binding:name minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{system.supportedlocale.description} binding:description size:40 minLen:1 maxLen:48 required:true
+!ui-select:frmLanguageTag caption:$m{system.supportedlocale.locale} binding:languageTag list:javalocalelist blankOption:$s{} required:true
+!ui-select:frmStatus caption:$m{system.supportedlocale.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

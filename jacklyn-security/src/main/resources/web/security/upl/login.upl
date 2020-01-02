@@ -1,5 +1,5 @@
 // UPL template for login sequence
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{application.login} components:$c{loginMainBody}  styleClass:$e{jk-loginband}
@@ -10,7 +10,7 @@
 !ui-panel:mainSection styleClass:$e{jk-loginsection} layout:$d{!ui-horizontal} components:$c{jacklynImg loginBoxFrame}
 
 !ui-panel:loginBoxFrame styleClass:$e{jk-loginboxframe} components:$c{loginBox}
-!ui-image:jacklynImg src:$s{web/images/applicationbanner.jpg} styleClass:$e{jk-logintopbannerimg}
+!ui-image:jacklynImg src:$s{web/images/applicationloginbanner.png} styleClass:$e{jk-logintopbannerimg}
 !ui-panel:loginBox styleClass:$e{jk-loginbox} layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{loginSequencePanel}
 
@@ -24,6 +24,7 @@
 !ui-titlebar:loginCaptionPanel caption:$m{security.signin}
 !ui-loginpanel:loginPanel loginNameBinding:userName loginPasswordBinding:password
     loginTokenBinding:token loginMessageBinding:loginMessage loginPath:$n{/login}
+    languageList:$s{supportedlocalelanguagelist} languageBinding:languageTag languagePath:$n{/changeLanguage}
     formCaptionSuffix:$s{}
 
 // Change password

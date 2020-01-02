@@ -1,20 +1,18 @@
 <?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
 <category name="customerRecActionCategory" description="Customer Record Action Category"
 	version="1.0">
 	<documents>
-		<document name="customerRecActionCategory.custInfo"
-			description="Customer Information" version="1.0">
-			<item-description-format>Customer:{firstName} {lastName}</item-description-format>
+		<document name="custDoc" description="Customer Information">
+			<item-description-format>Customer:{firstName} {lastName}
+			</item-description-format>
 			<fields>
-				<field name="id" description="Customer ID" type="long"
-					multiple="false" />
-				<field name="firstName" description="First Name" type="string"
-					multiple="false" />
-				<field name="lastName" description="Last Name" type="string"
-					multiple="false" />
-				<field name="age" description="Age" type="integer" multiple="false" />
-				<field name="height" description="Height" type="double"
-					multiple="false" />
+				<field name="firstName" description="First Name" type="string" />
+				<field name="lastName" description="Last Name" type="string" />
+				<field name="age" description="Age" type="integer" />
+				<field name="height" description="Height" type="double" />
 			</fields>
 			<classifiers>
 				<classifier name="class1" description="Class 1">
@@ -26,8 +24,7 @@
 			</classifiers>
 			<bean-mappings>
 				<bean-mapping name="custBeanMapping" description="Customer Bean Mapping"
-					type="primary" bean-type="com.tcdng.jacklyn.common.TestCustomer">
-					<field-mapping doc-field="id" bean-field="id" />
+					bean-type="com.tcdng.jacklyn.common.TestCustomer">
 					<field-mapping doc-field="firstName" bean-field="firstName" />
 					<field-mapping doc-field="lastName" bean-field="lastName" />
 					<field-mapping doc-field="age" bean-field="age" />
@@ -37,16 +34,17 @@
 		</document>
 	</documents>
 	<templates>
-		<template name="customerRecActionCategory.manageCust"
-			description="Manage Customer" document="customerRecActionCategory.custInfo"
-			version="1.0">
+		<template name="manageCust" description="Manage Customer">
+			<documents>
+			     <document name="custDoc" manual="true"/>
+			</documents>
 			<steps>
 				<step name="start" description="Start Step" type="start">
 					<routings>
 						<routing name="routToUpdate" description="Route to Update"
-							target="updateCust" classifier="class1" />
+							target="updateCust" document ="custDoc" classifier="class1" />
 						<routing name="routToRead" description="Route to Read"
-							target="readCust" classifier="class2" />
+							target="readCust" document ="custDoc" classifier="class2" />
 						<routing name="routToDelete" description="Route to Delete"
 							target="deleteCust" />
 					</routings>
@@ -54,7 +52,7 @@
 				<step name="updateCust" description="Update Customer" type="automatic">
 					<record-actions>
 						<record-action name="updateCust" description="Update Customer"
-							mapping="custBeanMapping" type="update" />
+							 document ="custDoc" mapping="custBeanMapping" type="update" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
@@ -64,17 +62,24 @@
 				<step name="readCust" description="Read Customer" type="automatic">
 					<record-actions>
 						<record-action name="readCust" description="Read Customer"
-							mapping="custBeanMapping" type="read" />
+							 document ="custDoc" mapping="custBeanMapping" type="read" />
 					</record-actions>
 					<routings>
-						<routing name="routToEnd" description="Route to End"
-							target="end" />
+						<routing name="routToPend" description="Route to Pend"
+							target="pendCust" />
 					</routings>
 				</step>
+                <step name="pendCust" description="Pending Customer" 
+                    participant="all" priority="high" type="interactive">
+                    <user-actions>
+                        <user-action name="approveCust" description="Approve Customer"
+                            label="Approve" target="end" comment-requirement="optional" />
+                    </user-actions>
+                </step>
 				<step name="deleteCust" description="Delete Customer" type="automatic">
 					<record-actions>
 						<record-action name="deleteCust" description="Delete Customer"
-							mapping="custBeanMapping" type="delete" />
+							 document ="custDoc" mapping="custBeanMapping" type="delete" />
 					</record-actions>
 					<routings>
 						<routing name="routToEnd" description="Route to End"
@@ -82,6 +87,8 @@
 					</routings>
 				</step>
 				<step name="end" description="End Step" type="end" />
+                <step name="error" description="Error Step"
+                    participant="all" priority="high" type="error"/>
 			</steps>
 		</template>
 	</templates>

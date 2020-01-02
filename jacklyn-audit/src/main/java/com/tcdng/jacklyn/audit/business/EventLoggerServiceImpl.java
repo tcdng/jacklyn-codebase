@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,7 +35,8 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.AbstractBusinessService;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
-import com.tcdng.unify.core.util.QueryUtils;
+import com.tcdng.unify.core.logging.FieldAudit;
+import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 
 /**
@@ -141,33 +142,64 @@ public class EventLoggerServiceImpl extends AbstractBusinessService implements E
 
             return true;
         }
+
+        return false;
+    }
+
+    @Override
+    public boolean logUserEvent(EventType eventType, Class<? extends Entity> recordClass, Object id,
+            List<FieldAudit> fieldAuditList) throws UnifyException {
+        AuditDefinition auditDefinitionData =
+                db().find(new AuditDefinitionQuery().recordName(recordClass.getName()).eventType(eventType)
+                        .installed(Boolean.TRUE).status(RecordStatus.ACTIVE));
+        if (auditDefinitionData != null) {
+            List<String> narrationList = new ArrayList<String>();
+            for (FieldAudit fieldAudit : fieldAuditList) {
+                // TODO check field is of record type
+                String name = fieldAudit.getFieldName();
+                Object oldValue = fieldAudit.getOldValue();
+                Object newValue = fieldAudit.getNewValue();
+                if (!DataUtils.equals(oldValue, newValue)) {
+                    String oldAuditValue = convert(String.class, oldValue, null);
+                    String newAuditValue = convert(String.class, newValue, null);
+                    narrationList.add(getApplicationMessage("eventloggerservice.narration.message.difference", name,
+                            oldAuditValue, newAuditValue));
+                }
+            }
+
+            createAuditTrail(auditDefinitionData.getId(), narrationList.toArray(new String[narrationList.size()]),
+                    (Long) id);
+
+            return true;
+        }
+
         return false;
     }
 
     private Long createAuditTrail(Long auditDefinitionId, String[] details, Long recordId) throws UnifyException {
-        AuditTrail auditTrailData = new AuditTrail();
-        auditTrailData.setAuditDefinitionId(auditDefinitionId);
-        auditTrailData.setRecordId(recordId);
+        AuditTrail auditTrail = new AuditTrail();
+        auditTrail.setAuditDefinitionId(auditDefinitionId);
+        auditTrail.setRecordId(recordId);
         UserToken userToken = getUserToken();
         if (userToken != null) {
-            auditTrailData.setUserLoginId(userToken.getUserLoginId());
-            auditTrailData.setIpAddress(userToken.getIpAddress());
-            auditTrailData.setRemoteEvent(userToken.isRemote());
+            auditTrail.setUserLoginId(userToken.getUserLoginId());
+            auditTrail.setIpAddress(userToken.getIpAddress());
+            auditTrail.setRemoteEvent(userToken.isRemote());
         } else {
-            auditTrailData.setUserLoginId(SystemReservedUserConstants.ANONYMOUS_LOGINID);
-            auditTrailData.setIpAddress(getSessionContext().getRemoteAddress());
-            auditTrailData.setRemoteEvent(null);
+            auditTrail.setUserLoginId(SystemReservedUserConstants.ANONYMOUS_LOGINID);
+            auditTrail.setIpAddress(getSessionContext().getRemoteAddress());
+            auditTrail.setRemoteEvent(null);
         }
-        Long auditTrailId = (Long) db().create(auditTrailData);
 
-        if (QueryUtils.isValidStringArrayCriteria(details)) {
-            AuditDetail auditDetailData = new AuditDetail();
-            auditDetailData.setAuditTrailId(auditTrailId);
+        if (details != null && details.length > 0) {
+            List<AuditDetail> auditDetailList = new ArrayList<AuditDetail>(details.length);
             for (String detail : details) {
-                auditDetailData.setDetail(detail);
-                db().create(auditDetailData);
+                auditDetailList.add(new AuditDetail(detail));
             }
+
+            auditTrail.setAuditDetailList(auditDetailList);
         }
-        return auditTrailId;
+
+        return (Long) db().create(auditTrail);
     }
 }

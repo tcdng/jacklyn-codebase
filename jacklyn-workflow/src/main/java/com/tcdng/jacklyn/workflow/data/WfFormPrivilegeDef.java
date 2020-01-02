@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,8 +16,6 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
-import java.io.Serializable;
-
 import com.tcdng.jacklyn.shared.workflow.WorkflowFormElementType;
 
 /**
@@ -26,11 +24,11 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowFormElementType;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class WfFormPrivilegeDef implements Serializable {
-
-    private static final long serialVersionUID = -3500886543859051597L;
+public class WfFormPrivilegeDef {
 
     private WorkflowFormElementType type;
+
+    private String docName;
 
     private String name;
 
@@ -42,9 +40,10 @@ public class WfFormPrivilegeDef implements Serializable {
 
     private boolean required;
 
-    public WfFormPrivilegeDef(WorkflowFormElementType type, String name, boolean visible, boolean editable,
-            boolean disabled, boolean required) {
+    public WfFormPrivilegeDef(WorkflowFormElementType type, String docName, String name, boolean visible,
+            boolean editable, boolean disabled, boolean required) {
         this.type = type;
+        this.docName = docName;
         this.name = name;
         this.visible = visible;
         this.editable = editable;
@@ -54,6 +53,10 @@ public class WfFormPrivilegeDef implements Serializable {
 
     public WorkflowFormElementType getType() {
         return type;
+    }
+
+    public String getDocName() {
+        return docName;
     }
 
     public String getName() {

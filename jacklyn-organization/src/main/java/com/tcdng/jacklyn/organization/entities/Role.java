@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -38,7 +38,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
 @Managed(
         module = OrganizationModuleNameConstants.ORGANIZATION_MODULE, title = "Role", reportable = true,
         auditable = true)
-@Table(name = "ROLE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
+@Table(name = "JKROLE", uniqueConstraints = { @UniqueConstraint({ "name" }) })
 public class Role extends BaseVersionedStatusEntity {
 
     @ForeignKey(Department.class)
@@ -56,14 +56,20 @@ public class Role extends BaseVersionedStatusEntity {
     @Column(name = "ROLE_DESC", length = 64)
     private String description;
 
-    @Column(type = ColumnType.TIMESTAMP, transformer = "timeofday-transformer", nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, transformer = "timeofday-transformer", nullable = true)
     private Date activeAfter;
 
-    @Column(type = ColumnType.TIMESTAMP, transformer = "timeofday-transformer", nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, transformer = "timeofday-transformer", nullable = true)
     private Date activeBefore;
 
     @Column(length = 64, nullable = true)
     private String application;
+
+    @Column(length = 64, nullable = true)
+    private String email;
+
+    @ListOnly(key = "departmentId", property = "name")
+    private String departmentName;
 
     @ListOnly(key = "departmentId", property = "description")
     private String departmentDesc;
@@ -138,6 +144,14 @@ public class Role extends BaseVersionedStatusEntity {
         this.application = application;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getThemeDesc() {
         return themeDesc;
     }
@@ -152,6 +166,14 @@ public class Role extends BaseVersionedStatusEntity {
 
     public void setDashboardName(String dashboardName) {
         this.dashboardName = dashboardName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public String getDepartmentDesc() {

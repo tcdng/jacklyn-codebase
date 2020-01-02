@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -15,7 +15,6 @@
  */
 package com.tcdng.jacklyn.shared.xml.config.workflow;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,8 +28,6 @@ import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
  */
 @XmlRootElement(name = "document")
 public class WfDocumentConfig extends BaseConfig {
-
-    private String version;
 
     private String itemDescFormat;
 
@@ -51,15 +48,6 @@ public class WfDocumentConfig extends BaseConfig {
     @XmlElement(name = "item-description-format", required = true)
     public void setItemDescFormat(String itemDescFormat) {
         this.itemDescFormat = itemDescFormat;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    @XmlAttribute(name = "version", required = true)
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public WfFieldsConfig getWfFieldsConfig() {
@@ -102,7 +90,7 @@ public class WfDocumentConfig extends BaseConfig {
         return wfFormConfig;
     }
 
-    @XmlElement(name = "form", required = true)
+    @XmlElement(name = "form")
     public void setWfFormConfig(WfFormConfig wfFormConfig) {
         this.wfFormConfig = wfFormConfig;
     }

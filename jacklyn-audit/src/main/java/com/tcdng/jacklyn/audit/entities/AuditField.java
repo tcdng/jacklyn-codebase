@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @since 1.0
  */
 @Managed(module = AuditModuleNameConstants.AUDIT_MODULE, title = "Audit Field")
-@Table(name = "AUDITFIELD", uniqueConstraints = { @UniqueConstraint({ "auditTypeId", "fieldName" }) })
+@Table(name = "JKAUDITFIELD", uniqueConstraints = { @UniqueConstraint({ "auditTypeId", "fieldName" }) })
 public class AuditField extends BaseInstallEntity {
 
     @ForeignKey(AuditType.class)

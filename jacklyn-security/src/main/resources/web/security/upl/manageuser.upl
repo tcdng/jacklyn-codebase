@@ -1,12 +1,12 @@
 // UPL template for managing users
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 !ui-page caption:$m{security.user.manage}
-    searchByList:$c{searchLoginId searchFullName searchStatus}
-    searchClearList:$c{searchLoginId searchFullName searchStatus}
+    searchByList:$c{searchRoleId searchLoginId searchFullName searchStatus}
+    searchClearList:$c{searchRoleId searchLoginId searchFullName searchStatus}
     tableColumnList:$c{loginId fullName email lastLoginDt statusDesc}
-    formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmLoginId frmFullName frmEmail frmTheme frmPasswordExpires frmStatus}}
+    formSection:$d{!ui-section caption:$m{security.user.section.basicdetails} components:$c{frmLoginId frmFullName frmEmail frmMobile frmTheme frmPasswordExpires frmStatus}}
     formSection:$d{!ui-section caption:$m{security.user.section.photograph} components:$c{frmPhotoPanel}}
     formSection:$d{!ui-section caption:$m{security.user.section.assignedroles} components:$c{frmRoleAssignPanel}}
     formSection:$d{!ui-section caption:$m{security.user.section.organization} components:$c{frmBranchId frmSupervisor}}
@@ -14,10 +14,12 @@
     moreCrudFooterComponentList:$c{spacer resetBtn}
     addPrivilege:$s{sec-user-add} editPrivilege:$s{sec-user-edit}
     viewPrivilege:$s{sec-user-view} deletePrivilege:$s{sec-user-delete}
-    addValidations:$c{frmLoginIdVal frmEmailVal}
-    saveValidations:$c{frmLoginIdVal frmEmailVal}
+    addValidations:$c{frmLoginIdVal frmEmailVal frmMobileVal}
+    saveValidations:$c{frmLoginIdVal frmEmailVal frmMobileVal}
 
 //Search
+!ui-select:searchRoleId caption:$m{security.user.roleid} binding:searchRoleId list:rolelist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
 !ui-text:searchLoginId caption:$m{security.user.loginid} binding:searchLoginId case:upper eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-text:searchFullName caption:$m{security.user.fullname} binding:searchFullName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
 !ui-select:searchStatus caption:$m{security.user.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
@@ -36,6 +38,7 @@
 !ui-name:frmLoginId caption:$m{security.user.loginid} case:upper focus:true binding:data.loginId maxLen:32 required:true
 !ui-text:frmFullName caption:$m{security.user.fullname} binding:data.fullName maxLen:64 required:true size:32
 !ui-text:frmEmail caption:$m{security.user.email} binding:data.email maxLen:64 required:true size:40
+!ui-text:frmMobile caption:$m{security.user.mobileno} binding:data.mobileNo maxLen:24 size:32
 !ui-select:frmTheme caption:$m{security.user.theme} binding:data.themeId list:themelist blankOption:$s{}
 !ui-checkbox:frmPasswordExpires caption:$m{security.user.passwordexpires} layoutCaption:true binding:data.passwordExpires
 !ui-panel:frmPhotoPanel caption:$m{security.user.photo} components:$c{frmImage}
@@ -60,6 +63,7 @@
 //Validations
 !ui-uniquevalidation:frmLoginIdVal components:$c{frmLoginId}
 !ui-emailvalidation:frmEmailVal components:$c{frmEmail}
+!ui-mobilevalidation:frmMobileVal components:$c{frmMobile}
 
 //Actions
 !ui-post:resetAct path:$n{/resetUserPassword} confirm:$m{security.user.resetpassword.confirm}

@@ -1,0 +1,37 @@
+// UPL template for managing states
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{location.state.manage}
+    searchByList:$c{searchCountryId searchCode searchDescription searchStatus}
+    searchClearList:$c{searchCode searchDescription searchStatus searchCountryId}
+    tableColumnList:$c{countryDesc code description statusDesc}
+    formSection:$d{!ui-section caption:$m{location.state.section.basicdetails} components:$c{frmCode frmDescription frmCountry frmStatus}}
+    addPrivilege:$s{loc-stateadd} editPrivilege:$s{loc-stateedit}
+    viewPrivilege:$s{loc-stateview} deletePrivilege:$s{loc-statedelete}
+    addValidations:$c{frmCodeVal frmDescVal}
+    saveValidations:$c{frmCodeVal frmDescVal}
+
+//Search
+!ui-text:searchCode caption:$m{location.state.code} binding:searchCode eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{location.state.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchCountryId caption:$m{location.state.country} binding:searchCountryId list:countrylist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{location.state.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:code caption:$m{location.state.code} binding:code columnStyle:$s{width:120px;} sortable:true
+!ui-label:description caption:$m{location.state.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:countryDesc caption:$m{location.state.country} binding:countryDesc columnStyle:$s{width:100px;} sortable:true
+!ui-label:statusDesc caption:$m{location.state.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmCode caption:$m{location.state.code} binding:code minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{location.state.description} binding:description minLen:1 maxLen:48 size:32 required:true
+!ui-select:frmCountry caption:$m{location.state.country} binding:countryId list:countrylist blankOption:$s{} required:true
+!ui-select:frmStatus caption:$m{location.state.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmCodeVal components:$c{frmCode}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

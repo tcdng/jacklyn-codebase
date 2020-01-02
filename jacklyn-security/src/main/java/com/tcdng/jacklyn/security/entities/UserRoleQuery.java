@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -21,7 +21,7 @@ import java.util.Date;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.operation.OrBuilder;
+import com.tcdng.unify.core.criterion.OrBuilder;
 import com.tcdng.unify.core.util.CalendarUtils;
 
 /**
@@ -37,40 +37,64 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
     }
 
     public UserRoleQuery userId(Long userId) {
-        return (UserRoleQuery) equals("userId", userId);
+        return (UserRoleQuery) addEquals("userId", userId);
+    }
+
+    public UserRoleQuery userIdIn(Collection<Long> userId) {
+        return (UserRoleQuery) addAmongst("userId", userId);
     }
 
     public UserRoleQuery userLoginId(String userLoginId) {
-        return (UserRoleQuery) equals("userLoginId", userLoginId);
+        return (UserRoleQuery) addEquals("userLoginId", userLoginId);
+    }
+
+    public UserRoleQuery branchCode(String branchCode) {
+        return (UserRoleQuery) addEquals("branchCode", branchCode);
+    }
+
+    public UserRoleQuery isSupervisor() {
+        return (UserRoleQuery) addEquals("supervisor", Boolean.TRUE);
+    }
+
+    public UserRoleQuery isNotSupervisor() {
+        return (UserRoleQuery) addEquals("supervisor", Boolean.FALSE);
     }
 
     public UserRoleQuery roleId(Long roleId) {
-        return (UserRoleQuery) equals("roleId", roleId);
+        return (UserRoleQuery) addEquals("roleId", roleId);
     }
 
     public UserRoleQuery roleIdNot(Long roleId) {
-        return (UserRoleQuery) notEqual("roleId", roleId);
+        return (UserRoleQuery) addNotEqual("roleId", roleId);
     }
 
     public UserRoleQuery roleName(String roleName) {
-        return (UserRoleQuery) equals("roleName", roleName);
+        return (UserRoleQuery) addEquals("roleName", roleName);
     }
 
     public UserRoleQuery roleNameNot(String roleName) {
-        return (UserRoleQuery) notEqual("roleName", roleName);
+        return (UserRoleQuery) addNotEqual("roleName", roleName);
+    }
+
+    public UserRoleQuery roleNameIn(Collection<String> roleName) {
+        return (UserRoleQuery) addAmongst("roleName", roleName);
     }
 
     public UserRoleQuery roleIdIn(Collection<Long> roleId) {
-        return (UserRoleQuery) amongst("roleId", roleId);
+        return (UserRoleQuery) addAmongst("roleId", roleId);
     }
 
     public UserRoleQuery roleStatus(RecordStatus roleStatus) {
-        return (UserRoleQuery) equals("roleStatus", roleStatus);
+        return (UserRoleQuery) addEquals("roleStatus", roleStatus);
+    }
+
+    public UserRoleQuery departmentName(String departmentName) {
+        return (UserRoleQuery) addEquals("departmentName", departmentName);
     }
 
     public UserRoleQuery roleActiveTime(Date date) throws UnifyException {
         date = CalendarUtils.getTimeOfDay(date);
-        return (UserRoleQuery) add(new OrBuilder().less("activeBefore", date).isNull("activeBefore"))
-                .add(new OrBuilder().greater("activeAfter", date).isNull("activeAfter"));
+        return (UserRoleQuery) addRestriction(new OrBuilder().less("activeBefore", date).isNull("activeBefore").build())
+                .addRestriction(new OrBuilder().greater("activeAfter", date).isNull("activeAfter").build());
     }
 }

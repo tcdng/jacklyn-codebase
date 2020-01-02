@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.Table;
  * @since 1.0
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification", reportable = true)
-@Table("NOTIFICATION")
+@Table("JKNOTIFICATION")
 public class Notification extends BaseTimestampedEntity {
 
     @ForeignKey(NotificationTemplate.class)
@@ -55,10 +55,10 @@ public class Notification extends BaseTimestampedEntity {
     @Column
     private Integer attempts;
 
-    @Column(type = ColumnType.TIMESTAMP)
+    @Column(type = ColumnType.TIMESTAMP_UTC)
     private Date dueDt;
 
-    @Column(type = ColumnType.TIMESTAMP, nullable = true)
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date sentDt;
 
     @Column(name = "REC_ST")

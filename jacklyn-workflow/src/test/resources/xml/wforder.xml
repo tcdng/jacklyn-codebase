@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Workflow Category 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-workflow-category_2_0.dtd">
+<category name="orderCategory" description="Order Category"
+	version="1.0">
+	<documents>
+		<document name="orderDoc" description="Order">
+			<item-description-format>Order:{description}</item-description-format>
+			<fields>
+				<field name="name" description="Name" type="string" />
+				<field name="description" description="Description" type="string" />
+				<field name="quantity" description="Quantity" type="integer" />
+				<field name="unitPrice" description="Unit Price" type="decimal" />
+				<field name="amount" description="Amount" type="decimal" />
+				<field name="vat" description="VAT" type="decimal" />
+				<field name="totalAmount" description="Total Amount" type="decimal" />
+				<field name="address" description="Address" type="string" />
+				<field name="status" description="Status" type="string" />
+			</fields>
+			<bean-mappings>
+				<bean-mapping name="orderBeanMapping" description="Order Bean Mapping"
+					bean-type="com.tcdng.jacklyn.workflow.Order">
+					<field-mapping doc-field="name" bean-field="name" />
+					<field-mapping doc-field="description" bean-field="description" />
+					<field-mapping doc-field="quantity" bean-field="quantity" />
+					<field-mapping doc-field="unitPrice" bean-field="unitPrice" />
+					<field-mapping doc-field="amount" bean-field="amount" />
+					<field-mapping doc-field="vat" bean-field="vat" />
+					<field-mapping doc-field="totalAmount" bean-field="totalAmount" />
+					<field-mapping doc-field="address" bean-field="address" />
+					<field-mapping doc-field="status" bean-field="status" />
+				</bean-mapping>
+			</bean-mappings>
+		</document>
+	</documents>
+	<templates>
+		<template name="simpleOrder" description="Simple Ordering">
+			<documents>
+				<document name="orderDoc"/>
+			</documents>
+			<steps>
+				<step name="start" description="Start Step" type="start">
+					<routings>
+						<routing name="routToSplit" description="Route to Split"
+							target="splitStep" />
+					</routings>
+				</step>
+				<step name="splitStep" description="Split Order Processing" type="split">
+					<branches>
+						<branch name="splitToVat" description="Split to VAT" target="vatStep">
+							<merges>
+								<merge field="amount" />
+								<merge field="vat" />
+								<merge field="totalAmount" />
+							</merges>
+						</branch>
+						<branch name="splitToDelivery" description="Split to Delivery" target="deliveryStep">
+							<merges>
+								<merge field="address" />
+								<merge field="status" />
+							</merges>
+						</branch>
+					</branches>
+				</step>
+				<step name="vatStep" description="VAT and Totals" type="automatic" origin="splitStep" branch="splitToVat">
+					<enrichments>
+						<enrichment name="vatEnrichment" description="VAT Enrichment"
+							logic="vat-enrichmentpolicy" />
+					</enrichments>
+					<routings>
+						<routing name="routToMerge" description="Route to Merge"
+							target="mergeStep" />
+					</routings>
+				</step>
+				<step name="deliveryStep" description="Delivery" type="automatic" origin="splitStep" branch="splitToDelivery">
+					<enrichments>
+						<enrichment name="deliveryEnrichment" description="Delivery Enrichment"
+							logic="delivery-enrichmentpolicy" />
+					</enrichments>
+					<routings>
+						<routing name="routToMerge" description="Route to Merge"
+							target="mergeStep" />
+					</routings>
+				</step>
+				<step name="mergeStep" description="Merge Order" origin="splitStep" type="merge">
+					<routings>
+						<routing name="routToFinalApproval" description="Route to Final Approval"
+							target="finalApproval" />
+					</routings>
+				</step>
+				<step name="finalApproval" description="Final Approval"
+					participant="all" priority="high" type="interactive">
+					<user-actions>
+						<user-action name="approveOrder" description="Approve Order"
+							label="Approve" target="end" comment-requirement="optional" />
+					</user-actions>
+				</step>
+				<step name="end" description="End Step" type="end" />
+				<step name="error" description="Error Step" participant="all"
+					priority="high" type="error">
+				</step>
+			</steps>
+		</template>
+	</templates>
+</category>

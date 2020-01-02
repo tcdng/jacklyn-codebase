@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,13 +16,13 @@
 package com.tcdng.jacklyn.common;
 
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
-import com.tcdng.jacklyn.common.controllers.CommonRemoteCallGateImpl;
+import com.tcdng.jacklyn.common.web.controllers.CommonRemoteCallGateImpl;
 import com.tcdng.unify.core.Setting;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.jetty.JettyApplicationComponents;
-import com.tcdng.unify.jetty.http.JettyHttpInterface;
-import com.tcdng.unify.web.RemoteCallClient;
+import com.tcdng.unify.jetty.http.JettyEmbeddedWebServer;
 import com.tcdng.unify.web.WebApplicationComponents;
+import com.tcdng.unify.web.remotecall.WebClient;
 
 /**
  * Abstract jacklyn web test.
@@ -38,15 +38,15 @@ public abstract class AbstractJacklynWebTest extends AbstractJacklynTest {
     protected void doAddSettingsAndDependencies() throws Exception {
         super.doAddSettingsAndDependencies();
         addContainerSetting(UnifyCorePropertyConstants.APPLICATION_INTERFACES,
-                new String[] { JettyApplicationComponents.JETTY_HTTPINTERFACE });
+                new String[] { JettyApplicationComponents.JETTY_EMBEDDEDWEBSERVER });
 
         addDependency(CommonModuleNameConstants.JACKLYNAPPLICATIONSERVICEGATE, CommonRemoteCallGateImpl.class, true,
                 true, new Setting("openMode", "true"));
-        addDependency(JettyApplicationComponents.JETTY_HTTPINTERFACE, JettyHttpInterface.class, true, true,
+        addDependency(JettyApplicationComponents.JETTY_EMBEDDEDWEBSERVER, JettyEmbeddedWebServer.class, true, true,
                 new Setting("contextPath", "/jacklyn"), new Setting("httpPort", String.valueOf(TEST_HTTPPORT)));
     }
 
-    protected RemoteCallClient getRemoteCallClient() throws Exception {
-        return (RemoteCallClient) this.getComponent(WebApplicationComponents.APPLICATION_REMOTECALLCLIENT);
+    protected WebClient getWebClient() throws Exception {
+        return (WebClient) getComponent(WebApplicationComponents.APPLICATION_WEBCLIENT);
     }
 }

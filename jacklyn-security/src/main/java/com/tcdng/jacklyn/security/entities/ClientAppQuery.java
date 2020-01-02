@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,18 +31,18 @@ public class ClientAppQuery extends BaseVersionedStatusEntityQuery<ClientApp> {
     }
 
     public ClientAppQuery name(String name) {
-        return (ClientAppQuery) equals("name", name);
+        return (ClientAppQuery) addEquals("name", name);
     }
 
     public ClientAppQuery nameLike(String name) {
-        return (ClientAppQuery) like("name", name);
+        return (ClientAppQuery) addLike("name", name);
     }
 
     public ClientAppQuery descriptionLike(String description) {
-        return (ClientAppQuery) like("description", description);
+        return (ClientAppQuery) addLike("description", description);
     }
 
     public ClientAppQuery type(ClientAppType type) {
-        return (ClientAppQuery) equals("type", type);
+        return (ClientAppQuery) addEquals("type", type);
     }
 }

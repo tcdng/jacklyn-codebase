@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,18 +30,18 @@ public class WfCategoryQuery extends BaseStatusEntityQuery<WfCategory> {
     }
 
     public WfCategoryQuery version(String version) {
-        return (WfCategoryQuery) equals("version", version);
+        return (WfCategoryQuery) addEquals("version", version);
     }
 
     public WfCategoryQuery name(String name) {
-        return (WfCategoryQuery) equals("name", name);
+        return (WfCategoryQuery) addEquals("name", name);
     }
 
     public WfCategoryQuery nameLike(String name) {
-        return (WfCategoryQuery) like("name", name);
+        return (WfCategoryQuery) addLike("name", name);
     }
 
     public WfCategoryQuery descriptionLike(String description) {
-        return (WfCategoryQuery) like("description", description);
+        return (WfCategoryQuery) addLike("description", description);
     }
 }

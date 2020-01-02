@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,10 +30,10 @@ public class PasswordHistoryQuery extends BaseEntityQuery<PasswordHistory> {
     }
 
     public PasswordHistoryQuery userId(Long userId) {
-        return (PasswordHistoryQuery) equals("userId", userId);
+        return (PasswordHistoryQuery) addEquals("userId", userId);
     }
 
     public PasswordHistoryQuery password(String password) {
-        return (PasswordHistoryQuery) equals("password", password);
+        return (PasswordHistoryQuery) addEquals("password", password);
     }
 }

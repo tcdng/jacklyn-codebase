@@ -1,14 +1,17 @@
 // UPL template for executing file transfers
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-page caption:$m{file.batchupload.manage} layout:$d{!ui-vertical}
+!ui-page caption:$m{file.batchupload.manage}
+    components:$c{manageBatchUploadPanel}
+
+!ui-panel:manageBatchUploadPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{maintainTypeLabel batchUploadFramePanel}
 
 !ui-label:maintainTypeLabel styleClass:$e{jk-maintaintype} styleClassBinding:modeStyle
     caption:$m{file.batchupload.performbatchupload}
 
-!ui-panel:batchUploadFramePanel layout:$d{!ui-horizontal}
+!ui-panel:batchUploadFramePanel layout:$d{!ui-horizontal style:$s{width:100%;}}
     components:$c{batchUploadPanel batchParamPanel}
     
 !ui-formpanel:batchUploadPanel
@@ -19,8 +22,8 @@
 !ui-panel:batchParamPanel components:$c{inputParameters}
 !ui-multidynamic:inputParameters binding:batchUploadParameters.inputParameterList
         
-!ui-select:batchUploadConfigId binding:batchUploadConfigId caption:$m{file.batchupload.batchfilereadconfig} 
-    list:batchfilereadconfiglist blankOption:$s{} focus:true
+!ui-select:batchUploadConfigId binding:batchUploadConfigId caption:$m{file.batchupload.batchfilereaddefinition} 
+    list:batchfilereaddefinitionlist blankOption:$s{} focus:true
     eventHandler:$d{!ui-event event:onchange action:$c{disableUploadAct loadParamsAct}}
 !ui-fileupload:fileSelect caption:$m{file.batchupload.batchfile} binding:batchUploadParameters.fileBlob selectOnly:true
     

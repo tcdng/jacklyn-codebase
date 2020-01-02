@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,18 +30,18 @@ public class ArchivableDefinitionQuery extends BaseInstallEntityQuery<Archivable
     }
 
     public ArchivableDefinitionQuery moduleId(Long moduleId) {
-        return (ArchivableDefinitionQuery) equals("moduleId", moduleId);
+        return (ArchivableDefinitionQuery) addEquals("moduleId", moduleId);
     }
 
     public ArchivableDefinitionQuery moduleName(String moduleName) {
-        return (ArchivableDefinitionQuery) equals("moduleName", moduleName);
+        return (ArchivableDefinitionQuery) addEquals("moduleName", moduleName);
     }
 
     public ArchivableDefinitionQuery name(String name) {
-        return (ArchivableDefinitionQuery) equals("name", name);
+        return (ArchivableDefinitionQuery) addEquals("name", name);
     }
 
     public ArchivableDefinitionQuery orderByDescription() {
-        return (ArchivableDefinitionQuery) order("description");
+        return (ArchivableDefinitionQuery) addOrder("description");
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,7 +34,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  */
 @Managed(module = NotificationModuleNameConstants.NOTIFICATION_MODULE, title = "Notification Template",
         reportable = true, auditable = true)
-@Table(name = "NOTIFICATIONTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
+@Table(name = "JKNOTIFICATIONTEMPLATE", uniqueConstraints = { @UniqueConstraint({ "moduleId", "name" }),
         @UniqueConstraint({ "moduleId", "description" }) })
 public class NotificationTemplate extends BaseVersionedStatusEntity {
 
@@ -56,13 +56,13 @@ public class NotificationTemplate extends BaseVersionedStatusEntity {
     @Column(length = 2048)
     private String template;
 
-    @Column(length = 64, nullable = true)
+    @Column(length = 96, nullable = true)
     private String actionLink;
 
     @Column(name = "HTML_FG")
     private Boolean htmlFlag;
 
-    @Column(length = 32, nullable = true)
+    @Column(length = 64, nullable = true)
     private String attachmentGenerator;
 
     @Column(name="TARGET_LINK", length = 64, nullable = true)

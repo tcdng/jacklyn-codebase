@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,52 +17,35 @@ package com.tcdng.jacklyn.shared.system.data;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import com.tcdng.jacklyn.shared.BaseToolingItem;
+
 /**
  * Application menu item.
  * 
  * @author Lateef
  * @since 1.0
  */
-public class AppMenuItem {
-
-    private String name;
-
-    private String description;
+public class AppMenuItem extends BaseToolingItem {
 
     private String pageCaption;
 
     private String caption;
 
-    private String path;
+    private String openPath;
 
-    public AppMenuItem(String name, String description, String pageCaption, String caption, String path) {
-        this.name = name;
-        this.description = description;
+    private boolean hidden;
+
+    public AppMenuItem(String name, String description, String pageCaption, String caption, String openPath,
+            boolean hidden) {
+        super(name, description);
         this.pageCaption = pageCaption;
         this.caption = caption;
-        this.path = path;
+        this.openPath = openPath;
+        this.hidden = hidden;
     }
 
     public AppMenuItem() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getPageCaption() {
@@ -83,12 +66,21 @@ public class AppMenuItem {
         this.caption = caption;
     }
 
-    public String getPath() {
-        return path;
+    public String getOpenPath() {
+        return openPath;
     }
 
     @XmlElement
-    public void setPath(String path) {
-        this.path = path;
+    public void setOpenPath(String openPath) {
+        this.openPath = openPath;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    @XmlElement
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }

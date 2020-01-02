@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,11 +29,7 @@ public class WfItemHistQuery extends BaseTimestampedEntityQuery<WfItemHist> {
         super(WfItemHist.class);
     }
 
-    public WfItemHistQuery wfTemplateId(Long wfTemplateId) {
-        return (WfItemHistQuery) equals("wfTemplateId", wfTemplateId);
-    }
-
     public WfItemHistQuery descriptionLike(String description) {
-        return (WfItemHistQuery) like("description", description);
+        return (WfItemHistQuery) addLike("description", description);
     }
 }

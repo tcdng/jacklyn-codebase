@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,14 +32,14 @@ public class FileArchiveQuery extends BaseTimestampedEntityQuery<FileArchive> {
     }
 
     public FileArchiveQuery archivableFieldId(Long archivableFieldId) {
-        return (FileArchiveQuery) this.equals("archivableFieldId", archivableFieldId);
+        return (FileArchiveQuery) this.addEquals("archivableFieldId", archivableFieldId);
     }
 
     public FileArchiveQuery backedUp(Boolean backedUp) {
-        return (FileArchiveQuery) this.equals("backedUp", backedUp);
+        return (FileArchiveQuery) this.addEquals("backedUp", backedUp);
     }
 
     public FileArchiveQuery archiveDt(Date archiveDt) {
-        return (FileArchiveQuery) this.equals("archiveDt", archiveDt);
+        return (FileArchiveQuery) this.addEquals("archiveDt", archiveDt);
     }
 }

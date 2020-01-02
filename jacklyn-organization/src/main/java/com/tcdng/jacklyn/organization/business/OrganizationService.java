@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,6 +24,8 @@ import com.tcdng.jacklyn.organization.entities.Branch;
 import com.tcdng.jacklyn.organization.entities.BranchQuery;
 import com.tcdng.jacklyn.organization.entities.Department;
 import com.tcdng.jacklyn.organization.entities.DepartmentQuery;
+import com.tcdng.jacklyn.organization.entities.Hub;
+import com.tcdng.jacklyn.organization.entities.HubQuery;
 import com.tcdng.jacklyn.organization.entities.Privilege;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategory;
 import com.tcdng.jacklyn.organization.entities.PrivilegeCategoryQuery;
@@ -68,11 +70,33 @@ public interface OrganizationService extends JacklynBusinessService {
     Branch findBranch(Long branchId) throws UnifyException;
 
     /**
+     * Finds branch ID by branch code.
+     * 
+     * @param branchCode
+     *            the branch code to use
+     * @return the branch ID
+     * @throws UnifyException
+     *             if branch identified by supplied code is unknown
+     */
+    Long findBranchId(String branchCode) throws UnifyException;
+
+    /**
+     * Finds branch by criteria.
+     * 
+     * @param query
+     *            the criteria to use
+     * @return the branch data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. if an error occurs
+     */
+    Branch findBranch(BranchQuery query) throws UnifyException;
+
+    /**
      * Finds branches by query.
      * 
      * @param query
      *            the branch query
-     * @return the list of branchs found
+     * @return the list of branches found
      * @throws UnifyException
      *             if an error occurs
      */
@@ -134,6 +158,17 @@ public interface OrganizationService extends JacklynBusinessService {
     Department findDepartment(Long departmentId) throws UnifyException;
 
     /**
+     * Finds department by criteria.
+     * 
+     * @param query
+     *            the criteria to use
+     * @return the department data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. if an error occurs
+     */
+    Department findDepartment(DepartmentQuery query) throws UnifyException;
+
+    /**
      * Finds departments by query.
      * 
      * @param query
@@ -167,6 +202,138 @@ public interface OrganizationService extends JacklynBusinessService {
     int deleteDepartment(Long id) throws UnifyException;
 
     /**
+     * Creates a new hub.
+     * 
+     * @param hub
+     *            the hub data
+     * @return the created hub ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long createHub(Hub hub) throws UnifyException;
+
+    /**
+     * Finds hub by ID.
+     * 
+     * @param hubId
+     *            the hub ID
+     * @return the hub data
+     * @throws UnifyException
+     *             if hub with ID is not found
+     */
+    Hub findHub(Long hubId) throws UnifyException;
+
+    /**
+     * Finds hub by query.
+     * 
+     * @param query
+     *            the hub query
+     * @return the hub record if found otherwise null
+     * @throws UnifyException
+     *             if hub multiple records are found. If an error occurs
+     */
+    Hub findHub(HubQuery query) throws UnifyException;
+
+    /**
+     * Finds hubs by query.
+     * 
+     * @param query
+     *            the hub query
+     * @return the list of hubs found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Hub> findHubs(HubQuery query) throws UnifyException;
+
+    /**
+     * Updates a hub.
+     * 
+     * @param hub
+     *            the hub data
+     * @return the update count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int updateHub(Hub hub) throws UnifyException;
+
+    /**
+     * Deletes a hub.
+     * 
+     * @param id
+     *            the hub ID
+     * @return the delete count
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    int deleteHub(Long id) throws UnifyException;
+
+    /**
+     * Finds hub branches by hub ID.
+     * 
+     * @param hubId
+     *            the hub ID
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByHub(Long hubId) throws UnifyException;
+
+    /**
+     * Finds hub branches by branch ID.
+     * 
+     * @param branchId
+     *            the branch ID
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByBranch(Long branchId) throws UnifyException;
+
+    /**
+     * Finds hub branches by hub code.
+     * 
+     * @param hubCode
+     *            the hub code
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByHub(String hubCode) throws UnifyException;
+
+    /**
+     * Finds hub branches by branch code.
+     * 
+     * @param branchCode
+     *            the branch code
+     * @return the list of branches found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Branch> findHubBranchesByBranch(String branchCode) throws UnifyException;
+
+    /**
+     * Finds hub branch IDs by branch code.
+     * 
+     * @param branchCode
+     *            the branch code
+     * @return the list of branch IDs found
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<Long> findHubBranchIdsByBranch(String branchCode) throws UnifyException;
+
+    /**
+     * Finds hub by branch code.
+     * 
+     * @param branchCode
+     *            the branch code
+     * @return the hub
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Hub findHubByBranch(String branchCode) throws UnifyException;
+
+    /**
      * Creates a new role.
      * 
      * @param role
@@ -198,6 +365,17 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if role with ID is not found
      */
     Role findRole(Long roleId) throws UnifyException;
+
+    /**
+     * Finds role by criteria.
+     * 
+     * @param query
+     *            the criteria to use
+     * @return the role data if found otherwise null
+     * @throws UnifyException
+     *             if multiple records found. if an error occurs
+     */
+    Role findRole(RoleQuery query) throws UnifyException;
 
     /**
      * Gets document for specified role.
@@ -473,4 +651,15 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     void loadRoleAttributesToApplication(String... roleNames) throws UnifyException;
+
+    /**
+     * Find roles that are tied to a workflow step.
+     * 
+     * @param stepGlobalName
+     *            the global workflow step name
+     * @return list of role codes
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<String> findWfStepRoles(String stepGlobalName) throws UnifyException;
 }

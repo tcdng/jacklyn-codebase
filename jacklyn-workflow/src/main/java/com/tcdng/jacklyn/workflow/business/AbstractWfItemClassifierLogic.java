@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,7 @@ package com.tcdng.jacklyn.workflow.business;
 
 import java.util.Date;
 
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfDocClassifierFilterDef;
 import com.tcdng.unify.core.AbstractUnifyComponent;
 import com.tcdng.unify.core.UnifyException;
@@ -43,7 +44,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
     /**
      * Applies filter to workflow item.
      * 
-     * @param wfItemReader
+     * @param flowingWfItemReader
      *            the workflow item reader
      * @param filter
      *            to filter to apply
@@ -51,100 +52,98 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
      * @throws UnifyException
      *             if an error occurs
      */
-    protected boolean applyFilter(WfItemReader wfItemReader, WfDocClassifierFilterDef filter) throws UnifyException {
-        if (wfItemReader != null) {
-            Object fieldValue = wfItemReader.readFieldValue(filter.getFieldName());
-            Object limVal1 = getCalcValue(wfItemReader, filter, filter.getValue1());
+    protected boolean applyFilter(Reader flowingWfItemReader, WfDocClassifierFilterDef filter) throws UnifyException {
+        if (flowingWfItemReader != null) {
+            Object fieldValue = flowingWfItemReader.read(filter.getFieldName());
+            Object limVal1 = resolveValue(flowingWfItemReader, filter, filter.getValue1());
             switch (filter.getOp()) {
-            case BETWEEN:
-                if (fieldValue != null) {
-                    double dblFieldVal = ((Number) fieldValue).doubleValue();
-                    return dblFieldVal >= ((Number) limVal1).doubleValue()
-                            && dblFieldVal <= ((Number) getCalcValue(wfItemReader, filter, filter.getValue2()))
-                                    .doubleValue();
-                }
-                break;
-            case EQUALS:
-                return limVal1.equals(fieldValue);
-            case GREATER:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() > ((Number) limVal1).doubleValue();
-                }
-                break;
-            case GREATER_OR_EQUAL:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() >= ((Number) limVal1).doubleValue();
-                }
-                break;
-            case IS_NOT_NULL:
-                return fieldValue != null;
-            case IS_NULL:
-                return fieldValue == null;
-            case LESS_OR_EQUAL:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() <= ((Number) limVal1).doubleValue();
-                }
-                break;
-            case LESS:
-                if (fieldValue != null) {
-                    return ((Number) fieldValue).doubleValue() < ((Number) limVal1).doubleValue();
-                }
-                break;
-            case LIKE:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).indexOf((String) limVal1) >= 0;
-                }
-                break;
-            case LIKE_BEGIN:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).startsWith((String) limVal1);
-                }
-                break;
-            case LIKE_END:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).endsWith((String) limVal1);
-                }
-                break;
-            case NOT_BETWEEN:
-                if (fieldValue != null) {
-                    double dblFieldVal = ((Number) fieldValue).doubleValue();
-                    return dblFieldVal < ((Number) limVal1).doubleValue()
-                            || dblFieldVal > ((Number) getCalcValue(wfItemReader, filter, filter.getValue2()))
-                                    .doubleValue();
-                }
-                break;
-            case NOT_EQUAL:
-                return !limVal1.equals(fieldValue);
-            case NOT_LIKE:
-                if (fieldValue != null) {
-                    return ((String) fieldValue).indexOf((String) limVal1) < 0;
-                }
-                break;
-            case NOT_LIKE_BEGIN:
-                if (fieldValue != null) {
-                    return !((String) fieldValue).startsWith((String) limVal1);
-                }
-                break;
-            case NOT_LIKE_END:
-                if (fieldValue != null) {
-                    return !((String) fieldValue).endsWith((String) limVal1);
-                }
-                break;
-            default:
-                break;
+                case BETWEEN:
+                    if (fieldValue != null) {
+                        double dblFieldVal = getDouble(fieldValue);
+                        return dblFieldVal >= getDouble(limVal1)
+                                && dblFieldVal <= getDouble(resolveValue(flowingWfItemReader, filter, filter.getValue2()));
+                    }
+                    break;
+                case EQUALS:
+                    return limVal1.equals(fieldValue);
+                case GREATER:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) > getDouble(limVal1);
+                    }
+                    break;
+                case GREATER_OR_EQUAL:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) >= getDouble(limVal1);
+                    }
+                    break;
+                case IS_NOT_NULL:
+                    return fieldValue != null;
+                case IS_NULL:
+                    return fieldValue == null;
+                case LESS_OR_EQUAL:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) <= getDouble(limVal1);
+                    }
+                    break;
+                case LESS:
+                    if (fieldValue != null) {
+                        return getDouble(fieldValue) < getDouble(limVal1);
+                    }
+                    break;
+                case LIKE:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).indexOf((String) limVal1) >= 0;
+                    }
+                    break;
+                case BEGIN_WITH:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).startsWith((String) limVal1);
+                    }
+                    break;
+                case END_WITH:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).endsWith((String) limVal1);
+                    }
+                    break;
+                case NOT_BETWEEN:
+                    if (fieldValue != null) {
+                        double dblFieldVal = getDouble(fieldValue);
+                        return dblFieldVal < getDouble(limVal1)
+                                || dblFieldVal > getDouble(resolveValue(flowingWfItemReader, filter, filter.getValue2()));
+                    }
+                    break;
+                case NOT_EQUAL:
+                    return !limVal1.equals(fieldValue);
+                case NOT_LIKE:
+                    if (fieldValue != null) {
+                        return ((String) fieldValue).indexOf((String) limVal1) < 0;
+                    }
+                    break;
+                case NOT_BEGIN_WITH:
+                    if (fieldValue != null) {
+                        return !((String) fieldValue).startsWith((String) limVal1);
+                    }
+                    break;
+                case NOT_END_WITH:
+                    if (fieldValue != null) {
+                        return !((String) fieldValue).endsWith((String) limVal1);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
         return false;
     }
 
-    private Object getCalcValue(WfItemReader wfItemReader, WfDocClassifierFilterDef filter, String value)
+    private Object resolveValue(Reader flowingWfItemReader, WfDocClassifierFilterDef filter, String value)
             throws UnifyException {
         Object val = null;
         if (filter.isFieldOnly()) {
-            val = wfItemReader.readFieldValue(value);
+            val = flowingWfItemReader.read(value);
         } else {
-            Class<?> fieldType = wfItemReader.getFieldType(filter.getFieldName());
+            Class<?> fieldType = flowingWfItemReader.getFieldType(filter.getFieldName());
             val = DataUtils.convert(fieldType, value, null);
         }
 
@@ -153,6 +152,22 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
         }
 
         return val;
+    }
+
+    private double getDouble(Object val) {
+        if (val instanceof Number) {
+            return ((Number) val).doubleValue();
+        }
+
+        if (val instanceof Date) {
+            return ((Date) val).getTime();
+        }
+
+        if (val instanceof String) {
+            return ((String) val).length();
+        }
+
+        return 0;
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,6 +31,6 @@ public class WfFormPrivilegeQuery extends BaseEntityQuery<WfFormPrivilege> {
     }
 
     public WfFormPrivilegeQuery wfStepId(Long wfStepId) {
-        return (WfFormPrivilegeQuery) equals("wfStepId", wfStepId);
+        return (WfFormPrivilegeQuery) addEquals("wfStepId", wfStepId);
     }
 }

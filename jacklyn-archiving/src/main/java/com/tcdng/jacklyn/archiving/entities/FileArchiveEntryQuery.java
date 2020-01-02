@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,14 +30,14 @@ public class FileArchiveEntryQuery extends BaseEntityQuery<FileArchiveEntry> {
     }
 
     public FileArchiveEntryQuery archivedItemId(Long archivedItemId) {
-        return (FileArchiveEntryQuery) equals("archivedItemId", archivedItemId);
+        return (FileArchiveEntryQuery) addEquals("archivedItemId", archivedItemId);
     }
 
     public FileArchiveEntryQuery recordName(String recordName) {
-        return (FileArchiveEntryQuery) equals("recordName", recordName);
+        return (FileArchiveEntryQuery) addEquals("recordName", recordName);
     }
 
     public FileArchiveEntryQuery fieldName(String fieldName) {
-        return (FileArchiveEntryQuery) equals("fieldName", fieldName);
+        return (FileArchiveEntryQuery) addEquals("fieldName", fieldName);
     }
 }

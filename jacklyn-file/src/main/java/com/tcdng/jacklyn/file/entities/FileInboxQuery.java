@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,18 +31,18 @@ public class FileInboxQuery extends AbstractFileBoxDataQuery<FileInbox> {
     }
 
     public FileInboxQuery readStatus(FileInboxReadStatus readStatus) {
-        return (FileInboxQuery) equals("readStatus", readStatus);
+        return (FileInboxQuery) addEquals("readStatus", readStatus);
     }
 
     public FileInboxQuery readStatusNot(FileInboxReadStatus readStatus) {
-        return (FileInboxQuery) equals("readStatus", readStatus);
+        return (FileInboxQuery) addEquals("readStatus", readStatus);
     }
 
     public FileInboxQuery status(FileInboxStatus status) {
-        return (FileInboxQuery) equals("status", status);
+        return (FileInboxQuery) addEquals("status", status);
     }
 
     public FileInboxQuery statusNot(FileInboxStatus status) {
-        return (FileInboxQuery) notEqual("status", status);
+        return (FileInboxQuery) addNotEqual("status", status);
     }
 }

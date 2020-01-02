@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,12 +30,12 @@ public abstract class AbstractQuickUtilizationProvider
         extends AbstractStatisticsProvider<QuickUtilization> {
 
     @Override
-    public QuickUtilization provide() throws UnifyException {
-        QuickPercentage quickPercentage = doProvidePercentage();
+    public QuickUtilization provide(Object... params) throws UnifyException {
+        QuickPercentage quickPercentage = doProvidePercentage(params);
         return new QuickUtilization(quickPercentage, doProvidePresentation(quickPercentage));
     }
 
-    protected abstract QuickPercentage doProvidePercentage() throws UnifyException;
+    protected abstract QuickPercentage doProvidePercentage(Object... params) throws UnifyException;
 
     protected abstract byte[] doProvidePresentation(QuickPercentage quickPercentage) throws UnifyException;
 

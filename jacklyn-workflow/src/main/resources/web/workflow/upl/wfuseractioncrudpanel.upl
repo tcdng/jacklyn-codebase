@@ -1,15 +1,15 @@
 // UPL template for workflow action definition CRUD panel
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 !ui-wfactiondefcrudpanel
-    formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmLabel frmTargetWfStepName frmNoteReqType frmValidatePage frmAttachmentCheckPanel}}
-    tableColumnList:$c{wfStepName name description targetWfStepName noteReqTypeDesc}
+    formSection:$d{!ui-section components:$c{frmWfStepName frmName frmDescription frmLabel frmTargetWfStepName frmCommentReqType frmValidatePage frmAttachmentCheckPanel}}
+    tableColumnList:$c{wfStepName name description targetWfStepName commentReqTypeDesc}
 
 //Table columns
 !ui-label:wfStepName caption:$m{workflow.wftemplate.wfstep.wfuseraction.step} binding:wfStepName columnStyle:$s{width:120px;} sortable:true
 !ui-label:name caption:$m{workflow.wftemplate.wfstep.wfuseraction.name} binding:name columnStyle:$s{width:120px;} sortable:true
 !ui-label:description caption:$m{workflow.wftemplate.wfstep.wfuseraction.description} binding:description columnStyle:$s{width:200px;} sortable:true
 !ui-label:targetWfStepName caption:$m{workflow.wftemplate.wfstep.wfuseraction.targetstep} binding:targetWfStepName columnStyle:$s{width:120px;} sortable:true
-!ui-label:noteReqTypeDesc caption:$m{workflow.wftemplate.wfstep.wfuseraction.notes} binding:noteReqTypeDesc columnStyle:$s{width:120px;} sortable:true
+!ui-label:commentReqTypeDesc caption:$m{workflow.wftemplate.wfstep.wfuseraction.comments} binding:commentReqTypeDesc columnStyle:$s{width:120px;} sortable:true
 
 //Form components
 !ui-text:frmWfStepName caption:$m{workflow.wftemplate.wfstep.wfuseraction.step} binding:wfStepName size:32 required:true
@@ -17,7 +17,7 @@
 !ui-text:frmDescription caption:$m{workflow.wftemplate.wfstep.wfuseraction.description} binding:description size:40 required:true
 !ui-text:frmLabel caption:$m{workflow.wftemplate.wfstep.wfuseraction.label} binding:label size:40 maxLen:56 required:true
 !ui-text:frmTargetWfStepName caption:$m{workflow.wftemplate.wfstep.wfuseraction.targetstep} size:32 binding:targetWfStepName required:true
-!ui-select:frmNoteReqType caption:$m{workflow.wftemplate.wfstep.wfuseraction.notes} binding:noteReqType
+!ui-select:frmCommentReqType caption:$m{workflow.wftemplate.wfstep.wfuseraction.comments} binding:commentReqType
     list:requirementtypelist blankOption:$s{}
 !ui-checkbox:frmValidatePage caption:$m{workflow.wftemplate.wfstep.wfuseraction.validatepage} binding:validatePage
 

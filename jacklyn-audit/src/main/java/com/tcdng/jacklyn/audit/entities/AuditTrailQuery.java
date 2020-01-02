@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -31,26 +31,30 @@ public class AuditTrailQuery extends BaseTimestampedEntityQuery<AuditTrail> {
     }
 
     public AuditTrailQuery userLoginId(String userLoginId) {
-        return (AuditTrailQuery) equals("userLoginId", userLoginId);
+        return (AuditTrailQuery) addEquals("userLoginId", userLoginId);
     }
 
     public AuditTrailQuery moduleId(Long moduleId) {
-        return (AuditTrailQuery) equals("moduleId", moduleId);
+        return (AuditTrailQuery) addEquals("moduleId", moduleId);
     }
 
     public AuditTrailQuery moduleName(String moduleName) {
-        return (AuditTrailQuery) equals("moduleName", moduleName);
+        return (AuditTrailQuery) addEquals("moduleName", moduleName);
     }
 
     public AuditTrailQuery auditDefinitionName(String auditDefinitionName) {
-        return (AuditTrailQuery) equals("auditDefinitionName", auditDefinitionName);
+        return (AuditTrailQuery) addEquals("auditDefinitionName", auditDefinitionName);
+    }
+
+    public AuditTrailQuery recordName(String recordName) {
+        return (AuditTrailQuery) addEquals("recordName", recordName);
     }
 
     public AuditTrailQuery recordId(Long recordId) {
-        return (AuditTrailQuery) equals("recordId", recordId);
+        return (AuditTrailQuery) addEquals("recordId", recordId);
     }
 
     public AuditTrailQuery eventType(EventType eventType) {
-        return (AuditTrailQuery) equals("eventType", eventType);
+        return (AuditTrailQuery) addEquals("eventType", eventType);
     }
 }

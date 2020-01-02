@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,7 +16,8 @@
 
 package com.tcdng.jacklyn.shared.notification.data;
 
-import javax.xml.bind.annotation.XmlElement;
+
+import com.tcdng.jacklyn.shared.BaseToolingItem;
 
 /**
  * Tooling enrichment logic item.
@@ -24,37 +25,14 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Lateef
  * @since 1.0
  */
-public class ToolingAttachmentGenItem {
-
-    private String name;
-
-    private String description;
+public class ToolingAttachmentGenItem extends BaseToolingItem {
 
     public ToolingAttachmentGenItem(String name, String description) {
-        this.name = name;
-        this.description = description;
+        super(name, description);
     }
 
     public ToolingAttachmentGenItem() {
 
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @XmlElement
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @XmlElement
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 }

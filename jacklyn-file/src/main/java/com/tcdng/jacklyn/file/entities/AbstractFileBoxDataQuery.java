@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,22 +33,22 @@ public abstract class AbstractFileBoxDataQuery<T extends AbstractFileTransferBox
     }
 
     public AbstractFileBoxDataQuery<T> fileTransferConfigId(Long fileTransferConfigId) {
-        return (AbstractFileBoxDataQuery<T>) equals("fileTransferConfigId", fileTransferConfigId);
+        return (AbstractFileBoxDataQuery<T>) addEquals("fileTransferConfigId", fileTransferConfigId);
     }
 
     public AbstractFileBoxDataQuery<T> fileTransferConfigName(String fileTransferConfigName) {
-        return (AbstractFileBoxDataQuery<T>) equals("fileTransferConfigName", fileTransferConfigName);
+        return (AbstractFileBoxDataQuery<T>) addEquals("fileTransferConfigName", fileTransferConfigName);
     }
 
     public AbstractFileBoxDataQuery<T> filenameLikeBeginWith(String filename) {
-        return (AbstractFileBoxDataQuery<T>) likeBegin("filename", filename);
+        return (AbstractFileBoxDataQuery<T>) addBeginsWith("filename", filename);
     }
 
     public AbstractFileBoxDataQuery<T> filenameLikeEndWith(String filename) {
-        return (AbstractFileBoxDataQuery<T>) likeEnd("filename", filename);
+        return (AbstractFileBoxDataQuery<T>) addEndsWith("filename", filename);
     }
 
     public AbstractFileBoxDataQuery<T> setFilenameIn(Collection<String> filenames) {
-        return (AbstractFileBoxDataQuery<T>) amongst("filename", filenames);
+        return (AbstractFileBoxDataQuery<T>) addAmongst("filename", filenames);
     }
 }

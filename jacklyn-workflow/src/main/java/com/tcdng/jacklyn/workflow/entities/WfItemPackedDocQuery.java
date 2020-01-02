@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,6 +14,8 @@
  * the License.
  */
 package com.tcdng.jacklyn.workflow.entities;
+
+import java.util.Collection;
 
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 
@@ -30,7 +32,11 @@ public class WfItemPackedDocQuery extends BaseTimestampedEntityQuery<WfItemPacke
     }
 
     public WfItemPackedDocQuery wfItemId(Long wfItemId) {
-        return (WfItemPackedDocQuery) equals("wfItemId", wfItemId);
+        return (WfItemPackedDocQuery) addEquals("wfItemId", wfItemId);
+    }
+
+    public WfItemPackedDocQuery wfItemIdIn(Collection<Long> wfItemId) {
+        return (WfItemPackedDocQuery) addAmongst("wfItemId", wfItemId);
     }
 
 }

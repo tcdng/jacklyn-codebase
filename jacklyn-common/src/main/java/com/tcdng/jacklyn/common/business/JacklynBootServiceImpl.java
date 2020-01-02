@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,9 +27,9 @@ import java.util.Set;
 
 import com.tcdng.jacklyn.common.annotation.Format;
 import com.tcdng.jacklyn.common.annotation.Managed;
+import com.tcdng.jacklyn.common.constants.CommonModuleErrorConstants;
 import com.tcdng.jacklyn.common.constants.CommonModuleNameConstants;
 import com.tcdng.jacklyn.common.constants.JacklynApplicationAttributeConstants;
-import com.tcdng.jacklyn.common.constants.CommonModuleErrorConstants;
 import com.tcdng.jacklyn.common.constants.JacklynModuleStaticSettings;
 import com.tcdng.jacklyn.common.constants.JacklynPropertyConstants;
 import com.tcdng.jacklyn.common.utils.JacklynUtils;
@@ -39,8 +39,6 @@ import com.tcdng.jacklyn.shared.xml.config.module.ArchiveConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ArchivesConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.AuditConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.AuditsConfig;
-import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
-import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTilesConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.FieldConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ManagedConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.MenuConfig;
@@ -50,7 +48,10 @@ import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ReportConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ReportGroupConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.ReportsConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTileConfig;
+import com.tcdng.jacklyn.shared.xml.config.module.ShortcutTilesConfig;
 import com.tcdng.unify.core.ApplicationComponents;
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyComponentConfig;
@@ -64,6 +65,7 @@ import com.tcdng.unify.core.annotation.ListOnly;
 import com.tcdng.unify.core.application.AbstractBootService;
 import com.tcdng.unify.core.application.BootInstallationInfo;
 import com.tcdng.unify.core.application.StartupShutdownHook;
+import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.report.ReportServer;
@@ -92,8 +94,9 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
         List<StartupShutdownHook> list = new ArrayList<StartupShutdownHook>();
         for (UnifyStaticSettings unifyStaticSettings : getStaticSettings()) {
             if (unifyStaticSettings instanceof JacklynModuleStaticSettings) {
-                JacklynModuleStaticSettings jacklynModuleStaticSettings = (JacklynModuleStaticSettings) unifyStaticSettings;
-                if (!StringUtils.isBlank(jacklynModuleStaticSettings.getModuleComponent())) {
+                JacklynModuleStaticSettings jacklynModuleStaticSettings =
+                        (JacklynModuleStaticSettings) unifyStaticSettings;
+                if (StringUtils.isNotBlank(jacklynModuleStaticSettings.getModuleComponent())) {
                     String componentName = jacklynModuleStaticSettings.getModuleComponent();
                     Class<? extends UnifyComponent> type = getComponentType(componentName);
                     if (StartupShutdownHook.class.isAssignableFrom(type)) {
@@ -115,21 +118,23 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
         List<String> moduleXmlList = new ArrayList<String>();
         for (UnifyStaticSettings unifyStaticSettings : getStaticSettings()) {
             if (unifyStaticSettings instanceof JacklynModuleStaticSettings) {
-                JacklynModuleStaticSettings jacklynModuleStaticSettings = (JacklynModuleStaticSettings) unifyStaticSettings;
+                JacklynModuleStaticSettings jacklynModuleStaticSettings =
+                        (JacklynModuleStaticSettings) unifyStaticSettings;
                 String componentName = jacklynModuleStaticSettings.getModuleComponent();
-                if (!StringUtils.isBlank(componentName)) {
+                if (StringUtils.isNotBlank(componentName)) {
                     logDebug("Identified feature installer [{0}]...", componentName);
                     installerList.add(componentName);
                 }
 
-                if (!StringUtils.isBlank(jacklynModuleStaticSettings.getModuleConfig())) {
+                if (StringUtils.isNotBlank(jacklynModuleStaticSettings.getModuleConfig())) {
                     moduleXmlList.add(jacklynModuleStaticSettings.getModuleConfig());
                 }
             }
         }
 
-        List<String> configXmlList = DataUtils.convert(ArrayList.class, String.class,
-                getContainerSetting(Object.class, JacklynPropertyConstants.MODULE_CONFIGURATION), null);
+        List<String> configXmlList =
+                DataUtils.convert(ArrayList.class, String.class,
+                        getContainerSetting(Object.class, JacklynPropertyConstants.MODULE_CONFIGURATION), null);
         if (configXmlList != null) {
             moduleXmlList.addAll(configXmlList);
         }
@@ -138,11 +143,14 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
             logDebug("Loading feature definitions from [{0}]...", configFile);
             InputStream inputStream = null;
             try {
-                inputStream = IOUtils.openFileResourceInputStream(configFile,
-                        getUnifyComponentContext().getWorkingPath());
+                inputStream =
+                        IOUtils.openFileResourceInputStream(configFile, getUnifyComponentContext().getWorkingPath());
                 ModuleConfig mc = xmlObjectStreamer.unmarshal(ModuleConfig.class, inputStream, null);
                 list.add(mc);
                 mc.getPrivileges().toMap();
+            } catch (UnifyException ue) {
+                logError(ue);
+                throw ue;
             } finally {
                 IOUtils.close(inputStream);
             }
@@ -192,7 +200,7 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                     providerName, configID);
         }
 
-        if (!StringUtils.isBlank(providerName)) {
+        if (StringUtils.isNotBlank(providerName)) {
             setApplicationAttribute(contextID, (T) getComponent(providerName));
         } else {
             logWarn("Could not find provider component with context ID [{0}] and config ID [{1}].", contextID,
@@ -212,13 +220,27 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                 }
             }
 
-            // Report privileges
-            ReportsConfig rc = mc.getReports();
-            if (rc != null) {
+            // Reportable privileges
+            List<ReportConfig> reportableList = mc.getReportableList();
+            if (DataUtils.isNotBlank(reportableList)) {
                 PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.REPORTABLE);
-                for (ReportConfig rci : rc.getReportList()) {
+                for (ReportConfig rci : reportableList) {
                     PrivilegeConfig pc = new PrivilegeConfig(rci.getName(), rci.getDescription());
                     pgc.addPrivilegeConfig(pc);
+                }
+            }
+
+            // Configured reports
+            ReportsConfig rc = mc.getReports();
+            if (rc != null && DataUtils.isNotBlank(rc.getReportGroupList())) {
+                PrivilegeGroupConfig pgc = getPrivilegeGroup(mc, PrivilegeCategoryConstants.CONFIGUREDREPORTS);
+                for (ReportGroupConfig rgConfig : rc.getReportGroupList()) {
+                    if (DataUtils.isNotBlank(rgConfig.getReportList())) {
+                        for (ReportConfig rci : rgConfig.getReportList()) {
+                            PrivilegeConfig pc = new PrivilegeConfig(rci.getName(), rci.getDescription());
+                            pgc.addPrivilegeConfig(pc);
+                        }
+                    }
                 }
             }
 
@@ -306,6 +328,10 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                     fc.setList(fa.list());
                     fc.setMask(fa.mask());
                     fc.setWidth(fa.widthRatio());
+                } else {
+                    if (Number.class.isAssignableFrom(field.getType())) {
+                        fc.sethAlign(HAlignType.RIGHT.name());
+                    }
                 }
 
                 if (description == null) {
@@ -366,14 +392,10 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
 
             // Reportable configuration
             if (ma.reportable()) {
-                ReportsConfig reportsConfig = mc.getReports();
-                if (reportsConfig == null) {
-                    mc.setReports(reportsConfig = new ReportsConfig());
-                }
-
-                List<ReportConfig> reportConfigList = reportsConfig.getReportList();
-                if (reportConfigList == null) {
-                    reportsConfig.setReportList(reportConfigList = new ArrayList<ReportConfig>());
+                List<ReportConfig> reportableList = mc.getReportableList();
+                if (reportableList == null) {
+                    reportableList = new ArrayList<ReportConfig>();
+                    mc.setReportableList(reportableList);
                 }
 
                 String name = JacklynUtils.generateManagedRecordReportableName(entityClass, title);
@@ -381,14 +403,12 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
                 ReportConfig rc = new ReportConfig();
                 rc.setName(name);
                 rc.setDescription(description);
-                rc.setDynamic(true);
                 rc.setParameters(null);
                 rc.setProcessor(null);
                 rc.setReportable(type);
                 rc.setTemplate(null);
                 rc.setTitle(title);
-                rc.setManaged(true);
-                reportConfigList.add(rc);
+                reportableList.add(rc);
             }
 
             // Add to module configuration
@@ -396,8 +416,8 @@ public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
         }
     }
 
-    private AuditConfig createAuditConfig(String namePrefix, String titleLowCase, String type, EventType eventType, boolean active)
-            throws UnifyException {
+    private AuditConfig createAuditConfig(String namePrefix, String titleLowCase, String type, EventType eventType,
+            boolean active) throws UnifyException {
         AuditConfig ac = new AuditConfig();
         String action = eventType.name().toLowerCase();
         ac.setAction(eventType);

@@ -1,0 +1,35 @@
+// UPL template for managing producer definitions
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{integration.producerdefinition.manage}
+    searchByList:$c{searchName searchDescription searchStatus}
+    searchClearList:$c{searchName searchDescription searchStatus}
+    tableColumnList:$c{name description statusDesc}
+    formSection:$d{!ui-section caption:$m{integration.producerdefinition.section.basicdetails} components:$c{frmName frmDescription frmMessageTag frmPreferredConsumer frmStatus}}
+    addPrivilege:$s{int-producerdefinitionadd} editPrivilege:$s{int-producerdefinitionedit}
+    viewPrivilege:$s{int-producerdefinitionview} deletePrivilege:$s{int-producerdefinitiondelete}
+    addValidations:$c{frmNameVal frmDescVal}
+    saveValidations:$c{frmNameVal frmDescVal}
+
+//Search
+!ui-text:searchName caption:$m{integration.producerdefinition.name} binding:searchName eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-text:searchDescription caption:$m{integration.producerdefinition.description} binding:searchDescription eventHandler:$d{!ui-event event:onenter action:$c{searchAct}}
+!ui-select:searchStatus caption:$m{integration.producerdefinition.status} binding:searchStatus list:recordstatuslist blankOption:$s{}
+        eventHandler:$d{!ui-event event:onchange action:$c{searchAct}}
+
+//Table columns
+!ui-label:name caption:$m{integration.producerdefinition.name} binding:name columnStyle:$s{width:80px;} sortable:true
+!ui-label:description caption:$m{integration.producerdefinition.description} binding:description  columnStyle:$s{width:250px;} sortable:true
+!ui-label:statusDesc caption:$m{integration.producerdefinition.status} binding:statusDesc style:$s{text-align:center;} columnStyle:$s{width:100px;} sortable:true
+
+//Form components   
+!ui-name:frmName caption:$m{integration.producerdefinition.name} binding:name minLen:3 maxLen:32 required:true focus:true
+!ui-text:frmDescription caption:$m{integration.producerdefinition.description} binding:description size:40 minLen:1 maxLen:48 required:true
+!ui-name:frmMessageTag caption:$m{integration.producerdefinition.messagetag} binding:messageTag size:40 minLen:1 maxLen:96 required:true period:true
+!ui-name:frmPreferredConsumer caption:$m{integration.producerdefinition.preferredconsumer} binding:preferredConsumer size:40 minLen:1 maxLen:64 required:true period:true dash:true
+!ui-select:frmStatus caption:$m{integration.producerdefinition.status} binding:status list:recordstatuslist blankOption:$s{} required:true
+
+//Validations
+!ui-uniquevalidation:frmNameVal components:$c{frmName}
+!ui-uniquevalidation:frmDescVal components:$c{frmDescription}

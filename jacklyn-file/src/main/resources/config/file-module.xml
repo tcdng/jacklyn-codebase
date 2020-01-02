@@ -24,25 +24,25 @@
 			description="$m{file.menu.main}">
 			<menuitem name="fil-managefiletransferconfig" caption="$m{file.filetransferconfig.menu.title}"
 				pageCaption="$m{file.filetransferconfig.manage}" description="$m{file.menuitem.filetransferconfig}"
-				path="/file/filetransferconfig/openPage" remotePath="/file/filetransferconfig/getRemoteDoc" />
+				path="/file/filetransferconfig/openPage" />
 			<menuitem name="fil-managefiletransfer" caption="$m{file.filetransfer.menu.title}"
 				pageCaption="$m{file.filetransfer.menu.title}" description="$m{file.menuitem.filetransfer}"
-				path="/file/filetransfer/openPage" remotePath="/file/filetransfer/getRemoteDoc" />
+				path="/file/filetransfer/openPage" />
 			<menuitem name="fil-managefileinbox" caption="$m{file.fileinbox.menu.title}"
 				pageCaption="$m{file.fileinbox.manage}" description="$m{file.menuitem.fileinbox}"
-				path="/file/fileinbox/openPage" remotePath="/file/fileinbox/getRemoteDoc" />
+				path="/file/fileinbox/openPage" />
 			<menuitem name="fil-managefileoutbox" caption="$m{file.fileoutbox.menu.title}"
 				pageCaption="$m{file.fileoutbox.manage}" description="$m{file.menuitem.fileoutbox}"
-				path="/file/fileoutbox/openPage" remotePath="/file/fileoutbox/getRemoteDoc" />
+				path="/file/fileoutbox/openPage" />
 			<menuitem name="fil-managebatchfiledefinition" caption="$m{file.batchfiledefinition.menu.title}"
 				pageCaption="$m{file.batchfiledefinition.manage}" description="$m{file.menuitem.batchfiledefinition}"
-				path="/file/batchfiledefinition/openPage" remotePath="/file/batchfiledefinition/getRemoteDoc" />
-			<menuitem name="fil-managebatchfilereadconfig" caption="$m{file.batchfilereadconfig.menu.title}"
-				pageCaption="$m{file.batchfilereadconfig.manage}" description="$m{file.menuitem.batchfilereadconfig}"
-				path="/file/batchfilereadconfig/openPage" remotePath="/file/batchfilereadconfig/getRemoteDoc" />
+				path="/file/batchfiledefinition/openPage" />
+			<menuitem name="fil-managebatchfilereaddefinition" caption="$m{file.batchfilereaddefinition.menu.title}"
+				pageCaption="$m{file.batchfilereaddefinition.manage}" description="$m{file.menuitem.batchfilereaddefinition}"
+				path="/file/batchfilereaddefinition/openPage" />
 			<menuitem name="fil-managebatchupload" caption="$m{file.batchupload.menu.title}"
 				pageCaption="$m{file.batchupload.manage}" description="$m{file.menuitem.batchupload}"
-				path="/file/batchupload/openPage" remotePath="/file/batchupload/getRemoteDoc" />
+				path="/file/batchupload/openPage" />
 		</menu>
 	</menus>
 	<privileges>
@@ -65,14 +65,14 @@
 				description="$m{file.privilege.batchfiledefinition.view}" />
 			<privilege name="fil-batchfiledefinitiondelete"
 				description="$m{file.privilege.batchfiledefinition.delete}" />
-			<privilege name="fil-batchfilereadconfigadd"
-				description="$m{file.privilege.batchfilereadconfig.add}" />
-			<privilege name="fil-batchfilereadconfigedit"
-				description="$m{file.privilege.batchfilereadconfig.edit}" />
-			<privilege name="fil-batchfilereadconfigview"
-				description="$m{file.privilege.batchfilereadconfig.view}" />
-			<privilege name="fil-batchfilereadconfigdelete"
-				description="$m{file.privilege.batchfilereadconfig.delete}" />
+			<privilege name="fil-batchfilereaddefinitionadd"
+				description="$m{file.privilege.batchfilereaddefinition.add}" />
+			<privilege name="fil-batchfilereaddefinitionedit"
+				description="$m{file.privilege.batchfilereaddefinition.edit}" />
+			<privilege name="fil-batchfilereaddefinitionview"
+				description="$m{file.privilege.batchfilereaddefinition.view}" />
+			<privilege name="fil-batchfilereaddefinitiondelete"
+				description="$m{file.privilege.batchfilereaddefinition.delete}" />
 		</privilege-group>
 	</privileges>
 </module>

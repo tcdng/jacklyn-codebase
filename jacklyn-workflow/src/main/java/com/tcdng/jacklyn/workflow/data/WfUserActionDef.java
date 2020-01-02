@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -28,9 +28,7 @@ import com.tcdng.unify.core.constant.RequirementType;
  */
 public class WfUserActionDef extends BaseLabelWfDef {
 
-    private static final long serialVersionUID = -7944354332014625017L;
-
-    private RequirementType noteReqType;
+    private RequirementType commentReqType;
 
     private String targetGlobalName;
 
@@ -38,10 +36,10 @@ public class WfUserActionDef extends BaseLabelWfDef {
 
     private List<WfAttachmentCheckDef> attachmentCheckList;
 
-    public WfUserActionDef(String name, String description, String label, RequirementType noteReqType,
+    public WfUserActionDef(String name, String description, String label, RequirementType commentReqType,
             String targetGlobalName, boolean validatePage, List<WfAttachmentCheckDef> attachmentCheckList) {
         super(name, description, label);
-        this.noteReqType = noteReqType;
+        this.commentReqType = commentReqType;
         this.targetGlobalName = targetGlobalName;
         this.validatePage = validatePage;
         if (attachmentCheckList != null) {
@@ -51,8 +49,8 @@ public class WfUserActionDef extends BaseLabelWfDef {
         }
     }
 
-    public RequirementType getNoteReqType() {
-        return noteReqType;
+    public RequirementType getCommentReqType() {
+        return commentReqType;
     }
 
     public String getTargetGlobalName() {

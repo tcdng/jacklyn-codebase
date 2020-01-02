@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -30,7 +30,7 @@ import com.tcdng.unify.core.annotation.UniqueConstraint;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Table(name = "WFRECORDACTION", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
+@Table(name = "JKWFRECORDACTION", uniqueConstraints = { @UniqueConstraint({ "wfStepId", "name" }),
         @UniqueConstraint({ "wfStepId", "description" }) })
 public class WfRecordAction extends BaseEntity {
 
@@ -45,6 +45,9 @@ public class WfRecordAction extends BaseEntity {
 
     @Column(name = "RECORDACTION_DESC", length = 64)
     private String description;
+
+    @Column(name = "DOC_NM", length = 32)
+    private String docName;
 
     @Column(name = "DOCMAPPING_NM", length = 32)
     private String docMappingName;
@@ -89,6 +92,14 @@ public class WfRecordAction extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
     }
 
     public String getDocMappingName() {

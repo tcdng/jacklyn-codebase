@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -34,7 +34,7 @@ public class SysParamConfig extends BaseConfig {
 
     private String editor;
 
-    private String defaultValue;
+    private String defaultVal;
 
     private boolean control;
 
@@ -52,7 +52,9 @@ public class SysParamConfig extends BaseConfig {
     @XmlJavaTypeAdapter(SystemParamTypeXmlAdapter.class)
     @XmlAttribute(required = true)
     public void setType(SystemParamType type) {
-        this.type = type;
+        if (type != null) {
+            this.type = type;
+        }
     }
 
     public String getEditor() {
@@ -64,13 +66,13 @@ public class SysParamConfig extends BaseConfig {
         this.editor = editor;
     }
 
-    public String getDefaultValue() {
-        return defaultValue;
+    public String getDefaultVal() {
+        return defaultVal;
     }
 
     @XmlAttribute(required = true)
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
+    public void setDefaultVal(String defaultVal) {
+        this.defaultVal = defaultVal;
     }
 
     public boolean isControl() {

@@ -1,7 +1,7 @@
 .ui-document .dBody {background-color: #F0F0F0;}
 
 /** Jacklyn */
-.jk-loginmainbody {display:block; width:908px; margin-left: auto; margin-right: auto; background-color: #000;}
+.jk-loginmainbody {display:block; width:908px; margin-left: auto; margin-right: auto; opacity:0.92;/*background-color: #000;*/}
 .jk-loginbannersection {display:inline-block; width:814px;}
 .jk-logintopbannerimg {padding:5px 0px 5px 5px;width:580px; height:280px;}
 
@@ -11,7 +11,7 @@
 .jk-loginbox {text-align: left; width: 304px; height:280px; background: #F8F8F8; border: 1px solid #A9A9A9;}
 .jk-loginboxframe {padding:5px 5px 5px 0px;}
     
-.jk-login-contentpanel {display:block;  position: relative; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #000;}
+.jk-login-contentpanel {display:block;  position: relative; left: 0px; top: 0px; width: 100%; height: 100%; /*background-color: #000;*/}
 
 .jk-loginband {padding-top:100px; height: auto;}
 
@@ -21,12 +21,12 @@
 
 .jk-topbanner {width: 100%; background-color: #000;}
 
-.jk-topbannerimg {width: 200px; height: 36px; text-align: left;}
+.jk-topbannerimg {/*width: 200px;*/ margin-left:2px; margin-top:2px; height: 36px; text-align: left;}
 
-.jk-topuserimg {float: right; width: 32px; height: 32px;padding:1px;border:solid 1px #A0A0A0;margin-right:4px;margin-top:2px;cursor:pointer;}
+.jk-topuserimg {float: right; width: 28px; height: 28px;padding:2px;border:solid 1px #A0A0A0;margin-right:4px;margin-top:2px;cursor:pointer;}
 
 .jk-topalert {float:right; width: 28px; height: 32px;padding-left:4px;padding-top:8px;}
-.jk-topbell {width:24px;height:24px;cursor:pointer;}
+.jk-topbell {width:20px;height:20px;cursor:pointer;}
 .jk-topbell span {height:14px;min-width:14px;border-radius:8px;font-size:10px;}
 
 .jk-topbannercontrol {float: right; font-family: sans-serif; font-size: 7pt;
@@ -34,7 +34,7 @@
 
 .jk-topnavcontrol {display:inline-block; float: right; font-family: sans-serif; font-size: 7pt;
     font-weight: bold; text-align: right;}
-.jk-topnavcontrol button {height:14px; font-size:11px; font-weight:bold; border:0px; background-color:#000;}
+.jk-topnavcontrol button {height:14px; font-size:10px; font-weight:bold; border:0px; background-color:#000;}
 .jk-topnavcontrol button:hover:enabled {background-color:#000;}
 
 .jk-userinfoband {display: inline-block; height: 12px; width: 100%; text-align: left;}
@@ -69,6 +69,11 @@
 
 .jk-searchboxpanel {width: 480px; background: #FFFFFF; border: 1px solid #A9A9A9;}
 
+.jk-searchgrid {}
+.jk-searchgrid .lcelltp {padding-right:4px;}
+
+
+.jk-countlabel {display:block; padding:2px; text-align:right; font-weight:bold; font-size:8pt;color:#202020;}
 .jk-mildlabel {margin-bottom:2px; width:120px; height:32px; display:table-cell; text-align:center; vertical-align:middle;
 	color: white; background: #5DDC5D; border: 1px solid #47A447; font-weight:bold;}
 
@@ -83,9 +88,9 @@
 
 .jk-bold-panel {font-weight:bold; font-size: 12pt; border:1px solid #A9A9A9; background-color: #ECECEC;}
 
-.jk-button {margin-bottom:2px; padding: 0px 16px; width:120px; height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
+.jk-button {margin-bottom:2px; padding: 0px 16px; width:120px; min-height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
 .jk-button:hover:enabled {color: #FFFFFF; background-color: #6080F0 !important;}
-.jk-button-alert {margin-bottom:2px; padding: 0px 16px; width:120px; height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
+.jk-button-alert {margin-bottom:2px; padding: 0px 16px; width:120px; min-height:32px; background-color: #E8E8E8 !important; border: 1px solid #C0C0C0; cursor: pointer;}
 .jk-button-alert:hover:enabled {color: #FFFFFF; background-color: #F06060 !important;}
 
 .jk-wfitemlabel {display:block; font-size:20px; padding:8px; background-color:#D0E0F0;}
@@ -116,11 +121,25 @@
 
 .ui-reportrunnerpanel {}
 .ui-reportrunnerpanel .paramList {margin-top:2px; width:300px; height:252px; overflow:auto; background-color:#F0F0F0;}
+.ui-reportrunnerpanel .title {display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; background-color:#F0F0F0;
+    font-size:14px; font-weight:bold; padding:2px; text-align:center;}
 
 .ui-wfitemnotespanel {}
 
 .ui-wfitemattachmentspanel {}
 .ui-wfitemattachmentspanel .abody{padding:1px; overflow-y:scroll;}
+
+.ui-quickpercentagestatisticspanel {color: #FFF;min-width:240px;margin:4px;}
+.ui-quickpercentagestatisticspanel .qpred{background-color: #C03333;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qpblue{background-color: #3378C0;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qpgreen{background-color: #33C078;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qporange{background-color: #C07833;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qpgray{background-color: #787878;padding:8px 12px;}
+.ui-quickpercentagestatisticspanel .qptitle{text-align:center; font-size:14px;border-bottom: solid 1px #FFF;
+       margin: 0px 4px;padding-bottom: 12px;}
+.ui-quickpercentagestatisticspanel .qpvalue{text-align:center; font-size:28px; font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
+.ui-quickpercentagestatisticspanel .qpfooter{font-size:10px;}
+.ui-quickpercentagestatisticspanel .qpfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
 
 .jk-maintaintype {display:inline-block; padding:2px; margin-left:4px; text-align:center; font-weight:bold; font-size:9pt;}
 

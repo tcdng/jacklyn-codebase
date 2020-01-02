@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -33,7 +33,7 @@ public class Message {
 
     private String notificationChannelName;
 
-    private String globalTemplateName;
+    private String templateGlobalName;
 
     private String senderName;
 
@@ -47,10 +47,10 @@ public class Message {
 
     private Map<String, Object> dictionary;
 
-    private Message(String notificationChannelName, String globalTemplateName, String senderName, String senderContact,
+    private Message(String notificationChannelName, String templateGlobalName, String senderName, String senderContact,
             String reference, List<Recipient> recipients, List<Attachment> attachments,
             Map<String, Object> dictionary) {
-        this.globalTemplateName = globalTemplateName;
+        this.templateGlobalName = templateGlobalName;
         this.notificationChannelName = notificationChannelName;
         this.senderName = senderName;
         this.senderContact = senderContact;
@@ -64,8 +64,8 @@ public class Message {
         return notificationChannelName;
     }
 
-    public String getGlobalTemplateName() {
-        return globalTemplateName;
+    public String getTemplateGlobalName() {
+        return templateGlobalName;
     }
 
     public String getSenderName() {
@@ -96,13 +96,13 @@ public class Message {
         return !dictionary.isEmpty();
     }
 
-    public static Builder newBuilder(String globalTemplateName) {
-        return new Builder(globalTemplateName);
+    public static Builder newBuilder(String templateGlobalName) {
+        return new Builder(templateGlobalName);
     }
 
     public static class Builder {
 
-        private String globalTemplateName;
+        private String templateGlobalName;
 
         private String senderName;
 
@@ -118,8 +118,8 @@ public class Message {
 
         private String notificationChannelName;
 
-        private Builder(String globalTemplateName) {
-            this.globalTemplateName = globalTemplateName;
+        private Builder(String templateGlobalName) {
+            this.templateGlobalName = templateGlobalName;
             recipients = new ArrayList<Recipient>();
         }
 
@@ -160,7 +160,7 @@ public class Message {
         }
 
         public Message build() {
-            return new Message(notificationChannelName, globalTemplateName, senderName, senderContact, reference,
+            return new Message(notificationChannelName, templateGlobalName, senderName, senderContact, reference,
                 DataUtils.unmodifiableList(recipients), DataUtils.unmodifiableList(attachments), dictionary);
         }
 

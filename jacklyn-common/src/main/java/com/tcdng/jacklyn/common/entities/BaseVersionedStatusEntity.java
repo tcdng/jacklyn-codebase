@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.common.entities;
 
 import com.tcdng.unify.core.annotation.Policy;
+import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.Version;
 
 /**
@@ -24,6 +25,7 @@ import com.tcdng.unify.core.annotation.Version;
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Tooling(name = "baseVersionStEntity", description = "Base Versioned Status")
 @Policy("versionedstatusentity-policy")
 public abstract class BaseVersionedStatusEntity extends BaseStatusEntity {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -42,10 +42,16 @@ public class WfItemHistEvent implements Serializable {
 
     private String wfActionDesc;
 
-    private String notes;
+    private String comments;
+
+    private String errorSource;
+
+    private String errorCode;
+
+    private String errorMsg;
 
     public WfItemHistEvent(Long id, String wfStep, Date stepDt, Date actionDt, String actor, String wfAction,
-            String wfActionDesc, String notes) {
+            String wfActionDesc, String comments, String errorSource, String errorCode, String errorMsg) {
         this.id = id;
         this.wfStep = wfStep;
         this.stepDt = stepDt;
@@ -53,7 +59,10 @@ public class WfItemHistEvent implements Serializable {
         this.actor = actor;
         this.wfAction = wfAction;
         this.wfActionDesc = wfActionDesc;
-        this.notes = notes;
+        this.comments = comments;
+        this.errorSource = errorSource;
+        this.errorCode = errorCode;
+        this.errorMsg = errorMsg;
     }
 
     public Long getId() {
@@ -84,8 +93,20 @@ public class WfItemHistEvent implements Serializable {
         return wfActionDesc;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getComments() {
+        return comments;
+    }
+
+    public String getErrorSource() {
+        return errorSource;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE unify PUBLIC
+  "-//The Code Department//DTD Jacklyn Module 2.0//EN"
+  "https://tcdng.com/dtd/jacklyn-module-config_2_0.dtd">
+<!--
+  Copyright 2018-2020 The Code Department.
+  
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+-->
+
+<!-- Jacklyn configuration for location module -->
+<module name="location" description="$m{location.module}">
+	<menus>
+		<menu name="loc-mainloc" description="$m{location.menu.main}"
+			caption="$m{location.menu.title}">
+			<menuitem name="loc-managezone" description="$m{location.menuitem.zone}"
+				caption="$m{location.zone.menu.title}" pageCaption="$m{location.zone.manage}"
+				path="/location/zone/openPage" />
+			<menuitem name="loc-managecountry" description="$m{location.menuitem.country}"
+				caption="$m{location.country.menu.title}" pageCaption="$m{location.country.manage}"
+				path="/location/country/openPage" />
+			<menuitem name="loc-managestate" description="$m{location.menuitem.state}"
+				caption="$m{location.state.menu.title}" pageCaption="$m{location.state.manage}"
+				path="/location/state/openPage" />
+		</menu>
+	</menus>
+	<privileges>
+		<privilege-group>
+			<privilege name="loc-zoneadd" description="$m{location.privilege.zone.add}" />
+			<privilege name="loc-zoneedit" description="$m{location.privilege.zone.edit}" />
+			<privilege name="loc-zoneview" description="$m{location.privilege.zone.view}" />
+			<privilege name="loc-zonedelete" description="$m{location.privilege.zone.delete}" />
+			<privilege name="loc-countryadd" description="$m{location.privilege.country.add}" />
+			<privilege name="loc-countryedit" description="$m{location.privilege.country.edit}" />
+			<privilege name="loc-countryview" description="$m{location.privilege.country.view}" />
+			<privilege name="loc-countrydelete" description="$m{location.privilege.country.delete}" />
+			<privilege name="loc-stateadd" description="$m{location.privilege.state.add}" />
+			<privilege name="loc-stateedit" description="$m{location.privilege.state.edit}" />
+			<privilege name="loc-stateview" description="$m{location.privilege.state.view}" />
+			<privilege name="loc-statedelete" description="$m{location.privilege.state.delete}" />
+		</privilege-group>
+	</privileges>
+</module>
