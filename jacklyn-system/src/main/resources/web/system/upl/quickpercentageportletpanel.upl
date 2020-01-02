@@ -1,5 +1,5 @@
 // UPL template for base quick percentage portlet panel
-// Copyright 2018-2019 The Code Department.
+// Copyright 2018-2020 The Code Department.
 !ui-quickpercentageportletpanel styleClass:$s{jk-quickpercentage}
     components:$c{bodyPanel}
     qpTotalTitle:$m{system.quickpercentage.portlet.total}
