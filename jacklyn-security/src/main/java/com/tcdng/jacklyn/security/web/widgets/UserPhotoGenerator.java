@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 The Code Department.
+ * Copyright 2018-2020 The Code Department.
  * 
  * http://www.tcdng.com/licenses/Jacklyn-Tools-1.0.txt
  * 
