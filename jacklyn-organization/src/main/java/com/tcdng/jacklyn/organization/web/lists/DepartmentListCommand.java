@@ -38,7 +38,7 @@ public class DepartmentListCommand extends AbstractZeroParamsOrganizationListCom
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getOrganizationService().findDepartments(
-                (DepartmentQuery) new DepartmentQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
+        return getOrganizationService().findDepartments((DepartmentQuery) new DepartmentQuery()
+                .status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true).addOrder("description"));
     }
 }

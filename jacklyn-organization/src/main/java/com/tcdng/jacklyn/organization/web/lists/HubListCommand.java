@@ -38,7 +38,7 @@ public class HubListCommand extends AbstractZeroParamsOrganizationListCommand {
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getOrganizationService().findHubs(
-                (HubQuery) new HubQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
+        return getOrganizationService().findHubs((HubQuery) new HubQuery().status(RecordStatus.ACTIVE)
+                .ignoreEmptyCriteria(true).addOrder("description"));
     }
 }
