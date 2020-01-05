@@ -127,6 +127,7 @@ public class ScheduledTaskController extends AbstractSystemFormController<Schedu
             largeData.setScheduledTaskParams(pageBean.getClipboardLargeData().getScheduledTaskParams());
         } else {
             largeData = getSystemService().loadScheduledTaskDocumentValues(largeData);
+            pageBean.setLargeData(largeData);
         }
 
         boolean isDisabled = ManageRecordModifier.VIEW == getMode() || ManageRecordModifier.DELETE == getMode();
