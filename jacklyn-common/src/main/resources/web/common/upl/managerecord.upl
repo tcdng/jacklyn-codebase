@@ -19,8 +19,9 @@
     components:$c{searchPanel searchResultPanel}
 
 !ui-searchcriteriapanel:searchPanel style:$s{margin-top:4px; margin-left:4px; display:block;}
-    layout:$d{!ui-vertical style:$s{padding-left: 8px;}}
-    searchLayout:$d{!ui-grid styleClass:$e{jk-searchgrid} columns:$f{searchColumns} showCaption:true captionSuffix:$s{:}}
+    layout:$d{!ui-vertical style:$s{padding-left: 8px; width:100%;}}
+//    searchLayout:$d{!ui-grid styleClass:$e{jk-searchgrid} columns:$f{searchColumns} showCaption:true captionSuffix:$s{:}}
+    searchLayout:$d{!ui-flowgrid columns:$f{searchColumns} showCaption:true captionSuffix:$s{:}}
     searchClearList:$f{searchClearList} searchByList:$g{searchByList} searchPath:$n{/findRecords}
 
 !ui-panel:searchResultPanel style:$s{height:100%;}
