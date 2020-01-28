@@ -30,9 +30,12 @@ public class ToolingEntityFieldItem {
 
     private String type;
 
-    public ToolingEntityFieldItem(String name, String type) {
+    private boolean enumConst;
+
+    public ToolingEntityFieldItem(String name, String type, boolean enumConst) {
         this.name = name;
         this.type = type;
+        this.enumConst = enumConst;
     }
 
     public ToolingEntityFieldItem() {
@@ -55,6 +58,15 @@ public class ToolingEntityFieldItem {
     @XmlElement
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean isEnumConst() {
+        return enumConst;
+    }
+
+    @XmlElement
+    public void setEnumConst(boolean enumConst) {
+        this.enumConst = enumConst;
     }
 
 }
