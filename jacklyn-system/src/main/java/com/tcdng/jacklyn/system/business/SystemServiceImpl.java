@@ -150,6 +150,7 @@ import com.tcdng.unify.core.ui.Tile;
 import com.tcdng.unify.core.upl.UplUtils;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
+import com.tcdng.unify.core.util.ColorUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -1443,8 +1444,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, null, null, true,
-                true, true, false);
+        String branchCode = null;
+        String zoneCode = null;
+        String tenantCode = null;
+        String colorScheme =
+                ColorUtils.getConformingColorSchemeCode(
+                        getContainerSetting(String.class, UnifyCorePropertyConstants.APPLICATION_COLORSCHEME));
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), branchCode, zoneCode,
+                tenantCode, colorScheme, true, true, true, false);
     }
 
     private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {

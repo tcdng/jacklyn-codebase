@@ -74,6 +74,7 @@ import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.system.entities.SystemAssetQuery;
 import com.tcdng.unify.core.SessionContext;
+import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Broadcast;
@@ -86,6 +87,7 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.security.OneWayStringCryptograph;
 import com.tcdng.unify.core.security.PasswordGenerator;
 import com.tcdng.unify.core.system.UserSessionManager;
+import com.tcdng.unify.core.util.ColorUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.QueryUtils;
@@ -746,7 +748,9 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         }
 
         String tenantCode = null; // For multi-tenancy
-        String colorScheme = null; // For now always use default color scheme
+        String colorScheme =
+                ColorUtils.getConformingColorSchemeCode(
+                        getContainerSetting(String.class, UnifyCorePropertyConstants.APPLICATION_COLORSCHEME));
         return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
                 user.getBranchCode(), user.getZoneName(), tenantCode, colorScheme, globalAccess, user.isReserved(),
                 allowMultipleLogin, false);
