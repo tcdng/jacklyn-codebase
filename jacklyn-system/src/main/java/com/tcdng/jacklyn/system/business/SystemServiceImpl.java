@@ -1021,12 +1021,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             for (ApplicationMenuItem applicationMenuItem : applicationMenuItemList) {
                 MenuItem menuItem =
                         new MenuItem(applicationMenuItem.getCaption(), applicationMenuItem.getName(),
-                                applicationMenuItem.getPath(), null);
+                                applicationMenuItem.getPath(), null, null, false);
                 menuItemList.add(menuItem);
             }
 
             menuItemSetList.add(new MenuItemSet(applicationMenu.getCaption(), applicationMenu.getName(),
-                    applicationMenu.getPath(), menuItemList));
+                    applicationMenu.getPath(), null, menuItemList, false));
         }
 
         MenuSet menuSet = new MenuSet();
