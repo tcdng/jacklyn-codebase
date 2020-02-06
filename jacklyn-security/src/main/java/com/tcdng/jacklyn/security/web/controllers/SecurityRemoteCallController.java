@@ -22,10 +22,13 @@ import com.tcdng.jacklyn.security.constants.SecurityModuleNameConstants;
 import com.tcdng.jacklyn.shared.security.SecurityRemoteCallNameConstants;
 import com.tcdng.jacklyn.shared.security.data.OSInstallationReqParams;
 import com.tcdng.jacklyn.shared.security.data.OSInstallationReqResult;
+import com.tcdng.jacklyn.shared.security.data.OSResources;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.web.annotation.RemoteAction;
+import com.tcdng.unify.web.ui.PageManager;
 
 /**
  * Security module remote call controller.
@@ -40,12 +43,19 @@ public class SecurityRemoteCallController extends BaseRemoteCallController {
     @Configurable
     private SecurityService securityService;
 
+    @Configurable
+    private PageManager pageManager;
+
     @RemoteAction(
             name = SecurityRemoteCallNameConstants.OS_REQUEST_INSTALL,
             description = "$m{security.remotecall.osrequestinstall}", restricted = false)
     public OSInstallationReqResult osRequestInstall(OSInstallationReqParams oSInstallationReqParams)
             throws UnifyException {
-        return securityService.processOSInstallationRequest(oSInstallationReqParams);
+        OSInstallationReqResult osirResult = securityService.processOSInstallationRequest(oSInstallationReqParams);
+        osirResult.setResources(IOUtils.streamToBytes(
+                new OSResources(pageManager.getPageName("resourceName"), pageManager.getPageName("contentType"),
+                        pageManager.getDocumentStyleSheets(), pageManager.getDocumentsScripts())));
+        return osirResult;
     }
 
 }
