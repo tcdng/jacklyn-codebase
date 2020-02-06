@@ -33,6 +33,8 @@ public class OSInstallationReqResult extends RemoteCallResult {
 
     private String appDesc;
 
+    private byte[] resources;
+    
     private byte[] appIcon;
 
     private boolean alreadyInstalled;
@@ -53,6 +55,15 @@ public class OSInstallationReqResult extends RemoteCallResult {
     @XmlElement(required = true)
     public void setAppDesc(String appDesc) {
         this.appDesc = appDesc;
+    }
+
+    public byte[] getResources() {
+        return resources;
+    }
+
+    @XmlElement(required = true)
+    public void setResources(byte[] resources) {
+        this.resources = resources;
     }
 
     public byte[] getAppIcon() {

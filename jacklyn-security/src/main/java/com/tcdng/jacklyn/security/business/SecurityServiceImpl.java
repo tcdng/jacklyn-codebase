@@ -234,17 +234,17 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Return result
         logDebug("Preparing installation result...");
-        OSInstallationReqResult airResult = new OSInstallationReqResult();
-        airResult.setAppName(getApplicationName());
-        airResult.setAppName(getApplicationName());
+        OSInstallationReqResult osirResult = new OSInstallationReqResult();
+        osirResult.setAppName(getApplicationName());
+        osirResult.setAppName(getApplicationName());
         String bannerFilename =
                 themeManager.expandThemeTag(systemService.getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_APPLICATION_BANNER));
         byte[] icon = IOUtils.readFileResourceInputStream(bannerFilename);
-        airResult.setAppIcon(icon);
-        airResult.setAlreadyInstalled(isAlreadyInstalled);
+        osirResult.setAppIcon(icon);
+        osirResult.setAlreadyInstalled(isAlreadyInstalled);
         logDebug("OS installation for [{0}] completed.", oSInstallationReqParams.getOsName());
-        return airResult;
+        return osirResult;
     }
 
     @Broadcast
