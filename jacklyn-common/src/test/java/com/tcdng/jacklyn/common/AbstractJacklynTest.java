@@ -28,6 +28,10 @@ import com.tcdng.unify.web.AbstractUnifyWebTest;
  */
 public abstract class AbstractJacklynTest extends AbstractUnifyWebTest {
 
+    public AbstractJacklynTest() {
+        super(true);
+    }
+
     @Override
     protected void doAddSettingsAndDependencies() throws Exception {
         super.doAddSettingsAndDependencies();

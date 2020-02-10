@@ -62,7 +62,7 @@
 				caption="$m{system.menu.menu.title}" path="/system/menu/openPage"
 				pageCaption="$m{system.menu.manage}" />
             <menuitem name="sys-managemenuitem" description="$m{system.menuitem.menu}"
-                caption="$m{system.menu.menuitem.title}" path="/system/menuitem/openPage"
+                caption="$m{system.menuitem.menu.title}" path="/system/menuitem/openPage"
                 pageCaption="$m{system.menuitem.manage}" hidden="true"/>
 		</menu>
 		<menu name="sys-mainsystem" description="$m{system.menu.main}"

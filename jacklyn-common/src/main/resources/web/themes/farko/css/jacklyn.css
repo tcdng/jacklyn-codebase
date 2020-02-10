@@ -1,5 +1,9 @@
 .ui-document .dBody {background-color: #F0F0F0;}
 
+/* Select */
+.ui-select {width:200px;}
+.ui-select .sslist .sel {background-color: #5970B2; color: #FFF;}
+
 /** Jacklyn */
 .jk-loginmainbody {display:block; width:908px; margin-left: auto; margin-right: auto; opacity:0.92;/*background-color: #000;*/}
 .jk-loginbannersection {display:inline-block; width:814px;}

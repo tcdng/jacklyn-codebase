@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.archiving.business;
 
+import java.util.Date;
 import java.util.List;
 
 import com.tcdng.jacklyn.archiving.entities.ArchivableDefinition;
@@ -25,6 +26,7 @@ import com.tcdng.jacklyn.archiving.entities.FileArchiveConfig;
 import com.tcdng.jacklyn.archiving.entities.FileArchiveConfigQuery;
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.task.TaskMonitor;
 
 /**
  * Archiving business service.
@@ -144,6 +146,22 @@ public interface ArchivingService extends JacklynBusinessService {
      *             if an error occurs
      */
     int deleteFileArchiveConfig(Long id) throws UnifyException;
+
+    /**
+     * Executes a LOB archiving.
+     * 
+     * @param taskMonitor
+     *            the task monitor
+     * @param fileArchiveConfigName
+     *            the file archive configuration name
+     * @param workingDt
+     *            the working date
+     * @return the file archive ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Long executeBuildLobFileArchiveTask(TaskMonitor taskMonitor, String fileArchiveConfigName, Date workingDt)
+            throws UnifyException;
 
     /**
      * Retrieves an archived BLOB.

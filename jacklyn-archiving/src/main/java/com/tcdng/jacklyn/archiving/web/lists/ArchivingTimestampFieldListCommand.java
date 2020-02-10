@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.archiving.web.lists;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +40,8 @@ public class ArchivingTimestampFieldListCommand extends AbstractArchivingListCom
         super(ArchivingParams.class);
     }
 
-    private static final ArchivingFieldType[] TIME = { ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP_UTC };
+    private static final List<ArchivingFieldType> TIME =
+            Arrays.asList(ArchivingFieldType.DATE, ArchivingFieldType.TIMESTAMP_UTC);
 
     @Override
     public List<? extends Listable> execute(Locale locale, ArchivingParams params) throws UnifyException {

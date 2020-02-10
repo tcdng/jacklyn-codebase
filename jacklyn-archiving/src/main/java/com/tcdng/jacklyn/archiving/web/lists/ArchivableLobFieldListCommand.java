@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.archiving.web.lists;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +36,8 @@ import com.tcdng.unify.core.util.QueryUtils;
 @Component("archivablelobfieldlist")
 public class ArchivableLobFieldListCommand extends AbstractArchivingListCommand<ArchivingParams> {
 
-    private static final ArchivingFieldType[] LOBS = { ArchivingFieldType.BLOB, ArchivingFieldType.CLOB };
+    private static final List<ArchivingFieldType> LOBS =
+            Arrays.asList(ArchivingFieldType.BLOB, ArchivingFieldType.CLOB);
 
     public ArchivableLobFieldListCommand() {
         super(ArchivingParams.class);

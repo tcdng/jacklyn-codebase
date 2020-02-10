@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.archiving.entities;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
 import com.tcdng.jacklyn.shared.archiving.ArchivingFieldType;
 
@@ -42,8 +44,8 @@ public class ArchivingFieldQuery extends BaseInstallEntityQuery<ArchivingField> 
         return (ArchivingFieldQuery) addEquals("fieldType", fieldType);
     }
 
-    public ArchivingFieldQuery fieldTypeIn(ArchivingFieldType[] fieldType) {
-        return (ArchivingFieldQuery) addEquals("fieldType", fieldType);
+    public ArchivingFieldQuery fieldTypeIn(List<ArchivingFieldType> fieldType) {
+        return (ArchivingFieldQuery) addAmongst("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery fieldTypeNot(ArchivingFieldType fieldType) {

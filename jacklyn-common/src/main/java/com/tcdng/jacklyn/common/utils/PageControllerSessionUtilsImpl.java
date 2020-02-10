@@ -31,6 +31,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.util.ReflectUtils;
+import com.tcdng.unify.web.PageBean;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
 
 /**
@@ -78,14 +79,15 @@ public class PageControllerSessionUtilsImpl extends AbstractUnifyComponent imple
     @Override
     public <T extends Entity> void loadSession(BasePageController<?> basePageController) throws UnifyException {
         SessionLoadingConfig slc = sessionLoadingConfigs.get(basePageController.getClass());
+        PageBean pageBean = basePageController.getPage().getPageBean();
         for (Map.Entry<String, String> entry : slc.getSetAttributeConfigs().entrySet()) {
             setSessionAttribute(entry.getKey(),
-                    ReflectUtils.getNestedBeanProperty(basePageController, entry.getValue()));
+                    ReflectUtils.getNestedBeanProperty(pageBean, entry.getValue()));
         }
 
         for (Map.Entry<String, String> entry : slc.getCrudPanelConfigs().entrySet()) {
             ((TableCrudPanel<T>) basePageController.getPage().getWidgetByShortName(entry.getKey()))
-                    .setRecordList((List<T>) ReflectUtils.getNestedBeanProperty(basePageController, entry.getValue()));
+                    .setRecordList((List<T>) ReflectUtils.getNestedBeanProperty(pageBean, entry.getValue()));
         }
     }
 

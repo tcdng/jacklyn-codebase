@@ -38,7 +38,7 @@ public class BranchListCommand extends AbstractZeroParamsOrganizationListCommand
 
     @Override
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
-        return getOrganizationService()
-                .findBranches((BranchQuery) new BranchQuery().status(RecordStatus.ACTIVE).ignoreEmptyCriteria(true));
+        return getOrganizationService().findBranches((BranchQuery) new BranchQuery().status(RecordStatus.ACTIVE)
+                .ignoreEmptyCriteria(true).addOrder("description"));
     }
 }

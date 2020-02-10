@@ -150,6 +150,7 @@ import com.tcdng.unify.core.ui.Tile;
 import com.tcdng.unify.core.upl.UplUtils;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.CalendarUtils;
+import com.tcdng.unify.core.util.ColorUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
@@ -808,8 +809,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     public List<ToolingEntityItem> findToolingEnumTypes() throws UnifyException {
         List<ToolingEntityItem> resultList = new ArrayList<ToolingEntityItem>();
         List<ToolingEntityFieldItem> fieldList = new ArrayList<ToolingEntityFieldItem>();
-        fieldList.add(new ToolingEntityFieldItem("code", String.class.getCanonicalName()));
-        fieldList.add(new ToolingEntityFieldItem("description", String.class.getCanonicalName()));
+        fieldList.add(new ToolingEntityFieldItem("code", String.class.getCanonicalName(), false));
+        fieldList.add(new ToolingEntityFieldItem("description", String.class.getCanonicalName(), false));
         for (Class<? extends EnumConst> enumClass : getAnnotatedClassesExcluded(EnumConst.class, Tooling.class,
                 "com.tcdng.jacklyn.common.entities")) {
             Tooling ta = enumClass.getAnnotation(Tooling.class);
@@ -1020,12 +1021,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
             for (ApplicationMenuItem applicationMenuItem : applicationMenuItemList) {
                 MenuItem menuItem =
                         new MenuItem(applicationMenuItem.getCaption(), applicationMenuItem.getName(),
-                                applicationMenuItem.getPath(), null);
+                                applicationMenuItem.getPath(), null, null, false);
                 menuItemList.add(menuItem);
             }
 
             menuItemSetList.add(new MenuItemSet(applicationMenu.getCaption(), applicationMenu.getName(),
-                    applicationMenu.getPath(), menuItemList));
+                    applicationMenu.getPath(), null, menuItemList, false));
         }
 
         MenuSet menuSet = new MenuSet();
@@ -1443,8 +1444,14 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
     }
 
     private UserToken createReservedUserToken(String loginId, Long id) throws UnifyException {
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), null, null, null, null, true,
-                true, true, false);
+        String branchCode = null;
+        String zoneCode = null;
+        String tenantCode = null;
+        String colorScheme =
+                ColorUtils.getConformingColorSchemeCode(
+                        getContainerSetting(String.class, UnifyCorePropertyConstants.APPLICATION_COLORSCHEME));
+        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), branchCode, zoneCode,
+                tenantCode, colorScheme, true, true, true, false);
     }
 
     private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {
@@ -1454,21 +1461,21 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Id.class)) {
             id = field.getName();
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+            fieldList.add(createToolingEntityFieldItem(field));
             break;
         }
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ForeignKey.class)) {
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+            fieldList.add(createToolingEntityFieldItem(field));
         }
 
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, Column.class)) {
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+            fieldList.add(createToolingEntityFieldItem(field));
         }
 
         // Add list-only fields 11/7/19
         for (Field field : ReflectUtils.getAnnotatedFields(entityClass, ListOnly.class)) {
-            fieldList.add(new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName()));
+            fieldList.add(createToolingEntityFieldItem(field));
         }
 
         String entityToolingName = AnnotationUtils.getAnnotationString(ta.name());
@@ -1478,6 +1485,11 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
         return new ToolingEntityItem(entityToolingName, resolveApplicationMessage(ta.description()),
                 entityClass.getName(), id, ta.guarded(), fieldList);
+    }
+
+    private ToolingEntityFieldItem createToolingEntityFieldItem(Field field) {
+        return new ToolingEntityFieldItem(field.getName(), field.getType().getCanonicalName(),
+                EnumConst.class.isAssignableFrom(field.getType()));
     }
 
     private AuthenticationLargeData internalFindAuthentication(Authentication authentication) throws UnifyException {
