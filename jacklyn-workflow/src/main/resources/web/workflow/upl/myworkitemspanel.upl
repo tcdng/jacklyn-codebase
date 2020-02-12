@@ -1,0 +1,43 @@
+// UPL template for my workflow items panel
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-myworkitemspanel layout:$d{!ui-vertical style:$s{width:100%;} heights:$l{none 100% none}}
+    actionPanels:$c{topActionPanel wfItemsPanel bottomActionPanel}
+
+// Top action panel    
+!ui-panel:topActionPanel layout:$d{!ui-horizontal showCaption:true captionSuffix:$s{:}}
+    components:$c{wfStepSelect}
+!ui-select:wfStepSelect caption:$m{workflow.myworkflowitems.step} list:userwfitemsummarylist blankOption:$s{} binding:wfStepName
+    eventHandler:$d{!ui-event event:onchange action:$c{refreshWfItemsAct}} style:$s{width:280px;}
+
+// Workflow items
+!ui-panel:wfItemsPanel style:$s{width:100%;height:100%;} components:$c{wfItemsTbl}
+!ui-tablepanel:wfItemsTbl style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}  heights:$l{100%}}
+    tableColumnList:$c{wfTemplateDesc wfStepDesc description forwardedBy priority status}
+    tableBinding:wfItemList
+    tableRowSelectable:false
+    tableMultiSelect:true
+    tableMultiSelDependentList:$c{releaseItemsBtn}
+    tableSerialNumbers:true
+    tableWindowed:true
+    tableSortable:true
+    tablePagination:false
+!ui-label:wfTemplateDesc caption:$m{workflow.myworkflowitems.process} columnStyle:$s{width:100px;} binding:wfTemplateDesc
+!ui-label:wfStepDesc caption:$m{workflow.myworkflowitems.step} columnStyle:$s{width:100px;} binding:wfStepDesc
+!ui-label:description caption:$m{workflow.myworkflowitems.description} columnStyle:$s{width:240px;} binding:wfItemDesc
+!ui-label:forwardedBy caption:$m{workflow.myworkflowitems.forwardedby}columnStyle:$s{width:120px;} binding:forwardedBy
+!ui-label:priority caption:$m{workflow.myworkflowitems.priority} columnStyle:$s{width:100px;} binding:priority
+!ui-badge:status caption:$m{workflow.myworkflowitems.status} columnStyle:$s{width:100px;} binding:status
+
+// Bottom action panel
+!ui-panel:bottomActionPanel layout:$d{!ui-horizontal}
+    components:$c{releaseItemsBtn}
+!ui-button:releaseItemsBtn caption:$m{button.release}
+    eventHandler:$d{!ui-event event:onclick action:$c{releaseItemsAct}}
+
+// Actions
+!ui-postcommand:refreshWfItemsAct command:reloadWorkflowItems components:$c{wfStepSelect}
+!ui-postcommand:releaseItemsAct command:releaseWorkflowItems components:$c{wfItemsPanel}
+    confirm:$m{workflow.myworkflowitems.confirm.release.multiple}

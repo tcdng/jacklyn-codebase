@@ -103,6 +103,7 @@ import com.tcdng.jacklyn.workflow.data.WfFormTabDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
+import com.tcdng.jacklyn.workflow.data.WfItemStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfManualInitDef;
 import com.tcdng.jacklyn.workflow.data.WfPolicyDef;
@@ -168,6 +169,7 @@ import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericService;
+import com.tcdng.unify.core.constant.ColorScheme;
 import com.tcdng.unify.core.constant.FrequencyUnit;
 import com.tcdng.unify.core.constant.LocaleType;
 import com.tcdng.unify.core.constant.RequirementType;
@@ -187,6 +189,7 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
+import com.tcdng.unify.web.ui.data.BadgeInfo;
 
 /**
  * Default workflow business service implementation.
@@ -589,11 +592,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, templateGlobalLockName, stepGlobalName,
                             originGlobalName, wfStep.getName(), wfStep.getDescription(), wfStep.getLabel(),
-                            wfStep.getWorkAssigner(), wfStep.getStepType(), wfStep.getParticipantType(), branchList,
-                            enrichmentList, routingList, recordActionList, userActionList, formPrivilegeList, alertList,
-                            policyList, wfStep.getItemsPerSession(), expiryMilliSec, wfStep.getAudit(),
-                            wfStep.getBranchOnly(), wfStep.getDepartmentOnly(), wfStep.getIncludeForwarder(),
-                            templateTimestamp));
+                            wfStep.getWorkAssigner(), wfStep.getPriorityLevelDesc(), wfStep.getStepType(),
+                            wfStep.getParticipantType(), branchList, enrichmentList, routingList, recordActionList,
+                            userActionList, formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
+                            expiryMilliSec, wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
+                            wfStep.getIncludeForwarder(), templateTimestamp));
                 }
 
                 return new WfTemplateDef(wfTemplateId, templateNames.getCategoryName(), templateGlobalName,
@@ -986,6 +989,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public int releaseCurrentUserWorkItems(List<Long> wfItemIds) throws UnifyException {
+        WfItemQuery wfItemQuery = new WfItemQuery();
+        wfItemQuery.idIn(wfItemIds);
+        wfItemQuery.heldBy(getUserToken().getUserLoginId());
+        return db().updateAll(wfItemQuery, new Update().add("heldBy", null));
+    }
+
+    @Override
     public InteractWfItems getCurrentUserWorkItems(String stepGlobalName) throws UnifyException {
         WfStepDef wfStepDef = accessCurrentUserStep(stepGlobalName);
         String useLoginID = getUserToken().getUserLoginId();
@@ -1022,6 +1033,35 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 DataUtils.sort(summaryList, WfItemSummary.class, "stepDesc", true);
                 return summaryList;
             }
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<WfItemStatusInfo> getCurrentWorkItemStatusList(String stepGlobalName) throws UnifyException {
+        WfItemQuery wfItemQuery = new WfItemQuery();
+        wfItemQuery.heldBy(getUserToken().getUserLoginId());
+        if (!StringUtils.isBlank(stepGlobalName)) {
+            wfItemQuery.stepGlobalName(stepGlobalName);
+        }
+
+        List<WfItem> wfItemList = db().listAll(wfItemQuery);
+        if (!wfItemList.isEmpty()) {
+            List<WfItemStatusInfo> wfItemStatusInfoList = new ArrayList<WfItemStatusInfo>();
+            for (WfItem wfItem : wfItemList) {
+                WfProcessDef wfProcessDef = wfProcesses.get(wfItem.getProcessGlobalName());
+                WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
+                BadgeInfo badgeInfo = getStatusBadge(wfItem);
+                WfItemStatusInfo wfItemStatusInfo =
+                        new WfItemStatusInfo(wfItem.getId(), wfProcessDef.getWfTemplateDef().getDescription(),
+                                wfProcessDef.getWfDocDef().getDescription(), wfStepDef.getDescription(),
+                                wfItem.getWfItemDesc(), wfItem.getForwardedBy(), wfStepDef.getPriorityLevelDesc(),
+                                badgeInfo);
+                wfItemStatusInfoList.add(wfItemStatusInfo);
+            }
+
+            return wfItemStatusInfoList;
         }
 
         return Collections.emptyList();
@@ -1517,6 +1557,25 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     public void performFlowingWfItemTransition(WfStepDef targetWfStepDef, FlowingWfItem flowingWfItem)
             throws UnifyException {
         doActualTransition(targetWfStepDef, flowingWfItem);
+    }
+
+    private BadgeInfo getStatusBadge(WfItem wfItem) throws UnifyException {
+        Date expectedDt = wfItem.getExpectedDt();
+        if (expectedDt != null) {
+            Date now = db().getNow();
+            if (now.after(expectedDt)) {
+                return new BadgeInfo(ColorScheme.RED, "$m{workflow.workitem.status.overdue}");
+            }
+            
+            int criticalMinutes = 20; // TODO Get from step configuration
+            Date critical = CalendarUtils.getDateWithFrequencyOffset(now, FrequencyUnit.MINUTE, criticalMinutes);
+            if (critical.after(expectedDt)) {
+                return new BadgeInfo(ColorScheme.YELLOW, "$m{workflow.workitem.status.critical}");
+            }
+        }
+        
+        
+        return new BadgeInfo(ColorScheme.GREEN, "$m{workflow.workitem.status.pending}");
     }
 
     private void populateChildList(WfDoc wfDoc, WfDocumentConfig wfDocConfig) throws UnifyException {

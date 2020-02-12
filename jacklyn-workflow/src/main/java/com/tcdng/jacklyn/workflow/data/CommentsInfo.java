@@ -13,11 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.web.widgets;
+package com.tcdng.jacklyn.workflow.data;
 
 import java.util.List;
-
-import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 
 /**
  * Comments information data object.

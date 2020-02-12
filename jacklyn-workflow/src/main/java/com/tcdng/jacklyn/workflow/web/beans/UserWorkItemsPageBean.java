@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.tcdng.jacklyn.common.web.beans.BasePageBean;
+import com.tcdng.jacklyn.workflow.data.CommentsInfo;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
-import com.tcdng.jacklyn.workflow.web.widgets.CommentsInfo;
 import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
 
 /**

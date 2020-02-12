@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.workflow.web.widgets;
 
 import com.tcdng.jacklyn.common.web.widgets.BaseDialogPanel;
+import com.tcdng.jacklyn.workflow.data.CommentsInfo;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
