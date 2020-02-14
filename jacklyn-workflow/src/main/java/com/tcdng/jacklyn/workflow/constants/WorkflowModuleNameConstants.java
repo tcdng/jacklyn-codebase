@@ -33,7 +33,5 @@ public interface WorkflowModuleNameConstants {
 
     String DEFAULTWORKFLOWITEMATTACHMENTHANDLER = "default-wfitemattachmenthandler";
 
-    String DEFAULTWORKFLOWITEMASSIGNMENTPOLICY = "default-wfitemassignpolicy";
-
     String DEFAULTWORKFLOWTRANSITIONQUEUEMANAGER = "default-wftransitionqueuemanager";
 }

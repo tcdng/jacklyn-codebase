@@ -114,9 +114,10 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.criterion.AggregateFunction;
+import com.tcdng.unify.core.criterion.AggregateType;
 import com.tcdng.unify.core.criterion.Restriction;
 import com.tcdng.unify.core.criterion.Update;
-import com.tcdng.unify.core.data.AggregateType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
@@ -670,10 +671,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public int getUniqueActiveUserSessions() throws UnifyException {
-        return Integer.valueOf((String) db()
-                .aggregate(AggregateType.COUNT,
-                        new UserSessionTrackingQuery().loggedIn().addSelect("userLoginId").setDistinct(true))
-                .getValue());
+        return DataUtils.convert(int.class, db().aggregate(new AggregateFunction(AggregateType.COUNT, "userLoginId"),
+                new UserSessionTrackingQuery().loggedIn().setDistinct(true)).getValue(), null);
     }
 
     @Override

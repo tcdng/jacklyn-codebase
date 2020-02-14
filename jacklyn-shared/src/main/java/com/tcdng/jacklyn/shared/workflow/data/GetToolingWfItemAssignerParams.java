@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,15 +14,24 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.business;
+package com.tcdng.jacklyn.shared.workflow.data;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
- * Convenient abstract base class for workflow item assignment policy.
+ * Get tooling workflow document assigner request parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy implements WfItemAssignmentPolicy {
+@XmlRootElement
+public class GetToolingWfItemAssignerParams extends RemoteCallParams {
 
-    
+    public GetToolingWfItemAssignerParams() {
+        super(WorkflowRemoteCallNameConstants.GET_TOOLING_WFDOC_ASSIGNER_LIST);
+    }
+
 }

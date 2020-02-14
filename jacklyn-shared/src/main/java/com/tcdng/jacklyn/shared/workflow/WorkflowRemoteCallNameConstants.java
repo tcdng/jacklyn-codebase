@@ -32,5 +32,7 @@ public interface WorkflowRemoteCallNameConstants {
 
     String GET_TOOLING_POLICY_LOGIC_LIST = "wfGetToolingPolicyLogicList";
 
+    String GET_TOOLING_WFDOC_ASSIGNER_LIST = "wfGetToolingWfDocAssignerList";
+
     String GET_TOOLING_WFDOC_UPLGENERATOR_LIST = "wfGetToolingWfDocUplGeneratorList";
 }

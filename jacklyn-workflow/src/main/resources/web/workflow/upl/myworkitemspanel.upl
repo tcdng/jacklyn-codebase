@@ -2,8 +2,9 @@
 // Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-myworkitemspanel layout:$d{!ui-vertical style:$s{width:100%;} heights:$l{none 100% none}}
-    actionPanels:$c{topActionPanel wfItemsPanel bottomActionPanel}
+!ui-myworkitemspanel style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{width:100%;height:100%;} heights:$l{none 100% none}}
+    components:$c{topActionPanel wfItemsPanel bottomActionPanel}
 
 // Top action panel    
 !ui-panel:topActionPanel layout:$d{!ui-horizontal showCaption:true captionSuffix:$s{:}}
@@ -15,7 +16,7 @@
 !ui-panel:wfItemsPanel style:$s{width:100%;height:100%;} components:$c{wfItemsTbl}
 !ui-tablepanel:wfItemsTbl style:$s{height:100%;}
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}  heights:$l{100%}}
-    tableColumnList:$c{wfTemplateDesc wfStepDesc description forwardedBy priority status}
+    tableColumnList:$c{wfTemplateDesc wfStepDesc description forwardedBy priority status openBtn}
     tableBinding:wfItemList
     tableRowSelectable:false
     tableMultiSelect:true
@@ -28,8 +29,10 @@
 !ui-label:wfStepDesc caption:$m{workflow.myworkflowitems.step} columnStyle:$s{width:100px;} binding:wfStepDesc
 !ui-label:description caption:$m{workflow.myworkflowitems.description} columnStyle:$s{width:240px;} binding:wfItemDesc
 !ui-label:forwardedBy caption:$m{workflow.myworkflowitems.forwardedby}columnStyle:$s{width:120px;} binding:forwardedBy
-!ui-label:priority caption:$m{workflow.myworkflowitems.priority} columnStyle:$s{width:100px;} binding:priority
-!ui-badge:status caption:$m{workflow.myworkflowitems.status} columnStyle:$s{width:100px;} binding:status
+!ui-label:priority caption:$m{workflow.myworkflowitems.priority} columnStyle:$s{width:100px;text-align:center;} binding:priority
+!ui-badge:status style:$s{min-width:80px;} caption:$m{workflow.myworkflowitems.status} columnStyle:$s{width:100px;text-align:center;} binding:status
+!ui-button:openBtn styleClass:$s{ui-minibutton} caption:$m{button.open} columnStyle:$s{width:80px;text-align:center;} binding:wfItemId
+    eventHandler:$d{!ui-event event:onclick action:$c{openWfItemAct}}
 
 // Bottom action panel
 !ui-panel:bottomActionPanel layout:$d{!ui-horizontal}
@@ -37,7 +40,9 @@
 !ui-button:releaseItemsBtn caption:$m{button.release}
     eventHandler:$d{!ui-event event:onclick action:$c{releaseItemsAct}}
 
-// Actions
+// Actions                                
 !ui-postcommand:refreshWfItemsAct command:reloadWorkflowItems components:$c{wfStepSelect}
 !ui-postcommand:releaseItemsAct command:releaseWorkflowItems components:$c{wfItemsPanel}
     confirm:$m{workflow.myworkflowitems.confirm.release.multiple}
+!ui-postcommand:openWfItemAct command:openWorkflowItem
+    

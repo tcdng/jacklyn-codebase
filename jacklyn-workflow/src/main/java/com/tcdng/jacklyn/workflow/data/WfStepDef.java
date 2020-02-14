@@ -28,7 +28,6 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.DataUtils;
-import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow step definition.
@@ -295,10 +294,6 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public boolean isEnd() {
         return stepType.isEnd();
-    }
-
-    public boolean isWithWorkAssigner() {
-        return !StringUtils.isBlank(workAssignerName);
     }
     
     public Set<String> getWfActionNames() {

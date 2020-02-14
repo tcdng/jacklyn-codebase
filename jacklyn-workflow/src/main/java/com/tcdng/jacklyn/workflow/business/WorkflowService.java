@@ -23,11 +23,13 @@ import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingWfItemAssignerItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
+import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
@@ -483,6 +485,17 @@ public interface WorkflowService extends JacklynBusinessService {
     InteractWfItems getCurrentUserWorkItems(String stepGlobalName) throws UnifyException;
 
     /**
+     * Returns the workflow step user actions.
+     * 
+     * @param stepGlobalName
+     *            the global step name.
+     * @return the action list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfAction> getWorkflowStepActions(String stepGlobalName) throws UnifyException;
+
+    /**
      * Returns the current user work item summary.
      * 
      * @return the summary list
@@ -642,4 +655,15 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<ToolingWfDocUplGeneratorItem> findToolingWfDocUplGeneratorTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling workflow document assigner types.
+     * 
+     * @return list of workflow document assigner types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingWfItemAssignerItem> findToolingWfItemAssignerTypes() throws UnifyException;
+    
+    
 }

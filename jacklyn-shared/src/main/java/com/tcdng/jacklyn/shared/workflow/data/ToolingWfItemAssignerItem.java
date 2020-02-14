@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,15 +14,24 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.business;
+package com.tcdng.jacklyn.shared.workflow.data;
+
+import com.tcdng.jacklyn.shared.BaseToolingItem;
 
 /**
- * Convenient abstract base class for workflow item assignment policy.
+ * Tooling workflow assigner item.
  * 
- * @author Lateef Ojulari
+ * @author Lateef
  * @since 1.0
  */
-public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy implements WfItemAssignmentPolicy {
+public class ToolingWfItemAssignerItem extends BaseToolingItem {
 
-    
+    public ToolingWfItemAssignerItem(String name, String description) {
+        super(name, description);
+    }
+
+    public ToolingWfItemAssignerItem() {
+
+    }
+
 }

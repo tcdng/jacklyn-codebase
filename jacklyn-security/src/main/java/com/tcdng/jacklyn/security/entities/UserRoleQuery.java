@@ -52,6 +52,10 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
         return (UserRoleQuery) addEquals("branchCode", branchCode);
     }
 
+    public UserRoleQuery userStatus(RecordStatus userStatus) {
+        return (UserRoleQuery) addEquals("userStatus", userStatus);
+    }
+
     public UserRoleQuery isSupervisor() {
         return (UserRoleQuery) addEquals("supervisor", Boolean.TRUE);
     }

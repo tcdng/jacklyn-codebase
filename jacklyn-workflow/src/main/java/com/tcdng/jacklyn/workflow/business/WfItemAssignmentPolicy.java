@@ -16,7 +16,10 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
+import com.tcdng.jacklyn.workflow.data.WfItemAssigneeInfo;
 import com.tcdng.unify.core.UnifyException;
 
 /**
@@ -30,11 +33,14 @@ public interface WfItemAssignmentPolicy extends WfItemPolicy {
     /**
      * Executes workflow item user assignment policy using data from workflow item.
      * 
+     * @param wfItemAssigneeInfoList
+     *            the assignee list
      * @param flowingWfItemReader
      *            the workflow item reader
-     * @return the ID of user to assign workflow item to otherwise null
+     * @return the login ID of user to assign workflow item to otherwise null
      * @throws UnifyException
      *             if an error occurs
      */
-    String execute(Reader flowingWfItemReader) throws UnifyException;
+    String assignWorkItem(List<WfItemAssigneeInfo> wfItemAssigneeInfoList, Reader flowingWfItemReader)
+            throws UnifyException;
 }

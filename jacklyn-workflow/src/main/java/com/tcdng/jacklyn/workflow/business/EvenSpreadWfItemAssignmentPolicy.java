@@ -14,33 +14,39 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow;
+package com.tcdng.jacklyn.workflow.business;
 
 import java.util.List;
 
-import com.tcdng.jacklyn.workflow.business.AbstractWfItemAssignmentPolicy;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
 import com.tcdng.jacklyn.workflow.data.WfItemAssigneeInfo;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.Tooling;
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
- * Test workflow item assignment policy implementation.
+ * Even spread workflow item assignment policy implementation.
  * 
  * @author Lateef
  * @since 1.0
  */
-@Component("test-wfitemassignmentpolicy")
-public class TestWfItemAssignmentPolicyImpl extends AbstractWfItemAssignmentPolicy {
+@Tooling(description = "Even-spread Assignment")
+@Component(name = "evenspread-wfassignmentpolicy", description = "Even-spread Assignment Policy")
+public class EvenSpreadWfItemAssignmentPolicy extends AbstractWfItemAssignmentPolicy {
 
     @Override
     public String assignWorkItem(List<WfItemAssigneeInfo> wfItemAssigneeInfoList, Reader flowingWfItemReader)
             throws UnifyException {
-        if ("BadFox".equals(flowingWfItemReader.read(String.class, "firstName"))) {
-            throw new RuntimeException("Bad customer detected!");
+        if (!DataUtils.isBlank(wfItemAssigneeInfoList)) {
+            if (wfItemAssigneeInfoList.size() > 1) {
+                DataUtils.sort(wfItemAssigneeInfoList, WfItemAssigneeInfo.class, "assignedCount", true);
+            }
+
+            return wfItemAssigneeInfoList.get(0).getUserLoginId();
         }
 
-        return "terry5432";
+        return null;
     }
 
 }

@@ -30,12 +30,15 @@ public class WfTemplateDocDef {
 
     private WfDocUplGenerator wfDocUplGenerator;
 
+    private String workAssignerName;
+
     private boolean manual;
 
-    public WfTemplateDocDef(WfDocDef wfDocDef, WfDocUplGenerator wfDocUplGenerator,
+    public WfTemplateDocDef(WfDocDef wfDocDef, WfDocUplGenerator wfDocUplGenerator, String workAssignerName,
             boolean manual) {
         this.wfDocDef = wfDocDef;
         this.wfDocUplGenerator = wfDocUplGenerator;
+        this.workAssignerName = workAssignerName;
         this.manual = manual;
     }
 
@@ -49,6 +52,10 @@ public class WfTemplateDocDef {
 
     public WfDocUplGenerator getWfDocUplGenerator() {
         return wfDocUplGenerator;
+    }
+
+    public String getWorkAssignerName() {
+        return workAssignerName;
     }
 
     public boolean isManual() {

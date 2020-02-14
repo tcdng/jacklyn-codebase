@@ -14,15 +14,20 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.business;
+package com.tcdng.jacklyn.workflow.web.widgets;
+
+import com.tcdng.jacklyn.system.web.widgets.AbstractDashboardPortletPanel;
+import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Convenient abstract base class for workflow item assignment policy.
+ * My workflow items dashboard portlet panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy implements WfItemAssignmentPolicy {
+@Component(name = "ui-myworkitemsportlet", description = "$m{workflow.myworkitems.portlet}")
+@UplBinding("web/workflow/upl/myworkitemsdashboardportletpanel.upl")
+public class MyWorkItemsDashboardPortletPanel extends AbstractDashboardPortletPanel {
 
-    
 }
