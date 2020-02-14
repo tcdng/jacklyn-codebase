@@ -28,7 +28,6 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowStepType;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.DataUtils;
-import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow step definition.
@@ -49,6 +48,8 @@ public class WfStepDef extends BaseLabelWfDef {
     private String originGlobalName;
     
     private String workAssignerName;
+
+    private String priorityLevelDesc;
 
     private WorkflowStepType stepType;
 
@@ -71,7 +72,7 @@ public class WfStepDef extends BaseLabelWfDef {
     private List<WfPolicyDef> policyList;
 
     private Map<String, WfUserActionDef> userActions;
-
+    
     private int itemsPerSession;
 
     private long expiryMilliSec;
@@ -87,7 +88,7 @@ public class WfStepDef extends BaseLabelWfDef {
     private long versionTimestamp;
 
     public WfStepDef(Long wfTemplateId, String templateGlobalName, String templateGlobalLockName, String globalName, String originGlobalName, String name, String description,
-            String label, String workAssignerName, WorkflowStepType stepType, WorkflowParticipantType participantType,
+            String label, String workAssignerName, String priorityLevelDesc, WorkflowStepType stepType, WorkflowParticipantType participantType,
             List<WfBranchDef> branchList, List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
             List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
@@ -100,6 +101,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.globalName = globalName;
         this.originGlobalName = originGlobalName;
         this.workAssignerName = workAssignerName;
+        this.priorityLevelDesc = priorityLevelDesc;
         this.stepType = stepType;
         this.participantType = participantType;
         this.itemsPerSession = itemsPerSession;
@@ -166,6 +168,10 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public String getWorkAssignerName() {
         return workAssignerName;
+    }
+
+    public String getPriorityLevelDesc() {
+        return priorityLevelDesc;
     }
 
     public WorkflowStepType getStepType() {
@@ -288,10 +294,6 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public boolean isEnd() {
         return stepType.isEnd();
-    }
-
-    public boolean isWithWorkAssigner() {
-        return !StringUtils.isBlank(workAssignerName);
     }
     
     public Set<String> getWfActionNames() {

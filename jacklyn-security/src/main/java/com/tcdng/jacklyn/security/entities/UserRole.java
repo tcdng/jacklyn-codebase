@@ -57,6 +57,9 @@ public class UserRole extends BaseEntity implements Describable {
     @ListOnly(key = "userId", property = "themeId")
     private Long userThemeId;
 
+    @ListOnly(key = "userId", property = "status")
+    private RecordStatus userStatus;
+
     @ListOnly(name = "BRANCH_CD", key = "userId", property = "branchCode")
     private String branchCode;
 
@@ -156,6 +159,14 @@ public class UserRole extends BaseEntity implements Describable {
 
     public void setUserThemeId(Long userThemeId) {
         this.userThemeId = userThemeId;
+    }
+
+    public RecordStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(RecordStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     public String getBranchCode() {

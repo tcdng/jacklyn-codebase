@@ -174,5 +174,8 @@
 .jk-simpledial .sdfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
 .jk-simpledial .sdimage {width:100%}
 
+.jk-myworkitemsportlet {}
+.jk-myworkitemsportlet .title{text-align:left; font-size:14px;border-bottom: solid 1px #444;
+       margin: 0px 4px;padding-bottom: 12px;}
 
 

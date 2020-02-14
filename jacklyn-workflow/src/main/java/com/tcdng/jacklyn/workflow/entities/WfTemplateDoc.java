@@ -39,6 +39,9 @@ public class WfTemplateDoc extends BaseEntity {
     @Column(name = "DOCUMENT_VIEWER", length = 64, nullable = true)
     private String wfDocViewer;
 
+    @Column(length = 64, nullable = true)
+    private String workAssigner;
+
     @Column(name = "MANUAL_FG")
     private Boolean manual;
 
@@ -69,6 +72,14 @@ public class WfTemplateDoc extends BaseEntity {
 
     public void setWfDocViewer(String wfDocViewer) {
         this.wfDocViewer = wfDocViewer;
+    }
+
+    public String getWorkAssigner() {
+        return workAssigner;
+    }
+
+    public void setWorkAssigner(String workAssigner) {
+        this.workAssigner = workAssigner;
     }
 
     public Boolean getManual() {

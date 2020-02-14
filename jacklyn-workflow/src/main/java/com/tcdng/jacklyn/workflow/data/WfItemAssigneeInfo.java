@@ -14,15 +14,30 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.business;
+package com.tcdng.jacklyn.workflow.data;
 
 /**
- * Convenient abstract base class for workflow item assignment policy.
+ * Workflow item assignee information.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy implements WfItemAssignmentPolicy {
+public class WfItemAssigneeInfo {
 
-    
+    private String userLoginId;
+
+    private int assignedCount;
+
+    public WfItemAssigneeInfo(String userLoginId, int assignedCount) {
+        this.userLoginId = userLoginId;
+        this.assignedCount = assignedCount;
+    }
+
+    public String getUserLoginId() {
+        return userLoginId;
+    }
+
+    public int getAssignedCount() {
+        return assignedCount;
+    }
 }

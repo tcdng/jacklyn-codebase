@@ -16,32 +16,20 @@
 
 package com.tcdng.jacklyn.workflow.web.beans;
 
-import java.util.List;
-import java.util.Map;
-
 import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.workflow.data.CommentsInfo;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
-import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
 
 /**
- * User workflow items page bean.
+ * My workflow item page bean.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class UserWorkItemsPageBean extends BasePageBean {
-
-    private String wfStepName;
-
-    private InteractWfItems csWorkItems;
+public class MyWorkItemPageBean extends BasePageBean {
 
     private FlowingWfItem workflowItem;
-
-    private List<Long> wfItemIds;
-
-    private int viewIndex;
 
     private String actionName;
 
@@ -49,27 +37,9 @@ public class UserWorkItemsPageBean extends BasePageBean {
 
     private CommentsInfo commentsInfo;
 
-    private Map<Long, FlowingWfItem> workingCache;
-
-    public UserWorkItemsPageBean() {
-        super("userWorkItemsPanel");
+    public MyWorkItemPageBean() {
+        super("myWorkItemPanel");
         commentsInfo = new CommentsInfo();
-    }
-
-    public String getWfStepName() {
-        return wfStepName;
-    }
-
-    public void setWfStepName(String wfStepName) {
-        this.wfStepName = wfStepName;
-    }
-
-    public InteractWfItems getCsWorkItems() {
-        return csWorkItems;
-    }
-
-    public void setCsWorkItems(InteractWfItems csWorkItems) {
-        this.csWorkItems = csWorkItems;
     }
 
     public FlowingWfItem getWorkflowItem() {
@@ -78,22 +48,6 @@ public class UserWorkItemsPageBean extends BasePageBean {
 
     public void setWorkflowItem(FlowingWfItem workflowItem) {
         this.workflowItem = workflowItem;
-    }
-
-    public List<Long> getWfItemIds() {
-        return wfItemIds;
-    }
-
-    public void setWfItemIds(List<Long> wfItemIds) {
-        this.wfItemIds = wfItemIds;
-    }
-
-    public int getViewIndex() {
-        return viewIndex;
-    }
-
-    public void setViewIndex(int viewIndex) {
-        this.viewIndex = viewIndex;
     }
 
     public String getActionName() {
@@ -114,22 +68,6 @@ public class UserWorkItemsPageBean extends BasePageBean {
 
     public CommentsInfo getCommentsInfo() {
         return commentsInfo;
-    }
-
-    public Map<Long, FlowingWfItem> getWorkingCache() {
-        return workingCache;
-    }
-
-    public void setWorkingCache(Map<Long, FlowingWfItem> workingCache) {
-        this.workingCache = workingCache;
-    }
-
-    public int getItemCount() {
-        if (wfItemIds != null) {
-            return wfItemIds.size();
-        }
-
-        return 0;
     }
 
 }

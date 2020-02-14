@@ -44,7 +44,7 @@ import com.tcdng.unify.web.ui.data.FileAttachmentInfo;
 import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
 
 /**
- * Controller for changing user password.
+ * Controller for managing user work items.
  * 
  * @author Lateef Ojulari
  * @since 1.0

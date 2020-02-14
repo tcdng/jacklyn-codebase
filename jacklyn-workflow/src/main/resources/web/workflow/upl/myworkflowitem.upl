@@ -1,0 +1,24 @@
+// UPL template for my workflow item
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-page caption:$m{workflow.myworkflowitem.manage}
+    components:$c{myWorkItemPanel}
+
+!ui-panel:myWorkItemPanel style:$s{height:100%;} layout:$d{!ui-vertical style:$s{height:100%;margin-bottom:-2px;} heights:$l{100%}}
+    components:$c{wfItemViewerPanel}
+
+// Workflow item viewer panel
+!ui-panel:wfItemViewerPanel style:$s{height:100%;}
+	layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}
+	heights:$l{100%}} components:$c{wfItemPanel}
+!ui-mywfitempanel:wfItemPanel binding:workflowItem
+    applyItemActionPath:$n{/applyActionToWorkflowItem}
+    showAttachmentsPath:$n{/showWorkflowItemAttachments}
+    showCommentsPath:$n{/showWorkflowItemComments}
+    closeViewItemPath:$n{/closePage}
+
+// Popup panels
+!ui-wfitemattachmentspanel:attachmentsPopup attachmentsBodyStyle:$s{width:420px; height:180px;} attachmentsInfoBinding:fileAttachmentsInfo
+!ui-wfitemcommentspanel:commentsPopup binding:commentsInfo saveCommentsPath:$n{/applyActionWithComments}
+    

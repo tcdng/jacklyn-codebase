@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department
+ * Copyright 2018-2020 The Code Department.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,16 +13,19 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.tcdng.jacklyn.workflow.web.widgets;
 
-package com.tcdng.jacklyn.workflow.business;
+import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Convenient abstract base class for workflow item assignment policy.
+ * My workflow item viewer panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy implements WfItemAssignmentPolicy {
+@Component("ui-mywfitempanel")
+@UplBinding("web/workflow/upl/mywfitempanel.upl")
+public class MyWfItemPanel extends AbstractWfItemPanel {
 
-    
 }

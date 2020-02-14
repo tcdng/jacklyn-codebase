@@ -14,15 +14,36 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.business;
+package com.tcdng.jacklyn.workflow.data;
+
+import java.util.List;
 
 /**
- * Convenient abstract base class for workflow item assignment policy.
+ * My work items panel information.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWfItemAssignmentPolicy extends AbstractWfItemPolicy implements WfItemAssignmentPolicy {
+public class MyWorkItemsInfo {
 
-    
+    private String wfStepName;
+
+    private List<WfItemStatusInfo> wfItemList;
+
+    public String getWfStepName() {
+        return wfStepName;
+    }
+
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
+
+    public List<WfItemStatusInfo> getWfItemList() {
+        return wfItemList;
+    }
+
+    public void setWfItemList(List<WfItemStatusInfo> wfItemList) {
+        this.wfItemList = wfItemList;
+    }
+
 }

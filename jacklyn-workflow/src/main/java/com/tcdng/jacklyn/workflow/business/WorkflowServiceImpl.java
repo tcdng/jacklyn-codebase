@@ -44,6 +44,7 @@ import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingWfItemAssignerItem;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAlertConfig;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfAttachmentCheckConfig;
@@ -100,9 +101,11 @@ import com.tcdng.jacklyn.workflow.data.WfFormFieldDef;
 import com.tcdng.jacklyn.workflow.data.WfFormPrivilegeDef;
 import com.tcdng.jacklyn.workflow.data.WfFormSectionDef;
 import com.tcdng.jacklyn.workflow.data.WfFormTabDef;
+import com.tcdng.jacklyn.workflow.data.WfItemAssigneeInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
+import com.tcdng.jacklyn.workflow.data.WfItemStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfManualInitDef;
 import com.tcdng.jacklyn.workflow.data.WfPolicyDef;
@@ -168,13 +171,17 @@ import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.business.GenericService;
+import com.tcdng.unify.core.constant.ColorScheme;
 import com.tcdng.unify.core.constant.FrequencyUnit;
 import com.tcdng.unify.core.constant.LocaleType;
 import com.tcdng.unify.core.constant.RequirementType;
+import com.tcdng.unify.core.criterion.Aggregate;
+import com.tcdng.unify.core.criterion.AggregateType;
 import com.tcdng.unify.core.criterion.Update;
 import com.tcdng.unify.core.data.BeanMappingConfig;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
+import com.tcdng.unify.core.data.GroupAggregation;
 import com.tcdng.unify.core.data.PackableDoc;
 import com.tcdng.unify.core.data.PackableDocConfig;
 import com.tcdng.unify.core.data.PackableDocConfig.Builder;
@@ -187,6 +194,7 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
+import com.tcdng.unify.web.ui.data.BadgeInfo;
 
 /**
  * Default workflow business service implementation.
@@ -221,6 +229,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     @Configurable
     private WfItemAlertPolicy wfItemAlertLogic;
+
+    @Configurable
+    private WfStepUserInformationProvider wfStepUserInformationProvider;
 
     private FactoryMap<String, WfDocDef> wfDocs;
 
@@ -444,7 +455,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
                     WfDocUplGenerator wfDocUplGenerator = (WfDocUplGenerator) getComponent(viewerGenerator);
                     wfTemplateDocDefs.put(docName, new WfTemplateDocDef(wfDocs.get(docGlobalName), wfDocUplGenerator,
-                            wfTemplateDoc.getManual()));
+                            wfTemplateDoc.getWorkAssigner(), wfTemplateDoc.getManual()));
                 }
 
                 // Steps
@@ -589,11 +600,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, templateGlobalLockName, stepGlobalName,
                             originGlobalName, wfStep.getName(), wfStep.getDescription(), wfStep.getLabel(),
-                            wfStep.getWorkAssigner(), wfStep.getStepType(), wfStep.getParticipantType(), branchList,
-                            enrichmentList, routingList, recordActionList, userActionList, formPrivilegeList, alertList,
-                            policyList, wfStep.getItemsPerSession(), expiryMilliSec, wfStep.getAudit(),
-                            wfStep.getBranchOnly(), wfStep.getDepartmentOnly(), wfStep.getIncludeForwarder(),
-                            templateTimestamp));
+                            wfStep.getWorkAssigner(), wfStep.getPriorityLevelDesc(), wfStep.getStepType(),
+                            wfStep.getParticipantType(), branchList, enrichmentList, routingList, recordActionList,
+                            userActionList, formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
+                            expiryMilliSec, wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
+                            wfStep.getIncludeForwarder(), templateTimestamp));
                 }
 
                 return new WfTemplateDef(wfTemplateId, templateNames.getCategoryName(), templateGlobalName,
@@ -986,19 +997,26 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public int releaseCurrentUserWorkItems(List<Long> wfItemIds) throws UnifyException {
+        WfItemQuery wfItemQuery = new WfItemQuery();
+        wfItemQuery.idIn(wfItemIds);
+        wfItemQuery.heldBy(getUserToken().getUserLoginId());
+        return db().updateAll(wfItemQuery, new Update().add("heldBy", null));
+    }
+
+    @Override
     public InteractWfItems getCurrentUserWorkItems(String stepGlobalName) throws UnifyException {
         WfStepDef wfStepDef = accessCurrentUserStep(stepGlobalName);
         String useLoginID = getUserToken().getUserLoginId();
         List<WfItem> wfItemList =
                 db().listAll(new WfItemQuery().stepGlobalName(wfStepDef.getGlobalName()).heldBy(useLoginID));
+        return new InteractWfItems(stepGlobalName, wfItemList, getWorkflowStepActions(wfStepDef));
+    }
 
-        List<WfAction> actions = new ArrayList<WfAction>();
-        for (WfUserActionDef wfUserActionDef : wfStepDef.getUserActionList()) {
-            actions.add(new WfAction(wfUserActionDef.getName(), resolveSessionMessage(wfUserActionDef.getLabel()),
-                    wfUserActionDef.getCommentReqType(), wfUserActionDef.isValidatePage()));
-        }
-
-        return new InteractWfItems(stepGlobalName, wfItemList, actions);
+    @Override
+    public List<WfAction> getWorkflowStepActions(String stepGlobalName) throws UnifyException {
+        WfStepDef wfStepDef = wfSteps.get(stepGlobalName);
+        return getWorkflowStepActions(wfStepDef);
     }
 
     @Override
@@ -1022,6 +1040,35 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 DataUtils.sort(summaryList, WfItemSummary.class, "stepDesc", true);
                 return summaryList;
             }
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<WfItemStatusInfo> getCurrentWorkItemStatusList(String stepGlobalName) throws UnifyException {
+        WfItemQuery wfItemQuery = new WfItemQuery();
+        wfItemQuery.heldBy(getUserToken().getUserLoginId());
+        if (!StringUtils.isBlank(stepGlobalName)) {
+            wfItemQuery.stepGlobalName(stepGlobalName);
+        }
+
+        List<WfItem> wfItemList = db().listAll(wfItemQuery);
+        if (!wfItemList.isEmpty()) {
+            List<WfItemStatusInfo> wfItemStatusInfoList = new ArrayList<WfItemStatusInfo>();
+            for (WfItem wfItem : wfItemList) {
+                WfProcessDef wfProcessDef = wfProcesses.get(wfItem.getProcessGlobalName());
+                WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
+                BadgeInfo badgeInfo = getStatusBadge(wfItem);
+                WfItemStatusInfo wfItemStatusInfo =
+                        new WfItemStatusInfo(wfItem.getId(), wfProcessDef.getWfTemplateDef().getDescription(),
+                                wfProcessDef.getWfDocDef().getDescription(), wfStepDef.getDescription(),
+                                wfItem.getWfItemDesc(), wfItem.getForwardedBy(), wfStepDef.getPriorityLevelDesc(),
+                                badgeInfo);
+                wfItemStatusInfoList.add(wfItemStatusInfo);
+            }
+
+            return wfItemStatusInfoList;
         }
 
         return Collections.emptyList();
@@ -1213,6 +1260,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public List<ToolingWfDocUplGeneratorItem> findToolingWfDocUplGeneratorTypes() throws UnifyException {
         return getToolingTypes(ToolingWfDocUplGeneratorItem.class, WfDocUplGenerator.class);
+    }
+
+    @Override
+    public List<ToolingWfItemAssignerItem> findToolingWfItemAssignerTypes() throws UnifyException {
+        return getToolingTypes(ToolingWfItemAssignerItem.class, WfItemAssignmentPolicy.class);
     }
 
     @Taskable(
@@ -1519,6 +1571,34 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         doActualTransition(targetWfStepDef, flowingWfItem);
     }
 
+    private List<WfAction> getWorkflowStepActions(WfStepDef wfStepDef) throws UnifyException {
+        List<WfAction> actions = new ArrayList<WfAction>();
+        for (WfUserActionDef wfUserActionDef : wfStepDef.getUserActionList()) {
+            actions.add(new WfAction(wfUserActionDef.getName(), resolveSessionMessage(wfUserActionDef.getLabel()),
+                    wfUserActionDef.getCommentReqType(), wfUserActionDef.isValidatePage()));
+        }
+
+        return actions;
+    }
+
+    private BadgeInfo getStatusBadge(WfItem wfItem) throws UnifyException {
+        Date expectedDt = wfItem.getExpectedDt();
+        if (expectedDt != null) {
+            Date now = db().getNow();
+            if (now.after(expectedDt)) {
+                return new BadgeInfo(ColorScheme.RED, "$m{workflow.workitem.status.overdue}");
+            }
+
+            int criticalMinutes = 20; // TODO Get from step configuration
+            Date critical = CalendarUtils.getDateWithFrequencyOffset(now, FrequencyUnit.MINUTE, criticalMinutes);
+            if (critical.after(expectedDt)) {
+                return new BadgeInfo(ColorScheme.YELLOW, "$m{workflow.workitem.status.critical}");
+            }
+        }
+
+        return new BadgeInfo(ColorScheme.GREEN, "$m{workflow.workitem.status.pending}");
+    }
+
     private void populateChildList(WfDoc wfDoc, WfDocumentConfig wfDocConfig) throws UnifyException {
         // Fields
         List<WfDocField> fieldList = new ArrayList<WfDocField>();
@@ -1698,6 +1778,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             WfTemplateDoc wfTemplateDoc = new WfTemplateDoc();
             wfTemplateDoc.setWfDocName(wfTemplateDocConfig.getName());
             wfTemplateDoc.setWfDocViewer(wfTemplateDocConfig.getViewer());
+            wfTemplateDoc.setWorkAssigner(wfTemplateDocConfig.getAssigner());
             wfTemplateDoc.setManual(wfTemplateDocConfig.isManual());
             templateDocList.add(wfTemplateDoc);
         }
@@ -2028,12 +2109,6 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         Long wfHistEventId = (Long) db().create(wfHistEvent);
 
         // Update workflow item information.
-        UserToken userToken = getUserToken();
-        String forwardedBy = null;
-        if (!userToken.isReservedUser()) {
-            forwardedBy = userToken.getUserLoginId();
-        }
-
         PackableDoc packableDoc = flowingWfItem.getPd();
         final Long wfItemId = flowingWfItem.getWfItemId();
         flowingWfItem.setWfItemHistId(wfItemHistId);
@@ -2041,7 +2116,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         db().updateById(WfItem.class, wfItemId,
                 new Update().add("wfHistEventId", wfHistEventId).add("stepGlobalName", targetWfStepDef.getGlobalName())
                         .add("stepDt", stepDt).add("expectedDt", expectedDt)
-                        .add("participantType", targetWfStepDef.getParticipantType()).add("forwardedBy", forwardedBy));
+                        .add("participantType", targetWfStepDef.getParticipantType())
+                        .add("forwardedBy", flowingWfItem.getHeldBy()));
 
         // Perform enrichment if any
         String docName = flowingWfItem.getDocName();
@@ -2214,10 +2290,45 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Assign to human agent if user actions are associated with current step
             if (targetWfStepDef.isUserInteractive()) {
                 String heldBy = null;
-                if (targetWfStepDef.isWithWorkAssigner()) {
+                // Attempt to assign item to user. Step assigner has priority over document
+                // assigner
+                String workAssignerName = targetWfStepDef.getWorkAssignerName();
+                if (StringUtils.isBlank(workAssignerName)) {
+                    workAssignerName = flowingWfItem.getWfTemplateDocDef().getWorkAssignerName();
+                }
+
+                if (!StringUtils.isBlank(workAssignerName)) {
+                    // Get step users and their current workload
+                    List<GroupAggregation> workloadList =
+                            db().aggregateGroupMany(new Aggregate().add(AggregateType.COUNT, "heldBy"),
+                                    new WfItemQuery().stepGlobalName(targetWfStepDef.getGlobalName())
+                                            .addGroupBy("heldBy"));
+
+                    // Fetch users available for step
+                    Collection<String> availableUsers =
+                            wfStepUserInformationProvider.getEligibleUsersForWorkflowStep(
+                                    flowingWfItemReader.getStepParticipant(), flowingWfItemReader.getStepGlobalName(),
+                                    flowingWfItemReader.getRestrictions().getBranchCode(),
+                                    flowingWfItemReader.getRestrictions().getDepartmentCode());
+
+                    // Evaluate work item assignees
+                    List<WfItemAssigneeInfo> wfItemAssigneeInfoList = new ArrayList<WfItemAssigneeInfo>();
+                    for (GroupAggregation workload : workloadList) {
+                        String userLoginId = (String) workload.getGroupingList().get(0).getValue();
+                        if (availableUsers.remove(userLoginId)) {
+                            wfItemAssigneeInfoList.add(new WfItemAssigneeInfo(userLoginId,
+                                    (Integer) workload.getAggregationList().get(0).getValue()));
+                        }
+                    }
+
+                    for (String userLoginId : availableUsers) {
+                        wfItemAssigneeInfoList.add(new WfItemAssigneeInfo(userLoginId, 0));
+                    }
+
+                    // Do assignment
                     WfItemAssignmentPolicy wfItemAssignmentPolicy =
-                            (WfItemAssignmentPolicy) getComponent(targetWfStepDef.getWorkAssignerName());
-                    heldBy = wfItemAssignmentPolicy.execute(flowingWfItemReader);
+                            (WfItemAssignmentPolicy) getComponent(workAssignerName);
+                    heldBy = wfItemAssignmentPolicy.assignWorkItem(wfItemAssigneeInfoList, flowingWfItemReader);
                 }
 
                 db().updateAll(new WfItemQuery().id(wfItemId), new Update().add("heldBy", heldBy));
