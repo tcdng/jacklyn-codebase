@@ -31,6 +31,6 @@ import com.tcdng.unify.web.ui.panel.AbstractInMemoryRackCrudPanel;
 public class BatchFileFieldDefinitionCrudPanel extends AbstractInMemoryRackCrudPanel<BatchFileFieldDefinition> {
 
     public BatchFileFieldDefinitionCrudPanel() {
-        super(BatchFileFieldDefinition.class, "file.batchfilefielddefinition", true);
+        super(BatchFileFieldDefinition.class, "$m{file.batchfilefielddefinition}", true);
     }
 }
