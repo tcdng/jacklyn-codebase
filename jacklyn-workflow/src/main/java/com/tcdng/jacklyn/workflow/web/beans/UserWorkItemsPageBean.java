@@ -16,14 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.web.beans;
 
-import java.util.List;
-import java.util.Map;
-
 import com.tcdng.jacklyn.common.web.beans.BasePageBean;
-import com.tcdng.jacklyn.workflow.data.CommentsInfo;
-import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
-import com.tcdng.jacklyn.workflow.data.InteractWfItems;
-import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
+import com.tcdng.jacklyn.workflow.data.MyWorkItemsInfo;
 
 /**
  * User workflow items page bean.
@@ -33,103 +27,15 @@ import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
  */
 public class UserWorkItemsPageBean extends BasePageBean {
 
-    private String wfStepName;
-
-    private InteractWfItems csWorkItems;
-
-    private FlowingWfItem workflowItem;
-
-    private List<Long> wfItemIds;
-
-    private int viewIndex;
-
-    private String actionName;
-
-    private FileAttachmentsInfo fileAttachmentsInfo;
-
-    private CommentsInfo commentsInfo;
-
-    private Map<Long, FlowingWfItem> workingCache;
+    private MyWorkItemsInfo myWorkItemsInfo;
 
     public UserWorkItemsPageBean() {
         super("userWorkItemsPanel");
-        commentsInfo = new CommentsInfo();
+        myWorkItemsInfo =  new MyWorkItemsInfo();
     }
 
-    public String getWfStepName() {
-        return wfStepName;
-    }
-
-    public void setWfStepName(String wfStepName) {
-        this.wfStepName = wfStepName;
-    }
-
-    public InteractWfItems getCsWorkItems() {
-        return csWorkItems;
-    }
-
-    public void setCsWorkItems(InteractWfItems csWorkItems) {
-        this.csWorkItems = csWorkItems;
-    }
-
-    public FlowingWfItem getWorkflowItem() {
-        return workflowItem;
-    }
-
-    public void setWorkflowItem(FlowingWfItem workflowItem) {
-        this.workflowItem = workflowItem;
-    }
-
-    public List<Long> getWfItemIds() {
-        return wfItemIds;
-    }
-
-    public void setWfItemIds(List<Long> wfItemIds) {
-        this.wfItemIds = wfItemIds;
-    }
-
-    public int getViewIndex() {
-        return viewIndex;
-    }
-
-    public void setViewIndex(int viewIndex) {
-        this.viewIndex = viewIndex;
-    }
-
-    public String getActionName() {
-        return actionName;
-    }
-
-    public void setActionName(String actionName) {
-        this.actionName = actionName;
-    }
-
-    public FileAttachmentsInfo getFileAttachmentsInfo() {
-        return fileAttachmentsInfo;
-    }
-
-    public void setFileAttachmentsInfo(FileAttachmentsInfo fileAttachmentsInfo) {
-        this.fileAttachmentsInfo = fileAttachmentsInfo;
-    }
-
-    public CommentsInfo getCommentsInfo() {
-        return commentsInfo;
-    }
-
-    public Map<Long, FlowingWfItem> getWorkingCache() {
-        return workingCache;
-    }
-
-    public void setWorkingCache(Map<Long, FlowingWfItem> workingCache) {
-        this.workingCache = workingCache;
-    }
-
-    public int getItemCount() {
-        if (wfItemIds != null) {
-            return wfItemIds.size();
-        }
-
-        return 0;
+    public MyWorkItemsInfo getMyWorkItemsInfo() {
+        return myWorkItemsInfo;
     }
 
 }

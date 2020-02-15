@@ -43,8 +43,9 @@ import com.tcdng.unify.web.ui.control.Table;
  */
 @Component("ui-myworkitemspanel")
 @UplBinding("web/workflow/upl/myworkitemspanel.upl")
-@UplAttributes({ @UplAttribute(
-        name = "wfItemViewerPath", type = String.class, defaultVal = "/workflow/myworkflowitem/openPage") })
+@UplAttributes({
+        @UplAttribute(name = "wfItemViewerPath", type = String.class, defaultVal = "/workflow/myworkflowitem/openPage"),
+        @UplAttribute(name = "showRefreshButton", type = boolean.class, defaultVal = "false") })
 public class MyWorkItemsPanel extends BasePanel {
 
     @Configurable
@@ -76,27 +77,17 @@ public class MyWorkItemsPanel extends BasePanel {
     @Override
     public void switchState() throws UnifyException {
         super.switchState();
-        MyWorkItemsInfo myWorkItemsInfo = getMyWorkItemsInfo();
-        if (myWorkItemsInfo.getWfItemList() == null) {
-            reloadWorkflowItems();
-        }
+        reloadWorkflowItems();
     }
 
-    private MyWorkItemsInfo getMyWorkItemsInfo() throws UnifyException {
-        ValueStore vs = getValueStore();
-        MyWorkItemsInfo myWorkItemsInfo = null;
-        if (vs != null) {
-            myWorkItemsInfo = (MyWorkItemsInfo) vs.getValueObject();
-        } else {
-            myWorkItemsInfo = new MyWorkItemsInfo();
-            setValueStore(createValueStore(myWorkItemsInfo));
-        }
-        
-        return myWorkItemsInfo;
+    @Override
+    public void onPageConstruct() throws UnifyException {
+        super.onPageConstruct();
+        setWidgetVisible("refreshSummaryBtn", getUplAttribute(boolean.class, "showRefreshButton"));
     }
-    
+
     private List<Long> getSelectedWfItemIds() throws UnifyException {
-        MyWorkItemsInfo myWorkItemsInfo = getValue(MyWorkItemsInfo.class);
+        MyWorkItemsInfo myWorkItemsInfo = getMyWorkItemsInfo();
         if (myWorkItemsInfo != null) {
             Table table = getWidgetByShortName(Table.class, "wfItemsTbl.contentTbl");
             if (table.getSelectedRows() > 0) {
@@ -109,5 +100,20 @@ public class MyWorkItemsPanel extends BasePanel {
             }
         }
         return Collections.emptyList();
+    }
+
+    private MyWorkItemsInfo getMyWorkItemsInfo() throws UnifyException {
+        MyWorkItemsInfo myWorkItemsInfo = getValue(MyWorkItemsInfo.class);
+        if (myWorkItemsInfo == null) {
+            ValueStore vs = getValueStore();
+            if (vs != null) {
+                myWorkItemsInfo = (MyWorkItemsInfo) vs.getValueObject();
+            } else {
+                myWorkItemsInfo = new MyWorkItemsInfo();
+                setValueStore(createValueStore(myWorkItemsInfo));
+            }
+        }
+
+        return myWorkItemsInfo;
     }
 }
