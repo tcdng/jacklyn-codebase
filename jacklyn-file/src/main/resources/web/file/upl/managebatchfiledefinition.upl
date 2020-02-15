@@ -34,8 +34,7 @@
 !ui-batchfilefielddefcrudpanel:frmBatchFileFieldDefPanel createNext:true
 
 // Map bean popup
-!ui-selectmappedbeanpanel:selectBeanToMapPopup
-    beanTypeBinding:beanType
+!ui-selectmappedbeanpanel:selectBeanToMapPopup beanTypeBinding:beanType
     performMappingPath:$n{/performMapBean}
 
 //More action components
