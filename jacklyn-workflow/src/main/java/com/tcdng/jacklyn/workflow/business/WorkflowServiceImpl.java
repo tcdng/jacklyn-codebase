@@ -752,8 +752,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     String processGlobalName =
                             WfNameUtils.getProcessGlobalName(wfTemplate.getWfCategoryName(), wfTemplate.getName(),
                                     wfTemplateDoc.getWfDocName());
-                    String processDesc =
-                            String.format("%s::%s", wfTemplate.getDescription(), wfTemplateDoc.getWfDocName());
+                    WfDocDef wfDocDef =
+                            wfDocs.get(WfNameUtils.getDocGlobalName(wfTemplate.getWfCategoryName(),
+                                    wfTemplateDoc.getWfDocName()));
+                    String processDesc = String.format("%s/%s", wfTemplate.getDescription(), wfDocDef.getDescription());
                     resultList.add(new ManualInitInfo(wfTemplate.getWfCategoryName(), wfTemplate.getWfCategoryDesc(),
                             processGlobalName, processDesc));
                 }
@@ -2024,8 +2026,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Construct title
         String title =
-                getSessionMessage("workflowitem.title.struct", wfTemplateDef.getName(), wfStepDef.getName(),
-                        wfTemplateDocDef.getWfDocDef().getName(), wfItem.getDescription());
+                getSessionMessage("workflowitem.title.struct", wfTemplateDef.getDescription(),
+                        wfTemplateDocDef.getWfDocDef().getDescription(), wfStepDef.getDescription(),
+                        wfItem.getDescription());
 
         // Create work item
         FlowingWfItem flowingWfItem = new FlowingWfItem(wfProcessDef, wfStepDef, wfItem, wfItemId, title, pd);

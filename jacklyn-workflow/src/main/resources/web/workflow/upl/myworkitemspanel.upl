@@ -7,10 +7,12 @@
     components:$c{topActionPanel wfItemsPanel bottomActionPanel}
 
 // Top action panel    
-!ui-panel:topActionPanel layout:$d{!ui-horizontal showCaption:true captionSuffix:$s{:}}
-    components:$c{wfStepSelect}
+!ui-panel:topActionPanel layout:$d{!ui-horizontal cellType:bottom showCaption:true captionSuffix:$s{:}}
+    components:$c{wfStepSelect refreshSummaryBtn}
 !ui-select:wfStepSelect caption:$m{workflow.myworkflowitems.step} list:userwfitemsummarylist blankOption:$s{} binding:wfStepName
     eventHandler:$d{!ui-event event:onchange action:$c{refreshWfItemsAct}} style:$s{width:280px;}
+!ui-button:refreshSummaryBtn styleClass:$s{ui-tablecrudpanel-abutton} caption:$m{button.refresh}
+    eventHandler:$d{!ui-event event:onclick action:$c{refreshWfItemsAct}}
 
 // Workflow items
 !ui-panel:wfItemsPanel style:$s{width:100%;height:100%;} components:$c{wfItemsTbl}
