@@ -18,8 +18,8 @@ package com.tcdng.jacklyn.security.business;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.security.entities.UserQuery;
-import com.tcdng.jacklyn.statistics.business.AbstractQuickPercentageProvider;
 import com.tcdng.jacklyn.statistics.data.QuickPercentage;
+import com.tcdng.jacklyn.statistics.providers.AbstractQuickPercentageProvider;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department.
+ * Copyright 2018-2020 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,30 +14,33 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.system.web.widgets;
+package com.tcdng.jacklyn.statistics.web.widgets;
 
+import com.tcdng.jacklyn.common.web.widgets.BasePanel;
 import com.tcdng.jacklyn.statistics.providers.StatisticsProvider;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplAttribute;
 import com.tcdng.unify.core.annotation.UplAttributes;
-import com.tcdng.unify.web.annotation.Action;
+import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Abstract base class for statistics dashboard portlet panels.
+ * Convenient abstract base class for chart panels.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@UplAttributes({ @UplAttribute(name = "provider", type = String.class, mandatory = true) })
-public abstract class AbstractStatisticsDashbordPortletPanel extends AbstractDashboardPortletPanel {
+@UplBinding("web/statistics/upl/chartpanel.upl")
+@UplAttributes(@UplAttribute(name = "chartProvider", type = String.class, mandatory = true))
+public abstract class AbstractChartPanel<T extends StatisticsProvider<?>> extends BasePanel {
 
-    @Action
     @Override
-    public void switchState() throws UnifyException {
-        super.switchState();
-        StatisticsProvider<?> statisticsProvider =
-                (StatisticsProvider<?>) getComponent(getUplAttribute(String.class, "provider"));
-        setValueStore(createValueStore(statisticsProvider.provide()));
+    public void onPageConstruct() throws UnifyException {
+        super.onPageConstruct();
+        setComponentValueBeanToThis("chartImg");
     }
 
+    @SuppressWarnings("unchecked")
+    protected T getProvider() throws UnifyException {
+        return (T) getComponent(getUplAttribute(String.class, "chartProvider"));
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department.
+ * Copyright 2018-2020 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,27 +14,16 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
+package com.tcdng.jacklyn.statistics.providers;
 
-import com.tcdng.unify.core.UnifyComponent;
-import com.tcdng.unify.core.UnifyException;
+import com.tcdng.jacklyn.statistics.data.QuickRatioVisual;
 
 /**
- * Statistics provider component.
+ * Visual quick ratio provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface StatisticsProvider<T> extends UnifyComponent {
+public interface QuickRatioVisualProvider extends StatisticsProvider<QuickRatioVisual> {
 
-    /**
-     * Provides statistical data.
-     * 
-     * @param params
-     *            the parameter list.
-     * @return the statistical data
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    T provide(Object... params) throws UnifyException;
 }
