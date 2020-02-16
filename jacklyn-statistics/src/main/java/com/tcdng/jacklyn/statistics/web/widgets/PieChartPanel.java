@@ -16,39 +16,28 @@
 
 package com.tcdng.jacklyn.statistics.web.widgets;
 
-import com.tcdng.jacklyn.common.web.widgets.BasePanel;
-import com.tcdng.jacklyn.statistics.business.QuickRatioVisualProvider;
 import com.tcdng.jacklyn.statistics.data.QuickRatioVisual;
+import com.tcdng.jacklyn.statistics.providers.QuickRatioVisualProvider;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.core.annotation.UplAttribute;
-import com.tcdng.unify.core.annotation.UplAttributes;
+import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Convenient abstract base class for pie chart panels.
+ * Pie chart panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
+@Component("ui-piechartpanel")
 @UplBinding("web/statistics/upl/piechartpanel.upl")
-@UplAttributes(@UplAttribute(name = "chartProvider", type = String.class, mandatory = true))
-public abstract class AbstractPieChartPanel extends BasePanel {
+public class PieChartPanel extends AbstractChartPanel<QuickRatioVisualProvider> {
 
     private QuickRatioVisual quickRatioVisual;
 
     @Override
-    public void onPageConstruct() throws UnifyException {
-        super.onPageConstruct();
-        setComponentValueBeanToThis("chartImg");
-    }
-
-    @Override
     public void switchState() throws UnifyException {
         super.switchState();
-
-        QuickRatioVisualProvider provider = (QuickRatioVisualProvider) getComponent(
-                getUplAttribute(String.class, "chartProvider"));
-        quickRatioVisual = provider.provide(getValue());
+        quickRatioVisual = getProvider().provide(getValue());
     }
 
     public QuickRatioVisual getQuickRatioVisual() {

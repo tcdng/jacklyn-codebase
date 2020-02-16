@@ -14,27 +14,27 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
+package com.tcdng.jacklyn.statistics.providers;
 
-import com.tcdng.unify.core.AbstractUnifyComponent;
+import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
 
 /**
- * Abstract base class for statistics provider.
+ * Statistics provider component.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractStatisticsProvider<T> extends AbstractUnifyComponent implements StatisticsProvider<T> {
+public interface StatisticsProvider<T> extends UnifyComponent {
 
-    @Override
-    protected void onInitialize() throws UnifyException {
-
-    }
-
-    @Override
-    protected void onTerminate() throws UnifyException {
-
-    }
-
+    /**
+     * Provides statistical data.
+     * 
+     * @param params
+     *            the parameter list.
+     * @return the statistical data
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    T provide(Object... params) throws UnifyException;
 }

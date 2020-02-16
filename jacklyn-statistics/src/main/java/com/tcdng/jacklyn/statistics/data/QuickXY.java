@@ -17,53 +17,61 @@
 package com.tcdng.jacklyn.statistics.data;
 
 import java.awt.Color;
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Quick ratios data object.
+ * Quick XY object.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class QuickRatio {
+public class QuickXY {
 
-    private List<Ratio> ratios;
-
-    public QuickRatio(List<Ratio> ratios) {
-        this.ratios = Collections.unmodifiableList(ratios);
-    }
-
-    public List<Ratio> getRatios() {
-        return ratios;
-    }
-
+    private List<XY> xyList;
     
-    public static class Ratio {
+    
+    public QuickXY(List<XY> xyList) {
+        this.xyList = xyList;
+    }
+
+
+    public List<XY> getXyList() {
+        return xyList;
+    }
+
+    public static class XY {
         
         private String name;
         
-        private Double value;
+        private List<?> xValueList;
+        
+        private List<? extends Number> yValueList;
         
         private Color color;
 
-        public Ratio(String name, Double value, Color color) {
+        public XY(String name, List<?> xValueList, List<? extends Number> yValueList, Color color) {
             this.name = name;
-            this.value = value;
+            this.xValueList = xValueList;
+            this.yValueList = yValueList;
             this.color = color;
         }
 
-        public Ratio(String name, Double value) {
+        public XY(String name, List<?> xValueList, List<? extends Number> yValueList) {
             this.name = name;
-            this.value = value;
+            this.xValueList = xValueList;
+            this.yValueList = yValueList;
         }
 
         public String getName() {
             return name;
         }
 
-        public Double getValue() {
-            return value;
+        public List<?> getXValueList() {
+            return xValueList;
+        }
+
+        public List<? extends Number> getYValueList() {
+            return yValueList;
         }
 
         public Color getColor() {

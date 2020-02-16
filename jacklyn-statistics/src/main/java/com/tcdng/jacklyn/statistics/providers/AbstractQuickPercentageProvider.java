@@ -14,30 +14,24 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.data;
+package com.tcdng.jacklyn.statistics.providers;
+
+import com.tcdng.jacklyn.statistics.data.QuickPercentage;
+import com.tcdng.unify.core.UnifyException;
 
 /**
- * Object with quick ratio visualization.
+ * Abstract base class for quick percentage providers.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class QuickRatioVisual {
+public abstract class AbstractQuickPercentageProvider extends AbstractStatisticsProvider<QuickPercentage> {
 
-    private QuickRatio quickRatio;
-
-    private byte[] presentation;
-
-    public QuickRatioVisual(QuickRatio quickRatio, byte[] presentation) {
-        this.quickRatio = quickRatio;
-        this.presentation = presentation;
+    @Override
+    public QuickPercentage provide(Object... params) throws UnifyException {
+        return doProvide(params);
     }
 
-    public QuickRatio getQuickRatio() {
-        return quickRatio;
-    }
+    protected abstract QuickPercentage doProvide(Object... params) throws UnifyException;
 
-    public byte[] getPresentation() {
-        return presentation;
-    }
 }

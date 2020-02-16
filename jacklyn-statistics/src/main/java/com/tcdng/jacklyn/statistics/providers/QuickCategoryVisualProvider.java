@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department.
+ * Copyright 2018-2020 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,30 +14,16 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.data;
+package com.tcdng.jacklyn.statistics.providers;
+
+import com.tcdng.jacklyn.statistics.data.QuickCategoryVisual;
 
 /**
- * Object with quick ratio visualization.
+ * Visual quick category provider.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class QuickRatioVisual {
+public interface QuickCategoryVisualProvider extends StatisticsProvider<QuickCategoryVisual> {
 
-    private QuickRatio quickRatio;
-
-    private byte[] presentation;
-
-    public QuickRatioVisual(QuickRatio quickRatio, byte[] presentation) {
-        this.quickRatio = quickRatio;
-        this.presentation = presentation;
-    }
-
-    public QuickRatio getQuickRatio() {
-        return quickRatio;
-    }
-
-    public byte[] getPresentation() {
-        return presentation;
-    }
 }

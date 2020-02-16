@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department.
+ * Copyright 2018-2020 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,24 +14,30 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
-
-import com.tcdng.jacklyn.statistics.data.QuickPercentage;
-import com.tcdng.unify.core.UnifyException;
+package com.tcdng.jacklyn.statistics.data;
 
 /**
- * Abstract base class for quick percentage providers.
+ * Object with quick XY visualization.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractQuickPercentageProvider extends AbstractStatisticsProvider<QuickPercentage> {
+public class QuickXYVisual {
 
-    @Override
-    public QuickPercentage provide(Object... params) throws UnifyException {
-        return doProvide(params);
+    private QuickXY quickXY;
+
+    private byte[] presentation;
+
+    public QuickXYVisual(QuickXY quickXY, byte[] presentation) {
+        this.quickXY = quickXY;
+        this.presentation = presentation;
     }
 
-    protected abstract QuickPercentage doProvide(Object... params) throws UnifyException;
+    public QuickXY getQuickXY() {
+        return quickXY;
+    }
 
+    public byte[] getPresentation() {
+        return presentation;
+    }
 }

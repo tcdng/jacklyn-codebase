@@ -14,9 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
-
-import java.util.Map;
+package com.tcdng.jacklyn.statistics.providers;
 
 import com.tcdng.jacklyn.statistics.data.QuickRatio;
 import com.tcdng.unify.core.UnifyException;
@@ -69,8 +67,8 @@ public abstract class AbstractPieChartProvider extends AbstractQuickRatioVisualP
         PieChart.Builder pcb =
                 PieChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
                         .valueFormat(valueFormat).showLegend(showLegend);
-        for (Map.Entry<String, Double> entry : quickRatio.getRatios().entrySet()) {
-            pcb.addSeries(entry.getKey(), entry.getValue());
+        for (QuickRatio.Ratio ratio : quickRatio.getRatios()) {
+            pcb.addSeries(ratio.getName(), ratio.getValue(), ratio.getColor());
         }
 
         PieChart chart = pcb.build();

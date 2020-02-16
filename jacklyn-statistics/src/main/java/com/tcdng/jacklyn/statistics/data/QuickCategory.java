@@ -17,53 +17,60 @@
 package com.tcdng.jacklyn.statistics.data;
 
 import java.awt.Color;
-import java.util.Collections;
 import java.util.List;
 
+import com.tcdng.unify.core.util.DataUtils;
+
 /**
- * Quick ratios data object.
+ * Quick categories data object.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class QuickRatio {
+public class QuickCategory {
 
-    private List<Ratio> ratios;
+    private List<?> xValueList;
 
-    public QuickRatio(List<Ratio> ratios) {
-        this.ratios = Collections.unmodifiableList(ratios);
+    private List<Category> categoryList;
+
+    public QuickCategory(List<?> xValueList, List<Category> categoryList) {
+        this.xValueList = DataUtils.unmodifiableList(xValueList);
+        this.categoryList = DataUtils.unmodifiableList(categoryList);
     }
 
-    public List<Ratio> getRatios() {
-        return ratios;
+    public List<?> getXValueList() {
+        return xValueList;
     }
 
-    
-    public static class Ratio {
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public static class Category {
         
         private String name;
         
-        private Double value;
+        private List<? extends Number> yValueList;
         
         private Color color;
 
-        public Ratio(String name, Double value, Color color) {
+        public Category(String name, List<? extends Number> yValueList, Color color) {
             this.name = name;
-            this.value = value;
+            this.yValueList = yValueList;
             this.color = color;
         }
 
-        public Ratio(String name, Double value) {
+        public Category(String name, List<? extends Number> yValueList) {
             this.name = name;
-            this.value = value;
+            this.yValueList = yValueList;
         }
 
         public String getName() {
             return name;
         }
 
-        public Double getValue() {
-            return value;
+        public List<? extends Number> getYValueList() {
+            return yValueList;
         }
 
         public Color getColor() {

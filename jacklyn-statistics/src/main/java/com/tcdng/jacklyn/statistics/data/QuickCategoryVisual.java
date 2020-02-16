@@ -14,16 +14,30 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
-
-import com.tcdng.jacklyn.statistics.data.QuickRatioVisual;
+package com.tcdng.jacklyn.statistics.data;
 
 /**
- * Visual quick ratio provider.
+ * Object with quick category visualization.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface QuickRatioVisualProvider extends StatisticsProvider<QuickRatioVisual> {
+public class QuickCategoryVisual {
 
+    private QuickCategory quickCategory;
+
+    private byte[] presentation;
+
+    public QuickCategoryVisual(QuickCategory quickCategory, byte[] presentation) {
+        this.quickCategory = quickCategory;
+        this.presentation = presentation;
+    }
+
+    public QuickCategory getQuickCategory() {
+        return quickCategory;
+    }
+
+    public byte[] getPresentation() {
+        return presentation;
+    }
 }
