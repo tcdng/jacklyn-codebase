@@ -21,10 +21,10 @@ import java.util.Map;
 import com.tcdng.jacklyn.statistics.data.QuickRatio;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.chart.AbstractChart.AnnotationType;
+import com.tcdng.unify.core.chart.AbstractChart.ValueFormat;
 import com.tcdng.unify.core.chart.ChartGenerator;
 import com.tcdng.unify.core.chart.PieChart;
-import com.tcdng.unify.core.chart.PieChart.AnnotationType;
-import com.tcdng.unify.core.chart.PieChart.ValueFormat;
 import com.tcdng.unify.core.constant.ColorPalette;
 
 /**
