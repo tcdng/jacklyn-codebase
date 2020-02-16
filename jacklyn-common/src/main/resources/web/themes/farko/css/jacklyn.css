@@ -99,6 +99,7 @@
 
 .jk-wfitemlabel {display:block; font-size:20px; padding:8px; background-color:#D0E0F0;}
 
+
 .ui-wfactionbuttons {display:table;}
 .ui-wfactionbuttons .buttonRow {display:table-row;}
 .ui-wfactionbuttons .buttonCell {display:table-cell; padding: 0px 2px; vertical-align: bottom;}
@@ -173,6 +174,9 @@
 .jk-simpledial .sdfooter{font-size:10px;}
 .jk-simpledial .sdfootervalue {font-weight:bold;font-family:Helvetica,Arial,sans-serif;}
 .jk-simpledial .sdimage {width:100%}
+
+.jk-charttitle {text-align:center; font-size:14px; margin: 0px 4px;padding-bottom: 12px;}
+.jk-chartimage {width:100%}
 
 .jk-myworkitemsportlet {}
 .jk-myworkitemsportlet .title{text-align:left; font-size:14px;border-bottom: solid 1px #444;
