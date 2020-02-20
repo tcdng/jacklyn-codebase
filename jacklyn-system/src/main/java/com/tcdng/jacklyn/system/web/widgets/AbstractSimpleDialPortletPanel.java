@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.system.web.widgets;
 
+import com.tcdng.jacklyn.statistics.data.QuickUtilization;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
@@ -26,6 +27,11 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 
 @UplBinding("web/system/upl/simpledialportletpanel.upl")
-public class AbstractSimpleDialPortletPanel extends AbstractStatisticsDashbordPortletPanel {
+public abstract class AbstractSimpleDialPortletPanel extends AbstractStatisticsDashbordPortletPanel<QuickUtilization> {
+
+    @Override
+    public QuickUtilization getStatistics() {
+        return statistics;
+    }
 
 }

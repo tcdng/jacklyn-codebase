@@ -60,4 +60,8 @@ public class QuickPercentage {
     public boolean isTotalValueZero() {
         return totalValue == 0.0;
     }
+    
+    public String toString() {
+        return "{value = " + value + ", totalValue = " + totalValue + "}";
+    }
 }

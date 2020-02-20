@@ -14,12 +14,12 @@
 
 !ui-panel:detailsPanel styleClass:$e{sdfooter} layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{sdValue footerPanel}
-!ui-label:sdValue styleClass:$e{sdvalue} formatter:$d{!percentformat scale:1} binding:fraction
+!ui-label:sdValue styleClass:$e{sdvalue} formatter:$d{!percentformat scale:1} binding:statistics.fraction
 !ui-panel:footerPanel layout:$d{!ui-vertical style:$s{width:100%;} showCaption:true captionSuffix:$s{:}}
     components:$c{sdUsedValue sdTotalValue}
 !ui-label:sdUsedValue caption:$f{sdUsedTitle} formatter:$f{sdValueFormatter} styleClass:$e{sdfootervalue}
-    layoutCaption:true binding:value
+    layoutCaption:true binding:statistics.value
 !ui-label:sdTotalValue caption:$f{sdTotalTitle} formatter:$f{sdValueFormatter} styleClass:$e{sdfootervalue}
-    layoutCaption:true binding:totalValue
+    layoutCaption:true binding:statistics.totalValue
 
-!ui-image:dialImg styleClass:$e{sdimage} binding:presentation
+!ui-image:dialImg styleClass:$e{sdimage} binding:statistics.presentation

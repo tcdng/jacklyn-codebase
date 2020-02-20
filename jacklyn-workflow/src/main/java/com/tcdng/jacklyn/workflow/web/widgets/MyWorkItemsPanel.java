@@ -30,7 +30,6 @@ import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.UplAttribute;
 import com.tcdng.unify.core.annotation.UplAttributes;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.core.data.ValueStore;
 import com.tcdng.unify.web.TargetPath;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.ui.control.Table;
@@ -53,7 +52,7 @@ public class MyWorkItemsPanel extends BasePanel {
 
     @Action
     public void reloadWorkflowItems() throws UnifyException {
-        MyWorkItemsInfo myWorkItemsInfo = getMyWorkItemsInfo();
+        MyWorkItemsInfo myWorkItemsInfo = getValue(MyWorkItemsInfo.class);
         List<WfItemStatusInfo> wfItemList =
                 workflowService.getCurrentWorkItemStatusList(myWorkItemsInfo.getWfStepName());
         myWorkItemsInfo.setWfItemList(wfItemList);
@@ -87,7 +86,7 @@ public class MyWorkItemsPanel extends BasePanel {
     }
 
     private List<Long> getSelectedWfItemIds() throws UnifyException {
-        MyWorkItemsInfo myWorkItemsInfo = getMyWorkItemsInfo();
+        MyWorkItemsInfo myWorkItemsInfo = getValue(MyWorkItemsInfo.class);
         if (myWorkItemsInfo != null) {
             Table table = getWidgetByShortName(Table.class, "wfItemsTbl.contentTbl");
             if (table.getSelectedRows() > 0) {
@@ -100,20 +99,5 @@ public class MyWorkItemsPanel extends BasePanel {
             }
         }
         return Collections.emptyList();
-    }
-
-    private MyWorkItemsInfo getMyWorkItemsInfo() throws UnifyException {
-        MyWorkItemsInfo myWorkItemsInfo = getValue(MyWorkItemsInfo.class);
-        if (myWorkItemsInfo == null) {
-            ValueStore vs = getValueStore();
-            if (vs != null) {
-                myWorkItemsInfo = (MyWorkItemsInfo) vs.getValueObject();
-            } else {
-                myWorkItemsInfo = new MyWorkItemsInfo();
-                setValueStore(createValueStore(myWorkItemsInfo));
-            }
-        }
-
-        return myWorkItemsInfo;
     }
 }

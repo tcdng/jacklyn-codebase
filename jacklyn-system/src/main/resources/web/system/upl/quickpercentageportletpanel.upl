@@ -9,16 +9,16 @@
     layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{title qpValue footerPanel}
 
 !ui-label:title caption:$f{qpTitle} styleClass:$e{qptitle}
-!ui-label:qpValue styleClass:$e{qpvalue} formatter:$f{qpValueFormatter} binding:value
+!ui-label:qpValue styleClass:$e{qpvalue} formatter:$f{qpValueFormatter} binding:statistics.value
 
 !ui-panel:footerPanel  styleClass:$e{qpfooter} layout:$d{!ui-horizontal style:$s{width:100%;}}
     components:$c{totalPanel percentPanel}
 !ui-panel:totalPanel layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{totalTitle qpTotalValue}
 !ui-label:totalTitle caption:$f{qpTotalTitle}
-!ui-label:qpTotalValue formatter:$f{qpValueFormatter} styleClass:$e{qpfootervalue} binding:totalValue
+!ui-label:qpTotalValue formatter:$f{qpValueFormatter} styleClass:$e{qpfootervalue} binding:statistics.totalValue
 
 !ui-panel:percentPanel layout:$d{!ui-vertical style:$s{width:100%;}} components:$c{percentTitle qpPercentage}
 !ui-label:percentTitle caption:$f{qpPercentTitle} style:$s{text-align:right;}
 !ui-label:qpPercentage formatter:$f{qpPercentFormatter} styleClass:$e{qpfootervalue} style:$s{text-align:right;}
-    binding:fraction
+    binding:statistics.fraction
 

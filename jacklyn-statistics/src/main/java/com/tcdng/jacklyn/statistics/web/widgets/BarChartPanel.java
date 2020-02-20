@@ -16,9 +16,7 @@
 
 package com.tcdng.jacklyn.statistics.web.widgets;
 
-import com.tcdng.jacklyn.statistics.data.QuickCategoryVisual;
 import com.tcdng.jacklyn.statistics.providers.QuickCategoryVisualProvider;
-import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -32,15 +30,4 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/statistics/upl/barchartpanel.upl")
 public class BarChartPanel extends AbstractChartPanel<QuickCategoryVisualProvider> {
 
-    private QuickCategoryVisual quickCategoryVisual;
-
-    @Override
-    public void switchState() throws UnifyException {
-        super.switchState();
-        quickCategoryVisual = getProvider().provide(getValue());
-    }
-
-    public QuickCategoryVisual getQuickCategoryVisual() {
-        return quickCategoryVisual;
-    }
 }

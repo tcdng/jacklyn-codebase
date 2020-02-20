@@ -1,4 +1,4 @@
 // UPL template for area chart panel
 // Copyright 2018-2020 The Code Department.
-!ui-areachartpanel presentationBinding:$s{quickXYVisual.presentation}
+!ui-areachartpanel
     

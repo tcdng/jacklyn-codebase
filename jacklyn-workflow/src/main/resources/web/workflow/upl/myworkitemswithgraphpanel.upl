@@ -12,12 +12,12 @@
     layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} widths:$l{50% 50%}}
     components:$c{myWorkItemsPieChartPanel myWorkloadBarChartPanel}
 !ui-piechartpanel:myWorkItemsPieChartPanel style:$s{width:80%;}
-    chartTitle:$m{workflow.myworkflowitemswithgraph.status} chartImageStyle:$s{height:340px;}
-    binding:ledgerDetailList chartProvider:$s{myworkitemspiechart-provider}
+    chartTitle:$m{workflow.myworkflowitemswithgraph.status} chartImageStyle:$s{height:320px;}
+    binding:statusRatioVisual chartProvider:$s{myworkitemspiechart-provider}
 !ui-barchartpanel:myWorkloadBarChartPanel style:$s{width:80%;}
-    chartTitle:$m{workflow.myworkflowitemswithgraph.workload} chartImageStyle:$s{height:340px;}
-    binding:ledgerDetailList chartProvider:$s{myworkloadbarchart-provider}
+    chartTitle:$m{workflow.myworkflowitemswithgraph.workload} chartImageStyle:$s{height:320px;}
+    binding:workloadCategoryVisual chartProvider:$s{myworkloadbarchart-provider}
 
 // Work Items
-!ui-myworkitemspanel:myWorkItemListPanel showRefreshButton:$f{showWorkItemListRefreshButton}
+!ui-myworkitemspanel:myWorkItemListPanel binding:myWorkItemsInfo showRefreshButton:$f{showWorkItemListRefreshButton}
     

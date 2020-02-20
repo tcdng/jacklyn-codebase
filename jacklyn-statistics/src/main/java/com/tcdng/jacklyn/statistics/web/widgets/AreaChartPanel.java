@@ -16,9 +16,7 @@
 
 package com.tcdng.jacklyn.statistics.web.widgets;
 
-import com.tcdng.jacklyn.statistics.data.QuickXYVisual;
 import com.tcdng.jacklyn.statistics.providers.QuickXYVisualProvider;
-import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -32,15 +30,4 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/statistics/upl/areachartpanel.upl")
 public class AreaChartPanel extends AbstractChartPanel<QuickXYVisualProvider> {
 
-    private QuickXYVisual quickXYVisual;
-
-    @Override
-    public void switchState() throws UnifyException {
-        super.switchState();
-        quickXYVisual = getProvider().provide(getValue());
-    }
-
-    public QuickXYVisual getQuickXYVisual() {
-        return quickXYVisual;
-    }
 }
