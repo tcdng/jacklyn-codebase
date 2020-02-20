@@ -1,0 +1,23 @@
+// UPL template for my workflow items with graph panel
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-myworkitemswithgraphpanel style:$s{height:100%;}
+    layout:$d{!ui-vertical style:$s{width:100%;height:100%;} heights:$l{none 100%}}
+    components:$c{workItemsGraphPanel myWorkItemListPanel}
+    showWorkItemListRefreshButton:false
+
+// Graph    
+!ui-panel:workItemsGraphPanel style:$s{width:100%;height:100%;}
+    layout:$d{!ui-horizontal style:$s{width:100%;height:100%;} widths:$l{50% 50%}}
+    components:$c{myWorkItemsPieChartPanel myWorkloadBarChartPanel}
+!ui-piechartpanel:myWorkItemsPieChartPanel style:$s{width:80%;}
+    chartTitle:$m{workflow.myworkflowitemswithgraph.status} chartImageStyle:$s{height:340px;}
+    binding:ledgerDetailList chartProvider:$s{myworkitemspiechart-provider}
+!ui-barchartpanel:myWorkloadBarChartPanel style:$s{width:80%;}
+    chartTitle:$m{workflow.myworkflowitemswithgraph.workload} chartImageStyle:$s{height:340px;}
+    binding:ledgerDetailList chartProvider:$s{myworkloadbarchart-provider}
+
+// Work Items
+!ui-myworkitemspanel:myWorkItemListPanel showRefreshButton:$f{showWorkItemListRefreshButton}
+    

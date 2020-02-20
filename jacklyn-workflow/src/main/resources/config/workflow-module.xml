@@ -70,5 +70,11 @@
         <sys-parameter name="WFL-0003" defaultVal="defWfSysNotifChannel"
             description="$m{workflow.sysparam.systemnotificationchannel}" editor="!ui-select list:systemnotificationchannellist listKey:name"
             type="string" />
+        <sys-parameter name="WFL-0004"
+            defaultVal="myWorkItemsDashboard" description="$m{workflow.sysparam.myworkitemsdashboard}"
+            editor="!ui-text size:48"/>
+        <sys-parameter name="WFL-0005"
+            defaultVal="myWorkItemsGraphDashboard" description="$m{workflow.sysparam.myworkitemsgraphdashboard}"
+            editor="!ui-text size:48"/>
     </sys-parameters>
 </module>

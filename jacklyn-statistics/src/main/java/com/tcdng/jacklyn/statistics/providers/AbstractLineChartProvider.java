@@ -41,17 +41,21 @@ public abstract class AbstractLineChartProvider extends AbstractXYChartProvider 
     }
 
     @Override
-    protected byte[] doProvidePresentation(QuickXY quickCategory) throws UnifyException {
-        LineChart.Builder lcb =
-                LineChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
-                        .valueFormat(valueFormat).showLegend(showLegend).showXAxisTicks(showXAxisTicks)
-                        .showYAxisTicks(showYAxisTicks);
-        for (QuickXY.XY xy : quickCategory.getXyList()) {
-            lcb.addSeries(xy.getName(), xy.getXValueList(), xy.getYValueList(), xy.getColor());
+    protected byte[] doProvidePresentation(QuickXY quickXY) throws UnifyException {
+        if(quickXY.isSanityCheck()) {
+            LineChart.Builder lcb =
+                    LineChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
+                            .valueFormat(valueFormat).showLegend(showLegend).showXAxisTicks(showXAxisTicks)
+                            .showYAxisTicks(showYAxisTicks);
+            for (QuickXY.XY xy : quickXY.getXyList()) {
+                lcb.addSeries(xy.getName(), xy.getXValueList(), xy.getYValueList(), xy.getColor());
+            }
+
+            LineChart chart = lcb.build();
+            return getChartGenerator().generateImage(chart);
         }
 
-        LineChart chart = lcb.build();
-        return getChartGenerator().generateImage(chart);
+        return null;
     }
 
 }

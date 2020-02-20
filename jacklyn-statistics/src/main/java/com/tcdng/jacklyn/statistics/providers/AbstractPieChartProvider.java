@@ -64,15 +64,19 @@ public abstract class AbstractPieChartProvider extends AbstractQuickRatioVisualP
 
     @Override
     protected byte[] doProvidePresentation(QuickRatio quickRatio) throws UnifyException {
-        PieChart.Builder pcb =
-                PieChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
-                        .valueFormat(valueFormat).showLegend(showLegend);
-        for (QuickRatio.Ratio ratio : quickRatio.getRatios()) {
-            pcb.addSeries(ratio.getName(), ratio.getValue(), ratio.getColor());
+        if (quickRatio.isSanityCheck()) {
+            PieChart.Builder pcb =
+                    PieChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
+                            .valueFormat(valueFormat).showLegend(showLegend);
+            for (QuickRatio.Ratio ratio : quickRatio.getRatios()) {
+                pcb.addSeries(ratio.getName(), ratio.getValue(), ratio.getColor());
+            }
+
+            PieChart chart = pcb.build();
+            return chartGenerator.generateImage(chart);
         }
 
-        PieChart chart = pcb.build();
-        return chartGenerator.generateImage(chart);
+        return null;
     }
 
 }

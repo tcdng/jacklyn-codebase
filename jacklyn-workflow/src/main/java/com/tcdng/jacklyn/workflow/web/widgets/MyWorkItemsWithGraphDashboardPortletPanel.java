@@ -21,13 +21,13 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * My workflow items dashboard portlet panel.
+ * My workflow items with graph dashboard portlet panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(name = "ui-myworkitemsportlet", description = "$m{workflow.myworkitems.portlet}")
-@UplBinding("web/workflow/upl/myworkitemsportletpanel.upl")
-public class MyWorkItemsDashboardPortletPanel extends AbstractDashboardPortletPanel {
+@Component(name = "ui-myworkitemswithgraphportlet", description = "$m{workflow.myworkitemswithgraph.portlet}")
+@UplBinding("web/workflow/upl/myworkitemswithgraphportletpanel.upl")
+public class MyWorkItemsWithGraphDashboardPortletPanel extends AbstractDashboardPortletPanel {
 
 }

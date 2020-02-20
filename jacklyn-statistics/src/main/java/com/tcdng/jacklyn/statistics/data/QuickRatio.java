@@ -20,6 +20,8 @@ import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
+import com.tcdng.unify.core.util.DataUtils;
+
 /**
  * Quick ratios data object.
  * 
@@ -38,6 +40,19 @@ public class QuickRatio {
         return ratios;
     }
 
+    public boolean isSanityCheck() {
+        if(DataUtils.isBlank(ratios)) {
+            return false;
+        }
+        
+        for(Ratio ratio: ratios) {
+            if(ratio.value != 0.00) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
     
     public static class Ratio {
         

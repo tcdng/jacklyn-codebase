@@ -46,6 +46,20 @@ public class QuickCategory {
         return categoryList;
     }
 
+    public boolean isSanityCheck() {
+        if (DataUtils.isBlank(xValueList) || DataUtils.isBlank(categoryList)) {
+            return false;
+        }
+        
+        for(Category category: categoryList) {
+            if (DataUtils.isBlank(category.yValueList)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     public static class Category {
         
         private String name;

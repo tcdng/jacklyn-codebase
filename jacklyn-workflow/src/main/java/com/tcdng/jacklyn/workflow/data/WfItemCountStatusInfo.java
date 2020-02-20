@@ -14,20 +14,32 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.web.widgets;
+package com.tcdng.jacklyn.workflow.data;
 
-import com.tcdng.jacklyn.system.web.widgets.AbstractDashboardPortletPanel;
-import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.web.ui.data.BadgeInfo;
 
 /**
- * My workflow items dashboard portlet panel.
+ * Workflow item count status information.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(name = "ui-myworkitemsportlet", description = "$m{workflow.myworkitems.portlet}")
-@UplBinding("web/workflow/upl/myworkitemsportletpanel.upl")
-public class MyWorkItemsDashboardPortletPanel extends AbstractDashboardPortletPanel {
+public class WfItemCountStatusInfo {
 
+    private BadgeInfo status;
+
+    private Integer itemCount;
+
+    public WfItemCountStatusInfo(BadgeInfo status, Integer itemCount) {
+        this.status = status;
+        this.itemCount = itemCount;
+    }
+
+    public BadgeInfo getStatus() {
+        return status;
+    }
+
+    public Integer getItemCount() {
+        return itemCount;
+    }
 }
