@@ -16,18 +16,18 @@
 
 package com.tcdng.jacklyn.workflow.web.widgets;
 
-import com.tcdng.jacklyn.system.web.widgets.AbstractDashboardPortletPanel;
+import com.tcdng.jacklyn.common.web.widgets.BasePanel;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * My workflow items dashboard portlet panel.
+ * My work items with graph panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Component(name = "ui-myworkitemsportlet", description = "$m{workflow.myworkitems.portlet}")
-@UplBinding("web/workflow/upl/myworkitemsportletpanel.upl")
-public class MyWorkItemsDashboardPortletPanel extends AbstractDashboardPortletPanel {
+@Component("ui-myworkitemswithgraphpanel")
+@UplBinding("web/workflow/upl/myworkitemswithgraphpanel.upl")
+public class MyWorkItemsWithGraphPanel extends BasePanel {
 
 }

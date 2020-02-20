@@ -32,10 +32,12 @@ import com.tcdng.jacklyn.workflow.data.ManualWfItem;
 import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
+import com.tcdng.jacklyn.workflow.data.WfItemCountStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.data.WfItemStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfProcessDef;
+import com.tcdng.jacklyn.workflow.data.WfProcessWorkloadInfo;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -516,6 +518,24 @@ public interface WorkflowService extends JacklynBusinessService {
     List<WfItemStatusInfo> getCurrentWorkItemStatusList(String stepGlobalName) throws UnifyException;
 
     /**
+     * Returns the current user work item count status list.
+     * 
+     * @return the current session work item count status list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfItemCountStatusInfo> getCurrentWorkItemCountStatusList() throws UnifyException;
+
+    /**
+     * Returns the current user top process workload list.
+     * 
+     * @return the process workload list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfProcessWorkloadInfo> getCurrentUserProcessWorkloadList() throws UnifyException;
+
+    /**
      * Applies workflow action and releases flowing workflow item.
      * 
      * @param flowingWfItem
@@ -664,6 +684,5 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<ToolingWfItemAssignerItem> findToolingWfItemAssignerTypes() throws UnifyException;
-    
-    
+
 }

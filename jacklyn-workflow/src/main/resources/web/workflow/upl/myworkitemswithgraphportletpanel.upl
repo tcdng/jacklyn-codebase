@@ -1,0 +1,9 @@
+// UPL template for my work items with graph dashboard portlet panel
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-myworkitemswithgraphportlet styleClass:$s{jk-myworkitemsportlet} style:$s{width:100%;height:100%;}
+    components:$c{myWorkItemsPanel}
+    
+// Work items panel
+!ui-myworkitemswithgraphpanel:myWorkItemsPanel

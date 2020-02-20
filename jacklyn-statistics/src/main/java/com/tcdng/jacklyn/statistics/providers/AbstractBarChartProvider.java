@@ -70,14 +70,21 @@ public abstract class AbstractBarChartProvider extends AbstractQuickCategoryVisu
 
     @Override
     protected byte[] doProvidePresentation(QuickCategory quickCategory) throws UnifyException {
-        BarChart.Builder bcb = BarChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
-                .valueFormat(valueFormat).showLegend(showLegend).showXAxisTicks(showXAxisTicks).showYAxisTicks(showYAxisTicks);
-        for(QuickCategory.Category category: quickCategory.getCategoryList()) {
-            bcb.addSeries(category.getName(), quickCategory.getXValueList(), category.getYValueList(), category.getColor());
+        if (quickCategory.isSanityCheck()) {
+            BarChart.Builder bcb =
+                    BarChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
+                            .valueFormat(valueFormat).showLegend(showLegend).showXAxisTicks(showXAxisTicks)
+                            .showYAxisTicks(showYAxisTicks);
+            for (QuickCategory.Category category : quickCategory.getCategoryList()) {
+                bcb.addSeries(category.getName(), quickCategory.getXValueList(), category.getYValueList(),
+                        category.getColor());
+            }
+
+            BarChart chart = bcb.build();
+            return chartGenerator.generateImage(chart);
         }
-        
-        BarChart chart = bcb.build();
-        return chartGenerator.generateImage(chart);
+
+        return null;
     }
 
 }

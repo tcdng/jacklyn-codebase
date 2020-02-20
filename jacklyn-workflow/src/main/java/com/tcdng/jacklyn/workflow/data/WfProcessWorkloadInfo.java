@@ -14,28 +14,37 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.workflow.web.beans;
-
-import com.tcdng.jacklyn.common.web.beans.BasePageBean;
-import com.tcdng.jacklyn.workflow.data.MyWorkItemsInfo;
+package com.tcdng.jacklyn.workflow.data;
 
 /**
- * User workflow items page bean.
+ * Workflow process workload information.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public class UserWorkItemsPageBean extends BasePageBean {
+public class WfProcessWorkloadInfo {
 
-    private MyWorkItemsInfo myWorkItemsInfo;
+    private String documentName;
+    
+    private Integer totalWorkload;
+    
+    private Integer userWorkload;
 
-    public UserWorkItemsPageBean() {
-        super("myWorkItemsPanel");
-        myWorkItemsInfo =  new MyWorkItemsInfo();
+    public WfProcessWorkloadInfo(String documentName, Integer totalWorkload, Integer userWorkload) {
+        this.documentName = documentName;
+        this.totalWorkload = totalWorkload;
+        this.userWorkload = userWorkload;
     }
 
-    public MyWorkItemsInfo getMyWorkItemsInfo() {
-        return myWorkItemsInfo;
+    public String getDocumentName() {
+        return documentName;
     }
 
+    public Integer getTotalWorkload() {
+        return totalWorkload;
+    }
+
+    public Integer getUserWorkload() {
+        return userWorkload;
+    }
 }

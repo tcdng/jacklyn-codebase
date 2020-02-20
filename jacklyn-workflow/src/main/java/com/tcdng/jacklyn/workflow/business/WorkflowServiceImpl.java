@@ -17,11 +17,13 @@ package com.tcdng.jacklyn.workflow.business;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +36,7 @@ import com.tcdng.jacklyn.notification.entities.NotificationChannel;
 import com.tcdng.jacklyn.notification.entities.NotificationChannelQuery;
 import com.tcdng.jacklyn.notification.entities.NotificationTemplate;
 import com.tcdng.jacklyn.notification.utils.NotificationUtils;
+import com.tcdng.jacklyn.shared.constants.OrientationType;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowApplyActionTaskConstants;
 import com.tcdng.jacklyn.shared.workflow.WorkflowCategoryBinaryPublicationTaskConstants;
@@ -80,8 +83,12 @@ import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.ProcessNameParts;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.StepNameParts;
 import com.tcdng.jacklyn.shared.xml.util.WfNameUtils.TemplateNameParts;
 import com.tcdng.jacklyn.system.business.SystemService;
+import com.tcdng.jacklyn.system.entities.Dashboard;
+import com.tcdng.jacklyn.system.entities.DashboardLayer;
+import com.tcdng.jacklyn.system.entities.DashboardPortlet;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleErrorConstants;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
+import com.tcdng.jacklyn.workflow.constants.WorkflowModuleSysParamConstants;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItemTransition;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
@@ -103,6 +110,7 @@ import com.tcdng.jacklyn.workflow.data.WfFormSectionDef;
 import com.tcdng.jacklyn.workflow.data.WfFormTabDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAssigneeInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
+import com.tcdng.jacklyn.workflow.data.WfItemCountStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistEvent;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
 import com.tcdng.jacklyn.workflow.data.WfItemStatusInfo;
@@ -110,6 +118,7 @@ import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfManualInitDef;
 import com.tcdng.jacklyn.workflow.data.WfPolicyDef;
 import com.tcdng.jacklyn.workflow.data.WfProcessDef;
+import com.tcdng.jacklyn.workflow.data.WfProcessWorkloadInfo;
 import com.tcdng.jacklyn.workflow.data.WfRecordActionDef;
 import com.tcdng.jacklyn.workflow.data.WfRoutingDef;
 import com.tcdng.jacklyn.workflow.data.WfStepDef;
@@ -211,6 +220,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     private static final String DEFAULT_WFDOCGENERATOR = "wfsingleformviewer-generator";
 
     private static final String WORKFLOW_SUBMISSION_ID_SEQUENCE = "wfsubmissionid-sequence";
+
+    private final BadgeInfo PENDING_BADGEINFO =
+            new BadgeInfo(ColorScheme.GREEN, "$m{workflow.workitem.status.pending}");
+    private final BadgeInfo CRITICAL_BADGEINFO =
+            new BadgeInfo(ColorScheme.YELLOW, "$m{workflow.workitem.status.critical}");
+    private final BadgeInfo OVERDUE_BADGEINFO = new BadgeInfo(ColorScheme.RED, "$m{workflow.workitem.status.overdue}");
 
     @Configurable
     private SystemService systemService;
@@ -1032,8 +1047,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 int itemCount = db().countAll(wfItemQuery);
                 if (itemCount > 0) {
                     String stepDesc = wfStepDef.getDescription();
+                    WfTemplateDef wfTemplateDef =  wfTemplates.get(wfStepDef.getTemplateGlobalName());
+                    String description = getSessionMessage("workflowitem.summary", wfTemplateDef.getDescription(), stepDesc);
                     int holdCount = db().countAll(wfItemQuery.isHeld());
-                    String description = getSessionMessage("workflowitem.summary", stepDesc, itemCount, holdCount);
                     summaryList.add(new WfItemSummary(description, stepGlobalName, stepDesc, itemCount, holdCount));
                 }
             }
@@ -1071,6 +1087,86 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             }
 
             return wfItemStatusInfoList;
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<WfItemCountStatusInfo> getCurrentWorkItemCountStatusList() throws UnifyException {
+        List<WfItem> wfItemList =
+                db().listAll(new WfItemQuery().heldBy(getUserToken().getUserLoginId()).addSelect("expectedDt")
+                        .addSelect("stepGlobalName"));
+        int pendingCount = 0;
+        int criticalCount = 0;
+        int overdueCount = 0;
+        if (!wfItemList.isEmpty()) {
+            for (WfItem wfItem : wfItemList) {
+                BadgeInfo badgeInfo = getStatusBadge(wfItem);
+                if (PENDING_BADGEINFO.equals(badgeInfo)) {
+                    pendingCount++;
+                } else if (CRITICAL_BADGEINFO.equals(badgeInfo)) {
+                    criticalCount++;
+                } else { // Overdue
+                    overdueCount++;
+                }
+            }
+        }
+
+        return Arrays.asList(new WfItemCountStatusInfo(PENDING_BADGEINFO, pendingCount),
+                new WfItemCountStatusInfo(CRITICAL_BADGEINFO, criticalCount),
+                new WfItemCountStatusInfo(OVERDUE_BADGEINFO, overdueCount));
+    }
+
+    @Override
+    public List<WfProcessWorkloadInfo> getCurrentUserProcessWorkloadList() throws UnifyException {
+        List<GroupAggregation> userGroupAggregationList =
+                db().aggregateGroupMany(new Aggregate().add(AggregateType.COUNT, "stepGlobalName"),
+                        new WfItemQuery().heldBy(getUserToken().getUserLoginId()).addGroupBy("processGlobalName")
+                                .addOrder("processGlobalName"));
+        if (!DataUtils.isBlank(userGroupAggregationList)) {
+            List<String> processNameList = new ArrayList<String>();
+            for (GroupAggregation groupAggregation : userGroupAggregationList) {
+                processNameList.add(groupAggregation.getGroupingValue(String.class, "processGlobalName"));
+            }
+
+            List<GroupAggregation> totalGroupAggregationList =
+                    db().aggregateGroupMany(new Aggregate().add(AggregateType.COUNT, "stepGlobalName"),
+                            new WfItemQuery().processGlobalNameIn(processNameList).addGroupBy("processGlobalName")
+                                    .addOrder("processGlobalName"));
+
+            List<WfProcessWorkloadInfo> workloadInfoList = new ArrayList<WfProcessWorkloadInfo>();
+            Map<String, WfProcessWorkloadInfo> summaryMap = new LinkedHashMap<String, WfProcessWorkloadInfo>();
+            int len = userGroupAggregationList.size();
+            for (int i = 0; i < len; i++) {
+                GroupAggregation userWorkAggregation = userGroupAggregationList.get(i);
+                GroupAggregation totalWorkAggregation = totalGroupAggregationList.get(i);
+                WfProcessDef wfProcessDef = wfProcesses.get(userWorkAggregation.getGroupingValue(String.class, 0));
+                String templateName = wfProcessDef.getTemplateName();
+                WfProcessWorkloadInfo wfProcessWorkloadInfo =
+                        new WfProcessWorkloadInfo(wfProcessDef.getDocName(),
+                                totalWorkAggregation.getAggregationValue(Integer.class, 0),
+                                userWorkAggregation.getAggregationValue(Integer.class, 0));
+                if (summaryMap.containsKey(templateName)) {
+                    WfProcessWorkloadInfo existWfProcessWorkloadInfo = summaryMap.get(templateName);
+                    wfProcessWorkloadInfo =
+                            new WfProcessWorkloadInfo(templateName,
+                                    existWfProcessWorkloadInfo.getTotalWorkload()
+                                    + totalWorkAggregation.getAggregationValue(Integer.class, 0),
+                                    existWfProcessWorkloadInfo.getUserWorkload()
+                                            + userWorkAggregation.getAggregationValue(Integer.class, 0));
+                } else {
+                    wfProcessWorkloadInfo =
+                            new WfProcessWorkloadInfo(templateName,
+                                    totalWorkAggregation.getAggregationValue(Integer.class, 0),
+                                    userWorkAggregation.getAggregationValue(Integer.class, 0));
+                }
+
+                summaryMap.put(templateName, wfProcessWorkloadInfo);
+                workloadInfoList.add(wfProcessWorkloadInfo);
+            }
+
+            return workloadInfoList;
         }
 
         return Collections.emptyList();
@@ -1302,6 +1398,44 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             notificationService.createNotificationChannel(notificationChannel);
             logDebug("Default workflow system notification channel created.");
         }
+
+        // Create default workflow dashboards
+        String dashboardName =
+                systemService.getSysParameterValue(String.class,
+                        WorkflowModuleSysParamConstants.SYSPARAM_WORKFLOW_WORKITEMS_DASHBOARD);
+        Dashboard dashboard = systemService.findDashboard(dashboardName);
+        if (dashboard == null) {
+            dashboard = new Dashboard(OrientationType.HORIZONTAL, dashboardName, "My Work Items Workflow Dashboard");
+            List<DashboardLayer> layerList = new ArrayList<DashboardLayer>();
+            layerList.add(new DashboardLayer("layer1", "Layer One", 1));
+            dashboard.setLayerList(layerList);
+
+            List<DashboardPortlet> portletList = new ArrayList<DashboardPortlet>();
+            portletList
+                    .add(new DashboardPortlet("myWorkItems", "My Work Items", "layer1", "ui-myworkitemsportlet", 1, 0));
+            dashboard.setPortletList(portletList);
+            systemService.createDashboard(dashboard);
+        }
+
+        dashboardName =
+                systemService.getSysParameterValue(String.class,
+                        WorkflowModuleSysParamConstants.SYSPARAM_WORKFLOW_WORKITEMS_GRAPH_DASHBOARD);
+        dashboard = systemService.findDashboard(dashboardName);
+        if (dashboard == null) {
+            dashboard =
+                    new Dashboard(OrientationType.HORIZONTAL, dashboardName,
+                            "My Work Items with Graph Workflow Dashboard");
+            List<DashboardLayer> layerList = new ArrayList<DashboardLayer>();
+            layerList.add(new DashboardLayer("layer1", "Layer One", 1));
+            dashboard.setLayerList(layerList);
+
+            List<DashboardPortlet> portletList = new ArrayList<DashboardPortlet>();
+            portletList.add(new DashboardPortlet("myWorkItemsWithGraph", "My Work Items (Graph)", "layer1",
+                    "ui-myworkitemswithgraphportlet", 1, 0));
+            dashboard.setPortletList(portletList);
+            systemService.createDashboard(dashboard);
+        }
+
     }
 
     @Override
@@ -1588,17 +1722,18 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         if (expectedDt != null) {
             Date now = db().getNow();
             if (now.after(expectedDt)) {
-                return new BadgeInfo(ColorScheme.RED, "$m{workflow.workitem.status.overdue}");
+                return OVERDUE_BADGEINFO;
             }
 
+            WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
             int criticalMinutes = 20; // TODO Get from step configuration
             Date critical = CalendarUtils.getDateWithFrequencyOffset(now, FrequencyUnit.MINUTE, criticalMinutes);
             if (critical.after(expectedDt)) {
-                return new BadgeInfo(ColorScheme.YELLOW, "$m{workflow.workitem.status.critical}");
+                return CRITICAL_BADGEINFO;
             }
         }
 
-        return new BadgeInfo(ColorScheme.GREEN, "$m{workflow.workitem.status.pending}");
+        return PENDING_BADGEINFO;
     }
 
     private void populateChildList(WfDoc wfDoc, WfDocumentConfig wfDocConfig) throws UnifyException {

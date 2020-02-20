@@ -19,6 +19,8 @@ package com.tcdng.jacklyn.statistics.data;
 import java.awt.Color;
 import java.util.List;
 
+import com.tcdng.unify.core.util.DataUtils;
+
 /**
  * Quick XY object.
  * 
@@ -39,6 +41,20 @@ public class QuickXY {
         return xyList;
     }
 
+    public boolean isSanityCheck() {
+        if(DataUtils.isBlank(xyList)) {
+            return false;
+        }
+        
+        for(XY xy: xyList) {
+            if(DataUtils.isBlank(xy.xValueList) || DataUtils.isBlank(xy.yValueList)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     public static class XY {
         
         private String name;

@@ -1,7 +1,7 @@
 // UPL template for base chart panel
 // Copyright 2018-2020 The Code Department.
-!ui-panel layout:$d{!ui-vertical style:$s{width:100%;height:100%} heights:$l{none 100%}}
-    components:$c{title chartImg}
+!ui-panel layout:$d{!ui-vertical style:$s{width:100%; height:100%;} heights:$l{none 100%}} components:$c{title chartImg}
 !ui-label:title caption:$f{chartTitle} styleClass:$e{jk-charttitle}
-!ui-image:chartImg styleClass:$e{jk-chartimage} style:$s{width:100%;height:100%;} binding:$f{presentationBinding}
+!ui-image:chartImg styleClass:$e{jk-chartimage} style:$f{chartImageStyle}
+    src:$t{images/blank.png} binding:$f{presentationBinding}
     

@@ -15,6 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.entities;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
@@ -34,6 +35,11 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
 
     public WfItemQuery() {
         super(WfItem.class);
+    }
+    
+    
+    public WfItemQuery processGlobalNameIn(Collection<String> processGlobalName) {
+        return (WfItemQuery) addAmongst("processGlobalName", processGlobalName);
     }
     
     public WfItemQuery wfItemSplitEventId(Long wfItemSplitEventId) {

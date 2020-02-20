@@ -2,14 +2,8 @@
 // Copyright 2018-2020 The Code Department.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
-!ui-userworkitemspage caption:$m{workflow.userworkflowitems.manage} components:$c{userWorkItemsPanel}
+!ui-userworkitemspage caption:$m{workflow.userworkflowitems.manage} components:$c{myWorkItemsPanel}
 
-!ui-panel:userWorkItemsPanel style:$s{height:100%;}
-    layout:$d{!ui-vertical style:$s{width:100%;height:100%;} heights:$l{none 100%}}
-    components:$c{title basePanel}
-
-!ui-label:title caption:$m{workflow.userworkflowitems.title} styleClass:$e{jk-userwfitemstitle}
-!ui-panel:basePanel style:$s{width:100%;height:100%;} components:$c{myWorkItemsPanel}
-
+// Work items panel
 !ui-myworkitemspanel:myWorkItemsPanel showRefreshButton:true binding:myWorkItemsInfo
     

@@ -69,17 +69,21 @@ public abstract class AbstractAreaChartProvider extends AbstractQuickXYVisualPro
     }
 
     @Override
-    protected byte[] doProvidePresentation(QuickXY quickCategory) throws UnifyException {
-        AreaChart.Builder acb =
-                AreaChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
-                        .valueFormat(valueFormat).showLegend(showLegend).showXAxisTicks(showXAxisTicks)
-                        .showYAxisTicks(showYAxisTicks);
-        for (QuickXY.XY xy : quickCategory.getXyList()) {
-            acb.addSeries(xy.getName(), xy.getXValueList(), xy.getYValueList(), xy.getColor());
-        }
+    protected byte[] doProvidePresentation(QuickXY quickXY) throws UnifyException {
+        if (quickXY.isSanityCheck()) {
+            AreaChart.Builder acb =
+                    AreaChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
+                            .valueFormat(valueFormat).showLegend(showLegend).showXAxisTicks(showXAxisTicks)
+                            .showYAxisTicks(showYAxisTicks);
+            for (QuickXY.XY xy : quickXY.getXyList()) {
+                acb.addSeries(xy.getName(), xy.getXValueList(), xy.getYValueList(), xy.getColor());
+            }
 
-        AreaChart chart = acb.build();
-        return chartGenerator.generateImage(chart);
+            AreaChart chart = acb.build();
+            return chartGenerator.generateImage(chart);
+        }
+        
+        return null;
     }
 
 }
