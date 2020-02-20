@@ -14,9 +14,10 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.business;
+package com.tcdng.jacklyn.security.providers;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.entities.UserQuery;
 import com.tcdng.jacklyn.statistics.data.QuickPercentage;
 import com.tcdng.jacklyn.statistics.providers.AbstractQuickPercentageProvider;

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.business;
+package com.tcdng.jacklyn.security.providers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +25,7 @@ import java.util.List;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.notification.data.NotificationContact;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;

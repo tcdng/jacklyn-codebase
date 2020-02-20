@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.system.web.widgets;
 
 import com.tcdng.jacklyn.common.web.widgets.BasePanel;
+import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
@@ -30,6 +31,12 @@ public abstract class AbstractDashboardPortletPanel extends BasePanel implements
 
     public AbstractDashboardPortletPanel() {
         setConforming(false);
+    }
+
+    @Override
+    public void onPageConstruct() throws UnifyException {
+        super.onPageConstruct();
+        setValueStore(createValueStore(this));
     }
 
 }

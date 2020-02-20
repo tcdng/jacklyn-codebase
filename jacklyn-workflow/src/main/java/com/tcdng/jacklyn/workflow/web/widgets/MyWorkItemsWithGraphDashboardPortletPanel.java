@@ -17,6 +17,8 @@
 package com.tcdng.jacklyn.workflow.web.widgets;
 
 import com.tcdng.jacklyn.system.web.widgets.AbstractDashboardPortletPanel;
+import com.tcdng.jacklyn.workflow.data.MyWorkItemsWithGraphInfo;
+import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -30,4 +32,18 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/workflow/upl/myworkitemswithgraphportletpanel.upl")
 public class MyWorkItemsWithGraphDashboardPortletPanel extends AbstractDashboardPortletPanel {
 
+    private MyWorkItemsWithGraphInfo myWorkItemsWithGraphInfo;
+
+    public MyWorkItemsWithGraphDashboardPortletPanel() {
+        myWorkItemsWithGraphInfo = new MyWorkItemsWithGraphInfo();
+    }
+
+    public MyWorkItemsWithGraphInfo getMyWorkItemsWithGraphInfo() {
+        return myWorkItemsWithGraphInfo;
+    }
+
+    @Override
+    public void switchState() throws UnifyException {
+        super.switchState();
+    }
 }

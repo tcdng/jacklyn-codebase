@@ -29,15 +29,20 @@ import com.tcdng.unify.web.annotation.Action;
  * @since 1.0
  */
 @UplAttributes({ @UplAttribute(name = "provider", type = String.class, mandatory = true) })
-public abstract class AbstractStatisticsDashbordPortletPanel extends AbstractDashboardPortletPanel {
+public abstract class AbstractStatisticsDashbordPortletPanel<T> extends AbstractDashboardPortletPanel {
 
+    protected T statistics;
+
+    @SuppressWarnings("unchecked")
     @Action
     @Override
     public void switchState() throws UnifyException {
         super.switchState();
-        StatisticsProvider<?> statisticsProvider =
-                (StatisticsProvider<?>) getComponent(getUplAttribute(String.class, "provider"));
-        setValueStore(createValueStore(statisticsProvider.provide()));
+        StatisticsProvider<T> statisticsProvider =
+                (StatisticsProvider<T>) getComponent(getUplAttribute(String.class, "provider"));
+        statistics = statisticsProvider.provide();
     }
+
+    public abstract T getStatistics();
 
 }

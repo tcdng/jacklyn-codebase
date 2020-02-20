@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.security.business;
+package com.tcdng.jacklyn.security.providers;
 
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.unify.core.annotation.Component;

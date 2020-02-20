@@ -10,9 +10,9 @@
 !ui-label:title caption:$m{workflow.myworkitems.title} styleClass:$e{jk-myworkitemstitle}
 
 // Top action panel    
-!ui-panel:topActionPanel layout:$d{!ui-horizontal cellType:bottom showCaption:true captionSuffix:$s{:}}
+!ui-panel:topActionPanel layout:$d{!ui-horizontal cellType:bottom showCaption:true inlineCaption:true captionSuffix:$s{:}}
     components:$c{wfStepSelect refreshSummaryBtn}
-!ui-select:wfStepSelect caption:$m{workflow.myworkflowitems.step} list:userwfitemsummarylist blankOption:$s{} binding:wfStepName
+!ui-select:wfStepSelect caption:$m{workflow.myworkflowitems.step.filter} list:userwfitemsummarylist blankOption:$s{} binding:wfStepName
     eventHandler:$d{!ui-event event:onchange action:$c{refreshWfItemsAct}} style:$s{width:280px;}
 !ui-button:refreshSummaryBtn styleClass:$s{ui-tablecrudpanel-abutton} caption:$m{button.refresh}
     eventHandler:$d{!ui-event event:onclick action:$c{refreshWfItemsAct}}
@@ -21,20 +21,21 @@
 !ui-panel:wfItemsPanel style:$s{width:100%;height:100%;} components:$c{wfItemsTbl}
 !ui-tablepanel:wfItemsTbl style:$s{height:100%;}
     layout:$d{!ui-vertical style:$s{table-layout:fixed;width:100%;height:100%;}  heights:$l{100%}}
-    tableColumnList:$c{wfTemplateDesc wfStepDesc description forwardedBy priority status openBtn}
+    tableColumnList:$c{wfTemplateDesc wfStepDesc description stepDt forwardedBy priority status openBtn}
     tableBinding:wfItemList
     tableRowSelectable:false
     tableMultiSelect:true
     tableMultiSelDependentList:$c{releaseItemsBtn}
-    tableSerialNumbers:true
+    tableSerialNumbers:false
     tableWindowed:true
     tableSortable:true
     tablePagination:false
-!ui-label:wfTemplateDesc caption:$m{workflow.myworkflowitems.process} columnStyle:$s{width:100px;} binding:wfTemplateDesc
-!ui-label:wfStepDesc caption:$m{workflow.myworkflowitems.step} columnStyle:$s{width:100px;} binding:wfStepDesc
-!ui-label:description caption:$m{workflow.myworkflowitems.description} columnStyle:$s{width:240px;} binding:wfItemDesc
-!ui-label:forwardedBy caption:$m{workflow.myworkflowitems.forwardedby}columnStyle:$s{width:120px;} binding:forwardedBy
-!ui-label:priority caption:$m{workflow.myworkflowitems.priority} columnStyle:$s{width:100px;text-align:center;} binding:priority
+!ui-label:wfTemplateDesc caption:$m{workflow.myworkflowitems.process} columnStyle:$s{width:100px;} binding:wfTemplateDesc sortable:true
+!ui-label:wfStepDesc caption:$m{workflow.myworkflowitems.step} columnStyle:$s{width:100px;} binding:wfStepDesc sortable:true
+!ui-label:description caption:$m{workflow.myworkflowitems.description} columnStyle:$s{width:240px;} binding:wfItemDesc sortable:true
+!ui-label:stepDt caption:$m{workflow.myworkflowitems.time} binding:stepDt formatter:$d{!datetimeformat style:medium} columnStyle:$s{width:120px;} sortable:true
+!ui-label:forwardedBy caption:$m{workflow.myworkflowitems.forwardedby}columnStyle:$s{width:120px;} binding:forwardedBy sortable:true
+!ui-label:priority caption:$m{workflow.myworkflowitems.priority} columnStyle:$s{width:100px;text-align:center;} binding:priority sortable:true
 !ui-badge:status style:$s{min-width:80px;} caption:$m{workflow.myworkflowitems.status} columnStyle:$s{width:100px;text-align:center;} binding:status
 !ui-button:openBtn styleClass:$s{ui-minibutton} caption:$m{button.open} columnStyle:$s{width:80px;text-align:center;} binding:wfItemId
     eventHandler:$d{!ui-event event:onclick action:$c{openWfItemAct}}

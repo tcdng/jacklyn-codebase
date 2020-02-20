@@ -6,4 +6,4 @@
     components:$c{myWorkItemsPanel}
     
 // Work items panel
-!ui-myworkitemswithgraphpanel:myWorkItemsPanel
+!ui-myworkitemswithgraphpanel:myWorkItemsPanel binding:myWorkItemsWithGraphInfo

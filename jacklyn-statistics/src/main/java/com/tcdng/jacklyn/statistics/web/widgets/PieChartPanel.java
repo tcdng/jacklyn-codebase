@@ -16,9 +16,7 @@
 
 package com.tcdng.jacklyn.statistics.web.widgets;
 
-import com.tcdng.jacklyn.statistics.data.QuickRatioVisual;
 import com.tcdng.jacklyn.statistics.providers.QuickRatioVisualProvider;
-import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -32,15 +30,4 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/statistics/upl/piechartpanel.upl")
 public class PieChartPanel extends AbstractChartPanel<QuickRatioVisualProvider> {
 
-    private QuickRatioVisual quickRatioVisual;
-
-    @Override
-    public void switchState() throws UnifyException {
-        super.switchState();
-        quickRatioVisual = getProvider().provide(getValue());
-    }
-
-    public QuickRatioVisual getQuickRatioVisual() {
-        return quickRatioVisual;
-    }
 }

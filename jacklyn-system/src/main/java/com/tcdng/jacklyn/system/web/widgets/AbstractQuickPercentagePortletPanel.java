@@ -16,6 +16,7 @@
 
 package com.tcdng.jacklyn.system.web.widgets;
 
+import com.tcdng.jacklyn.statistics.data.QuickPercentage;
 import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
@@ -26,6 +27,12 @@ import com.tcdng.unify.core.annotation.UplBinding;
  */
 
 @UplBinding("web/system/upl/quickpercentageportletpanel.upl")
-public class AbstractQuickPercentagePortletPanel extends AbstractStatisticsDashbordPortletPanel {
+public abstract class AbstractQuickPercentagePortletPanel
+        extends AbstractStatisticsDashbordPortletPanel<QuickPercentage> {
+
+    @Override
+    public QuickPercentage getStatistics() {
+        return statistics;
+    }
 
 }

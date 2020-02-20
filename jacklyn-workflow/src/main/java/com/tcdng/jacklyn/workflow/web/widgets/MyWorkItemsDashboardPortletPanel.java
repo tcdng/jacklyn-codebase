@@ -17,6 +17,7 @@
 package com.tcdng.jacklyn.workflow.web.widgets;
 
 import com.tcdng.jacklyn.system.web.widgets.AbstractDashboardPortletPanel;
+import com.tcdng.jacklyn.workflow.data.MyWorkItemsInfo;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 
@@ -30,4 +31,13 @@ import com.tcdng.unify.core.annotation.UplBinding;
 @UplBinding("web/workflow/upl/myworkitemsportletpanel.upl")
 public class MyWorkItemsDashboardPortletPanel extends AbstractDashboardPortletPanel {
 
+    private MyWorkItemsInfo myWorkItemsInfo;
+
+    public MyWorkItemsDashboardPortletPanel() {
+        myWorkItemsInfo = new MyWorkItemsInfo();
+    }
+    
+    public MyWorkItemsInfo getMyWorkItemsInfo() {
+        return myWorkItemsInfo;
+    }    
 }

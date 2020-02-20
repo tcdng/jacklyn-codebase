@@ -34,13 +34,8 @@ import com.tcdng.unify.core.annotation.UplBinding;
 public abstract class AbstractChartPanel<T extends StatisticsProvider<?>> extends BasePanel {
 
     @Override
-    public void onPageConstruct() throws UnifyException {
-        super.onPageConstruct();
-        setComponentValueBeanToThis("chartImg");
-    }
-
-    @SuppressWarnings("unchecked")
-    protected T getProvider() throws UnifyException {
-        return (T) getComponent(getUplAttribute(String.class, "chartProvider"));
+    public void switchState() throws UnifyException {
+        super.switchState();
+        setValue(((StatisticsProvider<?>) getComponent(getUplAttribute(String.class, "chartProvider"))).provide());
     }
 }
