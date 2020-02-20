@@ -1005,20 +1005,19 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
-    public int releaseCurrentUserWorkItems(String stepGlobalName, List<Long> wfItemIds) throws UnifyException {
-        WfStepDef wfStepDef = accessCurrentUserStep(stepGlobalName);
-        WfItemQuery wfItemQuery = getCurrentUserParticipationWfItemQuery(wfStepDef);
-        wfItemQuery.idIn(wfItemIds);
-        wfItemQuery.heldBy(getUserToken().getUserLoginId());
-        return db().updateAll(wfItemQuery, new Update().add("heldBy", null));
-    }
-
-    @Override
     public int releaseCurrentUserWorkItems(List<Long> wfItemIds) throws UnifyException {
-        WfItemQuery wfItemQuery = new WfItemQuery();
-        wfItemQuery.idIn(wfItemIds);
-        wfItemQuery.heldBy(getUserToken().getUserLoginId());
-        return db().updateAll(wfItemQuery, new Update().add("heldBy", null));
+        String userLoginId = getUserToken().getUserLoginId();
+        int releaseCount = 0;
+        for (Long wfItemId : wfItemIds) {
+            FlowingWfItem flowingWfItem = findWorkflowItem(wfItemId);
+            if (flowingWfItem.getHeldBy().equals(userLoginId)) {
+                if (assignWorkflowItem(flowingWfItem, flowingWfItem.getWfStepDef())) {
+                    releaseCount++;
+                }
+            }
+        }
+
+        return releaseCount;
     }
 
     @Override
@@ -1047,8 +1046,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 int itemCount = db().countAll(wfItemQuery);
                 if (itemCount > 0) {
                     String stepDesc = wfStepDef.getDescription();
-                    WfTemplateDef wfTemplateDef =  wfTemplates.get(wfStepDef.getTemplateGlobalName());
-                    String description = getSessionMessage("workflowitem.summary", wfTemplateDef.getDescription(), stepDesc);
+                    WfTemplateDef wfTemplateDef = wfTemplates.get(wfStepDef.getTemplateGlobalName());
+                    String description =
+                            getSessionMessage("workflowitem.summary", wfTemplateDef.getDescription(), stepDesc);
                     int holdCount = db().countAll(wfItemQuery.isHeld());
                     summaryList.add(new WfItemSummary(description, stepGlobalName, stepDesc, itemCount, holdCount));
                 }
@@ -1082,7 +1082,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         new WfItemStatusInfo(wfItem.getId(), wfProcessDef.getWfTemplateDef().getDescription(),
                                 wfProcessDef.getWfDocDef().getDescription(), wfStepDef.getDescription(),
                                 wfItem.getWfItemDesc(), wfItem.getForwardedBy(), wfStepDef.getPriorityLevelDesc(),
-                                badgeInfo);
+                                wfItem.getStepDt(), badgeInfo);
                 wfItemStatusInfoList.add(wfItemStatusInfo);
             }
 
@@ -1152,7 +1152,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfProcessWorkloadInfo =
                             new WfProcessWorkloadInfo(templateName,
                                     existWfProcessWorkloadInfo.getTotalWorkload()
-                                    + totalWorkAggregation.getAggregationValue(Integer.class, 0),
+                                            + totalWorkAggregation.getAggregationValue(Integer.class, 0),
                                     existWfProcessWorkloadInfo.getUserWorkload()
                                             + userWorkAggregation.getAggregationValue(Integer.class, 0));
                 } else {
@@ -2427,59 +2427,70 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Workflow item has settled in current step
             // Assign to human agent if user actions are associated with current step
             if (targetWfStepDef.isUserInteractive()) {
-                String heldBy = null;
-                // Attempt to assign item to user. Step assigner has priority over document
-                // assigner
-                String workAssignerName = targetWfStepDef.getWorkAssignerName();
-                if (StringUtils.isBlank(workAssignerName)) {
-                    workAssignerName = flowingWfItem.getWfTemplateDocDef().getWorkAssignerName();
+                assignWorkflowItem(flowingWfItem, targetWfStepDef);
+            }
+        }
+    }
+
+    private boolean assignWorkflowItem(FlowingWfItem flowingWfItem, WfStepDef targetWfStepDef) throws UnifyException {
+        final String origHeldBy = flowingWfItem.getHeldBy();
+        String assignee = null;
+
+        // Attempt to assign item to user. Step assigner has priority over document
+        // assigner
+        String workAssignerName = targetWfStepDef.getWorkAssignerName();
+        if (StringUtils.isBlank(workAssignerName)) {
+            workAssignerName = flowingWfItem.getWfTemplateDocDef().getWorkAssignerName();
+        }
+
+        if (!StringUtils.isBlank(workAssignerName)) {
+            // Get step users and their current workload
+            List<GroupAggregation> workloadList =
+                    db().aggregateGroupMany(new Aggregate().add(AggregateType.COUNT, "heldBy"),
+                            new WfItemQuery().stepGlobalName(targetWfStepDef.getGlobalName()).addGroupBy("heldBy"));
+
+            // Fetch users available for step
+            Collection<String> availableUsers =
+                    wfStepUserInformationProvider.getEligibleUsersForWorkflowStep(
+                            flowingWfItem.getReader().getStepParticipant(),
+                            flowingWfItem.getReader().getStepGlobalName(),
+                            flowingWfItem.getReader().getRestrictions().getBranchCode(),
+                            flowingWfItem.getReader().getRestrictions().getDepartmentCode());
+
+            // Evaluate work item assignees
+            List<WfItemAssigneeInfo> wfItemAssigneeInfoList = new ArrayList<WfItemAssigneeInfo>();
+            for (GroupAggregation workload : workloadList) {
+                String userLoginId = (String) workload.getGroupingList().get(0).getValue();
+                if (availableUsers.remove(userLoginId)) {
+                    wfItemAssigneeInfoList.add(new WfItemAssigneeInfo(userLoginId,
+                            (Integer) workload.getAggregationList().get(0).getValue()));
                 }
+            }
 
-                if (!StringUtils.isBlank(workAssignerName)) {
-                    // Get step users and their current workload
-                    List<GroupAggregation> workloadList =
-                            db().aggregateGroupMany(new Aggregate().add(AggregateType.COUNT, "heldBy"),
-                                    new WfItemQuery().stepGlobalName(targetWfStepDef.getGlobalName())
-                                            .addGroupBy("heldBy"));
+            for (String userLoginId : availableUsers) {
+                wfItemAssigneeInfoList.add(new WfItemAssigneeInfo(userLoginId, 0));
+            }
 
-                    // Fetch users available for step
-                    Collection<String> availableUsers =
-                            wfStepUserInformationProvider.getEligibleUsersForWorkflowStep(
-                                    flowingWfItemReader.getStepParticipant(), flowingWfItemReader.getStepGlobalName(),
-                                    flowingWfItemReader.getRestrictions().getBranchCode(),
-                                    flowingWfItemReader.getRestrictions().getDepartmentCode());
+            // Do assignment
+            WfItemAssignmentPolicy wfItemAssignmentPolicy = (WfItemAssignmentPolicy) getComponent(workAssignerName);
+            assignee = wfItemAssignmentPolicy.assignWorkItem(wfItemAssigneeInfoList, flowingWfItem.getReader());
+        }
 
-                    // Evaluate work item assignees
-                    List<WfItemAssigneeInfo> wfItemAssigneeInfoList = new ArrayList<WfItemAssigneeInfo>();
-                    for (GroupAggregation workload : workloadList) {
-                        String userLoginId = (String) workload.getGroupingList().get(0).getValue();
-                        if (availableUsers.remove(userLoginId)) {
-                            wfItemAssigneeInfoList.add(new WfItemAssigneeInfo(userLoginId,
-                                    (Integer) workload.getAggregationList().get(0).getValue()));
-                        }
-                    }
 
-                    for (String userLoginId : availableUsers) {
-                        wfItemAssigneeInfoList.add(new WfItemAssigneeInfo(userLoginId, 0));
-                    }
+        // Alert user
+        boolean reAssigned = !DataUtils.equals(origHeldBy, assignee);
+        if (reAssigned) {
+            db().updateAll(new WfItemQuery().id(flowingWfItem.getWfItemId()), new Update().add("heldBy", assignee));
 
-                    // Do assignment
-                    WfItemAssignmentPolicy wfItemAssignmentPolicy =
-                            (WfItemAssignmentPolicy) getComponent(workAssignerName);
-                    heldBy = wfItemAssignmentPolicy.assignWorkItem(wfItemAssigneeInfoList, flowingWfItemReader);
-                }
-
-                db().updateAll(new WfItemQuery().id(wfItemId), new Update().add("heldBy", heldBy));
-
-                // Alert user
-                flowingWfItem.setHeldBy(heldBy);
-                for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
-                    if (wfAlertDef.isUserInteract() && wfAlertDef.getDocName().equals(docName)) {
-                        wfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
-                    }
+            flowingWfItem.setHeldBy(assignee);
+            for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
+                if (wfAlertDef.isUserInteract() && wfAlertDef.getDocName().equals(flowingWfItem.getDocName())) {
+                    wfItemAlertLogic.sendAlert(flowingWfItem.getReader(), wfAlertDef);
                 }
             }
         }
+
+        return reAssigned;
     }
 
     private WfStepDef resolveWorkflowRouting(WfStepDef currWfStepDef, FlowingWfItem flowingWfItem)

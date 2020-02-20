@@ -451,19 +451,6 @@ public interface WorkflowService extends JacklynBusinessService {
     List<Long> grabCurrentUserWorkItems(String stepGlobalName) throws UnifyException;
 
     /**
-     * Releases work items for current user from specified step.
-     * 
-     * @param stepGlobalName
-     *            the global step name
-     * @param wfItemIds
-     *            the workflow item IDs
-     * @return the total number of work items released.
-     * @throws UnifyException
-     *             if current user is not a participant in step if an error occurs
-     */
-    int releaseCurrentUserWorkItems(String stepGlobalName, List<Long> wfItemIds) throws UnifyException;
-
-    /**
      * Releases work items for current user.
      * 
      * @param wfItemIds

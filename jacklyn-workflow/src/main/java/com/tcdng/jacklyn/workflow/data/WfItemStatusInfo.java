@@ -16,6 +16,8 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
+import java.util.Date;
+
 import com.tcdng.unify.web.ui.data.BadgeInfo;
 
 /**
@@ -40,10 +42,12 @@ public class WfItemStatusInfo {
 
     private String priority;
 
+    private Date stepDt;
+
     private BadgeInfo status;
 
     public WfItemStatusInfo(Long wfItemId, String wfTemplateDesc, String wfDocDesc, String wfStepDesc,
-            String wfItemDesc, String forwardedBy, String priority, BadgeInfo status) {
+            String wfItemDesc, String forwardedBy, String priority, Date stepDt, BadgeInfo status) {
         this.wfItemId = wfItemId;
         this.wfTemplateDesc = wfTemplateDesc;
         this.wfDocDesc = wfDocDesc;
@@ -51,6 +55,7 @@ public class WfItemStatusInfo {
         this.wfItemDesc = wfItemDesc;
         this.forwardedBy = forwardedBy;
         this.priority = priority;
+        this.stepDt = stepDt;
         this.status = status;
     }
 
@@ -80,6 +85,10 @@ public class WfItemStatusInfo {
 
     public String getPriority() {
         return priority;
+    }
+
+    public Date getStepDt() {
+        return stepDt;
     }
 
     public BadgeInfo getStatus() {

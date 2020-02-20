@@ -39,11 +39,19 @@ public class EvenSpreadWfItemAssignmentPolicy extends AbstractWfItemAssignmentPo
     public String assignWorkItem(List<WfItemAssigneeInfo> wfItemAssigneeInfoList, Reader flowingWfItemReader)
             throws UnifyException {
         if (!DataUtils.isBlank(wfItemAssigneeInfoList)) {
-            if (wfItemAssigneeInfoList.size() > 1) {
-                DataUtils.sort(wfItemAssigneeInfoList, WfItemAssigneeInfo.class, "assignedCount", true);
+            if(wfItemAssigneeInfoList.size() == 1) {
+                return wfItemAssigneeInfoList.get(0).getUserLoginId();
             }
 
-            return wfItemAssigneeInfoList.get(0).getUserLoginId();
+            if (wfItemAssigneeInfoList.size() > 1) {
+                DataUtils.sort(wfItemAssigneeInfoList, WfItemAssigneeInfo.class, "assignedCount", true);
+                String assignedTo = wfItemAssigneeInfoList.get(0).getUserLoginId();
+                if (!assignedTo.equals(flowingWfItemReader.getItemHeldBy())) {
+                    return assignedTo;
+                }
+
+                return wfItemAssigneeInfoList.get(1).getUserLoginId();
+            }
         }
 
         return null;
