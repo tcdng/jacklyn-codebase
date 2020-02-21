@@ -44,6 +44,8 @@ public class ReportConfig extends BaseConfig {
 
     private FilterConfig filter;
 
+    private boolean showGrandFooter;
+
     private boolean invertGroupColors;
 
     private boolean landscape;
@@ -122,6 +124,15 @@ public class ReportConfig extends BaseConfig {
     @XmlAttribute
     public void setLayout(String layout) {
         this.layout = layout;
+    }
+
+    public boolean isShowGrandFooter() {
+        return showGrandFooter;
+    }
+
+    @XmlAttribute
+    public void setShowGrandFooter(boolean showGrandFooter) {
+        this.showGrandFooter = showGrandFooter;
     }
 
     public boolean isInvertGroupColors() {

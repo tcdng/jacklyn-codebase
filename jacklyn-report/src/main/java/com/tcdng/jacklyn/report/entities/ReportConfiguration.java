@@ -66,6 +66,9 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
     private String processor;
 
     @Column
+    private boolean showGrandFooter;
+
+    @Column
     private boolean invertGroupColors;
 
     @Column
@@ -172,6 +175,14 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
 
     public void setProcessor(String processor) {
         this.processor = processor;
+    }
+
+    public boolean isShowGrandFooter() {
+        return showGrandFooter;
+    }
+
+    public void setShowGrandFooter(boolean showGrandFooter) {
+        this.showGrandFooter = showGrandFooter;
     }
 
     public boolean isInvertGroupColors() {

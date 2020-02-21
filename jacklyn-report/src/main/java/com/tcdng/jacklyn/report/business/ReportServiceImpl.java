@@ -139,6 +139,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         reportOptions.setReportDescription(reportConfiguration.getDescription().toUpperCase());
         reportOptions.setTitle(resolveSessionMessage(reportConfiguration.getTitle()));
         reportOptions.setProcessor(reportConfiguration.getProcessor());
+        reportOptions.setShowGrandFooter(reportConfiguration.isShowGrandFooter());
         reportOptions.setInvertGroupColors(reportConfiguration.isInvertGroupColors());
         reportOptions.setLandscape(reportConfiguration.isLandscape());
         reportOptions.setShadeOddRows(reportConfiguration.isShadeOddRows());
@@ -346,6 +347,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         rb.dynamicDataSource(reportOptions.isDynamicDataSource());
         rb.printColumnNames(reportOptions.isPrintColumnNames());
         rb.printGroupColumnNames(reportOptions.isPrintGroupColumnNames());
+        rb.showGrandFooter(reportOptions.isShowGrandFooter());
         rb.invertGroupColors(reportOptions.isInvertGroupColors());
         rb.underlineRows(reportOptions.isUnderlineRows());
         rb.shadeOddRows(reportOptions.isShadeOddRows());
@@ -529,6 +531,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 reportConfiguration.setTemplate(reportConfig.getTemplate());
                                 reportConfiguration.setLayout(reportConfig.getLayout());
                                 reportConfiguration.setProcessor(reportConfig.getProcessor());
+                                reportConfiguration.setShowGrandFooter(reportConfig.isShowGrandFooter());
                                 reportConfiguration.setInvertGroupColors(reportConfig.isInvertGroupColors());
                                 reportConfiguration.setLandscape(reportConfig.isLandscape());
                                 reportConfiguration.setShadeOddRows(reportConfig.isShadeOddRows());
@@ -546,6 +549,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                                 oldReportConfiguration.setTemplate(reportConfig.getTemplate());
                                 oldReportConfiguration.setLayout(reportConfig.getLayout());
                                 oldReportConfiguration.setProcessor(reportConfig.getProcessor());
+                                oldReportConfiguration.setShowGrandFooter(reportConfig.isShowGrandFooter());
                                 oldReportConfiguration.setInvertGroupColors(reportConfig.isInvertGroupColors());
                                 oldReportConfiguration.setLandscape(reportConfig.isLandscape());
                                 oldReportConfiguration.setShadeOddRows(reportConfig.isShadeOddRows());
