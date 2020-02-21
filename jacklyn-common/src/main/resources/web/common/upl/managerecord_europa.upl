@@ -128,31 +128,31 @@
     eventHandler:$d{!ui-event event:onclick action:$c{deactivateAct}}
    
 //CRUD actions
-!ui-post:prepareAddAct path:$n{/prepareCreateRecord} debounce:true
-!ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel} debounce:true
-!ui-post:prepareEditAct path:$n{/prepareUpdateRecord} components:$c{tablePanel} debounce:true
-!ui-post:prepareDeleteAct path:$n{/prepareDeleteRecord} components:$c{tablePanel} debounce:true
-!ui-post:firstAct path:$n{/firstRecord} components:$f{moreNavigationPushComponents} debounce:true
-!ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents} debounce:true
-!ui-post:nextAct path:$n{/nextRecord} components:$f{moreNavigationPushComponents} debounce:true
-!ui-post:lastAct path:$n{/lastRecord} components:$f{moreNavigationPushComponents} debounce:true
-!ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel} debounce:true
+!ui-post:prepareAddAct path:$n{/prepareCreateRecord}
+!ui-post:prepareViewAct path:$n{/prepareViewRecord} components:$c{tablePanel}
+!ui-post:prepareEditAct path:$n{/prepareUpdateRecord} components:$c{tablePanel}
+!ui-post:prepareDeleteAct path:$n{/prepareDeleteRecord} components:$c{tablePanel}
+!ui-post:firstAct path:$n{/firstRecord} components:$f{moreNavigationPushComponents}
+!ui-post:prevAct path:$n{/previousRecord} components:$f{moreNavigationPushComponents}
+!ui-post:nextAct path:$n{/nextRecord} components:$f{moreNavigationPushComponents}
+!ui-post:lastAct path:$n{/lastRecord} components:$f{moreNavigationPushComponents}
+!ui-post:addNextAct path:$n{/createAndNextRecord} components:$c{crudPanel}
     validations:$c{crudViewerVal} validations:$f{addValidations}
-!ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel} debounce:true
+!ui-post:addCloseAct path:$n{/createAndCloseRecord} components:$c{crudPanel}
     validations:$c{crudViewerVal} validations:$f{addValidations}
-!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel} debounce:true
+!ui-post:saveNextAct path:$n{/updateAndNextRecord} components:$c{crudPanel}
     validations:$c{crudViewerVal} validations:$f{saveValidations}
-!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel} debounce:true
+!ui-post:saveCloseAct path:$n{/updateAndCloseRecord} components:$c{crudPanel}
     validations:$c{crudViewerVal} validations:$f{saveValidations}
-!ui-post:deleteAct path:$n{/deleteRecord} confirm:$f{deleteConfirm} debounce:true
+!ui-post:deleteAct path:$n{/deleteRecord} confirm:$f{deleteConfirm}
 !ui-post:doneAct path:$n{/done} components:$f{moreNavigationPushComponents}
 !ui-post:cancelAct path:$n{/cancel}
-!ui-post:activateAct path:$n{/activateRecord} components:$c{crudPanel} debounce:true
+!ui-post:activateAct path:$n{/activateRecord} components:$c{crudPanel}
     validations:$f{activateValidations}
-!ui-post:deactivateAct path:$n{/deactivateRecord} components:$c{crudPanel} debounce:true
+!ui-post:deactivateAct path:$n{/deactivateRecord} components:$c{crudPanel}
     validations:$f{deactivateValidations}
-!ui-post:copyAct path:$n{/copyRecord} debounce:true
-!ui-post:pasteAct path:$n{/pasteRecord} debounce:true
+!ui-post:copyAct path:$n{/copyRecord}
+!ui-post:pasteAct path:$n{/pasteRecord}
 
 // Validations
 !ui-validation:crudViewerVal components:$c{crudViewPanel}
@@ -161,7 +161,7 @@
 !ui-post:searchAct path:$n{/findRecords} components:$g{searchByList}
 !ui-post:refreshSearchAct path:$n{/refreshSearch} components:$c{searchPanel}
 !ui-post:refreshCrudViewerAct path:$n{/refreshCrudViewer} components:$c{crudPanel}
-!ui-post:manageDoneAct path:$n{/closePage}
+!ui-post:manageDoneAct path:$n{/closePage} debounce:false
 
 //Report actions 
-!ui-post:preparePdfRpt path:$n{/prepareGenerateReport} components:$c{reportType} valueList:$l{PDF}
+!ui-post:preparePdfRpt path:$n{/prepareGenerateReport} components:$c{reportType} valueList:$l{PDF} debounce:false
