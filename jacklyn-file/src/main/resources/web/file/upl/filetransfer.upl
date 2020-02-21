@@ -22,5 +22,5 @@
 !ui-button:doneBtn caption:$m{button.done} eventHandler:$d{!ui-event event:onclick action:$c{trnsDoneAct}}
     
 !ui-post:startTrnsAct path:$n{/startFileTransferTask} components:$c{fileTransferConfigId workingDt}
-!ui-post:trnsDoneAct path:$n{/closePage}
+!ui-post:trnsDoneAct path:$n{/closePage} debounce:false
 !ui-disable:disableTrnsAct valueComponentList:$c{fileTransferConfigId} components:$c{transferBtn}
