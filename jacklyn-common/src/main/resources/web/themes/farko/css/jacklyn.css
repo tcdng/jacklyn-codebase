@@ -176,13 +176,11 @@
 .jk-simpledial .sdimage {width:100%}
 
 .jk-charttitle {text-align:left; font-size:14px;border-bottom: solid 1px #444;
-       margin: 0px 4px;padding-bottom: 12px;}
+       margin: 0px 4px;padding-bottom: 2px;}
 .jk-chartimage {width:auto; height:auto;}
 
 .jk-myworkitemsportlet {}
-.jk-myworkitemsportlet .title{text-align:left; font-size:14px;border-bottom: solid 1px #444;
-       margin: 0px 4px;padding-bottom: 12px;}
 
-.jk-myworkitemstitle {text-align:left; font-size:14px;border-bottom: solid 1px #444;
-       margin: 0px 4px;padding-bottom: 12px;}
+.jk-dashboardtitle {text-align:left; font-size:14px;border-bottom: solid 1px #444;
+       margin: 0px 4px;padding-bottom: 2px;}
 

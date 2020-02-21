@@ -7,7 +7,7 @@
     components:$c{title topActionPanel wfItemsPanel bottomActionPanel}
 
 // Title
-!ui-label:title caption:$m{workflow.myworkitems.title} styleClass:$e{jk-myworkitemstitle}
+!ui-label:title caption:$m{workflow.myworkitems.title} styleClass:$e{jk-dashboardtitle}
 
 // Top action panel    
 !ui-panel:topActionPanel layout:$d{!ui-horizontal cellType:bottom showCaption:true inlineCaption:true captionSuffix:$s{:}}
