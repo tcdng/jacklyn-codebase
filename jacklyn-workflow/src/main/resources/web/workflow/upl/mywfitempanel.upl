@@ -4,10 +4,6 @@
 // you may not use this file except in compliance with the License.
 !ui-mywfitempanel actionPanels:$c{bottomActionPanel}
     
-//!ui-panel:topActionPanel layout:$d{!ui-vertical style:$s{width:100%;}} style:$s{margin-bottom:4px;}
-//    components:$c{itemOfLabel}
-//!ui-label:itemOfLabel styleClass:$e{jk-mildlabel} binding:$s{label}
-
 !ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
     components:$c{attachmentsBtn commentsBtn wfActionButtons closeBtn}
 

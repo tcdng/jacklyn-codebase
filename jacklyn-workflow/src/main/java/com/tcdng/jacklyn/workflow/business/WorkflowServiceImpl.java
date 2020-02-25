@@ -1011,7 +1011,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         for (Long wfItemId : wfItemIds) {
             FlowingWfItem flowingWfItem = findWorkflowItem(wfItemId);
             if (flowingWfItem.getHeldBy().equals(userLoginId)) {
-                if (assignWorkflowItem(flowingWfItem, flowingWfItem.getWfStepDef())) {
+                if (assignWorkflowItem(flowingWfItem, flowingWfItem.getWfStepDef(), false)) {
                     releaseCount++;
                 }
             }
@@ -2427,12 +2427,13 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             // Workflow item has settled in current step
             // Assign to human agent if user actions are associated with current step
             if (targetWfStepDef.isUserInteractive()) {
-                assignWorkflowItem(flowingWfItem, targetWfStepDef);
+                assignWorkflowItem(flowingWfItem, targetWfStepDef, true);
             }
         }
     }
 
-    private boolean assignWorkflowItem(FlowingWfItem flowingWfItem, WfStepDef targetWfStepDef) throws UnifyException {
+    private boolean assignWorkflowItem(FlowingWfItem flowingWfItem, WfStepDef targetWfStepDef,
+            final boolean isTransition) throws UnifyException {
         final String origHeldBy = flowingWfItem.getHeldBy();
         String assignee = null;
 
@@ -2476,13 +2477,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             assignee = wfItemAssignmentPolicy.assignWorkItem(wfItemAssigneeInfoList, flowingWfItem.getReader());
         }
 
+        db().updateAll(new WfItemQuery().id(flowingWfItem.getWfItemId()), new Update().add("heldBy", assignee));
+        flowingWfItem.setHeldBy(assignee);
 
-        // Alert user
+        // Alert user if transition or reassigned
         boolean reAssigned = !DataUtils.equals(origHeldBy, assignee);
-        if (reAssigned) {
-            db().updateAll(new WfItemQuery().id(flowingWfItem.getWfItemId()), new Update().add("heldBy", assignee));
-
-            flowingWfItem.setHeldBy(assignee);
+        if (isTransition || reAssigned) {
             for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
                 if (wfAlertDef.isUserInteract() && wfAlertDef.getDocName().equals(flowingWfItem.getDocName())) {
                     wfItemAlertLogic.sendAlert(flowingWfItem.getReader(), wfAlertDef);
