@@ -15,7 +15,7 @@
     footerComponentList:$c{publishBtn doneBtn}
 
 !ui-fileupload:frmFileSelect caption:$m{workflow.wfcategory.publish.configfile} binding:wfCategoryBin
-    selectOnly:true required:true style:$s{width:296px;}
+    selectOnly:true required:true style:$s{width:380px;}
 !ui-checkbox:frmActivate caption:$m{workflow.wfcategory.publish.activate} binding:activate
     
 !ui-button:publishBtn caption:$m{button.publish} eventHandler:$d{!ui-event event:onclick action:$c{startPublishAct}}
