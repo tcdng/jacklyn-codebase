@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.organization.business;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -578,8 +579,12 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         registerPrivilegeCategory(PrivilegeCategoryConstants.CONFIGUREDREPORTS,
                 "reserved.privilegecategory.configuredreport");
 
-        // Uninstall old
-        db().updateAll(new PrivilegeQuery().installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));
+        // Uninstall old standard categories
+        db().updateAll(new PrivilegeQuery()
+                .categoryNameIn(Arrays.asList(PrivilegeCategoryConstants.APPLICATIONUI,
+                        PrivilegeCategoryConstants.SHORTCUT, PrivilegeCategoryConstants.DOCUMENTCONTROL,
+                        PrivilegeCategoryConstants.REPORTABLE, PrivilegeCategoryConstants.CONFIGUREDREPORTS))
+                .installed(Boolean.TRUE), new Update().add("installed", Boolean.FALSE));
 
         // Install new and update old
         Map<String, PrivilegeCategory> categoryMap =

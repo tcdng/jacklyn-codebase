@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.organization.entities;
 
+import java.util.Collection;
+
 import com.tcdng.jacklyn.common.entities.BaseInstallEntityQuery;
 
 /**
@@ -51,5 +53,9 @@ public class PrivilegeQuery extends BaseInstallEntityQuery<Privilege> {
 
     public PrivilegeQuery categoryName(String categoryName) {
         return (PrivilegeQuery) addEquals("categoryName", categoryName);
+    }
+
+    public PrivilegeQuery categoryNameIn(Collection<String> categoryName) {
+        return (PrivilegeQuery) addAmongst("categoryName", categoryName);
     }
 }
