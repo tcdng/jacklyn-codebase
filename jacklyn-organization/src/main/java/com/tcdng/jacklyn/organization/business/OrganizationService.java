@@ -662,4 +662,35 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<String> findWfStepRoles(String stepGlobalName) throws UnifyException;
+
+    /**
+     * Confirms if supplied role has a certain privilege.
+     * 
+     * @param roleId
+     *            the role ID
+     * @param privilegeCatCode
+     *            the privilege category code
+     * @param privilegeCode
+     *            the privilege code
+     * @return a true if role has privilege otherwise false
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean confirmUserPrivilege(Long roleId, String privilegeCatCode, String privilegeCode) throws UnifyException;
+
+    /**
+     * Confirms if at least one of supplied roles has a certain privilege.
+     * 
+     * @param roleIdList
+     *            the role ID list
+     * @param privilegeCatCode
+     *            the privilege category code
+     * @param privilegeCode
+     *            the privilege code
+     * @return a true if at least one role has privilege otherwise false
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean confirmUserPrivilege(List<Long> roleIdList, String privilegeCatCode, String privilegeCode)
+            throws UnifyException;
 }

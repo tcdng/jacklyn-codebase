@@ -568,6 +568,24 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+    public boolean confirmUserPrivilege(Long roleId, String privilegeCatCode, String privilegeCode)
+            throws UnifyException {
+        return db().countAll(new RolePrivilegeQuery().roleId(roleId).categoryName(privilegeCatCode)
+                .privilegeName(privilegeCode)) > 0;
+    }
+
+    @Override
+    public boolean confirmUserPrivilege(List<Long> roleIdList, String privilegeCatCode, String privilegeCode)
+            throws UnifyException {
+        if (!DataUtils.isBlank(roleIdList)) {
+            return db().countAll(new RolePrivilegeQuery().roleIdIn(roleIdList).categoryName(privilegeCatCode)
+                    .privilegeName(privilegeCode)) > 0;
+        }
+
+        return false;
+    }
+
+    @Override
     public void installFeatures(List<ModuleConfig> moduleConfigList) throws UnifyException {
         logInfo("Managing organization...");
         logDebug("Registering role privilege categories...");
