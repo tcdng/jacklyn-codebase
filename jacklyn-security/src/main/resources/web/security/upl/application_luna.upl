@@ -32,9 +32,9 @@
 
 !ui-panel:navigationBand styleClass:$e{jk-topnavcontrol} components:$c{switchRoleLabel logoutLabel}
 !ui-button:switchRoleLabel caption:$m{application.switchrole} styleClass:$e{jk-switchrole}
-    eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{switchRoleAct}} debounce:false
 !ui-button:logoutLabel caption:$m{application.logout} styleClass:$e{jk-logout}
-    eventHandler:$d{!ui-event event:onclick action:$c{logoutAct}}
+    eventHandler:$d{!ui-event event:onclick action:$c{logoutAct}} debounce:false
 
 // Menu
 !ui-verticalflyoutmenu:menuBar
