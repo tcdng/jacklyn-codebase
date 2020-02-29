@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.organization.entities;
 import com.tcdng.jacklyn.common.annotation.Managed;
 import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.organization.constants.OrganizationModuleNameConstants;
+import com.tcdng.jacklyn.shared.organization.RoleWfStepType;
 import com.tcdng.jacklyn.workflow.entities.WfTemplate;
 import com.tcdng.unify.core.annotation.Column;
 import com.tcdng.unify.core.annotation.ForeignKey;
@@ -34,6 +35,9 @@ import com.tcdng.unify.core.annotation.Table;
 @Table("JKROLEWFSTEP")
 public class RoleWfStep extends BaseEntity {
 
+    @ForeignKey
+    private RoleWfStepType type;
+    
     @ForeignKey(Role.class)
     private Long roleId;
 
@@ -42,6 +46,9 @@ public class RoleWfStep extends BaseEntity {
 
     @Column(name = "STEP_NM", length = 32)
     private String stepName;
+
+    @ListOnly(key = "type", property = "description")
+    private String typeDesc;
 
     @ListOnly(key = "roleId", property = "name")
     private String roleName;
@@ -69,6 +76,14 @@ public class RoleWfStep extends BaseEntity {
         return stepName;
     }
 
+    public RoleWfStepType getType() {
+        return type;
+    }
+
+    public void setType(RoleWfStepType type) {
+        this.type = type;
+    }
+
     public Long getRoleId() {
         return roleId;
     }
@@ -91,6 +106,14 @@ public class RoleWfStep extends BaseEntity {
 
     public void setStepName(String stepName) {
         this.stepName = stepName;
+    }
+
+    public String getTypeDesc() {
+        return typeDesc;
+    }
+
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
     }
 
     public String getRoleName() {

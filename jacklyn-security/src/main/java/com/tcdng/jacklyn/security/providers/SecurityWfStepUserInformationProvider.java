@@ -29,6 +29,7 @@ import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.shared.organization.RoleWfStepType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.workflow.business.AbstractWfStepUserInformationProvider;
 import com.tcdng.unify.core.UnifyException;
@@ -141,7 +142,7 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
             if (preferredRoles.length > 0) {
                 roleList = Arrays.asList(preferredRoles);
             } else {
-                roleList = organizationService.findWfStepRoles(stepGlobalName);
+                roleList = organizationService.findWfStepRoles(RoleWfStepType.USER_INTERACT, stepGlobalName);
             }
 
             if (DataUtils.isNotBlank(roleList)) {
