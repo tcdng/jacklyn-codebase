@@ -29,7 +29,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 public class WfAlertDef extends BaseWfDef {
 
     private WorkflowAlertType type;
-    
+
     private WorkflowParticipantType participant;
 
     private NotificationType channel;
@@ -81,5 +81,13 @@ public class WfAlertDef extends BaseWfDef {
 
     public boolean isUserInteract() {
         return type.isUserInteract();
+    }
+
+    public boolean isCriticalNotification() {
+        return type.isCriticalNotification();
+    }
+
+    public boolean isExpirationNotification() {
+        return type.isExpirationNotification();
     }
 }

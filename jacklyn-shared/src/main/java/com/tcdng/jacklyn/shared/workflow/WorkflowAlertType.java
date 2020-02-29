@@ -28,7 +28,10 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("wfalerttypelist")
 public enum WorkflowAlertType implements EnumConst {
 
-    PASS_THROUGH("P"), USER_INTERACT("U");
+    PASS_THROUGH("P"),
+    USER_INTERACT("U"),
+    CRITICAL_NOTIFICATION("C"),
+    EXPIRATION_NOTIFICATION("E");
 
     private final String code;
 
@@ -52,6 +55,14 @@ public enum WorkflowAlertType implements EnumConst {
 
     public boolean isUserInteract() {
         return USER_INTERACT.equals(this);
+    }
+
+    public boolean isCriticalNotification() {
+        return CRITICAL_NOTIFICATION.equals(this);
+    }
+
+    public boolean isExpirationNotification() {
+        return EXPIRATION_NOTIFICATION.equals(this);
     }
 
     public static WorkflowStepType fromCode(String code) {

@@ -46,6 +46,9 @@ public class WfItemEvent extends BaseEntity {
     private Date expectedDt;
 
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
+    private Date criticalDt;
+
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date actionDt;
 
     @Column(nullable = true)
@@ -102,6 +105,14 @@ public class WfItemEvent extends BaseEntity {
 
     public void setStepDt(Date stepDt) {
         this.stepDt = stepDt;
+    }
+
+    public Date getCriticalDt() {
+        return criticalDt;
+    }
+
+    public void setCriticalDt(Date criticalDt) {
+        this.criticalDt = criticalDt;
     }
 
     public Date getExpectedDt() {

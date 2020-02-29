@@ -611,6 +611,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                         templateNames.getTemplateName(), wfStep.getOrigin());
                     }
 
+                    long criticalMilliSec = 0;
+                    if (wfStep.getCriticalHours() != null) {
+                        criticalMilliSec =
+                                CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getCriticalHours());
+                    }
+
                     long expiryMilliSec =
                             CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, templateGlobalLockName, stepGlobalName,
@@ -618,8 +624,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             wfStep.getWorkAssigner(), wfStep.getPriorityLevelDesc(), wfStep.getStepType(),
                             wfStep.getParticipantType(), branchList, enrichmentList, routingList, recordActionList,
                             userActionList, formPrivilegeList, alertList, policyList, wfStep.getItemsPerSession(),
-                            expiryMilliSec, wfStep.getAudit(), wfStep.getBranchOnly(), wfStep.getDepartmentOnly(),
-                            wfStep.getIncludeForwarder(), templateTimestamp));
+                            criticalMilliSec, expiryMilliSec, wfStep.getAudit(), wfStep.getBranchOnly(),
+                            wfStep.getDepartmentOnly(), wfStep.getIncludeForwarder(), templateTimestamp));
                 }
 
                 return new WfTemplateDef(wfTemplateId, templateNames.getCategoryName(), templateGlobalName,
@@ -1718,19 +1724,13 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     private BadgeInfo getStatusBadge(WfItem wfItem) throws UnifyException {
-        Date expectedDt = wfItem.getExpectedDt();
-        if (expectedDt != null) {
-            Date now = db().getNow();
-            if (now.after(expectedDt)) {
-                return OVERDUE_BADGEINFO;
-            }
+        Date now = db().getNow();
+        if (wfItem.getExpectedDt() != null && now.after(wfItem.getExpectedDt())) {
+            return OVERDUE_BADGEINFO;
+        }
 
-            WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
-            int criticalMinutes = 20; // TODO Get from step configuration
-            Date critical = CalendarUtils.getDateWithFrequencyOffset(now, FrequencyUnit.MINUTE, criticalMinutes);
-            if (critical.after(expectedDt)) {
-                return CRITICAL_BADGEINFO;
-            }
+        if (wfItem.getCriticalDt() != null && now.after(wfItem.getCriticalDt())) {
+            return CRITICAL_BADGEINFO;
         }
 
         return PENDING_BADGEINFO;
@@ -1935,6 +1935,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfStep.setPriorityLevel(wfStepConfig.getPriority());
             wfStep.setParticipantType(wfStepConfig.getParticipant());
             wfStep.setItemsPerSession(wfStepConfig.getItemsPerSession());
+            wfStep.setCriticalHours(wfStepConfig.getCriticalHours());
             wfStep.setExpiryHours(wfStepConfig.getExpiryHours());
             wfStep.setIncludeForwarder(wfStepConfig.getIncludeForwarder());
             wfStep.setAudit(wfStepConfig.getAudit());
@@ -2228,6 +2229,11 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfItemHistId = (Long) db().create(wfHist);
         }
 
+        Date criticalDt = null;
+        if (targetWfStepDef.isCritical()) {
+            criticalDt = CalendarUtils.getDateWithOffset(stepDt, targetWfStepDef.getCriticalMilliSec());
+        }
+
         Date expectedDt = null;
         if (targetWfStepDef.isExpiry()) {
             expectedDt = CalendarUtils.getDateWithOffset(stepDt, targetWfStepDef.getExpiryMilliSec());
@@ -2237,6 +2243,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfHistEvent.setWfItemHistId(wfItemHistId);
         wfHistEvent.setWfStepName(targetWfStepDef.getName());
         wfHistEvent.setStepDt(stepDt);
+        wfHistEvent.setCriticalDt(criticalDt);
         wfHistEvent.setExpectedDt(expectedDt);
         if (targetWfStepDef.isError()) {
             wfHistEvent.setSrcWfStepName(flowingWfItem.getSourceWfStepDef().getName());
@@ -2253,7 +2260,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         flowingWfItem.setWfHistEventId(wfHistEventId);
         db().updateById(WfItem.class, wfItemId,
                 new Update().add("wfHistEventId", wfHistEventId).add("stepGlobalName", targetWfStepDef.getGlobalName())
-                        .add("stepDt", stepDt).add("expectedDt", expectedDt)
+                        .add("stepDt", stepDt).add("criticalDt", criticalDt).add("expectedDt", expectedDt)
                         .add("participantType", targetWfStepDef.getParticipantType())
                         .add("forwardedBy", flowingWfItem.getHeldBy()));
 

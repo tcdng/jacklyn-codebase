@@ -72,6 +72,9 @@ public class WfItem extends BaseTimestampedEntity {
     private Date stepDt;
 
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
+    private Date criticalDt;
+
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date expectedDt;
 
     @Column(length = 96, nullable = true)
@@ -80,6 +83,12 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(length = 96, nullable = true)
     private String forwardedBy;
 
+    @Column(name = "CRITICAL_ALERT_FG", nullable = true)
+    private Boolean criticalAlert;
+
+    @Column(name = "EXPIRATION_ALERT_FG", nullable = true)
+    private Boolean expirationAlert;
+    
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
     private Long wfItemHistId;
 
@@ -101,6 +110,11 @@ public class WfItem extends BaseTimestampedEntity {
     @ListOnly(key = "wfHistEventId", property = "errorMsg")
     private String errorMsg;
 
+    public WfItem() {
+        criticalAlert =  Boolean.FALSE;
+        expirationAlert = Boolean.FALSE;
+    }
+    
     @Override
     public String getDescription() {
         return wfItemDesc;
@@ -196,6 +210,14 @@ public class WfItem extends BaseTimestampedEntity {
         this.stepDt = stepDt;
     }
 
+    public Date getCriticalDt() {
+        return criticalDt;
+    }
+
+    public void setCriticalDt(Date criticalDt) {
+        this.criticalDt = criticalDt;
+    }
+
     public Date getExpectedDt() {
         return expectedDt;
     }
@@ -218,6 +240,22 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setForwardedBy(String forwardedBy) {
         this.forwardedBy = forwardedBy;
+    }
+
+    public Boolean getCriticalAlert() {
+        return criticalAlert;
+    }
+
+    public void setCriticalAlert(Boolean criticalAlert) {
+        this.criticalAlert = criticalAlert;
+    }
+
+    public Boolean getExpirationAlert() {
+        return expirationAlert;
+    }
+
+    public void setExpirationAlert(Boolean expirationAlert) {
+        this.expirationAlert = expirationAlert;
     }
 
     public String getProcessGlobalName() {

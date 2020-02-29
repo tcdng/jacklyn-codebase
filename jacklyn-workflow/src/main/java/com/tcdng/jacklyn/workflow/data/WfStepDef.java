@@ -75,6 +75,8 @@ public class WfStepDef extends BaseLabelWfDef {
     
     private int itemsPerSession;
 
+    private long criticalMilliSec;
+
     private long expiryMilliSec;
 
     private boolean audit;
@@ -92,7 +94,7 @@ public class WfStepDef extends BaseLabelWfDef {
             List<WfBranchDef> branchList, List<WfEnrichmentDef> enrichmentList, List<WfRoutingDef> routingList,
             List<WfRecordActionDef> recordActionList, List<WfUserActionDef> userActionList,
             List<WfFormPrivilegeDef> formPrivilegeList, List<WfAlertDef> alertList, List<WfPolicyDef> policyList,
-            int itemsPerSession, long expiryMilliSec, boolean audit, boolean branchOnly, boolean departmentOnly,
+            int itemsPerSession, long criticalMilliSec, long expiryMilliSec, boolean audit, boolean branchOnly, boolean departmentOnly,
             boolean includeForwarder, long versionTimestamp) {
         super(name, description, label);
         this.wfTemplateId = wfTemplateId;
@@ -105,6 +107,7 @@ public class WfStepDef extends BaseLabelWfDef {
         this.stepType = stepType;
         this.participantType = participantType;
         this.itemsPerSession = itemsPerSession;
+        this.criticalMilliSec = criticalMilliSec;
         this.expiryMilliSec = expiryMilliSec;
         this.audit = audit;
         this.branchOnly = branchOnly;
@@ -230,6 +233,14 @@ public class WfStepDef extends BaseLabelWfDef {
 
     public int getItemsPerSession() {
         return itemsPerSession;
+    }
+
+    public long getCriticalMilliSec() {
+        return criticalMilliSec;
+    }
+
+    public boolean isCritical() {
+        return criticalMilliSec > 0;
     }
 
     public long getExpiryMilliSec() {
