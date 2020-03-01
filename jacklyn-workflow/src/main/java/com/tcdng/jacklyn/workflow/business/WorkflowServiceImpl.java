@@ -176,6 +176,9 @@ import com.tcdng.unify.core.UserToken;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.annotation.Parameter;
+import com.tcdng.unify.core.annotation.Periodic;
+import com.tcdng.unify.core.annotation.PeriodicType;
+import com.tcdng.unify.core.annotation.Synchronized;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
 import com.tcdng.unify.core.annotation.Transactional;
@@ -221,10 +224,16 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
     private static final String WORKFLOW_SUBMISSION_ID_SEQUENCE = "wfsubmissionid-sequence";
 
+    private static final String CRITICAL_EXPIRED_NOTIFICATION_LOCK = "wf::criticalexpirednotiflock";
+
+    private static final int CRITICAL_EXPIRED_NOTIFICATION_LIMIT = 100; // TODO Should be system parameter
+
     private final BadgeInfo PENDING_BADGEINFO =
             new BadgeInfo(ColorScheme.GREEN, "$m{workflow.workitem.status.pending}");
+
     private final BadgeInfo CRITICAL_BADGEINFO =
             new BadgeInfo(ColorScheme.YELLOW, "$m{workflow.workitem.status.critical}");
+
     private final BadgeInfo OVERDUE_BADGEINFO = new BadgeInfo(ColorScheme.RED, "$m{workflow.workitem.status.overdue}");
 
     @Configurable
@@ -1208,14 +1217,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public FlowingWfItem findWorkflowItem(Long wfItemId) throws UnifyException {
         WfItem wfItem = db().list(WfItem.class, wfItemId);
-        return findFlowingWfItem(wfItem);
+        return createFlowingWfItem(wfItem);
     }
 
     @Override
     public FlowingWfItem findWorkflowItemBySubmission(Long submissionId) throws UnifyException {
         WfItem wfItem = db().list(new WfItemQuery().submissionId(submissionId));
         if (wfItem != null) {
-            return findFlowingWfItem(wfItem);
+            return createFlowingWfItem(wfItem);
         }
 
         return null;
@@ -1388,6 +1397,49 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             addTaskMessage(taskMonitor, "$m{workflow.taskmonitor.actionapplied}");
         }
         return wfItemIdList.size();
+    }
+
+    @Synchronized(CRITICAL_EXPIRED_NOTIFICATION_LOCK)
+    @Periodic(PeriodicType.SLOWEST)
+    public void sendCriticalExpiredNotifications(TaskMonitor taskMonitor) throws UnifyException {
+        Date now = getNow();
+        // Critical
+        List<WfItem> criticalWfItemList =
+                db().listAll(new WfItemQuery().criticalAlertNotSent().expiredAlertNotSent().isCritical(now).orderById()
+                        .setLimit(CRITICAL_EXPIRED_NOTIFICATION_LIMIT));
+        if (!DataUtils.isBlank(criticalWfItemList)) {
+            List<Long> wfItemIdList = new ArrayList<Long>();
+            for (WfItem wfItem : criticalWfItemList) {
+                FlowingWfItem flowingWfItem = createFlowingWfItem(wfItem);
+                for (WfAlertDef wfAlertDef : flowingWfItem.getWfStepDef().getAlertList()) {
+                    if (wfAlertDef.isCriticalNotification()) {
+                        wfItemAlertLogic.sendAlert(flowingWfItem.getReader(), wfAlertDef);
+                    }
+                }
+                wfItemIdList.add(wfItem.getId());
+            }
+
+            db().updateAll(new WfItemQuery().idIn(wfItemIdList), new Update().add("criticalAlertSent", Boolean.TRUE));
+        }
+
+        // Expired
+        List<WfItem> expiredWfItemList =
+                db().listAll(new WfItemQuery().expiredAlertNotSent().isExpired(now).orderById()
+                        .setLimit(CRITICAL_EXPIRED_NOTIFICATION_LIMIT));
+        if (!DataUtils.isBlank(expiredWfItemList)) {
+            List<Long> wfItemIdList = new ArrayList<Long>();
+            for (WfItem wfItem : expiredWfItemList) {
+                FlowingWfItem flowingWfItem = createFlowingWfItem(wfItem);
+                for (WfAlertDef wfAlertDef : flowingWfItem.getWfStepDef().getAlertList()) {
+                    if (wfAlertDef.isExpirationNotification()) {
+                        wfItemAlertLogic.sendAlert(flowingWfItem.getReader(), wfAlertDef);
+                    }
+                }
+                wfItemIdList.add(wfItem.getId());
+            }
+
+            db().updateAll(new WfItemQuery().idIn(wfItemIdList), new Update().add("expirationAlertSent", Boolean.TRUE));
+        }
     }
 
     @Override
@@ -2149,7 +2201,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfTemplate.setStepList(stepList);
     }
 
-    private FlowingWfItem findFlowingWfItem(WfItem wfItem) throws UnifyException {
+    private FlowingWfItem createFlowingWfItem(WfItem wfItem) throws UnifyException {
         Long wfItemId = wfItem.getId();
         WfItemPackedDoc wfItemPackedDoc = db().find(WfItemPackedDoc.class, wfItemId);
         WfStepDef wfStepDef = wfSteps.get(wfItem.getStepGlobalName());
@@ -2459,7 +2511,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
             // Fetch users available for step
             Collection<String> availableUsers =
-                    wfStepUserInformationProvider.getEligibleUsersForWorkflowStep(
+                    wfStepUserInformationProvider.getEligibleUsersForParticipation(
                             flowingWfItem.getReader().getStepParticipant(),
                             flowingWfItem.getReader().getStepGlobalName(),
                             flowingWfItem.getReader().getRestrictions().getBranchCode(),

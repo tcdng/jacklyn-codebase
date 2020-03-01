@@ -83,11 +83,11 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(length = 96, nullable = true)
     private String forwardedBy;
 
-    @Column(name = "CRITICAL_ALERT_FG", nullable = true)
-    private Boolean criticalAlert;
+    @Column(name = "CRITICAL_ALERT_SENT_FG", nullable = true)
+    private Boolean criticalAlertSent;
 
-    @Column(name = "EXPIRATION_ALERT_FG", nullable = true)
-    private Boolean expirationAlert;
+    @Column(name = "EXPIRATION_ALERT_SENT_FG", nullable = true)
+    private Boolean expirationAlertSent;
     
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
     private Long wfItemHistId;
@@ -111,8 +111,8 @@ public class WfItem extends BaseTimestampedEntity {
     private String errorMsg;
 
     public WfItem() {
-        criticalAlert =  Boolean.FALSE;
-        expirationAlert = Boolean.FALSE;
+        criticalAlertSent =  Boolean.FALSE;
+        expirationAlertSent = Boolean.FALSE;
     }
     
     @Override
@@ -242,20 +242,20 @@ public class WfItem extends BaseTimestampedEntity {
         this.forwardedBy = forwardedBy;
     }
 
-    public Boolean getCriticalAlert() {
-        return criticalAlert;
+    public Boolean getCriticalAlertSent() {
+        return criticalAlertSent;
     }
 
-    public void setCriticalAlert(Boolean criticalAlert) {
-        this.criticalAlert = criticalAlert;
+    public void setCriticalAlertSent(Boolean criticalAlertSent) {
+        this.criticalAlertSent = criticalAlertSent;
     }
 
-    public Boolean getExpirationAlert() {
-        return expirationAlert;
+    public Boolean getExpirationAlertSent() {
+        return expirationAlertSent;
     }
 
-    public void setExpirationAlert(Boolean expirationAlert) {
-        this.expirationAlert = expirationAlert;
+    public void setExpirationAlertSent(Boolean expirationAlertSent) {
+        this.expirationAlertSent = expirationAlertSent;
     }
 
     public String getProcessGlobalName() {

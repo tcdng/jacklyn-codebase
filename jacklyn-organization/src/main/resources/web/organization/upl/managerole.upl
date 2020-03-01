@@ -10,6 +10,7 @@
     formSection:$d{!ui-section caption:$m{organization.role.section.schedule} components:$c{frmActiveAfter frmActiveBefore}}
     formSection:$d{!ui-section caption:$m{organization.role.section.privileges} components:$c{frmPrivilegeAttachment}}
     formSection:$d{!ui-section caption:$m{organization.role.section.steps} components:$c{frmStepAttachment}}
+    formSection:$d{!ui-section caption:$m{organization.role.section.notification.steps} components:$c{frmNotifStepAttachment}}
     formBinding:largeData
     addPrivilege:$s{org-role-add} editPrivilege:$s{org-role-edit}
     viewPrivilege:$s{org-role-view} deletePrivilege:$s{org-role-delete}
@@ -58,6 +59,16 @@
     
 !ui-panel:frmStepAttachment layout:$d{!ui-vertical} components:$c{queAssignmentBox}
 !ui-assignmentbox:queAssignmentBox binding:wfStepIdList
+    filterCaption1:$m{organization.role.maintain.assigned.category}
+    filterCaption2:$m{organization.role.maintain.assigned.template}
+    assignCaption:$m{organization.role.maintain.assigned.step}
+    unassignCaption:$m{organization.role.maintain.available.step}
+    filterList1:$s{wfcategorylist} filterList2:$s{wftemplatelist}
+    assignList:$s{wfstepinlist} unassignList:$s{wfstepnotinlist}
+    assignListDesc:$s{extDescription} unassignListDesc:$s{extDescription}
+    
+!ui-panel:frmNotifStepAttachment layout:$d{!ui-vertical} components:$c{queNotifAssignmentBox}
+!ui-assignmentbox:queNotifAssignmentBox binding:wfNotifStepIdList
     filterCaption1:$m{organization.role.maintain.assigned.category}
     filterCaption2:$m{organization.role.maintain.assigned.template}
     assignCaption:$m{organization.role.maintain.assigned.step}

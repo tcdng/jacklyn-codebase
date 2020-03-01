@@ -36,16 +36,33 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     public WfItemQuery() {
         super(WfItem.class);
     }
-    
-    
+
+    public WfItemQuery isCritical(Date now) {
+        return (WfItemQuery) addIsNotNull("criticalDt").addLessThan("criticalDt", now);
+    }
+
+    public WfItemQuery criticalAlertNotSent() {
+        return (WfItemQuery) addRestriction(
+                new Or().add(new IsNull("criticalAlertSent")).add(new Equals("criticalAlertSent", Boolean.FALSE)));
+    }
+
+    public WfItemQuery isExpired(Date now) {
+        return (WfItemQuery) addIsNotNull("expectedDt").addLessThan("expectedDt", now);
+    }
+
+    public WfItemQuery expiredAlertNotSent() {
+        return (WfItemQuery) addRestriction(
+                new Or().add(new IsNull("expirationAlertSent")).add(new Equals("expirationAlertSent", Boolean.FALSE)));
+    }
+
     public WfItemQuery processGlobalNameIn(Collection<String> processGlobalName) {
         return (WfItemQuery) addAmongst("processGlobalName", processGlobalName);
     }
-    
+
     public WfItemQuery wfItemSplitEventId(Long wfItemSplitEventId) {
         return (WfItemQuery) addEquals("wfItemSplitEventId", wfItemSplitEventId);
     }
-    
+
     public WfItemQuery submissionId(Long submissionId) {
         return (WfItemQuery) addEquals("submissionId", submissionId);
     }
@@ -87,11 +104,12 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
     }
 
     public WfItemQuery allOrParticipantType(WorkflowParticipantType participantType) {
-        return (WfItemQuery) addRestriction(new Or().add(new Equals("participantType", WorkflowParticipantType.ALL)).add(
-                new Equals("participantType", participantType)));
+        return (WfItemQuery) addRestriction(new Or().add(new Equals("participantType", WorkflowParticipantType.ALL))
+                .add(new Equals("participantType", participantType)));
     }
 
     public WfItemQuery notForwardedBy(String userId) {
-        return (WfItemQuery) addRestriction(new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
+        return (WfItemQuery) addRestriction(
+                new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
     }
 }

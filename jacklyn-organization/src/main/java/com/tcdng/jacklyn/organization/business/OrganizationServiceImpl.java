@@ -242,7 +242,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         Long roleId = (Long) db().create(roleFormData.getData());
         updateRolePrivileges(roleId, roleFormData.getPrivilegeIdList());
         updateRoleWorkflowSteps(RoleWfStepType.USER_INTERACT, roleId, roleFormData.getWfStepIdList());
-        // TODO update unattended workflow step list
+        updateRoleWorkflowSteps(RoleWfStepType.NOTIFY_UNATTENDED, roleId, roleFormData.getWfNotifStepIdList());
         return roleId;
     }
 
@@ -262,8 +262,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         List<Long> privilegeIdList =
                 db().valueList(Long.class, "privilegeId", new RolePrivilegeQuery().roleId(roleId).orderById());
         List<Long> wfStepIdList = getWfStepIdListForRole(RoleWfStepType.USER_INTERACT, roleId);
-        // TODO fetch for unattended workflow steps
-        return new RoleLargeData(role, privilegeIdList, wfStepIdList);
+        List<Long> wfNotifStepIdList = getWfStepIdListForRole(RoleWfStepType.NOTIFY_UNATTENDED, roleId);
+        return new RoleLargeData(role, privilegeIdList, wfStepIdList, wfNotifStepIdList);
     }
 
     @Override
@@ -282,7 +282,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         int updateCount = db().updateByIdVersion(role);
         updateRolePrivileges(role.getId(), roleFormData.getPrivilegeIdList());
         updateRoleWorkflowSteps(RoleWfStepType.USER_INTERACT, role.getId(), roleFormData.getWfStepIdList());
-        // TODO update unattended workflow step list
+        updateRoleWorkflowSteps(RoleWfStepType.NOTIFY_UNATTENDED, role.getId(), roleFormData.getWfNotifStepIdList());
         return updateCount;
     }
 
@@ -568,7 +568,6 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
     @Override
     public List<String> findWfStepRoles(RoleWfStepType type, String stepGlobalName) throws UnifyException {
-        // TODO Implement cache?
         StepNameParts stepNameParts = WfNameUtils.getStepNameParts(stepGlobalName);
         return db().valueList(String.class, "roleName",
                 new RoleWfStepQuery().type(type).stepName(stepNameParts.getStepName())
@@ -704,7 +703,7 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         for (Long wfTemplateId : wfTemplateIds) {
             Set<String> stepNames =
                     db().valueSet(String.class, "stepName",
-                            new RoleWfStepQuery().roleId(roleId).wfTemplateId(wfTemplateId));
+                            new RoleWfStepQuery().type(type).roleId(roleId).wfTemplateId(wfTemplateId));
             wfStepIdList.addAll(workflowService.findStepIds(wfTemplateId, stepNames));
         }
 
