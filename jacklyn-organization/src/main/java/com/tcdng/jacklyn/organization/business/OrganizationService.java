@@ -37,6 +37,7 @@ import com.tcdng.jacklyn.organization.entities.RolePrivilegeQuery;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidget;
 import com.tcdng.jacklyn.organization.entities.RolePrivilegeWidgetQuery;
 import com.tcdng.jacklyn.organization.entities.RoleQuery;
+import com.tcdng.jacklyn.shared.organization.RoleWfStepType;
 import com.tcdng.unify.core.UnifyException;
 
 /**
@@ -632,6 +633,8 @@ public interface OrganizationService extends JacklynBusinessService {
     /**
      * Updates role workflow steps.
      * 
+     * @param type
+     *            the role workflow step type
      * @param roleId
      *            the role ID
      * @param wfStepIdList
@@ -640,7 +643,7 @@ public interface OrganizationService extends JacklynBusinessService {
      * @throws UnifyException
      *             if an error occurs
      */
-    int updateRoleWorkflowSteps(Long roleId, List<Long> wfStepIdList) throws UnifyException;
+    int updateRoleWorkflowSteps(RoleWfStepType type, Long roleId, List<Long> wfStepIdList) throws UnifyException;
 
     /**
      * Loads attributes for roles into application context.
@@ -655,13 +658,15 @@ public interface OrganizationService extends JacklynBusinessService {
     /**
      * Find roles that are tied to a workflow step.
      * 
+     * @param type
+     *            the role workflow step type
      * @param stepGlobalName
      *            the global workflow step name
      * @return list of role codes
      * @throws UnifyException
      *             if an error occurs
      */
-    List<String> findWfStepRoles(String stepGlobalName) throws UnifyException;
+    List<String> findWfStepRoles(RoleWfStepType type, String stepGlobalName) throws UnifyException;
 
     /**
      * Confirms if supplied role has a certain privilege.

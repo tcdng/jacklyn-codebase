@@ -48,6 +48,7 @@ import com.tcdng.jacklyn.organization.entities.RoleQuery;
 import com.tcdng.jacklyn.organization.entities.RoleWfStep;
 import com.tcdng.jacklyn.organization.entities.RoleWfStepQuery;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
+import com.tcdng.jacklyn.shared.organization.RoleWfStepType;
 import com.tcdng.jacklyn.shared.xml.config.module.ModuleConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeConfig;
 import com.tcdng.jacklyn.shared.xml.config.module.PrivilegeGroupConfig;
@@ -240,7 +241,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     public Long createRole(RoleLargeData roleFormData) throws UnifyException {
         Long roleId = (Long) db().create(roleFormData.getData());
         updateRolePrivileges(roleId, roleFormData.getPrivilegeIdList());
-        updateRoleWorkflowSteps(roleId, roleFormData.getWfStepIdList());
+        updateRoleWorkflowSteps(RoleWfStepType.USER_INTERACT, roleId, roleFormData.getWfStepIdList());
+        updateRoleWorkflowSteps(RoleWfStepType.NOTIFY_UNATTENDED, roleId, roleFormData.getWfNotifStepIdList());
         return roleId;
     }
 
@@ -259,8 +261,9 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         Role role = db().list(Role.class, roleId);
         List<Long> privilegeIdList =
                 db().valueList(Long.class, "privilegeId", new RolePrivilegeQuery().roleId(roleId).orderById());
-        List<Long> wfStepIdList = getWfStepIdListForRole(roleId);
-        return new RoleLargeData(role, privilegeIdList, wfStepIdList);
+        List<Long> wfStepIdList = getWfStepIdListForRole(RoleWfStepType.USER_INTERACT, roleId);
+        List<Long> wfNotifStepIdList = getWfStepIdListForRole(RoleWfStepType.NOTIFY_UNATTENDED, roleId);
+        return new RoleLargeData(role, privilegeIdList, wfStepIdList, wfNotifStepIdList);
     }
 
     @Override
@@ -278,7 +281,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         Role role = roleFormData.getData();
         int updateCount = db().updateByIdVersion(role);
         updateRolePrivileges(role.getId(), roleFormData.getPrivilegeIdList());
-        updateRoleWorkflowSteps(role.getId(), roleFormData.getWfStepIdList());
+        updateRoleWorkflowSteps(RoleWfStepType.USER_INTERACT, role.getId(), roleFormData.getWfStepIdList());
+        updateRoleWorkflowSteps(RoleWfStepType.NOTIFY_UNATTENDED, role.getId(), roleFormData.getWfNotifStepIdList());
         return updateCount;
     }
 
@@ -465,27 +469,29 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
-    public int updateRoleWorkflowSteps(Long roleId, List<Long> wfStepIdList) throws UnifyException {
+    public int updateRoleWorkflowSteps(RoleWfStepType type, Long roleId, List<Long> wfStepIdList)
+            throws UnifyException {
         int updateCount = 0;
 
         // Delete old step privileges.
-        updateCount = db().deleteAll(new RoleWfStepQuery().roleId(roleId));
+        updateCount = db().deleteAll(new RoleWfStepQuery().type(type).roleId(roleId));
 
         if (DataUtils.isNotBlank(wfStepIdList)) {
             // Create new privileges
             RoleWfStep roleWfStep = new RoleWfStep();
+            roleWfStep.setType(type);
             roleWfStep.setRoleId(roleId);
 
             List<WfStep> wfStepList =
                     workflowService.findSteps(
                             ((WfStepQuery) new WfStepQuery().idIn(wfStepIdList).addSelect("wfTemplateId", "name")));
-            for (WfStep wfStepData : wfStepList) {
-                roleWfStep.setWfTemplateId(wfStepData.getWfTemplateId());
-                roleWfStep.setStepName(wfStepData.getName());
+            for (WfStep wfStep : wfStepList) {
+                roleWfStep.setWfTemplateId(wfStep.getWfTemplateId());
+                roleWfStep.setStepName(wfStep.getName());
                 db().create(roleWfStep);
             }
 
-            updateCount += wfStepIdList.size();
+            updateCount += wfStepIdList.size() * 2;
         }
 
         if (updateCount > 0) {
@@ -542,7 +548,8 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
 
                 // Workflow steps
                 Set<String> wfStepCodes = new HashSet<String>();
-                List<RoleWfStep> roleWfStepList = db().listAll(new RoleWfStepQuery().roleName(roleName));
+                List<RoleWfStep> roleWfStepList =
+                        db().listAll(new RoleWfStepQuery().type(RoleWfStepType.USER_INTERACT).roleName(roleName));
                 for (RoleWfStep roleWfStep : roleWfStepList) {
                     wfStepCodes.add(WfNameUtils.getStepGlobalName(roleWfStep.getWfCategoryName(),
                             roleWfStep.getWfTemplateName(), roleWfStep.getStepName()));
@@ -560,11 +567,12 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
-    public List<String> findWfStepRoles(String stepGlobalName) throws UnifyException {
-        // TODO Implement cache
+    public List<String> findWfStepRoles(RoleWfStepType type, String stepGlobalName) throws UnifyException {
         StepNameParts stepNameParts = WfNameUtils.getStepNameParts(stepGlobalName);
-        return db().valueList(String.class, "roleName", new RoleWfStepQuery().stepName(stepNameParts.getStepName())
-                .wfTemplateName(stepNameParts.getTemplateName()).wfCategoryName(stepNameParts.getCategoryName()));
+        return db().valueList(String.class, "roleName",
+                new RoleWfStepQuery().type(type).stepName(stepNameParts.getStepName())
+                        .wfTemplateName(stepNameParts.getTemplateName())
+                        .wfCategoryName(stepNameParts.getCategoryName()));
     }
 
     @Override
@@ -688,13 +696,14 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
         return db().deleteAll(query);
     }
 
-    private List<Long> getWfStepIdListForRole(Long roleId) throws UnifyException {
+    private List<Long> getWfStepIdListForRole(RoleWfStepType type, Long roleId) throws UnifyException {
         List<Long> wfStepIdList = new ArrayList<Long>();
-        Set<Long> wfTemplateIds = db().valueSet(Long.class, "wfTemplateId", new RoleWfStepQuery().roleId(roleId));
+        Set<Long> wfTemplateIds =
+                db().valueSet(Long.class, "wfTemplateId", new RoleWfStepQuery().type(type).roleId(roleId));
         for (Long wfTemplateId : wfTemplateIds) {
             Set<String> stepNames =
                     db().valueSet(String.class, "stepName",
-                            new RoleWfStepQuery().roleId(roleId).wfTemplateId(wfTemplateId));
+                            new RoleWfStepQuery().type(type).roleId(roleId).wfTemplateId(wfTemplateId));
             wfStepIdList.addAll(workflowService.findStepIds(wfTemplateId, stepNames));
         }
 

@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.organization.entities;
 import java.util.Collection;
 
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
+import com.tcdng.jacklyn.shared.organization.RoleWfStepType;
 
 /**
  * Role workflow step query.
@@ -29,6 +30,10 @@ public class RoleWfStepQuery extends BaseEntityQuery<RoleWfStep> {
 
     public RoleWfStepQuery() {
         super(RoleWfStep.class);
+    }
+    
+    public RoleWfStepQuery type(RoleWfStepType type) {
+        return (RoleWfStepQuery) addEquals("type", type);
     }
 
     public RoleWfStepQuery roleId(Long roleId) {

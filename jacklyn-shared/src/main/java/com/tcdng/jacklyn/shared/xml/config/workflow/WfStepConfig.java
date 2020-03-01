@@ -51,6 +51,8 @@ public class WfStepConfig extends BaseConfig {
 
     private Integer itemsPerSession;
 
+    private Integer criticalHours;
+
     private Integer expiryHours;
 
     private Boolean audit;
@@ -86,6 +88,7 @@ public class WfStepConfig extends BaseConfig {
         this.departmentOnly = Boolean.FALSE;
         this.includeForwarder = Boolean.FALSE;
         this.itemsPerSession = Integer.valueOf(0);
+        this.criticalHours = Integer.valueOf(0);
         this.expiryHours = Integer.valueOf(0);
     }
 
@@ -168,6 +171,15 @@ public class WfStepConfig extends BaseConfig {
     @XmlAttribute(name = "max-session-items", required = true)
     public void setItemsPerSession(Integer itemsPerSession) {
         this.itemsPerSession = itemsPerSession;
+    }
+
+    public Integer getCriticalHours() {
+        return criticalHours;
+    }
+
+    @XmlAttribute(name = "critical-hours", required = true)
+    public void setCriticalHours(Integer criticalHours) {
+        this.criticalHours = criticalHours;
     }
 
     public Integer getExpiryHours() {

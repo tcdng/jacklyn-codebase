@@ -32,18 +32,21 @@ public class RoleLargeData extends BaseLargeData<Role> {
 
     private List<Long> wfStepIdList;
 
+    private List<Long> wfNotifStepIdList;
+
     public RoleLargeData() {
         super(new Role());
     }
 
-    public RoleLargeData(Role roleData) {
-        super(roleData);
+    public RoleLargeData(Role role) {
+        super(role);
     }
 
-    public RoleLargeData(Role roleData, List<Long> privilegeIdList, List<Long> wfStepIdList) {
-        super(roleData);
+    public RoleLargeData(Role role, List<Long> privilegeIdList, List<Long> wfStepIdList, List<Long> wfNotifStepIdList) {
+        super(role);
         this.privilegeIdList = privilegeIdList;
         this.wfStepIdList = wfStepIdList;
+        this.wfNotifStepIdList = wfNotifStepIdList;
     }
 
     public List<Long> getPrivilegeIdList() {
@@ -60,6 +63,14 @@ public class RoleLargeData extends BaseLargeData<Role> {
 
     public void setWfStepIdList(List<Long> wfStepIdList) {
         this.wfStepIdList = wfStepIdList;
+    }
+
+    public List<Long> getWfNotifStepIdList() {
+        return wfNotifStepIdList;
+    }
+
+    public void setWfNotifStepIdList(List<Long> wfNotifStepIdList) {
+        this.wfNotifStepIdList = wfNotifStepIdList;
     }
 
 }

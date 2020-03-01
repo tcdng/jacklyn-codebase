@@ -73,6 +73,9 @@ public class WfStep extends BaseEntity {
     @Column
     private Integer itemsPerSession;
 
+    @Column(nullable = true)
+    private Integer criticalHours;
+
     @Column
     private Integer expiryHours;
 
@@ -225,6 +228,14 @@ public class WfStep extends BaseEntity {
 
     public void setItemsPerSession(Integer itemsPerSession) {
         this.itemsPerSession = itemsPerSession;
+    }
+
+    public Integer getCriticalHours() {
+        return criticalHours;
+    }
+
+    public void setCriticalHours(Integer criticalHours) {
+        this.criticalHours = criticalHours;
     }
 
     public Integer getExpiryHours() {

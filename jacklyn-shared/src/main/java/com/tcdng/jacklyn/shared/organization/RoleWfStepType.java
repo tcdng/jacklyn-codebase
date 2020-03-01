@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department.
+ * Copyright 2018-2020 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,26 +14,27 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.shared.constants;
+package com.tcdng.jacklyn.shared.organization;
 
 import com.tcdng.unify.core.annotation.StaticList;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.util.EnumUtils;
 
 /**
- * Orientation type.
+ * Role workflow step type.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("orientationtypelist")
-public enum OrientationType implements EnumConst {
+@StaticList("rolewfsteptypelist")
+public enum RoleWfStepType implements EnumConst {
 
-    HORIZONTAL("H"), VERTICAL("V");
+    USER_INTERACT("I"),
+    NOTIFY_UNATTENDED("N");
 
     private final String code;
-
-    private OrientationType(String code) {
+    
+    private RoleWfStepType(String code) {
         this.code = code;
     }
 
@@ -44,14 +45,14 @@ public enum OrientationType implements EnumConst {
 
     @Override
     public String defaultCode() {
-        return HORIZONTAL.code;
+        return USER_INTERACT.code;
     }
 
-    public static OrientationType fromCode(String code) {
-        return EnumUtils.fromCode(OrientationType.class, code);
+    public static RoleWfStepType fromCode(String code) {
+        return EnumUtils.fromCode(RoleWfStepType.class, code);
     }
 
-    public static OrientationType fromName(String name) {
-        return EnumUtils.fromName(OrientationType.class, name);
+    public static RoleWfStepType fromName(String name) {
+        return EnumUtils.fromName(RoleWfStepType.class, name);
     }
 }

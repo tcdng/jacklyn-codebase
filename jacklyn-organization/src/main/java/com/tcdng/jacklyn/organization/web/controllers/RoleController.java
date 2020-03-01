@@ -90,37 +90,38 @@ public class RoleController extends AbstractOrganizationFormController<RolePageB
     }
 
     @Override
-    protected void onPrepareView(Role roleData, boolean onPaste) throws UnifyException {
+    protected void onPrepareView(Role role, boolean onPaste) throws UnifyException {
         RolePageBean pageBean = getPageBean();
         RoleLargeData largeData = pageBean.getLargeData();
         if (onPaste) {
             RoleLargeData clipboardLargeData = pageBean.getClipboardLargeData();
             largeData.setPrivilegeIdList(clipboardLargeData.getPrivilegeIdList());
             largeData.setWfStepIdList(clipboardLargeData.getWfStepIdList());
+            largeData.setWfNotifStepIdList(clipboardLargeData.getWfNotifStepIdList());
         }
     }
 
     @Override
-    protected void onLoseView(Role roleData) throws UnifyException {
+    protected void onLoseView(Role role) throws UnifyException {
         RolePageBean pageBean = getPageBean();
         pageBean.setLargeData(new RoleLargeData());
         pageBean.setClipboardLargeData(null);
     }
 
     @Override
-    protected Object create(Role roleData) throws UnifyException {
+    protected Object create(Role role) throws UnifyException {
         RolePageBean pageBean = getPageBean();
         return getOrganizationService().createRole(pageBean.getLargeData());
     }
 
     @Override
-    protected int update(Role roleData) throws UnifyException {
+    protected int update(Role role) throws UnifyException {
         RolePageBean pageBean = getPageBean();
         return getOrganizationService().updateRole(pageBean.getLargeData());
     }
 
     @Override
-    protected int delete(Role roleData) throws UnifyException {
-        return getOrganizationService().deleteRole(roleData.getId());
+    protected int delete(Role role) throws UnifyException {
+        return getOrganizationService().deleteRole(role.getId());
     }
 }

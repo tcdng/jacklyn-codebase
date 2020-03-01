@@ -32,7 +32,43 @@ import com.tcdng.unify.core.UnifyException;
 public interface WfStepUserInformationProvider extends UnifyComponent {
 
     /**
-     * Gets the list of eligible users for a workflow step.
+     * Gets the list of eligible users for workflow escalation
+     * 
+     * @param stepGlobalName
+     *            the workflow step
+     * @param branchCode
+     *            restrict to branch code
+     * @param departmentCode
+     *            restrict to department code
+     * @param preferredRoles
+     *            optional preferred role names
+     * @return the list of contact information
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Collection<String> getEligibleUsersForEscalation(String stepGlobalName, String branchCode, String departmentCode,
+            String... preferredRoles) throws UnifyException;
+
+    /**
+     * Gets the list of notification email contacts for workflow escalation.
+     * 
+     * @param stepGlobalName
+     *            the workflow step
+     * @param branchCode
+     *            restrict to branch code
+     * @param departmentCode
+     *            restrict to department code
+     * @param preferredRoles
+     *            optional preferred role names
+     * @return the list of contact information
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Collection<NotificationContact> getEligibleEmailContactsForEscalation(String stepGlobalName, String branchCode,
+            String departmentCode, String... preferredRoles) throws UnifyException;
+
+    /**
+     * Gets the list of eligible users for workflow participation
      * 
      * @param participant
      *            the participant type
@@ -48,11 +84,11 @@ public interface WfStepUserInformationProvider extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    Collection<String> getEligibleUsersForWorkflowStep(WorkflowParticipantType participant, String stepGlobalName,
+    Collection<String> getEligibleUsersForParticipation(WorkflowParticipantType participant, String stepGlobalName,
             String branchCode, String departmentCode, String... preferredRoles) throws UnifyException;
 
     /**
-     * Gets the list of notification email contacts for a workflow step.
+     * Gets the list of notification email contacts for workflow participation.
      * 
      * @param participant
      *            the participant type
@@ -68,7 +104,7 @@ public interface WfStepUserInformationProvider extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    Collection<NotificationContact> getEligibleEmailContactsForWorkflowStep(WorkflowParticipantType participant,
+    Collection<NotificationContact> getEligibleEmailContactsForParticipation(WorkflowParticipantType participant,
             String stepGlobalName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException;
 
@@ -84,7 +120,8 @@ public interface WfStepUserInformationProvider extends UnifyComponent {
     Collection<NotificationContact> getEmailContactsForUser(String userLoginId) throws UnifyException;
 
     /**
-     * Gets the list of notification mobile phone contacts for a workflow step.
+     * Gets the list of notification mobile phone contacts for a workflow
+     * participation.
      * 
      * @param participant
      *            the participant type
@@ -100,7 +137,7 @@ public interface WfStepUserInformationProvider extends UnifyComponent {
      * @throws UnifyException
      *             if an error occurs
      */
-    Collection<NotificationContact> getEligibleMobilePhoneContactsForWorkflowStep(WorkflowParticipantType participant,
+    Collection<NotificationContact> getEligibleMobilePhoneContactsForParticipation(WorkflowParticipantType participant,
             String globalStepName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException;
 
