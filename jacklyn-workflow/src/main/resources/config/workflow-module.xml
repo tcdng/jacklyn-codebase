@@ -62,10 +62,10 @@
 	</privileges>
     <sys-parameters>
         <sys-parameter name="WFL-0001" defaultVal=""
-            description="$m{workflow.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name"
+            description="$m{workflow.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name blankOption:$s{}"
             type="string" />
         <sys-parameter name="WFL-0002" defaultVal=""
-            description="$m{workflow.sysparam.smsnotificationchannel}" editor="!ui-select list:smsnotificationchannellist listKey:name"
+            description="$m{workflow.sysparam.smsnotificationchannel}" editor="!ui-select list:smsnotificationchannellist listKey:name blankOption:$s{}"
             type="string" />
         <sys-parameter name="WFL-0003" defaultVal="defWfSysNotifChannel"
             description="$m{workflow.sysparam.systemnotificationchannel}" editor="!ui-select list:systemnotificationchannellist listKey:name"

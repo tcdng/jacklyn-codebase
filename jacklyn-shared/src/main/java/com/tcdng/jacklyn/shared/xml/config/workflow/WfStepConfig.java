@@ -42,18 +42,18 @@ public class WfStepConfig extends BaseConfig {
     private WorkflowStepPriority priority;
 
     private String label;
-    
+
     private String assigner;
-    
+
     private String branch;
-    
+
     private String origin;
 
     private Integer itemsPerSession;
 
-    private Integer criticalHours;
+    private Integer criticalMinutes;
 
-    private Integer expiryHours;
+    private Integer expiryMinutes;
 
     private Boolean audit;
 
@@ -88,8 +88,8 @@ public class WfStepConfig extends BaseConfig {
         this.departmentOnly = Boolean.FALSE;
         this.includeForwarder = Boolean.FALSE;
         this.itemsPerSession = Integer.valueOf(0);
-        this.criticalHours = Integer.valueOf(0);
-        this.expiryHours = Integer.valueOf(0);
+        this.criticalMinutes = Integer.valueOf(0);
+        this.expiryMinutes = Integer.valueOf(0);
     }
 
     public WorkflowStepType getType() {
@@ -173,22 +173,22 @@ public class WfStepConfig extends BaseConfig {
         this.itemsPerSession = itemsPerSession;
     }
 
-    public Integer getCriticalHours() {
-        return criticalHours;
+    public Integer getCriticalMinutes() {
+        return criticalMinutes;
     }
 
-    @XmlAttribute(name = "critical-hours", required = true)
-    public void setCriticalHours(Integer criticalHours) {
-        this.criticalHours = criticalHours;
+    @XmlAttribute(name = "critical-minutes", required = true)
+    public void setCriticalMinutes(Integer criticalMinutes) {
+        this.criticalMinutes = criticalMinutes;
     }
 
-    public Integer getExpiryHours() {
-        return expiryHours;
+    public Integer getExpiryMinutes() {
+        return expiryMinutes;
     }
 
-    @XmlAttribute(name = "expiry-hours", required = true)
-    public void setExpiryHours(Integer expiryHours) {
-        this.expiryHours = expiryHours;
+    @XmlAttribute(name = "expiry-minutes", required = true)
+    public void setExpiryMinutes(Integer expiryMinutes) {
+        this.expiryMinutes = expiryMinutes;
     }
 
     public Boolean getAudit() {

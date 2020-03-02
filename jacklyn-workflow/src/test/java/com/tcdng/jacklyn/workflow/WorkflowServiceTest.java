@@ -439,7 +439,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.PERSONNEL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -483,7 +483,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -534,7 +534,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -588,7 +588,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -651,7 +651,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -684,7 +684,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -707,7 +707,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
