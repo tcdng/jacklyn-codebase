@@ -137,7 +137,7 @@
 			editor="!ui-select list:notificationtemplatelist listKey:name listParams:$l{security}"
 			type="string" />
 		<sys-parameter name="SEC-0013" defaultVal=""
-			description="$m{security.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist listKey:name"
+			description="$m{security.sysparam.emailnotificationchannel}" editor="!ui-select list:emailnotificationchannellist blankOption:$s{} listKey:name"
 			type="string" />
 		<sys-parameter name="SEC-0014"
 			description="$m{security.sysparam.administratoremail}"

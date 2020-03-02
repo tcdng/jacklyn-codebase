@@ -73,11 +73,11 @@ public class WfStep extends BaseEntity {
     @Column
     private Integer itemsPerSession;
 
-    @Column(nullable = true)
-    private Integer criticalHours;
+    @Column(defaultVal = "0")
+    private Integer criticalMinutes;
 
-    @Column
-    private Integer expiryHours;
+    @Column(defaultVal = "0")
+    private Integer expiryMinutes;
 
     @Column(name = "AUDIT_FG")
     private Boolean audit;
@@ -230,20 +230,20 @@ public class WfStep extends BaseEntity {
         this.itemsPerSession = itemsPerSession;
     }
 
-    public Integer getCriticalHours() {
-        return criticalHours;
+    public Integer getCriticalMinutes() {
+        return criticalMinutes;
     }
 
-    public void setCriticalHours(Integer criticalHours) {
-        this.criticalHours = criticalHours;
+    public void setCriticalMinutes(Integer criticalMinutes) {
+        this.criticalMinutes = criticalMinutes;
     }
 
-    public Integer getExpiryHours() {
-        return expiryHours;
+    public Integer getExpiryMinutes() {
+        return expiryMinutes;
     }
 
-    public void setExpiryHours(Integer expiryHours) {
-        this.expiryHours = expiryHours;
+    public void setExpiryMinutes(Integer expiryMinutes) {
+        this.expiryMinutes = expiryMinutes;
     }
 
     public Boolean getAudit() {

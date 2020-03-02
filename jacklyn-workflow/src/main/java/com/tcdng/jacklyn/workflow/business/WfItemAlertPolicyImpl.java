@@ -60,7 +60,8 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
 
     @Override
     public void sendAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
-        logDebug("Sending alert...");
+        logDebug("Sending alert of type [{0}] through channel [{1}] for workflow item [{2}]...", wfAlertDef.getType(),
+                wfAlertDef.getChannel(), flowingWfItemReader.getItemDesc());
         String senderName =
                 getSystemService().getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_SYSTEM_NAME);
@@ -96,6 +97,7 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
         }
 
         // Attempt to send only on valid channel name
+        logDebug("Using specific channel with name [{0}]...", channelName);
         if (!StringUtils.isBlank(channelName)) {
             // Get contact list
             switch (wfAlertDef.getType()) {
@@ -127,6 +129,7 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
 
             // Send only if there's at least one contact
             if (!DataUtils.isBlank(contactList)) {
+                logDebug("Targeting [{0}] contacts through channel...", contactList.size());
                 String templateGlobalName = wfAlertDef.getNotificationTemplateCode();
                 NotificationTemplateDef notificationTemplateDef =
                         getNotificationService().getRuntimeNotificationTemplateDef(templateGlobalName);

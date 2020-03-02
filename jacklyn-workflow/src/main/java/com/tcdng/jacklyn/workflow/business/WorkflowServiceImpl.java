@@ -621,13 +621,14 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     }
 
                     long criticalMilliSec = 0;
-                    if (wfStep.getCriticalHours() != null) {
+                    if (wfStep.getCriticalMinutes() != null) {
                         criticalMilliSec =
-                                CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getCriticalHours());
+                                CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.MINUTE,
+                                        wfStep.getCriticalMinutes());
                     }
 
                     long expiryMilliSec =
-                            CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.HOUR, wfStep.getExpiryHours());
+                            CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.MINUTE, wfStep.getExpiryMinutes());
                     stepList.add(new WfStepDef(wfTemplateId, templateGlobalName, templateGlobalLockName, stepGlobalName,
                             originGlobalName, wfStep.getName(), wfStep.getDescription(), wfStep.getLabel(),
                             wfStep.getWorkAssigner(), wfStep.getPriorityLevelDesc(), wfStep.getStepType(),
@@ -1110,8 +1111,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Override
     public List<WfItemCountStatusInfo> getCurrentWorkItemCountStatusList() throws UnifyException {
         List<WfItem> wfItemList =
-                db().listAll(new WfItemQuery().heldBy(getUserToken().getUserLoginId()).addSelect("expectedDt")
-                        .addSelect("stepGlobalName"));
+                db().listAll(new WfItemQuery().heldBy(getUserToken().getUserLoginId()).addSelect("criticalDt",
+                        "expectedDt", "stepGlobalName"));
         int pendingCount = 0;
         int criticalCount = 0;
         int overdueCount = 0;
@@ -1122,7 +1123,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     pendingCount++;
                 } else if (CRITICAL_BADGEINFO.equals(badgeInfo)) {
                     criticalCount++;
-                } else { // Overdue
+                } else {
                     overdueCount++;
                 }
             }
@@ -1402,6 +1403,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     @Synchronized(CRITICAL_EXPIRED_NOTIFICATION_LOCK)
     @Periodic(PeriodicType.SLOWEST)
     public void sendCriticalExpiredNotifications(TaskMonitor taskMonitor) throws UnifyException {
+        logDebug("Sending notifications for critical and expired workflow items...");
         Date now = getNow();
         // Critical
         List<WfItem> criticalWfItemList =
@@ -1987,8 +1989,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             wfStep.setPriorityLevel(wfStepConfig.getPriority());
             wfStep.setParticipantType(wfStepConfig.getParticipant());
             wfStep.setItemsPerSession(wfStepConfig.getItemsPerSession());
-            wfStep.setCriticalHours(wfStepConfig.getCriticalHours());
-            wfStep.setExpiryHours(wfStepConfig.getExpiryHours());
+            wfStep.setCriticalMinutes(wfStepConfig.getCriticalMinutes());
+            wfStep.setExpiryMinutes(wfStepConfig.getExpiryMinutes());
             wfStep.setIncludeForwarder(wfStepConfig.getIncludeForwarder());
             wfStep.setAudit(wfStepConfig.getAudit());
             wfStep.setBranchOnly(wfStepConfig.getBranchOnly());
