@@ -45,6 +45,8 @@ public class NotificationChannelDef {
 
     private long versionNo;
 
+    private boolean serverConfigured;
+
     public NotificationChannelDef(Long notificationChannelId, String notificationChannelName,
             NotificationType notificationType, String hostAddress, Integer hostPort, NetworkSecurityType securityType,
             String username, String password, long versionNo) {
@@ -57,6 +59,7 @@ public class NotificationChannelDef {
         this.username = username;
         this.password = password;
         this.versionNo = versionNo;
+        this.serverConfigured = false;
     }
 
     public Long getNotificationChannelId() {
@@ -95,4 +98,11 @@ public class NotificationChannelDef {
         return versionNo;
     }
 
+    public boolean isServerConfigured() {
+        return serverConfigured;
+    }
+
+    public void setServerConfigured() {
+        serverConfigured = true;
+    }
 }
