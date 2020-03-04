@@ -54,9 +54,11 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
 
     private static final String WFITEMDESC_TOKEN = "wfItemDesc";
 
+    private static final String COMMENT_TOKEN = "comment";
+
     private static final Set<String> RESERVED_WFITEM_TOKENS =
             Collections.unmodifiableSet(
-                    new HashSet<String>(Arrays.asList(HELDBY_TOKEN, FORWARDED_TOKEN, WFITEMDESC_TOKEN)));
+                    new HashSet<String>(Arrays.asList(HELDBY_TOKEN, FORWARDED_TOKEN, WFITEMDESC_TOKEN, COMMENT_TOKEN)));
 
     @Override
     public void sendAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
@@ -152,6 +154,8 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
                                 msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getItemHeldBy());
                             } else if (FORWARDED_TOKEN.equals(tokenName)) {
                                 msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getItemForwardedBy());
+                            } else if (COMMENT_TOKEN.equals(tokenName)) {
+                                msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getLastComment());
                             } else if (WFITEMDESC_TOKEN.equals(tokenName)) {
                                 msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getItemDesc());
                             }

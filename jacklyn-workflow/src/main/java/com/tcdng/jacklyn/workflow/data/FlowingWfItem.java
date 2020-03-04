@@ -352,6 +352,10 @@ public class FlowingWfItem implements ViewableWfItem {
             return wfItemDepartmentCode;
         }
 
+        public String getLastComment() {
+            return comment;
+        }
+
         public String getItemHeldBy() {
             return heldBy;
         }
