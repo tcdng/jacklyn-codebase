@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.common.web.controllers;
 
+import com.tcdng.unify.web.constant.Secured;
+
 /**
  * Base CRUD controller manage record modifier.
  * 
@@ -65,8 +67,12 @@ public final class ManageRecordModifier {
         return (ACTIVATABLE & modifier) != 0;
     }
 
-    public static boolean isSecure(int modifier) {
-        return (SECURE & modifier) != 0;
+    public static Secured isSecure(int modifier) {
+        if((SECURE & modifier) != 0){
+            return Secured.TRUE;
+        }
+        
+        return Secured.FALSE;
     }
 
     public static boolean isCopyable(int modifier) {

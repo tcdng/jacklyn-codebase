@@ -41,6 +41,8 @@ import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
 import com.tcdng.unify.web.ui.panel.SearchCriteriaPanel;
@@ -94,7 +96,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     private int modifier;
 
     public BaseEntityController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
-        super(pageBeanClass, ManageRecordModifier.isSecure(modifier), false, false);
+        super(pageBeanClass, ManageRecordModifier.isSecure(modifier), ReadOnly.FALSE, ResetOnWrite.FALSE);
         this.entityClass = entityClass;
         this.modifier = modifier;
     }

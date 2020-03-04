@@ -20,6 +20,9 @@ import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.system.business.SystemService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Abstract page controller for system module.
@@ -32,8 +35,8 @@ public abstract class AbstractSystemPageController<T extends BasePageBean> exten
     @Configurable
     private SystemService systemService;
 
-    public AbstractSystemPageController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
-            boolean resetOnWrite) {
+    public AbstractSystemPageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly,
+            ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 

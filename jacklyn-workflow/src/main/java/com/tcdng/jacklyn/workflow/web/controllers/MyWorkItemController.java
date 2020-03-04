@@ -33,6 +33,9 @@ import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 import com.tcdng.unify.web.ui.data.FileAttachmentInfo;
 import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
 
@@ -54,7 +57,7 @@ import com.tcdng.unify.web.ui.data.FileAttachmentsInfo;
 public class MyWorkItemController extends AbstractWorkflowPageController<MyWorkItemPageBean> {
 
     public MyWorkItemController() {
-        super(MyWorkItemPageBean.class, true, false, false);
+        super(MyWorkItemPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

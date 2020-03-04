@@ -20,6 +20,9 @@ import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.report.business.ReportService;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Convenient base page controller for report module.
@@ -32,8 +35,8 @@ public abstract class AbstractReportPageController<T extends BasePageBean> exten
     @Configurable
     private ReportService reportService;
 
-    public AbstractReportPageController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
-            boolean resetOnWrite) {
+    public AbstractReportPageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly,
+            ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 

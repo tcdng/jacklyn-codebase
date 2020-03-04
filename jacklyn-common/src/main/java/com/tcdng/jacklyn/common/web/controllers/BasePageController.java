@@ -32,6 +32,9 @@ import com.tcdng.unify.core.logging.FieldAudit;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.AbstractPageController;
 import com.tcdng.unify.web.DocViewController;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 import com.tcdng.unify.web.ui.data.MessageResult;
 import com.tcdng.unify.web.ui.data.SearchBox;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
@@ -48,7 +51,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
     @Configurable
     private UserSessionViewAccessProvider userSessionViewAccessProvider;
 
-    public BasePageController(Class<T> pageBeanClass, boolean secured, boolean readOnly, boolean resetOnWrite) {
+    public BasePageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly, ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 

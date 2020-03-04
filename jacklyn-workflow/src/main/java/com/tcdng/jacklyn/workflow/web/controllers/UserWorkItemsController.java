@@ -18,6 +18,9 @@ package com.tcdng.jacklyn.workflow.web.controllers;
 import com.tcdng.jacklyn.workflow.web.beans.UserWorkItemsPageBean;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Controller for managing user work items.
@@ -30,6 +33,6 @@ import com.tcdng.unify.core.annotation.UplBinding;
 public class UserWorkItemsController extends AbstractWorkflowPageController<UserWorkItemsPageBean> {
 
     public UserWorkItemsController() {
-        super(UserWorkItemsPageBean.class, true, false, false);
+        super(UserWorkItemsPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 }

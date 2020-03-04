@@ -20,6 +20,9 @@ import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Abstract base page controller for security module.
@@ -32,8 +35,8 @@ public abstract class AbstractSecurityPageController<T extends BasePageBean> ext
     @Configurable
     private SecurityService securityService;
 
-    public AbstractSecurityPageController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
-            boolean resetOnWrite) {
+    public AbstractSecurityPageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly,
+            ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
