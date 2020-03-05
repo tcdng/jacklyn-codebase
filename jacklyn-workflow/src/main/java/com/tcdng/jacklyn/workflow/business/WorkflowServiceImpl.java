@@ -1741,6 +1741,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             try {
                 performFlowingWfItemTransition(targetWfStepDef, flowingWfItem);
             } catch (Exception e) {
+                logError(e);
                 try {
                     // Push workflow item to error step
                     flowingWfItem.setSourceWfStepDef(targetWfStepDef);
