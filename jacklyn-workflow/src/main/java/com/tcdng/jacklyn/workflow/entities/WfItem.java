@@ -104,6 +104,9 @@ public class WfItem extends BaseTimestampedEntity {
     @ListOnly(key = "wfHistEventId", property = "srcWfStepName")
     private String srcWfStepName;
 
+    @ListOnly(key = "wfHistEventId", property = "prevWfStepName")
+    private String prevWfStepName;
+    
     @ListOnly(key = "wfHistEventId", property = "errorCode")
     private String errorCode;
 
@@ -288,6 +291,14 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setSrcWfStepName(String srcWfStepName) {
         this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getPrevWfStepName() {
+        return prevWfStepName;
+    }
+
+    public void setPrevWfStepName(String prevWfStepName) {
+        this.prevWfStepName = prevWfStepName;
     }
 
     public String getErrorCode() {
