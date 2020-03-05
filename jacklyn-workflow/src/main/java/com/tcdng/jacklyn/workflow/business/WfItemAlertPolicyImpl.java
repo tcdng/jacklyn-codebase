@@ -48,13 +48,13 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
         description = "Default Workflow Item Alert Policy")
 public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
 
-    private static final String HELDBY_TOKEN = "heldBy";
+    private static final String HELDBY_TOKEN = ":heldBy";
 
-    private static final String FORWARDED_TOKEN = "forwardedBy";
+    private static final String FORWARDED_TOKEN = ":forwardedBy";
 
-    private static final String WFITEMDESC_TOKEN = "wfItemDesc";
+    private static final String WFITEMDESC_TOKEN = ":itemDesc";
 
-    private static final String COMMENT_TOKEN = "comment";
+    private static final String COMMENT_TOKEN = ":comment";
 
     private static final Set<String> RESERVED_WFITEM_TOKENS =
             Collections.unmodifiableSet(
