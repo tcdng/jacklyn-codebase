@@ -37,8 +37,10 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
-    private WfStepDef sourceWfStepDef;
+    private WfStepDef prevWfStepDef;
 
+    private WfStepDef sourceWfStepDef;
+    
     private Long wfItemId;
 
     private Long wfItemHistId;
@@ -188,6 +190,26 @@ public class FlowingWfItem implements ViewableWfItem {
 
     public WfStepDef getErrorWfStepDef() {
         return wfProcessDef.getWfTemplateDef().getErrorStep();
+    }
+
+    public WfStepDef getPrevWfStepDef() {
+        return prevWfStepDef;
+    }
+
+    public void setPrevWfStepDef(WfStepDef prevWfStepDef) {
+        this.prevWfStepDef = prevWfStepDef;
+    }
+
+    public boolean isWithPrevStep() {
+        return prevWfStepDef != null;
+    }
+
+    public String getPrevStepName() {
+        if (prevWfStepDef != null) {
+            return prevWfStepDef.getName();
+        }
+        
+        return null;
     }
 
     public WfStepDef getSourceWfStepDef() {
@@ -343,7 +365,7 @@ public class FlowingWfItem implements ViewableWfItem {
         public String getStepGlobalName() {
             return wfStepDef.getGlobalName();
         }
-
+        
         public String getItemBranchCode() {
             return wfItemBranchCode;
         }

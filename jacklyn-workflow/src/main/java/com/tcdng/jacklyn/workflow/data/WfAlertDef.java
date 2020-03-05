@@ -19,6 +19,7 @@ package com.tcdng.jacklyn.workflow.data;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow document alert definition.
@@ -38,13 +39,17 @@ public class WfAlertDef extends BaseWfDef {
 
     private String stepGlobalName;
 
+    private String fireOnPrevStepName;
+
     private String notificationTemplateCode;
 
-    public WfAlertDef(String docName, String stepGlobalName, String name, String description, WorkflowAlertType type,
-            WorkflowParticipantType participant, NotificationType channel, String notificationTemplateCode) {
+    public WfAlertDef(String docName, String stepGlobalName, String fireOnPrevStepName, String name, String description,
+            WorkflowAlertType type, WorkflowParticipantType participant, NotificationType channel,
+            String notificationTemplateCode) {
         super(name, description);
         this.docName = docName;
         this.stepGlobalName = stepGlobalName;
+        this.fireOnPrevStepName = fireOnPrevStepName;
         this.type = type;
         this.participant = participant;
         this.channel = channel;
@@ -73,6 +78,15 @@ public class WfAlertDef extends BaseWfDef {
 
     public String getDocName() {
         return docName;
+    }
+
+    public String getFireOnPrevStepName() {
+        return fireOnPrevStepName;
+    }
+
+    public boolean isFireAlertOn(String docName, String prevStepName) {
+        return this.docName.equals(docName)
+                && (StringUtils.isBlank(this.fireOnPrevStepName) || this.fireOnPrevStepName.equals(prevStepName));
     }
 
     public boolean isPassThrough() {

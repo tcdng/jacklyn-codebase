@@ -596,9 +596,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                                     NotificationUtils.getTemplateGlobalName(WorkflowModuleNameConstants.WORKFLOW_MODULE,
                                             WfNameUtils.getMessageGlobalName(templateNames.getCategoryName(),
                                                     wfAlert.getNotificationTemplateCode()));
-                            alertList.add(new WfAlertDef(wfAlert.getDocName(), stepGlobalName, wfAlert.getName(),
-                                    wfAlert.getDescription(), wfAlert.getType(), wfAlert.getParticipant(),
-                                    wfAlert.getChannel(), notifTemplateGlobalName));
+                            alertList.add(new WfAlertDef(wfAlert.getDocName(), stepGlobalName,
+                                    wfAlert.getFireOnPrevStepName(), wfAlert.getName(), wfAlert.getDescription(),
+                                    wfAlert.getType(), wfAlert.getParticipant(), wfAlert.getChannel(),
+                                    notifTemplateGlobalName));
                         }
                     }
 
@@ -1253,10 +1254,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                 actionDesc = resolveSessionMessage(wfStepDef.getWfUserActionDef(wfHistEvent.getWfAction()).getLabel());
             }
 
-            eventList.add(new WfItemHistEvent(wfHistEvent.getId(), wfHistEvent.getWfStepName(), wfHistEvent.getStepDt(),
-                    wfHistEvent.getActionDt(), wfHistEvent.getActor(), wfHistEvent.getWfAction(), actionDesc,
-                    wfHistEvent.getComment(), wfHistEvent.getSrcWfStepName(), wfHistEvent.getErrorCode(),
-                    wfHistEvent.getErrorMsg()));
+            eventList.add(new WfItemHistEvent(wfHistEvent.getId(), wfHistEvent.getWfStepName(),
+                    wfHistEvent.getPrevWfStepName(), wfHistEvent.getStepDt(), wfHistEvent.getActionDt(),
+                    wfHistEvent.getActor(), wfHistEvent.getWfAction(), actionDesc, wfHistEvent.getComment(),
+                    wfHistEvent.getSrcWfStepName(), wfHistEvent.getErrorCode(), wfHistEvent.getErrorMsg()));
         }
 
         return new WfItemHistory(wfHist.getId(), wfHist.getDocId(), processNameParts.getDocGlobalName(),
@@ -2162,6 +2163,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfAlert.setName(wfAlertConfig.getName());
                     wfAlert.setDescription(resolveApplicationMessage(wfAlertConfig.getDescription()));
                     wfAlert.setDocName(wfAlertConfig.getDocument());
+                    wfAlert.setFireOnPrevStepName(wfAlertConfig.getFireOnPrevStepName());
                     wfAlert.setType(wfAlertConfig.getType());
                     wfAlert.setParticipant(wfAlertConfig.getParticipant());
                     wfAlert.setChannel(wfAlertConfig.getChannel());
@@ -2222,6 +2224,10 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Create work item
         FlowingWfItem flowingWfItem = new FlowingWfItem(wfProcessDef, wfStepDef, wfItem, wfItemId, title, pd);
+        if (!StringUtils.isBlank(wfItem.getPrevWfStepName())) {
+            flowingWfItem.setPrevWfStepDef(wfTemplateDef.getWfStepDef(wfItem.getPrevWfStepName()));
+        }
+
         flowingWfItem.setErrorSource(wfItem.getSrcWfStepName());
         flowingWfItem.setErrorCode(wfItem.getErrorCode());
         flowingWfItem.setErrorMsg(wfItem.getErrorMsg());
@@ -2269,6 +2275,9 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
     private void doActualTransition(final WfStepDef targetWfStepDef, final FlowingWfItem flowingWfItem)
             throws UnifyException {
         // Flow workflow item into target step
+        if (!targetWfStepDef.isError()) {
+            flowingWfItem.setPrevWfStepDef(flowingWfItem.getWfStepDef());
+        }
         flowingWfItem.setWfStepDef(targetWfStepDef);
 
         // Create history
@@ -2299,6 +2308,12 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfHistEvent.setStepDt(stepDt);
         wfHistEvent.setCriticalDt(criticalDt);
         wfHistEvent.setExpectedDt(expectedDt);
+        String prevStepName = null;
+        if (flowingWfItem.isWithPrevStep()) {
+            prevStepName = flowingWfItem.getPrevWfStepDef().getName();
+        }
+        wfHistEvent.setPrevWfStepName(prevStepName);
+
         if (targetWfStepDef.isError()) {
             wfHistEvent.setSrcWfStepName(flowingWfItem.getSourceWfStepDef().getName());
             wfHistEvent.setErrorCode(flowingWfItem.getErrorCode());
@@ -2375,7 +2390,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
 
         // Send pass-through alerts
         for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
-            if (wfAlertDef.isPassThrough() && wfAlertDef.getDocName().equals(docName)) {
+            if (wfAlertDef.isPassThrough() && wfAlertDef.isFireAlertOn(docName, prevStepName)) {
                 wfItemAlertLogic.sendAlert(flowingWfItemReader, wfAlertDef);
             }
         }
@@ -2545,7 +2560,8 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         boolean reAssigned = !DataUtils.equals(origHeldBy, assignee);
         if (isTransition || reAssigned) {
             for (WfAlertDef wfAlertDef : targetWfStepDef.getAlertList()) {
-                if (wfAlertDef.isUserInteract() && wfAlertDef.getDocName().equals(flowingWfItem.getDocName())) {
+                if (wfAlertDef.isUserInteract()
+                        && wfAlertDef.isFireAlertOn(flowingWfItem.getDocName(), flowingWfItem.getPrevStepName())) {
                     wfItemAlertLogic.sendAlert(flowingWfItem.getReader(), wfAlertDef);
                 }
             }

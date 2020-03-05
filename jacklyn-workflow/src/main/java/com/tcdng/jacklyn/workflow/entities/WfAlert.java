@@ -57,6 +57,9 @@ public class WfAlert extends BaseEntity {
     @Column(name = "DOC_NM", length = 32)
     private String docName;
 
+    @Column(name = "FIRE_ON_PREV_STEP_NM", length = 64, nullable = true)
+    private String fireOnPrevStepName;
+
     @Column(name = "NOTIFICATION_TMPL_CD")
     private String notificationTemplateCode;
 
@@ -130,6 +133,14 @@ public class WfAlert extends BaseEntity {
 
     public void setDocName(String docName) {
         this.docName = docName;
+    }
+
+    public String getFireOnPrevStepName() {
+        return fireOnPrevStepName;
+    }
+
+    public void setFireOnPrevStepName(String fireOnPrevStepName) {
+        this.fireOnPrevStepName = fireOnPrevStepName;
     }
 
     public String getNotificationTemplateCode() {
