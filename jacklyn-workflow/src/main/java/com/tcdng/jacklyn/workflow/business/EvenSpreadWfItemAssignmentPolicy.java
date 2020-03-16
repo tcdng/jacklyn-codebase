@@ -44,7 +44,7 @@ public class EvenSpreadWfItemAssignmentPolicy extends AbstractWfItemAssignmentPo
             }
 
             if (wfItemAssigneeInfoList.size() > 1) {
-                DataUtils.sort(wfItemAssigneeInfoList, WfItemAssigneeInfo.class, "assignedCount", true);
+                DataUtils.sortAscending(wfItemAssigneeInfoList, WfItemAssigneeInfo.class, "assignedCount");
                 String assignedTo = wfItemAssigneeInfoList.get(0).getUserLoginId();
                 if (!assignedTo.equals(flowingWfItemReader.getItemHeldBy())) {
                     return assignedTo;

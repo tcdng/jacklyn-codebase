@@ -1072,7 +1072,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
             }
 
             if (!summaryList.isEmpty()) {
-                DataUtils.sort(summaryList, WfItemSummary.class, "stepDesc", true);
+                DataUtils.sortAscending(summaryList, WfItemSummary.class, "stepDesc");
                 return summaryList;
             }
         }

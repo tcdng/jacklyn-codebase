@@ -40,7 +40,7 @@ public class ToolingDocumentListCommand extends AbstractZeroParamsSystemListComm
     public List<? extends Listable> execute(Locale locale, ZeroParams params) throws UnifyException {
         if (list == null) {
             list = getSystemService().findToolingDocumentListItems();
-            DataUtils.sort(list, ToolingDocumentListItem.class, "description", true);
+            DataUtils.sortAscending(list, ToolingDocumentListItem.class, "description");
         }
         
         return list;

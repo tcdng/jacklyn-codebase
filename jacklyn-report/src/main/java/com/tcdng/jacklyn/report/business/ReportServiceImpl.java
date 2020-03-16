@@ -181,17 +181,16 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
         if (StringUtils.isBlank(className)) {
             className = reportConfiguration.getBeanType();
         }
-        
+
         Class<?> targetReportClass = null;
         if (StringUtils.isNotBlank(className)) {
             targetReportClass = ReflectUtils.getClassForName(className);
             if (Entity.class.isAssignableFrom(targetReportClass)) {
                 sqlEntityInfo =
-                        ((SqlDataSourceDialect) db().getDataSource().getDialect())
-                                .getSqlEntityInfo(targetReportClass);
+                        ((SqlDataSourceDialect) db().getDataSource().getDialect()).getSqlEntityInfo(targetReportClass);
             }
         }
-        
+
         Map<String, ReportableField> fieldMap = Collections.emptyMap();
         Long reportableDefinitionId = reportConfiguration.getReportableId();
         boolean isWithReportableDefinition = reportableDefinitionId != null;
@@ -371,10 +370,11 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
         List<ReportColumnOptions> reportColumnOptionsList =
                 new ArrayList<ReportColumnOptions>(reportOptions.getColumnOptionsList());
-        DataUtils.sort(reportColumnOptionsList, ReportColumnOptions.class, "group", false);
+        DataUtils.sortDescending(reportColumnOptionsList, ReportColumnOptions.class, "group");
 
         List<ReportColumnOptions> sortReportColumnOptionsList = new ArrayList<ReportColumnOptions>();
-        // TODO Get from report data source. For now just get from application data source
+        // TODO Get from report data source. For now just get from application data
+        // source
         String sqlBlobTypeName = ((SqlDataSourceDialect) db().getDataSource().getDialect()).getSqlBlobType();
         for (ReportColumnOptions reportColumnOptions : reportColumnOptionsList) {
             if (reportColumnOptions.isIncluded()) {
@@ -383,7 +383,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
                 }
 
                 rb.addColumn(reportColumnOptions.getDescription(), reportColumnOptions.getTableName(),
-                        reportColumnOptions.getColumnName(), reportColumnOptions.getType(),sqlBlobTypeName,
+                        reportColumnOptions.getColumnName(), reportColumnOptions.getType(), sqlBlobTypeName,
                         reportColumnOptions.getFormatter(), reportColumnOptions.getOrderType(),
                         reportColumnOptions.getHorizontalAlignment(), reportColumnOptions.getWidth(),
                         reportColumnOptions.isGroup(), reportColumnOptions.isGroupOnNewPage(),
@@ -396,8 +396,11 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             List<?> content = reportOptions.getContent();
             for (int i = sortReportColumnOptionsList.size() - 1; i >= 0; i--) {
                 ReportColumnOptions reportColumnOptions = sortReportColumnOptionsList.get(i);
-                DataUtils.sort(content, dataClass, reportColumnOptions.getColumnName(),
-                        OrderType.ASCENDING.equals(reportColumnOptions.getOrderType()));
+                if (OrderType.ASCENDING.equals(reportColumnOptions.getOrderType())) {
+                    DataUtils.sortAscending(content, dataClass, reportColumnOptions.getColumnName());
+                } else {
+                    DataUtils.sortDescending(content, dataClass, reportColumnOptions.getColumnName());
+                }
             }
             rb.beanCollection(content);
         } else {

@@ -1179,7 +1179,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         // Register module system parameters and menus
         Map<String, Module> moduleMap =
                 db().findAllMap(String.class, "name", new ModuleQuery().ignoreEmptyCriteria(true));
-        DataUtils.sort(moduleConfigList, ModuleConfig.class, "description", true);
+        DataUtils.sortAscending(moduleConfigList, ModuleConfig.class, "description");
         for (ModuleConfig moduleConfig : moduleConfigList) {
             String moduleName = moduleConfig.getName();
             module = moduleMap.get(moduleName);
@@ -1237,7 +1237,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 logDebug("Updating menu definitions for module [{0}]...", module.getDescription());
                 List<MenuConfig> menuConfigList = moduleConfig.getMenus().getMenuList();
 
-                DataUtils.sort(menuConfigList, MenuConfig.class, "caption", true);
+                DataUtils.sortAscending(menuConfigList, MenuConfig.class, "caption");
                 applicationMenu.setModuleId(module.getId());
                 // Deal with parent menus first
                 ApplicationMenuQuery mQuery = new ApplicationMenuQuery();
