@@ -941,12 +941,19 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     }
 
                     if (calcNextExecutionOn == null) {
-                        // Use next eligible date start time
-                        calcNextExecutionOn =
-                                CalendarUtils.getDateWithOffset(
-                                        CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
-                                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
-                                        scheduledTaskDef.getStartOffset());
+                        Date todayStartTime = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getStartOffset());
+                        if (now.before(todayStartTime) && CalendarUtils.isWithinCalendar(scheduledTaskDef.getWeekdays(),
+                                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), todayStartTime)) {
+                            // Today start time
+                            calcNextExecutionOn = todayStartTime;
+                        } else {
+                            // Use next eligible date start time
+                            calcNextExecutionOn =
+                                    CalendarUtils.getDateWithOffset(
+                                            CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
+                                                    scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
+                                            scheduledTaskDef.getStartOffset());
+                        }
                     }
 
                     db().updateById(ScheduledTask.class, scheduledTaskId,
