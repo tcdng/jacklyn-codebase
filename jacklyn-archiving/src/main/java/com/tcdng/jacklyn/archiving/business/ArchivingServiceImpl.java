@@ -158,6 +158,11 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                         fileArchiveConfigName);
             }
 
+            ArchivingPolicy archivingPolicy = null;
+            if (!StringUtils.isBlank(fileArchiveConfig.getArchivingPolicyName())) {
+                archivingPolicy = (ArchivingPolicy) getComponent(fileArchiveConfig.getArchivingPolicyName());
+            }
+
             // Fetch ID's of records to backup. (Involves generic persistence
             // operations)
             Class<? extends Entity> entityClazz =
@@ -166,15 +171,14 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
             query.addBetween(fileArchiveConfig.getDateFieldName(), CalendarUtils.getMidnightDate(workingDt),
                     CalendarUtils.getLastSecondDate(workingDt));
             query.addEquals(fileArchiveConfig.getIndicatorFieldName(), Boolean.FALSE);
+            if (archivingPolicy != null) {
+                archivingPolicy.addFetchFilter(query);
+            }
+
             query.addOrder("id").setLimit(fileArchiveConfig.getMaxItemsPerFile());
             List<Long> targetIdList = db().valueList(Long.class, "id", query);
 
             if (!targetIdList.isEmpty()) {
-                ArchivingPolicy archivingPolicy = null;
-                if (!StringUtils.isBlank(fileArchiveConfig.getArchivingPolicyName())) {
-                    archivingPolicy = (ArchivingPolicy) getComponent(fileArchiveConfig.getArchivingPolicyName());
-                }
-
                 FileArchiveNameGenerator fileArchiveNameGenerator =
                         (FileArchiveNameGenerator) getComponent(fileArchiveConfig.getFilenameGenerator());
                 String filename =
@@ -219,17 +223,19 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
                             }
                         }
 
-                        // Append LOB to file with a write
-                        fileSystemIO.writeAll(outputStream, lobToArchive);
+                        if (lobToArchive != null && lobToArchive.length > 0) {
+                            // Append LOB to file with a write
+                            fileSystemIO.writeAll(outputStream, lobToArchive);
 
-                        // Create file archive entry record
-                        fileArchiveEntry.setArchivedItemId(archivedItemId);
-                        fileArchiveEntry.setFileIndex(fileIndex);
-                        fileArchiveEntry.setArchivedItemLength(lobToArchive.length);
-                        db().create(fileArchiveEntry);
+                            // Create file archive entry record
+                            fileArchiveEntry.setArchivedItemId(archivedItemId);
+                            fileArchiveEntry.setFileIndex(fileIndex);
+                            fileArchiveEntry.setArchivedItemLength(lobToArchive.length);
+                            db().create(fileArchiveEntry);
 
-                        // Next index
-                        fileIndex += lobToArchive.length;
+                            // Next index
+                            fileIndex += lobToArchive.length;
+                        }
                     }
                 } catch (UnsupportedEncodingException e) {
                     throwOperationErrorException(e);

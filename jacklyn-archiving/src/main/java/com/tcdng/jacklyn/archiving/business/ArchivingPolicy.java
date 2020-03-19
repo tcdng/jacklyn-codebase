@@ -20,6 +20,8 @@ import java.util.List;
 
 import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
+import com.tcdng.unify.core.database.Entity;
+import com.tcdng.unify.core.database.Query;
 
 /**
  * Archiving policy component.
@@ -28,6 +30,17 @@ import com.tcdng.unify.core.UnifyException;
  * @since 1.0
  */
 public interface ArchivingPolicy extends UnifyComponent {
+
+    /**
+     * Adds filter to fetch query.
+     * 
+     * @param query
+     *            the query to add filter to
+     * @return a true if filter was added otherwise false
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean addFetchFilter(Query<? extends Entity> query) throws UnifyException;
 
     /**
      * Gets the LOB object to be archived for archive item.
