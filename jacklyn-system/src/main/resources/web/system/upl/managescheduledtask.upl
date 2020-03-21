@@ -36,7 +36,7 @@
     eventHandler:$d{!ui-event event:onchange action:$c{refreshParamsAct}} required:true
 !ui-text:frmDescription caption:$m{system.scheduledtask.description} binding:data.description maxLen:48 size:40 required:true
 !ui-time:frmStartTime caption:$m{system.scheduledtask.starttime} binding:data.startTime required:true
-!ui-time:frmEndTime caption:$m{system.scheduledtask.endtime} binding:data.endTime
+!ui-time:frmEndTime caption:$m{system.scheduledtask.endtime} binding:data.endTime clearable:true
 !ui-group:frmFreqCombo caption:$m{system.scheduledtask.frequency} components:$c{frmFreq frmFreqUnit} space:true
 !ui-dropdownchecklist:frmWeekDays binding:data.weekdays caption:$m{system.scheduledtask.daysinweek} list:dayinweeklist
     selectAllOption:$m{system.scheduledtask.selectalldays}
