@@ -865,7 +865,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         // Working dates
-        Date now = db().getNow();
+        final Date now = db().getNow();
         final Date workingDt = CalendarUtils.getMidnightDate(now);
 
         // Expiration allowance
