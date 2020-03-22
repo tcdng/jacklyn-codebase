@@ -26,6 +26,7 @@ import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.business.GenericService;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.logging.FieldAudit;
@@ -47,6 +48,9 @@ import com.tcdng.unify.web.ui.panel.TableCrudPanel;
  */
 public abstract class BasePageController<T extends BasePageBean> extends AbstractPageController<T>
         implements DocViewController<T> {
+
+    @Configurable
+    private GenericService genericService;
 
     @Configurable
     private UserSessionViewAccessProvider userSessionViewAccessProvider;
@@ -288,5 +292,9 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      */
     protected boolean isHubAdminView() throws UnifyException {
         return getViewDirective(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
+    }
+
+    protected GenericService getGenericService() {
+        return genericService;
     }
 }
