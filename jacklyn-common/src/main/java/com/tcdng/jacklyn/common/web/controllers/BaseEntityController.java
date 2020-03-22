@@ -122,6 +122,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     @Action
     public String prepareCreateRecord() throws UnifyException {
         V record = prepareCreate();
+        record.setExt(getGenericService().getNewExtensionInstance(entityClass));
         BaseEntityPageBean<V> pageBean = getPageBean();
         pageBean.setRecord(record);
         loadSessionOnCreate();
@@ -130,7 +131,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     @Action
-    public String createAndNextRecord() throws UnifyException {
+    public final String createAndNextRecord() throws UnifyException {
         doCreate();
         return prepareCreateRecord();
     }
