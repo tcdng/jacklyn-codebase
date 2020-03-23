@@ -66,11 +66,6 @@ public class SupportedLocaleController extends AbstractSystemFormController<Supp
     }
 
     @Override
-    protected SupportedLocale prepareCreate() throws UnifyException {
-        return new SupportedLocale();
-    }
-
-    @Override
     protected Object create(SupportedLocale supportedLocale) throws UnifyException {
         return getSystemService().createSupportedLocale(supportedLocale);
     }

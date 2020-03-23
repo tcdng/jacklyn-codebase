@@ -70,11 +70,9 @@ public class AuthenticationController extends AbstractSystemFormController<Authe
     }
 
     @Override
-    protected Authentication prepareCreate() throws UnifyException {
-        AuthenticationLargeData largeData = new AuthenticationLargeData();
+    protected void onPrepareCreate(Authentication authentication) throws UnifyException {
         AuthenticationPageBean pageBean = getPageBean();
-        pageBean.setLargeData(largeData);
-        return largeData.getData();
+        pageBean.setLargeData(new AuthenticationLargeData(authentication));
     }
 
     @Override

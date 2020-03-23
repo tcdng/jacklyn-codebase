@@ -66,11 +66,6 @@ public class CountryController extends AbstractLocationFormController<CountryPag
     }
 
     @Override
-    protected Country prepareCreate() throws UnifyException {
-        return new Country();
-    }
-
-    @Override
     protected Object create(Country country) throws UnifyException {
         return getLocationService().createCountry(country);
     }

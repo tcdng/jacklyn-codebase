@@ -70,11 +70,6 @@ public class StateController extends AbstractLocationFormController<StatePageBea
     }
 
     @Override
-    protected State prepareCreate() throws UnifyException {
-        return new State();
-    }
-
-    @Override
     protected Object create(State state) throws UnifyException {
         return getLocationService().createState(state);
     }

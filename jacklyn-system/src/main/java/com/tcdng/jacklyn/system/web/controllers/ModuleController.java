@@ -65,11 +65,6 @@ public class ModuleController extends AbstractSystemFormController<ModulePageBea
     }
 
     @Override
-    protected Module prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected void onPrepareView(Module module, boolean paste) throws UnifyException {
         setPageWidgetEditable("frmStatus", module.getDeactivatable());
     }

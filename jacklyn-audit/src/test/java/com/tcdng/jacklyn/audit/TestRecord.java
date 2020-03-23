@@ -51,16 +51,6 @@ public class TestRecord implements Entity {
     }
 
     @Override
-    public Entity getExt() {
-        return null;
-    }
-
-    @Override
-    public void setExt(Entity entity) {
-        
-    }
-
-    @Override
     public String getListKey() {
         return String.valueOf(id);
     }

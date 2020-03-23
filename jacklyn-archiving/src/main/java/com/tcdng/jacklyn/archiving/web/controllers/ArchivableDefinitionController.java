@@ -65,11 +65,6 @@ public class ArchivableDefinitionController
     }
 
     @Override
-    protected ArchivableDefinition prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(ArchivableDefinition record) throws UnifyException {
         return null;
     }

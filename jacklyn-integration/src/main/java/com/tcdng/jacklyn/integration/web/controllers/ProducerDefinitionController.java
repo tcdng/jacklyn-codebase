@@ -67,11 +67,6 @@ public class ProducerDefinitionController extends AbstractIntegrationFormControl
     }
 
     @Override
-    protected ProducerDefinition prepareCreate() throws UnifyException {
-        return new ProducerDefinition();
-    }
-
-    @Override
     protected Object create(ProducerDefinition producerDefinition) throws UnifyException {
         return getIntegrationService().createProducerDefinition(producerDefinition);
     }

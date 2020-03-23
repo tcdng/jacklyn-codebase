@@ -36,12 +36,12 @@ public class UserLargeData extends BaseLargeData<User> {
         super(new User());
     }
 
-    public UserLargeData(User userData) {
-        super(userData);
+    public UserLargeData(User user) {
+        super(user);
     }
 
-    public UserLargeData(User userData, byte[] photograph, List<Long> roleIdList) {
-        super(userData);
+    public UserLargeData(User user, byte[] photograph, List<Long> roleIdList) {
+        super(user);
         this.photograph = photograph;
         this.roleIdList = roleIdList;
     }

@@ -64,11 +64,6 @@ public class FileArchiveConfigController
     }
 
     @Override
-    protected FileArchiveConfig prepareCreate() throws UnifyException {
-        return new FileArchiveConfig();
-    }
-
-    @Override
     protected Object create(FileArchiveConfig fileArchiveConfigData) throws UnifyException {
         return getArchivingService().createFileArchiveConfig(fileArchiveConfigData);
     }

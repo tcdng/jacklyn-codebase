@@ -95,11 +95,6 @@ public class AuditSettingController extends AbstractAuditFormController<AuditSet
     }
 
     @Override
-    protected AuditDefinition prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(AuditDefinition auditDefinitionData) throws UnifyException {
         return null;
     }

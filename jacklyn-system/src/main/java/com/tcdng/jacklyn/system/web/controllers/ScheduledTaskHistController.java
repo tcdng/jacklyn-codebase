@@ -81,11 +81,6 @@ public class ScheduledTaskHistController extends AbstractSystemFormController<Sc
     }
 
     @Override
-    protected ScheduledTaskHist prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(ScheduledTaskHist scheduledTaskHist) throws UnifyException {
         return null;
     }

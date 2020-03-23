@@ -66,11 +66,6 @@ public class DepartmentController extends AbstractOrganizationFormController<Dep
     }
 
     @Override
-    protected Department prepareCreate() throws UnifyException {
-        return new Department();
-    }
-
-    @Override
     protected Object create(Department departmentData) throws UnifyException {
         return getOrganizationService().createDepartment(departmentData);
     }

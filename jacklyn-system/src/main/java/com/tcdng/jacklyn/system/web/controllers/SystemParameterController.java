@@ -80,11 +80,6 @@ public class SystemParameterController extends AbstractSystemFormController<Syst
     }
 
     @Override
-    protected SystemParameter prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(SystemParameter sysParameter) throws UnifyException {
         return null;
     }

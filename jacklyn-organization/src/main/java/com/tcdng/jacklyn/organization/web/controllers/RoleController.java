@@ -82,11 +82,9 @@ public class RoleController extends AbstractOrganizationFormController<RolePageB
     }
 
     @Override
-    protected Role prepareCreate() throws UnifyException {
+    protected void onPrepareCreate(Role role) throws UnifyException {
         RolePageBean pageBean = getPageBean();
-        RoleLargeData largeData = new RoleLargeData();
-        pageBean.setLargeData(largeData);
-        return largeData.getData();
+        pageBean.setLargeData(new RoleLargeData(role));
     }
 
     @Override

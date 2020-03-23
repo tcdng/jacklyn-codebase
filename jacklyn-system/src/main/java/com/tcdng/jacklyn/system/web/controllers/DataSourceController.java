@@ -96,11 +96,6 @@ public class DataSourceController extends AbstractSystemFormController<DataSourc
     }
 
     @Override
-    protected DataSource prepareCreate() throws UnifyException {
-        return new DataSource();
-    }
-
-    @Override
     protected int update(DataSource dataSource) throws UnifyException {
         return getSystemService().updateDataSource(dataSource);
     }

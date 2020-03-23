@@ -68,18 +68,16 @@ public class DashboardController extends AbstractSystemFormController<DashboardP
 
     @Override
     protected Dashboard find(Long id) throws UnifyException {
-        DashboardLargeData largeData = getSystemService().findDashboard(id);
         DashboardPageBean pageBean = getPageBean();
+        DashboardLargeData largeData = getSystemService().findDashboard(id);
         pageBean.setLargeData(largeData);
         return largeData.getData();
     }
 
     @Override
-    protected Dashboard prepareCreate() throws UnifyException {
-        DashboardLargeData largeData = new DashboardLargeData();
+    protected void onPrepareCreate(Dashboard dashboard) throws UnifyException {
         DashboardPageBean pageBean = getPageBean();
-        pageBean.setLargeData(largeData);
-        return largeData.getData();
+        pageBean.setLargeData(new DashboardLargeData(dashboard));
     }
 
     @Override

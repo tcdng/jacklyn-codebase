@@ -96,13 +96,6 @@ public class BatchFileDefinitionController
     }
 
     @Override
-    protected BatchFileDefinition prepareCreate() throws UnifyException {
-        BatchFileDefinition batchFileDefinition = new BatchFileDefinition();
-        batchFileDefinition.setFieldDefList(new ArrayList<BatchFileFieldDefinition>());
-        return batchFileDefinition;
-    }
-
-    @Override
     protected Object create(BatchFileDefinition record) throws UnifyException {
         return getFileService().createBatchFileDefinition(record);
     }
@@ -115,6 +108,11 @@ public class BatchFileDefinitionController
     @Override
     protected int delete(BatchFileDefinition record) throws UnifyException {
         return getFileService().deleteBatchFileDefinition(record.getId());
+    }
+
+    @Override
+    protected void onPrepareCreate(BatchFileDefinition batchFileDefinition) throws UnifyException {
+        batchFileDefinition.setFieldDefList(new ArrayList<BatchFileFieldDefinition>());
     }
 
     @Override

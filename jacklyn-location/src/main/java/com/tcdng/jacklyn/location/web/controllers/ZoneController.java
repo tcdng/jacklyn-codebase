@@ -66,11 +66,6 @@ public class ZoneController extends AbstractLocationFormController<ZonePageBean,
     }
 
     @Override
-    protected Zone prepareCreate() throws UnifyException {
-        return new Zone();
-    }
-
-    @Override
     protected Object create(Zone zone) throws UnifyException {
         return getLocationService().createZone(zone);
     }

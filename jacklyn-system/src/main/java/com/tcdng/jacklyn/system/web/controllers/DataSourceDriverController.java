@@ -79,11 +79,6 @@ public class DataSourceDriverController
     }
 
     @Override
-    protected DataSourceDriver prepareCreate() throws UnifyException {
-        return new DataSourceDriver();
-    }
-
-    @Override
     protected int update(DataSourceDriver datasourceDriver) throws UnifyException {
         return getSystemService().updateDataSourceDriver(datasourceDriver);
     }

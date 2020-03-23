@@ -113,11 +113,6 @@ public class NotificationController extends AbstractNotificationFormController<N
     }
 
     @Override
-    protected Notification prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(Notification record) throws UnifyException {
         return null;
     }

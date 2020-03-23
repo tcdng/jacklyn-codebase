@@ -119,10 +119,11 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         return "refreshtable";
     }
 
+    @SuppressWarnings("unchecked")
     @Action
     public String prepareCreateRecord() throws UnifyException {
-        V record = prepareCreate();
-        record.setExt(getGenericService().getNewExtensionInstance(entityClass));
+        V record = (V) getGenericService().getExtendedInstance(entityClass);
+        onPrepareCreate(record);
         BaseEntityPageBean<V> pageBean = getPageBean();
         pageBean.setRecord(record);
         loadSessionOnCreate();
@@ -131,7 +132,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     }
 
     @Action
-    public final String createAndNextRecord() throws UnifyException {
+    public String createAndNextRecord() throws UnifyException {
         doCreate();
         return prepareCreateRecord();
     }
@@ -508,8 +509,6 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     protected abstract V find(U id) throws UnifyException;
 
-    protected abstract V prepareCreate() throws UnifyException;
-
     protected abstract Object create(V record) throws UnifyException;
 
     protected abstract int update(V record) throws UnifyException;
@@ -517,6 +516,10 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     protected abstract int delete(V record) throws UnifyException;
 
     protected abstract void setCrudViewerEditable(boolean editable) throws UnifyException;
+
+    protected void onPrepareCreate(V record) throws UnifyException {
+
+    }
 
     protected void onCopy(V recordCopy) throws UnifyException {
 

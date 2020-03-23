@@ -71,11 +71,6 @@ public class NotificationChannelController
     }
 
     @Override
-    protected NotificationChannel prepareCreate() throws UnifyException {
-        return new NotificationChannel();
-    }
-
-    @Override
     protected Object create(NotificationChannel notificationChannelData) throws UnifyException {
         return getNotificationService().createNotificationChannel(notificationChannelData);
     }
