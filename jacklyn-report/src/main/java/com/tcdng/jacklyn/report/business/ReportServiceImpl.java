@@ -187,7 +187,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
             targetReportClass = ReflectUtils.getClassForName(className);
             if (Entity.class.isAssignableFrom(targetReportClass)) {
                 sqlEntityInfo =
-                        ((SqlDataSourceDialect) db().getDataSource().getDialect()).getSqlEntityInfo(targetReportClass);
+                        ((SqlDataSourceDialect) db().getDataSource().getDialect()).findSqlEntityInfo(targetReportClass);
             }
         }
 
