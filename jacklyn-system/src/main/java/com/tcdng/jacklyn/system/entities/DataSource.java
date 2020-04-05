@@ -58,8 +58,11 @@ public class DataSource extends BaseVersionedStatusEntity {
 	@Column
 	private Integer maxConnections;
 
-	@Column(name = "USER_NAME", nullable = true)
-	private String userName;
+    @Column(name = "APP_SCHEMA", nullable = true)
+    private String schema;
+
+    @Column(name = "USER_NAME", nullable = true)
+    private String userName;
 
 	@Column(name = "USER_PASSWORD", length = 128, transformer = "twoway-stringcryptograph", nullable = true)
 	private String password;
@@ -113,7 +116,15 @@ public class DataSource extends BaseVersionedStatusEntity {
 		this.maxConnections = maxConnections;
 	}
 
-	public String getUserName() {
+	public String getSchema() {
+        return schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
+
+    public String getUserName() {
 		return userName;
 	}
 

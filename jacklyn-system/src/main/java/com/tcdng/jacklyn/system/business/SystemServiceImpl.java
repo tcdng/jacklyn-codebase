@@ -125,9 +125,9 @@ import com.tcdng.unify.core.data.Inputs;
 import com.tcdng.unify.core.database.AbstractEntity;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
+import com.tcdng.unify.core.database.dynamic.sql.DynamicSqlDataSourceConfig;
+import com.tcdng.unify.core.database.dynamic.sql.DynamicSqlDataSourceManager;
 import com.tcdng.unify.core.database.sql.SqlDialectNameConstants;
-import com.tcdng.unify.core.database.sql.dynamic.DynamicSqlDataSourceConfig;
-import com.tcdng.unify.core.database.sql.dynamic.DynamicSqlDataSourceManager;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
 import com.tcdng.unify.core.security.TwoWayStringCryptograph;
@@ -776,7 +776,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         result =
                 dataSourceManager.testConfiguration(new DynamicSqlDataSourceConfig(taskMonitor.getTaskId(0),
                         driver.getDialect(), driver.getDriverType(), dataSource.getConnectionUrl(),
-                        dataSource.getUserName(), dataSource.getPassword(), 1, false));
+                        dataSource.getSchema(), dataSource.getUserName(), dataSource.getPassword(), 1, false));
         addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.completed}", result);
         return result;
     }
@@ -941,9 +941,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     }
 
                     if (calcNextExecutionOn == null) {
-                        Date todayStartTime = CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getStartOffset());
+                        Date todayStartTime =
+                                CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getStartOffset());
                         if (now.before(todayStartTime) && CalendarUtils.isWithinCalendar(scheduledTaskDef.getWeekdays(),
-                                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), todayStartTime)) {
+                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), todayStartTime)) {
                             // Today start time
                             calcNextExecutionOn = todayStartTime;
                         } else {
@@ -951,7 +952,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                             calcNextExecutionOn =
                                     CalendarUtils.getDateWithOffset(
                                             CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
-                                                    scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
+                                                    scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(),
+                                                    workingDt),
                                             scheduledTaskDef.getStartOffset());
                         }
                     }
@@ -1524,8 +1526,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     private DynamicSqlDataSourceConfig getDynamicSqlDataSourceConfig(DataSource dataSource) throws UnifyException {
         return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
-                dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(),
-                dataSource.getMaxConnections(), false);
+                dataSource.getConnectionUrl(), dataSource.getSchema(), dataSource.getUserName(),
+                dataSource.getPassword(), dataSource.getMaxConnections(), false);
     }
 
     private void ensureDataSourceDriver(String name, String description, String dialect, String driverType)
