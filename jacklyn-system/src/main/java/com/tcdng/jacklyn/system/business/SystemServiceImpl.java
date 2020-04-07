@@ -107,6 +107,7 @@ import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.StaticList;
+import com.tcdng.unify.core.annotation.Synchronized;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
@@ -720,6 +721,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return db().listAll(query);
     }
 
+    @Synchronized("configure-datasource")
     @Override
     public int updateDataSource(DataSource dataSource) throws UnifyException {
         int updateCount = db().updateByIdVersion(dataSource);
@@ -741,6 +743,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return updateCount;
     }
 
+    @Synchronized("configure-datasource")
     @Override
     public boolean activateDataSource(String dataSourceName) throws UnifyException {
         if (!dataSourceManager.isConfigured(dataSourceName)) {
@@ -752,6 +755,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return false;
     }
 
+    @Synchronized("configure-datasource")
     @Override
     public String activateDataSource(Long dataSourceId) throws UnifyException {
         DataSource dataSource = db().list(new DataSourceQuery().id(dataSourceId));

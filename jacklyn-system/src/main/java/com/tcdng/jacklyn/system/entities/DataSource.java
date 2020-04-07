@@ -58,7 +58,7 @@ public class DataSource extends BaseVersionedStatusEntity {
 	@Column
 	private Integer maxConnections;
 
-    @Column(name = "APP_SCHEMA", nullable = true)
+    @Column(name = "APP_SCHEMA", length = 32, nullable = true)
     private String schema;
 
     @Column(name = "USER_NAME", nullable = true)
