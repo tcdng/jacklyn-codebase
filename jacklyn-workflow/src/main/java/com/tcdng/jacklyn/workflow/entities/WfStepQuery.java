@@ -63,6 +63,6 @@ public class WfStepQuery extends BaseEntityQuery<WfStep> {
     }
 
     public WfStepQuery isParticipation() {
-        return (WfStepQuery) addNotEqual("participantType", WorkflowParticipantType.NONE);
+        return (WfStepQuery) addNotEquals("participantType", WorkflowParticipantType.NONE);
     }
 }

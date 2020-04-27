@@ -66,7 +66,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
                     break;
                 case EQUALS:
                     return limVal1.equals(fieldValue);
-                case GREATER:
+                case GREATER_THAN:
                     if (fieldValue != null) {
                         return getDouble(fieldValue) > getDouble(limVal1);
                     }
@@ -85,7 +85,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
                         return getDouble(fieldValue) <= getDouble(limVal1);
                     }
                     break;
-                case LESS:
+                case LESS_THAN:
                     if (fieldValue != null) {
                         return getDouble(fieldValue) < getDouble(limVal1);
                     }
@@ -95,12 +95,12 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
                         return ((String) fieldValue).indexOf((String) limVal1) >= 0;
                     }
                     break;
-                case BEGIN_WITH:
+                case BEGINS_WITH:
                     if (fieldValue != null) {
                         return ((String) fieldValue).startsWith((String) limVal1);
                     }
                     break;
-                case END_WITH:
+                case ENDS_WITH:
                     if (fieldValue != null) {
                         return ((String) fieldValue).endsWith((String) limVal1);
                     }
@@ -112,7 +112,7 @@ public abstract class AbstractWfItemClassifierLogic extends AbstractUnifyCompone
                                 || dblFieldVal > getDouble(resolveValue(flowingWfItemReader, filter, filter.getValue2()));
                     }
                     break;
-                case NOT_EQUAL:
+                case NOT_EQUALS:
                     return !limVal1.equals(fieldValue);
                 case NOT_LIKE:
                     if (fieldValue != null) {

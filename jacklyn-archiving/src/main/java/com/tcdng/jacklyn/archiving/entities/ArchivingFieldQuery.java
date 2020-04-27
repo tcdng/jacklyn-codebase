@@ -49,11 +49,11 @@ public class ArchivingFieldQuery extends BaseInstallEntityQuery<ArchivingField> 
     }
 
     public ArchivingFieldQuery fieldTypeNot(ArchivingFieldType fieldType) {
-        return (ArchivingFieldQuery) addNotEqual("fieldType", fieldType);
+        return (ArchivingFieldQuery) addNotEquals("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery fieldTypeNotIn(ArchivingFieldType[] fieldType) {
-        return (ArchivingFieldQuery) addNotEqual("fieldType", fieldType);
+        return (ArchivingFieldQuery) addNotEquals("fieldType", fieldType);
     }
 
     public ArchivingFieldQuery recordName(String recordName) {
