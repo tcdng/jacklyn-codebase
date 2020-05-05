@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tcdng.jacklyn</groupId>
 	<artifactId>jacklyn</artifactId>
-	<version>1.1.2-SNAPSHOT</version>
+	<version>1.1.2</version>
 	<packaging>pom</packaging>
 
 	<name>jacklyn</name>
@@ -49,7 +49,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<unify.version>1.1.2-SNAPSHOT</unify.version>
+		<unify.version>1.1.2</unify.version>
 	</properties>
 
 	<scm>
