@@ -89,14 +89,6 @@ public class BatchFileReadDefinitionController
     }
 
     @Override
-    protected BatchFileReadDefinition prepareCreate() throws UnifyException {
-        BatchFileReadDefinitionPageBean pageBean = getPageBean();
-        BatchFileReadDefinitionLargeData largeData = new BatchFileReadDefinitionLargeData();
-        pageBean.setLargeData(largeData);
-        return largeData.getData();
-    }
-
-    @Override
     protected Object create(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
         BatchFileReadDefinitionPageBean pageBean = getPageBean();
         return getFileService().createBatchFileReadDefinition(pageBean.getLargeData());
@@ -111,6 +103,12 @@ public class BatchFileReadDefinitionController
     @Override
     protected int delete(BatchFileReadDefinition batchUploadConfig) throws UnifyException {
         return getFileService().deleteBatchFileReadDefinition(batchUploadConfig.getId());
+    }
+
+    @Override
+    protected void onPrepareCreate(BatchFileReadDefinition batchFileReadDefinition) throws UnifyException {
+        BatchFileReadDefinitionPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new BatchFileReadDefinitionLargeData(batchFileReadDefinition));
     }
 
     @Override

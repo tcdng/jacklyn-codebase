@@ -17,7 +17,7 @@
 package com.tcdng.jacklyn.statistics.data;
 
 /**
- * Object with quick ration visualization.
+ * Object with quick ratio visualization.
  * 
  * @author Lateef Ojulari
  * @since 1.0

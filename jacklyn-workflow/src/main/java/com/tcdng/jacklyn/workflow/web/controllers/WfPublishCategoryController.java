@@ -23,6 +23,9 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.annotation.Action;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Publish workflow category controller.
@@ -35,7 +38,7 @@ import com.tcdng.unify.web.annotation.Action;
 public class WfPublishCategoryController extends AbstractWorkflowPageController<WfPublishCategoryPageBean> {
 
     public WfPublishCategoryController() {
-        super(WfPublishCategoryPageBean.class, true, false, false);
+        super(WfPublishCategoryPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

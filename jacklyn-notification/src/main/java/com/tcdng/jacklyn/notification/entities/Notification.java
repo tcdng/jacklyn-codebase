@@ -43,6 +43,9 @@ public class Notification extends BaseTimestampedEntity {
     @ForeignKey(NotificationChannel.class)
     private Long notificationChannelId;
 
+    @ForeignKey(name = "REC_ST")
+    private NotificationStatus status;
+
     @Column(length = 64)
     private String senderName;
 
@@ -60,9 +63,6 @@ public class Notification extends BaseTimestampedEntity {
 
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date sentDt;
-
-    @Column(name = "REC_ST")
-    private NotificationStatus status;
 
     @Column(name="MSG_DICTIONARY", nullable = true)
     private byte[] dictionary;
@@ -87,6 +87,12 @@ public class Notification extends BaseTimestampedEntity {
 
     @ListOnly(key = "notificationChannelId", property = "name")
     private String notificationChannelName;
+
+    @ListOnly(key = "notificationChannelId", property = "notificationTypeDesc")
+    private String notificationTypeDesc;
+
+    @ListOnly(key = "status", property = "description")
+    private String statusDesc;
 
     @Override
     public String getDescription() {
@@ -227,5 +233,21 @@ public class Notification extends BaseTimestampedEntity {
 
     public void setNotificationChannelName(String notificationChannelName) {
         this.notificationChannelName = notificationChannelName;
+    }
+
+    public String getNotificationTypeDesc() {
+        return notificationTypeDesc;
+    }
+
+    public void setNotificationTypeDesc(String notificationTypeDesc) {
+        this.notificationTypeDesc = notificationTypeDesc;
+    }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
     }
 }

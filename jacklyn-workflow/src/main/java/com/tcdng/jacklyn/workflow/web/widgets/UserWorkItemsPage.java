@@ -39,9 +39,9 @@ public class UserWorkItemsPage extends BasicPage {
 
     @Override
     public boolean isValidationEnabled() throws UnifyException {
-        String actionName = this.getRequestTarget(String.class);
+        String actionName = getRequestTarget(String.class);
         if (actionName != null) {
-            return this.pageValidationActions != null && this.pageValidationActions.contains(actionName);
+            return pageValidationActions != null && pageValidationActions.contains(actionName);
         }
 
         return false;

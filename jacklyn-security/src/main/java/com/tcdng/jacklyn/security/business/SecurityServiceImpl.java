@@ -420,6 +420,13 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
     }
 
     @Override
+    public boolean confirmUserPrivilege(String userLoginId, String privilegeCatCode, String privilegeCode)
+            throws UnifyException {
+        List<Long> roleIdList = db().valueList(Long.class, "roleId", new UserRoleQuery().userLoginId(userLoginId));
+        return organizationService.confirmUserPrivilege(roleIdList, privilegeCatCode, privilegeCode);
+    }
+
+    @Override
     public List<Long> findUserRoleIds(Long userId) throws UnifyException {
         return db().valueList(Long.class, "roleId", new UserRoleQuery().userId(userId).orderById());
     }

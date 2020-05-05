@@ -22,7 +22,6 @@ import com.tcdng.jacklyn.security.data.ClientAppLargeData;
 import com.tcdng.jacklyn.security.entities.ClientApp;
 import com.tcdng.jacklyn.security.entities.ClientAppQuery;
 import com.tcdng.jacklyn.security.web.beans.ClientAppPageBean;
-import com.tcdng.jacklyn.shared.system.ClientAppType;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -71,12 +70,9 @@ public class ClientAppController extends AbstractSecurityFormController<ClientAp
     }
 
     @Override
-    protected ClientApp prepareCreate() throws UnifyException {
-        ClientAppLargeData largeData = new ClientAppLargeData();
-        largeData.getData().setType(ClientAppType.STANDARD);
+    protected void onPrepareCreate(ClientApp clientApp) throws UnifyException {
         ClientAppPageBean pageBean = getPageBean();
-        pageBean.setLargeData(largeData);
-        return largeData.getData();
+        pageBean.setLargeData(new ClientAppLargeData(clientApp));
     }
 
     @Override

@@ -67,11 +67,6 @@ public class WfCategoryController extends AbstractWorkflowFormController<WfCateg
     }
 
     @Override
-    protected WfCategory prepareCreate() throws UnifyException {
-        return new WfCategory();
-    }
-
-    @Override
     protected Object create(WfCategory wfCategory) throws UnifyException {
         return null;
     }

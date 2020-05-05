@@ -43,11 +43,6 @@ public abstract class AbstractFileTransferBoxFormController<T extends AbstractFi
     }
 
     @Override
-    protected U prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(U record) throws UnifyException {
         return null;
     }

@@ -14,27 +14,24 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
+package com.tcdng.jacklyn.shared.workflow.data;
 
-import com.tcdng.unify.core.UnifyComponent;
-import com.tcdng.unify.core.UnifyException;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.tcdng.jacklyn.shared.workflow.WorkflowRemoteCallNameConstants;
+import com.tcdng.unify.web.remotecall.RemoteCallParams;
 
 /**
- * Statistics provider component.
+ * Get tooling workflow document assigner request parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface StatisticsProvider<T> extends UnifyComponent {
+@XmlRootElement
+public class GetToolingWfItemAssignerParams extends RemoteCallParams {
 
-    /**
-     * Provides statistical data.
-     * 
-     * @param params
-     *            the parameter list.
-     * @return the statistical data
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    T provide(Object... params) throws UnifyException;
+    public GetToolingWfItemAssignerParams() {
+        super(WorkflowRemoteCallNameConstants.GET_TOOLING_WFDOC_ASSIGNER_LIST);
+    }
+
 }

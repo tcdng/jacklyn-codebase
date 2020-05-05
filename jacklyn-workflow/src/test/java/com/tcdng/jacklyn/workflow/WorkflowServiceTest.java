@@ -439,7 +439,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.PERSONNEL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -483,7 +483,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -534,7 +534,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -588,7 +588,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -651,7 +651,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -684,7 +684,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.NONE, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.NORMAL, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -707,7 +707,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(WorkflowParticipantType.ALL, wfStep.getParticipantType());
         assertEquals(WorkflowStepPriority.HIGH, wfStep.getPriorityLevel());
         assertEquals(Integer.valueOf(0), wfStep.getItemsPerSession());
-        assertEquals(Integer.valueOf(0), wfStep.getExpiryHours());
+        assertEquals(Integer.valueOf(0), wfStep.getExpiryMinutes());
         assertFalse(wfStep.getAudit());
         assertFalse(wfStep.getBranchOnly());
         assertFalse(wfStep.getIncludeForwarder());
@@ -903,6 +903,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(4, eventList.size());
 
         WfItemHistEvent wihe = eventList.get(0);
+        assertEquals("start", wihe.getPrevWfStep());
         assertEquals("start", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
@@ -911,6 +912,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(wihe.getActionDt());
 
         wihe = eventList.get(1);
+        assertEquals("start", wihe.getPrevWfStep());
         assertEquals("custApproval", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertEquals("approveCust", wihe.getWfAction());
@@ -919,6 +921,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wihe.getActionDt());
 
         wihe = eventList.get(2);
+        assertEquals("custApproval", wihe.getPrevWfStep());
         assertEquals("createCust", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
@@ -927,6 +930,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(wihe.getActionDt());
 
         wihe = eventList.get(3);
+        assertEquals("createCust", wihe.getPrevWfStep());
         assertEquals("end", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
@@ -987,6 +991,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals(3, eventList.size());
 
         WfItemHistEvent wihe = eventList.get(0);
+        assertEquals("start", wihe.getPrevWfStep());
         assertEquals("start", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
@@ -995,6 +1000,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNull(wihe.getActionDt());
 
         wihe = eventList.get(1);
+        assertEquals("start", wihe.getPrevWfStep());
         assertEquals("custApproval", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertEquals("checkCust", wihe.getWfAction());
@@ -1003,6 +1009,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertNotNull(wihe.getActionDt());
 
         wihe = eventList.get(2);
+        assertEquals("custApproval", wihe.getPrevWfStep());
         assertEquals("error", wihe.getWfStep());
         assertNotNull(wihe.getStepDt());
         assertNull(wihe.getWfAction());
@@ -1241,7 +1248,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         while (!taskMonitor.isDone()) {
             ThreadUtils.yield();
         }
-        
+
         if (taskMonitor.getExceptions() != null && taskMonitor.getExceptions().length > 0) {
             throw taskMonitor.getExceptions()[0];
         }

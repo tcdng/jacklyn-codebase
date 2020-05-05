@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.security.business;
+package com.tcdng.jacklyn.security.providers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +22,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.notification.data.NotificationContact;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
+import com.tcdng.jacklyn.security.business.SecurityService;
 import com.tcdng.jacklyn.security.entities.User;
 import com.tcdng.jacklyn.security.entities.UserRole;
 import com.tcdng.jacklyn.security.entities.UserRoleQuery;
+import com.tcdng.jacklyn.shared.organization.RoleWfStepType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.jacklyn.workflow.business.AbstractWfStepUserInformationProvider;
 import com.tcdng.unify.core.UnifyException;
@@ -51,11 +54,23 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
     private SecurityService securityService;
 
     @Override
-    public Collection<String> getEligibleUsersForWorkflowStep(WorkflowParticipantType participant,
+    public Collection<String> getEligibleUsersForEscalation(String stepGlobalName, String branchCode,
+            String departmentCode, String... preferredRoles) throws UnifyException {
+        UserRoleQuery userRoleQuery =
+                getUserRoleQueryForEscalation(stepGlobalName, branchCode, departmentCode, preferredRoles);
+        if (userRoleQuery != null) {
+            return securityService.findUsers(userRoleQuery);
+        }
+
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Collection<String> getEligibleUsersForParticipation(WorkflowParticipantType participant,
             String stepGlobalName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException {
         UserRoleQuery userRoleQuery =
-                getUserRoleQueryForEligibleUsers(participant, stepGlobalName, branchCode, departmentCode,
+                getUserRoleQueryForParticipation(participant, stepGlobalName, branchCode, departmentCode,
                         preferredRoles);
         if (userRoleQuery != null) {
             return securityService.findUsers(userRoleQuery);
@@ -65,13 +80,26 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
     }
 
     @Override
-    public Collection<NotificationContact> getEligibleEmailContactsForWorkflowStep(WorkflowParticipantType participant,
+    public Collection<NotificationContact> getEligibleEmailContactsForEscalation(String stepGlobalName,
+            String branchCode, String departmentCode, String... preferredRoles) throws UnifyException {
+        UserRoleQuery userRoleQuery =
+                getUserRoleQueryForEscalation(stepGlobalName, branchCode, departmentCode, preferredRoles);
+        return getEmailContacts(userRoleQuery);
+    }
+
+    @Override
+    public Collection<NotificationContact> getEligibleEmailContactsForParticipation(WorkflowParticipantType participant,
             String stepGlobalName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException {
         UserRoleQuery userRoleQuery =
-                getUserRoleQueryForEligibleUsers(participant, stepGlobalName, branchCode, departmentCode,
+                getUserRoleQueryForParticipation(participant, stepGlobalName, branchCode, departmentCode,
                         preferredRoles);
+        return getEmailContacts(userRoleQuery);
+    }
+
+    private Collection<NotificationContact> getEmailContacts(UserRoleQuery userRoleQuery) throws UnifyException {
         if (userRoleQuery != null) {
+            userRoleQuery.addSelect("userName", "userEmail");
             List<UserRole> userRoleList = securityService.findUserRoles(userRoleQuery);
             if (DataUtils.isNotBlank(userRoleList)) {
                 List<NotificationContact> contactList = new ArrayList<NotificationContact>();
@@ -99,13 +127,14 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
     }
 
     @Override
-    public Collection<NotificationContact> getEligibleMobilePhoneContactsForWorkflowStep(
+    public Collection<NotificationContact> getEligibleMobilePhoneContactsForParticipation(
             WorkflowParticipantType participant, String globalStepName, String branchCode, String departmentCode,
             String... preferredRoles) throws UnifyException {
         UserRoleQuery userRoleQuery =
-                getUserRoleQueryForEligibleUsers(participant, globalStepName, branchCode, departmentCode,
+                getUserRoleQueryForParticipation(participant, globalStepName, branchCode, departmentCode,
                         preferredRoles);
         if (userRoleQuery != null) {
+            userRoleQuery.addSelect("userName", "userMobileNo");
             List<UserRole> userRoleList = securityService.findUserRoles(userRoleQuery);
             if (DataUtils.isNotBlank(userRoleList)) {
                 List<NotificationContact> contactList = new ArrayList<NotificationContact>();
@@ -132,20 +161,20 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
         return Collections.emptyList();
     }
 
-    private UserRoleQuery getUserRoleQueryForEligibleUsers(WorkflowParticipantType participant, String stepGlobalName,
+    private UserRoleQuery getUserRoleQueryForParticipation(WorkflowParticipantType participant, String stepGlobalName,
             String branchCode, String departmentCode, String... preferredRoles) throws UnifyException {
         if (participant.isParticipant()) {
             List<String> roleList = null;
             if (preferredRoles.length > 0) {
                 roleList = Arrays.asList(preferredRoles);
             } else {
-                roleList = organizationService.findWfStepRoles(stepGlobalName);
+                roleList = organizationService.findWfStepRoles(RoleWfStepType.USER_INTERACT, stepGlobalName);
             }
 
             if (DataUtils.isNotBlank(roleList)) {
                 // Default to all participants in roles
                 UserRoleQuery userRoleQuery =
-                        (UserRoleQuery) new UserRoleQuery().roleNameIn(roleList).addSelect("userName", "userEmail");
+                        (UserRoleQuery) new UserRoleQuery().roleNameIn(roleList).userStatus(RecordStatus.ACTIVE);
 
                 // Restrict by participant type if necessary
                 if (participant.isPersonnel()) {
@@ -167,6 +196,36 @@ public class SecurityWfStepUserInformationProvider extends AbstractWfStepUserInf
                 return userRoleQuery;
             }
         }
+        return null;
+    }
+
+    private UserRoleQuery getUserRoleQueryForEscalation(String stepGlobalName, String branchCode, String departmentCode,
+            String... preferredRoles) throws UnifyException {
+        List<String> roleList = null;
+        if (preferredRoles.length > 0) {
+            roleList = Arrays.asList(preferredRoles);
+        } else {
+            roleList = organizationService.findWfStepRoles(RoleWfStepType.NOTIFY_UNATTENDED, stepGlobalName);
+        }
+
+        if (DataUtils.isNotBlank(roleList)) {
+            // Default to all participants in roles
+            UserRoleQuery userRoleQuery =
+                    (UserRoleQuery) new UserRoleQuery().roleNameIn(roleList).userStatus(RecordStatus.ACTIVE);
+
+            // Restrict by branch if necessary
+            if (!StringUtils.isBlank(branchCode)) {
+                userRoleQuery.branchCode(branchCode);
+            }
+
+            // Restrict by department if necessary
+            if (!StringUtils.isBlank(departmentCode)) {
+                userRoleQuery.departmentName(departmentCode);
+            }
+
+            return userRoleQuery;
+        }
+
         return null;
     }
 

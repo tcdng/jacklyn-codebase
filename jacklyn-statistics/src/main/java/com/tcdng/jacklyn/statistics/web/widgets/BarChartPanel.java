@@ -14,16 +14,20 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
+package com.tcdng.jacklyn.statistics.web.widgets;
 
-import com.tcdng.jacklyn.statistics.data.QuickRatioVisual;
+import com.tcdng.jacklyn.statistics.providers.QuickCategoryVisualProvider;
+import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.core.annotation.UplBinding;
 
 /**
- * Visual quick ratio provider.
+ * Bar chart panel.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public interface QuickRatioVisualProvider extends StatisticsProvider<QuickRatioVisual> {
+@Component("ui-barchartpanel")
+@UplBinding("web/statistics/upl/barchartpanel.upl")
+public class BarChartPanel extends AbstractChartPanel<QuickCategoryVisualProvider> {
 
 }

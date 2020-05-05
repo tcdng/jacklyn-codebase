@@ -20,6 +20,9 @@ import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.file.business.FileService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Abstract base page controller for file module.
@@ -32,7 +35,8 @@ public abstract class AbstractFilePageController<T extends BasePageBean> extends
     @Configurable
     private FileService fileService;
 
-    public AbstractFilePageController(Class<T> pageBeanClass, boolean secured, boolean readOnly, boolean resetOnWrite) {
+    public AbstractFilePageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly,
+            ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 

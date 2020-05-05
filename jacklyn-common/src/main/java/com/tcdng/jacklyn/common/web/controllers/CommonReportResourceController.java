@@ -23,6 +23,7 @@ import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.web.AbstractResourceController;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Common resource controller for generating a report.
@@ -34,7 +35,7 @@ import com.tcdng.unify.web.AbstractResourceController;
 public class CommonReportResourceController extends AbstractResourceController {
 
     public CommonReportResourceController() {
-        super(true);
+        super(Secured.TRUE);
     }
 
     @Override

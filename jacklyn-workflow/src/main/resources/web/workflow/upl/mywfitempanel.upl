@@ -1,0 +1,25 @@
+// UPL template for my workflow item panel
+// Copyright 2018-2020 The Code Department.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+!ui-mywfitempanel actionPanels:$c{bottomActionPanel}
+    
+!ui-panel:bottomActionPanel layout:$d{!ui-vertical style:$s{width:100%;}}
+    components:$c{attachmentsBtn commentsBtn wfActionButtons closeBtn}
+
+!ui-button:attachmentsBtn styleClass:$e{jk-button} caption:$m{button.attachments}
+    eventHandler:$d{!ui-event event:onclick action:$c{showAttachmentsAct}}
+!ui-button:commentsBtn styleClass:$e{jk-button} caption:$m{button.comments}
+    eventHandler:$d{!ui-event event:onclick action:$c{showCommentsAct}}
+!ui-wfactionbuttons:wfActionButtons buttonClass:$s{jk-button} verticalLayout:true binding:actionList
+    eventHandler:$d{!ui-event event:onclick action:$c{applySingleItemActionAct}}
+!ui-button:closeBtn styleClass:$e{jk-button-alert} caption:$m{button.close}
+    eventHandler:$d{!ui-event event:onclick action:$c{closeItemViewerAct}}
+
+
+// Actions
+!ui-post:applySingleItemActionAct path:$g{applyItemActionPath}
+    validations:$c{validateDynamicPanel} components:$c{dynamicPanel}
+!ui-post:showAttachmentsAct path:$g{showAttachmentsPath}
+!ui-post:showCommentsAct path:$g{showCommentsPath}
+!ui-post:closeItemViewerAct path:$g{closeViewItemPath}

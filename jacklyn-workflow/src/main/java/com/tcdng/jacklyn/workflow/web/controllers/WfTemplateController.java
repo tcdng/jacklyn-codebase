@@ -85,11 +85,6 @@ public class WfTemplateController extends AbstractWorkflowFormController<WfTempl
     }
 
     @Override
-    protected WfTemplate prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(WfTemplate wfTemplate) throws UnifyException {
         return null;
     }

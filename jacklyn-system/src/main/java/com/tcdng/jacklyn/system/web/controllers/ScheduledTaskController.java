@@ -89,14 +89,6 @@ public class ScheduledTaskController extends AbstractSystemFormController<Schedu
     }
 
     @Override
-    protected ScheduledTask prepareCreate() throws UnifyException {
-        ScheduledTaskPageBean pageBean = getPageBean();
-        ScheduledTaskLargeData largeData = new ScheduledTaskLargeData();
-        pageBean.setLargeData(largeData);
-        return largeData.getData();
-    }
-
-    @Override
     protected Object create(ScheduledTask scheduledTask) throws UnifyException {
         ScheduledTaskPageBean pageBean = getPageBean();
         return getSystemService().createScheduledTask(pageBean.getLargeData());
@@ -117,6 +109,12 @@ public class ScheduledTaskController extends AbstractSystemFormController<Schedu
     protected void onCopy(ScheduledTask scheduledTaskCopy) throws UnifyException {
         scheduledTaskCopy.setNextExecutionOn(null);
         scheduledTaskCopy.setLastExecutionOn(null);
+    }
+
+    @Override
+    protected void onPrepareCreate(ScheduledTask scheduledTask) throws UnifyException {
+        ScheduledTaskPageBean pageBean = getPageBean();
+        pageBean.setLargeData(new ScheduledTaskLargeData(scheduledTask));
     }
 
     @Override

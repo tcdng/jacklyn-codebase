@@ -35,14 +35,27 @@ import com.tcdng.unify.core.annotation.Component;
 public class TestWfStepUserInformationProvider extends AbstractWfStepUserInformationProvider {
 
     @Override
-    public Collection<String> getEligibleUsersForWorkflowStep(WorkflowParticipantType participant,
+    public Collection<String> getEligibleUsersForEscalation(String stepGlobalName, String branchCode,
+            String departmentCode, String... preferredRoles) throws UnifyException {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Collection<NotificationContact> getEligibleEmailContactsForEscalation(
             String stepGlobalName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException {
         return Collections.emptyList();
     }
 
     @Override
-    public Collection<NotificationContact> getEligibleEmailContactsForWorkflowStep(WorkflowParticipantType participant,
+    public Collection<String> getEligibleUsersForParticipation(WorkflowParticipantType participant,
+            String stepGlobalName, String branchCode, String departmentCode, String... preferredRoles)
+            throws UnifyException {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Collection<NotificationContact> getEligibleEmailContactsForParticipation(WorkflowParticipantType participant,
             String stepGlobalName, String branchCode, String departmentCode, String... preferredRoles)
             throws UnifyException {
         return Collections.emptyList();
@@ -54,7 +67,7 @@ public class TestWfStepUserInformationProvider extends AbstractWfStepUserInforma
     }
 
     @Override
-    public Collection<NotificationContact> getEligibleMobilePhoneContactsForWorkflowStep(
+    public Collection<NotificationContact> getEligibleMobilePhoneContactsForParticipation(
             WorkflowParticipantType participant, String globalStepName, String branchCode, String departmentCode,
             String... preferredRoles) throws UnifyException {
         return Collections.emptyList();

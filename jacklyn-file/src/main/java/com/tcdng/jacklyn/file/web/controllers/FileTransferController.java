@@ -24,6 +24,9 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.annotation.Action;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Controller for file transfer page used for initiating and monitoring a file
@@ -37,7 +40,7 @@ import com.tcdng.unify.web.annotation.Action;
 public class FileTransferController extends AbstractFilePageController<FileTransferPageBean> {
 
     public FileTransferController() {
-        super(FileTransferPageBean.class, true, false, false);
+        super(FileTransferPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

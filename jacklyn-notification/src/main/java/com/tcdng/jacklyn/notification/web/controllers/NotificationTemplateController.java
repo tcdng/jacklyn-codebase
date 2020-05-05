@@ -69,11 +69,6 @@ public class NotificationTemplateController
     }
 
     @Override
-    protected NotificationTemplate prepareCreate() throws UnifyException {
-        return new NotificationTemplate();
-    }
-
-    @Override
     protected Object create(NotificationTemplate notificationTemplateData) throws UnifyException {
         return getNotificationService().createNotificationTemplate(notificationTemplateData);
     }

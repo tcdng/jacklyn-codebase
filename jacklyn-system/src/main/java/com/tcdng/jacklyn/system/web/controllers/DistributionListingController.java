@@ -19,6 +19,9 @@ package com.tcdng.jacklyn.system.web.controllers;
 import com.tcdng.jacklyn.system.web.beans.DistributionListingPageBean;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Distribution listing controller.
@@ -31,7 +34,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
 public class DistributionListingController extends AbstractSystemPageController<DistributionListingPageBean> {
 
     public DistributionListingController() {
-        super(DistributionListingPageBean.class, true, false, false);
+        super(DistributionListingPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
 }

@@ -80,11 +80,6 @@ public class UserSessionController
     }
 
     @Override
-    protected UserSessionTracking prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(UserSessionTracking record) throws UnifyException {
         return null;
     }

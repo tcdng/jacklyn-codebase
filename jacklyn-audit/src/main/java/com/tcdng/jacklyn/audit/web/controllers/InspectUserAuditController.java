@@ -25,6 +25,9 @@ import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Controller for inspect user page.
@@ -38,7 +41,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 public class InspectUserAuditController extends AbstractAuditPageController<InspectUserAuditPageBean> {
 
     public InspectUserAuditController() {
-        super(InspectUserAuditPageBean.class, true, false, false);
+        super(InspectUserAuditPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

@@ -66,11 +66,6 @@ public class HubController extends AbstractOrganizationFormController<HubPageBea
     }
 
     @Override
-    protected Hub prepareCreate() throws UnifyException {
-        return new Hub();
-    }
-
-    @Override
     protected Object create(Hub hubData) throws UnifyException {
         return getOrganizationService().createHub(hubData);
     }

@@ -368,6 +368,22 @@ public interface SecurityService extends JacklynBusinessService, StartupShutdown
     List<Long> findUserDepartmentIds(String userLoginId) throws UnifyException;
 
     /**
+     * Confirms if supplied user has a certain privilege.
+     * 
+     * @param userLoginId
+     *            the user login ID
+     * @param privilegeCatCode
+     *            the privilege category code
+     * @param privilegeCode
+     *            the privilege code
+     * @return a true if user has privilege otherwise false
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    boolean confirmUserPrivilege(String userLoginId, String privilegeCatCode, String privilegeCode)
+            throws UnifyException;
+
+    /**
      * Gets role ID list for specified user.
      * 
      * @param userId

@@ -114,11 +114,6 @@ public class MenuController extends AbstractSystemFormController<ApplicationMenu
     }
 
     @Override
-    protected ApplicationMenu prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(ApplicationMenu menuData) throws UnifyException {
         return null;
     }

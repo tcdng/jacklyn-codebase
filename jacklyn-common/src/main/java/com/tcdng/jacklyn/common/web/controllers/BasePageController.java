@@ -26,12 +26,16 @@ import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.business.GenericService;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.logging.FieldAudit;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.web.AbstractPageController;
 import com.tcdng.unify.web.DocViewController;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 import com.tcdng.unify.web.ui.data.MessageResult;
 import com.tcdng.unify.web.ui.data.SearchBox;
 import com.tcdng.unify.web.ui.panel.TableCrudPanel;
@@ -46,9 +50,12 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
         implements DocViewController<T> {
 
     @Configurable
+    private GenericService genericService;
+
+    @Configurable
     private UserSessionViewAccessProvider userSessionViewAccessProvider;
 
-    public BasePageController(Class<T> pageBeanClass, boolean secured, boolean readOnly, boolean resetOnWrite) {
+    public BasePageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly, ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 
@@ -285,5 +292,9 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      */
     protected boolean isHubAdminView() throws UnifyException {
         return getViewDirective(SecurityPrivilegeConstants.HUB_ADMIN).isVisible();
+    }
+
+    protected GenericService getGenericService() {
+        return genericService;
     }
 }

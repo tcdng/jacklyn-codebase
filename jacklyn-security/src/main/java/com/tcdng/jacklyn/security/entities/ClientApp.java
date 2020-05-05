@@ -49,6 +49,10 @@ public class ClientApp extends BaseVersionedStatusEntity {
     @ListOnly(key = "type", property = "description")
     private String typeDesc;
 
+    public ClientApp() {
+        type = ClientAppType.STANDARD;
+    }
+    
     @Override
     public String getDescription() {
         return description;

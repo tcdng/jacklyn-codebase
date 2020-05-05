@@ -63,11 +63,6 @@ public class ReportDefinitionController
     }
 
     @Override
-    protected ReportableDefinition prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(ReportableDefinition reportableDefinitionData) throws UnifyException {
         return null;
     }

@@ -31,6 +31,9 @@ import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Controller for managing role document control privileges.
@@ -45,7 +48,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 public class RoleDocumentControlController extends AbstractOrganizationPageController<RoleDocumentControlPageBean> {
 
     public RoleDocumentControlController() {
-        super(RoleDocumentControlPageBean.class, true, false, false);
+        super(RoleDocumentControlPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

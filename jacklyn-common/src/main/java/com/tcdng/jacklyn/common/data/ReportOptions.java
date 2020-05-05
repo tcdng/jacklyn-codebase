@@ -74,6 +74,8 @@ public class ReportOptions {
 
     private boolean printGroupColumnNames;
 
+    private boolean showGrandFooter;
+
     private boolean invertGroupColors;
 
     private boolean shadeOddRows;
@@ -305,6 +307,14 @@ public class ReportOptions {
 
     public void setPrintGroupColumnNames(boolean printGroupColumnNames) {
         this.printGroupColumnNames = printGroupColumnNames;
+    }
+
+    public boolean isShowGrandFooter() {
+        return showGrandFooter;
+    }
+
+    public void setShowGrandFooter(boolean showGrandFooter) {
+        this.showGrandFooter = showGrandFooter;
     }
 
     public boolean isInvertGroupColors() {

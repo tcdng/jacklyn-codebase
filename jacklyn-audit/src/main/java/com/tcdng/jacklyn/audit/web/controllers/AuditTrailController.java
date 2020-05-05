@@ -69,11 +69,6 @@ public class AuditTrailController extends AbstractAuditFormController<AuditTrail
     }
 
     @Override
-    protected AuditTrail prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(AuditTrail auditTrailData) throws UnifyException {
         return null;
     }

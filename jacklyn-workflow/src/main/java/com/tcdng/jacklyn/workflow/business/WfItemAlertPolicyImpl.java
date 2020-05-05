@@ -16,7 +16,11 @@
 
 package com.tcdng.jacklyn.workflow.business;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.tcdng.jacklyn.notification.data.Message;
 import com.tcdng.jacklyn.notification.data.NotificationContact;
@@ -44,9 +48,22 @@ import com.tcdng.unify.core.util.StringUtils.StringToken;
         description = "Default Workflow Item Alert Policy")
 public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
 
+    private static final String HELDBY_TOKEN = ":heldBy";
+
+    private static final String FORWARDED_TOKEN = ":forwardedBy";
+
+    private static final String WFITEMDESC_TOKEN = ":itemDesc";
+
+    private static final String COMMENT_TOKEN = ":comment";
+
+    private static final Set<String> RESERVED_WFITEM_TOKENS =
+            Collections.unmodifiableSet(
+                    new HashSet<String>(Arrays.asList(HELDBY_TOKEN, FORWARDED_TOKEN, WFITEMDESC_TOKEN, COMMENT_TOKEN)));
+
     @Override
     public void sendAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
-        logDebug("Sending alert...");
+        logDebug("Sending alert of type [{0}] through channel [{1}] for workflow item [{2}]...", wfAlertDef.getType(),
+                wfAlertDef.getChannel(), flowingWfItemReader.getItemDesc());
         String senderName =
                 getSystemService().getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_SYSTEM_NAME);
@@ -82,28 +99,39 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
         }
 
         // Attempt to send only on valid channel name
+        logDebug("Using specific channel with name [{0}]...", channelName);
         if (!StringUtils.isBlank(channelName)) {
             // Get contact list
-            if (wfAlertDef.isPassThrough()) {
-                // Alert all contacts in step
-                contactList =
-                        getEligibleContacts(channel, flowingWfItemReader, wfAlertDef.getParticipant(),
-                                wfAlertDef.getStepGlobalName());
-            } else if (wfAlertDef.isUserInteract()) {
-                String heldBy = flowingWfItemReader.getItemHeldBy();
-                if (!StringUtils.isBlank(heldBy)) {
-                    // Alert specific user
-                    contactList = getUserContacts(channel, heldBy);
-                } else {
-                    // Alert all contacts in step
+            switch (wfAlertDef.getType()) {
+                case CRITICAL_NOTIFICATION:
+                case EXPIRATION_NOTIFICATION:
                     contactList =
-                            getEligibleContacts(channel, flowingWfItemReader, wfAlertDef.getParticipant(),
+                            getEligibleEscalationContacts(channel, flowingWfItemReader, wfAlertDef.getStepGlobalName());
+                    break;
+                case PASS_THROUGH:
+                    contactList =
+                            getEligibleParticipationContacts(channel, flowingWfItemReader, wfAlertDef.getParticipant(),
                                     wfAlertDef.getStepGlobalName());
-                }
+                    break;
+                case USER_INTERACT:
+                    String heldBy = flowingWfItemReader.getItemHeldBy();
+                    if (!StringUtils.isBlank(heldBy)) {
+                        // Alert specific user
+                        contactList = getUserContacts(channel, heldBy);
+                    } else {
+                        // Alert all contacts in step
+                        contactList =
+                                getEligibleParticipationContacts(channel, flowingWfItemReader,
+                                        wfAlertDef.getParticipant(), wfAlertDef.getStepGlobalName());
+                    }
+                    break;
+                default:
+                    break;
             }
 
             // Send only if there's at least one contact
             if (!DataUtils.isBlank(contactList)) {
+                logDebug("Targeting [{0}] contacts through channel...", contactList.size());
                 String templateGlobalName = wfAlertDef.getNotificationTemplateCode();
                 NotificationTemplateDef notificationTemplateDef =
                         getNotificationService().getRuntimeNotificationTemplateDef(templateGlobalName);
@@ -121,7 +149,19 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
                 for (StringToken token : notificationTemplateDef.getTokenList()) {
                     if (token.isParam()) {
                         String tokenName = token.getToken();
-                        msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.read(tokenName));
+                        if (RESERVED_WFITEM_TOKENS.contains(tokenName)) {
+                            if (HELDBY_TOKEN.equals(tokenName)) {
+                                msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getItemHeldBy());
+                            } else if (FORWARDED_TOKEN.equals(tokenName)) {
+                                msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getItemForwardedBy());
+                            } else if (COMMENT_TOKEN.equals(tokenName)) {
+                                msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getLastComment());
+                            } else if (WFITEMDESC_TOKEN.equals(tokenName)) {
+                                msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.getItemDesc());
+                            }
+                        } else {
+                            msgBuilder.usingDictionaryEntry(tokenName, flowingWfItemReader.read(tokenName));
+                        }
                     }
                 }
 
@@ -133,5 +173,4 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
             }
         }
     }
-
 }

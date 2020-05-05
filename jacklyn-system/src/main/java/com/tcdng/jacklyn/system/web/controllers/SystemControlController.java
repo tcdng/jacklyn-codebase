@@ -28,6 +28,9 @@ import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * System control controller.
@@ -42,7 +45,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 public class SystemControlController extends AbstractSystemPageController<SystemControlPageBean> {
 
     public SystemControlController() {
-        super(SystemControlPageBean.class, true, false, false); // Secured and not read-only
+        super(SystemControlPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

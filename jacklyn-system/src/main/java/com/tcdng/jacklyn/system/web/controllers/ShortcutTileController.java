@@ -108,11 +108,6 @@ public class ShortcutTileController extends AbstractSystemFormController<Shortcu
     }
 
     @Override
-    protected ShortcutTile prepareCreate() throws UnifyException {
-        return null;
-    }
-
-    @Override
     protected Object create(ShortcutTile shortcutTile) throws UnifyException {
         return null;
     }

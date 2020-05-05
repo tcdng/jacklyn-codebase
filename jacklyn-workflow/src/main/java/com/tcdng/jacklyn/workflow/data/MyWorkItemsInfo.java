@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 The Code Department.
+ * Copyright 2018-2020 The Code Department
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,25 +13,37 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.security.business;
 
-import com.tcdng.jacklyn.security.entities.User;
-import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.core.annotation.Tooling;
-import com.tcdng.unify.core.list.AbstractDBSearchProvider;
+package com.tcdng.jacklyn.workflow.data;
+
+import java.util.List;
 
 /**
- * Users by name search provider.
+ * My work items panel information.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-@Tooling(description = "User by Name Search Provider")
-@Component("userbyname-searchprovider")
-public class UserByNameSearchProvider extends AbstractDBSearchProvider {
+public class MyWorkItemsInfo {
 
-    public UserByNameSearchProvider() {
-        super(User.class, "loginId", "fullName");
+    private String wfStepName;
+
+    private List<WfItemStatusInfo> wfItemList;
+
+    public String getWfStepName() {
+        return wfStepName;
+    }
+
+    public void setWfStepName(String wfStepName) {
+        this.wfStepName = wfStepName;
+    }
+
+    public List<WfItemStatusInfo> getWfItemList() {
+        return wfItemList;
+    }
+
+    public void setWfItemList(List<WfItemStatusInfo> wfItemList) {
+        this.wfItemList = wfItemList;
     }
 
 }

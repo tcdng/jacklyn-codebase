@@ -78,11 +78,6 @@ public class WfDocController extends AbstractWorkflowFormController<WfDocPageBea
     }
 
     @Override
-    protected WfDoc prepareCreate() throws UnifyException {
-        return new WfDoc();
-    }
-
-    @Override
     protected void onPrepareView(WfDoc wfDocData, boolean onPaste) throws UnifyException {
 
     }

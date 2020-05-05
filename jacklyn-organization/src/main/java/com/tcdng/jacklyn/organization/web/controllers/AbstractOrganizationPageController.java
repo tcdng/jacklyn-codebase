@@ -21,6 +21,9 @@ import com.tcdng.jacklyn.common.web.controllers.BasePageController;
 import com.tcdng.jacklyn.organization.business.OrganizationService;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Abstract base page controller for organization module.
@@ -33,8 +36,8 @@ public abstract class AbstractOrganizationPageController<T extends BasePageBean>
     @Configurable
     private OrganizationService organizationService;
 
-    public AbstractOrganizationPageController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
-            boolean resetOnWrite) {
+    public AbstractOrganizationPageController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly,
+            ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 

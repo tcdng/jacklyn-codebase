@@ -44,7 +44,7 @@
      
 //Actions
 !ui-post:generateRpt path:$g{generateReportPath}
-    components:$c{rptParamsPanel reportColumnRack reportOptionsPanel}  validations:$c{paramsValidation}
+    components:$c{rptParamsPanel reportColumnRack reportOptionsPanel}  validations:$c{paramsValidation} debounce:false
 
 // Validations
 !ui-validation:paramsValidation components:$c{rptParamsPanel}

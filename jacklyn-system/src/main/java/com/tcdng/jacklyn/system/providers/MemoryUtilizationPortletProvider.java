@@ -14,10 +14,10 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.system.business;
+package com.tcdng.jacklyn.system.providers;
 
-import com.tcdng.jacklyn.statistics.business.AbstractSimpleDialUtilizationProvider;
 import com.tcdng.jacklyn.statistics.data.QuickPercentage;
+import com.tcdng.jacklyn.statistics.providers.AbstractSimpleDialUtilizationProvider;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 

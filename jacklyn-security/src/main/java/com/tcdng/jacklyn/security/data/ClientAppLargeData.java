@@ -22,7 +22,7 @@ import com.tcdng.jacklyn.common.entities.BaseLargeData;
 import com.tcdng.jacklyn.security.entities.ClientApp;
 
 /**
- * Client application large data.
+ * Client application large clientApp.
  * 
  * @author Lateef Ojulari
  * @since 1.0
@@ -35,12 +35,12 @@ public class ClientAppLargeData extends BaseLargeData<ClientApp> {
         super(new ClientApp());
     }
 
-    public ClientAppLargeData(ClientApp data) {
-        super(data);
+    public ClientAppLargeData(ClientApp clientApp) {
+        super(clientApp);
     }
 
-    public ClientAppLargeData(ClientApp data, List<Long> systemAssetIdList) {
-        super(data);
+    public ClientAppLargeData(ClientApp clientApp, List<Long> systemAssetIdList) {
+        super(clientApp);
         this.systemAssetIdList = systemAssetIdList;
     }
 

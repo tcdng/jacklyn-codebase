@@ -41,6 +41,8 @@ import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.data.Hint.MODE;
 import com.tcdng.unify.web.ui.panel.SearchCriteriaPanel;
@@ -94,7 +96,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     private int modifier;
 
     public BaseEntityController(Class<T> pageBeanClass, Class<V> entityClass, int modifier) {
-        super(pageBeanClass, ManageRecordModifier.isSecure(modifier), false, false);
+        super(pageBeanClass, ManageRecordModifier.isSecure(modifier), ReadOnly.FALSE, ResetOnWrite.FALSE);
         this.entityClass = entityClass;
         this.modifier = modifier;
     }
@@ -117,9 +119,11 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         return "refreshtable";
     }
 
+    @SuppressWarnings("unchecked")
     @Action
     public String prepareCreateRecord() throws UnifyException {
-        V record = prepareCreate();
+        V record = (V) getGenericService().getExtendedInstance(entityClass);
+        onPrepareCreate(record);
         BaseEntityPageBean<V> pageBean = getPageBean();
         pageBean.setRecord(record);
         loadSessionOnCreate();
@@ -505,8 +509,6 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
 
     protected abstract V find(U id) throws UnifyException;
 
-    protected abstract V prepareCreate() throws UnifyException;
-
     protected abstract Object create(V record) throws UnifyException;
 
     protected abstract int update(V record) throws UnifyException;
@@ -514,6 +516,10 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
     protected abstract int delete(V record) throws UnifyException;
 
     protected abstract void setCrudViewerEditable(boolean editable) throws UnifyException;
+
+    protected void onPrepareCreate(V record) throws UnifyException {
+
+    }
 
     protected void onCopy(V recordCopy) throws UnifyException {
 

@@ -107,6 +107,7 @@ import com.tcdng.unify.core.annotation.Parameter;
 import com.tcdng.unify.core.annotation.Periodic;
 import com.tcdng.unify.core.annotation.PeriodicType;
 import com.tcdng.unify.core.annotation.StaticList;
+import com.tcdng.unify.core.annotation.Synchronized;
 import com.tcdng.unify.core.annotation.Taskable;
 import com.tcdng.unify.core.annotation.Tooling;
 import com.tcdng.unify.core.annotation.TransactionAttribute;
@@ -114,9 +115,10 @@ import com.tcdng.unify.core.annotation.Transactional;
 import com.tcdng.unify.core.constant.ApplicationAttributeConstants;
 import com.tcdng.unify.core.constant.EnumConst;
 import com.tcdng.unify.core.constant.FrequencyUnit;
+import com.tcdng.unify.core.criterion.AggregateFunction;
+import com.tcdng.unify.core.criterion.AggregateType;
 import com.tcdng.unify.core.criterion.Restriction;
 import com.tcdng.unify.core.criterion.Update;
-import com.tcdng.unify.core.data.AggregateType;
 import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
@@ -124,8 +126,8 @@ import com.tcdng.unify.core.data.Inputs;
 import com.tcdng.unify.core.database.AbstractEntity;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
-import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceConfig;
-import com.tcdng.unify.core.database.sql.DynamicSqlDataSourceManager;
+import com.tcdng.unify.core.database.dynamic.sql.DynamicSqlDataSourceConfig;
+import com.tcdng.unify.core.database.dynamic.sql.DynamicSqlDataSourceManager;
 import com.tcdng.unify.core.database.sql.SqlDialectNameConstants;
 import com.tcdng.unify.core.list.ListCommand;
 import com.tcdng.unify.core.list.ListManager;
@@ -670,10 +672,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     @Override
     public int getUniqueActiveUserSessions() throws UnifyException {
-        return Integer.valueOf((String) db()
-                .aggregate(AggregateType.COUNT,
-                        new UserSessionTrackingQuery().loggedIn().addSelect("userLoginId").setDistinct(true))
-                .getValue());
+        return DataUtils.convert(int.class, db().aggregate(new AggregateFunction(AggregateType.COUNT, "userLoginId"),
+                new UserSessionTrackingQuery().loggedIn().setDistinct(true)).getValue(), null);
     }
 
     @Override
@@ -721,6 +721,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return db().listAll(query);
     }
 
+    @Synchronized("configure-datasource")
     @Override
     public int updateDataSource(DataSource dataSource) throws UnifyException {
         int updateCount = db().updateByIdVersion(dataSource);
@@ -742,6 +743,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return updateCount;
     }
 
+    @Synchronized("configure-datasource")
     @Override
     public boolean activateDataSource(String dataSourceName) throws UnifyException {
         if (!dataSourceManager.isConfigured(dataSourceName)) {
@@ -753,6 +755,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         return false;
     }
 
+    @Synchronized("configure-datasource")
     @Override
     public String activateDataSource(Long dataSourceId) throws UnifyException {
         DataSource dataSource = db().list(new DataSourceQuery().id(dataSourceId));
@@ -777,7 +780,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         result =
                 dataSourceManager.testConfiguration(new DynamicSqlDataSourceConfig(taskMonitor.getTaskId(0),
                         driver.getDialect(), driver.getDriverType(), dataSource.getConnectionUrl(),
-                        dataSource.getUserName(), dataSource.getPassword(), 1, false));
+                        dataSource.getSchema(), dataSource.getUserName(), dataSource.getPassword(), 1, false));
         addTaskMessage(taskMonitor, "$m{system.datasource.taskmonitor.completed}", result);
         return result;
     }
@@ -866,7 +869,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         }
 
         // Working dates
-        Date now = db().getNow();
+        final Date now = db().getNow();
         final Date workingDt = CalendarUtils.getMidnightDate(now);
 
         // Expiration allowance
@@ -942,12 +945,21 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                     }
 
                     if (calcNextExecutionOn == null) {
-                        // Use next eligible date start time
-                        calcNextExecutionOn =
-                                CalendarUtils.getDateWithOffset(
-                                        CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
-                                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), workingDt),
-                                        scheduledTaskDef.getStartOffset());
+                        Date todayStartTime =
+                                CalendarUtils.getDateWithOffset(workingDt, scheduledTaskDef.getStartOffset());
+                        if (now.before(todayStartTime) && CalendarUtils.isWithinCalendar(scheduledTaskDef.getWeekdays(),
+                                scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), todayStartTime)) {
+                            // Today start time
+                            calcNextExecutionOn = todayStartTime;
+                        } else {
+                            // Use next eligible date start time
+                            calcNextExecutionOn =
+                                    CalendarUtils.getDateWithOffset(
+                                            CalendarUtils.getNextEligibleDate(scheduledTaskDef.getWeekdays(),
+                                                    scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(),
+                                                    workingDt),
+                                            scheduledTaskDef.getStartOffset());
+                        }
                     }
 
                     db().updateById(ScheduledTask.class, scheduledTaskId,
@@ -1180,7 +1192,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         // Register module system parameters and menus
         Map<String, Module> moduleMap =
                 db().findAllMap(String.class, "name", new ModuleQuery().ignoreEmptyCriteria(true));
-        DataUtils.sort(moduleConfigList, ModuleConfig.class, "description", true);
+        DataUtils.sortAscending(moduleConfigList, ModuleConfig.class, "description");
         for (ModuleConfig moduleConfig : moduleConfigList) {
             String moduleName = moduleConfig.getName();
             module = moduleMap.get(moduleName);
@@ -1238,7 +1250,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
                 logDebug("Updating menu definitions for module [{0}]...", module.getDescription());
                 List<MenuConfig> menuConfigList = moduleConfig.getMenus().getMenuList();
 
-                DataUtils.sort(menuConfigList, MenuConfig.class, "caption", true);
+                DataUtils.sortAscending(menuConfigList, MenuConfig.class, "caption");
                 applicationMenu.setModuleId(module.getId());
                 // Deal with parent menus first
                 ApplicationMenuQuery mQuery = new ApplicationMenuQuery();
@@ -1518,8 +1530,8 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
     private DynamicSqlDataSourceConfig getDynamicSqlDataSourceConfig(DataSource dataSource) throws UnifyException {
         return new DynamicSqlDataSourceConfig(dataSource.getName(), dataSource.getDialect(), dataSource.getDriverType(),
-                dataSource.getConnectionUrl(), dataSource.getUserName(), dataSource.getPassword(),
-                dataSource.getMaxConnections(), false);
+                dataSource.getConnectionUrl(), dataSource.getSchema(), dataSource.getUserName(),
+                dataSource.getPassword(), dataSource.getMaxConnections(), false);
     }
 
     private void ensureDataSourceDriver(String name, String description, String dialect, String driverType)

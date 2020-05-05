@@ -16,8 +16,11 @@
 
 package com.tcdng.jacklyn.workflow;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.workflow.business.AbstractWfItemAssignmentPolicy;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
+import com.tcdng.jacklyn.workflow.data.WfItemAssigneeInfo;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 
@@ -31,11 +34,12 @@ import com.tcdng.unify.core.annotation.Component;
 public class TestWfItemAssignmentPolicyImpl extends AbstractWfItemAssignmentPolicy {
 
     @Override
-    public String execute(Reader flowingWfItemReader) throws UnifyException {
+    public String assignWorkItem(List<WfItemAssigneeInfo> wfItemAssigneeInfoList, Reader flowingWfItemReader)
+            throws UnifyException {
         if ("BadFox".equals(flowingWfItemReader.read(String.class, "firstName"))) {
             throw new RuntimeException("Bad customer detected!");
         }
-        
+
         return "terry5432";
     }
 

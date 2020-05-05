@@ -46,6 +46,9 @@ public class WfItemEvent extends BaseEntity {
     private Date expectedDt;
 
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
+    private Date criticalDt;
+
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date actionDt;
 
     @Column(nullable = true)
@@ -59,6 +62,9 @@ public class WfItemEvent extends BaseEntity {
 
     @Column(length = 64, nullable = true)
     private String srcWfStepName;
+
+    @Column(length = 64, nullable = true)
+    private String prevWfStepName;
 
     @Column(name = "ERROR_CD", length = 32, nullable = true)
     private String errorCode;
@@ -102,6 +108,14 @@ public class WfItemEvent extends BaseEntity {
 
     public void setStepDt(Date stepDt) {
         this.stepDt = stepDt;
+    }
+
+    public Date getCriticalDt() {
+        return criticalDt;
+    }
+
+    public void setCriticalDt(Date criticalDt) {
+        this.criticalDt = criticalDt;
     }
 
     public Date getExpectedDt() {
@@ -150,6 +164,14 @@ public class WfItemEvent extends BaseEntity {
 
     public void setSrcWfStepName(String srcWfStepName) {
         this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getPrevWfStepName() {
+        return prevWfStepName;
+    }
+
+    public void setPrevWfStepName(String prevWfStepName) {
+        this.prevWfStepName = prevWfStepName;
     }
 
     public String getErrorCode() {

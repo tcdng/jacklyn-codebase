@@ -70,11 +70,6 @@ public class InputCtrlDefController extends AbstractSystemFormController<InputCt
     }
 
     @Override
-    protected InputCtrlDef prepareCreate() throws UnifyException {
-        return new InputCtrlDef();
-    }
-
-    @Override
     protected Object create(InputCtrlDef inputCtrlDefData) throws UnifyException {
         return getSystemService().createInputCtrlDef(inputCtrlDefData);
     }

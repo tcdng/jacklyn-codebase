@@ -72,6 +72,9 @@ public class WfItem extends BaseTimestampedEntity {
     private Date stepDt;
 
     @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
+    private Date criticalDt;
+
+    @Column(type = ColumnType.TIMESTAMP_UTC, nullable = true)
     private Date expectedDt;
 
     @Column(length = 96, nullable = true)
@@ -80,6 +83,12 @@ public class WfItem extends BaseTimestampedEntity {
     @Column(length = 96, nullable = true)
     private String forwardedBy;
 
+    @Column(name = "CRITICAL_ALERT_SENT_FG", nullable = true)
+    private Boolean criticalAlertSent;
+
+    @Column(name = "EXPIRATION_ALERT_SENT_FG", nullable = true)
+    private Boolean expirationAlertSent;
+    
     @ListOnly(key = "wfHistEventId", property = "wfItemHistId")
     private Long wfItemHistId;
 
@@ -95,12 +104,20 @@ public class WfItem extends BaseTimestampedEntity {
     @ListOnly(key = "wfHistEventId", property = "srcWfStepName")
     private String srcWfStepName;
 
+    @ListOnly(key = "wfHistEventId", property = "prevWfStepName")
+    private String prevWfStepName;
+    
     @ListOnly(key = "wfHistEventId", property = "errorCode")
     private String errorCode;
 
     @ListOnly(key = "wfHistEventId", property = "errorMsg")
     private String errorMsg;
 
+    public WfItem() {
+        criticalAlertSent =  Boolean.FALSE;
+        expirationAlertSent = Boolean.FALSE;
+    }
+    
     @Override
     public String getDescription() {
         return wfItemDesc;
@@ -196,6 +213,14 @@ public class WfItem extends BaseTimestampedEntity {
         this.stepDt = stepDt;
     }
 
+    public Date getCriticalDt() {
+        return criticalDt;
+    }
+
+    public void setCriticalDt(Date criticalDt) {
+        this.criticalDt = criticalDt;
+    }
+
     public Date getExpectedDt() {
         return expectedDt;
     }
@@ -218,6 +243,22 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setForwardedBy(String forwardedBy) {
         this.forwardedBy = forwardedBy;
+    }
+
+    public Boolean getCriticalAlertSent() {
+        return criticalAlertSent;
+    }
+
+    public void setCriticalAlertSent(Boolean criticalAlertSent) {
+        this.criticalAlertSent = criticalAlertSent;
+    }
+
+    public Boolean getExpirationAlertSent() {
+        return expirationAlertSent;
+    }
+
+    public void setExpirationAlertSent(Boolean expirationAlertSent) {
+        this.expirationAlertSent = expirationAlertSent;
     }
 
     public String getProcessGlobalName() {
@@ -250,6 +291,14 @@ public class WfItem extends BaseTimestampedEntity {
 
     public void setSrcWfStepName(String srcWfStepName) {
         this.srcWfStepName = srcWfStepName;
+    }
+
+    public String getPrevWfStepName() {
+        return prevWfStepName;
+    }
+
+    public void setPrevWfStepName(String prevWfStepName) {
+        this.prevWfStepName = prevWfStepName;
     }
 
     public String getErrorCode() {

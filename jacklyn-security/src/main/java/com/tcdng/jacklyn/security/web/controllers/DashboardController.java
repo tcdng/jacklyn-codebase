@@ -19,6 +19,9 @@ import com.tcdng.jacklyn.security.web.beans.DashboardPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Dashboard controller.
@@ -31,7 +34,7 @@ import com.tcdng.unify.core.annotation.UplBinding;
 public class DashboardController extends AbstractSecurityPageController<DashboardPageBean> {
 
     public DashboardController() {
-        super(DashboardPageBean.class, true, false, false);// Secure and not-readonly
+        super(DashboardPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Override

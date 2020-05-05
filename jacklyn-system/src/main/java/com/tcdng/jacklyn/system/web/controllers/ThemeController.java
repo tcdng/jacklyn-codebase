@@ -66,11 +66,6 @@ public class ThemeController extends AbstractSystemFormController<ThemePageBean,
     }
 
     @Override
-    protected Theme prepareCreate() throws UnifyException {
-        return new Theme();
-    }
-
-    @Override
     protected Object create(Theme theme) throws UnifyException {
         return getSystemService().createTheme(theme);
     }

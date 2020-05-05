@@ -19,6 +19,9 @@ import com.tcdng.jacklyn.security.web.beans.ApplicationLoginPageBean;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.AbstractPageController;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Page controller for application login document.
@@ -31,6 +34,6 @@ import com.tcdng.unify.web.AbstractPageController;
 public class ApplicationLoginController extends AbstractPageController<ApplicationLoginPageBean> {
 
     public ApplicationLoginController() {
-        super(ApplicationLoginPageBean.class, false, false, false); // Unsecured and not read-only
+        super(ApplicationLoginPageBean.class, Secured.FALSE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 }

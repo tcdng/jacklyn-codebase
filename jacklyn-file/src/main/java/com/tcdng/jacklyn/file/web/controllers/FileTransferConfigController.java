@@ -81,11 +81,6 @@ public class FileTransferConfigController
     }
 
     @Override
-    protected FileTransferConfig prepareCreate() throws UnifyException {
-        return new FileTransferConfig();
-    }
-
-    @Override
     protected Object create(FileTransferConfig fileTransferConfigData) throws UnifyException {
         return getFileService().createFileTransferConfig(fileTransferConfigData);
     }

@@ -19,6 +19,7 @@ package com.tcdng.jacklyn.workflow.data;
 import com.tcdng.jacklyn.shared.notification.NotificationType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowAlertType;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Workflow document alert definition.
@@ -29,7 +30,7 @@ import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 public class WfAlertDef extends BaseWfDef {
 
     private WorkflowAlertType type;
-    
+
     private WorkflowParticipantType participant;
 
     private NotificationType channel;
@@ -38,13 +39,17 @@ public class WfAlertDef extends BaseWfDef {
 
     private String stepGlobalName;
 
+    private String fireOnPrevStepName;
+
     private String notificationTemplateCode;
 
-    public WfAlertDef(String docName, String stepGlobalName, String name, String description, WorkflowAlertType type,
-            WorkflowParticipantType participant, NotificationType channel, String notificationTemplateCode) {
+    public WfAlertDef(String docName, String stepGlobalName, String fireOnPrevStepName, String name, String description,
+            WorkflowAlertType type, WorkflowParticipantType participant, NotificationType channel,
+            String notificationTemplateCode) {
         super(name, description);
         this.docName = docName;
         this.stepGlobalName = stepGlobalName;
+        this.fireOnPrevStepName = fireOnPrevStepName;
         this.type = type;
         this.participant = participant;
         this.channel = channel;
@@ -75,11 +80,28 @@ public class WfAlertDef extends BaseWfDef {
         return docName;
     }
 
+    public String getFireOnPrevStepName() {
+        return fireOnPrevStepName;
+    }
+
+    public boolean isFireAlertOn(String docName, String prevStepName) {
+        return this.docName.equals(docName)
+                && (StringUtils.isBlank(this.fireOnPrevStepName) || this.fireOnPrevStepName.equals(prevStepName));
+    }
+
     public boolean isPassThrough() {
         return type.isPassThrough();
     }
 
     public boolean isUserInteract() {
         return type.isUserInteract();
+    }
+
+    public boolean isCriticalNotification() {
+        return type.isCriticalNotification();
+    }
+
+    public boolean isExpirationNotification() {
+        return type.isExpirationNotification();
     }
 }

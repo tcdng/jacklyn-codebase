@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
+package com.tcdng.jacklyn.statistics.providers;
 
 import com.tcdng.jacklyn.statistics.data.QuickPercentage;
 import com.tcdng.unify.core.UnifyException;

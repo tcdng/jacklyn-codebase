@@ -14,17 +14,15 @@
  * the License.
  */
 
-package com.tcdng.jacklyn.statistics.business;
-
-import java.util.Map;
+package com.tcdng.jacklyn.statistics.providers;
 
 import com.tcdng.jacklyn.statistics.data.QuickRatio;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.chart.AbstractChart.AnnotationType;
+import com.tcdng.unify.core.chart.AbstractChart.ValueFormat;
 import com.tcdng.unify.core.chart.ChartGenerator;
 import com.tcdng.unify.core.chart.PieChart;
-import com.tcdng.unify.core.chart.PieChart.AnnotationType;
-import com.tcdng.unify.core.chart.PieChart.ValueFormat;
 import com.tcdng.unify.core.constant.ColorPalette;
 
 /**
@@ -66,15 +64,19 @@ public abstract class AbstractPieChartProvider extends AbstractQuickRatioVisualP
 
     @Override
     protected byte[] doProvidePresentation(QuickRatio quickRatio) throws UnifyException {
-        PieChart.Builder pcb =
-                PieChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
-                        .valueFormat(valueFormat).showLegend(showLegend);
-        for (Map.Entry<String, Double> entry : quickRatio.getRatios().entrySet()) {
-            pcb.addSeries(entry.getKey(), entry.getValue());
+        if (quickRatio.isSanityCheck()) {
+            PieChart.Builder pcb =
+                    PieChart.newBuilder(width, height).colorPalette(colorPalette).annotationType(annotationType)
+                            .valueFormat(valueFormat).showLegend(showLegend);
+            for (QuickRatio.Ratio ratio : quickRatio.getRatios()) {
+                pcb.addSeries(ratio.getName(), ratio.getValue(), ratio.getColor());
+            }
+
+            PieChart chart = pcb.build();
+            return chartGenerator.generateImage(chart);
         }
 
-        PieChart chart = pcb.build();
-        return chartGenerator.generateImage(chart);
+        return null;
     }
 
 }

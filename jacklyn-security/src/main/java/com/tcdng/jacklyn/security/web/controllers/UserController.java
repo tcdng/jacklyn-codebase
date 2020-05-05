@@ -107,16 +107,13 @@ public class UserController extends AbstractSecurityFormController<UserPageBean,
     }
 
     @Override
-    protected User prepareCreate() throws UnifyException {
+    protected void onPrepareCreate(User user) throws UnifyException {
         setPageWidgetEditable("frmLoginId", true);
 
         UserPageBean pageBean = getPageBean();
-        UserLargeData largeData = new UserLargeData();
-        User user = largeData.getData();
         user.setStatus(RecordStatus.ACTIVE);
         user.setPasswordExpires(Boolean.TRUE);
-        pageBean.setLargeData(largeData);
-        return user;
+        pageBean.setLargeData(new UserLargeData(user));
     }
 
     @Override

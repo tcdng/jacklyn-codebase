@@ -27,7 +27,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @since 1.0
  */
 @StaticList("orientationtypelist")
-public enum OrientationType  implements EnumConst {
+public enum OrientationType implements EnumConst {
 
     HORIZONTAL("H"), VERTICAL("V");
 

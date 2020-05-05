@@ -38,6 +38,9 @@ import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 import com.tcdng.unify.web.ui.control.Table;
 import com.tcdng.unify.web.ui.panel.SwitchPanel;
 
@@ -62,7 +65,7 @@ import com.tcdng.unify.web.ui.panel.SwitchPanel;
 public class UserLoginController extends AbstractApplicationForwarderController<UserLoginPageBean> {
 
     public UserLoginController() {
-        super(UserLoginPageBean.class, false, false, false);
+        super(UserLoginPageBean.class, Secured.FALSE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

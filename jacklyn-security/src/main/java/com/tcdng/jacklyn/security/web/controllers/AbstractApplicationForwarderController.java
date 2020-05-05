@@ -24,6 +24,9 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Provides application forwarding method based on user role.
@@ -36,8 +39,8 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 public abstract class AbstractApplicationForwarderController<T extends AbstractApplicationForwarderPageBean>
         extends AbstractSecurityPageController<T> {
 
-    public AbstractApplicationForwarderController(Class<T> pageBeanClass, boolean secured, boolean readOnly,
-            boolean resetOnWrite) {
+    public AbstractApplicationForwarderController(Class<T> pageBeanClass, Secured secured, ReadOnly readOnly,
+            ResetOnWrite resetOnWrite) {
         super(pageBeanClass, secured, readOnly, resetOnWrite);
     }
 

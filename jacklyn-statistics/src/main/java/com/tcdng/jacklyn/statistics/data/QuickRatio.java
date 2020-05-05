@@ -16,9 +16,11 @@
 
 package com.tcdng.jacklyn.statistics.data;
 
+import java.awt.Color;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
+
+import com.tcdng.unify.core.util.DataUtils;
 
 /**
  * Quick ratios data object.
@@ -28,14 +30,59 @@ import java.util.Map;
  */
 public class QuickRatio {
 
-    private Map<String, Double> ratios;
+    private List<Ratio> ratios;
 
-    public QuickRatio(LinkedHashMap<String, Double> ratios) {
-        this.ratios = Collections.unmodifiableMap(ratios);
+    public QuickRatio(List<Ratio> ratios) {
+        this.ratios = Collections.unmodifiableList(ratios);
     }
 
-    public Map<String, Double> getRatios() {
+    public List<Ratio> getRatios() {
         return ratios;
     }
 
+    public boolean isSanityCheck() {
+        if(DataUtils.isBlank(ratios)) {
+            return false;
+        }
+        
+        for(Ratio ratio: ratios) {
+            if(ratio.value != 0.00) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public static class Ratio {
+        
+        private String name;
+        
+        private Double value;
+        
+        private Color color;
+
+        public Ratio(String name, Double value, Color color) {
+            this.name = name;
+            this.value = value;
+            this.color = color;
+        }
+
+        public Ratio(String name, Double value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Double getValue() {
+            return value;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+    }
 }

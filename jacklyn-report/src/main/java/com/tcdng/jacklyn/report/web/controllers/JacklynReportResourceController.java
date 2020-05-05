@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import com.tcdng.jacklyn.common.data.ReportOptions;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Backing resource controller for retrieving a generated report.
@@ -31,7 +32,7 @@ import com.tcdng.unify.core.annotation.Component;
 public class JacklynReportResourceController extends AbstractReportResourceController {
 
     public JacklynReportResourceController() {
-        super(true);
+        super(Secured.TRUE);
     }
 
     @Override

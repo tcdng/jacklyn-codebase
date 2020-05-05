@@ -23,16 +23,21 @@ import com.tcdng.jacklyn.shared.workflow.data.ToolingEnrichmentLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingItemClassifierLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingPolicyLogicItem;
 import com.tcdng.jacklyn.shared.workflow.data.ToolingWfDocUplGeneratorItem;
+import com.tcdng.jacklyn.shared.workflow.data.ToolingWfItemAssignerItem;
 import com.tcdng.jacklyn.shared.xml.config.workflow.WfCategoryConfig;
 import com.tcdng.jacklyn.workflow.data.FlowingWfItem;
 import com.tcdng.jacklyn.workflow.data.InteractWfItems;
 import com.tcdng.jacklyn.workflow.data.ManualInitInfo;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
+import com.tcdng.jacklyn.workflow.data.WfAction;
 import com.tcdng.jacklyn.workflow.data.WfFormDef;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
+import com.tcdng.jacklyn.workflow.data.WfItemCountStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemHistory;
+import com.tcdng.jacklyn.workflow.data.WfItemStatusInfo;
 import com.tcdng.jacklyn.workflow.data.WfItemSummary;
 import com.tcdng.jacklyn.workflow.data.WfProcessDef;
+import com.tcdng.jacklyn.workflow.data.WfProcessWorkloadInfo;
 import com.tcdng.jacklyn.workflow.data.WfTemplateLargeData;
 import com.tcdng.jacklyn.workflow.entities.WfCategory;
 import com.tcdng.jacklyn.workflow.entities.WfCategoryQuery;
@@ -446,17 +451,16 @@ public interface WorkflowService extends JacklynBusinessService {
     List<Long> grabCurrentUserWorkItems(String stepGlobalName) throws UnifyException;
 
     /**
-     * Releases work items for current user from specified step.
+     * Releases work items for current user.
      * 
-     * @param stepGlobalName
-     *            the global step name
      * @param wfItemIds
      *            the workflow item IDs
      * @return the total number of work items released.
      * @throws UnifyException
-     *             if current user is not a participant in step if an error occurs
+     *             if current user is not a participant in work items steps. if an
+     *             error occurs
      */
-    int releaseCurrentUserWorkItems(String stepGlobalName, List<Long> wfItemIds) throws UnifyException;
+    int releaseCurrentUserWorkItems(List<Long> wfItemIds) throws UnifyException;
 
     /**
      * Returns the current user work item list for particular step.
@@ -470,6 +474,17 @@ public interface WorkflowService extends JacklynBusinessService {
     InteractWfItems getCurrentUserWorkItems(String stepGlobalName) throws UnifyException;
 
     /**
+     * Returns the workflow step user actions.
+     * 
+     * @param stepGlobalName
+     *            the global step name.
+     * @return the action list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfAction> getWorkflowStepActions(String stepGlobalName) throws UnifyException;
+
+    /**
      * Returns the current user work item summary.
      * 
      * @return the summary list
@@ -477,6 +492,35 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<WfItemSummary> getCurrentUserWorkItemSummary() throws UnifyException;
+
+    /**
+     * Returns the current user work item status list.
+     * 
+     * @param stepGlobalName
+     *            optional global step name
+     * @return the current session work item status list
+     * @throws UnifyException
+     *             if current user is not a participant in step
+     */
+    List<WfItemStatusInfo> getCurrentWorkItemStatusList(String stepGlobalName) throws UnifyException;
+
+    /**
+     * Returns the current user work item count status list.
+     * 
+     * @return the current session work item count status list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfItemCountStatusInfo> getCurrentWorkItemCountStatusList() throws UnifyException;
+
+    /**
+     * Returns the current user top process workload list.
+     * 
+     * @return the process workload list
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<WfProcessWorkloadInfo> getCurrentUserProcessWorkloadList() throws UnifyException;
 
     /**
      * Applies workflow action and releases flowing workflow item.
@@ -618,4 +662,14 @@ public interface WorkflowService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<ToolingWfDocUplGeneratorItem> findToolingWfDocUplGeneratorTypes() throws UnifyException;
+
+    /**
+     * Finds all tooling workflow document assigner types.
+     * 
+     * @return list of workflow document assigner types
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    List<ToolingWfItemAssignerItem> findToolingWfItemAssignerTypes() throws UnifyException;
+
 }

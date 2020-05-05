@@ -25,6 +25,9 @@ import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 import com.tcdng.unify.web.ui.data.LinkGridInfo;
 
 /**
@@ -47,7 +50,7 @@ public class ManualWorkItemInitiationController extends AbstractWorkflowPageCont
     private static final int CREATE_ITEM_MODE = 1;
 
     public ManualWorkItemInitiationController() {
-        super(ManualWorkItemInitiationPageBean.class, true, false, false);
+        super(ManualWorkItemInitiationPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

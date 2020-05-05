@@ -43,6 +43,9 @@ import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.annotation.WebApplication;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 import com.tcdng.unify.web.ui.control.Table;
 
 /**
@@ -81,7 +84,7 @@ public class ApplicationController extends AbstractApplicationForwarderControlle
     private ImageGenerator userPhotoGenerator;
 
     public ApplicationController() {
-        super(ApplicationPageBean.class, true, false, false);
+        super(ApplicationPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

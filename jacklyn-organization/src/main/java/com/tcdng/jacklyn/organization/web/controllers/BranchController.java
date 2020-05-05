@@ -80,11 +80,6 @@ public class BranchController extends AbstractOrganizationFormController<BranchP
     }
 
     @Override
-    protected Branch prepareCreate() throws UnifyException {
-        return new Branch();
-    }
-
-    @Override
     protected Object create(Branch branch) throws UnifyException {
         return getOrganizationService().createBranch(branch);
     }

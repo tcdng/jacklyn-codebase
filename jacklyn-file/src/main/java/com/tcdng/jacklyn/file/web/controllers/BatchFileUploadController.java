@@ -26,6 +26,9 @@ import com.tcdng.unify.core.util.QueryUtils;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
+import com.tcdng.unify.web.constant.ReadOnly;
+import com.tcdng.unify.web.constant.ResetOnWrite;
+import com.tcdng.unify.web.constant.Secured;
 
 /**
  * Controller for batch upload page used for initiating and monitoring a batch
@@ -41,7 +44,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 public class BatchFileUploadController extends AbstractFilePageController<BatchFileUploadPageBean> {
 
     public BatchFileUploadController() {
-        super(BatchFileUploadPageBean.class, true, false, false);
+        super(BatchFileUploadPageBean.class, Secured.TRUE, ReadOnly.FALSE, ResetOnWrite.FALSE);
     }
 
     @Action

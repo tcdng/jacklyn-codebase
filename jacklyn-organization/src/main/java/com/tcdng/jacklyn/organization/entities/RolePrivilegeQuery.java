@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.organization.entities;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.tcdng.jacklyn.common.constants.RecordStatus;
 import com.tcdng.jacklyn.common.entities.BaseEntityQuery;
@@ -34,6 +35,10 @@ public class RolePrivilegeQuery extends BaseEntityQuery<RolePrivilege> {
 
     public RolePrivilegeQuery roleId(Long roleId) {
         return (RolePrivilegeQuery) addEquals("roleId", roleId);
+    }
+
+    public RolePrivilegeQuery roleIdIn(List<Long> roleIdList) {
+        return (RolePrivilegeQuery) addAmongst("roleId", roleIdList);
     }
 
     public RolePrivilegeQuery roleName(String roleName) {
@@ -64,12 +69,16 @@ public class RolePrivilegeQuery extends BaseEntityQuery<RolePrivilege> {
         return (RolePrivilegeQuery) addEquals("privilegeCategoryId", privilegeCategoryId);
     }
 
+    public RolePrivilegeQuery privilegeName(String privilegeName) {
+        return (RolePrivilegeQuery) addEquals("privilegeName", privilegeName);
+    }
+
     public RolePrivilegeQuery categoryName(String categoryName) {
         return (RolePrivilegeQuery) addEquals("categoryName", categoryName);
     }
 
     public RolePrivilegeQuery categoryNameNot(String categoryName) {
-        return (RolePrivilegeQuery) addNotEqual("categoryName", categoryName);
+        return (RolePrivilegeQuery) addNotEquals("categoryName", categoryName);
     }
 
     public RolePrivilegeQuery privilegeStatus(RecordStatus privilegeStatus) {

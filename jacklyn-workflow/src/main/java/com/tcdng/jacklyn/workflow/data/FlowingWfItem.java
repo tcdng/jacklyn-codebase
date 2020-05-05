@@ -37,8 +37,10 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private WfStepDef wfStepDef;
 
-    private WfStepDef sourceWfStepDef;
+    private WfStepDef prevWfStepDef;
 
+    private WfStepDef sourceWfStepDef;
+    
     private Long wfItemId;
 
     private Long wfItemHistId;
@@ -81,6 +83,10 @@ public class FlowingWfItem implements ViewableWfItem {
 
     private String heldBy;
 
+    private String forwardedBy;
+
+    private String wfItemDesc;
+
     private List<WfAction> actionList;
 
     public FlowingWfItem(WfProcessDef wfProcessDef, WfStepDef wfStepDef, WfItem wfItem, Long wfItemId, String title,
@@ -100,11 +106,13 @@ public class FlowingWfItem implements ViewableWfItem {
         this.createDt = wfItem.getCreateDt();
         this.stepDt = wfItem.getStepDt();
         this.heldBy = wfItem.getHeldBy();
+        this.forwardedBy = wfItem.getForwardedBy();
+        this.wfItemDesc = wfItem.getWfItemDesc();
         this.pd = pd;
     }
-    
+
     public FlowingWfItem() {
-        
+
     }
 
     @Override
@@ -182,6 +190,26 @@ public class FlowingWfItem implements ViewableWfItem {
 
     public WfStepDef getErrorWfStepDef() {
         return wfProcessDef.getWfTemplateDef().getErrorStep();
+    }
+
+    public WfStepDef getPrevWfStepDef() {
+        return prevWfStepDef;
+    }
+
+    public void setPrevWfStepDef(WfStepDef prevWfStepDef) {
+        this.prevWfStepDef = prevWfStepDef;
+    }
+
+    public boolean isWithPrevStep() {
+        return prevWfStepDef != null;
+    }
+
+    public String getPrevStepName() {
+        if (prevWfStepDef != null) {
+            return prevWfStepDef.getName();
+        }
+        
+        return null;
     }
 
     public WfStepDef getSourceWfStepDef() {
@@ -280,6 +308,14 @@ public class FlowingWfItem implements ViewableWfItem {
         return heldBy;
     }
 
+    public String getForwardedBy() {
+        return forwardedBy;
+    }
+
+    public String getWfItemDesc() {
+        return wfItemDesc;
+    }
+
     public List<WfAction> getActionList() {
         return actionList;
     }
@@ -329,7 +365,7 @@ public class FlowingWfItem implements ViewableWfItem {
         public String getStepGlobalName() {
             return wfStepDef.getGlobalName();
         }
-
+        
         public String getItemBranchCode() {
             return wfItemBranchCode;
         }
@@ -338,8 +374,20 @@ public class FlowingWfItem implements ViewableWfItem {
             return wfItemDepartmentCode;
         }
 
+        public String getLastComment() {
+            return comment;
+        }
+
         public String getItemHeldBy() {
             return heldBy;
+        }
+
+        public String getItemForwardedBy() {
+            return forwardedBy;
+        }
+
+        public String getItemDesc() {
+            return wfItemDesc;
         }
 
         public String getConfigName() {
