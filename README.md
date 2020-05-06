@@ -41,7 +41,13 @@ Streamline your organization’s operational processes using software by creatin
 
 Expedite your project delivery using low-code productivity tools that allow your developers to generate end-to-end code from business domain objects and to design and evaluate workflow templates for business process management. Access tools for hot deploying your workflow definitions in real time.
 
-## Starters
+## Quick Run
+* Download an already assembled deployable package [here](https://github.com/tcdng/jacklyn-app-war/releases/download/1.1.2/jacklyn.war).
+* Deploy downloaded WAR file into suitable web server.
+* Open a browser and enter `http://localhost:[Port Number]/jacklyn` into the address bar.
+* Login with login ID 'SYSTEM' and password 'system'.
+
+## Starter Projects
 Project templates for your Jacklyn Codebase applications
 
 | Starter | Repository |
