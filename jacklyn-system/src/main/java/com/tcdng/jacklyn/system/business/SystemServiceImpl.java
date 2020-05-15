@@ -1462,8 +1462,19 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
         String colorScheme =
                 ColorUtils.getConformingColorSchemeCode(
                         getContainerSetting(String.class, UnifyCorePropertyConstants.APPLICATION_COLORSCHEME));
-        return new UserToken(loginId, "System", getSessionContext().getRemoteAddress(), branchCode, zoneCode,
-                tenantCode, colorScheme, true, true, true, false);
+        return UserToken.newBuilder()
+                .userLoginId(loginId)
+                .userName("System")
+                .ipAddress(getSessionContext().getRemoteAddress())
+                .branchCode(branchCode)
+                .zoneCode(zoneCode)
+                .tenantCode(tenantCode)
+                .colorScheme(colorScheme)
+                .globalAccess(true)
+                .reservedUser(true)
+                .allowMultipleLogin(true)
+                .build();
+
     }
 
     private ToolingEntityItem createToolingEntityItem(Class<? extends Entity> entityClass) throws UnifyException {

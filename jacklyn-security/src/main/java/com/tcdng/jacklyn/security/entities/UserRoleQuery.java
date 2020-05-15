@@ -69,7 +69,7 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
     }
 
     public UserRoleQuery roleIdNot(Long roleId) {
-        return (UserRoleQuery) addNotEqual("roleId", roleId);
+        return (UserRoleQuery) addNotEquals("roleId", roleId);
     }
 
     public UserRoleQuery roleName(String roleName) {
@@ -77,7 +77,7 @@ public class UserRoleQuery extends BaseEntityQuery<UserRole> {
     }
 
     public UserRoleQuery roleNameNot(String roleName) {
-        return (UserRoleQuery) addNotEqual("roleName", roleName);
+        return (UserRoleQuery) addNotEquals("roleName", roleName);
     }
 
     public UserRoleQuery roleNameIn(Collection<String> roleName) {

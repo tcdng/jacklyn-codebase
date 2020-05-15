@@ -43,6 +43,6 @@ public class FileInboxQuery extends AbstractFileBoxDataQuery<FileInbox> {
     }
 
     public FileInboxQuery statusNot(FileInboxStatus status) {
-        return (FileInboxQuery) addNotEqual("status", status);
+        return (FileInboxQuery) addNotEquals("status", status);
     }
 }

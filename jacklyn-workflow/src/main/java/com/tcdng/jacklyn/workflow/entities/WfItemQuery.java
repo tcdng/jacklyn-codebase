@@ -22,7 +22,7 @@ import com.tcdng.jacklyn.common.entities.BaseTimestampedEntityQuery;
 import com.tcdng.jacklyn.shared.workflow.WorkflowParticipantType;
 import com.tcdng.unify.core.criterion.Equals;
 import com.tcdng.unify.core.criterion.IsNull;
-import com.tcdng.unify.core.criterion.NotEqual;
+import com.tcdng.unify.core.criterion.NotEquals;
 import com.tcdng.unify.core.criterion.Or;
 
 /**
@@ -110,6 +110,6 @@ public class WfItemQuery extends BaseTimestampedEntityQuery<WfItem> {
 
     public WfItemQuery notForwardedBy(String userId) {
         return (WfItemQuery) addRestriction(
-                new Or().add(new NotEqual("forwardedBy", userId)).add(new IsNull("forwardedBy")));
+                new Or().add(new NotEquals("forwardedBy", userId)).add(new IsNull("forwardedBy")));
     }
 }

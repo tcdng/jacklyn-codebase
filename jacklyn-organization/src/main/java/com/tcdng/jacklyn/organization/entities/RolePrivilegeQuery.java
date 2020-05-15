@@ -78,7 +78,7 @@ public class RolePrivilegeQuery extends BaseEntityQuery<RolePrivilege> {
     }
 
     public RolePrivilegeQuery categoryNameNot(String categoryName) {
-        return (RolePrivilegeQuery) addNotEqual("categoryName", categoryName);
+        return (RolePrivilegeQuery) addNotEquals("categoryName", categoryName);
     }
 
     public RolePrivilegeQuery privilegeStatus(RecordStatus privilegeStatus) {

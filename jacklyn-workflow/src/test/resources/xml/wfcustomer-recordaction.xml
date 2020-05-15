@@ -16,10 +16,10 @@
 			</fields>
 			<classifiers>
 				<classifier name="class1" description="Class 1">
-					<filter field="age" op="greater" value1="60" field-only="false" />
+					<filter field="age" op="greater_than" value1="60" field-only="false" />
 				</classifier>
 				<classifier name="class2" description="Class 2">
-					<filter field="age" op="greater" value1="40" field-only="false" />
+					<filter field="age" op="greater_than" value1="40" field-only="false" />
 				</classifier>
 			</classifiers>
 			<bean-mappings>
