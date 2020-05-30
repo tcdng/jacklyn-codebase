@@ -44,9 +44,9 @@ public class WfActionButtons extends AbstractValueListMultiControl<ValueStore, O
         super.onPageConstruct();
         String buttonClass = getUplAttribute(String.class, "buttonClass");
         if (StringUtils.isBlank(buttonClass)) {
-            actionCtrl = addInternalChildControl("!ui-button captionBinding:label binding:name");
+            actionCtrl = (Control) addInternalChildWidget("!ui-button captionBinding:label binding:name");
         } else {
-            actionCtrl = addInternalChildControl(
+            actionCtrl = (Control) addInternalChildWidget(
                     "!ui-button styleClass:$e{" + buttonClass + "} captionBinding:label binding:name");
         }
 
