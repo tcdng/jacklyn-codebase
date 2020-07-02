@@ -52,6 +52,9 @@ public class DataSource extends BaseVersionedStatusEntity {
 	@Column(name = "DATASOURCE_DESC", length = 48)
 	private String description;
 
+	@Column(name = "PREFFERED_NM", length = 64, nullable = true)
+	private String preferredName;
+
 	@Column(length = 128)
 	private String connectionUrl;
 
@@ -98,6 +101,14 @@ public class DataSource extends BaseVersionedStatusEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPreferredName() {
+		return preferredName;
+	}
+
+	public void setPreferredName(String preferredName) {
+		this.preferredName = preferredName;
 	}
 
 	public String getConnectionUrl() {
