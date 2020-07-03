@@ -36,7 +36,7 @@
 	list:datasourcedriverlist blankOption:$s{} required:true style:$s{width:180px;}
 !ui-name:frmName caption:$m{system.datasource.name} binding:name underscore:true case:upper minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{system.datasource.description} binding:description minLen:1 maxLen:48 size:32 required:true
-!ui-name:frmPreferredName caption:$m{system.datasource.preferredname} binding:preferredName underscore:true case:upper maxLen:64
+!ui-name:frmPreferredName caption:$m{system.datasource.preferredname} binding:preferredName size:32 underscore:true maxLen:64
 !ui-text:frmConnectionUrl caption:$m{system.datasource.connectionurl} binding:connectionUrl minLen:3 maxLen:128 size:56 required:true
 !ui-name:frmSchema caption:$m{system.datasource.schema} binding:schema underscore:true maxLen:32
 !ui-integer:frmMaxConnections caption:$m{system.datasource.maxconnections} binding:maxConnections maxLen:3 required:true
