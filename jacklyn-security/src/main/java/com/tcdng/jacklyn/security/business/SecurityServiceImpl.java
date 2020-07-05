@@ -758,9 +758,18 @@ public class SecurityServiceImpl extends AbstractJacklynBusinessService implemen
         String colorScheme =
                 ColorUtils.getConformingColorSchemeCode(
                         getContainerSetting(String.class, UnifyCorePropertyConstants.APPLICATION_COLORSCHEME));
-        return new UserToken(user.getLoginId(), user.getFullName(), getSessionContext().getRemoteAddress(),
-                user.getBranchCode(), user.getZoneName(), tenantCode, colorScheme, globalAccess, user.isReserved(),
-                allowMultipleLogin, false);
+        return UserToken.newBuilder()
+                .userLoginId(user.getLoginId())
+                .userName(user.getFullName())
+                .ipAddress(getSessionContext().getRemoteAddress())
+                .branchCode(user.getBranchCode())
+                .zoneCode(user.getZoneName())
+                .tenantCode(tenantCode)
+                .colorScheme(colorScheme)
+                .globalAccess(globalAccess)
+                .reservedUser(user.isReserved())
+                .allowMultipleLogin(allowMultipleLogin)
+                .build();
     }
 
     private String generatePassword(User user, String sysParamNotificationTemplateName) throws UnifyException {

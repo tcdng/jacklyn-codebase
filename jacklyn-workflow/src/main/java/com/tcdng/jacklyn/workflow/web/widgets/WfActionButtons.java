@@ -40,20 +40,6 @@ public class WfActionButtons extends AbstractValueListMultiControl<ValueStore, O
     private Control actionCtrl;
 
     @Override
-    public void onPageConstruct() throws UnifyException {
-        super.onPageConstruct();
-        String buttonClass = getUplAttribute(String.class, "buttonClass");
-        if (StringUtils.isBlank(buttonClass)) {
-            actionCtrl = addInternalChildControl("!ui-button captionBinding:label binding:name");
-        } else {
-            actionCtrl = addInternalChildControl(
-                    "!ui-button styleClass:$e{" + buttonClass + "} captionBinding:label binding:name");
-        }
-
-        actionCtrl.setGroupId(getId());
-    }
-
-    @Override
     public void addPageAliases() throws UnifyException {
         addPageAlias(actionCtrl);
     }
@@ -85,5 +71,18 @@ public class WfActionButtons extends AbstractValueListMultiControl<ValueStore, O
 
     public Control getActionCtrl() {
         return actionCtrl;
+    }
+
+    @Override
+    protected void doOnPageConstruct() throws UnifyException {
+        String buttonClass = getUplAttribute(String.class, "buttonClass");
+        if (StringUtils.isBlank(buttonClass)) {
+            actionCtrl = (Control) addInternalChildWidget("!ui-button captionBinding:label binding:name");
+        } else {
+            actionCtrl = (Control) addInternalChildWidget(
+                    "!ui-button styleClass:$e{" + buttonClass + "} captionBinding:label binding:name");
+        }
+
+        actionCtrl.setGroupId(getId());
     }
 }

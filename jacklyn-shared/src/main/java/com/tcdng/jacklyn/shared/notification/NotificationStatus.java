@@ -28,7 +28,7 @@ import com.tcdng.unify.core.util.EnumUtils;
 @StaticList("notificationstatuslist")
 public enum NotificationStatus implements EnumConst {
 
-    NOT_SENT("N"), SENT("S"), ABORTED("A");
+	PREPARATION("P"), NOT_SENT("N"), SENT("S"), ABORTED("A");
 
     private final String code;
 
@@ -43,7 +43,7 @@ public enum NotificationStatus implements EnumConst {
 
     @Override
     public String defaultCode() {
-        return NOT_SENT.code;
+        return PREPARATION.code;
     }
 
     public static NotificationStatus fromCode(String code) {
