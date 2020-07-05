@@ -638,7 +638,7 @@ public class FileServiceImpl extends AbstractJacklynBusinessService implements F
                 .useAuthenticationId(fileTransferConfig.getAuthenticationId())
                 .useAuthenticationPassword(fileTransferConfig.getAuthenticationPassword()).remotePath(serverPath)
                 .localPath(localPath).filterByPrefixes(fileTransferPolicy.getFilePrefixes(workingDt))
-                .filterByExtensions(fileTransferPolicy.getFileSuffixes(workingDt))
+                .filterBySuffixes(fileTransferPolicy.getFileSuffixes(workingDt))
                 .deleteSourceOnTransfer(Boolean.TRUE.equals(fileTransferConfig.getDeleteSourceOnTransfer())).build();
     }
 
