@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.tcdng.jacklyn.shared.notification.MessageType;
 import com.tcdng.jacklyn.shared.xml.adapter.MessageTypeXmlAdapter;
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+import com.tcdng.unify.core.util.xml.adapter.CDataXmlAdapter;
 
 /**
  * Workflow message configuration.
@@ -64,6 +65,7 @@ public class WfMessageConfig extends BaseConfig {
         return subject;
     }
 
+    @XmlJavaTypeAdapter(CDataXmlAdapter.class)
     @XmlElement(required = true)
     public void setSubject(String subject) {
         this.subject = subject;
@@ -73,6 +75,7 @@ public class WfMessageConfig extends BaseConfig {
         return body;
     }
 
+    @XmlJavaTypeAdapter(CDataXmlAdapter.class)
     @XmlElement(required = true)
     public void setBody(String body) {
         this.body = body;

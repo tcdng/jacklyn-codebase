@@ -17,8 +17,10 @@ package com.tcdng.jacklyn.shared.xml.config.workflow;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.tcdng.jacklyn.shared.xml.config.BaseConfig;
+import com.tcdng.unify.core.util.xml.adapter.CDataXmlAdapter;
 
 /**
  * Workflow document configuration.
@@ -45,6 +47,7 @@ public class WfDocumentConfig extends BaseConfig {
         return itemDescFormat;
     }
 
+    @XmlJavaTypeAdapter(CDataXmlAdapter.class)
     @XmlElement(name = "item-description-format", required = true)
     public void setItemDescFormat(String itemDescFormat) {
         this.itemDescFormat = itemDescFormat;
