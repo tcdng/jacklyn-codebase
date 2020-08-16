@@ -15,6 +15,8 @@
  */
 package com.tcdng.jacklyn.workflow.web.widgets;
 
+import java.util.List;
+
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.jacklyn.workflow.constants.WorkflowModuleNameConstants;
 import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
@@ -37,6 +39,12 @@ public class WfItemFileAttachmentHandler extends AbstractFileAttachmentHandler {
     private WorkflowService workflowService;
 
     @Override
+	public void fillAttachFileNames(Object parentId, List<FileAttachmentInfo> attachmentInfoList)
+			throws UnifyException {
+
+	}
+
+	@Override
     public void handleAttach(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
         WfItemAttachmentInfo wfItemAttachment = new WfItemAttachmentInfo(fileAttachmentInfo.getName(), null,
                 fileAttachmentInfo.getFilename(), fileAttachmentInfo.getType(), fileAttachmentInfo.getAttachment());
@@ -47,8 +55,8 @@ public class WfItemFileAttachmentHandler extends AbstractFileAttachmentHandler {
     public FileAttachmentInfo handleView(Object parentId, FileAttachmentInfo fileAttachmentInfo) throws UnifyException {
         WfItemAttachmentInfo wfItemAttachment = workflowService.fetchWorkflowItemAttachment((Long) parentId,
                 fileAttachmentInfo.getName());
-        FileAttachmentInfo retAttachmentInfo = new FileAttachmentInfo(wfItemAttachment.getName(),
-                resolveSessionMessage(wfItemAttachment.getLabel()), wfItemAttachment.getType());
+        FileAttachmentInfo retAttachmentInfo = new FileAttachmentInfo(wfItemAttachment.getType(), wfItemAttachment.getName(),
+                resolveSessionMessage(wfItemAttachment.getLabel()));
         retAttachmentInfo.setFilename(wfItemAttachment.getFilename());
         retAttachmentInfo.setAttachment(wfItemAttachment.getData());
         return retAttachmentInfo;
