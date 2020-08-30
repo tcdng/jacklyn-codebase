@@ -98,13 +98,12 @@ public class MyWorkItemController extends AbstractWorkflowPageController<MyWorkI
         Long wfItemId = pageBean.getWorkflowItem().getWfItemId();
         List<WfItemAttachmentInfo> wfAttachmentList = getWorkflowService().fetchWorkflowItemAttachments(wfItemId, true);
         List<FileAttachmentInfo> filaAttachmentInfoList = new ArrayList<FileAttachmentInfo>();
-        for (WfItemAttachmentInfo workflowItemAttachment : wfAttachmentList) {
-            FileAttachmentInfo fileAttachmentInfo =
-                    new FileAttachmentInfo(workflowItemAttachment.getName(), workflowItemAttachment.getLabel(),
-                            workflowItemAttachment.getType());
-            fileAttachmentInfo.setFilename(workflowItemAttachment.getFilename());
-            filaAttachmentInfoList.add(fileAttachmentInfo);
-        }
+		for (WfItemAttachmentInfo workflowItemAttachment : wfAttachmentList) {
+			FileAttachmentInfo fileAttachmentInfo = new FileAttachmentInfo(workflowItemAttachment.getType(),
+					workflowItemAttachment.getName(), workflowItemAttachment.getLabel());
+			fileAttachmentInfo.setFilename(workflowItemAttachment.getFilename());
+			filaAttachmentInfoList.add(fileAttachmentInfo);
+		}
 
         FileAttachmentsInfo fileAttachmentsInfo = new FileAttachmentsInfo(wfItemId, filaAttachmentInfoList);
         pageBean.setFileAttachmentsInfo(fileAttachmentsInfo);

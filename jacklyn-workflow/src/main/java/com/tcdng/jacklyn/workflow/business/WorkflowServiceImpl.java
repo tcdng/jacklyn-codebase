@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.workflow.business;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -203,6 +204,7 @@ import com.tcdng.unify.core.task.TaskMonitor;
 import com.tcdng.unify.core.task.TaskSetup;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.core.util.DataUtils;
+import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
@@ -1504,6 +1506,19 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
         wfDocs.clear();
         wfTemplates.clear();
     }
+
+	@Override
+	public void publishWorkflowCategoryFromResourceFile(TaskMonitor taskMonitor, String resourceName, boolean activate)
+			throws UnifyException {
+		InputStream inputStream = null;
+		try {
+			inputStream = IOUtils.openClassLoaderResourceInputStream(resourceName);
+			WfCategoryConfig wfCategoryConfig = WfCategoryConfigUtils.readWfCategoryConfig(inputStream);
+			executeWorkflowCategoryPublicationTask(taskMonitor, wfCategoryConfig, activate);
+		} finally {
+			IOUtils.close(inputStream);
+		}
+	}
 
     @Override
     @Taskable(

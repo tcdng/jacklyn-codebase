@@ -1203,6 +1203,11 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("Delivery Pending", reader.read(String.class, "status"));
     }
 
+	@Test
+	public void testPublishWorkflowCategoryFromResourceFile() throws Exception {
+		getWorkflowService().publishWorkflowCategoryFromResourceFile(null, "xml/wfcustomer.xml", true);
+	}
+    
     @Override
     protected void onSetup() throws Exception {
         if (!published) {
