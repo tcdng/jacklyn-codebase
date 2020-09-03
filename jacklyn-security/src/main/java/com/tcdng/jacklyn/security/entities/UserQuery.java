@@ -45,6 +45,10 @@ public class UserQuery extends BaseVersionedTimestampedStatusEntityQuery<User> {
     public UserQuery idNotIn(Collection<Long> id) {
         return (UserQuery) super.idNotIn(id);
     }
+    
+    public UserQuery branchId(Long branchId) {
+        return (UserQuery) addEquals("branchId", branchId);
+    }
 
     public UserQuery fullNameLike(String fullName) {
         return (UserQuery) addLike("fullName", fullName);

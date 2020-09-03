@@ -81,6 +81,10 @@ public class UserController extends AbstractSecurityFormController<UserPageBean,
             query.idIn(userIdList);
         }
 
+        if (QueryUtils.isValidLongCriteria(pageBean.getSearchBranchId())) {
+        	query.branchId(pageBean.getSearchBranchId());
+        }
+        
         if (QueryUtils.isValidStringCriteria(pageBean.getSearchLoginId())) {
             query.loginIdLike(pageBean.getSearchLoginId());
         }
