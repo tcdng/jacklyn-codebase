@@ -65,6 +65,12 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
     @Column(length = 64, nullable = true)
     private String processor;
 
+    @Column(name="MFILE_PATH_SYS_PARAM", length = 64, nullable = true)
+    private String multiFilePathSystemParam;
+
+    @Column(name="MFILE_PATH_GEN", length = 64, nullable = true)
+    private String multiFileOptionsGenerator;
+
     @Column
     private boolean showGrandFooter;
 
@@ -177,7 +183,23 @@ public class ReportConfiguration extends BaseVersionedStatusEntity {
         this.processor = processor;
     }
 
-    public boolean isShowGrandFooter() {
+    public String getMultiFilePathSystemParam() {
+		return multiFilePathSystemParam;
+	}
+
+	public void setMultiFilePathSystemParam(String multiFilePathSystemParam) {
+		this.multiFilePathSystemParam = multiFilePathSystemParam;
+	}
+
+	public String getMultiFileOptionsGenerator() {
+		return multiFileOptionsGenerator;
+	}
+
+	public void setMultiFileOptionsGenerator(String multiFileOptionsGenerator) {
+		this.multiFileOptionsGenerator = multiFileOptionsGenerator;
+	}
+
+	public boolean isShowGrandFooter() {
         return showGrandFooter;
     }
 

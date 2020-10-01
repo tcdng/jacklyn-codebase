@@ -16,6 +16,7 @@
 package com.tcdng.jacklyn.organization.business;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tcdng.jacklyn.common.business.JacklynBusinessService;
 import com.tcdng.jacklyn.common.constants.RecordStatus;
@@ -102,6 +103,17 @@ public interface OrganizationService extends JacklynBusinessService {
      *             if an error occurs
      */
     List<Branch> findBranches(BranchQuery query) throws UnifyException;
+
+    /**
+     * Finds branches by query.
+     * 
+     * @param query
+     *            the branch query
+     * @return the map of branches found by ID
+     * @throws UnifyException
+     *             if an error occurs
+     */
+    Map<Long, Branch> findBranchesMapById(BranchQuery query) throws UnifyException;
 
     /**
      * Updates a branch.

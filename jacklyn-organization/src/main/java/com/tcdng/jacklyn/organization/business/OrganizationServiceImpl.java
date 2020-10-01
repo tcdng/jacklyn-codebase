@@ -120,6 +120,11 @@ public class OrganizationServiceImpl extends AbstractJacklynBusinessService impl
     }
 
     @Override
+	public Map<Long, Branch> findBranchesMapById(BranchQuery query) throws UnifyException {
+		return db().findAllMap(Long.class, "id", query);
+	}
+
+	@Override
     public int updateBranch(Branch branch) throws UnifyException {
         return db().updateByIdVersion(branch);
     }

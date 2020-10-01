@@ -29,6 +29,8 @@ public class ReportFilterOptions {
 
     private RestrictionType op;
 
+    private String fieldName;
+
     private String tableName;
 
     private String columnName;
@@ -36,16 +38,21 @@ public class ReportFilterOptions {
     private Object param1;
 
     private Object param2;
+    
+    private boolean useParam;
 
     private List<ReportFilterOptions> subFilterOptionList;
 
-    public ReportFilterOptions(RestrictionType op, String tableName, String columnName, Object param1, Object param2) {
-        this.op = op;
-        this.tableName = tableName;
-        this.columnName = columnName;
-        this.param1 = param1;
-        this.param2 = param2;
-    }
+	public ReportFilterOptions(RestrictionType op, String fieldName, String tableName, String columnName, Object param1,
+			Object param2, boolean useParam) {
+		this.op = op;
+		this.fieldName = fieldName;
+		this.tableName = tableName;
+		this.columnName = columnName;
+		this.param1 = param1;
+		this.param2 = param2;
+		this.useParam = useParam;
+	}
 
     public ReportFilterOptions(RestrictionType op, List<ReportFilterOptions> subFilterOptionList) {
         this.op = op;
@@ -60,7 +67,11 @@ public class ReportFilterOptions {
         return op.isCompound();
     }
 
-    public String getTableName() {
+    public String getFieldName() {
+		return fieldName;
+	}
+
+	public String getTableName() {
         return tableName;
     }
 
@@ -76,7 +87,18 @@ public class ReportFilterOptions {
         return param2;
     }
 
-    public List<ReportFilterOptions> getSubFilterOptionList() {
+    public boolean isUseParam() {
+		return useParam;
+	}
+
+	public List<ReportFilterOptions> getSubFilterOptionList() {
         return subFilterOptionList;
     }
+
+	@Override
+	public String toString() {
+		return "ReportFilterOptions [op=" + op + ", fieldName=" + fieldName + ", tableName=" + tableName
+				+ ", columnName=" + columnName + ", param1=" + param1 + ", param2=" + param2 + ", subFilterOptionList="
+				+ subFilterOptionList + "]";
+	}
 }
