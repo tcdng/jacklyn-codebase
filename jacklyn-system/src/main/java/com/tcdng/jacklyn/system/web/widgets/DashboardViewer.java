@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.system.web.widgets;
 
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractStandalonePanel;
 
 /**
  * Base dashboard viewer panel.

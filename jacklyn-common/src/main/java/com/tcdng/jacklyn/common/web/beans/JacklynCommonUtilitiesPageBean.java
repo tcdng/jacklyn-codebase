@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.common.web.beans;
 
-import com.tcdng.unify.web.CommonUtilitiesPageBean;
+import com.tcdng.unify.web.ui.CommonUtilitiesPageBean;
 
 /**
  * Jacklyn common utiities page bean.

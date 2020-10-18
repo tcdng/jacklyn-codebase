@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.workflow.web.widgets;
 
 import com.tcdng.jacklyn.workflow.data.ViewableWfItem;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.web.ui.panel.StandalonePanel;
+import com.tcdng.unify.web.ui.widget.panel.StandalonePanel;
 
 /**
  * Workflow item viewer.

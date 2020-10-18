@@ -28,7 +28,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.web.annotation.RemoteAction;
-import com.tcdng.unify.web.ui.PageManager;
+import com.tcdng.unify.web.ui.widget.PageManager;
 
 /**
  * Security module remote call controller.

@@ -23,12 +23,12 @@ import com.tcdng.jacklyn.common.web.beans.JacklynCommonUtilitiesPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.AbstractCommonUtilitiesPageController;
 import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
-import com.tcdng.unify.web.ui.data.SearchBox;
-import com.tcdng.unify.web.ui.panel.SearchBoxPanel;
+import com.tcdng.unify.web.ui.AbstractCommonUtilitiesPageController;
+import com.tcdng.unify.web.ui.widget.data.SearchBox;
+import com.tcdng.unify.web.ui.widget.panel.SearchBoxPanel;
 
 /**
  * Common utilities page controller.
@@ -60,7 +60,7 @@ public class JacklynCommonUtilitiesController
         ReportOptions reportOptions =
                 (ReportOptions) getSessionAttribute(JacklynSessionAttributeConstants.REPORTOPTIONS);
         setRequestAttribute(JacklynRequestAttributeConstants.REPORTOPTIONS, reportOptions);
-        getRequestContextUtil().logUserEvent(CommonModuleAuditConstants.GENERATE_REPORT, reportOptions.getTitle());
+        getEventLogger().logUserEvent(CommonModuleAuditConstants.GENERATE_REPORT, reportOptions.getTitle());
         return "viewreport";
     }
 

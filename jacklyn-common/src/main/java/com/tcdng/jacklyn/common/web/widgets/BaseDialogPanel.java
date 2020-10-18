@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.common.web.widgets;
 
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.web.ui.panel.AbstractDialogPanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractDialogPanel;
 
 /**
  * Convenient base class for dialog panels in Jacklyn context.

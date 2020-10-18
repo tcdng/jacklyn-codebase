@@ -31,14 +31,14 @@ import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.logging.FieldAudit;
 import com.tcdng.unify.core.task.TaskSetup;
-import com.tcdng.unify.web.AbstractPageController;
-import com.tcdng.unify.web.DocViewController;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.constant.Secured;
-import com.tcdng.unify.web.ui.data.MessageResult;
-import com.tcdng.unify.web.ui.data.SearchBox;
-import com.tcdng.unify.web.ui.panel.TableCrudPanel;
+import com.tcdng.unify.web.ui.AbstractPageController;
+import com.tcdng.unify.web.ui.DocViewController;
+import com.tcdng.unify.web.ui.widget.data.MessageResult;
+import com.tcdng.unify.web.ui.widget.data.SearchBox;
+import com.tcdng.unify.web.ui.widget.panel.TableCrudPanel;
 
 /**
  * Common base class for all page controllers.
@@ -155,7 +155,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      *             if event code is unknown. if an error occurs.
      */
     protected void logUserEvent(String eventName, String... details) throws UnifyException {
-        getRequestContextUtil().logUserEvent(eventName, details);
+        getEventLogger().logUserEvent(eventName, details);
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      *             if event code is unknown. if an error occurs.
      */
     protected void logUserEvent(String eventName, List<String> details) throws UnifyException {
-        getRequestContextUtil().logUserEvent(eventName, details);
+    	getEventLogger().logUserEvent(eventName, details);
     }
 
     /**
@@ -183,7 +183,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      *             If an error occurs.
      */
     protected void logUserEvent(EventType eventType, Class<? extends Entity> entityClass) throws UnifyException {
-        getRequestContextUtil().logUserEvent(eventType, entityClass);
+    	getEventLogger().logUserEvent(eventType, entityClass);
     }
 
     /**
@@ -199,7 +199,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      *             if an error occurs.
      */
     protected void logUserEvent(EventType eventType, Entity record, boolean isNewRecord) throws UnifyException {
-        getRequestContextUtil().logUserEvent(eventType, record, isNewRecord);
+    	getEventLogger().logUserEvent(eventType, record, isNewRecord);
     }
 
     /**
@@ -217,7 +217,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      */
     protected <U extends Entity> void logUserEvent(EventType eventType, U oldRecord, U newRecord)
             throws UnifyException {
-        getRequestContextUtil().logUserEvent(eventType, oldRecord, newRecord);
+    	getEventLogger().logUserEvent(eventType, oldRecord, newRecord);
     }
 
     /**
@@ -236,7 +236,7 @@ public abstract class BasePageController<T extends BasePageBean> extends Abstrac
      */
     protected void logUserEvent(EventType eventType, Class<? extends Entity> entityClass, Long recordId,
             List<FieldAudit> fieldAuditList) throws UnifyException {
-        getRequestContextUtil().logUserEvent(eventType, entityClass, recordId, fieldAuditList);
+    	getEventLogger().logUserEvent(eventType, entityClass, recordId, fieldAuditList);
     }
 
     /**

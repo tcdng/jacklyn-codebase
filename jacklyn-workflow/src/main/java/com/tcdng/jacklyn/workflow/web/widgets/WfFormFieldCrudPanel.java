@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.workflow.web.widgets;
 import com.tcdng.jacklyn.workflow.entities.WfFormField;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractInMemoryTableCrudPanel;
 
 /**
  * Workflow form field CRUD panel.

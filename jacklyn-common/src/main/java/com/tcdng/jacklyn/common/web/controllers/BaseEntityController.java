@@ -43,10 +43,10 @@ import com.tcdng.unify.web.annotation.ResultMapping;
 import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
-import com.tcdng.unify.web.ui.control.Table;
-import com.tcdng.unify.web.ui.data.Hint.MODE;
-import com.tcdng.unify.web.ui.panel.SearchCriteriaPanel;
-import com.tcdng.unify.web.ui.panel.SwitchPanel;
+import com.tcdng.unify.web.ui.widget.control.Table;
+import com.tcdng.unify.web.ui.widget.data.Hint.MODE;
+import com.tcdng.unify.web.ui.widget.panel.SearchCriteriaPanel;
+import com.tcdng.unify.web.ui.widget.panel.SwitchPanel;
 
 /**
  * Convenient abstract base class for page controllers that manage entity CRUD

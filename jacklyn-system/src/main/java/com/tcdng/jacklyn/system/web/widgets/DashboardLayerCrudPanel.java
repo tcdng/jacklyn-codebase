@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.system.web.widgets;
 import com.tcdng.jacklyn.system.entities.DashboardLayer;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractInMemoryTableCrudPanel;
 
 /**
  * Dashboard layer CRUD panel.

@@ -19,7 +19,7 @@ package com.tcdng.jacklyn.workflow.web.widgets;
 import com.tcdng.jacklyn.workflow.entities.WfStep;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractInMemoryTableCrudPanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractInMemoryTableCrudPanel;
 
 /**
  * Workflow step CRUD panel.

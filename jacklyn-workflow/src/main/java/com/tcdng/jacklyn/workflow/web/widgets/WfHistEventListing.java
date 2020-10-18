@@ -23,7 +23,7 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplAttribute;
 import com.tcdng.unify.core.annotation.UplAttributes;
 import com.tcdng.unify.core.format.Formatter;
-import com.tcdng.unify.web.ui.AbstractWidget;
+import com.tcdng.unify.web.ui.widget.AbstractWidget;
 
 /**
  * Workflow history event listing.

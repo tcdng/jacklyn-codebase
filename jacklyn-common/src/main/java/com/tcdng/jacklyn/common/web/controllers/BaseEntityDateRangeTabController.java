@@ -22,8 +22,8 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.util.CalendarUtils;
 import com.tcdng.unify.web.annotation.Action;
-import com.tcdng.unify.web.ui.data.MessageIcon;
-import com.tcdng.unify.web.ui.data.MessageMode;
+import com.tcdng.unify.web.ui.widget.data.MessageIcon;
+import com.tcdng.unify.web.ui.widget.data.MessageMode;
 
 /**
  * Convenient abstract base class for tab date range CRUD controllers.

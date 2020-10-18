@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.security.web.beans;
 
-import com.tcdng.unify.web.AbstractPageBean;
+import com.tcdng.unify.web.ui.AbstractPageBean;
 
 /**
  * Application login page bean.

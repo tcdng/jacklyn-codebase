@@ -41,8 +41,8 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.constant.Secured;
-import com.tcdng.unify.web.ui.control.Table;
-import com.tcdng.unify.web.ui.panel.SwitchPanel;
+import com.tcdng.unify.web.ui.widget.control.Table;
+import com.tcdng.unify.web.ui.widget.panel.SwitchPanel;
 
 /**
  * Controller for user login.

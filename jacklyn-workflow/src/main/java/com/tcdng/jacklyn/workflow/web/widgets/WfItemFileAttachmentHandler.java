@@ -23,8 +23,8 @@ import com.tcdng.jacklyn.workflow.data.WfItemAttachmentInfo;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.web.ui.control.AbstractFileAttachmentHandler;
-import com.tcdng.unify.web.ui.data.FileAttachmentInfo;
+import com.tcdng.unify.web.ui.widget.control.AbstractFileAttachmentHandler;
+import com.tcdng.unify.web.ui.widget.data.FileAttachmentInfo;
 
 /**
  * Default workflow item file attachment handler.

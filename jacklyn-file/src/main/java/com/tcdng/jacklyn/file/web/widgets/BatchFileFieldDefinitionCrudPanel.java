@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.file.web.widgets;
 import com.tcdng.jacklyn.file.entities.BatchFileFieldDefinition;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.AbstractInMemoryRackCrudPanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractInMemoryRackCrudPanel;
 
 /**
  * Batch file field definition CRUD panel.

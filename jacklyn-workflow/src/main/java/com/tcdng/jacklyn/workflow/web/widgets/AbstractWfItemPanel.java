@@ -20,7 +20,7 @@ import com.tcdng.jacklyn.common.web.widgets.BasePanel;
 import com.tcdng.jacklyn.workflow.data.ViewableWfItem;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.DynamicPanel;
+import com.tcdng.unify.web.ui.widget.panel.DynamicPanel;
 
 /**
  * Abstract workflow item panel.

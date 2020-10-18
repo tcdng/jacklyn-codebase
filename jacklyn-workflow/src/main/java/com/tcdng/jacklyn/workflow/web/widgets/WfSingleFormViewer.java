@@ -23,9 +23,9 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.constant.TriState;
-import com.tcdng.unify.web.ui.Control;
-import com.tcdng.unify.web.ui.Widget;
-import com.tcdng.unify.web.ui.container.Form;
+import com.tcdng.unify.web.ui.widget.Control;
+import com.tcdng.unify.web.ui.widget.Widget;
+import com.tcdng.unify.web.ui.widget.container.Form;
 
 /**
  * Single form workflow item viewer panel.

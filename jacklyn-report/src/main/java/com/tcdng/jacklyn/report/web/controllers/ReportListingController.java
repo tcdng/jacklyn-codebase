@@ -26,7 +26,7 @@ import com.tcdng.unify.web.annotation.Action;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.constant.Secured;
-import com.tcdng.unify.web.ui.data.LinkGridInfo;
+import com.tcdng.unify.web.ui.widget.data.LinkGridInfo;
 
 /**
  * Page controller for report listing.
@@ -47,7 +47,7 @@ public class ReportListingController extends AbstractReportPageController<Report
 
     @Action
     public String prepareGenerateReport() throws UnifyException {
-        String reportConfigName = getRequestContextUtil().getRequestTargetValue(String.class);
+        String reportConfigName = getPageRequestContextUtil().getRequestTargetValue(String.class);
         ReportOptions reportOptions = getReportService().getReportOptionsForConfiguration(reportConfigName);
         reportOptions.setReportResourcePath(reportResourcePath);
         reportOptions.setUserInputOnly(true);

@@ -21,7 +21,7 @@ import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.constant.MimeType;
 import com.tcdng.unify.core.report.ReportFormat;
-import com.tcdng.unify.web.AbstractOpenWindowPageControllerResponse;
+import com.tcdng.unify.web.ui.AbstractOpenWindowPageControllerResponse;
 
 /**
  * Used for preparing the generation of a report and the presentation of the

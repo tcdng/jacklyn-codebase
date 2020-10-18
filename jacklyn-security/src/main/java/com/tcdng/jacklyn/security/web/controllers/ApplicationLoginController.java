@@ -18,10 +18,10 @@ package com.tcdng.jacklyn.security.web.controllers;
 import com.tcdng.jacklyn.security.web.beans.ApplicationLoginPageBean;
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.AbstractPageController;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.constant.Secured;
+import com.tcdng.unify.web.ui.AbstractPageController;
 
 /**
  * Page controller for application login document.
