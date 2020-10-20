@@ -7,7 +7,7 @@
     searchClearList:$c{searchZoneId searchStateId searchHubId searchCode searchDescription searchStatus}
     tableColumnList:$c{zoneDesc stateDesc hubDesc code description sortCode timeZone statusDesc}
     formSection:$d{!ui-section caption:$m{organization.branch.section.basicdetails}
-        components:$c{frmCode frmDescription frmSortCode frmHeadOffice frmHubId frmZoneId frmStateId frmStatus}}
+        components:$c{frmCode frmDescription frmSortCode frmAltSortCode frmHeadOffice frmHubId frmZoneId frmStateId frmStatus}}
     addPrivilege:$s{org-branchadd} editPrivilege:$s{org-branchedit}
     viewPrivilege:$s{org-branchview} deletePrivilege:$s{org-branchdelete}
     addValidations:$c{frmCodeVal frmDescVal frmSortCodeVal}
@@ -43,6 +43,7 @@
 !ui-name:frmCode caption:$m{organization.branch.code} binding:code minLen:3 maxLen:32 required:true focus:true
 !ui-text:frmDescription caption:$m{organization.branch.description} binding:description minLen:1 maxLen:48 size:32 required:true
 !ui-name:frmSortCode caption:$m{organization.branch.sortcode} binding:sortCode minLen:9 maxLen:9 required:true
+!ui-name:frmAltSortCode caption:$m{organization.branch.altsortcode} binding:altSortCode minLen:9 maxLen:9 
 !ui-checkbox:frmHeadOffice caption:$m{organization.branch.headoffice} layoutCaption:true binding:headOffice
 !ui-select:frmStatus caption:$m{organization.branch.status} binding:status list:recordstatuslist blankOption:$s{} required:true
 
