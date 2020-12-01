@@ -123,6 +123,7 @@ import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
+import com.tcdng.unify.core.data.ParamConfig;
 import com.tcdng.unify.core.database.AbstractEntity;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
@@ -1366,7 +1367,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 		for (TaskableMethodConfig bmtc : taskManager.getAllTaskableMethodConfigs()) {
 			if (bmtc.isSchedulable()) {
 				List<ParameterDef> parameterList = new ArrayList<ParameterDef>();
-				for (TaskableMethodConfig.ParamConfig pc : bmtc.getParamConfigList()) {
+				for (ParamConfig pc : bmtc.getParamConfigList()) {
 					String editor = AnnotationUtils.getAnnotationString(pc.getEditor());
 					if (editor != null) {
 						ParameterDef parameterDef = new ParameterDef();
