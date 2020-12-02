@@ -34,7 +34,7 @@ public interface ReportMultiFileOptionsGenerator extends UnifyComponent {
 	 * Generates report multi-file options
 	 * 
 	 * @param path  base output path
-	 * @param input the report input
+	 * @param inputList the report input
 	 * @return the generated report options
 	 * @throws UnifyException if an error occurs
 	 */
