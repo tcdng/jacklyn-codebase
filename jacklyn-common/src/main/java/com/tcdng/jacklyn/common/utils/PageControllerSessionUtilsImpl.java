@@ -31,8 +31,8 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.util.ReflectUtils;
-import com.tcdng.unify.web.PageBean;
-import com.tcdng.unify.web.ui.panel.TableCrudPanel;
+import com.tcdng.unify.web.ui.PageBean;
+import com.tcdng.unify.web.ui.widget.panel.TableCrudPanel;
 
 /**
  * Page controller session utilities.

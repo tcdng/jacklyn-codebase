@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.workflow.web.beans;
 
 import com.tcdng.jacklyn.common.web.beans.BasePageBean;
 import com.tcdng.jacklyn.workflow.data.ManualWfItem;
-import com.tcdng.unify.web.ui.data.LinkGridInfo;
+import com.tcdng.unify.web.ui.widget.data.LinkGridInfo;
 
 /**
  * Manual work item initiation page bean.

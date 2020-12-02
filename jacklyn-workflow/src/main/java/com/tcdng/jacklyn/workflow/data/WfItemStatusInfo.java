@@ -18,7 +18,7 @@ package com.tcdng.jacklyn.workflow.data;
 
 import java.util.Date;
 
-import com.tcdng.unify.web.ui.data.BadgeInfo;
+import com.tcdng.unify.web.ui.widget.data.BadgeInfo;
 
 /**
  * Workflow item status information.

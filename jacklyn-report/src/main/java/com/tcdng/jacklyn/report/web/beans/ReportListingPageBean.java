@@ -17,7 +17,7 @@
 package com.tcdng.jacklyn.report.web.beans;
 
 import com.tcdng.jacklyn.common.web.beans.BasePageBean;
-import com.tcdng.unify.web.ui.data.LinkGridInfo;
+import com.tcdng.unify.web.ui.widget.data.LinkGridInfo;
 
 /**
  * Report listing page bean.

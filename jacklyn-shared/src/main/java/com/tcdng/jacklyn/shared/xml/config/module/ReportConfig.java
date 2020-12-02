@@ -38,6 +38,10 @@ public class ReportConfig extends BaseConfig {
 
     private String layout;
 
+    private String multiFilePathSystemParam;
+
+    private String multiFileOptionsGenerator;
+
     private ColumnsConfig columns;
 
     private ParametersConfig parameters;
@@ -90,7 +94,25 @@ public class ReportConfig extends BaseConfig {
         this.columns = columns;
     }
 
-    public ParametersConfig getParameters() {
+    public String getMultiFilePathSystemParam() {
+		return multiFilePathSystemParam;
+	}
+
+    @XmlAttribute
+	public void setMultiFilePathSystemParam(String multiFilePathSystemParam) {
+		this.multiFilePathSystemParam = multiFilePathSystemParam;
+	}
+
+	public String getMultiFileOptionsGenerator() {
+		return multiFileOptionsGenerator;
+	}
+
+    @XmlAttribute
+	public void setMultiFileOptionsGenerator(String multiFileOptionsGenerator) {
+		this.multiFileOptionsGenerator = multiFileOptionsGenerator;
+	}
+
+	public ParametersConfig getParameters() {
         return parameters;
     }
 

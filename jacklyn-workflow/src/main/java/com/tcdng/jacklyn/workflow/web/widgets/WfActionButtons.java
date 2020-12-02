@@ -23,8 +23,8 @@ import com.tcdng.unify.core.annotation.UplAttribute;
 import com.tcdng.unify.core.annotation.UplAttributes;
 import com.tcdng.unify.core.data.ValueStore;
 import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.web.ui.AbstractValueListMultiControl;
-import com.tcdng.unify.web.ui.Control;
+import com.tcdng.unify.web.ui.widget.AbstractValueListMultiControl;
+import com.tcdng.unify.web.ui.widget.Control;
 
 /**
  * Workflow step action buttons.

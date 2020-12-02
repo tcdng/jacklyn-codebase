@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.workflow.data;
 
-import com.tcdng.unify.web.ui.data.BadgeInfo;
+import com.tcdng.unify.web.ui.widget.data.BadgeInfo;
 
 /**
  * Workflow item count status information.

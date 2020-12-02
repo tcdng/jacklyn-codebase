@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.common.web.beans;
 
-import com.tcdng.unify.web.AbstractDocViewBean;
+import com.tcdng.unify.web.ui.AbstractDocViewBean;
 
 /**
  * Base page bean.

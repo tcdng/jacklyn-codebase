@@ -28,7 +28,7 @@ import com.tcdng.unify.web.annotation.ResultMappings;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.constant.Secured;
-import com.tcdng.unify.web.ui.data.LinkGridInfo;
+import com.tcdng.unify.web.ui.widget.data.LinkGridInfo;
 
 /**
  * Manual work item initiation controller.

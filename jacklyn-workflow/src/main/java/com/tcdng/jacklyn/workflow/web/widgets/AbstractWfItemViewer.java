@@ -15,7 +15,7 @@
  */
 package com.tcdng.jacklyn.workflow.web.widgets;
 
-import com.tcdng.unify.web.ui.panel.AbstractStandalonePanel;
+import com.tcdng.unify.web.ui.widget.panel.AbstractStandalonePanel;
 
 /**
  * Abstract workflow item viewer.

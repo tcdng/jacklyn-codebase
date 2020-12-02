@@ -31,6 +31,8 @@ public class UserPageBean extends BaseEntityPageBean<User> {
 
     private Long searchRoleId;
 
+    private Long searchBranchId;
+
     private String searchLoginId;
 
     private String searchFullName;
@@ -54,7 +56,15 @@ public class UserPageBean extends BaseEntityPageBean<User> {
         this.searchRoleId = searchRoleId;
     }
 
-    public String getSearchLoginId() {
+    public Long getSearchBranchId() {
+		return searchBranchId;
+	}
+
+	public void setSearchBranchId(Long searchBranchId) {
+		this.searchBranchId = searchBranchId;
+	}
+
+	public String getSearchLoginId() {
         return searchLoginId;
     }
 

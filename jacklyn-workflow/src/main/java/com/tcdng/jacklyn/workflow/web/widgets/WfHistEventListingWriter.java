@@ -23,9 +23,9 @@ import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.Writes;
 import com.tcdng.unify.core.format.Formatter;
 import com.tcdng.unify.core.util.DataUtils;
-import com.tcdng.unify.web.ui.ResponseWriter;
-import com.tcdng.unify.web.ui.Widget;
-import com.tcdng.unify.web.ui.writer.AbstractWidgetWriter;
+import com.tcdng.unify.web.ui.widget.ResponseWriter;
+import com.tcdng.unify.web.ui.widget.Widget;
+import com.tcdng.unify.web.ui.widget.writer.AbstractWidgetWriter;
 
 /**
  * Workflow history event listing writer.

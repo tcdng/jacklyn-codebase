@@ -32,7 +32,7 @@ import com.tcdng.unify.core.annotation.UplAttributes;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.web.TargetPath;
 import com.tcdng.unify.web.annotation.Action;
-import com.tcdng.unify.web.ui.control.Table;
+import com.tcdng.unify.web.ui.widget.control.Table;
 
 /**
  * My work items panel.

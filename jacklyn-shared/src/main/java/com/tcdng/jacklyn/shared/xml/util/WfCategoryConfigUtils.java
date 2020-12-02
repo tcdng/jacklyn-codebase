@@ -58,7 +58,7 @@ import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
-import com.tcdng.unify.core.util.XMLConfigUtils;
+import com.tcdng.unify.core.util.XmlConfigUtils;
 
 /**
  * Workflow category XML configuration utilities.
@@ -73,12 +73,12 @@ public final class WfCategoryConfigUtils {
     }
 
     public static WfCategoryConfig readWfCategoryConfig(File file) throws UnifyException {
-        return XMLConfigUtils.readXmlConfig(WfCategoryConfig.class, file);
+        return XmlConfigUtils.readXmlConfig(WfCategoryConfig.class, file);
     }
 
     public static WfCategoryConfig readWfCategoryConfig(InputStream in) throws UnifyException {
         try {
-            return XMLConfigUtils.readXmlConfig(WfCategoryConfig.class, in);
+            return XmlConfigUtils.readXmlConfig(WfCategoryConfig.class, in);
         } finally {
             IOUtils.close(in);
         }
@@ -86,7 +86,7 @@ public final class WfCategoryConfigUtils {
 
     public static WfCategoryConfig readWfCategoryConfig(Reader reader) throws UnifyException {
         try {
-            return XMLConfigUtils.readXmlConfig(WfCategoryConfig.class, reader);
+            return XmlConfigUtils.readXmlConfig(WfCategoryConfig.class, reader);
         } finally {
             IOUtils.close(reader);
         }
@@ -96,7 +96,7 @@ public final class WfCategoryConfigUtils {
         InputStream inputStream = null;
         try {
             inputStream = IOUtils.openClassLoaderResourceInputStream(resourceName);
-            return XMLConfigUtils.readXmlConfig(WfCategoryConfig.class, inputStream);
+            return XmlConfigUtils.readXmlConfig(WfCategoryConfig.class, inputStream);
         } finally {
             IOUtils.close(inputStream);
         }

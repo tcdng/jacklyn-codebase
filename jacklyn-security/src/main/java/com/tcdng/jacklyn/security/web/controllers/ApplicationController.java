@@ -46,7 +46,7 @@ import com.tcdng.unify.web.annotation.WebApplication;
 import com.tcdng.unify.web.constant.ReadOnly;
 import com.tcdng.unify.web.constant.ResetOnWrite;
 import com.tcdng.unify.web.constant.Secured;
-import com.tcdng.unify.web.ui.control.Table;
+import com.tcdng.unify.web.ui.widget.control.Table;
 
 /**
  * Page controller for application document.

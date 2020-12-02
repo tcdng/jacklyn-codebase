@@ -18,8 +18,8 @@ package com.tcdng.jacklyn.report.web.controllers;
 
 import com.tcdng.jacklyn.report.business.ReportService;
 import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.web.AbstractResourceController;
 import com.tcdng.unify.web.constant.Secured;
+import com.tcdng.unify.web.ui.AbstractPageResourceController;
 
 /**
  * Abstract base class for report module resource controllers
@@ -27,7 +27,7 @@ import com.tcdng.unify.web.constant.Secured;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractReportResourceController extends AbstractResourceController {
+public abstract class AbstractReportResourceController extends AbstractPageResourceController {
 
     @Configurable
     private ReportService reportService;

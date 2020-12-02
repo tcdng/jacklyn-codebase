@@ -20,7 +20,7 @@ import java.util.Set;
 
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.Component;
-import com.tcdng.unify.web.ui.container.BasicPage;
+import com.tcdng.unify.web.ui.widget.container.BasicPage;
 
 /**
  * Specialized page for managing user workflow items.

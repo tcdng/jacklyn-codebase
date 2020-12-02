@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tcdng.unify.core.data.Input;
+import com.tcdng.unify.core.util.StringUtils;
 
 /**
  * Report options.
@@ -41,6 +42,10 @@ public class ReportOptions {
     private String recordName;
 
     private String processor;
+
+    private String multiReportPath;
+
+    private String multiReportOptionsGenerator;
 
     private String dataSource;
 
@@ -177,7 +182,27 @@ public class ReportOptions {
         this.processor = processor;
     }
 
-    public List<?> getContent() {
+    public String getMultiReportPath() {
+		return multiReportPath;
+	}
+
+	public void setMultiReportPath(String multiReportPath) {
+		this.multiReportPath = multiReportPath;
+	}
+
+	public String getMultiReportOptionsGenerator() {
+		return multiReportOptionsGenerator;
+	}
+
+	public void setMultiReportOptionsGenerator(String multiReportOptionsGenerator) {
+		this.multiReportOptionsGenerator = multiReportOptionsGenerator;
+	}
+
+	public boolean isMultiFileReport() {
+		return !StringUtils.isBlank(multiReportPath) && !StringUtils.isBlank(multiReportOptionsGenerator);
+	}
+	
+	public List<?> getContent() {
         return content;
     }
 

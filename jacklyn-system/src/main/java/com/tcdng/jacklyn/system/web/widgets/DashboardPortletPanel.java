@@ -16,7 +16,7 @@
 
 package com.tcdng.jacklyn.system.web.widgets;
 
-import com.tcdng.unify.web.ui.Panel;
+import com.tcdng.unify.web.ui.widget.Panel;
 
 /**
  * Dashboard portlet panel.

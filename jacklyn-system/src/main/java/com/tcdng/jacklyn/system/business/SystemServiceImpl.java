@@ -123,6 +123,7 @@ import com.tcdng.unify.core.data.Document;
 import com.tcdng.unify.core.data.FactoryMap;
 import com.tcdng.unify.core.data.Input;
 import com.tcdng.unify.core.data.Inputs;
+import com.tcdng.unify.core.data.ParamConfig;
 import com.tcdng.unify.core.database.AbstractEntity;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.database.Query;
@@ -865,12 +866,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 		final Date workingDt = CalendarUtils.getMidnightDate(now);
 
 		// Expiration allowance
-		int expirationAllowanceMins = getSysParameterValue(int.class,
+		final int expirationAllowanceMins = getSysParameterValue(int.class,
 				SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_TRIGGER_EXPIRATION);
-		long expirationAllowanceMilliSec = CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.MINUTE,
+		final long expirationAllowanceMilliSec = CalendarUtils.getMilliSecondsByFrequency(FrequencyUnit.MINUTE,
 				expirationAllowanceMins);
 
-		int maxScheduledTaskTrigger = getSysParameterValue(int.class,
+		final int maxScheduledTaskTrigger = getSysParameterValue(int.class,
 				SystemModuleSysParamConstants.SYSPARAM_SYSTEM_SCHEDULER_MAX_TRIGGER);
 
 		// Fetch tasks ready to run
@@ -897,8 +898,10 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 
 					Date nextExecutionOn = db().value(Date.class, "nextExecutionOn",
 							new ScheduledTaskQuery().id(scheduledTaskId));
+					final Date todayStartTime = CalendarUtils.getDateWithOffset(workingDt,
+							scheduledTaskDef.getStartOffset());
 					Date expiryOn = CalendarUtils.getDateWithOffset(nextExecutionOn, expirationAllowanceMilliSec);
-					if (now.before(expiryOn)) {
+					if (!now.before(todayStartTime) && now.before(expiryOn)) {
 						// Task execution has not expired. Start task
 						// Load settings
 						for (Input<?> input : scheduledTaskDef.getInputList()) {
@@ -930,14 +933,12 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 						long factor = ((now.getTime() - nextExecutionOn.getTime()) / repeatMillSecs) + 1;
 						long actNextOffsetMillSecs = factor * repeatMillSecs;
 						calcNextExecutionOn = CalendarUtils.getDateWithOffset(nextExecutionOn, actNextOffsetMillSecs);
-						if (calcNextExecutionOn.compareTo(limit) >= 0) {
+						if (calcNextExecutionOn.before(todayStartTime) || calcNextExecutionOn.after(limit)) {
 							calcNextExecutionOn = null;
 						}
 					}
 
 					if (calcNextExecutionOn == null) {
-						Date todayStartTime = CalendarUtils.getDateWithOffset(workingDt,
-								scheduledTaskDef.getStartOffset());
 						if (now.before(todayStartTime) && CalendarUtils.isWithinCalendar(scheduledTaskDef.getWeekdays(),
 								scheduledTaskDef.getDays(), scheduledTaskDef.getMonths(), todayStartTime)) {
 							// Today start time
@@ -1366,7 +1367,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 		for (TaskableMethodConfig bmtc : taskManager.getAllTaskableMethodConfigs()) {
 			if (bmtc.isSchedulable()) {
 				List<ParameterDef> parameterList = new ArrayList<ParameterDef>();
-				for (TaskableMethodConfig.ParamConfig pc : bmtc.getParamConfigList()) {
+				for (ParamConfig pc : bmtc.getParamConfigList()) {
 					String editor = AnnotationUtils.getAnnotationString(pc.getEditor());
 					if (editor != null) {
 						ParameterDef parameterDef = new ParameterDef();

@@ -208,7 +208,7 @@ import com.tcdng.unify.core.util.IOUtils;
 import com.tcdng.unify.core.util.ReflectUtils;
 import com.tcdng.unify.core.util.StringUtils;
 import com.tcdng.unify.core.util.StringUtils.StringToken;
-import com.tcdng.unify.web.ui.data.BadgeInfo;
+import com.tcdng.unify.web.ui.widget.data.BadgeInfo;
 
 /**
  * Default workflow business service implementation.

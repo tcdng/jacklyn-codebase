@@ -19,7 +19,7 @@ import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
 import com.tcdng.unify.core.database.Entity;
-import com.tcdng.unify.web.ui.container.Form;
+import com.tcdng.unify.web.ui.widget.container.Form;
 
 /**
  * Convenient abstract base class for page controllers that manage entity CRUD

@@ -69,7 +69,7 @@ import com.tcdng.unify.core.constant.HAlignType;
 import com.tcdng.unify.core.database.Entity;
 import com.tcdng.unify.core.logging.EventType;
 import com.tcdng.unify.core.report.ReportServer;
-import com.tcdng.unify.core.stream.XMLObjectStreamer;
+import com.tcdng.unify.core.stream.XmlObjectStreamer;
 import com.tcdng.unify.core.util.AnnotationUtils;
 import com.tcdng.unify.core.util.DataUtils;
 import com.tcdng.unify.core.util.IOUtils;
@@ -87,7 +87,7 @@ import com.tcdng.unify.core.util.StringUtils;
 public class JacklynBootServiceImpl extends AbstractBootService<ModuleConfig> {
 
     @Configurable(ApplicationComponents.APPLICATION_XMLOBJECTSTREAMER)
-    private XMLObjectStreamer xmlObjectStreamer;
+    private XmlObjectStreamer xmlObjectStreamer;
 
     @Override
     protected List<StartupShutdownHook> getStartupShutdownHooks() throws UnifyException {

@@ -13,28 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.workflow.web.widgets;
+package com.tcdng.jacklyn.common.business;
 
-import com.tcdng.jacklyn.workflow.data.ViewableWfItem;
+import java.util.List;
+
+import com.tcdng.jacklyn.common.data.ReportMultiFileOptions;
+import com.tcdng.unify.core.UnifyComponent;
 import com.tcdng.unify.core.UnifyException;
-import com.tcdng.unify.web.ui.widget.panel.StandalonePanel;
+import com.tcdng.unify.core.data.Input;
 
 /**
- * Workflow item viewer.
+ * Report multi-file options generator,
  * 
- * @author Lateef Ojulari
+ * @author Lateef
  * @since 1.0
  */
-public interface WfItemViewer extends StandalonePanel {
+public interface ReportMultiFileOptionsGenerator extends UnifyComponent {
 
-    /**
-     * Sets viewer document mode based on privileges in viewable item's supplied
-     * step.
-     * 
-     * @param viewableWfItem
-     *            the viewable workflow item
-     * @throws UnifyException
-     *             if an error occurs
-     */
-    void setDocumentMode(ViewableWfItem viewableWfItem) throws UnifyException;
+	/**
+	 * Generates report multi-file options
+	 * 
+	 * @param path  base output path
+	 * @param input the report input
+	 * @return the generated report options
+	 * @throws UnifyException if an error occurs
+	 */
+	ReportMultiFileOptions generate(String path, List<Input<?>> inputList) throws UnifyException;
 }

@@ -61,6 +61,9 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
     @Column(name = "SORT_CD", length = 32)
     private String sortCode;
 
+    @Column(name = "ALT_SORT_CD", length = 32, nullable = true)
+    private String altSortCode;
+
     @Column(name = "HEAD_OFFICE_FG")
     private Boolean headOffice;
 
@@ -123,7 +126,15 @@ public class Branch extends BaseVersionedStatusEntity implements BatchItemRecord
         this.sortCode = sortCode;
     }
 
-    public Boolean getHeadOffice() {
+    public String getAltSortCode() {
+		return altSortCode;
+	}
+
+	public void setAltSortCode(String altSortCode) {
+		this.altSortCode = altSortCode;
+	}
+
+	public Boolean getHeadOffice() {
         return headOffice;
     }
 

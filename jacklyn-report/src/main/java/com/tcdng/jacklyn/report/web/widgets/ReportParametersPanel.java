@@ -17,7 +17,7 @@ package com.tcdng.jacklyn.report.web.widgets;
 
 import com.tcdng.unify.core.annotation.Component;
 import com.tcdng.unify.core.annotation.UplBinding;
-import com.tcdng.unify.web.ui.panel.UserInputPanel;
+import com.tcdng.unify.web.ui.widget.panel.UserInputPanel;
 
 /**
  * PanelImpl for presenting and capturing report parameters.
