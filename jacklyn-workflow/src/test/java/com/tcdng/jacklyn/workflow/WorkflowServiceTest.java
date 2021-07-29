@@ -380,7 +380,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("awaitCustApproval", wfMessage.getName());
         assertEquals("Awaiting Customer Approval", wfMessage.getDescription());
         assertEquals("Awaiting Customer Approval", wfMessage.getSubject());
-        assertEquals("Awaiting approval for {firstName} {lastName}", wfMessage.getTemplate());
+        assertEquals("Awaiting approval for {{firstName}} {{lastName}}", wfMessage.getTemplate());
         assertEquals("custDoc", wfMessage.getWfDocName());
         assertEquals("default-attachmentgenerator", wfMessage.getAttachmentGenerator());
         assertEquals(Boolean.FALSE, wfMessage.getHtmlFlag());
@@ -390,7 +390,7 @@ public class WorkflowServiceTest extends AbstractJacklynTest {
         assertEquals("custFlowError", wfMessage.getName());
         assertEquals("Customer Document Flow Error", wfMessage.getDescription());
         assertEquals("Customer Document Flow Error", wfMessage.getSubject());
-        assertEquals("Workflow error while processing customer document. Document Details: {firstName} {lastName}",
+        assertEquals("Workflow error while processing customer document. Document Details: {{firstName}} {{lastName}}",
                 wfMessage.getTemplate());
         assertEquals("custDoc", wfMessage.getWfDocName());
         assertNull(wfMessage.getAttachmentGenerator());
