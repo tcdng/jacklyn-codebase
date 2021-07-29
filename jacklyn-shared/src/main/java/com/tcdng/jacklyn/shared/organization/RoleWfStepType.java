@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("rolewfsteptypelist")
+@StaticList(name = "rolewfsteptypelist", description = "Role Workflow Step Type List")
 public enum RoleWfStepType implements EnumConst {
 
     USER_INTERACT("I"),

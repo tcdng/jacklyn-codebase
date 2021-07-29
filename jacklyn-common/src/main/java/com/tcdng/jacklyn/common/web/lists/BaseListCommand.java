@@ -19,6 +19,7 @@ package com.tcdng.jacklyn.common.web.lists;
 import com.tcdng.jacklyn.shared.security.SecurityPrivilegeConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.list.AbstractListCommand;
+import com.tcdng.unify.core.list.ListParam;
 
 /**
  * Convenient base class for list command in Jacklyn context.
@@ -26,7 +27,7 @@ import com.tcdng.unify.core.list.AbstractListCommand;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class BaseListCommand<T> extends AbstractListCommand<T> {
+public abstract class BaseListCommand<T extends ListParam> extends AbstractListCommand<T> {
 
     public BaseListCommand(Class<T> paramType) {
         super(paramType);

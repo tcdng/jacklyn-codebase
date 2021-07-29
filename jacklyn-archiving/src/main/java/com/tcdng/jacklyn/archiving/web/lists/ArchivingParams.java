@@ -16,13 +16,15 @@
 
 package com.tcdng.jacklyn.archiving.web.lists;
 
+import com.tcdng.unify.core.list.AbstractListParam;
+
 /**
  * Archjving list parameters.
  * 
  * @author Lateef Ojulari
  * @since 1.o
  */
-public class ArchivingParams {
+public class ArchivingParams extends AbstractListParam {
 
     private Long archivableDefId;
 
@@ -33,4 +35,9 @@ public class ArchivingParams {
     public Long getArchivableDefId() {
         return archivableDefId;
     }
+
+	@Override
+	public boolean isPresent() {
+		return archivableDefId  != null;
+	}
 }

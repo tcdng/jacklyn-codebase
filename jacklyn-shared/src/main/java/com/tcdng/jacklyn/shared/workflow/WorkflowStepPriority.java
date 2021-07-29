@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfstepprioritylist")
+@StaticList(name = "wfstepprioritylist", description = "Workflow Step Priority List")
 public enum WorkflowStepPriority implements EnumConst {
 
     CRITICAL("C"), HIGH("H"), NORMAL("N"), LOW("L");

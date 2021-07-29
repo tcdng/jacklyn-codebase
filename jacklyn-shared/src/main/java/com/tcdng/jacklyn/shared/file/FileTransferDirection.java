@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("filetransferdirectionlist")
+@StaticList(name = "filetransferdirectionlist", description = "File Transfer Direction List")
 public enum FileTransferDirection implements EnumConst {
 
     UPLOAD("U"), DOWNLOAD("D");

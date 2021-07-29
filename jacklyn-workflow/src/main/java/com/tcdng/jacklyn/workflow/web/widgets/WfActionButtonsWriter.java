@@ -81,7 +81,7 @@ public class WfActionButtonsWriter extends AbstractControlWriter {
                 actionCtrl.setValueStore(valueStore);
                 getRequestContext().setQuickReference(valueStore);
                 for (EventHandler eventHandler : eventHandlers) {
-                    writer.writeBehavior(eventHandler, actionCtrl.getId());
+                    writer.writeBehavior(eventHandler, actionCtrl.getId(), null);
                 }
             }
         }

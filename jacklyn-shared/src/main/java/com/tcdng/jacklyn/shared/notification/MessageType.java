@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("messagetypelist")
+@StaticList(name = "messagetypelist", description = "Message Type List")
 public enum MessageType implements EnumConst {
 
     INFORMATION("I", "$t{images/info.png}"),

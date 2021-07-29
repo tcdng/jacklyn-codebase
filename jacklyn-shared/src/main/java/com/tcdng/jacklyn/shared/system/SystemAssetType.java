@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("systemassettypelist")
+@StaticList(name = "systemassettypelist", description = "System Asset Type List")
 public enum SystemAssetType implements EnumConst {
 
     REMOTECALL_METHOD("RCM");

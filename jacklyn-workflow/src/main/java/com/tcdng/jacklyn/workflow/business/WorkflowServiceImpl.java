@@ -336,7 +336,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         new HashMap<String, Class<? extends Document>>();
                 for (WfDocBeanMapping wfDocBeanMapping : wfDoc.getBeanMappingList()) {
                     Class<? extends Document> beanClass =
-                            (Class<? extends Document>) ReflectUtils.getClassForName(wfDocBeanMapping.getBeanType());
+                            (Class<? extends Document>) ReflectUtils.classForName(wfDocBeanMapping.getBeanType());
                     BeanMappingConfig.Builder bcmb = BeanMappingConfig.newBuilder(beanClass);
                     for (WfDocFieldMapping wfDocFieldMapping : wfDocBeanMapping.getFieldMappingList()) {
                         bcmb.addMapping(wfDocFieldMapping.getDocFieldName(), wfDocFieldMapping.getBeanFieldName());

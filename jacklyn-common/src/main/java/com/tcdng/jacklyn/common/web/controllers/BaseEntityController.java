@@ -28,7 +28,7 @@ import com.tcdng.jacklyn.common.entities.BaseEntity;
 import com.tcdng.jacklyn.common.utils.PageControllerSessionUtils;
 import com.tcdng.jacklyn.common.web.beans.BaseEntityPageBean;
 import com.tcdng.jacklyn.shared.organization.PrivilegeCategoryConstants;
-import com.tcdng.unify.core.UnifyContainer;
+import com.tcdng.unify.core.UnifyCoreConstants;
 import com.tcdng.unify.core.UnifyCorePropertyConstants;
 import com.tcdng.unify.core.UnifyException;
 import com.tcdng.unify.core.annotation.UplBinding;
@@ -111,7 +111,7 @@ public abstract class BaseEntityController<T extends BaseEntityPageBean<V>, U, V
         logUserEvent(EventType.SEARCH, entityClass);
 
         if (recordList != null && recordList.size() >= getContainerSetting(int.class,
-                UnifyCorePropertyConstants.APPLICATION_QUERY_LIMIT, UnifyContainer.DEFAULT_APPLICATION_QUERY_LIMIT)) {
+                UnifyCorePropertyConstants.APPLICATION_QUERY_LIMIT, UnifyCoreConstants.DEFAULT_APPLICATION_QUERY_LIMIT)) {
             hintUser(MODE.WARNING, "$m{managerecord.hint.applicationquerylimit.reached}");
         }
 

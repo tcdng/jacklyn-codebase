@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @version 1.0
  */
-@StaticList("archivingfieldtypelist")
+@StaticList(name = "archivingfieldtypelist", description = "Archiving Field Type List")
 public enum ArchivingFieldType implements EnumConst {
 
     BLOB(ColumnType.BLOB.code()),

@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfformelementtypelist")
+@StaticList(name = "wfformelementtypelist", description = "Wprkflow Form Element Type List")
 public enum WorkflowFormElementType implements EnumConst {
 
     TAB("TAB"), SECTION("SEC"), FIELD("FLD");

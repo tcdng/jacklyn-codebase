@@ -18,6 +18,7 @@ package com.tcdng.jacklyn.workflow.web.lists;
 import com.tcdng.jacklyn.common.web.lists.BaseListCommand;
 import com.tcdng.jacklyn.workflow.business.WorkflowService;
 import com.tcdng.unify.core.annotation.Configurable;
+import com.tcdng.unify.core.list.ListParam;
 
 /**
  * Convenient abstract workflow module list command implementation.
@@ -25,7 +26,7 @@ import com.tcdng.unify.core.annotation.Configurable;
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractWorkflowListCommand<T> extends BaseListCommand<T> {
+public abstract class AbstractWorkflowListCommand<T extends ListParam> extends BaseListCommand<T> {
 
     @Configurable
     private WorkflowService workflowService;

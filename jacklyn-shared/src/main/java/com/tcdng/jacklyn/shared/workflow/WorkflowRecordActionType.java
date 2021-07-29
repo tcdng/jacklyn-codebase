@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfrecordactiontypelist")
+@StaticList(name = "wfrecordactiontypelist", description = "Workflow Record Action Type List")
 public enum WorkflowRecordActionType implements EnumConst {
 
     CREATE("C"), READ("R"), UPDATE("U"), DELETE("D");

@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("systemparamtypelist")
+@StaticList(name = "systemparamtypelist", description = "System Parameter Type List")
 public enum SystemParamType implements EnumConst {
 
     BOOLEAN("B"), NUMBER("N"), STRING("S");

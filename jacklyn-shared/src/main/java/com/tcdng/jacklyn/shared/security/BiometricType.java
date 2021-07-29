@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("biometrictypelist")
+@StaticList(name = "biometrictypelist", description = "Biometric Type List")
 public enum BiometricType implements EnumConst {
 
     PHOTOGRAPH("P"), SIGNATURE("S"), THUMBPRINT("T"), RETINALSCAN("R");
