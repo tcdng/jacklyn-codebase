@@ -43,9 +43,11 @@ public class WfAlertDef extends BaseWfDef {
 
     private String notificationTemplateCode;
 
+    private String filter;
+    
     public WfAlertDef(String docName, String stepGlobalName, String fireOnPrevStepName, String name, String description,
             WorkflowAlertType type, WorkflowParticipantType participant, NotificationType channel,
-            String notificationTemplateCode) {
+            String notificationTemplateCode, String filter) {
         super(name, description);
         this.docName = docName;
         this.stepGlobalName = stepGlobalName;
@@ -54,6 +56,7 @@ public class WfAlertDef extends BaseWfDef {
         this.participant = participant;
         this.channel = channel;
         this.notificationTemplateCode = notificationTemplateCode;
+        this.filter = filter;
     }
 
     public String getStepGlobalName() {
@@ -84,7 +87,15 @@ public class WfAlertDef extends BaseWfDef {
         return fireOnPrevStepName;
     }
 
-    public boolean isFireAlertOn(String docName, String prevStepName) {
+    public String getFilter() {
+		return filter;
+	}
+
+    public boolean isWithFilter() {
+    	return !StringUtils.isBlank(filter);
+    }
+    
+	public boolean isFireAlertOn(String docName, String prevStepName) {
         return this.docName.equals(docName)
                 && (StringUtils.isBlank(this.fireOnPrevStepName) || this.fireOnPrevStepName.equals(prevStepName));
     }

@@ -64,6 +64,14 @@ public class WfItemAlertPolicyImpl extends AbstractWfItemAlertPolicy {
     public void sendAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException {
         logDebug("Sending alert of type [{0}] through channel [{1}] for workflow item [{2}]...", wfAlertDef.getType(),
                 wfAlertDef.getChannel(), flowingWfItemReader.getItemDesc());
+        if (wfAlertDef.isWithFilter()) {
+        	WfItemAlertFilter WfItemAlertFilter = (WfItemAlertFilter) getComponent(wfAlertDef.getFilter());
+        	if(!WfItemAlertFilter.acceptAlert(flowingWfItemReader, wfAlertDef)) {
+                logDebug("Alert discarded by filter [{0}]...", wfAlertDef.getFilter());
+                return;
+        	}
+        }
+
         String senderName =
                 getSystemService().getSysParameterValue(String.class,
                         SystemModuleSysParamConstants.SYSPARAM_SYSTEM_NAME);

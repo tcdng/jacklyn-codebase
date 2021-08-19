@@ -601,7 +601,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             alertList.add(new WfAlertDef(wfAlert.getDocName(), stepGlobalName,
                                     wfAlert.getFireOnPrevStepName(), wfAlert.getName(), wfAlert.getDescription(),
                                     wfAlert.getType(), wfAlert.getParticipant(), wfAlert.getChannel(),
-                                    notifTemplateGlobalName));
+                                    notifTemplateGlobalName, wfAlert.getFilterName()));
                         }
                     }
 
@@ -2184,6 +2184,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfAlert.setParticipant(wfAlertConfig.getParticipant());
                     wfAlert.setChannel(wfAlertConfig.getChannel());
                     wfAlert.setNotificationTemplateCode(wfAlertConfig.getMessage());
+                    wfAlert.setFilterName(wfAlertConfig.getFilter());
                     alertList.add(wfAlert);
                 }
             }
