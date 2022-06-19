@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("assignmentstatuslist")
+@StaticList(name = "assignmentstatuslist", description = "Assignment Status")
 public enum AssignmentStatus implements EnumConst {
 
     ASSIGNED("A"), UNASSIGNED("U");

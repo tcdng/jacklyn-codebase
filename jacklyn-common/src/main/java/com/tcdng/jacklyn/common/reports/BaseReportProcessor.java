@@ -56,8 +56,8 @@ public abstract class BaseReportProcessor extends AbstractReportProcessor {
             String itemTypeDesc = "";
             if (reportParameters.isParameterNotNull(paramName)) {
                 itemTypeDesc =
-                        getListItemDescription(LocaleType.SESSION, enumStaticList,
-                                (String) reportParameters.getParameterValue(paramName));
+                        getListItemByKey(LocaleType.SESSION, enumStaticList,
+                                (String) reportParameters.getParameterValue(paramName)).getListDescription();
             }
             setReportHeaderParameter(reportParameters, "header_" + paramName, description, itemTypeDesc);
         }

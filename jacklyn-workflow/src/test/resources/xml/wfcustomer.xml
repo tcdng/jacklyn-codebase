@@ -6,7 +6,7 @@
 	version="1.0">
 	<documents>
 		<document name="custDoc" description="Customer Information">
-			<item-description-format><![CDATA[Customer:{firstName} {lastName}]]></item-description-format>
+			<item-description-format><![CDATA[Customer:{{firstName}} {{lastName}}]]></item-description-format>
 			<fields>
 				<field name="firstName" description="First Name" type="string" />
 				<field name="lastName" description="Last Name" type="string" />
@@ -69,12 +69,12 @@
 			attachment-generator="default-attachmentgenerator" html="false"
 			document="custDoc">
 			<subject><![CDATA[Awaiting Customer Approval]]></subject>
-			<body><![CDATA[Awaiting approval for {firstName} {lastName}]]></body>
+			<body><![CDATA[Awaiting approval for {{firstName}} {{lastName}}]]></body>
 		</message>
 		<message name="custFlowError" description="Customer Document Flow Error"
 			html="false" document="custDoc">
 			<subject><![CDATA[Customer Document Flow Error]]></subject>
-			<body><![CDATA[Workflow error while processing customer document. Document Details: {firstName} {lastName}]]></body>
+			<body><![CDATA[Workflow error while processing customer document. Document Details: {{firstName}} {{lastName}}]]></body>
 		</message>
 	</messages>
 	<templates>

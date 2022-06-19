@@ -13,29 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.file.web.lists;
 
-import com.tcdng.jacklyn.common.web.lists.BaseListCommand;
-import com.tcdng.jacklyn.file.business.FileService;
-import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.ListParam;
+package com.tcdng.jacklyn.workflow.business;
+
+import com.tcdng.jacklyn.workflow.data.WfAlertDef;
+import com.tcdng.jacklyn.workflow.data.FlowingWfItem.Reader;
+import com.tcdng.unify.core.UnifyException;
 
 /**
- * Abstract base class for file module list commands.
+ * Workflow item alert filter.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractFileListCommand<T extends ListParam> extends BaseListCommand<T> {
+public interface WfItemAlertFilter extends WfItemPolicy {
 
-    @Configurable
-    private FileService fileModule;
-
-    public AbstractFileListCommand(Class<T> paramType) {
-        super(paramType);
-    }
-
-    protected FileService getFileModule() {
-        return fileModule;
-    }
+	/**
+	 * Accepts for alert.
+	 * 
+	 * @param flowingWfItemReader the workflow item reader
+	 * @param wfAlertDef          the alert definition
+	 * @return true if alert is accepted otherwise false
+	 * @throws UnifyException if an error occurs
+	 */
+	boolean acceptAlert(Reader flowingWfItemReader, WfAlertDef wfAlertDef) throws UnifyException;
 }

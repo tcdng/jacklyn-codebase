@@ -336,7 +336,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                         new HashMap<String, Class<? extends Document>>();
                 for (WfDocBeanMapping wfDocBeanMapping : wfDoc.getBeanMappingList()) {
                     Class<? extends Document> beanClass =
-                            (Class<? extends Document>) ReflectUtils.getClassForName(wfDocBeanMapping.getBeanType());
+                            (Class<? extends Document>) ReflectUtils.classForName(wfDocBeanMapping.getBeanType());
                     BeanMappingConfig.Builder bcmb = BeanMappingConfig.newBuilder(beanClass);
                     for (WfDocFieldMapping wfDocFieldMapping : wfDocBeanMapping.getFieldMappingList()) {
                         bcmb.addMapping(wfDocFieldMapping.getDocFieldName(), wfDocFieldMapping.getBeanFieldName());
@@ -601,7 +601,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                             alertList.add(new WfAlertDef(wfAlert.getDocName(), stepGlobalName,
                                     wfAlert.getFireOnPrevStepName(), wfAlert.getName(), wfAlert.getDescription(),
                                     wfAlert.getType(), wfAlert.getParticipant(), wfAlert.getChannel(),
-                                    notifTemplateGlobalName));
+                                    notifTemplateGlobalName, wfAlert.getFilterName()));
                         }
                     }
 
@@ -2184,6 +2184,7 @@ public class WorkflowServiceImpl extends AbstractJacklynBusinessService implemen
                     wfAlert.setParticipant(wfAlertConfig.getParticipant());
                     wfAlert.setChannel(wfAlertConfig.getChannel());
                     wfAlert.setNotificationTemplateCode(wfAlertConfig.getMessage());
+                    wfAlert.setFilterName(wfAlertConfig.getFilter());
                     alertList.add(wfAlert);
                 }
             }

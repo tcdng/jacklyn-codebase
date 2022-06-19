@@ -46,6 +46,8 @@ public class WfAlertConfig extends BaseConfig {
     private String message;
     
     private String fireOnPrevStepName;
+    
+    private String filter;
 
     public WfAlertConfig() {
         type = WorkflowAlertType.USER_INTERACT;
@@ -115,4 +117,13 @@ public class WfAlertConfig extends BaseConfig {
     public void setFireOnPrevStepName(String fireOnPrevStepName) {
         this.fireOnPrevStepName = fireOnPrevStepName;
     }
+
+	public String getFilter() {
+		return filter;
+	}
+
+    @XmlAttribute
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
 }

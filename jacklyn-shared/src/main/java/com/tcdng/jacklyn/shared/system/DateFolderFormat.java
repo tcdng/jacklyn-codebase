@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("datefolderformatlist")
+@StaticList(name = "datefolderformatlist", description = "Date Folder Format List")
 public enum DateFolderFormat implements EnumConst {
 
     DDMMYYYY("ddMMyyyy"), MMDDYYYY("MMddyyyy"), YYYYMMDD("yyyyMMdd");

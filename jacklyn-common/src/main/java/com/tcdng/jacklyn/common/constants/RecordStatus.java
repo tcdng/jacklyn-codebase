@@ -27,7 +27,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @since 1.0
  */
 @Tooling(description = "Record Status")
-@StaticList("recordstatuslist")
+@StaticList(name = "recordstatuslist", description = "Record Status")
 public enum RecordStatus implements EnumConst {
 
     INACTIVE("I"), ACTIVE("A");

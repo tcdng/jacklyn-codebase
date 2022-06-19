@@ -13,29 +13,15 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.tcdng.jacklyn.security.web.lists;
 
-import com.tcdng.jacklyn.common.web.lists.BaseListCommand;
-import com.tcdng.jacklyn.security.business.SecurityService;
-import com.tcdng.unify.core.annotation.Configurable;
-import com.tcdng.unify.core.list.ListParam;
+package com.tcdng.jacklyn.workflow.business;
 
 /**
- * Abstract base class for security module list commands.
+ * Convenient abstract base class for workflow item alert filter.
  * 
  * @author Lateef Ojulari
  * @since 1.0
  */
-public abstract class AbstractSecurityListCommand<T extends ListParam> extends BaseListCommand<T> {
+public abstract class AbstractWfItemAlertFilter extends AbstractWfItemPolicy implements WfItemAlertFilter {
 
-    @Configurable
-    private SecurityService securityService;
-
-    public AbstractSecurityListCommand(Class<T> paramType) {
-        super(paramType);
-    }
-
-    protected SecurityService getSecurityService() {
-        return securityService;
-    }
 }

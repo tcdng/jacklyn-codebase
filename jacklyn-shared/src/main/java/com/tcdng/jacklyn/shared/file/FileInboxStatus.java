@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("fileinboxstatuslist")
+@StaticList(name = "fileinboxstatuslist", description = "FileInbox Status List")
 public enum FileInboxStatus implements EnumConst {
     NOT_RECEIVED("N"), RECEIVED("R"), ABORTED("A");
 

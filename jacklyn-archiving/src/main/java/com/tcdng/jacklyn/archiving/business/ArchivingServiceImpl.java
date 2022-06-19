@@ -166,7 +166,7 @@ public class ArchivingServiceImpl extends AbstractJacklynBusinessService impleme
             // Fetch ID's of records to backup. (Involves generic persistence
             // operations)
             Class<? extends Entity> entityClazz =
-                    (Class<? extends Entity>) ReflectUtils.getClassForName(fileArchiveConfig.getRecordName());
+                    (Class<? extends Entity>) ReflectUtils.classForName(fileArchiveConfig.getRecordName());
             Query<? extends Entity> query = Query.of(entityClazz);
             query.addBetween(fileArchiveConfig.getDateFieldName(), CalendarUtils.getMidnightDate(workingDt),
                     CalendarUtils.getLastSecondDate(workingDt));

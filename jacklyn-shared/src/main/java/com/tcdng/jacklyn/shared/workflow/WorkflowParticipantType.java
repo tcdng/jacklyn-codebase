@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfparticipanttypelist")
+@StaticList(name = "wfparticipanttypelist", description = "Workflow Participant Type List")
 public enum WorkflowParticipantType implements EnumConst {
 
     NONE("NON"), ALL("ALL"), PERSONNEL("PER"), SUPERVISOR("SUP");

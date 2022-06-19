@@ -6,7 +6,7 @@
 	version="1.0">
 	<documents>
 		<document name="custDoc" description="Customer Information">
-			<item-description-format>Customer:{firstName} {lastName}
+			<item-description-format>Customer:{{firstName}} {{lastName}}
 			</item-description-format>
 			<fields>
 				<field name="firstName" description="First Name" type="string" />

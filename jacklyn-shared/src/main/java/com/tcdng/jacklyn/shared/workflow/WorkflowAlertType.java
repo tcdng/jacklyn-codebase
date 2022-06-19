@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfalerttypelist")
+@StaticList(name = "wfalerttypelist", description = "Workflow Alert Type List")
 public enum WorkflowAlertType implements EnumConst {
 
     PASS_THROUGH("P"),

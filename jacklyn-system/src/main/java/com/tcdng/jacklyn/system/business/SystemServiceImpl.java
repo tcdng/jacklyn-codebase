@@ -812,7 +812,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 			Tooling ta = enumClass.getAnnotation(Tooling.class);
 			StaticList sla = enumClass.getAnnotation(StaticList.class);
 			if (sla != null) {
-				resultList.add(new ToolingEntityItem(sla.value(), resolveApplicationMessage(ta.description()),
+				resultList.add(new ToolingEntityItem(sla.name(), resolveApplicationMessage(ta.description()),
 						enumClass.getName(), "code", ta.guarded(), fieldList));
 			}
 		}
@@ -843,7 +843,7 @@ public class SystemServiceImpl extends AbstractJacklynBusinessService implements
 			StaticList sla = enumClass.getAnnotation(StaticList.class);
 			if (sla != null) {
 				Tooling ta = enumClass.getAnnotation(Tooling.class);
-				resultList.add(new ToolingListTypeItem(sla.value(), resolveApplicationMessage(ta.description())));
+				resultList.add(new ToolingListTypeItem(sla.name(), resolveApplicationMessage(ta.description())));
 			}
 		}
 

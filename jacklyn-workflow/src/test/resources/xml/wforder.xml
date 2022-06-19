@@ -6,7 +6,7 @@
 	version="1.0">
 	<documents>
 		<document name="orderDoc" description="Order">
-			<item-description-format>Order:{description}</item-description-format>
+			<item-description-format>Order:{{description}}</item-description-format>
 			<fields>
 				<field name="name" description="Name" type="string" />
 				<field name="description" description="Description" type="string" />

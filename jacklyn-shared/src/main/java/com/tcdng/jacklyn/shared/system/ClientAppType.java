@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("clientapptypelist")
+@StaticList(name = "clientapptypelist", description = "Client Application Type List")
 public enum ClientAppType implements EnumConst {
 
     STANDARD("S"), OS("O");

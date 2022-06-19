@@ -63,6 +63,9 @@ public class WfAlert extends BaseEntity {
     @Column(name = "NOTIFICATION_TMPL_CD")
     private String notificationTemplateCode;
 
+    @Column(name = "FILTER_NM", length = 64, nullable = true)
+    private String filterName;
+
     @ListOnly(key = "wfStepId", property = "name")
     private String wfStepName;
 
@@ -151,7 +154,15 @@ public class WfAlert extends BaseEntity {
         this.notificationTemplateCode = notificationTemplateCode;
     }
 
-    public String getWfStepName() {
+    public String getFilterName() {
+		return filterName;
+	}
+
+	public void setFilterName(String filterName) {
+		this.filterName = filterName;
+	}
+
+	public String getWfStepName() {
         return wfStepName;
     }
 

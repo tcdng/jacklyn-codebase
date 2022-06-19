@@ -28,7 +28,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @since 1.0
  */
 @Deprecated
-@StaticList("wfformwidgettypelist")
+@StaticList(name = "wfformwidgettypelist", description = "Workflow Form Widget Type List")
 public enum WorkflowFormWidgetType implements EnumConst {
 
     TEXT("TXT", "ui-text"), NAME("NME", "ui-name"), WORD("WRD", "ui-word"), DATE("DTE", "ui-date"), TIME("TME",

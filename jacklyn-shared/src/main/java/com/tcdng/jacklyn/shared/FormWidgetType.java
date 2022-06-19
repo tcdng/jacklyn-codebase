@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("formwidgettypelist")
+@StaticList(name = "formwidgettypelist", description = "Form Widget Type List")
 public enum FormWidgetType implements EnumConst {
 
     TEXT("TXT", "ui-text"),

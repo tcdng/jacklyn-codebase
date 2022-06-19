@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("wfsteptypelist")
+@StaticList(name = "wfsteptypelist", description = "Workflow Step Type List")
 public enum WorkflowStepType implements EnumConst {
 
     START("S"),

@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("notificationstatuslist")
+@StaticList(name = "notificationstatuslist", description = "Notification Status List")
 public enum NotificationStatus implements EnumConst {
 
 	PREPARATION("P"), NOT_SENT("N"), SENT("S"), ABORTED("A");

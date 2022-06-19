@@ -190,7 +190,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 
 		Class<?> targetReportClass = null;
 		if (StringUtils.isNotBlank(className)) {
-			targetReportClass = ReflectUtils.getClassForName(className);
+			targetReportClass = ReflectUtils.classForName(className);
 			if (Entity.class.isAssignableFrom(targetReportClass)) {
 				sqlEntityInfo = ((SqlDataSourceDialect) db().getDataSource().getDialect())
 						.findSqlEntityInfo(targetReportClass);
@@ -752,7 +752,7 @@ public class ReportServiceImpl extends AbstractJacklynBusinessService implements
 		}
 
 		if (reportOptions.isBeanCollection()) {
-			Class<?> dataClass = ReflectUtils.getClassForName(reportOptions.getRecordName());
+			Class<?> dataClass = ReflectUtils.classForName(reportOptions.getRecordName());
 			List<?> content = reportOptions.getContent();
 			for (int i = sortReportColumnOptionsList.size() - 1; i >= 0; i--) {
 				ReportColumnOptions reportColumnOptions = sortReportColumnOptionsList.get(i);

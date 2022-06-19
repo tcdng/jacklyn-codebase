@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("notificationtypelist")
+@StaticList(name = "notificationtypelist", description = "Notification Type List")
 public enum NotificationType implements EnumConst {
 
     SYSTEM("X"), EMAIL("E"), SMS("S");

@@ -26,7 +26,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("dimensiontypelist")
+@StaticList(name = "dimensiontypelist", description = "Dimension Type List")
 public enum DimensionType implements EnumConst {
 
     PERCENTAGE("PER", "%"), PIXELS("PIX", "px");

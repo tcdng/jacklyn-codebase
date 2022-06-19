@@ -25,7 +25,7 @@ import com.tcdng.unify.core.util.EnumUtils;
  * @author Lateef Ojulari
  * @since 1.0
  */
-@StaticList("biometriccategorylist")
+@StaticList(name = "biometriccategorylist", description = "Biometric Category List")
 public enum BiometricCategory implements EnumConst {
 
     USERS("U");
